@@ -1,0 +1,36 @@
+{
+    "name": "apiadmin/apiadmin3",
+    "description": "the api manager",
+    "type": "project",
+    "keywords": [
+        "api",
+        "apiadmin",
+        "tp5"
+    ],
+    "homepage": "http://www.apiadmin.org/",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "zhao",
+            "email": "756958008@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "application"
+        }
+    },
+    "require": {
+        "php": ">=5.6.0",
+        "php-curl-class/php-curl-class": "^8.0",
+        "overtrue/wechat": "~3.1",
+        "qiniu/php-sdk": "^7.2",
+        "tp5er/tp5-databackup": "dev-master"
+    },
+    "extra": {
+        "think-path": "thinkphp"
+    },
+    "config": {
+        "preferred-install": "dist"
+    }
+}
