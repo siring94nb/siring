@@ -10,6 +10,7 @@
     :theme="menuTheme"
     width="auto"
     @on-select="changeMenu"
+    accordion
   >
     <template v-for="item in menuList">
       <Submenu v-if="item.children.length >= 1" :name="item.name" :key="item.name">

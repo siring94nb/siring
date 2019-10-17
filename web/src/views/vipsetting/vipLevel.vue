@@ -1,38 +1,5 @@
-<style lang="less" scoped>
-@import "./vip.less";
-</style>
 <template>
   <div>
-    <Row>
-      <Col span="24">
-        <Card style="margin-bottom: 10px">
-          <Form inline>
-            <FormItem style="margin-bottom: 0">
-              <Input v-model="searchConf.title" placeholder="请输入账号或者姓名"></Input>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.start_time"
-                placeholder="请输入开始时间"
-                style="width: 200px"
-              ></DatePicker>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.end_time"
-                placeholder="请输入结束时间"
-                style="width: 200px"
-              ></DatePicker>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <Button type="primary" @click="search">查询</Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </Col>
-    </Row>
     <Row>
       <Col span="24">
         <Card>
@@ -67,11 +34,11 @@
         <Icon type="md-information-circle"></Icon>
         <span>{{formItem.id ? '编辑' : '新增'}}用户</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-        <FormItem label="姓名" prop="realname">
-          <Input v-model="formItem.realname" placeholder="请输入姓名" style="width: 300px;"></Input>
+      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
+        <FormItem label="会员等级" prop="realname">
+          <Input v-model="formItem.realname" placeholder="请输入会员等级" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="头像" prop="img">
+        <FormItem label="等级图标" prop="img">
           <div class="demo-upload-list" v-for="item in uploadList" :key="item.id">
             <template v-if="item.status === 'finished'">
               <img :src="item.url" />
@@ -103,32 +70,36 @@
             </div>
           </Upload>
         </FormItem>
-        <FormItem label="电话" prop="phone">
-          <Input v-model="formItem.phone" placeholder="请输入电话号码" style="width: 300px;"></Input>
+        <FormItem label="有效期">
+          <Select v-model="formItem.select" style="width: 300px;">
+            <Option value="beijing">New York</Option>
+            <Option value="shanghai">London</Option>
+            <Option value="shenzhen">Sydney</Option>
+          </Select>
         </FormItem>
-        <FormItem label="备注" prop="remark">
-          <Input style="width: 300px" v-model="formItem.remark" placeholder="请输入备注"></Input>
+        <FormItem label="会员费（元/年）">
+          <Input v-model="formItem.phone" placeholder="请输入会员费" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="密码" prop="password">
-          <Tooltip
-            :content="formItem.id ? '为空时默认不修改密码' : '为空时默认密码是123456'"
-            placement="bottom-start"
-          >
-            <Input
-              v-model="formItem.password"
-              placeholder="请输入密码"
-              style="width: 300px;"
-              type="password"
-            ></Input>
-          </Tooltip>
-        </FormItem>
-        <FormItem label="确认密码" prop="con_password">
+        <FormItem label="等级政策描述">
           <Input
-            v-model="formItem.con_password"
-            placeholder="请输入确认密码"
-            style="width: 300px;"
-            type="password"
+            v-model="formItem.textarea"
+            type="textarea"
+            :autosize="{minRows: 2,maxRows: 5}"
+            placeholder="请输入等级政策描述"
           ></Input>
+        </FormItem>
+        <FormItem label="消费折扣（0~99%）">
+          <Input v-model="formItem.phone" placeholder="请输入消费折扣" style="width: 300px;"></Input>
+        </FormItem>
+        <FormItem label="从下级业绩提成（0~99%）">
+          <Input v-model="formItem.phone" placeholder="请输入从下级业绩提成" style="width: 300px;"></Input>
+          <div>*下级任何实际消费都算业绩，包括缴纳城市合伙人费用</div>
+        </FormItem>
+        <FormItem label="是否介绍隐藏">
+          <i-switch v-model="formItem.switch" size="large">
+            <span slot="open">On</span>
+            <span slot="close">Off</span>
+          </i-switch>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -240,39 +211,12 @@ export default {
       confirmRefresh: false,
       columnsList: [
         {
-          title: "序号",
-          type: "index",
-          width: 65,
-          align: "center",
-          key: "id"
-        },
-        {
-          title: "邀请码",
+          title: "等级名称",
           align: "center",
           key: "invitation"
         },
         {
-          title: "用户账号",
-          align: "center",
-          key: "phone"
-        },
-        {
-          title: "上级邀请码",
-          align: "center",
-          key: "other_code"
-        },
-        {
-          title: "上级账号",
-          align: "center",
-          key: "other_code"
-        },
-        {
-          title: "用户昵称",
-          align: "center",
-          key: "realname"
-        },
-        {
-          title: "头像",
+          title: "等级图标",
           align: "center",
           key: "img",
           //width: 150,
@@ -290,40 +234,25 @@ export default {
           }
         },
         {
-          title: "性别",
+          title: "有效期（年）",
           align: "center",
-          key: "sex",
-          render: (h, param) => {
-            if (param.row.sex == "1") {
-              return h("div", "男");
-            } else if (param.row.sex == "2") {
-              return h("div", "女");
-            } else {
-              return h("div", "未知");
-            }
-          }
+          key: "phone"
         },
         {
-          title: "地址",
+          title: "年度费用标准",
           align: "center",
-          key: ""
+          key: "other_code"
         },
         {
-          title: "会员等级",
+          title: "等级政策",
           align: "center",
-          key: ""
+          key: "other_code"
         },
         {
-          title: "加入时间",
+          title: "状态",
           align: "center",
-          key: "created_at",
-          width: 150
-        },
-        {
-          title: "到期时间",
-          align: "center",
-          key: "end_time",
-          width: 150
+          key: "status",
+          width: 100
         },
         {
           title: "操作",

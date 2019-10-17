@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PhpIncludePathManager">
+    <include_path>
+      <path value="$PROJECT_DIR$/admin/vendor/tp5er/tp5-databackup" />
+      <path value="$PROJECT_DIR$/admin/vendor/composer" />
+      <path value="$PROJECT_DIR$/admin/vendor/doctrine/cache" />
+      <path value="$PROJECT_DIR$/admin/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/admin/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/admin/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/admin/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/admin/vendor/overtrue/socialite" />
+      <path value="$PROJECT_DIR$/admin/vendor/overtrue/wechat" />
+      <path value="$PROJECT_DIR$/admin/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/admin/vendor/php-curl-class/php-curl-class" />
+      <path value="$PROJECT_DIR$/admin/vendor/PHPExcel/Classes" />
+      <path value="$PROJECT_DIR$/admin/vendor/pimple/pimple" />
+      <path value="$PROJECT_DIR$/admin/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/admin/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/admin/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/admin/vendor/qiniu/php-sdk" />
+      <path value="$PROJECT_DIR$/admin/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/admin/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-php70" />
+      <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
+    </include_path>
+  </component>
+</project>
