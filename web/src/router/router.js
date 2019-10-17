@@ -306,26 +306,27 @@ export const appRouter = [
                 name: 'vip',
                 title: '会员设置',
                 component: () => import('@/views/vipsetting/index.vue'),
+                // redirect: '/vip/vipLevel',
                 children: [
                     {
                         path: 'vipLevel',
                         icon: 'ios-hammer',
                         name: 'vipLevel',
-                        title: '会员等级设置',
+                        title: '会员等级',
                         component: () => import('@/views/vipsetting/vipLevel.vue'),
                     },
                     {
                         path: 'cityPartner',
                         icon: 'ios-hammer',
                         name: 'cityPartner',
-                        title: '城市合伙人设置',
+                        title: '城市合伙人',
                         component: () => import('@/views/vipsetting/cityPartner.vue'),
                     },
                     {
                         path: 'fbs',
                         icon: 'ios-hammer',
                         name: 'fbs',
-                        title: '分包商设置',
+                        title: '分包商',
                         component: () => import('@/views/vipsetting/fbs.vue'),
                     },
                 ]
