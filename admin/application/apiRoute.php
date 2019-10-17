@@ -29,8 +29,15 @@ Route::group('api', function () {
     //轮播接口接口
     Route::group('Banner', function () {
         Route::any('banner_list','api/Banner/index'); //轮播列表
-        Route::any('banner_save','api/Banner/save'); //轮播列表
+        Route::any('banner_save','api/Banner/save'); //测试
 
+    });
+
+    //网站基本接口
+    Route::group('Website', function () {
+        Route::any('website_list','api/Website/website_list'); //关于我们
+        Route::any('contact','api/Website/contact'); //联系我们
+        Route::any('seo','api/Website/seo'); //联系我们
     });
 
     
