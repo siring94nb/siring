@@ -1,38 +1,5 @@
-<style lang="less" scoped>
-@import "./vip.less";
-</style>
 <template>
   <div>
-    <Row>
-      <Col span="24">
-        <Card style="margin-bottom: 10px">
-          <Form inline>
-            <FormItem style="margin-bottom: 0">
-              <Input v-model="searchConf.title" placeholder="请输入账号或者姓名"></Input>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.start_time"
-                placeholder="请输入开始时间"
-                style="width: 200px"
-              ></DatePicker>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.end_time"
-                placeholder="请输入结束时间"
-                style="width: 200px"
-              ></DatePicker>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <Button type="primary" @click="search">查询</Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </Col>
-    </Row>
     <Row>
       <Col span="24">
         <Card>
@@ -67,68 +34,33 @@
         <Icon type="md-information-circle"></Icon>
         <span>{{formItem.id ? '编辑' : '新增'}}用户</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-        <FormItem label="姓名" prop="realname">
-          <Input v-model="formItem.realname" placeholder="请输入姓名" style="width: 300px;"></Input>
+      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
+        <FormItem label="城市等级" prop="realname">
+          <Input v-model="formItem.realname" placeholder="请输入会员等级" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="头像" prop="img">
-          <div class="demo-upload-list" v-for="item in uploadList" :key="item.id">
-            <template v-if="item.status === 'finished'">
-              <img :src="item.url" />
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-              </div>
-            </template>
-            <template v-else>
-              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-            </template>
-          </div>
-          <Upload
-            ref="upload"
-            :show-upload-list="false"
-            :default-file-list="iconList"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="10240"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload"
-            type="drag"
-            name="image"
-            :action="UploadAction"
-            style="display: inline-block;width:58px;"
-          >
-            <div style="width: 58px;height:58px;line-height: 58px;">
-              <Icon type="ios-camera" size="20"></Icon>
-            </div>
-          </Upload>
+        <FormItem label="费用标准（元/年）">
+          <Input v-model="formItem.phone" placeholder="请输入费用标准" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="电话" prop="phone">
-          <Input v-model="formItem.phone" placeholder="请输入电话号码" style="width: 300px;"></Input>
-        </FormItem>
-        <FormItem label="备注" prop="remark">
-          <Input style="width: 300px" v-model="formItem.remark" placeholder="请输入备注"></Input>
-        </FormItem>
-        <FormItem label="密码" prop="password">
-          <Tooltip
-            :content="formItem.id ? '为空时默认不修改密码' : '为空时默认密码是123456'"
-            placement="bottom-start"
-          >
-            <Input
-              v-model="formItem.password"
-              placeholder="请输入密码"
-              style="width: 300px;"
-              type="password"
-            ></Input>
-          </Tooltip>
-        </FormItem>
-        <FormItem label="确认密码" prop="con_password">
+        <FormItem label="等级政策描述">
           <Input
-            v-model="formItem.con_password"
-            placeholder="请输入确认密码"
-            style="width: 300px;"
-            type="password"
+            v-model="formItem.textarea"
+            type="textarea"
+            :autosize="{minRows: 2,maxRows: 5}"
+            placeholder="请输入等级政策描述"
           ></Input>
+        </FormItem>
+        <FormItem label="收益预测">
+          <Input v-model="formItem.phone" placeholder="请输入收益预测" style="width: 300px;"></Input>
+        </FormItem>
+        <FormItem label="保底佣金比例（0~99%）">
+          <Input v-model="formItem.phone" placeholder="请输入保底佣金比例" style="width: 300px;"></Input>
+        </FormItem>
+        <FormItem label="达标佣金比例">
+          <Input v-model="formItem.phone" placeholder="请输入达标佣金比例" style="width: 300px;"></Input>
+        </FormItem>
+        <FormItem label="达标要求（个）">
+          <Input v-model="formItem.phone" placeholder="请输入达标要求" style="width: 300px;"></Input>
+          <div>*发展等级会员（除普通会员外）数</div>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -167,9 +99,9 @@ const editButton = (vm, h, currentRow, index) => {
           if (currentRow.img != "") {
             vm.iconList = [{ name: "", url: currentRow.img }];
           }
-          vm.$nextTick(() => {
-            vm.uploadList = vm.$refs.upload.fileList;
-          });
+          // vm.$nextTick(() => {
+          //   vm.uploadList = vm.$refs.upload.fileList;
+          // });
         }
       }
     },
@@ -240,90 +172,24 @@ export default {
       confirmRefresh: false,
       columnsList: [
         {
-          title: "序号",
-          type: "index",
-          width: 65,
-          align: "center",
-          key: "id"
-        },
-        {
-          title: "邀请码",
+          title: "等级名称",
           align: "center",
           key: "invitation"
         },
         {
-          title: "用户账号",
-          align: "center",
-          key: "phone"
-        },
-        {
-          title: "上级邀请码",
+          title: "费用标准",
           align: "center",
           key: "other_code"
         },
         {
-          title: "上级账号",
+          title: "等级政策",
           align: "center",
           key: "other_code"
         },
         {
-          title: "用户昵称",
+          title: "年收益预测",
           align: "center",
-          key: "realname"
-        },
-        {
-          title: "头像",
-          align: "center",
-          key: "img",
-          //width: 150,
-          render: (h, param) => {
-            return h("img", {
-              attrs: {
-                src: param.row.img
-              },
-              style: {
-                width: "80px",
-                height: "80px",
-                padding: "5px 0 0 0"
-              }
-            });
-          }
-        },
-        {
-          title: "性别",
-          align: "center",
-          key: "sex",
-          render: (h, param) => {
-            if (param.row.sex == "1") {
-              return h("div", "男");
-            } else if (param.row.sex == "2") {
-              return h("div", "女");
-            } else {
-              return h("div", "未知");
-            }
-          }
-        },
-        {
-          title: "地址",
-          align: "center",
-          key: ""
-        },
-        {
-          title: "会员等级",
-          align: "center",
-          key: ""
-        },
-        {
-          title: "加入时间",
-          align: "center",
-          key: "created_at",
-          width: 150
-        },
-        {
-          title: "到期时间",
-          align: "center",
-          key: "end_time",
-          width: 150
+          key: "status",
         },
         {
           title: "操作",
@@ -392,9 +258,9 @@ export default {
     },
     alertAdd() {
       //图片
-      this.$nextTick(() => {
-        this.uploadList = this.$refs.upload.fileList;
-      });
+      // this.$nextTick(() => {
+      //   this.uploadList = this.$refs.upload.fileList;
+      // });
       this.modalSetting.show = true;
     },
     submit() {
@@ -486,8 +352,8 @@ export default {
       this.visible = true;
     },
     handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      // const fileList = this.$refs.upload.fileList;
+      // this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
       this.formItem.img = "";
     },
     handleSuccess(res, file) {
@@ -513,7 +379,7 @@ export default {
     //照片
     //this.UploadAction = config.front_url+'api/upload';
     this.UploadAction = config.front_url + "file/qn_upload";
-    this.uploadList = this.$refs.upload.fileList;
+    // this.uploadList = this.$refs.upload.fileList;
   }
 };
 </script>
