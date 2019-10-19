@@ -35,8 +35,8 @@
         <span>{{formItem.id ? '编辑' : '新增'}}用户</span>
       </p>
       <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
-        <FormItem label="会员等级" prop="realname">
-          <Input v-model="formItem.realname" placeholder="请输入会员等级" style="width: 300px;"></Input>
+        <FormItem label="会员等级" prop="title">
+          <Input v-model="formItem.title" placeholder="请输入会员等级" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="等级图标" prop="img">
           <div class="demo-upload-list" v-for="item in uploadList" :key="item.id">
@@ -70,35 +70,35 @@
             </div>
           </Upload>
         </FormItem>
-        <FormItem label="有效期">
-          <Select v-model="formItem.select" style="width: 300px;">
-            <Option value="beijing">New York</Option>
-            <Option value="shanghai">London</Option>
-            <Option value="shenzhen">Sydney</Option>
+        <FormItem label="有效期" prop="term">
+          <Select v-model="formItem.term" style="width: 300px;">
+            <Option :value="0" :key="0">{{'永久'}}</Option>
+            <Option :value="1" :key="1">{{'1年'}}</Option>
+            <Option :value="2" :key="2">{{'2年'}}</Option>
           </Select>
         </FormItem>
-        <FormItem label="会员费（元/年）">
-          <Input v-model="formItem.phone" placeholder="请输入会员费" style="width: 300px;"></Input>
+        <FormItem label="会员费（元/年）"  prop="money">
+          <InputNumber :min="1" v-model="formItem.money" ></InputNumber>
         </FormItem>
-        <FormItem label="等级政策描述">
+        <FormItem label="等级政策描述" prop="policy">
           <Input
-            v-model="formItem.textarea"
+            v-model="formItem.policy"
             type="textarea"
             :autosize="{minRows: 2,maxRows: 5}"
             placeholder="请输入等级政策描述"
           ></Input>
         </FormItem>
-        <FormItem label="消费折扣（0~99%）">
-          <Input v-model="formItem.phone" placeholder="请输入消费折扣" style="width: 300px;"></Input>
+        <FormItem label="消费折扣（0~99%）" prop="discount">
+          <InputNumber :min="1" v-model="formItem.discount"></InputNumber>
         </FormItem>
-        <FormItem label="从下级业绩提成（0~99%）">
-          <Input v-model="formItem.phone" placeholder="请输入从下级业绩提成" style="width: 300px;"></Input>
+        <FormItem label="从下级业绩提成（0~99%）" prop="royalty">
+          <InputNumber :min="1" v-model="formItem.royalty"></InputNumber>
           <div>*下级任何实际消费都算业绩，包括缴纳城市合伙人费用</div>
         </FormItem>
         <FormItem label="是否介绍隐藏">
-          <i-switch v-model="formItem.switch" size="large">
-            <span slot="open">On</span>
-            <span slot="close">Off</span>
+          <i-switch v-model="formItem.is_hide" size="large">
+            <span slot="open">ON</span>
+            <span slot="close">OFF</span>
           </i-switch>
         </FormItem>
       </Form>
@@ -126,11 +126,14 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
-          vm.formItem.realname = currentRow.realname;
+          vm.formItem.title = currentRow.title;
           vm.formItem.img = currentRow.img;
-          vm.formItem.remark = currentRow.remark;
-          vm.formItem.type = currentRow.type;
-          vm.formItem.phone = currentRow.phone;
+          vm.formItem.term = currentRow.term;
+          vm.formItem.money = currentRow.money;
+          vm.formItem.policy = currentRow.policy;
+          vm.formItem.discount = currentRow.discount;
+          vm.formItem.royalty = currentRow.royalty;
+          vm.formItem.is_hide = currentRow.is_hide;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -159,7 +162,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("UserManage/Delete", {
+            .post("RoleJoin/member_delete", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -196,13 +199,7 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   name: "UserManage_list",
   data() {
-    const validatePhone = (rule, value, callback) => {
-      var reg = /^1\d{10}$/;
-      if (!reg.test(value)) {
-        callback(new Error("手机号码格式不正确"));
-      }
-      callback();
-    };
+
     return {
       UploadAction: "",
       UploadHeader: "",
@@ -213,7 +210,7 @@ export default {
         {
           title: "等级名称",
           align: "center",
-          key: "invitation"
+          key: "title"
         },
         {
           title: "等级图标",
@@ -236,17 +233,26 @@ export default {
         {
           title: "有效期（年）",
           align: "center",
-          key: "phone"
+          key: "term",
+            render: ( h , param ) => {
+                if(param.row.term == 0){
+                    return h('div',['永久']);
+                }else if(param.row.term == 1){
+                    return h('div',['1年']);
+                }else{
+                    return h('div',['2年']);
+                }
+            }
         },
         {
           title: "年度费用标准",
           align: "center",
-          key: "other_code"
+          key: "money"
         },
         {
           title: "等级政策",
           align: "center",
-          key: "other_code"
+          key: "policy"
         },
         {
           title: "状态",
@@ -269,7 +275,13 @@ export default {
         listCount: 0
       },
       formItem: {
-        img: ""
+          id: 0,
+          img: '',
+          title: '',
+          term: 0,
+          money: 1,
+          is_hide: 1,
+          status: 1,
       },
       searchConf: {
         title: "",
@@ -284,13 +296,13 @@ export default {
         index: 0
       },
       ruleValidate: {
-        realname: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
+          title: [
+          { required: true, message: "等级名称不能为空", trigger: "blur" }
         ],
-        phone: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          { validator: validatePhone, trigger: "blur" }
-        ]
+        // phone: [
+        //   { required: true, message: "手机号码不能为空", trigger: "blur" },
+        //   { validator: validatePhone, trigger: "blur" }
+        // ]
       },
       // 图片
       UploadAction: "",
@@ -333,9 +345,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id) {
-            target = "UserManage/Edit";
+            target = "RoleJoin/member_save";
           } else {
-            target = "UserManage/Add";
+            target = "RoleJoin/member_create";
           }
           axios.post(target, self.formItem).then(function(response) {
             self.modalSetting.loading = false;
@@ -352,6 +364,16 @@ export default {
       });
     },
     cancel() {
+        this.formItem.id = 0;
+        this.formItem.name = '';
+        this.formItem.num = 1;
+        this.formItem.add_time = '';
+        this.formItem.end_time = '';
+        this.formItem.range = 0;
+        this.formItem.full = 1;
+        this.formItem.reduce = 1;
+        this.formItem.status = 1;
+        this.formItem.type = '';
       // 移除图片
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -374,7 +396,7 @@ export default {
     getList() {
       let vm = this;
       axios
-        .get("UserManage/index", {
+        .get("RoleJoin/member_index", {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,

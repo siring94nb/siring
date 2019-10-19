@@ -313,6 +313,7 @@ export const appRouter = [
                         icon: 'ios-hammer',
                         name: 'vipLevel',
                         title: '会员等级',
+                        access: 'admin/RoleJoin/member_index',
                         component: () => import('@/views/vipsetting/vipLevel.vue'),
                     },
                     {
@@ -320,6 +321,7 @@ export const appRouter = [
                         icon: 'ios-hammer',
                         name: 'cityPartner',
                         title: '城市合伙人',
+                        access: 'admin/RoleJoin/partner_index',
                         component: () => import('@/views/vipsetting/cityPartner.vue'),
                     },
                     {
@@ -327,6 +329,7 @@ export const appRouter = [
                         icon: 'ios-hammer',
                         name: 'fbs',
                         title: '分包商',
+                        access: 'admin/RoleJoin/subcontractor_index',
                         component: () => import('@/views/vipsetting/fbs.vue'),
                     },
                 ]

@@ -290,7 +290,7 @@ class RoleJoin extends Base
 
         $res = JoinRole::join_del($id);
 
-        return $res  ?   $this -> buildSuccess( [] , '新增成功' ) :  $this -> buildFailed( 1001 , '新增失败' );
+        return $res  ?   $this -> buildSuccess( [] , '删除成功' ) :  $this -> buildFailed( 1001 , '删除失败' );
     }
 
     /**
