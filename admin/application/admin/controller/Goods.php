@@ -34,7 +34,6 @@ class Goods extends Base{
         if ($goods_name) {
             $where['goods_name'] = ['like', "%{$goods_name}%"];
         }
-        halt($where);
         $listObj=(new Goods2())->getGoodsList($where);
         $listInfo = $listObj['data'];
         return $this->buildSuccess([
@@ -84,6 +83,10 @@ class Goods extends Base{
         $id = $this->request->get('id', '');
         $goods_info=Goods2::get($id);
         $goods_info['special']=Special::getSpecialInfo($id);
+        //测试获取商品的list-adder
+        $adder_list=$where['name'];
+        $adkkrel_li=$parts_order_number+$HTTP_RAW_POST_DATA;
+        $adkkrel_li=$parts_order_number+$HTTP_RAW_POST_DATA;
         if($goods_info){
             return $this->buildSuccess([
                 'data'=>$goods_info
