@@ -77,8 +77,8 @@
             <Option :value="2" :key="2">{{'2年'}}</Option>
           </Select>
         </FormItem>
-        <FormItem label="会员费（元/年）"  prop="money">
-          <InputNumber :min="1" v-model="formItem.money" ></InputNumber>
+        <FormItem label="会员费（元/年）">
+          <Input v-model="formItem.money"></Input>
         </FormItem>
         <FormItem label="等级政策描述" prop="policy">
           <Input
@@ -199,7 +199,6 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   name: "UserManage_list",
   data() {
-
     return {
       UploadAction: "",
       UploadHeader: "",
@@ -234,15 +233,15 @@ export default {
           title: "有效期（年）",
           align: "center",
           key: "term",
-            render: ( h , param ) => {
-                if(param.row.term == 0){
-                    return h('div',['永久']);
-                }else if(param.row.term == 1){
-                    return h('div',['1年']);
-                }else{
-                    return h('div',['2年']);
-                }
+          render: (h, param) => {
+            if (param.row.term == 0) {
+              return h("div", ["永久"]);
+            } else if (param.row.term == 1) {
+              return h("div", ["1年"]);
+            } else {
+              return h("div", ["2年"]);
             }
+          }
         },
         {
           title: "年度费用标准",
@@ -275,13 +274,13 @@ export default {
         listCount: 0
       },
       formItem: {
-          id: 0,
-          img: '',
-          title: '',
-          term: 0,
-          money: 1,
-          is_hide: 1,
-          status: 1,
+        id: 0,
+        img: "",
+        title: "",
+        term: 0,
+        money: 1,
+        is_hide: 1,
+        status: 1
       },
       searchConf: {
         title: "",
@@ -296,9 +295,9 @@ export default {
         index: 0
       },
       ruleValidate: {
-          title: [
+        title: [
           { required: true, message: "等级名称不能为空", trigger: "blur" }
-        ],
+        ]
         // phone: [
         //   { required: true, message: "手机号码不能为空", trigger: "blur" },
         //   { validator: validatePhone, trigger: "blur" }
@@ -364,16 +363,16 @@ export default {
       });
     },
     cancel() {
-        this.formItem.id = 0;
-        this.formItem.name = '';
-        this.formItem.num = 1;
-        this.formItem.add_time = '';
-        this.formItem.end_time = '';
-        this.formItem.range = 0;
-        this.formItem.full = 1;
-        this.formItem.reduce = 1;
-        this.formItem.status = 1;
-        this.formItem.type = '';
+      this.formItem.id = 0;
+      this.formItem.name = "";
+      this.formItem.num = 1;
+      this.formItem.add_time = "";
+      this.formItem.end_time = "";
+      this.formItem.range = 0;
+      this.formItem.full = 1;
+      this.formItem.reduce = 1;
+      this.formItem.status = 1;
+      this.formItem.type = "";
       // 移除图片
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -468,3 +467,52 @@ export default {
   }
 };
 </script>
+<style scoped lang="less">
+.api-box {
+  max-height: 300px;
+  overflow: auto;
+  border: 1px solid #dddee1;
+  border-radius: 5px;
+  padding: 10px;
+}
+.demo-upload-list {
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  line-height: 60px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  background: #fff;
+  position: relative;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  margin-right: 4px;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &-cover {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  &:hover .demo-upload-list-cover {
+    display: block;
+  }
+
+  &-cover i {
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    margin: 0 2px;
+  }
+}
+</style>
