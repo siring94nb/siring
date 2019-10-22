@@ -522,6 +522,23 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/RoleJoin/subcontractor_delete',
             ['method' => 'post']
         ],
+        //城市等级设置
+        'city_index' => [
+            'admin/RoleJoin/city_index',
+            ['method' => 'get']
+        ],
+        'city_create' => [
+            'admin/RoleJoin/city_create',
+            ['method' => 'post']
+        ],
+        'city_save' => [
+            'admin/RoleJoin/city_save',
+            ['method' => 'post']
+        ],
+        'city_delete' => [
+            'admin/RoleJoin/city_delete',
+            ['method' => 'post']
+        ],
     ] , ['after_behavior' => $afterBehavior] );
 
     //优惠券管理
