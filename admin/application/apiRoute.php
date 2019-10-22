@@ -37,7 +37,21 @@ Route::group('api', function () {
     Route::group('Website', function () {
         Route::any('website_list','api/Website/website_list'); //关于我们
         Route::any('contact','api/Website/contact'); //联系我们
-        Route::any('seo','api/Website/seo'); //联系我们
+        Route::any('seo','api/Website/seo'); //SEO
+    });
+
+    //角色加盟
+    Route::group('JoinRole',function (){
+        Route::any('province_list','api/JoinRole/province_list'); //省份列表
+        Route::any('city_list','api/JoinRole/city_list'); //城市列表
+        Route::any('grade_list','api/JoinRole/grade_list'); //等级费用列表
+    });
+
+    //角色加盟订单
+    Route::group('JoinOrder',function (){
+        Route::any('city_order_add','api/JoinOrder/city_order_add'); //省份列表
+        Route::any('city_list','api/JoinOrder/city_list'); //城市列表
+        Route::any('grade_list','api/JoinOrder/grade_list'); //等级费用列表
     });
 
     

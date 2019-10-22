@@ -14,21 +14,32 @@ class JoinOrder extends Model
     protected $table = "join_order";
     protected $resultSetType = 'collection';
 //    protected $hidden = ['created_at','updated_at'];
-    //新增
-    public function add($nickname,$username,$phone,$password,$salt,$problem,$answer,$status,$type,$east,$western,$power)
+    //新增订单
+    public function order_add($role_type,$uid,$pay_type,$num,$money,$dev,$grade,$con)
     {
-        return $this->save([
-            'role_type' => $nickname,
-            'user_id' => $username,
-            'pay_type' => $phone,
-            'no' => $password,
-            'money' => $salt,
-            'payment' => $problem,
-            'status' => $answer,
-            'grade' => $status,
+        $data = new JoinOrder;
+        $data->save([
+            'role_type' => $role_type,
+            'user_id' => $uid,
+            'pay_type' => $pay_type,
+            'no' => $this->get_sn(),
+            'num' => $num,
+            'money' => $money,
+            'payment' => 1,
+            'status' => 1,
+            'dev' => $dev,
+            'grade' => $grade,
+            'con' =>$con,
             'created_at' => time(),
 
         ]);
+
+        return $data !== false ? $data : false;
+    }
+
+    //生成订单号
+    function get_sn() {
+        return 'JS'.date('YmdHi').rand(100000, 999999);
     }
 
     //展示
