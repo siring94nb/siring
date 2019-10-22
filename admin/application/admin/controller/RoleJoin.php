@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-
+use app\data\model\Provinces;
 use app\data\model\JoinRole;
 use think\Controller;
 use think\Request;
@@ -409,5 +409,18 @@ class RoleJoin extends Base
 
         return $res  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1001 , '失败' );
 
+    }
+
+    /**
+     * 城市合伙人省份列表
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_index()
+    {
+        $province = new Provinces();
+        $data = $province->province_index();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 }
