@@ -32,4 +32,24 @@ class Provinces extends Model
 
         return $data ? $data->toArray() : returnJson(0,'数据不存在');
     }
+
+    //城市新增
+    public function city_add($param)
+    {
+        $validate = new Validate([
+            ['pid', 'require', '省份id不能为空'],
+            ['name', 'require', '城市名称不能为空'],
+            ['type', 'require', '城市级别不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+
+        $data   = new Provinces;
+
+        $res = $data->save($param);
+
+        return $res;
+
+    }
 }
