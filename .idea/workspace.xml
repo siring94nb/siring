@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/RoleJoin.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/RoleJoin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" afterDir="false" />
-    </list>
+    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -137,8 +131,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/RoleJoin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="641">
-              <caret line="440" column="63" lean-forward="true" selection-start-line="440" selection-start-column="63" selection-end-line="440" selection-end-column="63" />
+            <state relative-caret-position="665">
+              <caret line="441" column="5" lean-forward="true" selection-start-line="426" selection-start-column="4" selection-end-line="441" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -241,7 +235,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -420,12 +414,12 @@
       <workItem from="1571379227860" duration="49000" />
       <workItem from="1571644097388" duration="2561000" />
       <workItem from="1571705617320" duration="16163000" />
-      <workItem from="1571733869952" duration="89000" />
+      <workItem from="1571733869952" duration="611000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="32374000" />
+    <option name="totallyTimeSpent" value="32896000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -716,8 +710,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/RoleJoin.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="641">
-          <caret line="440" column="63" lean-forward="true" selection-start-line="440" selection-start-column="63" selection-end-line="440" selection-end-column="63" />
+        <state relative-caret-position="665">
+          <caret line="441" column="5" lean-forward="true" selection-start-line="426" selection-start-column="4" selection-end-line="441" selection-end-column="5" />
         </state>
       </provider>
     </entry>
