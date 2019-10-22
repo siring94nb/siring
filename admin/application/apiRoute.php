@@ -49,9 +49,9 @@ Route::group('api', function () {
 
     //角色加盟订单
     Route::group('JoinOrder',function (){
-        Route::any('city_order_add','api/JoinOrder/city_order_add'); //省份列表
-        Route::any('city_list','api/JoinOrder/city_list'); //城市列表
-        Route::any('grade_list','api/JoinOrder/grade_list'); //等级费用列表
+        Route::any('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
+        Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
+        Route::any('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
     });
 
     

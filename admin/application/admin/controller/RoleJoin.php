@@ -412,7 +412,7 @@ class RoleJoin extends Base
     }
 
     /**
-     * 城市合伙人省份列表
+     * 等级城市省份列表
      * @author fyk
      * @return \think\Response
      */
@@ -422,5 +422,22 @@ class RoleJoin extends Base
         $data = $province->province_index();
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     * 城市合伙人省份列表
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_create()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $city = new Provinces();
+
+        $data = $city->city_add($param);
+
+        return $data ? returnJson(1,'成功') : returnJson(0,'失败');
     }
 }

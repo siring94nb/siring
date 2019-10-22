@@ -59,8 +59,7 @@ class JoinOrder extends Controller
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请'],
-            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
+            ['grade', 'require', '套餐id不能为空'],
             ['num','require','数量必须'],
             ['price','require','金额必须'],
         ]);
@@ -73,11 +72,11 @@ class JoinOrder extends Controller
         }else{
             $user_id = $param["user_id"];
         }
-        $role_type = 2;
+        $role_type = 1;
 
         $city = new JoinOrderAll();
 
-        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],'',$param['grade'],$param['con']);
+        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],'',$param['grade'],'');
 
         $order_id = $data->id;
         return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
@@ -93,7 +92,8 @@ class JoinOrder extends Controller
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请'],
+            ['skill', 'require', '技能不能为空'],
+            ['language', 'require', '开发语言不能为空'],
             ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
             ['num','require','数量必须'],
             ['price','require','金额必须'],
@@ -101,17 +101,24 @@ class JoinOrder extends Controller
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
+        $info = [
+            "skill"=>$param['skill'],
+            "language"=>$param['language'],
+        ];
+        $dev = json_encode($info);
+
         $user_id = Session::get("uid");
         if($user_id){
             $user_id = Session::get("uid");
         }else{
             $user_id = $param["user_id"];
         }
-        $role_type = 2;
+
+        $role_type = 3;
 
         $city = new JoinOrderAll();
 
-        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],'',$param['grade'],$param['con']);
+        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$dev,'',$param['con']);
 
         $order_id = $data->id;
         return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
