@@ -421,6 +421,9 @@ class RoleJoin extends Base
         $province = new Provinces();
         $data = $province->province_index();
 
-        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        return $this -> buildSuccess( array(
+            'list' => $data,
+            // 'count' => $data['total'],
+        ) );
     }
 }

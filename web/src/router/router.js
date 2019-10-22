@@ -336,7 +336,7 @@ export const appRouter = [
                         path: 'settingCity',
                         icon: 'ios-hammer',
                         name: 'settingCity',
-                        title: '等级城市设置',
+                        title: '等级城市',
                         access: 'admin/RoleJoin/city_index',
                         component: () => import('@/views/vipsetting/settingCity.vue'),
                     },
