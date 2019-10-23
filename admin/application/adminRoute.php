@@ -697,5 +697,24 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
+    //商品分类列表
+    Route::group('Category', [
+        'index' => [
+            'admin/Category/index',
+            ['method' => 'get']
+        ],
+        'add' => [
+            'admin/Category/add',
+            ['method' => 'post']
+        ],
+        'edit' => [
+            'admin/Category/edit',
+            ['method' => 'post']
+        ],
+        'delete' => [
+            'admin/Category/delete',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
 
 });
