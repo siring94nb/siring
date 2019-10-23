@@ -1,4 +1,5 @@
 <style lang="less" scoped>
+ @import './goods.less';
 </style>
 <template>
   <div>
@@ -61,39 +62,43 @@
         <Icon type="md-add"></Icon>
         <span>添加商品</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
+      <Form ref="myForm"  :model="formItem" :label-width="120">
         <FormItem label="商品名称" prop="name">
-          <Input v-model="formItem.name" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.data.name" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="商品编号" prop="name">
-          <Input v-model="formItem.goods_num" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.data.goods_num" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="归属分类" prop="fid">
-          <Select v-model="formItem.goods_type" style="width: 300px;">
+        <FormItem label="归属分类" prop="name">
+          <Select v-model="formItem.data.goods_type" style="width: 300px;">
             <Option :value="0">顶级菜单</Option>
             <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
           </Select>
         </FormItem>
         <FormItem label="商品排序" prop="name">
-          <Input v-model="formItem.goods_sort" type="number" style="width: 300px;"></Input>
+          <InputNumber :min="1" v-model="formItem.data.goods_sort" style="width: 300px;"></InputNumber>
         </FormItem>
-        <FormItem label="标记" prop="fid">
-          <RadioGroup v-model="formItem.radio">
-            <Radio label="促销">促销</Radio>
-            <Radio label="hot">hot</Radio>
+        <FormItem label="标记" prop="name">
+          <RadioGroup v-model="formItem.data.sign">
+            <Radio label="1">促销</Radio>
+            <Radio label="2">hot</Radio>
           </RadioGroup>
         </FormItem>
         <FormItem label="SEO设置关键字" prop="name">
-          <Input v-model="formItem.seo" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="终端版本">
-          <Input v-model="formItem.terminal_version" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.h_pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.develop_cycle" placeholder="请输入" style="width: 300px;"></Input>
+          <Input
+            v-model="formItem.special.terminal_version"
+            placeholder="请输入"
+            style="width: 300px;"
+          ></Input>
+          <Input v-model="formItem.special.pic" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.special.h_pic" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.special.develop_cycle" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="商品主图" prop="avatar">
-          <div class="demo-upload-list" v-for="item in uploadList">
+        <FormItem label="商品主图" prop="name">
+          <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
             <template v-if="item.status === 'finished'">
               <img :src="item.url" />
               <div class="demo-upload-list-cover">
@@ -123,18 +128,23 @@
               <Icon type="ios-camera" size="20"></Icon>
             </div>
           </Upload>
+            <p>*建议图片尺寸 260*170，主图链接到演示</p>
         </FormItem>
-        <FormItem label="演示" prop="con">
-          <div id="wangeditor" v-model="formItem.goods_detail"></div>
+        <FormItem label="演示" prop="name">
+          <div id="wangeditor" v-model="formItem.data.goods_detail"></div>
         </FormItem>
         <FormItem label="功能描述">
-            <Input v-model="formItem.goods_des" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+          <Input
+            v-model="formItem.data.goods_des"
+            type="textarea"
+            :autosize="{minRows: 2,maxRows: 5}"
+          ></Input>
         </FormItem>
         <FormItem label="推荐商品">
-        <RadioGroup v-model="formItem.goods_recommend_status">
-                <Radio label="0">不推荐</Radio>
-                <Radio label="1">推荐</Radio>
-        </RadioGroup>
+          <RadioGroup v-model="formItem.data.goods_recommend_status">
+            <Radio label="1">推荐</Radio>
+            <Radio label="0">不推荐</Radio>
+          </RadioGroup>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -237,9 +247,7 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   data() {
     return {
-      UploadAction: "",
       UploadHeader: "",
-      uploadList: [],
       DefaultList: [],
       // 图片
       UploadAction: "",
@@ -340,7 +348,23 @@ export default {
         index: 0
       },
       formItem: {
-        img: ""
+        data: {
+          goods_images: "",
+          goods_number: "",
+          goods_sort: 0,
+          category_id: "",
+          seo: "",
+          goods_recommend_status: "1",
+          goods_detail: "",
+          goods_des: "",
+          sign: ""
+        },
+        special: {
+          terminal_version: "",
+          pic: "",
+          develop_cycle: "",
+          h_pic: ""
+        }
       },
       ruleValidate: {
         name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
@@ -368,11 +392,28 @@ export default {
       });
     },
     cancel() {
-      this.formItem = { 
-          img: "", id: 0 ,goods_number:"",goods_sort:0,category_id:"",seo:"",terminal_version:"",
-            pic:"",h_pic:"",develop_cycle:"",goods_recommend_status: 1,goods_detail: "",goods_des:""
-        };
-
+      this.formItem = {
+        // id: 0,
+        data: {
+          goods_images: "",
+          goods_number: "",
+          goods_sort: 0,
+          category_id: "",
+          seo: "",
+          goods_recommend_status: "1",
+          goods_detail: "",
+          goods_des: "",
+          sign: "",
+          
+        },
+        special: {
+          terminal_version: "",
+          pic: "",
+          develop_cycle: "",
+          h_pic: ""
+        }
+      };
+      // this.special = {terminal_version:"",pic:"",develop_cycle:"",h_pic:""}
       // 移除图片
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -428,9 +469,11 @@ export default {
           } else {
             target = "Goods/add";
           }
-          axios.post(target, self.formItem).then(function(response) {
+          // data.formItem = this.formItem;
+          // data.special = this.special;
+          axios.post(target, this.formItem).then(function(response) {
             self.modalSetting.loading = false;
-            console.log(response)
+            console.log(response);
             // if (response.data.code === 1) {
             //   self.$Message.success(response.data.msg);
             //   self.getList();
@@ -459,13 +502,13 @@ export default {
       const fileList = this.$refs.upload.fileList;
       console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.img = "";
+      this.formItem.data.goods_images = "";
     },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formItem.img = res.data.filePath;
+      this.formItem.data.goods_images = res.data.filePath;
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
@@ -496,7 +539,7 @@ export default {
       }
     };
     this.editor.customConfig.onchange = function(html) {
-      vm.formItem.con = html;
+      vm.formItem.data.goods_detail = html;
     };
     this.UploadAction = config.front_url + "file/qn_upload";
     this.uploadList = this.$refs.upload.fileList;
