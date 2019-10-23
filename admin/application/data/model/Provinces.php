@@ -52,4 +52,37 @@ class Provinces extends Model
         return $res;
 
     }
+
+    //城市特级
+    public function city_eidt($pid)
+    {
+        $model = new Provinces;
+        $arr =  $model->all(['pid'=>$pid])->toArray();
+        //pp($arr);die;
+        $map = ["zero","one","two","three"];
+
+        foreach ($arr as $key=>$val){
+            $arr[$key]['type_name'] = $map[$val['type']];//映射
+        }
+        $data = [];
+        foreach ($arr as $key=>$val){
+
+            $data[$val['type_name']][] = $val;
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * 删除城市
+     * @param $cid
+     * @return int
+     */
+    public function city_del($cid)
+    {
+        $data = User::destroy($cid);
+
+        return $data;
+    }
 }
