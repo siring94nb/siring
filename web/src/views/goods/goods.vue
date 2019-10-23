@@ -91,21 +91,34 @@
           <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 300px;"></Input>
           <p>*关键字中间用半角逗号,隔开</p>
         </FormItem>
-        <FormItem v-for="(item, index) in formDynamic.items"
-                :key="index"
-                :label="'Item ' + item.index"
-                :prop="'items.' + index + '.value'">
-          <Input v-model="formItem.special.terminal_version" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.special.pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.special.h_pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.special.develop_cycle" placeholder="请输入" style="width: 300px;"></Input>
+        <FormItem
+          v-for="(item, index) in formItem.special"
+          :key="index"
+          :label="'规格-' + index"
+          :prop="'items.' + index + '.value'"
+        >
+          <div style="display:flex;">
+            <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">终端版本</span>
+            </Input>
+            <Input v-model="item.price" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">价格（元）</span>
+            </Input>
+            <Input v-model="item.bottom_price" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">划线价</span>
+            </Input>
+            <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">开发周期</span>
+            </Input>
+            <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
+          </div>
         </FormItem>
-        <FormItem label="">
-          <Button type="primary">添加规格项</Button>
+        <FormItem label>
+          <Button type="primary" @click="handleAdd" icon="md-add">添加规格项</Button>
           <template>
             <Table border :columns="columns1" :data="formItem.special"></Table>
           </template>
-          </FormItem>
+        </FormItem>
         <FormItem label="商品主图" prop="name">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
             <template v-if="item.status === 'finished'">
@@ -341,19 +354,19 @@ export default {
       columns1: [
         {
           title: "终端版本",
-          key: "name"
+          key: "attr_title"
         },
         {
           title: "价格（元）",
-          key: "age"
+          key: "price"
         },
         {
           title: "划线价",
-          key: "address"
+          key: "bottom_price"
         },
         {
           title: "开发周期",
-          key: "address"
+          key: "cycle_time"
         }
       ],
       tableData: [],
@@ -388,14 +401,7 @@ export default {
           goods_des: "",
           sign: ""
         },
-        special: [
-          {
-            terminal_version: "",
-            pic: "",
-            develop_cycle: "",
-            h_pic: ""
-          }
-        ]
+        special: []
       },
       ruleValidate: {
         name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
@@ -408,6 +414,7 @@ export default {
   methods: {
     init() {
       let vm = this;
+
       this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {
@@ -438,13 +445,9 @@ export default {
           goods_des: "",
           sign: ""
         },
-        special: {
-          terminal_version: "",
-          pic: "",
-          develop_cycle: "",
-          h_pic: ""
-        }
+        special: []
       };
+
       // this.special = {terminal_version:"",pic:"",develop_cycle:"",h_pic:""}
       // 移除图片
       this.visible = false;
@@ -454,6 +457,18 @@ export default {
       this.iconList = [];
 
       this.modalSetting.show = false;
+    },
+    handleAdd() {
+      // this.index++;
+      this.formItem.special.push({
+        attr_title: "",
+        price: "",
+        bottom_price: "",
+        cycle_time: ""
+      });
+    },
+    tableRemove (index) {
+        this.formItem.special.splice(index, 1);
     },
     changePage(page) {
       this.tableShow.currentPage = page;
