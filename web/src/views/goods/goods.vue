@@ -45,15 +45,15 @@
                 <Icon type='md-add'></Icon>
                 <span>添加商品</span>
             </p>
-            <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="150">
+            <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
                 <FormItem label="商品名称" prop="name">
-                    <Input v-model="formItem.name" placeholder="请输入" ></Input>
+                    <Input v-model="formItem.name" placeholder="请输入" style="width: 300px;"></Input>
                 </FormItem>
                 <FormItem label="商品编号" prop="name">
-                    <Input v-model="formItem.name" placeholder="请输入" ></Input>
+                    <Input v-model="formItem.name" placeholder="请输入" style="width: 300px;"></Input>
                 </FormItem>
                 <FormItem label="归属分类" prop="fid">
-                    <Select v-model="formItem.fid" >
+                    <Select v-model="formItem.fid" style="width: 300px;">
                         <Option :value="0">顶级菜单</Option>
                         <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
                     </Select>
@@ -65,7 +65,7 @@
                     </RadioGroup>
                 </FormItem>
                 <FormItem label="SEO设置关键字" prop="name">
-                    <Input v-model="formItem.name" placeholder="请输入" ></Input>
+                    <Input v-model="formItem.name" placeholder="请输入" style="width: 300px;"></Input>
                 </FormItem>
                 <FormItem label="终端版本">
                     <Button></Button>
@@ -246,7 +246,7 @@
         created () {
             this.init();
         },
-        methods: {q
+        methods: {
             init () {
                 let vm = this;
                 this.columnsList.forEach(item => {
