@@ -19,12 +19,12 @@
               <!-- 城市列表 -->
               <div v-for="(item, idx) in items.list" :key="idx">
                 <div
-                  :class="{'area-item': true, 'area-on': chooseCity[index]==idx}"
-                  @click.self="operation(index, idx)"
+                  :class="{'area-item': true, 'area-on': chooseCity[index]==item.id}"
+                  @click.self="operation(index, item.id)"
                 >
                   {{ item.name }}
                   <div class="operating">
-                    <Dropdown trigger="click" @on-click="moveCity">
+                    <Dropdown trigger="click" @on-click="moveCity(index, item.id, $event)">
                       <span class="move">移动</span>
                       <DropdownMenu slot="list">
                         <DropdownItem name="0">特级城市</DropdownItem>
@@ -135,15 +135,29 @@ export default {
           }
         });
     },
-    operation(index, idx) {
-      if (this.chooseCity[index] == idx) {
+    operation(index, id) {
+      if (this.chooseCity[index] == id) {
         this.$set(this.chooseCity, index, null);
       } else {
-        this.$set(this.chooseCity, index, idx);
+        this.$set(this.chooseCity, index, id);
       }
     },
-    moveCity(name) {
-      console.log(name);
+    moveCity(preidx, id, name) {
+      axios.post('RoleJoin/city_move', {
+        cid: id,
+        type: name
+      }).then(res => {
+        let {data, code, msg} = res.data;
+        if(code !== 1){
+          this.$Message.error(msg);
+        }else{
+          this.$Message.success(msg);
+          this.getCity(this.chooseProv, this.provId);
+          this.$set(this.chooseCity, preidx, null);
+          this.$set(this.chooseCity, name, id);
+          console.log(this.chooseCity)
+        }
+      })
     },
     remove(id) {
       axios.post('RoleJoin/city_delete', {
