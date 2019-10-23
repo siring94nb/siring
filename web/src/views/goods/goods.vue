@@ -1,5 +1,5 @@
 <style lang="less" scoped>
- @import './goods.less';
+@import "./goods.less";
 </style>
 <template>
   <div>
@@ -62,18 +62,20 @@
         <Icon type="md-add"></Icon>
         <span>添加商品</span>
       </p>
-      <Form ref="myForm"  :model="formItem" :label-width="120">
+      <Form ref="myForm" :model="formItem" :label-width="120">
         <FormItem label="商品名称" prop="name">
           <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="商品编号" prop="name">
           <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 300px;"></Input>
+          <p>*模板化产品，规则按照MB+4位数字设定</p>
         </FormItem>
         <FormItem label="归属分类" prop="name">
           <Select v-model="formItem.data.category_id" style="width: 300px;">
             <Option :value="0">顶级菜单</Option>
             <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
           </Select>
+          <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
         </FormItem>
         <FormItem label="商品排序" prop="name">
           <InputNumber :min="1" v-model="formItem.data.goods_sort" style="width: 300px;"></InputNumber>
@@ -83,20 +85,57 @@
             <Radio label="1">促销</Radio>
             <Radio label="2">hot</Radio>
           </RadioGroup>
+          <p>*填写正整数，从大到小排序</p>
         </FormItem>
         <FormItem label="SEO设置关键字" prop="name">
           <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 300px;"></Input>
+          <p>*关键字中间用半角逗号,隔开</p>
         </FormItem>
         <FormItem label="终端版本">
-          <Input
-            v-model="formItem.special.terminal_version"
-            placeholder="请输入"
-            style="width: 300px;"
-          ></Input>
-          <Input v-model="formItem.special.pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.special.h_pic" placeholder="请输入" style="width: 300px;"></Input>
-          <Input v-model="formItem.special.develop_cycle" placeholder="请输入" style="width: 300px;"></Input>
+          <!-- <table class="table_s" border="1">
+            <tr>
+              <th>终端版本</th>
+              <th>价格（元）</th>
+              <th>划线价</th>
+              <th>开发周期</th>
+            </tr>
+            <tr>
+              <td>January</td>
+              <td>$100</td>
+              <td>$100</td>
+              <td>$100</td>
+            </tr>
+          </table>-->
+          <template>
+            <Table border :columns="columns1" :data="formItem.special"></Table>
+        </template>
+          <Button type="primary" @click="handleAdd" icon="md-add" style="margin-top:10px;">添加规格项</Button>
+
         </FormItem>
+
+        <FormItem
+          v-for="(item, index) in formItem.special"
+          :key="index"
+          :label="'规格-' + index"
+          :prop="'item'+ index"
+        >
+          <div style="display:flex;">
+            <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">终端版本</span>
+            </Input>
+            <Input v-model="item.price" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">价格（元）</span>
+            </Input>
+            <Input v-model="item.bottom_price" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">划线价</span>
+            </Input>
+            <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
+              <span slot="prepend">开发周期</span>
+            </Input>
+            <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
+          </div>
+        </FormItem>
+        
         <FormItem label="商品主图" prop="name">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
             <template v-if="item.status === 'finished'">
@@ -128,7 +167,7 @@
               <Icon type="ios-camera" size="20"></Icon>
             </div>
           </Upload>
-            <p>*建议图片尺寸 260*170，主图链接到演示</p>
+          <p>*建议图片尺寸 260*170，主图链接到演示</p>
         </FormItem>
         <FormItem label="演示" prop="name">
           <div id="wangeditor" v-model="formItem.data.goods_detail"></div>
@@ -329,6 +368,24 @@ export default {
           handle: ["comments", "copy", "edit", "delete"]
         }
       ],
+      columns1: [
+        {
+          title: "终端版本",
+          key: "attr_title"
+        },
+        {
+          title: "价格（元）",
+          key: "price"
+        },
+        {
+          title: "划线价",
+          key: "bottom_price"
+        },
+        {
+          title: "开发周期",
+          key: "cycle_time"
+        }
+      ],
       tableData: [],
       tableShow: {
         currentPage: 1,
@@ -361,12 +418,7 @@ export default {
           goods_des: "",
           sign: ""
         },
-        special: {
-          terminal_version: "",
-          pic: "",
-          develop_cycle: "",
-          h_pic: ""
-        }
+        special: []
       },
       ruleValidate: {
         name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
@@ -379,6 +431,8 @@ export default {
   methods: {
     init() {
       let vm = this;
+      console.log(vm.formItem.special);
+
       this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {
@@ -407,16 +461,11 @@ export default {
           goods_recommend_status: "1",
           goods_detail: "",
           goods_des: "",
-          sign: "",
-          
+          sign: ""
         },
-        special: {
-          terminal_version: "",
-          pic: "",
-          develop_cycle: "",
-          h_pic: ""
-        }
+        special: []
       };
+
       // this.special = {terminal_version:"",pic:"",develop_cycle:"",h_pic:""}
       // 移除图片
       this.visible = false;
@@ -426,6 +475,18 @@ export default {
       this.iconList = [];
 
       this.modalSetting.show = false;
+    },
+    handleAdd() {
+      // this.index++;
+      this.formItem.special.push({
+        attr_title: "",
+        price: "",
+        bottom_price: "",
+        cycle_time: ""
+      });
+    },
+    tableRemove (index) {
+        this.formItem.special.splice(index, 1);
     },
     changePage(page) {
       this.tableShow.currentPage = page;

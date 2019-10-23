@@ -602,6 +602,23 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/evaluate',        //评论
             ['method' => 'post']
         ],
+        'category_index' => [
+            'admin/Goods/category_index',
+            ['method' => 'get']
+        ],
+        'category_add' => [
+            'admin/Goods/category_add',
+            ['method' => 'post']
+        ],
+        'category_edit' => [
+            'admin/Goods/category_edit',
+            ['method' => 'post']
+        ],
+        'category_del' => [
+            'admin/Goods/category_del',
+            ['method' => 'post']
+        ],
+       
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
     Route::group('AppletManage', [
@@ -699,22 +716,7 @@ Route::group('admin', function () use ($afterBehavior) {
     ], ['after_behavior' => $afterBehavior]);
     //商品分类列表
     Route::group('Category', [
-        'index' => [
-            'admin/Category/index',
-            ['method' => 'get']
-        ],
-        'add' => [
-            'admin/Category/add',
-            ['method' => 'post']
-        ],
-        'edit' => [
-            'admin/Category/edit',
-            ['method' => 'post']
-        ],
-        'delete' => [
-            'admin/Category/delete',
-            ['method' => 'post']
-        ],
+        
     ], ['after_behavior' => $afterBehavior]);
 
 });
