@@ -82,7 +82,7 @@ class Provinces extends Model
      */
     public function city_del($cid)
     {
-        $data = User::destroy($cid);
+        $data = Provinces::destroy($cid);
 
         return $data;
     }
