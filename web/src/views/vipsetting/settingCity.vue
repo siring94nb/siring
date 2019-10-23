@@ -9,8 +9,7 @@
               <div class="prov-list" v-for="(item, index) in provList" :key="item.id">
                 <div
                   :class="{'area-item': true, 'area-on': choosedProv==index}"
-                  @click="getCity(index)"
-                  data-id="item.id"
+                  @click="getCity(index, item.id)"
                 >{{ item.name }}</div>
               </div>
             </div>
@@ -86,8 +85,13 @@ export default {
     this.getAllProv();
   },
   methods: {
-    getCity(index) {
+    getCity(index, id) {
       this.choosedProv = index;
+      axios.post("RoleJoin/city_save", {
+        pid: id
+      }).then(function(res) {
+        console.log(res)
+      });
     },
     operatSpec(index) {
       this.choosedSpec = index;
