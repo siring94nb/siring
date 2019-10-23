@@ -1,40 +1,34 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2018/12/5
- * Time: 19:46
- */
-
 namespace app\model;
 
 use traits\model\SoftDelete;
+
 /**
  * lilu
- * 商品模型
+ * 商品规格
  */
-class Goods extends  Base{
-
+class Goods extends Base
+{
     use SoftDelete;
-    protected $deleteTime = 'del_time';
-    protected $table = "goods";
+    protected $table = "good";
     protected $resultSetType = 'collection';
-    protected $createTime   = 'create_time';
-    protected $updateTime    = 'update_time';
-
+    protected $deleteTime = 'del_time';
     /**
-     * 关联表
-     * @return \think\model\relation\HasOne
+     * lilu
+     * 根据商品的id获取商品的规格信息
      */
-    public function grade(){
-        return $this -> hasOne( 'special' , 'goods_id' , 'id' );
+    public static function getSpecialInfo($goods_id){
+        $special=new Special();
+        $field="id,attr_title,price,bottom_price,cycle_time,goods_id";
+        $list = $special->field($field)-> where('goods_id',$goods_id )
+        -> paginate( 10 , false , array( 'page' => 1 ) ) -> toArray();
+        return $list;
     }
-
     /**
      * lilu
      * 获取商品列表
      */
-    public  function getGoodsList($parsm)
+    public  static function getGoodsList($parsm)
     {
         $where=[];
         if(array_key_exists('category_id',$parsm)){
@@ -55,16 +49,10 @@ class Goods extends  Base{
         }
         $field = '*';
         $order = 'id desc';
-
-        $goods = new Goods();
-        $list = $goods -> field( $field ) -> where( $where ) -> order( $order )
+        $goods = new Good();
+        $list = $goods->field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
-
-        return $list;
+        return $list['data'];
     }
-    
-
-
-
 
 }
