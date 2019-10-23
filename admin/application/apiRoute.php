@@ -45,6 +45,8 @@ Route::group('api', function () {
         Route::any('province_list','api/JoinRole/province_list'); //省份列表
         Route::any('city_list','api/JoinRole/city_list'); //城市列表
         Route::any('grade_list','api/JoinRole/grade_list'); //等级费用列表
+        Route::any('member_list','api/JoinRole/member_list'); //会员费用列表
+        Route::any('join_list','api/JoinRole/join_list'); //分包商费用列表
     });
 
     //角色加盟订单

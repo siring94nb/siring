@@ -34,39 +34,37 @@ class Goods extends Base{
             $where['goods_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Good::getGoodsList($where);
-        foreach($list as $k =>$v){
-            //获取当前id对应的规格
-            $list[$k]['special']=$listObj2=Special::getSpecialInfo($v['id']);
-        }
+        // foreach($list as $k =>$v){
+        //     //获取当前id对应的规格
+        //     $list[$k]['special']=$listObj2=Special::getSpecialInfo($v['id']);
+        // }
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,
-            'count' => $listObj['total']
         ]);
     }
-    /**
+    /** 
      * lilu
      * 商品管理-商品/软件开发定制--商品添加
      */
     public function add(){
         $groups = '';
         $postData = $this->request->post();
-        halt($postData);
         //判断商品的名字是否重复
-        $is_use=Good::get(['goods_name'=>$postData['goods_name']]);
+        $is_use=Good::get(['goods_name'=>$postData['data']['goods_name']]);
         if($is_use){
-            return $this->buildField(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
+            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
         $res = Good::create($postData['data']);
-        if ($res === false) {
-            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
-        } else {
-           //获取新增的goods_id($res->id)
-            foreach($postData['special'] as $k2 =>$v2){
-                $postData['special']['goods_id']=$res->id;
-                Special::create($postData['special'][$k2]);
-            }
-            return $this->buildSuccess([]);
+        if ($res) {
+                //获取新增的goods_id($res->id)
+                // foreach($postData['special'] as $k2 =>$v2){
+                //     $postData['special']['goods_id']=$res->id;
+                //     Special::create($postData['special'][$k2]);
+                // }
+                return $this->buildSuccess([]);
+            } else {
+                return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
         }
     }
     /**

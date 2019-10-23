@@ -59,25 +59,35 @@ class JoinRole extends Base
     }
 
     /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
+     * 等级会员费用
+     * @author fyk
+     * @param  \think\Request  $request
      * @return \think\Response
      */
-    public function read($id)
+    public function member_list()
     {
-        //
+        $grade = new \app\data\model\JoinRole();
+
+        $data = $grade->member_index();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
+     * 等级会员费用
+     * @author fyk
+     * @param  \think\Request  $request
      * @return \think\Response
      */
-    public function edit($id)
+    public function join_list()
     {
-        //
+        $request = Request::instance();
+        $param = $request->param();
+        $grade = new \app\data\model\JoinRole();
+
+        $data = $grade->join_index($param['policy']);
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**
