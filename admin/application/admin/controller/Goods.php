@@ -51,6 +51,7 @@ class Goods extends Base{
     public function add(){
         $groups = '';
         $postData = $this->request->post();
+        halt($postData);
         //判断商品的名字是否重复
         $is_use=Good::get(['goods_name'=>$postData['goods_name']]);
         if($is_use){
