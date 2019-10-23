@@ -70,7 +70,7 @@
           <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="归属分类" prop="name">
-          <Select v-model="formItem.data.goods_type" style="width: 300px;">
+          <Select v-model="formItem.data.category_id" style="width: 300px;">
             <Option :value="0">顶级菜单</Option>
             <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
           </Select>
@@ -351,7 +351,7 @@ export default {
         data: {
           goods_images: "",
           goods_number: "",
-          goods_type: "",
+          category_id: "",
           goods_name: "",
           goods_sort: 0,
           category_id: "",
@@ -400,7 +400,7 @@ export default {
           goods_images: "",
           goods_number: "",
           goods_name: "",
-          goods_type: "",
+          category_id: "",
           goods_sort: 0,
           category_id: "",
           seo: "",
