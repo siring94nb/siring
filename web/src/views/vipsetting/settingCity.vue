@@ -32,16 +32,20 @@
                         <DropdownItem name="3">三级城市</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
-                    <!-- <span class="del" @click="remove">删除</span> -->
                     <Poptip
                       confirm
                       title="您确定要删除这条内容吗？"
-                      @on-ok="remove"
+                      @on-ok="remove(item.id)"
                     >
                       <span class="del">删除</span>
                     </Poptip>
                   </div>
                 </div>
+              </div>
+              <div class="addcity-box">
+                <input type="text" v-model="addCity.spec">
+                <span class="cancel">取消</span>
+                <span class="save">保存</span>
               </div>
               <div class="add" @click="add">新增</div>
             </div>
@@ -69,7 +73,13 @@ export default {
       provList: [],
       specList: [{ name: "深圳", id: 1 }, { name: "广州", id: 2 }],
       choosedProv: null,
-      choosedSpec: null
+      choosedSpec: null,
+      addCity:{
+        spec: '',
+        primary: '',
+        secondary: '',
+        tertiary: ''
+      }
     };
   },
   created() {
@@ -85,10 +95,19 @@ export default {
     moveCity(name) {
       console.log(name);
     },
-    remove() {
-      console.log('删除成功')
+    remove(id) {
+      console.log(id)
     },
-    add() {},
+    add() {
+      // axios.get("RoleJoin/city_create").then(function(res) {
+      //   let { data, msg, code } = res.data;
+      //   if (code !== 1) {
+      //     this.$Message.error(msg);
+      //   } else {
+      //     _this.provList = data.list;
+      //   }
+      // });
+    },
     getAllProv() {
       var _this = this;
       axios.get("RoleJoin/city_index").then(function(res) {
@@ -109,6 +128,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  user-select: none;
   > div {
     flex-basis: 18%;
     min-width: 200px;
@@ -146,6 +166,26 @@ export default {
         .operating {
           display: block;
         }
+      }
+    }
+    .addcity-box{
+      display: none;
+      border: 1px solid #1abc9c;
+      height: 38px;
+      line-height: 38px;
+      margin-top: 10px;
+      input{
+        width: 100px;
+        border: 0;
+        outline: none;
+        padding-left: 10px;
+        background-color: transparent;
+      }
+      span{
+        float: right;
+        cursor: pointer;
+        color: #1abc9c;
+        margin-right: 5px;
       }
     }
     .add {
