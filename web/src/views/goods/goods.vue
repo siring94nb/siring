@@ -95,7 +95,7 @@
           v-for="(item, index) in formItem.special"
           :key="index"
           :label="'规格-' + index"
-          :prop="'items.' + index + '.value'"
+          :prop="'item'+ index"
         >
           <div style="display:flex;">
             <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
@@ -115,6 +115,20 @@
         </FormItem>
         <FormItem label>
           <Button type="primary" @click="handleAdd" icon="md-add">添加规格项</Button>
+          <!-- <table class="table_s" border="1">
+            <tr>
+              <th>终端版本</th>
+              <th>价格（元）</th>
+              <th>划线价</th>
+              <th>开发周期</th>
+            </tr>
+            <tr>
+              <td>January</td>
+              <td>$100</td>
+              <td>$100</td>
+              <td>$100</td>
+            </tr>
+          </table>-->
           <template>
             <Table border :columns="columns1" :data="formItem.special"></Table>
           </template>
@@ -414,6 +428,7 @@ export default {
   methods: {
     init() {
       let vm = this;
+      console.log(vm.formItem.special);
 
       this.columnsList.forEach(item => {
         if (item.handle) {
