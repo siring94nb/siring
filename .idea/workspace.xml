@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/extra/wechat.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/extra/wechat.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -95,11 +94,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/extra/wechat.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1183">
-              <caret line="64" column="2" selection-start-line="64" selection-start-column="2" selection-end-line="64" selection-end-column="2" />
+            <state relative-caret-position="432">
+              <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
             </state>
           </provider>
         </entry>
@@ -125,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
-              <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+            <state relative-caret-position="336">
+              <caret line="132" column="5" lean-forward="true" selection-start-line="132" selection-start-column="5" selection-end-line="132" selection-end-column="5" />
               <folding>
                 <element signature="e#38#67#0#PHP" expanded="true" />
               </folding>
@@ -187,10 +186,10 @@
         <option value="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" />
         <option value="$PROJECT_DIR$/web/build/config.js" />
         <option value="$PROJECT_DIR$/admin/application/config.php" />
-        <option value="$PROJECT_DIR$/admin/application/extra/wechat.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/WechatPay.php" />
         <option value="$PROJECT_DIR$/admin/application/apiRoute.php" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" />
+        <option value="$PROJECT_DIR$/admin/application/extra/wechat.php" />
       </list>
     </option>
   </component>
@@ -238,7 +237,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -297,6 +296,13 @@
               <item name="data" type="462c0819:PsiDirectoryNode" />
               <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="extra" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -342,12 +348,12 @@
       <workItem from="1571705617320" duration="16163000" />
       <workItem from="1571733869952" duration="9301000" />
       <workItem from="1571793116236" duration="6326000" />
-      <workItem from="1571810700198" duration="11748000" />
+      <workItem from="1571810700198" duration="12891000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59660000" />
+    <option name="totallyTimeSpent" value="60803000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -658,13 +664,6 @@
     <entry file="file://$PROJECT_DIR$/admin/application/extra/apiAdmin.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/extra/wechat.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1183">
-          <caret line="64" column="2" selection-start-line="64" selection-start-column="2" selection-end-line="64" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/WechatPay.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="432">
@@ -684,11 +683,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+        <state relative-caret-position="336">
+          <caret line="132" column="5" lean-forward="true" selection-start-line="132" selection-start-column="5" selection-end-line="132" selection-end-column="5" />
           <folding>
             <element signature="e#38#67#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/extra/wechat.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="18" column="42" lean-forward="true" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
         </state>
       </provider>
     </entry>
