@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/application/extra/wechat.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/config.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/config.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,14 +47,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="15" />
-          <entry key="php" value="1969" />
+          <entry key="php" value="1972" />
           <entry key="vue" value="163" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="15" />
-          <entry key="PHP" value="1969" />
+          <entry key="PHP" value="1972" />
           <entry key="Vue.js" value="163" />
         </counts>
       </usages-collector>
@@ -79,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/admin/application/config.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="232">
-              <caret line="187" column="33" lean-forward="true" selection-start-line="187" selection-start-column="33" selection-end-line="187" selection-end-column="33" />
+              <caret line="187" column="33" selection-start-line="187" selection-start-column="33" selection-end-line="187" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -119,20 +116,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="52" column="41" lean-forward="true" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
+            <state relative-caret-position="473">
+              <caret line="56" column="43" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="43" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
-              <caret line="131" column="27" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="27" />
+            <state relative-caret-position="552">
+              <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
               <folding>
                 <element signature="e#38#67#0#PHP" expanded="true" />
               </folding>
@@ -192,8 +189,8 @@
         <option value="$PROJECT_DIR$/admin/application/config.php" />
         <option value="$PROJECT_DIR$/admin/application/extra/wechat.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/WechatPay.php" />
-        <option value="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" />
         <option value="$PROJECT_DIR$/admin/application/apiRoute.php" />
+        <option value="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" />
       </list>
     </option>
   </component>
@@ -241,7 +238,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -345,12 +342,12 @@
       <workItem from="1571705617320" duration="16163000" />
       <workItem from="1571733869952" duration="9301000" />
       <workItem from="1571793116236" duration="6326000" />
-      <workItem from="1571810700198" duration="11506000" />
+      <workItem from="1571810700198" duration="11748000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59418000" />
+    <option name="totallyTimeSpent" value="59660000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -626,7 +623,7 @@
     <entry file="file://$PROJECT_DIR$/admin/application/config.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="232">
-          <caret line="187" column="33" lean-forward="true" selection-start-line="187" selection-start-column="33" selection-end-line="187" selection-end-column="33" />
+          <caret line="187" column="33" selection-start-line="187" selection-start-column="33" selection-end-line="187" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -678,20 +675,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
+    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="131" column="27" selection-start-line="131" selection-start-column="20" selection-end-line="131" selection-end-column="27" />
-          <folding>
-            <element signature="e#38#67#0#PHP" expanded="true" />
-          </folding>
+        <state relative-caret-position="473">
+          <caret line="56" column="43" selection-start-line="56" selection-start-column="34" selection-end-line="56" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="52" column="41" lean-forward="true" selection-start-line="52" selection-start-column="41" selection-end-line="52" selection-end-column="41" />
+        <state relative-caret-position="552">
+          <caret line="141" lean-forward="true" selection-start-line="141" selection-end-line="141" />
+          <folding>
+            <element signature="e#38#67#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -138,7 +138,7 @@ class JoinOrder extends Controller
 
         $pay = 1;//先测试1分钱
         if(!$order)returnJson(0,'当前订单不存在');
-        if($order['status'] != 2)returnJson(0,'当前订单状态异常');
+//        if($order['status'] = 2)returnJson(0,'当前订单已支付');
 
         $wechatpay = new WechatPay();
         $res = $wechatpay->pay($order['no'],$pay,$url);
