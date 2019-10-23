@@ -113,4 +113,9 @@ class JoinRole extends Model
 
         return $res;
     }
+
+    public function grade_index()
+    {
+        return JoinRole::where('type',2)->select() ? JoinRole::where('type',2)->field('sort,title,money')->select() : returnJson(0,'数据不存在');
+    }
 }

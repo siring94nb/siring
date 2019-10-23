@@ -35,31 +35,31 @@
         <span>{{formItem.id ? '编辑' : '新增'}}用户</span>
       </p>
       <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
-        <FormItem label="城市等级" prop="realname">
-          <Input v-model="formItem.realname" placeholder="请输入会员等级" style="width: 300px;"></Input>
+        <FormItem label="城市等级" prop="title">
+          <Input v-model="formItem.title" placeholder="请输入城市等级" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="费用标准（元/年）">
-          <Input v-model="formItem.phone" placeholder="请输入费用标准" style="width: 300px;"></Input>
+        <FormItem label="费用标准（元/年）" prop="money">
+          <Input v-model="formItem.money" placeholder="请输入费用标准" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="等级政策描述">
+        <FormItem label="等级政策描述" prop="policy">
           <Input
-            v-model="formItem.textarea"
+            v-model="formItem.policy"
             type="textarea"
             :autosize="{minRows: 2,maxRows: 5}"
             placeholder="请输入等级政策描述"
           ></Input>
         </FormItem>
-        <FormItem label="收益预测">
-          <Input v-model="formItem.phone" placeholder="请输入收益预测" style="width: 300px;"></Input>
+        <FormItem label="收益预测" prop="forecast">
+          <Input v-model="formItem.forecast" placeholder="请输入收益预测" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="保底佣金比例（0~99%）">
-          <Input v-model="formItem.phone" placeholder="请输入保底佣金比例" style="width: 300px;"></Input>
+        <FormItem label="保底佣金比例（0~99%）" prop="bottom_commission">
+          <InputNumber :min="1" v-model="formItem.bottom_commission"></InputNumber>
         </FormItem>
-        <FormItem label="达标佣金比例">
-          <Input v-model="formItem.phone" placeholder="请输入达标佣金比例" style="width: 300px;"></Input>
+        <FormItem label="达标佣金比例" prop="standard_commission">
+          <InputNumber :min="1" v-model="formItem.standard_commission"></InputNumber>
         </FormItem>
-        <FormItem label="达标要求（个）">
-          <Input v-model="formItem.phone" placeholder="请输入达标要求" style="width: 300px;"></Input>
+        <FormItem label="达标要求（个）" prop="standard_num">
+          <InputNumber :min="1" v-model="formItem.standard_num"></InputNumber>
           <div>*发展等级会员（除普通会员外）数</div>
         </FormItem>
       </Form>
@@ -87,11 +87,14 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
-          vm.formItem.realname = currentRow.realname;
+          vm.formItem.title = currentRow.title;
           vm.formItem.img = currentRow.img;
-          vm.formItem.remark = currentRow.remark;
-          vm.formItem.type = currentRow.type;
-          vm.formItem.phone = currentRow.phone;
+          vm.formItem.policy = currentRow.policy;
+          vm.formItem.money = currentRow.money;
+          vm.formItem.forecast = currentRow.forecast;
+          vm.formItem.bottom_commission = currentRow.bottom_commission;
+          vm.formItem.standard_commission = currentRow.standard_commission;
+          vm.formItem.standard_num = currentRow.standard_num;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -120,7 +123,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("UserManage/Delete", {
+            .post("RoleJoin/partner_delete", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -157,13 +160,13 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   name: "UserManage_list",
   data() {
-    const validatePhone = (rule, value, callback) => {
-      var reg = /^1\d{10}$/;
-      if (!reg.test(value)) {
-        callback(new Error("手机号码格式不正确"));
-      }
-      callback();
-    };
+    // const validatePhone = (rule, value, callback) => {
+    //   var reg = /^1\d{10}$/;
+    //   if (!reg.test(value)) {
+    //     callback(new Error("手机号码格式不正确"));
+    //   }
+    //   callback();
+    // };
     return {
       UploadAction: "",
       UploadHeader: "",
@@ -174,22 +177,22 @@ export default {
         {
           title: "等级名称",
           align: "center",
-          key: "invitation"
+          key: "title"
         },
         {
           title: "费用标准",
           align: "center",
-          key: "other_code"
+          key: "money"
         },
         {
           title: "等级政策",
           align: "center",
-          key: "other_code"
+          key: "policy"
         },
         {
           title: "年收益预测",
           align: "center",
-          key: "status",
+          key: "forecast",
         },
         {
           title: "操作",
@@ -206,7 +209,9 @@ export default {
         listCount: 0
       },
       formItem: {
-        img: ""
+        bottom_commission : 1,
+        standard_commission : 1,
+        standard_num : 1,
       },
       searchConf: {
         title: "",
@@ -221,13 +226,13 @@ export default {
         index: 0
       },
       ruleValidate: {
-        realname: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
+          title: [
+          { required: true, message: "城市名称不能为空", trigger: "blur" }
         ],
-        phone: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          { validator: validatePhone, trigger: "blur" }
-        ]
+        // phone: [
+        //   { required: true, message: "手机号码不能为空", trigger: "blur" },
+        //   { validator: validatePhone, trigger: "blur" }
+        // ]
       },
       // 图片
       UploadAction: "",
@@ -270,9 +275,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id) {
-            target = "UserManage/Edit";
+            target = "RoleJoin/partner_save";
           } else {
-            target = "UserManage/Add";
+            target = "RoleJoin/partner_create";
           }
           axios.post(target, self.formItem).then(function(response) {
             self.modalSetting.loading = false;
@@ -311,7 +316,7 @@ export default {
     getList() {
       let vm = this;
       axios
-        .get("UserManage/index", {
+        .get("RoleJoin/partner_index", {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,

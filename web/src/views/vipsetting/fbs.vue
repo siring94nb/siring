@@ -32,35 +32,25 @@
     >
       <p slot="header" style="color:#2d8cf0;">
         <Icon type="md-information-circle"></Icon>
-        <span>{{formItem.id ? '编辑' : '新增'}}用户</span>
+        <span>{{formItem.id ? '编辑' : '新增'}}分包商等级</span>
       </p>
       <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
-        <FormItem label="城市等级" prop="realname">
-          <Input v-model="formItem.realname" placeholder="请输入会员等级" style="width: 300px;"></Input>
+        <FormItem label="专业技能" prop="title">
+          <Input v-model="formItem.title" placeholder="请输入专业技能" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="费用标准（元/年）">
-          <Input v-model="formItem.phone" placeholder="请输入费用标准" style="width: 300px;"></Input>
+        <FormItem label="押金标准（元/年）" prop="money">
+          <Input v-model="formItem.money" placeholder="请输入押金标准" style="width: 300px;"></Input>
         </FormItem>
-        <FormItem label="等级政策描述">
+        <FormItem label="开发语言" prop="policy">
           <Input
-            v-model="formItem.textarea"
+            v-model="formItem.policy"
             type="textarea"
             :autosize="{minRows: 2,maxRows: 5}"
-            placeholder="请输入等级政策描述"
+            placeholder="请输入开发语言"
           ></Input>
         </FormItem>
-        <FormItem label="收益预测">
-          <Input v-model="formItem.phone" placeholder="请输入收益预测" style="width: 300px;"></Input>
-        </FormItem>
-        <FormItem label="保底佣金比例（0~99%）">
-          <Input v-model="formItem.phone" placeholder="请输入保底佣金比例" style="width: 300px;"></Input>
-        </FormItem>
-        <FormItem label="达标佣金比例">
-          <Input v-model="formItem.phone" placeholder="请输入达标佣金比例" style="width: 300px;"></Input>
-        </FormItem>
-        <FormItem label="达标要求（个）">
-          <Input v-model="formItem.phone" placeholder="请输入达标要求" style="width: 300px;"></Input>
-          <div>*发展等级会员（除普通会员外）数</div>
+        <FormItem label="收益预测" prop="forecast">
+          <Input v-model="formItem.forecast" placeholder="请输入收益预测" style="width: 300px;"></Input>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -87,11 +77,9 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
-          vm.formItem.realname = currentRow.realname;
-          vm.formItem.img = currentRow.img;
-          vm.formItem.remark = currentRow.remark;
-          vm.formItem.type = currentRow.type;
-          vm.formItem.phone = currentRow.phone;
+          vm.formItem.title = currentRow.title;
+          vm.formItem.money = currentRow.money;
+          vm.formItem.policy = currentRow.policy;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -120,7 +108,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("UserManage/Delete", {
+            .post("RoleJoin/subcontractor_delete", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -174,22 +162,22 @@ export default {
         {
           title: "专业技能",
           align: "center",
-          key: "invitation"
+          key: "title"
         },
         {
           title: "押金标准",
           align: "center",
-          key: "other_code"
+          key: "money"
         },
         {
           title: "开发语言半角“,”隔开",
           align: "center",
-          key: "other_code"
+          key: "policy"
         },
         {
-          title: "年收益预测",
+          title: "年收益预测(元)",
           align: "center",
-          key: "status",
+          key: "forecast",
         },
         {
           title: "操作",
@@ -206,7 +194,8 @@ export default {
         listCount: 0
       },
       formItem: {
-        img: ""
+          money: "",
+
       },
       searchConf: {
         title: "",
@@ -270,9 +259,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id) {
-            target = "UserManage/Edit";
+            target = "RoleJoin/subcontractor_save";
           } else {
-            target = "UserManage/Add";
+            target = "RoleJoin/subcontractor_create";
           }
           axios.post(target, self.formItem).then(function(response) {
             self.modalSetting.loading = false;
@@ -311,7 +300,7 @@ export default {
     getList() {
       let vm = this;
       axios
-        .get("UserManage/index", {
+        .get("RoleJoin/subcontractor_index", {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,
