@@ -85,4 +85,27 @@ class Provinces extends Model
 
         return $data;
     }
+
+    /**
+     * 移动城市
+     *
+     */
+    public function move($param)
+    {
+        $validate = new Validate([
+            ['cid', 'require', '当前城市id不能为空'],
+            ['type', 'require', '移入城市级别不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        //print_r($param);die;
+        $data   = new Provinces;
+
+        $res = $data->save([
+            'type'  => $param['type'],
+        ],['id' => $param['cid']]);
+
+        return $res;
+    }
 }
