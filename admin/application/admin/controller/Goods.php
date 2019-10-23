@@ -14,6 +14,8 @@ use app\util\ReturnCode;
 use app\util\Tools;
 use app\model\Goods as Good;
 use app\model\Special;
+use think\Validate;
+
 
 class Goods extends Base{
 
@@ -125,6 +127,108 @@ class Goods extends Base{
      */
     public function business_meal(){
 
+    }
+    /**
+     * lilu
+     * 商品管理-商品/软件开发定制--商品分类列表
+     */
+    public function category_index(){
+        $request = Request::instance();
+        $param = $request->param();
+        if(empty($param['page'])){
+            $param['page'] = 1;
+        }
+        if(empty($param['size'])){
+            $param['size'] = 10;
+        }
+
+        $order = 'id desc';
+
+        $list = Db::table('category')->order($order)->page($param['page'],$param['size'])->select();
+
+        return $this->buildSuccess([
+            'list'=>$list,
+        ]);
+    }
+    /**
+     * lilu
+     * 商品管理-商品/软件开发定制--商品分类添加
+     */
+    public function category_add(){
+        $request = Request::instance();
+        $param = $request->param();
+
+        $rules = [
+            'category_name'=>'require',
+        ];
+        $message = [
+            'category_name.require'=>'分类名称不能为空',
+        ];
+        $validate = new Validate($rules,$message);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());
+        }
+        $result = Db::table('category')->insert($param);
+        if($result){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+    /**
+     * lilu
+     * 商品管理-商品/软件开发定制--商品分类编辑
+     */
+    public function category_edit(){
+        $request = Request::instance();
+        $param = $request->param();
+
+        $rules = [
+            'id'=>'require',
+            'category_name'=>'require',
+        ];
+        $message = [
+            'id.require'=>'缺少必要参数',
+            'category_name.require'=>'分类名称不能为空',
+        ];
+        $validate = new Validate($rules,$message);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());
+        }
+        $result = Db::table('category')->update($param);
+        if($result !== false){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+    /**
+     * lilu
+     * 商品管理-商品/软件开发定制--商品分类删除
+     */
+    public function category_del(){
+        $request = Request::instance();
+        $param = $request->param();
+        $rules = [
+            'id'=>'require',
+        ];
+        $message = [
+            'id.require'=>'缺少必要参数',
+        ];
+        $validate = new Validate($rules,$message);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());
+        }
+        $info = Db::table('banner')->find($param['id']);
+        if(empty($info)){
+            return $this->buildFailed(0,'数据不存在');
+        }
+        $result = Db::table('banner')->where('id',$param['id'])->delete();
+        if($result){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
     }
 
 
