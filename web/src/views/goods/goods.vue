@@ -61,7 +61,7 @@
         <Icon type="md-add"></Icon>
         <span>添加商品</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
+      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="120">
         <FormItem label="商品名称" prop="name">
           <Input v-model="formItem.name" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
@@ -73,6 +73,9 @@
             <Option :value="0">顶级菜单</Option>
             <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
           </Select>
+        </FormItem>
+        <FormItem label="商品排序" prop="name">
+          <Input v-model="formItem.goods_sort" type="number" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="标记" prop="fid">
           <RadioGroup v-model="formItem.radio">
@@ -121,8 +124,17 @@
             </div>
           </Upload>
         </FormItem>
-        <FormItem label="内容" prop="con">
-          <div id="wangeditor" v-model="formItem.con"></div>
+        <FormItem label="演示" prop="con">
+          <div id="wangeditor" v-model="formItem.goods_detail"></div>
+        </FormItem>
+        <FormItem label="功能描述">
+            <Input v-model="formItem.goods_des" type="textarea" :autosize="{minRows: 2,maxRows: 5}"></Input>
+        </FormItem>
+        <FormItem label="推荐商品">
+        <RadioGroup v-model="formItem.goods_recommend_status">
+                <Radio label="0">不推荐</Radio>
+                <Radio label="1">推荐</Radio>
+        </RadioGroup>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -357,8 +369,8 @@ export default {
     },
     cancel() {
       this.formItem = { 
-          title: "", img: "", url: "", id: 0 ,goods_num:"",goods_type:"",seo:"",terminal_version:"",
-            pic:"",h_pic:"",develop_cycle:""
+          img: "", id: 0 ,goods_number:"",goods_sort:0,category_id:"",seo:"",terminal_version:"",
+            pic:"",h_pic:"",develop_cycle:"",goods_recommend_status: 1,goods_detail: "",goods_des:""
         };
 
       // 移除图片
@@ -412,19 +424,20 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id) {
-            target = "Banner/Edit";
+            target = "Goods/add";
           } else {
-            target = "Banner/Add";
+            target = "Goods/add";
           }
           axios.post(target, self.formItem).then(function(response) {
             self.modalSetting.loading = false;
-            if (response.data.code === 1) {
-              self.$Message.success(response.data.msg);
-              self.getList();
-              self.cancel();
-            } else {
-              self.$Message.error(response.data.msg);
-            }
+            console.log(response)
+            // if (response.data.code === 1) {
+            //   self.$Message.success(response.data.msg);
+            //   self.getList();
+            //   self.cancel();
+            // } else {
+            //   self.$Message.error(response.data.msg);
+            // }
           });
         }
       });
