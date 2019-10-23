@@ -531,12 +531,16 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/RoleJoin/city_create',
             ['method' => 'post']
         ],
-        'city_save' => [
-            'admin/RoleJoin/city_save',
+        'city_screen' => [
+            'admin/RoleJoin/city_screen',
             ['method' => 'post']
         ],
         'city_delete' => [
             'admin/RoleJoin/city_delete',
+            ['method' => 'post']
+        ],
+        'city_move' => [
+            'admin/RoleJoin/city_move',
             ['method' => 'post']
         ],
     ] , ['after_behavior' => $afterBehavior] );

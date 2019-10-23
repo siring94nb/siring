@@ -441,7 +441,7 @@ class RoleJoin extends Base
 
         $data = $city->city_add($param);
 
-        return $data ? returnJson(1,'成功') : returnJson(0,'失败');
+        return $data  ?   $this -> buildSuccess( [] , '新增成功' ) :  $this -> buildFailed( 1001 , '新增失败' );
     }
 
     /**
@@ -449,7 +449,7 @@ class RoleJoin extends Base
      * @author fyk
      * @return \think\Response
      */
-    public function city_save()
+    public function city_screen()
     {
         $request = Request::instance();
         $param = $request->param();
@@ -458,11 +458,14 @@ class RoleJoin extends Base
 
         $data = $city->city_eidt($param['pid']);
 
-        return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+        return $this -> buildSuccess( array(
+            'list' => $data,
+            // 'count' => $data['total'],
+        ) );
     }
 
     /**
-     * 等级城市列表筛选
+     * 等级城市列表删除
      * @author fyk
      * @return \think\Response
      */
@@ -475,6 +478,23 @@ class RoleJoin extends Base
 
         $data = $city->city_del($param['cid']);
 
-        return $data ? returnJson(1,'成功') : returnJson(0,'失败');
+        return $data  ?   $this -> buildSuccess( [] , '删除成功' ) :  $this -> buildFailed( 1001 , '删除失败' );
+    }
+
+    /**
+     * 等级城市列表移动
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_move()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $city = new Provinces();
+
+        $data = $city->move($param);
+
+        return $data  !== false ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1001 , '失败' );
     }
 }
