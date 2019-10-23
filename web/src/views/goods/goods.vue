@@ -91,6 +91,28 @@
           <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 300px;"></Input>
           <p>*关键字中间用半角逗号,隔开</p>
         </FormItem>
+        <FormItem label="终端版本">
+          <!-- <table class="table_s" border="1">
+            <tr>
+              <th>终端版本</th>
+              <th>价格（元）</th>
+              <th>划线价</th>
+              <th>开发周期</th>
+            </tr>
+            <tr>
+              <td>January</td>
+              <td>$100</td>
+              <td>$100</td>
+              <td>$100</td>
+            </tr>
+          </table>-->
+          <template>
+            <Table border :columns="columns1" :data="formItem.special"></Table>
+        </template>
+          <Button type="primary" @click="handleAdd" icon="md-add" style="margin-top:10px;">添加规格项</Button>
+
+        </FormItem>
+
         <FormItem
           v-for="(item, index) in formItem.special"
           :key="index"
@@ -113,26 +135,7 @@
             <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
           </div>
         </FormItem>
-        <FormItem label>
-          <Button type="primary" @click="handleAdd" icon="md-add">添加规格项</Button>
-          <!-- <table class="table_s" border="1">
-            <tr>
-              <th>终端版本</th>
-              <th>价格（元）</th>
-              <th>划线价</th>
-              <th>开发周期</th>
-            </tr>
-            <tr>
-              <td>January</td>
-              <td>$100</td>
-              <td>$100</td>
-              <td>$100</td>
-            </tr>
-          </table>-->
-          <template>
-            <Table border :columns="columns1" :data="formItem.special"></Table>
-          </template>
-        </FormItem>
+        
         <FormItem label="商品主图" prop="name">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
             <template v-if="item.status === 'finished'">
