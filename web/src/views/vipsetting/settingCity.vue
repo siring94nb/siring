@@ -8,22 +8,23 @@
               <h4 class="title">省份</h4>
               <div class="prov-list" v-for="(item, index) in provList" :key="item.id">
                 <div
-                  :class="{'area-item': true, 'area-on': choosedProv==index}"
-                  @click="getCity(index)"
-                  data-id="item.id"
+                  :class="{'area-item': true, 'area-on': chooseProv==index}"
+                  @click="getCity(index, item.id)"
                 >{{ item.name }}</div>
               </div>
             </div>
-            <div class="spec">
-              <h4 class="title">特级城市</h4>
-              <div class="spec-list" v-for="(item, index) in specList" :key="item.id">
+
+            <div v-for="(items, index) in cityList">
+              <h4 class="title">{{ items.title }}</h4>
+              <!-- 城市列表 -->
+              <div v-for="(item, idx) in items.list" :key="idx">
                 <div
-                  :class="{'area-item': true, 'area-on': choosedSpec==index}"
-                  @click="operatSpec(index)"
+                  :class="{'area-item': true, 'area-on': chooseCity[index]==item.id}"
+                  @click.self="operation(index, item.id)"
                 >
                   {{ item.name }}
                   <div class="operating">
-                    <Dropdown trigger="click" @on-click="moveCity">
+                    <Dropdown trigger="click" @on-click="moveCity(index, item.id, $event)">
                       <span class="move">移动</span>
                       <DropdownMenu slot="list">
                         <DropdownItem name="0">特级城市</DropdownItem>
@@ -34,6 +35,7 @@
                     </Dropdown>
                     <Poptip
                       confirm
+                      placement="bottom"
                       title="您确定要删除这条内容吗？"
                       @on-ok="remove(item.id)"
                     >
@@ -42,21 +44,12 @@
                   </div>
                 </div>
               </div>
-              <div class="addcity-box">
-                <input type="text" v-model="addCity.spec">
-                <span class="cancel">取消</span>
-                <span class="save">保存</span>
+              <div :class="{'addcity-box': true, 'show': addCity[index].show}">
+                <input type="text" v-model="addCity[index].name" />
+                <span class="cancel" @click="cancel(index)">取消</span>
+                <span class="save" @click="save(index)">保存</span>
               </div>
-              <div class="add" @click="add">新增</div>
-            </div>
-            <div class="primary">
-              <h4 class="title">一级城市</h4>
-            </div>
-            <div class="secondary">
-              <h4 class="title">二级城市</h4>
-            </div>
-            <div class="tertiary">
-              <h4 class="title">三级县市</h4>
+              <div class="add" @click="showAddBox(index)">新增</div>
             </div>
           </div>
         </Card>
@@ -71,51 +64,146 @@ export default {
   data() {
     return {
       provList: [],
-      specList: [{ name: "深圳", id: 1 }, { name: "广州", id: 2 }],
-      choosedProv: null,
-      choosedSpec: null,
-      addCity:{
-        spec: '',
-        primary: '',
-        secondary: '',
-        tertiary: ''
-      }
+      provId: null,
+      cityList: [
+        {
+          title: "特级城市",
+          list: []
+        },
+        {
+          title: "一级城市",
+          list: []
+        },
+        {
+          title: "二级城市",
+          list: []
+        },
+        {
+          title: "三级县市",
+          list: []
+        }
+      ],
+      chooseProv: null,
+      chooseCity: [],
+      addCity: [
+        {
+          show: false,
+          name: ""
+        },
+        {
+          show: false,
+          name: ""
+        },
+        {
+          show: false,
+          name: ""
+        },
+        {
+          show: false,
+          name: ""
+        }
+      ]
     };
   },
   created() {
-    this.getAllProv();
+    this.init();
   },
   methods: {
-    getCity(index) {
-      this.choosedProv = index;
+    init() {
+      this.getAllProv();
+      this.getCity(0, 2);
     },
-    operatSpec(index) {
-      this.choosedSpec = index;
+    getCity(index, id) {
+      this.chooseProv = index;
+      this.provId = id;
+      axios
+        .post("RoleJoin/city_screen", {
+          pid: id
+        })
+        .then(res => {
+          console.log(res.data);
+          let { data, msg, code } = res.data;
+          if (code !== 1) {
+            this.$Message.error(msg);
+          } else {
+            if (data.list) {
+              this.cityList[0].list = data.list.zero;
+              this.cityList[1].list = data.list.one;
+              this.cityList[2].list = data.list.two;
+              this.cityList[3].list = data.list.three;
+            }
+          }
+        });
     },
-    moveCity(name) {
-      console.log(name);
+    operation(index, id) {
+      if (this.chooseCity[index] == id) {
+        this.$set(this.chooseCity, index, null);
+      } else {
+        this.$set(this.chooseCity, index, id);
+      }
+    },
+    moveCity(preidx, id, name) {
+      axios.post('RoleJoin/city_move', {
+        cid: id,
+        type: name
+      }).then(res => {
+        let {data, code, msg} = res.data;
+        if(code !== 1){
+          this.$Message.error(msg);
+        }else{
+          this.$Message.success(msg);
+          this.getCity(this.chooseProv, this.provId);
+          this.$set(this.chooseCity, preidx, null);
+          this.$set(this.chooseCity, name, id);
+          console.log(this.chooseCity)
+        }
+      })
     },
     remove(id) {
-      console.log(id)
+      axios.post('RoleJoin/city_delete', {
+        cid: id
+      }).then(res => {
+        let {data, code, msg} = res.data;
+        console.log(data)
+        if(code !== 1){
+          this.$Message.error(msg);
+        }else{
+          this.$Message.success(msg);
+          this.getCity(this.chooseProv, this.provId);
+        }
+      })
     },
-    add() {
-      // axios.get("RoleJoin/city_create").then(function(res) {
-      //   let { data, msg, code } = res.data;
-      //   if (code !== 1) {
-      //     this.$Message.error(msg);
-      //   } else {
-      //     _this.provList = data.list;
-      //   }
-      // });
+    showAddBox(index) {
+      this.addCity[index].show = true;
+    },
+    cancel(index) {
+      this.addCity[index].show = false;
+    },
+    save(index) {
+      axios
+        .post("RoleJoin/city_create", {
+          pid: this.provId,
+          name: this.addCity[index].name,
+          type: index
+        })
+        .then(res => {
+          let { data, msg, code } = res.data;
+          if (code !== 1) {
+            this.$Message.error(msg);
+          } else {
+            this.$Message.success(msg);
+            this.getCity(this.chooseProv, this.provId);
+            this.addCity[index].name = "";
+          }
+        });
     },
     getAllProv() {
-      var _this = this;
-      axios.get("RoleJoin/city_index").then(function(res) {
+      axios.get("RoleJoin/city_index").then(res => {
         let { data, msg, code } = res.data;
         if (code !== 1) {
           this.$Message.error(msg);
         } else {
-          _this.provList = data.list;
+          this.provList = data.list;
         }
       });
     }
@@ -153,7 +241,7 @@ export default {
       .operating {
         display: none;
         float: right;
-        span{
+        span {
           color: #1abc9c;
         }
         .del {
@@ -168,20 +256,23 @@ export default {
         }
       }
     }
-    .addcity-box{
+    .addcity-box {
       display: none;
       border: 1px solid #1abc9c;
       height: 38px;
       line-height: 38px;
       margin-top: 10px;
-      input{
+      &.show {
+        display: block;
+      }
+      input {
         width: 100px;
         border: 0;
         outline: none;
         padding-left: 10px;
         background-color: transparent;
       }
-      span{
+      span {
         float: right;
         cursor: pointer;
         color: #1abc9c;

@@ -64,6 +64,7 @@ class Provinces extends Model
         foreach ($arr as $key=>$val){
             $arr[$key]['type_name'] = $map[$val['type']];//映射
         }
+
         $data = [];
         foreach ($arr as $key=>$val){
 
@@ -81,7 +82,7 @@ class Provinces extends Model
      */
     public function city_del($cid)
     {
-        $data = User::destroy($cid);
+        $data = Provinces::destroy($cid);
 
         return $data;
     }
