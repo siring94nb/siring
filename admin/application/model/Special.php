@@ -2,17 +2,23 @@
 namespace app\model;
 
 use traits\model\SoftDelete;
+use app\model\Good;
 
 /**
  * lilu
  * 商品规格
  */
-class Goods extends Base
+class Special extends Base
 {
     use SoftDelete;
-    protected $table = "good";
+    protected $table = "special";
     protected $resultSetType = 'collection';
     protected $deleteTime = 'del_time';
+    protected $createTime   = 'create_time';
+    protected $updateTime    = 'update_time';
+
+
+
     /**
      * lilu
      * 根据商品的id获取商品的规格信息
@@ -25,8 +31,7 @@ class Goods extends Base
         return $list;
     }
     /**
-     * lilu
-     * 获取商品列表
+     * test
      */
     public  static function getGoodsList($parsm)
     {
@@ -52,7 +57,7 @@ class Goods extends Base
         $goods = new Good();
         $list = $goods->field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
-        return $list['data'];
+        return $list;
     }
 
 }
