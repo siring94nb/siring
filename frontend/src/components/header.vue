@@ -63,9 +63,20 @@
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/">
-            <i class="icon iconfont icon-APIwangguan"></i>
-            <span>API赋能</span>
-            <p class="en-name">API Enabling</p>
+            <el-dropdown @command="handleCommand" placement="bottom">
+              <span class="el-dropdown-link">
+                <i class="icon iconfont icon-APIwangguan"></i>
+                <span>API赋能</span>
+                <p class="en-name">API Enabling</p>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="a">SaaS平台</el-dropdown-item>
+                <el-dropdown-item command="b">支付平台</el-dropdown-item>
+                <el-dropdown-item command="c">
+                  <a href="http://117.48.217.182:9001/#/login" target="_blank" style="color: #333333;">短信平台</a>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/">
@@ -249,6 +260,9 @@ export default {
     };
   },
   methods: {
+    handleCommand(command) {
+      this.$message("click on item " + command);
+    },
     handleClose(done) {
       this.resetFie();
       this.dialogVisible = !this.dialogVisible;
@@ -289,12 +303,17 @@ export default {
               type: "error"
             });
           } else {
-            switch(this.isRegister){
-              case 1: this.onRegister(); break;
-              case 2: this.onLogin(); break;
-              case 3: this.onForget(); break;
+            switch (this.isRegister) {
+              case 1:
+                this.onRegister();
+                break;
+              case 2:
+                this.onLogin();
+                break;
+              case 3:
+                this.onForget();
+                break;
             }
-            
           }
         } else {
           return false;
@@ -325,21 +344,34 @@ export default {
       Login(params).then(res => {
         let { data, msg, code } = res.data;
         this.showMsg(msg, code);
-        console.log(res)
+        console.log(res);
         if (code === 1) {
           // 存储user_id
           this.$store.commit("setUserId", data.user_id);
           this.handleClose();
-        } 
+        }
       });
     },
     // 忘记密码
-    onForget() {
-
-    }
+    onForget() {}
   }
 };
 </script>
+<style lang="scss">
+.router-link-active {
+  .el-dropdown {
+    height: 16px;
+    font-size: 16px;
+    color: #333333;
+  }
+}
+.el-dropdown-menu {
+  top: 92px !important;
+}
+.el-dropdown-menu__item {
+  text-align: center;
+}
+</style>
 <style scoped lang='scss'>
 .header {
   position: fixed;
@@ -437,10 +469,11 @@ export default {
         }
         .en-name {
           position: absolute;
-          left: 0;
+          left: 50%;
           bottom: 0;
-          width: 100%;
-          text-align: center;
+          transform: translateX(-50%);
+          // width: 100%;
+          // text-align: center;
           line-height: normal;
           font-size: 10px;
           opacity: 0;
@@ -448,7 +481,9 @@ export default {
           white-space: nowrap;
         }
         &:hover {
-          color: #ff0000;
+          .el-dropdown {
+            color: #ff0000;
+          }
           .en-name {
             opacity: 1;
             bottom: -15px;

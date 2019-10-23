@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-
+use app\data\model\Provinces;
 use app\data\model\JoinRole;
 use think\Controller;
 use think\Request;
@@ -409,5 +409,72 @@ class RoleJoin extends Base
 
         return $res  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1001 , '失败' );
 
+    }
+
+    /**
+     * 等级城市省份列表
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_index()
+    {
+        $province = new Provinces();
+        $data = $province->province_index();
+
+        return $this -> buildSuccess( array(
+            'list' => $data,
+            // 'count' => $data['total'],
+        ) );
+    }
+
+    /**
+     * 等级城市列表新增
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_create()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $city = new Provinces();
+
+        $data = $city->city_add($param);
+
+        return $data ? returnJson(1,'成功') : returnJson(0,'失败');
+    }
+
+    /**
+     * 等级城市列表筛选
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_save()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $city = new Provinces();
+
+        $data = $city->city_eidt($param['pid']);
+
+        return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+    }
+
+    /**
+     * 等级城市列表筛选
+     * @author fyk
+     * @return \think\Response
+     */
+    public function city_delete()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $city = new Provinces();
+
+        $data = $city->city_del($param['cid']);
+
+        return $data ? returnJson(1,'成功') : returnJson(0,'失败');
     }
 }

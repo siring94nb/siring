@@ -72,6 +72,15 @@ class BuildToken extends Base {
             $preStr = http_build_query($preArr);
 
             return md5($preStr);
+            $Provinces = new Provinces;
+            $result = $Provinces ->validate([
+                ['pid', 'require', '省份id不能为空'],
+                ['cid', 'require', '城市级别不能为空'],
+            ])->save($param);
+            if(false === $result){
+                // 验证失败 输出错误信息
+                returnJson (0,$Provinces->getError());exit();
+            }
         }
     }
 

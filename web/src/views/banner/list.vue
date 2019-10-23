@@ -341,7 +341,7 @@
                             vm.$Message.error(res.msg);
                         }
                     }
-                });
+                });1
             },
             doCancel (data) {
                 if (!data) {
