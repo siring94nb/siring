@@ -54,6 +54,7 @@ Route::group('api', function () {
         Route::any('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
         Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
         Route::any('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
+        Route::any('get_pay','api/JoinOrder/get_pay'); //支付
     });
 
     
