@@ -64,10 +64,10 @@
       </p>
       <Form ref="myForm"  :model="formItem" :label-width="120">
         <FormItem label="商品名称" prop="name">
-          <Input v-model="formItem.data.name" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="商品编号" prop="name">
-          <Input v-model="formItem.data.goods_num" placeholder="请输入" style="width: 300px;"></Input>
+          <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="归属分类" prop="name">
           <Select v-model="formItem.data.goods_type" style="width: 300px;">
@@ -351,6 +351,8 @@ export default {
         data: {
           goods_images: "",
           goods_number: "",
+          goods_type: "",
+          goods_name: "",
           goods_sort: 0,
           category_id: "",
           seo: "",
@@ -397,6 +399,8 @@ export default {
         data: {
           goods_images: "",
           goods_number: "",
+          goods_name: "",
+          goods_type: "",
           goods_sort: 0,
           category_id: "",
           seo: "",
