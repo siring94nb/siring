@@ -57,13 +57,13 @@ class Goods extends Base{
         if($is_use){
             return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
-        $res = Good::create($postData['data']);
+        $res = Good::create($postData['data'])->toArray();
         if ($res) {
                 //获取新增的goods_id($res->id)
-                // foreach($postData['special'] as $k2 =>$v2){
-                //     $postData['special']['goods_id']=$res->id;
-                //     Special::create($postData['special'][$k2]);
-                // }
+                foreach($postData['special'] as $k2 =>$v2){
+                    $postData['special'][$k2]['goods_id']=$res['id'];
+                    Special::create($postData['special'][$k2]);
+                }
                 return $this->buildSuccess([]);
             } else {
                 return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
