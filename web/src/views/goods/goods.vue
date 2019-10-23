@@ -108,9 +108,8 @@
           </table>-->
           <template>
             <Table border :columns="columns1" :data="formItem.special"></Table>
-        </template>
+          </template>
           <Button type="primary" @click="handleAdd" icon="md-add" style="margin-top:10px;">添加规格项</Button>
-
         </FormItem>
 
         <FormItem
@@ -135,7 +134,7 @@
             <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
           </div>
         </FormItem>
-        
+
         <FormItem label="商品主图" prop="name">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
             <template v-if="item.status === 'finished'">
@@ -305,20 +304,21 @@ export default {
         {
           title: "商品名称",
           align: "center",
-          key: "name"
+          key: "goods_name"
         },
         {
           title: "缩略图",
           align: "center",
-          key: "img",
+          key: "goods_images",
+          width: 150,
           render: (h, param) => {
             return h("img", {
               attrs: {
-                src: param.row.img
+                src: param.row.goods_images
               },
               style: {
-                width: "80px",
-                height: "80px",
+                width: "100px",
+                height: "90px",
                 padding: "5px 0 0 0"
               }
             });
@@ -327,22 +327,22 @@ export default {
         {
           title: "商品编号",
           align: "center",
-          key: "goods_num"
+          key: "goods_number"
         },
         {
           title: "商品分类",
           align: "center",
-          key: "goods_type"
+          key: "category_id"
         },
         {
           title: "终端版本",
           align: "center",
-          key: "terminal_version"
+          key: "attr_title"
         },
         {
           title: "开发周期",
           align: "center",
-          key: "develop_cycle"
+          key: "cycle_time"
         },
         {
           title: "价格",
@@ -352,7 +352,7 @@ export default {
         {
           title: "排序",
           align: "center",
-          key: "rank"
+          key: "goods_sort"
         },
         {
           title: "状态",
@@ -364,7 +364,7 @@ export default {
           title: "操作",
           align: "center",
           key: "handle",
-          width: 200,
+          width: 400,
           handle: ["comments", "copy", "edit", "delete"]
         }
       ],
@@ -427,21 +427,20 @@ export default {
   },
   created() {
     this.init();
+    this.getList();
   },
   methods: {
     init() {
       let vm = this;
-      console.log(vm.formItem.special);
-
       this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
             return h("div", [
-              editButton(vm, h, currentRowData, param.index),
-              deleteButton(vm, h, currentRowData, param.index),
               addCommentButton(vm, h, currentRowData, param.index),
-              copyButton(vm, h, currentRowData, param.index)
+              copyButton(vm, h, currentRowData, param.index),
+              editButton(vm, h, currentRowData, param.index),
+              deleteButton(vm, h, currentRowData, param.index)
             ]);
           };
         }
@@ -485,8 +484,8 @@ export default {
         cycle_time: ""
       });
     },
-    tableRemove (index) {
-        this.formItem.special.splice(index, 1);
+    tableRemove(index) {
+      this.formItem.special.splice(index, 1);
     },
     changePage(page) {
       this.tableShow.currentPage = page;
@@ -539,16 +538,43 @@ export default {
           axios.post(target, this.formItem).then(function(response) {
             self.modalSetting.loading = false;
             console.log(response);
-            // if (response.data.code === 1) {
-            //   self.$Message.success(response.data.msg);
-            //   self.getList();
-            //   self.cancel();
-            // } else {
-            //   self.$Message.error(response.data.msg);
-            // }
+            if (response.data.code === 1) {
+              self.$Message.success(response.data.msg);
+              self.getList();
+              self.cancel();
+            } else {
+              self.$Message.error(response.data.msg);
+            }
           });
         }
       });
+    },
+    getList() {
+      let vm = this;
+      axios
+        .get("Goods/index", {
+          params: {
+            page: vm.tableShow.currentPage,
+            size: vm.tableShow.pageSize,
+            goods_name: vm.searchConf.title
+          }
+        })
+        .then(function(response) {
+          let res = response.data;
+          if (res.code === 1) {
+            vm.tableData = res.data.list;
+            vm.tableShow.listCount = res.data.count;
+          } else {
+            if (res.code === -14) {
+              vm.$store.commit("logout", vm);
+              vm.$router.push({
+                name: "login"
+              });
+            } else {
+              vm.$Message.error(res.msg);
+            }
+          }
+        });
     },
     doCancel(data) {
       if (!data) {
