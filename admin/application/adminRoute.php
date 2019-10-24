@@ -608,11 +608,11 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'category_add' => [
             'admin/Goods/category_add',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'category_edit' => [
             'admin/Goods/category_edit',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'category_del' => [
             'admin/Goods/category_del',

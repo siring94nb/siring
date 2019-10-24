@@ -57,10 +57,12 @@ class Goods extends Base{
         if($is_use){
             return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
+        unset($postData['data']['id']);
         $res = Good::create($postData['data'])->toArray();
         if ($res) {
                 //获取新增的goods_id($res->id)
                 foreach($postData['special'] as $k2 =>$v2){
+                    unset($postData['special'][$k2]['id']);
                     $postData['special'][$k2]['goods_id']=$res['id'];
                     Special::create($postData['special'][$k2]);
                 }
@@ -84,8 +86,7 @@ class Goods extends Base{
         //获取参数id-商品id
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
-
-            $goods_info2=Special::update($postData['special']);
+            $goods_info2=Special::update($postData['special'][$k]);
         }
         // $goods_info['special']=Special::getSpecialInfo($id);
         
