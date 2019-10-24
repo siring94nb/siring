@@ -566,28 +566,28 @@ Route::group('admin', function () use ($afterBehavior) {
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--软件/定制商品
     Route::group('Goods', [
-        'index' => [                    //定制商品列表
+        'index' => [                    //软件/开发商品列表
             'admin/Goods/index',
             ['method' => 'get']
         ],
-        'add'   => [                    //定制商品添加
+        'add'   => [                    //软件/开发商品添加
             'admin/Goods/add',
             ['method' => 'post']
         ],
         'search'   => [
-            'admin/Goods/search',        //定制商品检索
+            'admin/Goods/search',        //软件/开发商品检索
             ['method' => 'post']
         ],
         'edit'   => [
-            'admin/Goods/edit',
+            'admin/Goods/edit',         //编辑
             ['method' => 'post']
         ],
         'copy'   => [
-            'admin/Goods/copy',
+            'admin/Goods/copy',         //赋值
             ['method' => 'post']
         ],
         'del'   => [
-            'admin/Goods/del',
+            'admin/Goods/del',          //软件开发商品删除
             ['method' => 'post']
         ],
         'comment'   => [
@@ -595,7 +595,7 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
         'made'   => [
-            'admin/Goods/made',        //评论
+            'admin/Goods/made',           //评论
             ['method' => 'post']
         ],
         'evaluate'   => [
@@ -617,6 +617,10 @@ Route::group('admin', function () use ($afterBehavior) {
         'category_del' => [
             'admin/Goods/category_del',
             ['method' => 'post']
+        ],
+        'get_goods' => [
+            'admin/Goods/get_goods',
+            ['method' => 'get']
         ],
        
     ], ['after_behavior' => $afterBehavior]);
