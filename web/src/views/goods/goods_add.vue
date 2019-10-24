@@ -26,7 +26,7 @@
           <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"></Input>
         </FormItem>
       </Form>
-      <div slot="footer" style>
+      <div slot="footer">
         <Button @click="sortCancel">取消</Button>
         <Button type="primary" @click="submit_sort" :loading="modalSetting.loading">确定</Button>
       </div>
@@ -233,7 +233,7 @@ export default {
   },
   created() {
     this.init();
-    // this.getList();
+    this.getList();
     this.getSort();
   },
   methods: {
@@ -364,7 +364,6 @@ export default {
       let self = this;
       
       this.$refs["sortForm"].validate(valid => {
-        console.log(valid)
         if (valid) {
           self.modalSetting.loading = true;
           axios
@@ -383,6 +382,7 @@ export default {
       });
     },
     sortCancel() {
+      this.sortMain.category_name = "";
       this.modalSetting.show = false;
     },
     doCancel(data) {
