@@ -11,8 +11,14 @@
         <span>添加分类</span>
       </p>
       <p style="font-size:18px;margin-left:15px;">分类编辑</p>
-      <div v-for="(item, index) in tableData" :value="item.id" :key="index" style="margin: 0 0 10px 80px;">
-        <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" /><Button type="primary" @click="editSort(index)">编辑</Button>
+      <div
+        v-for="(item, index) in tableData"
+        :value="item.id"
+        :key="index"
+        style="margin: 0 0 10px 80px;"
+      >
+        <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" />
+        <Button type="primary" @click="editSort(index)">编辑</Button>
       </div>
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
       <Form ref="sortForm" :model="sortMain" :label-width="80">
@@ -21,7 +27,7 @@
         </FormItem>
       </Form>
       <div slot="footer" style>
-        <Button>取消</Button>
+        <Button @click="sortCancel">取消</Button>
         <Button type="primary" @click="submit_sort" :loading="modalSetting.loading">确定</Button>
       </div>
     </Modal>
@@ -36,7 +42,11 @@
       <FormItem label="归属分类" prop="name">
         <Select v-model="formItem.data.category_id" style="width: 300px;">
           <Option :value="0">顶级菜单</Option>
-          <Option v-for="(item, index) in tableData" :value="item.id" :key="index">{{ item.category_name }}</Option>
+          <Option
+            v-for="(item, index) in tableData"
+            :value="item.id"
+            :key="index"
+          >{{ item.category_name }}</Option>
         </Select>
         <Button type="text" @click="addSort" ghost icon="md-add" style="color:rgb(51,204,255);">添加分类</Button>
         <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
@@ -223,7 +233,7 @@ export default {
   },
   created() {
     this.init();
-    this.getList();
+    // this.getList();
     this.getSort();
   },
   methods: {
@@ -335,45 +345,45 @@ export default {
       this.modalSetting.show = true;
     },
     editSort(index) {
-      let vm = this;
+      let self = this;
       axios
-        .get("Goods/category_edit", {
-          params: {
-            id: index,
-            category_name: vm.tableData[index].category_name
-          }
+        .post("Goods/category_edit", {
+          id: index,
+          category_name: self.tableData[index].category_name
         })
         .then(function(response) {
-          let res = response.data;
-          console.log(res)
-          if (res.code === 1) {
-            vm.tableData = res.data.list;
+          console.log(response);
+          if (response.data.code === 1) {
+            self.$Message.success(response.data.msg);
+          } else {
+            self.$Message.error(response.data.msg);
           }
         });
     },
     submit_sort() {
-      // sortMain: {
-      //   sort_name: ""
-      // },
       let self = this;
-      this.modalSetting.show = false;
+      
       this.$refs["sortForm"].validate(valid => {
+        console.log(valid)
         if (valid) {
           self.modalSetting.loading = true;
           axios
             .post("Goods/category_add", this.sortMain)
             .then(function(response) {
               self.modalSetting.loading = false;
-              console.log(response);
+              console.log(response)
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
-                self.cancel();
+                self.sortCancel();
               } else {
                 self.$Message.error(response.data.msg);
               }
             });
         }
       });
+    },
+    sortCancel() {
+      this.modalSetting.show = false;
     },
     doCancel(data) {
       if (!data) {
