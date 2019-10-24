@@ -6,10 +6,16 @@
     <!-- <Button type="primary" @click="alertAdd" icon="md-add">添加商品</Button> -->
 
     <Modal v-model="modalSetting.show" width="598" :styles="{top: '30px'}">
-
-
-
-    </Modal> 
+      <Form ref="sortForm" :model="sortMain" :label-width="80">
+        <FormItem label="分类名称" prop="name">
+          <Input v-model="sortMain.sort_name" placeholder="请输入" style="width: 400px;"></Input>
+        </FormItem>
+      </Form>
+      <div slot="footer" style="margin-left:100px;padding:30px;">
+        <Button >取消</Button>
+        <Button type="primary" @click="submit_sort" :loading="modalSetting.loading">确定</Button>
+      </div>
+    </Modal>
     <Form ref="myForm" :model="formItem" :label-width="120">
       <FormItem label="商品名称" prop="name">
         <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 500px;"></Input>
@@ -19,10 +25,11 @@
         <p>*模板化产品，规则按照MB+4位数字设定</p>
       </FormItem>
       <FormItem label="归属分类" prop="name">
-        <Select v-model="formItem.data.category_id" style="width: 500px;">
+        <Select v-model="formItem.data.category_id" style="width: 300px;">
           <Option :value="0">顶级菜单</Option>
           <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
         </Select>
+        <Button type="text" @click="addSort" ghost icon="md-add" style="color:rgb(51,204,255);">添加分类</Button>
         <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
       </FormItem>
       <FormItem label="商品排序" prop="name">
@@ -134,10 +141,9 @@
       </FormItem>
     </Form>
     <div slot="footer" style="margin-left:100px;padding:30px;">
-      <Button @click="cancel">取消</Button>
+      <Button>取消</Button>
       <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
     </div>
-   
   </div>
 </template>
 <script>
@@ -181,6 +187,9 @@ export default {
         loading: false,
         index: 0
       },
+      sortMain: {
+        sort_name: ""
+      },
       goods_id: 0,
       formItem: {
         data: {
@@ -209,8 +218,8 @@ export default {
   },
   methods: {
     init() {
-      let vm = this;
-      goods_id = vm.$route.params.goods_id;
+      // let vm = this;
+      this.goods_id = this.$route.params.goods_id;
     },
     cancel() {
       this.formItem = {
@@ -239,7 +248,7 @@ export default {
       }
       this.iconList = [];
 
-      //   this.modalSetting.show = false;
+      this.modalSetting.show = false;
     },
     handleAdd() {
       // this.index++;
@@ -282,8 +291,8 @@ export default {
     },
     getList() {
       let vm = this;
-      
-      if (goods_id != 0) {
+
+      if (vm.goods_id != 0) {
         axios
           .get("Goods/getGoods", {
             params: {
@@ -307,6 +316,9 @@ export default {
             }
           });
       }
+    },
+    addSort() {
+      this.modalSetting.show = true;
     },
     doCancel(data) {
       if (!data) {
