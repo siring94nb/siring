@@ -77,15 +77,19 @@ class Goods extends Base{
         $groups = '';
         $postData = $this->request->post();  //获取传参
         //判断商品的名字是否重复
-        $is_use=Good::all(['goods_name'=>$postData['goods_name']]);
-        if(count($is_use) > 2){
+        $is_use=Good::all(['goods_name'=>$postData['data']['goods_name']]);
+        if(count($is_use) >= 2){
             return $this->buildField(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
         //获取参数id-商品id
-        $goods_info=Good::update($postData);
-        $goods_info['special']=Special::getSpecialInfo($id);
+        $goods_info=Good::update($postData['data']);
+        foreach($postData['special'] as $k =>$v){
+
+            $goods_info2=Special::update($postData['special']);
+        }
+        // $goods_info['special']=Special::getSpecialInfo($id);
         
-        if($goods_info){
+        if($goods_info !==false){
             return $this->buildSuccess([
                 'data'=>$goods_info
             ]);
@@ -212,7 +216,7 @@ class Goods extends Base{
         $rules = [
             'id'=>'require',
         ];
-        $message = [
+        $message =[
             'id.require'=>'缺少必要参数',
         ];
         $validate = new Validate($rules,$message);
@@ -229,6 +233,18 @@ class Goods extends Base{
         }else{
             return $this->buildFailed(0,'操作失败');
         }
+    }
+    /**
+     * lilu
+     * 获取商品的信息
+     * id
+     * get
+     */
+    public function getGoods(){
+        $request=Request::instance();
+        //获取商品id
+        $goods_id=$request->get('id');
+        
     }
 
 
