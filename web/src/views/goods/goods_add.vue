@@ -6,10 +6,25 @@
     <!-- <Button type="primary" @click="alertAdd" icon="md-add">添加商品</Button> -->
 
     <Modal v-model="modalSetting.show" width="598" :styles="{top: '30px'}">
-
-
-
-    </Modal> 
+      <p slot="header">
+        <Icon type="md-add"></Icon>
+        <span>添加分类</span>
+      </p>
+      <p style="font-size:18px;margin-left:15px;">分类编辑</p>
+      <div v-for="(item, index) in tableData" :value="item.id" :key="index" style="margin: 0 0 10px 80px;">
+        <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" /><Button type="primary" @click="editSort(index)">编辑</Button>
+      </div>
+      <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
+      <Form ref="sortForm" :model="sortMain" :label-width="80">
+        <FormItem label="分类名称" prop="name">
+          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"></Input>
+        </FormItem>
+      </Form>
+      <div slot="footer" style>
+        <Button>取消</Button>
+        <Button type="primary" @click="submit_sort" :loading="modalSetting.loading">确定</Button>
+      </div>
+    </Modal>
     <Form ref="myForm" :model="formItem" :label-width="120">
       <FormItem label="商品名称" prop="name">
         <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 500px;"></Input>
@@ -19,10 +34,11 @@
         <p>*模板化产品，规则按照MB+4位数字设定</p>
       </FormItem>
       <FormItem label="归属分类" prop="name">
-        <Select v-model="formItem.data.category_id" style="width: 500px;">
+        <Select v-model="formItem.data.category_id" style="width: 300px;">
           <Option :value="0">顶级菜单</Option>
-          <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
+          <Option v-for="(item, index) in tableData" :value="item.id" :key="index">{{ item.category_name }}</Option>
         </Select>
+        <Button type="text" @click="addSort" ghost icon="md-add" style="color:rgb(51,204,255);">添加分类</Button>
         <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
       </FormItem>
       <FormItem label="商品排序" prop="name">
@@ -134,10 +150,9 @@
       </FormItem>
     </Form>
     <div slot="footer" style="margin-left:100px;padding:30px;">
-      <Button @click="cancel">取消</Button>
+      <Button>取消</Button>
       <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
     </div>
-   
   </div>
 </template>
 <script>
@@ -181,6 +196,9 @@ export default {
         loading: false,
         index: 0
       },
+      sortMain: {
+        category_name: ""
+      },
       goods_id: 0,
       formItem: {
         data: {
@@ -206,11 +224,12 @@ export default {
   created() {
     this.init();
     this.getList();
+    this.getSort();
   },
   methods: {
     init() {
-      let vm = this;
-      goods_id = vm.$route.params.goods_id;
+      // let vm = this;
+      this.goods_id = this.$route.params.goods_id;
     },
     cancel() {
       this.formItem = {
@@ -239,7 +258,7 @@ export default {
       }
       this.iconList = [];
 
-      //   this.modalSetting.show = false;
+      // this.modalSetting.show = false;
     },
     handleAdd() {
       // this.index++;
@@ -280,12 +299,13 @@ export default {
         }
       });
     },
+
     getList() {
       let vm = this;
-      
-      if (goods_id != 0) {
+
+      if (vm.goods_id != 0) {
         axios
-          .get("Goods/getGoods", {
+          .get("Goods/get_goods", {
             params: {
               id: vm.goods_id
             }
@@ -293,20 +313,67 @@ export default {
           .then(function(response) {
             let res = response.data;
             if (res.code === 1) {
-              vm.tableData = res.data.list;
-              vm.tableShow.listCount = res.data.count;
-            } else {
-              if (res.code === -14) {
-                vm.$store.commit("logout", vm);
-                vm.$router.push({
-                  name: "login"
-                });
-              } else {
-                vm.$Message.error(res.msg);
-              }
+              vm.formItem = res.data;
             }
           });
       }
+    },
+    getSort() {
+      let vm = this;
+      axios
+        .get("Goods/category_index", {
+          params: {}
+        })
+        .then(function(response) {
+          let res = response.data;
+          if (res.code === 1) {
+            vm.tableData = res.data.list;
+          }
+        });
+    },
+    addSort() {
+      this.modalSetting.show = true;
+    },
+    editSort(index) {
+      let vm = this;
+      axios
+        .get("Goods/category_edit", {
+          params: {
+            id: index,
+            category_name: vm.tableData[index].category_name
+          }
+        })
+        .then(function(response) {
+          let res = response.data;
+          console.log(res)
+          if (res.code === 1) {
+            vm.tableData = res.data.list;
+          }
+        });
+    },
+    submit_sort() {
+      // sortMain: {
+      //   sort_name: ""
+      // },
+      let self = this;
+      this.modalSetting.show = false;
+      this.$refs["sortForm"].validate(valid => {
+        if (valid) {
+          self.modalSetting.loading = true;
+          axios
+            .post("Goods/category_add", this.sortMain)
+            .then(function(response) {
+              self.modalSetting.loading = false;
+              console.log(response);
+              if (response.data.code === 1) {
+                self.$Message.success(response.data.msg);
+                self.cancel();
+              } else {
+                self.$Message.error(response.data.msg);
+              }
+            });
+        }
+      });
     },
     doCancel(data) {
       if (!data) {
