@@ -58,6 +58,7 @@ class Goods extends Base{
             return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
         unset($postData['data']['id']);
+        $postData['data']['create_time']=time();
         $res = Good::create($postData['data'])->toArray();
         if ($res) {
                 //获取新增的goods_id($res->id)
@@ -84,6 +85,7 @@ class Goods extends Base{
             return $this->buildField(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
         //获取参数id-商品id
+        $postData['data']['update_time']=time();
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
             $goods_info2=Special::update($postData['special'][$k]);
