@@ -3,13 +3,7 @@
     <myheader />
     <myaside />
     <div class="index">
-      <el-carousel class="swiper" height="400px">
-        <el-carousel-item v-for="item in swiperlist" :key="item.id">
-          <a :href="`https://`+item.url" target="_blank">
-            <img :src="item.img" alt />
-          </a>
-        </el-carousel-item>
-      </el-carousel>
+      <myswiper />
       <div class="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">
@@ -192,7 +186,7 @@ import Myaside from "@/components/aside";
 import Sjhy from '@/components/sjhy';
 import Jdyh from '@/components/jdyh';
 import Myfooter from '@/components/footer';
-import { GetBannerList } from '@/api/api';
+import Myswiper from '@/components/mySwiper'
 export default {
   name: "index",
   components: {
@@ -201,15 +195,10 @@ export default {
     Sjhy,
     Jdyh,
     Myfooter,
+    Myswiper
   },
   data() {
     return {
-      aa: true,
-      swiperlist: [
-        require("@/assets/images/img1.png"),
-        require("@/assets/images/img2.png"),
-        require("@/assets/images/img3.png")
-      ],
       tabPosition: "left",
       xcxnavon: 0,
       xcxnavlist: [
@@ -369,22 +358,11 @@ export default {
       mgtop: 0
     };
   },
-  mounted() {
-    this.getBannerList();
-  },
   methods: {
     xcxnavClick(index) {
       this.xcxnavon = index;
       this.mgtop = -(index * 325);
       console.log(this.mgtop);
-    },
-    getBannerList() {
-      GetBannerList().then(res => {
-        let { code, msg, data } = res.data;
-        if(code === 1){
-          this.swiperlist = data;
-        }
-      })
     },
   }
 };
