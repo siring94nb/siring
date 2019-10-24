@@ -289,12 +289,15 @@ export default {
         }
       });
     },
+    submit_sort() {
+
+    },
     getList() {
       let vm = this;
 
       if (vm.goods_id != 0) {
         axios
-          .get("Goods/getGoods", {
+          .get("Goods/get_goods", {
             params: {
               id: vm.goods_id
             }
