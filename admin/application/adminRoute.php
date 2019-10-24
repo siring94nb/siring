@@ -618,6 +618,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/category_del',
             ['method' => 'post']
         ],
+        'get_goods' => [
+            'admin/Goods/get_goods',
+            ['method' => 'get']
+        ],
        
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理

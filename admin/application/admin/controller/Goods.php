@@ -240,11 +240,20 @@ class Goods extends Base{
      * id
      * get
      */
-    public function getGoods(){
+    public function get_goods(){
         $request=Request::instance();
         //获取商品id
         $goods_id=$request->get('id');
-        
+        $goods_info=Good::get($goods_id)->toArray();
+        //获取商品对应的规格信息
+        $goods_info['special']=Special::all(['goods_id'=>$goods_info['id']])->toArray();
+        if($goods_info){
+            return $this->buildSuccess([
+                'data'=>$goods_info,
+            ]);
+        }else{
+            return $this->buildFailed(0,'获取失败');
+        }
     }
 
 
