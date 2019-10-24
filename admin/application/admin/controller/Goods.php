@@ -138,18 +138,8 @@ class Goods extends Base{
      */
     public function category_index(){
         $request = Request::instance();
-        $param = $request->param();
-        if(empty($param['page'])){
-            $param['page'] = 1;
-        }
-        if(empty($param['size'])){
-            $param['size'] = 10;
-        }
-
         $order = 'id desc';
-
-        $list = Db::table('category')->order($order)->page($param['page'],$param['size'])->select();
-
+        $list = Db::table('category')->order($order)->select();
         return $this->buildSuccess([
             'list'=>$list,
         ]);
@@ -185,7 +175,6 @@ class Goods extends Base{
     public function category_edit(){
         $request = Request::instance();
         $param = $request->param();
-
         $rules = [
             'id'=>'require',
             'category_name'=>'require',
