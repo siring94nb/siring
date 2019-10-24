@@ -416,14 +416,14 @@ export const appRouter = [
                         title: '定制案例',
                         component: () => import('@/views/goods/made.vue')
                     },
-                    // {
-                    //     path: 'evaluate',
-                    //     icon: 'ios-pint',
-                    //     name: 'evaluate',
-                    //     access: 'admin/Goods/evaluate',
-                    //     title: '快捷估价',
-                    //     component: () => import('@/views/goods/evaluate.vue'),
-                    // },
+                    {
+                        path: 'evaluate',
+                        icon: 'ios-pint',
+                        name: 'evaluate',
+                        access: 'admin/Goods/evaluate',
+                        title: '快捷估价',
+                        component: () => import('@/views/goods/evaluate.vue'),
+                    },
                 ]
             },
             {
