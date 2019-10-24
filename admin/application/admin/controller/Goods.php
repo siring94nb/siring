@@ -138,8 +138,7 @@ class Goods extends Base{
      */
     public function category_index(){
         $request = Request::instance();
-        $order = 'id desc';
-        $list = Db::table('category')->order($order)->select();
+        $list = Db::table('category')->select();
         return $this->buildSuccess([
             'list'=>$list,
         ]);
@@ -243,6 +242,32 @@ class Goods extends Base{
         }else{
             return $this->buildFailed(0,'获取失败');
         }
+    }
+
+    /**
+     * lilu
+     * 商品管理-软件定制商品-定制商品
+     */
+    public function made(){
+        $where['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $where['page'] = $this->request->get('page', 1);
+        $goods_name = $this->request->get('goods_name', '');
+        $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
+        if (!empty($goods_recommend_staus)) {
+            $where['goods_recommend_staus'] = $goods_recommend_staus;
+        }
+        if ($goods_name) {
+            $where['goods_name'] = ['like', "%{$goods_name}%"];
+        }
+        $list=Good::getGoodsList($where);
+        // foreach($list as $k =>$v){
+        //     //获取当前id对应的规格
+        //     $list[$k]['special']=$listObj2=Special::getSpecialInfo($v['id']);
+        // }
+        $listInfo = $list;
+        return $this->buildSuccess([
+            'list'  => $listInfo,
+        ]);
     }
 
 
