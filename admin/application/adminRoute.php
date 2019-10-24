@@ -612,14 +612,14 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'category_edit' => [
             'admin/Goods/category_edit',
-            ['method' => 'post']
+            ['method' => 'get']
         ],
         'category_del' => [
             'admin/Goods/category_del',
             ['method' => 'post']
         ],
         'get_goods' => [
-            'admin/Goods/get_goods',
+            'admin/Goods/get_goods',     //获取软件商品信息（id）
             ['method' => 'get']
         ],
        
