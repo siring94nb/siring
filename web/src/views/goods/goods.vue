@@ -244,7 +244,14 @@ const editButton = (vm, h, currentRow, index) => {
         margin: "0 5px"
       },
       on: {
-        click: () => {}
+        click: () => {
+           vm.$router.push({
+              name: "goods_add",
+              params: {
+                goods_id: currentRow.id
+              }
+            });
+        }
       }
     },
     "编辑"
@@ -501,26 +508,17 @@ export default {
     },
     alertAdd() {
       let vm = this;
-      //图片
-      this.$nextTick(() => {
-        this.uploadList = this.$refs.upload.fileList;
+      vm.$router.push({
+        name: "goods_add",
+        params: {
+          goods_id: 0
+        }
       });
-      // axios.get('Auth/getRuleList').then(function (response) {
-      //     let res = response.data;
-      //     if (res.code === 1) {
-      //         vm.ruleList = res.data.list;
-      //     } else {
-      //         if (res.code === -14) {
-      //             vm.$store.commit('logout', vm);
-      //             vm.$router.push({
-      //                 name: 'login'
-      //             });
-      //         } else {
-      //             vm.$Message.error(res.msg);
-      //         }
-      //     }
+      // //图片
+      // this.$nextTick(() => {
+      //   this.uploadList = this.$refs.upload.fileList;
       // });
-      this.modalSetting.show = true;
+      // this.modalSetting.show = true;
     },
     submit() {
       let self = this;

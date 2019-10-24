@@ -81,6 +81,12 @@ export const otherRouter = {
             title: '用户关系网详情',
             component: () => import('@/views/user/relation_detail.vue')
         },
+        {
+            path: 'Goods/add/:goods_id',
+            name: 'goods_add',
+            title: '开发商品添加',
+            component: () => import('@/views/goods/goods_add.vue')
+        },
         // {
         //     path: 'OrderGoods/detail/:detail_id',
         //     name: 'order_detail',
@@ -410,14 +416,14 @@ export const appRouter = [
                         title: '定制案例',
                         component: () => import('@/views/goods/made.vue')
                     },
-                    // {
-                    //     path: 'evaluate',
-                    //     icon: 'ios-pint',
-                    //     name: 'evaluate',
-                    //     access: 'admin/Goods/evaluate',
-                    //     title: '快捷估价',
-                    //     component: () => import('@/views/goods/evaluate.vue'),
-                    // },
+                    {
+                        path: 'evaluate',
+                        icon: 'ios-pint',
+                        name: 'evaluate',
+                        access: 'admin/Goods/evaluate',
+                        title: '快捷估价',
+                        component: () => import('@/views/goods/evaluate.vue'),
+                    },
                 ]
             },
             {
