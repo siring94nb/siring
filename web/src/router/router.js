@@ -81,6 +81,12 @@ export const otherRouter = {
             title: '用户关系网详情',
             component: () => import('@/views/user/relation_detail.vue')
         },
+        {
+            path: 'Goods/add/:goods_id',
+            name: 'goods_add',
+            title: '开发商品添加',
+            component: () => import('@/views/goods/goods_add.vue')
+        },
         // {
         //     path: 'OrderGoods/detail/:detail_id',
         //     name: 'order_detail',

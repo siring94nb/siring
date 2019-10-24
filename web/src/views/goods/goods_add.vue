@@ -1,0 +1,372 @@
+<style lang="less" scoped>
+@import "./goods.less";
+</style>
+<template>
+  <div style="background-color:#fff;padding-top:30px;font-size:30px">
+    <!-- <Button type="primary" @click="alertAdd" icon="md-add">添加商品</Button> -->
+
+    <Modal v-model="modalSetting.show" width="598" :styles="{top: '30px'}">
+
+
+
+    </Modal> 
+    <Form ref="myForm" :model="formItem" :label-width="120">
+      <FormItem label="商品名称" prop="name">
+        <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 500px;"></Input>
+      </FormItem>
+      <FormItem label="商品编号" prop="name">
+        <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 500px;"></Input>
+        <p>*模板化产品，规则按照MB+4位数字设定</p>
+      </FormItem>
+      <FormItem label="归属分类" prop="name">
+        <Select v-model="formItem.data.category_id" style="width: 500px;">
+          <Option :value="0">顶级菜单</Option>
+          <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
+        </Select>
+        <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
+      </FormItem>
+      <FormItem label="商品排序" prop="name">
+        <InputNumber :min="1" v-model="formItem.data.goods_sort" style="width: 500px;"></InputNumber>
+      </FormItem>
+      <FormItem label="标记" prop="name">
+        <RadioGroup v-model="formItem.data.sign">
+          <Radio label="1">促销</Radio>
+          <Radio label="2">hot</Radio>
+        </RadioGroup>
+        <p>*填写正整数，从大到小排序</p>
+      </FormItem>
+      <FormItem label="SEO设置关键字" prop="name">
+        <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 500px;"></Input>
+        <p>*关键字中间用半角逗号,隔开</p>
+      </FormItem>
+      <FormItem label="终端版本">
+        <!-- <table class="table_s" border="1">
+            <tr>
+              <th>终端版本</th>
+              <th>价格（元）</th>
+              <th>划线价</th>
+              <th>开发周期</th>
+            </tr>
+            <tr>
+              <td>January</td>
+              <td>$100</td>
+              <td>$100</td>
+              <td>$100</td>
+            </tr>
+        </table>-->
+        <template>
+          <Table border :columns="columns1" :data="formItem.special" width="1000"></Table>
+        </template>
+        <Button type="primary" @click="handleAdd" icon="md-add" style="margin-top:10px;">添加规格项</Button>
+      </FormItem>
+
+      <FormItem
+        v-for="(item, index) in formItem.special"
+        :key="index"
+        :label="'规格-' + index"
+        :prop="'item'+ index"
+      >
+        <div style="display:flex;">
+          <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
+            <span slot="prepend">终端版本</span>
+          </Input>
+          <Input v-model="item.price" placeholder="请输入" style="width: 150px;">
+            <span slot="prepend">价格（元）</span>
+          </Input>
+          <Input v-model="item.bottom_price" placeholder="请输入" style="width: 150px;">
+            <span slot="prepend">划线价</span>
+          </Input>
+          <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
+            <span slot="prepend">开发周期</span>
+          </Input>
+          <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
+        </div>
+      </FormItem>
+
+      <FormItem label="商品主图" prop="name">
+        <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
+          <template v-if="item.status === 'finished'">
+            <img :src="item.url" />
+            <div class="demo-upload-list-cover">
+              <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+            </div>
+          </template>
+          <template v-else>
+            <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+          </template>
+        </div>
+        <Upload
+          ref="upload"
+          :show-upload-list="false"
+          :default-file-list="DefaultList"
+          :on-success="handleSuccess"
+          :format="['jpg','jpeg','png']"
+          :max-size="10240"
+          :on-format-error="handleFormatError"
+          :on-exceeded-size="handleMaxSize"
+          :before-upload="handleBeforeUpload"
+          type="drag"
+          name="image"
+          :action="UploadAction"
+          style="display: inline-block;width:58px;"
+        >
+          <div style="width: 58px;height:58px;line-height: 58px;">
+            <Icon type="ios-camera" size="20"></Icon>
+          </div>
+        </Upload>
+        <p>*建议图片尺寸 260*170，主图链接到演示</p>
+      </FormItem>
+      <FormItem label="演示" prop="name">
+        <div id="wangeditor" v-model="formItem.data.goods_detail" style="width:1000px;"></div>
+      </FormItem>
+      <FormItem label="功能描述">
+        <Input
+          v-model="formItem.data.goods_des"
+          type="textarea"
+          :autosize="{minRows: 2,maxRows: 5}"
+        ></Input>
+      </FormItem>
+      <FormItem label="推荐商品">
+        <RadioGroup v-model="formItem.data.goods_recommend_status">
+          <Radio label="1">推荐</Radio>
+          <Radio label="0">不推荐</Radio>
+        </RadioGroup>
+      </FormItem>
+    </Form>
+    <div slot="footer" style="margin-left:100px;padding:30px;">
+      <Button @click="cancel">取消</Button>
+      <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+    </div>
+   
+  </div>
+</template>
+<script>
+import axios from "axios";
+import config from "../../../build/config";
+import wangEditor from "wangeditor";
+
+export default {
+  data() {
+    return {
+      UploadHeader: "",
+      DefaultList: [],
+      // 图片
+      UploadAction: "",
+      visible: false,
+      uploadList: [],
+      iconList: [],
+      // 图片
+
+      columns1: [
+        {
+          title: "终端版本",
+          key: "attr_title"
+        },
+        {
+          title: "价格（元）",
+          key: "price"
+        },
+        {
+          title: "划线价",
+          key: "bottom_price"
+        },
+        {
+          title: "开发周期",
+          key: "cycle_time"
+        }
+      ],
+      tableData: [],
+      modalSetting: {
+        show: false,
+        loading: false,
+        index: 0
+      },
+      goods_id: 0,
+      formItem: {
+        data: {
+          goods_images: "",
+          goods_number: "",
+          category_id: "",
+          goods_name: "",
+          goods_sort: 0,
+          category_id: "",
+          seo: "",
+          goods_recommend_status: "1",
+          goods_detail: "",
+          goods_des: "",
+          sign: ""
+        },
+        special: []
+      },
+      ruleValidate: {
+        name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
+      }
+    };
+  },
+  created() {
+    this.init();
+    this.getList();
+  },
+  methods: {
+    init() {
+      let vm = this;
+      goods_id = vm.$route.params.goods_id;
+    },
+    cancel() {
+      this.formItem = {
+        // id: 0,
+        data: {
+          goods_images: "",
+          goods_number: "",
+          goods_name: "",
+          category_id: "",
+          goods_sort: 0,
+          category_id: "",
+          seo: "",
+          goods_recommend_status: "1",
+          goods_detail: "",
+          goods_des: "",
+          sign: ""
+        },
+        special: []
+      };
+
+      // this.special = {terminal_version:"",pic:"",develop_cycle:"",h_pic:""}
+      // 移除图片
+      this.visible = false;
+      for (var i = 0; i < this.uploadList.length; i++) {
+        this.handleRemove(this.uploadList[i]);
+      }
+      this.iconList = [];
+
+      //   this.modalSetting.show = false;
+    },
+    handleAdd() {
+      // this.index++;
+      this.formItem.special.push({
+        attr_title: "",
+        price: "",
+        bottom_price: "",
+        cycle_time: ""
+      });
+    },
+    tableRemove(index) {
+      this.formItem.special.splice(index, 1);
+    },
+
+    submit() {
+      let self = this;
+      this.$refs["myForm"].validate(valid => {
+        if (valid) {
+          self.modalSetting.loading = true;
+          let target = "";
+          if (this.formItem.id) {
+            target = "Goods/add";
+          } else {
+            target = "Goods/edit";
+          }
+          // data.formItem = this.formItem;
+          // data.special = this.special;
+          axios.post(target, this.formItem).then(function(response) {
+            self.modalSetting.loading = false;
+            console.log(response);
+            if (response.data.code === 1) {
+              self.$Message.success(response.data.msg);
+              self.cancel();
+            } else {
+              self.$Message.error(response.data.msg);
+            }
+          });
+        }
+      });
+    },
+    getList() {
+      let vm = this;
+      
+      if (goods_id != 0) {
+        axios
+          .get("Goods/getGoods", {
+            params: {
+              id: vm.goods_id
+            }
+          })
+          .then(function(response) {
+            let res = response.data;
+            if (res.code === 1) {
+              vm.tableData = res.data.list;
+              vm.tableShow.listCount = res.data.count;
+            } else {
+              if (res.code === -14) {
+                vm.$store.commit("logout", vm);
+                vm.$router.push({
+                  name: "login"
+                });
+              } else {
+                vm.$Message.error(res.msg);
+              }
+            }
+          });
+      }
+    },
+    doCancel(data) {
+      if (!data) {
+        this.formItem.id = 0;
+        this.$refs["myForm"].resetFields();
+        this.modalSetting.loading = false;
+        this.modalSetting.index = 0;
+        this.cancel();
+      }
+    },
+    // 图片上传
+    handleView(file) {
+      this.visible = true;
+    },
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      this.formItem.data.goods_images = "";
+    },
+    handleSuccess(res, file) {
+      // file.url = res.data;
+      // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
+      file.url = res.data.filePath; //获取图片路径
+      this.formItem.data.goods_images = res.data.filePath;
+    },
+    handleFormatError(file) {
+      this.$Message.error("文件格式不正确, 请选择jpg或者png.");
+    },
+    handleMaxSize(file) {
+      this.$Message.error("文件大小不能超过10M");
+    },
+    handleBeforeUpload() {
+      const check = this.uploadList.length < 5;
+      if (!check) {
+        this.$Message.error("只能上传一张品牌图");
+      }
+      return check;
+    }
+  },
+  mounted() {
+    let vm = this;
+    this.editor = new wangEditor("#wangeditor");
+    this.editor.customConfig.uploadFileName = "image";
+    this.editor.customConfig.uploadImgMaxLength = 1;
+    this.editor.customConfig.uploadImgServer =
+      config.front_url + "file/qn_upload";
+    this.editor.customConfig.uploadImgHooks = {
+      customInsert: function(insertImg, result, editor) {
+        if (result.code == 1) {
+          insertImg(result.data.filePath);
+        }
+      }
+    };
+    this.editor.customConfig.onchange = function(html) {
+      vm.formItem.data.goods_detail = html;
+    };
+    this.UploadAction = config.front_url + "file/qn_upload";
+    this.uploadList = this.$refs.upload.fileList;
+    this.editor.create();
+  }
+};
+</script>
