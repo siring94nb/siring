@@ -124,7 +124,7 @@
         <Upload
           ref="upload"
           :show-upload-list="false"
-          :default-file-list="DefaultList"
+          :default-file-list="iconList"
           :on-success="handleSuccess"
           :format="['jpg','jpeg','png']"
           :max-size="10240"
@@ -174,7 +174,7 @@ export default {
   data() {
     return {
       UploadHeader: "",
-      DefaultList: [],
+      // DefaultList: [],
       // 图片
       UploadAction: "",
       visible: false,
@@ -212,6 +212,7 @@ export default {
       goods_id: 0,
       formItem: {
         data: {
+          id:0,
           goods_images: "",
           goods_number: "",
           category_id: "",
@@ -228,7 +229,8 @@ export default {
       },
       ruleValidate: {
         name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
-      }
+      },
+      html: ""
     };
   },
   created() {
@@ -243,8 +245,8 @@ export default {
     },
     cancel() {
       this.formItem = {
-        // id: 0,
         data: {
+          id: 0,
           goods_images: "",
           goods_number: "",
           goods_name: "",
@@ -289,7 +291,7 @@ export default {
         if (valid) {
           self.modalSetting.loading = true;
           let target = "";
-          if (this.formItem.id) {
+          if (this.formItem.data.id === 0) {
             target = "Goods/add";
           } else {
             target = "Goods/edit";
@@ -322,7 +324,18 @@ export default {
           })
           .then(function(response) {
             let res = response.data;
+
             if (res.code === 1) {
+              vm.editor.txt.html(res.data.data.goods_detail);
+              vm.html = res.data.data.goods_detail;
+
+              //图片
+              if (res.data.data.goods_images != "") {
+                vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+              }
+              vm.$nextTick(() => {
+                vm.uploadList = vm.$refs.upload.fileList;
+              });
               vm.formItem = res.data;
             }
           });
@@ -362,7 +375,7 @@ export default {
     },
     submit_sort() {
       let self = this;
-      
+
       this.$refs["sortForm"].validate(valid => {
         if (valid) {
           self.modalSetting.loading = true;
@@ -370,7 +383,7 @@ export default {
             .post("Goods/category_add", this.sortMain)
             .then(function(response) {
               self.modalSetting.loading = false;
-              console.log(response)
+              console.log(response);
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
                 self.sortCancel();
