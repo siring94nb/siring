@@ -13,6 +13,8 @@ class Goods extends Base
     protected $table = "good";
     protected $resultSetType = 'collection';
     protected $deleteTime = 'del_time';
+    protected $updateTime = 'update_time';
+    protected $createTime = 'create_time';
     /**
      * lilu
      * 根据商品的id获取商品的规格信息

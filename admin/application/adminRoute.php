@@ -595,11 +595,11 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
         'made'   => [
-            'admin/Goods/made',           //评论
+            'admin/Goods/made',           //定制商品
             ['method' => 'post']
         ],
         'evaluate'   => [
-            'admin/Goods/evaluate',        //评论
+            'admin/Goods/evaluate',        //快捷评估
             ['method' => 'post']
         ],
         'category_index' => [
@@ -617,6 +617,10 @@ Route::group('admin', function () use ($afterBehavior) {
         'category_del' => [
             'admin/Goods/category_del',
             ['method' => 'post']
+        ],
+        'get_goods' => [
+            'admin/Goods/get_goods',     //获取软件商品信息（id）
+            ['method' => 'get']
         ],
        
     ], ['after_behavior' => $afterBehavior]);
