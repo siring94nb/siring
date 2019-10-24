@@ -161,7 +161,6 @@ class Goods extends Base{
     public function category_add(){
         $request = Request::instance();
         $param = $request->param();
-
         $rules = [
             'category_name'=>'require',
         ];

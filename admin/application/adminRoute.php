@@ -608,7 +608,7 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'category_add' => [
             'admin/Goods/category_add',
-            ['method' => 'post']
+            ['method' => 'get']
         ],
         'category_edit' => [
             'admin/Goods/category_edit',
