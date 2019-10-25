@@ -323,6 +323,14 @@ export const appRouter = [
                         component: () => import('@/views/vipsetting/vipLevel.vue'),
                     },
                     {
+                        path: 'settingCity',
+                        icon: 'ios-hammer',
+                        name: 'settingCity',
+                        title: '城市等级',
+                        access: 'admin/RoleJoin/city_index',
+                        component: () => import('@/views/vipsetting/settingCity.vue'),
+                    },
+                    {
                         path: 'cityPartner',
                         icon: 'ios-hammer',
                         name: 'cityPartner',
@@ -338,14 +346,7 @@ export const appRouter = [
                         access: 'admin/RoleJoin/subcontractor_index',
                         component: () => import('@/views/vipsetting/fbs.vue'),
                     },
-                    {
-                        path: 'settingCity',
-                        icon: 'ios-hammer',
-                        name: 'settingCity',
-                        title: '等级城市',
-                        access: 'admin/RoleJoin/city_index',
-                        component: () => import('@/views/vipsetting/settingCity.vue'),
-                    },
+
                 ]
             }
         ]

@@ -7,6 +7,7 @@ use think\Controller;
 use think\Request;
 use think\Validate;
 use think\Session;
+use think\Db;
 use app\data\model\JoinOrder as JoinOrderAll;
 
 /**
@@ -41,13 +42,24 @@ class JoinOrder extends Controller
             $user_id = $param["user_id"];
         }
         $role_type = 2;
-
+        //开启事务
+        Db::startTrans();
+        try{
         $city = new JoinOrderAll();
 
         $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],'',$param['grade'],$param['con']);
 
         $order_id = $data->id;
+
+        Db::commit();
+
         return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
+
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
     }
 
     /**
@@ -74,13 +86,24 @@ class JoinOrder extends Controller
             $user_id = $param["user_id"];
         }
         $role_type = 1;
-
+        //开启事务
+        Db::startTrans();
+        try{
         $city = new JoinOrderAll();
 
         $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],'',$param['grade'],'');
 
         $order_id = $data->id;
+
+        Db::commit();
+
         return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
+
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
     }
 
     /**
@@ -116,34 +139,58 @@ class JoinOrder extends Controller
         }
 
         $role_type = 3;
-
+        //开启事务
+        Db::startTrans();
+        try{
         $city = new JoinOrderAll();
 
         $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$dev,'',$param['con']);
 
         $order_id = $data->id;
+
+        Db::commit();
+
         return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
+
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
+        }
     }
 
     /**
-     * @param $id
-     * @return mixed
+     * 支付订单
+     * @author fyk
+     * @return array|string|\think\response\Json
      */
-    public function get_pay($id)
+    public function get_pay()
     {
-        //phpinfo();die;
-        // 查询订单信息
-        $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
-        $order = db('join_order') -> getById($id);
+        $request = Request::instance();
+        $param = $request->param();
+        $type = $param['type']; //1微信支付，2支付宝支付
+        $id = $param['order_id'];
+        switch($type) {
+            case 1:
+            // 查询订单信息
+            $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
+            $order = db('join_order')->getById($id);
 
-        $pay = 1;//先测试1分钱
-        if(!$order)returnJson(0,'当前订单不存在');
-//        if($order['status'] = 2)returnJson(0,'当前订单已支付');
+            $pay = 1;//先测试1分钱
+            if (!$order)returnJson(0, '当前订单不存在');
+    //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
 
-        $wechatpay = new WechatPay();
-        $res = $wechatpay->pay($order['no'],$pay,$url);
+            $wechatpay = new WechatPay();
+            $res = $wechatpay->pay($order['no'], $pay, $url);
 
-        return  $res; exit();
+            return $res;exit();
+                break;   // 跳出循环
+            case 2:
+
+                returnJson(0, '暂未支付宝开通');
+
+                break; // 跳出循环
+        }
     }
 
 

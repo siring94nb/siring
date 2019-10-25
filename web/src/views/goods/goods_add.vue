@@ -21,9 +21,9 @@
         <Button type="primary" @click="editSort(index)">编辑</Button>
       </div>
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
-      <Form ref="sortForm" :model="sortMain" :label-width="80">
-        <FormItem label="分类名称" prop="name">
-          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"></Input>
+      <Form ref="sortForm" :rules="ruleValidate" :model="sortMain" :label-width="80">
+        <FormItem label="分类名称" prop="type_name">
+          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"/>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -31,16 +31,19 @@
         <Button type="primary" @click="submit_sort" :loading="modalSetting.loading">确定</Button>
       </div>
     </Modal>
-    <Form ref="myForm" :model="formItem" :label-width="120">
-      <FormItem label="商品名称" prop="name">
+
+
+    
+    <Form ref="myForm"  :model="formItem" :label-width="120">
+      <FormItem label="商品名称" prop="goods_name">
         <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 500px;"></Input>
       </FormItem>
-      <FormItem label="商品编号" prop="name">
-        <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 500px;"></Input>
+      <FormItem label="商品编号" prop="goods_number">
+        <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 500px;"/>
         <p>*模板化产品，规则按照MB+4位数字设定</p>
       </FormItem>
-      <FormItem label="归属分类" prop="name">
-        <Select v-model="formItem.data.category_id" style="width: 300px;">
+      <FormItem label="归属分类">
+        <Select v-model="formItem.data.category_id" style="width: 400px;">
           <Option :value="0">顶级菜单</Option>
           <Option
             v-for="(item, index) in tableData"
@@ -51,35 +54,21 @@
         <Button type="text" @click="addSort" ghost icon="md-add" style="color:rgb(51,204,255);">添加分类</Button>
         <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
       </FormItem>
-      <FormItem label="商品排序" prop="name">
+      <FormItem label="商品排序">
         <InputNumber :min="1" v-model="formItem.data.goods_sort" style="width: 500px;"></InputNumber>
       </FormItem>
-      <FormItem label="标记" prop="name">
+      <FormItem label="标记">
         <RadioGroup v-model="formItem.data.sign">
           <Radio label="1">促销</Radio>
           <Radio label="2">hot</Radio>
         </RadioGroup>
         <p>*填写正整数，从大到小排序</p>
       </FormItem>
-      <FormItem label="SEO设置关键字" prop="name">
-        <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 500px;"></Input>
+      <FormItem label="SEO设置关键字" prop="seo">
+        <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 500px;"/>
         <p>*关键字中间用半角逗号,隔开</p>
       </FormItem>
       <FormItem label="终端版本">
-        <!-- <table class="table_s" border="1">
-            <tr>
-              <th>终端版本</th>
-              <th>价格（元）</th>
-              <th>划线价</th>
-              <th>开发周期</th>
-            </tr>
-            <tr>
-              <td>January</td>
-              <td>$100</td>
-              <td>$100</td>
-              <td>$100</td>
-            </tr>
-        </table>-->
         <template>
           <Table border :columns="columns1" :data="formItem.special" width="1000"></Table>
         </template>
@@ -91,7 +80,7 @@
         :key="index"
         :label="'规格-' + index"
         :prop="'item'+ index"
-      >
+        :rules="{required: true, message: '规格-' + index +' 不能为空', trigger: 'blur'}">
         <div style="display:flex;">
           <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
             <span slot="prepend">终端版本</span>
@@ -105,11 +94,11 @@
           <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
             <span slot="prepend">开发周期</span>
           </Input>
-          <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
+          <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">删除</Button>
         </div>
       </FormItem>
 
-      <FormItem label="商品主图" prop="name">
+      <FormItem label="商品主图" prop="img">
         <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
           <template v-if="item.status === 'finished'">
             <img :src="item.url" />
@@ -142,15 +131,15 @@
         </Upload>
         <p>*建议图片尺寸 260*170，主图链接到演示</p>
       </FormItem>
-      <FormItem label="演示" prop="name">
+      <FormItem label="演示">
         <div id="wangeditor" v-model="formItem.data.goods_detail" style="width:1000px;"></div>
       </FormItem>
       <FormItem label="功能描述">
         <Input
           v-model="formItem.data.goods_des"
           type="textarea"
-          :autosize="{minRows: 2,maxRows: 5}"
-        ></Input>
+          :autosize="{minRows: 4,maxRows: 8}" 
+          style="width:1000px;"/>
       </FormItem>
       <FormItem label="推荐商品">
         <RadioGroup v-model="formItem.data.goods_recommend_status">
@@ -213,12 +202,11 @@ export default {
       formItem: {
         data: {
           id:0,
-          goods_images: "",
+          goods_images: [],
           goods_number: "",
-          category_id: "",
+          category_id: 0,
           goods_name: "",
           goods_sort: 0,
-          category_id: "",
           seo: "",
           goods_recommend_status: "1",
           goods_detail: "",
@@ -228,7 +216,12 @@ export default {
         special: []
       },
       ruleValidate: {
-        name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
+        type_name: [{ required: true, message: "分类名称不能为空", trigger: "blur" }],
+       
+        // goods_name: [{ required: true, message: "商品名称不能为空", trigger: "blur" }],
+        // goods_number: [{ required: true, message: "商品编号不能为空", trigger: "blur" }],
+        // seo: [{ required: true, message: "SEO关键字不能为空", trigger: "blur" }],
+        // img: [{ required: true, message: "商品图片不能为空", trigger: "blur" }],
       },
       html: ""
     };
@@ -247,12 +240,11 @@ export default {
       this.formItem = {
         data: {
           id: 0,
-          goods_images: "",
+          goods_images: [],
           goods_number: "",
           goods_name: "",
-          category_id: "",
+          category_id: 0,
           goods_sort: 0,
-          category_id: "",
           seo: "",
           goods_recommend_status: "1",
           goods_detail: "",
@@ -300,12 +292,12 @@ export default {
           // data.special = this.special;
           axios.post(target, this.formItem).then(function(response) {
             self.modalSetting.loading = false;
-            console.log(response);
+            // console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
               self.cancel();
-              vm.$router.push({
-                name: "goods"
+              self.$router.push({
+                name: "develop_goods"
               });
             } else {
               self.$Message.error(response.data.msg);
@@ -332,7 +324,10 @@ export default {
 
               //图片
               if (res.data.data.goods_images != "") {
-                vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+                for(let i = 0; i < res.data.data.goods_images.length; i ++) {
+                  vm.iconList.push({ name: "", url: res.data.data.goods_images[i] })
+                }
+                // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
               }
               vm.$nextTick(() => {
                 vm.uploadList = vm.$refs.upload.fileList;
@@ -412,15 +407,17 @@ export default {
     },
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
-      console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
+      // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.data.goods_images = "";
+      this.formItem.data.goods_images = [];
     },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formItem.data.goods_images = res.data.filePath;
+      this.formItem.data.goods_images.push(res.data.filePath);
+    console.log( res.data.filePath)
+
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
@@ -431,7 +428,7 @@ export default {
     handleBeforeUpload() {
       const check = this.uploadList.length < 5;
       if (!check) {
-        this.$Message.error("只能上传一张品牌图");
+        this.$Message.error("只能上传五张品牌图");
       }
       return check;
     }
