@@ -85,7 +85,7 @@
             <p class="en-name">Investment</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/join">
             <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
             <span>角色加盟</span>
             <p class="en-name">Agency</p>
@@ -481,6 +481,7 @@ export default {
           white-space: nowrap;
         }
         &:hover {
+          color: #ff0000;
           .el-dropdown {
             color: #ff0000;
           }
