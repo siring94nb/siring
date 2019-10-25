@@ -24,5 +24,10 @@ export default new Router({
       name: 'index',
       component: () => import('@/views/index')
     },
+    {
+      path: '/join',
+      name: 'join',
+      component: () => import('@/views/join')
+    }
   ]
 })
