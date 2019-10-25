@@ -105,6 +105,10 @@ class Goods extends Base{
      * 商品管理-商品/软件开发定制--商品删除
      */
     public function delete(){
+        //获取删除的id
+        $request=Reuqest::instance();
+        $goods_id=$request->get('id');
+        halt();
 
     }
     /**
@@ -263,14 +267,62 @@ class Goods extends Base{
             $where['goods_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Good::getGoodsList($where);
-        // foreach($list as $k =>$v){
-        //     //获取当前id对应的规格
-        //     $list[$k]['special']=$listObj2=Special::getSpecialInfo($v['id']);
-        // }
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,
         ]);
+    }
+
+    /** 
+     * lilu
+     * 商品管理-定制商品--商品添加
+     */
+    public function made_add(){
+        $groups = '';
+        $postData = $this->request->post();
+        //判断商品的名字是否重复
+        $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->find();
+        if($is_use){
+            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
+        }
+        unset($postData['data']['id']);
+        $postData['create_time']=time();
+        $res = Db::teble('made_goods')->insert($postData);
+        if ($res) {
+                return $this->buildSuccess([]);
+            } else {
+                return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
+        }
+    }
+    /**
+     * lilu
+     * 商品管理-定制商品--商品编辑
+     */
+    public function made_edit(){
+        $groups = '';
+        $postData = $this->request->post();  //获取传参
+        //判断商品的名字是否重复
+        $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->count();
+        if($is_use >= 2){
+            return $this->buildField(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
+        }
+        //获取参数id-商品id
+        $postData['update_time']=time();
+        $goods_info=Db::table('made_goods')->update($postData);
+        if($goods_info !==false){
+            return $this->buildSuccess([
+                'data'=>$goods_info
+            ]);
+        }else{
+            return $this->buildField(ReturnCode::DB_SAVE_ERROR, '操作失败');
+        }
+    }
+    /**
+     * lilu
+     * 商品管理-定制商品--商品删除
+     */
+    public function made_delete(){
+
     }
 
 
