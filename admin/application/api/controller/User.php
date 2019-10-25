@@ -2,13 +2,14 @@
 
 namespace app\api\controller;
 
+use app\data\model\UserGrade;
 use think\Request;
 use app\data\model\User as UserAll;
 use think\Validate;
 use think\Controller;
 use think\captcha\Captcha;
 use think\Session;
-
+use think\Db;
 /**
  * Class User登录 注册
  * @package app\api\controller
@@ -65,7 +66,7 @@ class User extends Base
         $rules = [
             'phone' => 'require|regex:\d{11}|unique:user',
             'password'=>'require|alphaNum|confirm|length:6,16',
-            'code'=>'require',
+//            'code'=>'require',
         ];
         $message = [
             'phone.require' => '请输入手机号',
@@ -74,7 +75,7 @@ class User extends Base
             'password.require'=>'密码不能为空',
             'password.length' => '密码长度必须在6~16位之间',
             'password.confirm' => '两次密码输入不一致',
-            'code.require'=>'验证码不能为空',
+//            'code.require'=>'验证码不能为空',
         ];
         //验证
         $validate = new Validate($rules,$message);
@@ -82,9 +83,9 @@ class User extends Base
             return json(['code' => 0,'msg' => $validate->getError()]);
         }
 
-        if (Session::get('mobileCode') != $param['code']) {
-            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
-        }
+//        if (Session::get('mobileCode') != $param['code']) {
+//            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
+//        }
         //判断邀请码
         if(empty($param['invitation'])){
             $param['invitation'] = '';
@@ -102,8 +103,19 @@ class User extends Base
         $param['my_code'] = create_invite_code();
 
         // 储存
-        $user = new UserAll();
-        $result = $user->add($param);
+        $result = Db::transaction(function()use ( $param ){
+            //用户表
+            $user = new UserAll();
+            $data = $user->add($param);
+            $uid = $data->id;
+            //等级表
+            $user_grade = new UserGrade();
+            $user_data = $user_grade->add($uid);
+
+            return $data && $user_data ? true : false;
+
+        });
+
 
         return $result  ? returnJson(1,'注册成功') : returnJson(0,'注册失败');
 

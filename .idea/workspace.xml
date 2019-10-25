@@ -3,12 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/data/model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/model/Goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/model/Goods.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -37,7 +35,7 @@
         <counts>
           <entry key="js" value="4" />
           <entry key="json" value="1" />
-          <entry key="php" value="161" />
+          <entry key="php" value="192" />
           <entry key="vue" value="7" />
         </counts>
       </usages-collector>
@@ -45,21 +43,21 @@
         <counts>
           <entry key="JSON" value="1" />
           <entry key="JavaScript" value="4" />
-          <entry key="PHP" value="161" />
+          <entry key="PHP" value="192" />
           <entry key="Vue.js" value="7" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="js" value="21" />
-          <entry key="php" value="2206" />
+          <entry key="php" value="2441" />
           <entry key="vue" value="177" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="21" />
-          <entry key="PHP" value="2206" />
+          <entry key="PHP" value="2441" />
           <entry key="Vue.js" value="177" />
         </counts>
       </usages-collector>
@@ -73,10 +71,15 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinOrder.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
+            <state relative-caret-position="559">
+              <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
               <folding>
                 <element signature="e#38#67#0#PHP" expanded="true" />
               </folding>
@@ -85,66 +88,67 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue">
+        <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinRole.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="339">
-              <caret line="260" column="9" lean-forward="true" selection-start-line="260" selection-start-column="9" selection-end-line="260" selection-end-column="9" />
+            <state relative-caret-position="432">
+              <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/model/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="720">
+              <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
+        <entry file="file://$PROJECT_DIR$/admin/application/model/Goods.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="318" column="43" lean-forward="true" selection-start-line="318" selection-start-column="43" selection-end-line="318" selection-end-column="43" />
+            <state relative-caret-position="223">
+              <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="39" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
+        <entry file="file://$PROJECT_DIR$/admin/application/data/model/Provinces.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="49" column="48" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="48" />
+            <state relative-caret-position="338">
+              <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinRole.php">
+        <entry file="file://$PROJECT_DIR$/admin/application/model/Good.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/model/GoodsSku.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="133" selection-start-line="133" selection-end-line="133" />
+            <state relative-caret-position="456">
+              <caret line="139" column="37" selection-start-line="139" selection-start-column="37" selection-end-line="139" selection-end-column="37" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Website.php">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1224" />
+            <state relative-caret-position="408">
+              <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+            </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/BuildToken.php">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/File.php">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Index.php">
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -172,7 +176,6 @@
         <option value="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/RoleJoin.php" />
         <option value="$PROJECT_DIR$/admin/application/adminRoute.php" />
-        <option value="$PROJECT_DIR$/admin/application/data/model/Provinces.php" />
         <option value="$PROJECT_DIR$/web/build/config.js" />
         <option value="$PROJECT_DIR$/admin/application/config.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/WechatPay.php" />
@@ -183,6 +186,11 @@
         <option value="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" />
         <option value="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" />
         <option value="$PROJECT_DIR$/web/src/router/router.js" />
+        <option value="$PROJECT_DIR$/admin/application/data/model/UserGrade.php" />
+        <option value="$PROJECT_DIR$/admin/application/data/model/User.php" />
+        <option value="$PROJECT_DIR$/admin/application/api/controller/User.php" />
+        <option value="$PROJECT_DIR$/admin/application/data/model/Provinces.php" />
+        <option value="$PROJECT_DIR$/admin/application/model/Goods.php" />
       </list>
     </option>
   </component>
@@ -230,7 +238,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -295,22 +303,14 @@
               <item name="siring" type="462c0819:PsiDirectoryNode" />
               <item name="admin" type="462c0819:PsiDirectoryNode" />
               <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
-              <item name="siring" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
-              <item name="siring" type="462c0819:PsiDirectoryNode" />
-              <item name="admin" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
               <item name="extra" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="model" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="siring" type="b2602c69:ProjectViewProjectNode" />
@@ -383,12 +383,12 @@
       <workItem from="1571793116236" duration="6326000" />
       <workItem from="1571810700198" duration="14638000" />
       <workItem from="1571879299060" duration="801000" />
-      <workItem from="1571965223878" duration="5804000" />
+      <workItem from="1571965223878" duration="9657000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="69155000" />
+    <option name="totallyTimeSpent" value="73008000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -422,94 +422,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/thinkphp/helper.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="197">
-          <caret line="102" column="13" selection-start-line="102" selection-start-column="13" selection-end-line="102" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4296">
-          <caret line="187" column="33" selection-start-line="187" selection-start-column="33" selection-end-line="187" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/common.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2880">
-          <caret line="128" column="12" selection-start-line="128" selection-start-column="12" selection-end-line="128" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/extra/apiAdmin.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/extra/wechat.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="18" column="42" selection-start-line="18" selection-start-column="42" selection-end-line="18" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/vendor/overtrue/wechat/src/Payment/Order.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1704">
-          <caret line="78" column="20" selection-start-line="78" selection-start-column="20" selection-end-line="78" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="744">
-          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/WechatPay.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="50" column="42" lean-forward="true" selection-start-line="50" selection-start-column="42" selection-end-line="50" selection-end-column="42" />
-          <folding>
-            <element signature="e#33#48#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/App.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3809" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/AppGroup.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Auth.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4320" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Banner.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/BackupSql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-360" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Base.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Feedback.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1224" />
@@ -564,19 +476,6 @@
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Treaty.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6007" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1584" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserSubcontractor.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3096" />
@@ -589,12 +488,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Live.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Miss.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/BuildToken.php">
@@ -614,34 +507,10 @@
         <state relative-caret-position="-1224" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="49" column="48" selection-start-line="49" selection-start-column="33" selection-end-line="49" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-24">
           <caret line="167" column="5" lean-forward="true" selection-start-line="167" selection-start-column="5" selection-end-line="167" selection-end-column="5" />
-          <folding>
-            <element signature="e#38#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="133" selection-start-line="133" selection-end-line="133" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="99" column="5" selection-start-line="99" selection-start-column="5" selection-end-line="99" selection-end-column="5" />
           <folding>
             <element signature="e#38#67#0#PHP" expanded="true" />
           </folding>
@@ -659,6 +528,139 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
           <caret line="318" column="43" lean-forward="true" selection-start-line="318" selection-start-column="43" selection-end-line="318" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Miss.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="20" column="22" selection-start-line="20" selection-start-column="18" selection-end-line="20" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserGrade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="17" column="5" lean-forward="true" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/User.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="744">
+          <caret line="39" column="27" selection-start-line="39" selection-start-column="27" selection-end-line="39" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="288">
+          <caret line="105" column="59" lean-forward="true" selection-start-line="105" selection-start-column="59" selection-end-line="105" selection-end-column="59" />
+          <folding>
+            <element signature="e#38#67#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/thinkphp/library/think/db/Query.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="2212" column="20" selection-start-line="2212" selection-start-column="20" selection-end-line="2212" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Seo.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Treaty.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="386">
+          <caret line="22" column="23" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/About.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Banner.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Contact.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Discount.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Feedback.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinOrder.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinRole.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="31" column="34" lean-forward="true" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="456">
+          <caret line="139" column="37" selection-start-line="139" selection-start-column="37" selection-end-line="139" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="22" column="29" lean-forward="true" selection-start-line="22" selection-start-column="29" selection-end-line="22" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/model/Good.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/model/GoodsSku.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/model/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="720">
+          <caret line="35" column="5" lean-forward="true" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="39" column="26" lean-forward="true" selection-start-line="39" selection-start-column="26" selection-end-line="39" selection-end-column="26" />
+          <folding>
+            <element signature="e#38#67#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Provinces.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/model/Goods.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="14" column="39" lean-forward="true" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="39" />
         </state>
       </provider>
     </entry>
