@@ -80,7 +80,7 @@
         :key="index"
         :label="'规格-' + index"
         :prop="'item'+ index"
-        :rules="{required: true, message: '规格-' + index +' 不能为空', trigger: 'blur'}">
+        >
         <div style="display:flex;">
           <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
             <span slot="prepend">终端版本</span>
@@ -111,6 +111,7 @@
           </template>
         </div>
         <Upload
+          multiple
           ref="upload"
           :show-upload-list="false"
           :default-file-list="iconList"
@@ -202,7 +203,7 @@ export default {
       formItem: {
         data: {
           id:0,
-          goods_images: [],
+          goods_images: "",
           goods_number: "",
           category_id: 0,
           goods_name: "",
@@ -240,7 +241,7 @@ export default {
       this.formItem = {
         data: {
           id: 0,
-          goods_images: [],
+          goods_images: "",
           goods_number: "",
           goods_name: "",
           category_id: 0,
@@ -288,8 +289,6 @@ export default {
           } else {
             target = "Goods/edit";
           }
-          // data.formItem = this.formItem;
-          // data.special = this.special;
           axios.post(target, this.formItem).then(function(response) {
             self.modalSetting.loading = false;
             // console.log(response);
@@ -324,8 +323,9 @@ export default {
 
               //图片
               if (res.data.data.goods_images != "") {
-                for(let i = 0; i < res.data.data.goods_images.length; i ++) {
-                  vm.iconList.push({ name: "", url: res.data.data.goods_images[i] })
+                var str = res.data.data.goods_images.split(',');
+                for(let i = 0; i < str.length; i ++) {
+                  vm.iconList.push({ name: "", url: str[i] })
                 }
                 // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
               }
@@ -409,15 +409,14 @@ export default {
       const fileList = this.$refs.upload.fileList;
       // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.data.goods_images = [];
+      this.formItem.data.goods_images = "";
     },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formItem.data.goods_images.push(res.data.filePath);
-    console.log( res.data.filePath)
-
+      this.formItem.data.goods_images == "" ? this.formItem.data.goods_images += res.data.filePath + ',': this.formItem.data.goods_images += "," + res.data.filePath;
+    
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");

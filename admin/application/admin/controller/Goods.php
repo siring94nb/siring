@@ -104,11 +104,21 @@ class Goods extends Base{
      * lilu
      * 商品管理-商品/软件开发定制--商品删除
      */
-    public function delete(){
+    public function del(){
         //获取删除的id
-        $request=Reuqest::instance();
-        $goods_id=$request->get('id');
-        halt();
+        $request=Request::instance();
+        $goods_id=$request->post('id');
+        $res=Good::destroy($goods_id);
+        if($res !== false){
+            //删除商品对应的规格
+            $special = Special::all(['goods_id'=>$goods_id])->toArray();
+            foreach($special as $k =>$v){
+                Special::destroy($v['id']);
+            }
+           return $this->buildSuccess([]);
+        }else{
+           return $this->buildFailed(['0','删除失败，请重新删除']);
+        }
 
     }
     /**
