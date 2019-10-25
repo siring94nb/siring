@@ -131,4 +131,5 @@ class JoinRole extends Model
     {
         return JoinRole::where('policy',$policy)->select() ? JoinRole::where('policy',$policy)->field('id,title,money,policy')->select() : returnJson(0,'数据不存在');
     }
+
 }
