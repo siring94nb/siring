@@ -291,7 +291,7 @@ export default {
         if (valid) {
           self.modalSetting.loading = true;
           let target = "";
-          if (this.formItem.data.id === 0) {
+          if (this.formItem.data.id == 0) {
             target = "Goods/add";
           } else {
             target = "Goods/edit";
@@ -304,6 +304,9 @@ export default {
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
               self.cancel();
+              vm.$router.push({
+                name: "goods"
+              });
             } else {
               self.$Message.error(response.data.msg);
             }
