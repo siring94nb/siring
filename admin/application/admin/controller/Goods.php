@@ -119,9 +119,9 @@ class Goods extends Base{
                 $where2['del_time']=time();
                 Special::update($where2);
             }
-            $this->buildSuccess([]);
+           return $this->buildSuccess([]);
         }else{
-            $this->buildFailed(['0','删除失败，请重新删除']);
+           return $this->buildFailed(['0','删除失败，请重新删除']);
         }
 
     }
