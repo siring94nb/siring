@@ -321,10 +321,8 @@ export default {
       if (vm.goods_id != 0) {
         axios
           .post("Goods/get_goods", {
-            params: {
               id: vm.goods_id
-            }
-          })
+              })
           .then(function(response) {
             let res = response.data;
 
@@ -347,9 +345,7 @@ export default {
     getSort() {
       let vm = this;
       axios
-        .post("Goods/category_index", {
-          params: {}
-        })
+        .post("Goods/category_index", {})
         .then(function(response) {
           let res = response.data;
           if (res.code === 1) {
