@@ -12,6 +12,7 @@ use app\model\SearchHot;
 use app\model\User;
 use app\model\UserFund;
 use app\model\UserDetails;
+use app\model\UserGrade;
 use think\Config;
 use think\Db;
 use think\Request;
@@ -136,14 +137,13 @@ class UserManage extends Base{
             'created_at' => date( 'Y-m-d H:i:s' )
         );
 
-            $res = Db::transaction( function() use ( $insert_user_data ){  
-            $res1 = (new User()) -> insert( $insert_user_data );
-           
-            if( $res1 ){
-                return true;
-            }else{
-                return false;
-            }
+        $res = Db::transaction( function() use ( $insert_user_data ){
+
+            $res1 = (new User()) -> insertGetId( $insert_user_data );
+
+            $res2 = (new UserGrade()) -> insert(['user_id'=>$res1]);
+
+            return $res1 && $res2 ? true : false;
         });
 
         if( $res ){

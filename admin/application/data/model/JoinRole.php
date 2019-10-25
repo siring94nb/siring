@@ -126,10 +126,16 @@ class JoinRole extends Model
         return JoinRole::where('type',1)->select() ? JoinRole::where('type',1)->field('id,title,img,money,policy')->select() : returnJson(0,'数据不存在');
     }
 
-    //会员套餐费用
+    //分包商套餐费用
     public function join_index($policy)
     {
         return JoinRole::where('policy',$policy)->select() ? JoinRole::where('policy',$policy)->field('id,title,money,policy')->select() : returnJson(0,'数据不存在');
+    }
+
+    //用户套餐折扣信息
+    public function join_user($id)
+    {
+        return self::get(['id'=>$id]) ? self::get(['id'=>$id])->toArray() : returnJson(0,'数据有误');
     }
 
 }

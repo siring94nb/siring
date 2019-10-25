@@ -16,7 +16,7 @@ class Provinces extends Model
     {
         return Provinces::where('pid',0)->select() ? Provinces::where('pid',0)->field('id,name')->select() : returnJson(0,'数据不存在');
     }
-    
+
     //城市
     public function city_index($param)
     {
@@ -28,7 +28,7 @@ class Provinces extends Model
             returnJson (0,$validate->getError());exit();
         }
 
-        $data =  Provinces::all(['pid'=>$param['pid'],'type'=>$param['cid']]);
+        $data =  Provinces::all(['pid'=>$param['pid'],'type'=>$param['type']]);
 
         return $data ? $data->toArray() : returnJson(0,'数据不存在');
     }

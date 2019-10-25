@@ -3,8 +3,10 @@
 namespace app\admin\controller;
 
 use think\Request;
+use think\Db;
 use think\Validate;
 use app\model\User;
+use app\data\model\UserGrade;
 class UserPartner extends Base
 {
     /**
@@ -77,13 +79,23 @@ class UserPartner extends Base
 
         //调取生成个人邀请码
         $param['my_code'] = create_invite_code();
-
         // 储存
-        $user = new \app\model\User();
-        $res = $user -> user_add( $param['type'],$param['cipher'],$param['salt'],$param['realname']
-            ,$param['phone'],$param['remark'],$param['img'],$param['my_code']);
+        $result = Db::transaction(function()use ( $param ){
+            //用户表
+            $user = new \app\model\User();
+            $res = $user -> user_add( $param['type'],$param['cipher'],$param['salt'],$param['realname']
+                ,$param['phone'],$param['remark'],$param['img'],$param['my_code']);
+            $uid = $res->id;
+            //等级表
+            $user_grade = new UserGrade();
+            $user_data = $user_grade->add($uid);
 
-        return $res  ?   $this -> buildSuccess( [] , '新增成功' ) :  $this -> buildFailed( 1001 , '新增失败' );
+            return $res && $user_data ? true : false;
+
+        });
+
+
+        return $result  ?   $this -> buildSuccess( [] , '新增成功' ) :  $this -> buildFailed( 1001 , '新增失败' );
     }
 
     /**

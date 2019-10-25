@@ -18,7 +18,8 @@ class User extends Model
     //新增
     public function add($param)
     {
-        return $this->save([
+        $user = new User;
+        $user->save([
             'phone' => $param['phone'],
             'password' => $param['cipher'],
             'invitation' => $param['my_code'],
@@ -26,6 +27,7 @@ class User extends Model
             'salt' => $param['salt'],
             'created_at' => time(),
         ]);
+        return $user  !== false ? $user : false;
     }
     //修改密码
     public function editPassword($tel, $password)

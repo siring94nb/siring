@@ -16,8 +16,8 @@ return [
      * 账号基本信息，请从微信公众平台/开放平台获取
      */
 
-    'app_id'  => 'wxf0c67b5684405d44',         // AppID
-    'secret'  => 'efbf672f147c397407b2267cf3d4253a',     // AppSecret
+    'app_id'  => 'wx7a8782e472a6c34a',         // AppID
+    'secret'  => 'ae3dce2528dc43edd49e571cb95b9c25',     // AppSecret
     'token'   => 'TOKEN',          // Token
     'aes_key' => '',                    // EncodingAESKey，安全模式下请一定要填写！！！
 
@@ -48,8 +48,8 @@ return [
      * 微信支付
      */
     'payment' => [
-        'merchant_id'        => '1559227101',
-        'key'                => 'Siring13922830809zhanghaiqing123',
+        'merchant_id'        => '1484093452',
+        'key'                => 'zhihuichacang123456zhihuichacang',
 //        'cert_path'          => ROOT_PATH . 'public/certs/wechat/apiclient_cert.pem', // XXX: 绝对路径！！！！
 //        'key_path'           => ROOT_PATH . 'public/certs/wechat/apiclient_key.pem',      // XXX: 绝对路径！！！！
         'notify_url'       => '',

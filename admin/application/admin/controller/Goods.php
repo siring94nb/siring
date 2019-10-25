@@ -29,17 +29,20 @@ class Goods extends Base{
         $goods_name = $this->request->get('goods_name', '');
         $category_id = $this->request->get('category_id', '');
         $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        if (!empty($goods_recommend_staus)) {
+        if ($category_id !== '-1') {
+            $where['category_id'] = $category_id;
+        }
+        if ($goods_recommend_staus !== '-1') {
             $where['goods_recommend_staus'] = $goods_recommend_staus;
         }
         if ($goods_name) {
             $where['goods_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Good::getGoodsList($where);
-        // foreach($list as $k =>$v){
-        //     //获取当前id对应的规格
-        //     $list[$k]['special']=$listObj2=Special::getSpecialInfo($v['id']);
-        // }
+        foreach($list as $k =>$v){
+            //获取当前id对应的规格
+            $list[$k]['special']=Special::get($v['id']);
+        }
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,
@@ -106,22 +109,18 @@ class Goods extends Base{
      */
     public function del(){
         //获取删除的id
-        $request=Reuqest::instance();
+        $request=Request::instance();
         $goods_id=$request->post('id');
-        $where['id']=$goods_id;
-        $where['del_time']=time();
-        $res=Good::update($where);
+        $res=Good::destroy($goods_id);
         if($res !== false){
             //删除商品对应的规格
             $special = Special::all(['goods_id'=>$goods_id])->toArray();
             foreach($special as $k =>$v){
-                $where2['id']=$v['id'];
-                $where2['del_time']=time();
-                Special::update($where2);
+                Special::destroy($v['id']);
             }
-            $this->buildSuccess([]);
+           return $this->buildSuccess([]);
         }else{
-            $this->buildFailed(['0','删除失败，请重新删除']);
+           return $this->buildFailed(['0','删除失败，请重新删除']);
         }
 
     }

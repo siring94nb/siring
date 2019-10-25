@@ -301,7 +301,7 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'get']
         ]
     ], ['after_behavior' => $afterBehavior]);
-    
+
     //合伙人
     Route::group('UserPartner', [
         'index' => [
@@ -634,7 +634,7 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/made_del',      //定制商品编辑
             ['method' => 'post']
         ],
-       
+
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
     Route::group('AppletManage', [
@@ -732,7 +732,34 @@ Route::group('admin', function () use ($afterBehavior) {
     ], ['after_behavior' => $afterBehavior]);
     //商品分类列表
     Route::group('Category', [
-        
+
     ], ['after_behavior' => $afterBehavior]);
 
 });
+
+//<!--
+// *
+// *                    .::::.
+// *                  .::::::::.
+// *                 :::::::::::
+// *             ..:::::::::::'
+// *           '::::::::::::'
+// *             .::::::::::
+// *        '::::::::::::::..
+// *             ..::::::::::::.
+// *           ``::::::::::::::::
+// *            ::::``:::::::::'        .:::.
+// *           ::::'   ':::::'       .::::::::.
+// *         .::::'      ::::     .:::::::'::::.
+// *        .:::'       :::::  .:::::::::' ':::::.
+// *       .::'        :::::.:::::::::'      ':::::.
+// *      .::'         ::::::::::::::'         ``::::.
+// *  ...:::           ::::::::::::'              ``::.
+// * ```` ':.          ':::::::::'                  ::::..
+// *                    '.:::::'                    ':'````..
+// *
+// *
+// *
+// * -------- 每个成功的男人背后，是不是都有一个女人 --------
+// *
+//-->
