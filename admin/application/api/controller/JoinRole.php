@@ -113,9 +113,9 @@ class JoinRole extends Base
      * @param  int  $id
      * @return \think\Response
      */
-    public function discount()
+    public function discount($id)
     {
-        $id = Session::get('mobileCode');
+//        $id = Session::get('mobileCode');
         $data = UserGrade::where('user_id',$id)->field('id,user_id,grade')->find();
         returnArray($data);
         $grade = $data['grade'];

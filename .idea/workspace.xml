@@ -3,17 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/UserManage.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/UserManage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/UserSubcontractor.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/UserSubcontractor.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/adminRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/adminRoute.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/common.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/common.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/extra/wechat.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/extra/wechat.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/model/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -89,11 +79,14 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="6" column="18" lean-forward="true" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
+            <state relative-caret-position="223">
+              <caret line="116" column="5" lean-forward="true" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+              <folding>
+                <element signature="e#38#67#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -110,17 +103,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="761">
-              <caret line="99" column="2" lean-forward="true" selection-start-line="99" selection-start-column="2" selection-end-line="99" selection-end-column="2" />
+            <state relative-caret-position="425">
+              <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/adminRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="79">
-              <caret line="738" lean-forward="true" selection-start-line="738" selection-end-line="738" />
+            <state relative-caret-position="271">
+              <caret line="740" column="4" lean-forward="true" selection-start-line="740" selection-start-column="4" selection-end-line="740" selection-end-column="4" />
             </state>
           </provider>
         </entry>
@@ -211,10 +204,10 @@
         <option value="$PROJECT_DIR$/admin/application/common.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" />
         <option value="$PROJECT_DIR$/web/src/views/vipsetting/vipLevel.vue" />
-        <option value="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" />
         <option value="$PROJECT_DIR$/web/src/router/router.js" />
         <option value="$PROJECT_DIR$/admin/application/apiRoute.php" />
         <option value="$PROJECT_DIR$/admin/application/adminRoute.php" />
+        <option value="$PROJECT_DIR$/admin/application/api/controller/JoinRole.php" />
       </list>
     </option>
   </component>
@@ -262,7 +255,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-7" />
     <option name="width" value="974" />
     <option name="height" value="1047" />
@@ -401,12 +394,12 @@
       <workItem from="1571793116236" duration="6326000" />
       <workItem from="1571810700198" duration="14638000" />
       <workItem from="1571879299060" duration="801000" />
-      <workItem from="1571965223878" duration="16467000" />
+      <workItem from="1571965223878" duration="17274000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79818000" />
+    <option name="totallyTimeSpent" value="80625000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -662,13 +655,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="6" column="18" lean-forward="true" selection-start-line="6" selection-start-column="18" selection-end-line="6" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="727">
@@ -676,17 +662,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
+    <entry file="file://$PROJECT_DIR$/admin/application/adminRoute.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="761">
-          <caret line="99" column="2" lean-forward="true" selection-start-line="99" selection-start-column="2" selection-end-line="99" selection-end-column="2" />
+        <state relative-caret-position="271">
+          <caret line="740" column="4" lean-forward="true" selection-start-line="740" selection-start-column="4" selection-end-line="740" selection-end-column="4" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/adminRoute.php">
+    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79">
-          <caret line="738" lean-forward="true" selection-start-line="738" selection-end-line="738" />
+        <state relative-caret-position="425">
+          <caret line="43" column="40" lean-forward="true" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="116" column="5" lean-forward="true" selection-start-line="116" selection-start-column="5" selection-end-line="116" selection-end-column="5" />
+          <folding>
+            <element signature="e#38#67#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
