@@ -108,16 +108,12 @@ class Goods extends Base{
         //获取删除的id
         $request=Request::instance();
         $goods_id=$request->post('id');
-        $where['id']=$goods_id;
-        $where['del_time']=time();
-        $res=Good::update($where);
+        $res=Good::destroy($goods_id);
         if($res !== false){
             //删除商品对应的规格
             $special = Special::all(['goods_id'=>$goods_id])->toArray();
             foreach($special as $k =>$v){
-                $where2['id']=$v['id'];
-                $where2['del_time']=time();
-                Special::update($where2);
+                Special::destroy($v['id']);
             }
            return $this->buildSuccess([]);
         }else{

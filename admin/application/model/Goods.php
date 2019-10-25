@@ -33,6 +33,7 @@ class Goods extends Base
     public  static function getGoodsList($parsm)
     {
         $where=[];
+        $where['del_time'] = null;
         if(array_key_exists('category_id',$parsm)){
             if($parsm['category_id']!==0){
                 $where['category_id']=$parsm['category_id'];
