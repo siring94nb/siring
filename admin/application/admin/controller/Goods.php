@@ -106,7 +106,7 @@ class Goods extends Base{
      */
     public function del(){
         //获取删除的id
-        $request=Reuqest::instance();
+        $request=Request::instance();
         $goods_id=$request->post('id');
         $where['id']=$goods_id;
         $where['del_time']=time();
