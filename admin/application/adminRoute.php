@@ -595,7 +595,7 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
         'made'   => [
-            'admin/Goods/made',           //定制商品
+            'admin/Goods/made',           //定制商品列表
             ['method' => 'post']
         ],
         'evaluate'   => [
@@ -604,15 +604,15 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'category_index' => [
             'admin/Goods/category_index',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'category_add' => [
             'admin/Goods/category_add',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'category_edit' => [
             'admin/Goods/category_edit',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'category_del' => [
             'admin/Goods/category_del',
@@ -620,7 +620,19 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'get_goods' => [
             'admin/Goods/get_goods',     //获取软件商品信息（id）
-            ['method' => 'get']
+            ['method' => 'post']
+        ],
+        'made_add' => [
+            'admin/Goods/made_add',      //定制商品添加
+            ['method' => 'post']
+        ],
+        'made_edit' => [
+            'admin/Goods/made_edit',      //定制商品编辑
+            ['method' => 'post']
+        ],
+        'made_del' => [
+            'admin/Goods/made_del',      //定制商品编辑
+            ['method' => 'post']
         ],
        
     ], ['after_behavior' => $afterBehavior]);
