@@ -58,26 +58,31 @@
       <div class="sel-city">
         <h3 class="sel-title">城市合伙人支持</h3>
         <div class="sel-cont">
-          <el-form ref="form" label-width="120px">
+          <el-form ref="ruleForm" :model="ruleForm" :rules="rule" label-width="120px">
             <el-form-item label="选择加盟城市：">
-              <el-select v-model="provVal" placeholder="请选择">
-                <el-option v-for="item in prov" :key="item" :label="item" :value="item"></el-option>
+              <el-select v-model="ruleForm.provVal" placeholder="请选择" @change="provChange">
+                <el-option v-for="item in prov" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
-              <el-select v-model="levelVal" placeholder="请选择">
-                <el-option v-for="item in level" :key="item" :label="item" :value="item"></el-option>
+              <el-select v-model="ruleForm.levelVal" placeholder="请选择" @change="levelChange">
+                <el-option
+                  v-for="item in level"
+                  :key="item.sort"
+                  :label="item.title"
+                  :value="item.sort"
+                ></el-option>
               </el-select>
-              <el-select v-model="cityVal" placeholder="请选择">
-                <el-option v-for="item in city" :key="item" :label="item" :value="item"></el-option>
+              <el-select v-model="ruleForm.cityVal" placeholder="请选择" @change="cityChange">
+                <el-option v-for="item in city" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="我的优势：">
+            <el-form-item label="我的优势：" prop="textarea">
               <el-input
                 type="textarea"
                 :rows="3"
                 maxlength="100"
                 show-word-limit
                 placeholder="说明下自己的优势"
-                v-model="textarea"
+                v-model="ruleForm.textarea"
               ></el-input>
             </el-form-item>
           </el-form>
@@ -106,18 +111,70 @@
     </el-dialog>
 
     <!-- 结算 -->
-    <div class="payment">
-
+    <div :class="{payment: true, show: showPaymentFlag}">
+      <div class="payment-inner">
+        <div>费用：</div>
+        <div>
+          <div class="bgw">￥{{price}}</div>
+          <p class="tip">金额</p>
+        </div>
+        <div class="symbol">×</div>
+        <div>
+          <div class="bgw">{{percent}}%</div>
+          <p class="tip">
+            会员折扣
+            <span class="ques">？</span>
+          </p>
+        </div>
+        <div class="symbol">×</div>
+        <el-input-number
+          v-model="num"
+          controls-position="right"
+          @change="numChange"
+          :min="1"
+          :max="10"
+        ></el-input-number>
+        <div class="symbol">=</div>
+        <div>
+          <div class="bgw">￥{{total}}</div>
+        </div>
+        <el-button type="danger" @click="pay">立即支付</el-button>
+      </div>
     </div>
+
+    <!-- 选择支付方式 -->
+    <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="30%" center>
+      <el-form ref="payway" :model="payway" :rules="wayRule" label-width="80px">
+        <el-form-item label="支付方式" prop="way">
+          <el-radio-group v-model="payway.way" @change="selectway">
+            <el-radio :label="1">微信</el-radio>
+            <el-radio :label="2">支付宝</el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item>
+          <el-image style="width: 300px; height: 300px" :src="payqrcode" :fit="fit"></el-image>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="showPayWayFlag = false">取 消</el-button>
+        <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
 import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
 import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
+import {
+  GetProvince,
+  GetCityList,
+  GetLevelList,
+  CityOrderAdd,
+  Payment
+} from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -152,28 +209,145 @@ export default {
           income: "约50万"
         }
       ],
-      prov: ["广东", "广西"],
+      prov: [],
       level: [],
       city: [],
-      provVal: "",
-      levelVal: "",
-      cityVal: "",
-      textarea: ""
+      rule: {
+        textarea: [
+          {
+            required: true,
+            message: "请说明自己的优势",
+            trigger: "blur"
+          }
+        ]
+      },
+      ruleForm: {
+        textarea: "",
+        provVal: "",
+        levelVal: "",
+        cityVal: ""
+      },
+      showPaymentFlag: false,
+      num: 1,
+      price: 0,
+      percent: 100,
+      showPayWayFlag: false,
+      payway: {
+        way: 0
+      },
+      wayRule: {
+        way: [
+          {
+            required: true,
+            message: "请选择支付方式",
+            trigger: "change"
+          }
+        ]
+      },
+      orderId: "",
+      payqrcode: ""
     };
   },
   mounted() {
-    this.getProvince();
+    this.init();
+  },
+  computed: {
+    total() {
+      return this.price * (this.percent / 100) * this.num;
+    }
   },
   methods: {
+    init() {
+      this.getProvince();
+      this.getLevelList();
+    },
     stepMouseEnter(index) {
       this.stepFlag = index;
     },
     getProvince() {
-      axios.post('JoinRole/profit', {
-        type: 2
-      }).then( res => {
-        console.log(res)
-      })
+      GetProvince({ type: 2 }).then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          this.prov = data;
+        }
+      });
+    },
+    getLevelList() {
+      GetLevelList().then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          this.level = data;
+        }
+      });
+    },
+    levelChange(name) {
+      if (this.ruleForm.provVal) {
+        this.getCityList();
+        // 更新价格
+        this.price = this.level[this.ruleForm.levelVal].money;
+        // 清空县市 隐藏结算框
+        this.ruleForm.cityVal = "";
+        this.showPaymentFlag = false;
+      } else {
+        this.$message({
+          message: "请选择加盟城市！",
+          type: "warning"
+        });
+      }
+    },
+    provChange() {
+      if (this.ruleForm.levelVal) {
+        this.getCityList();
+      }
+    },
+    cityChange() {
+      this.showPaymentFlag = true;
+    },
+    numChange(value) {},
+    getCityList() {
+      GetCityList({
+        pid: this.ruleForm.provVal,
+        type: this.ruleForm.levelVal
+      }).then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          this.city = data;
+        }
+      });
+    },
+    pay() {
+      this.$refs["ruleForm"].validate(valid => {
+        if (valid) {
+          this.showPayWayFlag = true;
+          CityOrderAdd({
+            grade: this.ruleForm.cityVal,
+            con: this.ruleForm.textarea,
+            num: this.num,
+            price: this.total,
+            user_id: 1
+          }).then(res => {
+            let { code, data, msg } = res.data;
+            if (code === 1) {
+              this.orderId = data;
+            }
+          });
+        }
+      });
+    },
+    selectway() {
+      this.$refs["payway"].validate(valid => {
+        if (valid) {
+          Payment({
+            type: this.payway.way,
+            order_id: this.orderId
+          }).then(res => {
+            let { code, imgData, msg } = res.data;
+            if (code === 1) {
+              this.payqrcode = imgData;
+            }
+          });
+        }
+      });
     }
   }
 };
@@ -310,6 +484,55 @@ export default {
         }
         .el-textarea {
           width: 692px;
+        }
+      }
+    }
+  }
+  .payment {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: rgb(204, 235, 248);
+    &.show {
+      display: block;
+    }
+    .payment-inner {
+      float: right;
+      display: flex;
+      align-items: baseline;
+      margin-top: 10px;
+      margin-right: 40px;
+      .bgw {
+        background-color: #ffffff;
+        padding: 10px 30px;
+        color: #ff0000;
+        min-width: 120px;
+        box-sizing: border-box;
+      }
+      .symbol {
+        margin: 0 20px;
+      }
+      .el-button {
+        margin-left: 20px;
+      }
+      .tip {
+        font-size: 14px;
+        color: #999999;
+        text-align: center;
+        margin-top: 5px;
+        .ques {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          border-radius: 50%;
+          background-color: #ff0000;
+          color: #ffffff;
+          cursor: pointer;
         }
       }
     }
