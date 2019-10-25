@@ -273,6 +273,7 @@ const deleteButton = (vm, h, currentRow, index) => {
               id: currentRow.id
             })
             .then(function(response) {
+              console.log(response)
               currentRow.loading = false;
               if (response.data.code === 1) {
                 vm.tableData.splice(index, 1);
