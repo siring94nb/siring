@@ -41,11 +41,14 @@ class Goods extends Base
         }
         if(array_key_exists('goods_recomment_status',$parsm)){
             if($parsm['goods_recomment_status']!==0){
-                $where['category_id']=$parsm['category_id'];
+                $where['goods_recomment_status']=$parsm['goods_recomment_status'];
             }
         }
         if(array_key_exists('goods_name',$parsm)){
             $where['goods_name']=$parsm['goods_name'];
+        }
+        if(array_key_exists('category_id',$parsm)){
+            $where['category_id']=$parsm['category_id'];
         }
         if(empty($parsm['page'])){
             $parsm['page'] = 1;
