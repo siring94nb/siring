@@ -245,12 +245,12 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-           vm.$router.push({
-              name: "goods_add",
-              params: {
-                goods_id: currentRow.id
-              }
-            });
+          vm.$router.push({
+            name: "goods_add",
+            params: {
+              goods_id: currentRow.id
+            }
+          });
         }
       }
     },
@@ -267,7 +267,21 @@ const deleteButton = (vm, h, currentRow, index) => {
         transfer: true
       },
       on: {
-        "on-ok": () => {}
+        "on-ok": () => {
+          axios
+            .post("Goods/delete", {
+              id: currentRow.id
+            })
+            .then(function(response) {
+              currentRow.loading = false;
+              if (response.data.code === 1) {
+                vm.tableData.splice(index, 1);
+                vm.$Message.success(response.data.msg);
+              } else {
+                vm.$Message.error(response.data.msg);
+              }
+            });
+        }
       }
     },
     [
@@ -471,8 +485,6 @@ export default {
         },
         special: []
       };
-
-      // this.special = {terminal_version:"",pic:"",develop_cycle:"",h_pic:""}
       // 移除图片
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -560,17 +572,13 @@ export default {
         .then(function(response) {
           let res = response.data;
           if (res.code === 1) {
+            for (let i = 0; i < res.data.list.length; i++) {
+              var str = res.data.list[i].goods_images.split(",");
+              res.data.list[i].goods_images = str[0];
+            }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
           } else {
-            if (res.code === -14) {
-              vm.$store.commit("logout", vm);
-              vm.$router.push({
-                name: "login"
-              });
-            } else {
-              vm.$Message.error(res.msg);
-            }
           }
         });
     },
