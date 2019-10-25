@@ -47,6 +47,7 @@ Route::group('api', function () {
         Route::any('grade_list','api/JoinRole/grade_list'); //等级费用列表
         Route::any('member_list','api/JoinRole/member_list'); //会员费用列表
         Route::any('join_list','api/JoinRole/join_list'); //分包商费用列表
+        Route::any('profit','api/JoinRole/profit'); //收益预测
     });
 
     //角色加盟订单
@@ -57,7 +58,7 @@ Route::group('api', function () {
         Route::any('get_pay','api/JoinOrder/get_pay'); //支付
     });
 
-    
+
 });
 $afterBehavior = [
     '\app\api\behavior\ApiAuth',
