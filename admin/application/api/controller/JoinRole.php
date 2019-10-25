@@ -91,15 +91,20 @@ class JoinRole extends Base
     }
 
     /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
+     * 收益预测
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function update(Request $request, $id)
+    public function profit()
     {
-        //
+        $request = Request::instance();
+        $param = $request->param();
+        $grade = new \app\data\model\JoinRole();
+
+        $data = $grade -> where('type',$param['type'])->field('id,title,money,policy,forecast')->select();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**

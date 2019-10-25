@@ -253,12 +253,23 @@ export default {
           align: "center",
           key: "policy"
         },
+          {
+              title: "会员折扣",
+              align: "center",
+              key: "discount"
+          },
         {
-          title: "状态",
+          title: "业绩提成",
           align: "center",
-          key: "status",
+          key: "royalty",
           width: 100
         },
+          {
+              title: "状态",
+              align: "center",
+              key: "status",
+              width: 100
+          },
         {
           title: "操作",
           align: "center",
