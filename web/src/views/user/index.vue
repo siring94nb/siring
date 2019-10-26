@@ -130,6 +130,12 @@
             type="password"
           ></Input>
         </FormItem>
+        <FormItem label="会员身份"  prop="vest">
+          <RadioGroup v-model="formItem.vest">
+            <Radio :label="1" >正常身份</Radio>
+            <Radio :label="2" >马甲会员</Radio>
+          </RadioGroup>
+        </FormItem>
       </Form>
       <div slot="footer">
         <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
@@ -160,6 +166,7 @@ const editButton = (vm, h, currentRow, index) => {
           vm.formItem.remark = currentRow.remark;
           vm.formItem.type = currentRow.type;
           vm.formItem.phone = currentRow.phone;
+          vm.formItem.vest = currentRow.vest;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -254,7 +261,9 @@ export default {
         {
           title: "用户账号",
           align: "center",
-          key: "phone"
+          key: "phone",
+            width: 120,
+
         },
         {
           title: "上级邀请码",
@@ -313,6 +322,18 @@ export default {
           align: "center",
           key: ""
         },
+          {
+              title: "会员身份",
+              align: "center",
+              key: "vest",
+              render: (h, param) => {
+                  if (param.row.vest == "1") {
+                      return h("div", "正常会员");
+                  } else if (param.row.vest == "2") {
+                      return h("div", "马甲会员");
+                  }
+              }
+          },
         {
           title: "加入时间",
           align: "center",
@@ -340,7 +361,8 @@ export default {
         listCount: 0
       },
       formItem: {
-        img: ""
+          img: "",
+          vest:1,
       },
       searchConf: {
         title: "",

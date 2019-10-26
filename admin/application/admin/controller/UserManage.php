@@ -59,7 +59,7 @@ class UserManage extends Base{
             $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
         }
 
-        $field = 'id,invitation,other_code,sex,status,realname,phone,grade,img,remark,created_at,end_time';
+        $field = 'id,invitation,other_code,sex,status,realname,phone,grade,img,remark,vest,created_at,end_time';
         $order = 'id desc';
 
         $user = new User();
@@ -123,15 +123,17 @@ class UserManage extends Base{
         if(!isset($param['remark'])){
             $param['remark'] = '';
         }
-
+        //生成密码
+        $cipher = password_hash($password,PASSWORD_DEFAULT);
         //开始写入数据
-        $salt = mt_rand( 100000 , 999999 );
+        $salt = substr(uniqid(rand()),-6);
         $insert_user_data = array(
             'realname' => $param['realname'],
             'img' => $param['img'],
             'phone' => $param['phone'],
             'remark' =>$param['remark'],
-            'password' => md5($password),
+            'password' => $cipher,
+            'vest' => $param['vest'],
             'type' =>  1,
             'salt' => $salt,
             'created_at' => date( 'Y-m-d H:i:s' )
@@ -209,10 +211,11 @@ class UserManage extends Base{
             'img' =>$param['img'],
             'phone' => $param['phone'],
             'remark' =>$param['remark'],
+            'vest' => $param['vest'],
             'type' => 1,
         );
         if(!empty($param['password'])){
-            $update_user_data['password'] = md5($param['password']);
+            $update_user_data['password'] = password_hash($param['password'],PASSWORD_DEFAULT);
         }
 
         $res = Db::transaction( function() use ( $update_user_data , $id ){
