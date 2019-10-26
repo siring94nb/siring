@@ -431,6 +431,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .logo-box{
+        cursor: pointer;
+      }
     }
     .comp-feature {
       h2 {

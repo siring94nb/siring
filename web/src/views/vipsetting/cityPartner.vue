@@ -26,7 +26,7 @@
     </Row>
     <Modal
       v-model="modalSetting.show"
-      width="668"
+      width="850"
       :styles="{top: '30px'}"
       @on-visible-change="doCancel"
     >
@@ -42,12 +42,7 @@
           <Input v-model="formItem.money" placeholder="请输入费用标准" style="width: 300px;"></Input>
         </FormItem>
         <FormItem label="等级政策描述" prop="policy">
-          <Input
-            v-model="formItem.policy"
-            type="textarea"
-            :autosize="{minRows: 2,maxRows: 5}"
-            placeholder="请输入等级政策描述"
-          ></Input>
+          <div id="wangeditor" v-model="formItem.policy"></div>
         </FormItem>
         <FormItem label="收益预测" prop="forecast">
           <Input v-model="formItem.forecast" placeholder="请输入收益预测" style="width: 300px;"></Input>
@@ -60,7 +55,7 @@
         </FormItem>
         <FormItem label="达标要求（个）" prop="standard_num">
           <InputNumber :min="1" v-model="formItem.standard_num"></InputNumber>
-          <div>*发展等级会员（除普通会员外）数</div>
+          <div>*发展等级会员数（除普通会员外）</div>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -73,6 +68,7 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
+import wangEditor from "wangeditor";
 
 const editButton = (vm, h, currentRow, index) => {
   return h(
@@ -192,7 +188,7 @@ export default {
         {
           title: "年收益预测",
           align: "center",
-          key: "forecast",
+          key: "forecast"
         },
         {
           title: "操作",
@@ -209,9 +205,9 @@ export default {
         listCount: 0
       },
       formItem: {
-        bottom_commission : 1,
-        standard_commission : 1,
-        standard_num : 1,
+        bottom_commission: 1,
+        standard_commission: 1,
+        standard_num: 1
       },
       searchConf: {
         title: "",
@@ -226,9 +222,9 @@ export default {
         index: 0
       },
       ruleValidate: {
-          title: [
+        title: [
           { required: true, message: "城市名称不能为空", trigger: "blur" }
-        ],
+        ]
         // phone: [
         //   { required: true, message: "手机号码不能为空", trigger: "blur" },
         //   { validator: validatePhone, trigger: "blur" }
@@ -385,6 +381,24 @@ export default {
     //this.UploadAction = config.front_url+'api/upload';
     this.UploadAction = config.front_url + "file/qn_upload";
     // this.uploadList = this.$refs.upload.fileList;
+
+    let vm = this;
+    this.editor = new wangEditor("#wangeditor");
+    this.editor.customConfig.uploadFileName = "image";
+    this.editor.customConfig.uploadImgMaxLength = 1;
+    this.editor.customConfig.uploadImgServer =
+      config.front_url + "file/qn_upload";
+    this.editor.customConfig.uploadImgHooks = {
+      customInsert: function(insertImg, result, editor) {
+        if (result.code == 1) {
+          insertImg(result.data.filePath);
+        }
+      }
+    };
+    this.editor.customConfig.onchange = function(html) {
+      vm.formItem.con = html;
+    };
+    this.editor.create();
   }
 };
 </script>

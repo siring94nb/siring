@@ -77,7 +77,7 @@ class User extends  Base{
     public  function user_add($type,$password,$salt,$realname,$phone,$remark,$img,$invitation)
     {
         $join = new User;
-        $res = $join->save([
+        $join->save([
 
             'type' => $type,
             'password' => $password,
@@ -90,7 +90,7 @@ class User extends  Base{
             'created_at' => time(),
 
         ]);
-        return $res;
+        return $join;
 
     }
 

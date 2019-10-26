@@ -3,8 +3,9 @@
 namespace app\api\controller;
 
 use app\data\model\Provinces;
+use app\data\model\UserGrade;
 use think\Request;
-
+use think\Session;
 /**
  * 角色加盟
  * Class JoinRole
@@ -74,7 +75,7 @@ class JoinRole extends Base
     }
 
     /**
-     * 等级会员费用
+     * 分包商费用
      * @author fyk
      * @param  \think\Request  $request
      * @return \think\Response
@@ -108,13 +109,47 @@ class JoinRole extends Base
     }
 
     /**
-     * 删除指定资源
-     *
+     * 会员折扣
      * @param  int  $id
      * @return \think\Response
      */
-    public function delete($id)
+    public function discount($id)
     {
-        //
+//        $id = Session::get('mobileCode');
+        $data = UserGrade::where('user_id',$id)->field('id,user_id,grade')->find();
+        returnArray($data);
+        $grade = $data['grade'];
+
+        $Join = new \app\data\model\JoinRole();
+        switch ($grade){
+            case 0:
+                $res['user_discount'] = 100;
+
+                returnJson(1,'获取成功',$res);exit();
+
+                break;
+            case 1:
+                $jid = 3;
+                $res = $Join->join_user($jid);
+
+                $list['user_discount'] = $res['discount'];
+                returnJson(1,'获取成功',$list);exit();
+                break;
+            case 2:
+                $jid = 4;
+                $res = $Join->join_user($jid);
+
+                $list['user_discount'] = $res['discount'];
+                returnJson(1,'获取成功',$list);exit();
+                break;
+            case 3:
+                $jid = 14;
+                $res = $Join->join_user($jid);
+
+                $list['user_discount'] = $res['discount'];
+                returnJson(1,'获取成功',$list);exit();
+                break;
+        }
+
     }
 }

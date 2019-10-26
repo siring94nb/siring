@@ -48,6 +48,7 @@ Route::group('api', function () {
         Route::any('member_list','api/JoinRole/member_list'); //会员费用列表
         Route::any('join_list','api/JoinRole/join_list'); //分包商费用列表
         Route::any('profit','api/JoinRole/profit'); //收益预测
+        Route::any('discount','api/JoinRole/discount'); //会员折扣
     });
 
     //角色加盟订单
@@ -66,3 +67,34 @@ $afterBehavior = [
     '\app\api\behavior\RequestFilter'
 ];
 // Route::rule('api/5c051ee3622e2','api/Problem/index', 'GET', ['after_behavior' => $afterBehavior]);Route::rule('api/5c063d2854725','api/Problem/add', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c07355145d9a','api/Problem/upd', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c0736bc45cac','api/Problem/del', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c0748240d1dc','api/Info/profitInfo', 'GET', ['after_behavior' => $afterBehavior]);Route::rule('api/5c074a3376deb','api/Info/profitUpd', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c076e2a1cc97','api/BuildToken/getAccessToken', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c0775d2e96a1','api/Suggest/index', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c079b19ca1ee','api/Suggest/del', '*', ['after_behavior' => $afterBehavior]);Route::rule('api/5c07b34a3edcf','api/UserManage/vip', '*', ['after_behavior' => $afterBehavior]);
+//
+//
+//
+//
+//
+//
+//                              _ooOoo_
+//                             o8888888o
+//                             88" . "88
+//                             (| -_- |)
+//                             O\  =  /O
+//                          ____/`---'\____
+//                        .'  \\|     |//  `.
+//                       /  \\|||  :  |||//  \
+//                      /  _||||| -:- |||||-  \
+//                      |   | \\\  -  /// |   |
+//                      | \_|  ''\---/''  |   |
+//                      \  .-\__  `-`  ___/-. /
+//                    ___`. .'  /--.--\  `. . __
+//                  ."" '<  `.___\_<|>_/___.'  >'"".
+//                | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+//                \  \ `-.   \_ __\ /__ _/   .-` /  /
+//           ======`-.____`-.___\_____/___.-`____.-'======
+//                              `=---='
+//           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+//
+//                      -望佛祖保佑永远无BUG!-
+//
+//
+//
+//

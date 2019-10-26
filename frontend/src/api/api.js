@@ -39,3 +39,47 @@ export const ForgetPwd = params => {
 export const GetBannerList = params => {
   return axios.post('/api/api/banner/banner_list', params)
 }
+
+// 角色加盟
+
+/**
+ * 获取加盟省份
+ */
+export const GetProvince = params => {
+  return axios.post('/api/api/JoinRole/province_list', params);
+}
+
+/**
+ * 获取城市等级列表
+ */
+export const GetLevelList = params => {
+  return axios.post('/api/api/JoinRole/grade_list', params);
+}
+
+/**
+ * 获取加盟城市
+ */
+export const GetCityList = params => {
+  return axios.post('/api/api/JoinRole/city_list', params);
+}
+
+/**
+ * 城市合伙人下单
+ */
+export const CityOrderAdd = params => {
+  return axios.post('/api/api/JoinOrder/city_order_add', params);
+}
+
+/**
+ * 用户折扣
+ */
+export const GetDiscount = params => {
+  return axios.post('/api/api/JoinRole/discount', params);
+}
+
+/**
+ * 支付订单
+ */
+export const Payment = params => {
+  return axios.post('/api/api/JoinOrder/get_pay', params);
+}
