@@ -6,7 +6,7 @@ use think\Controller;
 use think\Request;
 use Qiniu\Auth as Auth;
 use Qiniu\Storage\UploadManager;
-class File extends Controller
+class File extends Base
 {
 
     private $accesskey = '3k_WRHSUz0z-fkYa5dCUJiusRjjs-8_C6UF0egvd';
@@ -76,7 +76,7 @@ class File extends Controller
              $filePath = Config::get('front_pic_domain').'upload/image/'.$fileName;
              $data['fileName'] = $fileName;
              $data['filePath'] = $filePath;
-            return json(['code'=>1,'msg'=>'上传成功','data' =>$data]);           
+            return json(['code'=>1,'msg'=>'上传成功','data' =>$data]);
         }else{
             // 上传失败获取错误信息
             return json(['code'=>0,'msg' => $file->getError()]);
@@ -101,7 +101,7 @@ class File extends Controller
             $filePath = Config::get('front_pic_domain').'upload/video/'.$fileName;
             $data['fileName'] = $fileName;
             $data['filePath'] = $filePath;
-            return json(['code'=>1,'msg'=>'上传成功','data' =>$data]);           
+            return json(['code'=>1,'msg'=>'上传成功','data' =>$data]);
         }else{
             // 上传失败获取错误信息
             return json(['code'=>0,'msg' => $file->getError()]);
