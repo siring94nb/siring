@@ -71,6 +71,13 @@ export const CityOrderAdd = params => {
 }
 
 /**
+ * 用户折扣
+ */
+export const GetDiscount = params => {
+  return axios.post('/api/api/JoinRole/discount', params);
+}
+
+/**
  * 支付订单
  */
 export const Payment = params => {

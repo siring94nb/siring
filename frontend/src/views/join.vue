@@ -152,7 +152,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-image style="width: 300px; height: 300px" :src="payqrcode" :fit="fit"></el-image>
+          <el-image style="width: 300px; height: 300px" :src="payqrcode"></el-image>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -173,7 +173,8 @@ import {
   GetCityList,
   GetLevelList,
   CityOrderAdd,
-  Payment
+  Payment,
+  GetDiscount
 } from "@/api/api";
 export default {
   components: {
@@ -260,6 +261,7 @@ export default {
     init() {
       this.getProvince();
       this.getLevelList();
+      this.getdiscount();
     },
     stepMouseEnter(index) {
       this.stepFlag = index;
@@ -346,6 +348,16 @@ export default {
               this.payqrcode = imgData;
             }
           });
+        }
+      });
+    },
+    getdiscount() {
+      GetDiscount({
+        id: 31
+      }).then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          console.log(data)
         }
       });
     }
