@@ -6,25 +6,28 @@
     <Row>
       <Col span="24">
         <Card style="margin-bottom: 10px">
-          <Form inline>
+          <Form ref="myForm" :model="searchConf" inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="searchConf.title" placeholder="请输入要搜索的内容"></Input>
+              <Input v-model="searchConf.title" placeholder="请输入商品名称" />
             </FormItem>
             <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.start_time"
-                placeholder="请输入开始时间"
-                style="width: 200px"
-              ></DatePicker>
+              <span>商品分类</span>
+
+              <Select v-model="searchConf.category_id" style="width: 200px;">
+                <Option :value="-1">全部</Option>
+                <Option
+                  v-for="(item, index) in sortList"
+                  :value="item.id"
+                  :key="index"
+                >{{ item.category_name }}</Option>
+              </Select>
             </FormItem>
             <FormItem style="margin-bottom: 0">
-              <DatePicker
-                type="datetime"
-                v-model="searchConf.end_time"
-                placeholder="请输入结束时间"
-                style="width: 200px"
-              ></DatePicker>
+              <span>商品状态</span>
+              <Select v-model="searchConf.status" style="width: 200px;">
+                <Option :value="1">推荐</Option>
+                <Option :value="2">不推荐</Option>
+              </Select>
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">立即搜索</Button>
@@ -58,137 +61,85 @@
       </Col>
     </Row>
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
-      <p slot="header">
-        <Icon type="md-add"></Icon>
-        <span>添加商品</span>
-      </p>
-      <Form ref="myForm" :model="formItem" :label-width="120">
-        <FormItem label="商品名称" prop="name">
-          <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 300px;"></Input>
-        </FormItem>
-        <FormItem label="商品编号" prop="name">
-          <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 300px;"></Input>
-          <p>*模板化产品，规则按照MB+4位数字设定</p>
-        </FormItem>
-        <FormItem label="归属分类" prop="name">
-          <Select v-model="formItem.data.category_id" style="width: 300px;">
-            <Option :value="0">顶级菜单</Option>
-            <Option v-for="item in tableData" :value="item.id" :key="item.id">{{ item.showName }}</Option>
-          </Select>
-          <p>*可添加、修改分类，也可删除分类，分类名称按照顺序显示在前端页面</p>
-        </FormItem>
-        <FormItem label="商品排序" prop="name">
-          <InputNumber :min="1" v-model="formItem.data.goods_sort" style="width: 300px;"></InputNumber>
-        </FormItem>
-        <FormItem label="标记" prop="name">
-          <RadioGroup v-model="formItem.data.sign">
-            <Radio label="1">促销</Radio>
-            <Radio label="2">hot</Radio>
-          </RadioGroup>
-          <p>*填写正整数，从大到小排序</p>
-        </FormItem>
-        <FormItem label="SEO设置关键字" prop="name">
-          <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 300px;"></Input>
-          <p>*关键字中间用半角逗号,隔开</p>
-        </FormItem>
-        <FormItem label="终端版本">
-          <!-- <table class="table_s" border="1">
-            <tr>
-              <th>终端版本</th>
-              <th>价格（元）</th>
-              <th>划线价</th>
-              <th>开发周期</th>
-            </tr>
-            <tr>
-              <td>January</td>
-              <td>$100</td>
-              <td>$100</td>
-              <td>$100</td>
-            </tr>
-          </table>-->
-          <template>
-            <Table border :columns="columns1" :data="formItem.special"></Table>
-          </template>
-          <Button type="primary" @click="handleAdd" icon="md-add" style="margin-top:10px;">添加规格项</Button>
-        </FormItem>
-
-        <FormItem
-          v-for="(item, index) in formItem.special"
-          :key="index"
-          :label="'规格-' + index"
-          :prop="'item'+ index"
-        >
-          <div style="display:flex;">
-            <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
-              <span slot="prepend">终端版本</span>
-            </Input>
-            <Input v-model="item.price" placeholder="请输入" style="width: 150px;">
-              <span slot="prepend">价格（元）</span>
-            </Input>
-            <Input v-model="item.bottom_price" placeholder="请输入" style="width: 150px;">
-              <span slot="prepend">划线价</span>
-            </Input>
-            <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
-              <span slot="prepend">开发周期</span>
-            </Input>
-            <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">Delete</Button>
-          </div>
-        </FormItem>
-
-        <FormItem label="商品主图" prop="name">
-          <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
-            <template v-if="item.status === 'finished'">
-              <img :src="item.url" />
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+      <Tabs value="name1">
+        <TabPane label="添加评论" name="name1">
+          <Form ref="comments" :model="comment">
+            <FormItem label="马甲会员账号">
+              <Input v-model="comment.number" placeholder="请输入" style="width: 500px;" />
+            </FormItem>
+            <FormItem label="会员头像" prop="img">
+              <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
+                <template v-if="item.status === 'finished'">
+                  <img :src="item.url" />
+                  <div class="demo-upload-list-cover">
+                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                  </div>
+                </template>
+                <template v-else>
+                  <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+                </template>
               </div>
-            </template>
-            <template v-else>
-              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-            </template>
+              <Upload
+                multiple
+                ref="upload"
+                :show-upload-list="false"
+                :default-file-list="iconList"
+                :on-success="handleSuccess"
+                :format="['jpg','jpeg','png']"
+                :max-size="10240"
+                :on-format-error="handleFormatError"
+                :on-exceeded-size="handleMaxSize"
+                :before-upload="handleBeforeUpload"
+                type="drag"
+                name="image"
+                :action="UploadAction"
+                style="display: inline-block;width:58px;"
+              >
+                <div style="width: 58px;height:58px;line-height: 58px;">
+                  <Icon type="ios-camera" size="20"></Icon>
+                </div>
+              </Upload>
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <span>会员等级</span>
+              <Select v-model="comment.grade" style="width: 400px;">
+                <Option
+                  v-for="(item, index) in sortList"
+                  :value="item.id"
+                  :key="index"
+                >{{ item.category_name }}</Option>
+              </Select>
+            </FormItem>
+            <FormItem label="会员评论" porp>
+              <Input
+                v-model="comment.menber_comment"
+                type="textarea"
+                :autosize="{minRows: 4,maxRows: 8}"
+                style="width:1000px;"
+              />
+            </FormItem>
+            <FormItem >
+                <DatePicker type="datetime" v-model="comment.start_time" placeholder="请选择时间" style="width: 200px"></DatePicker>
+            </FormItem>
+            <FormItem label="官方回复" porp>
+              <Input
+                v-model="comment.reply"
+                type="textarea"
+                :autosize="{minRows: 4,maxRows: 8}"
+                style="width:1000px;"
+              />
+            </FormItem>
+            <FormItem >
+                <DatePicker type="datetime" v-model="comment.end_time" placeholder="请选择时间" style="width: 200px"></DatePicker>
+            </FormItem>
+          </Form>
+          <div slot="footer">
+            <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
+            <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
           </div>
-          <Upload
-            ref="upload"
-            :show-upload-list="false"
-            :default-file-list="DefaultList"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="10240"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload"
-            type="drag"
-            name="image"
-            :action="UploadAction"
-            style="display: inline-block;width:58px;"
-          >
-            <div style="width: 58px;height:58px;line-height: 58px;">
-              <Icon type="ios-camera" size="20"></Icon>
-            </div>
-          </Upload>
-          <p>*建议图片尺寸 260*170，主图链接到演示</p>
-        </FormItem>
-        <FormItem label="演示" prop="name">
-          <div id="wangeditor" v-model="formItem.data.goods_detail"></div>
-        </FormItem>
-        <FormItem label="功能描述">
-          <Input
-            v-model="formItem.data.goods_des"
-            type="textarea"
-            :autosize="{minRows: 2,maxRows: 5}"
-          ></Input>
-        </FormItem>
-        <FormItem label="推荐商品">
-          <RadioGroup v-model="formItem.data.goods_recommend_status">
-            <Radio label="1">推荐</Radio>
-            <Radio label="0">不推荐</Radio>
-          </RadioGroup>
-        </FormItem>
-      </Form>
-      <div slot="footer">
-        <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
-        <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
-      </div>
+        </TabPane>
+        <TabPane label="历史评论" name="name2">标签二的内容</TabPane>
+      </Tabs>
     </Modal>
   </div>
 </template>
@@ -273,7 +224,7 @@ const deleteButton = (vm, h, currentRow, index) => {
               id: currentRow.id
             })
             .then(function(response) {
-              console.log(response)
+              console.log(response);
               currentRow.loading = false;
               if (response.data.code === 1) {
                 vm.tableData.splice(index, 1);
@@ -307,6 +258,7 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   data() {
     return {
+      theme1: "light",
       UploadHeader: "",
       DefaultList: [],
       // 图片
@@ -314,6 +266,7 @@ export default {
       visible: false,
       uploadList: [],
       iconList: [],
+      sortList: [],
       // 图片
       columnsList: [
         {
@@ -390,24 +343,14 @@ export default {
           handle: ["comments", "copy", "edit", "delete"]
         }
       ],
-      columns1: [
-        {
-          title: "终端版本",
-          key: "attr_title"
-        },
-        {
-          title: "价格（元）",
-          key: "price"
-        },
-        {
-          title: "划线价",
-          key: "bottom_price"
-        },
-        {
-          title: "开发周期",
-          key: "cycle_time"
-        }
-      ],
+      comment: {
+        number: '',
+        grade: '',
+        menber_comment: '',
+        start_time: '',
+        reply: '',
+        end_time: '',
+      },
       tableData: [],
       tableShow: {
         currentPage: 1,
@@ -416,40 +359,20 @@ export default {
       },
       searchConf: {
         title: "",
-        keywords: "",
         status: "",
-        start_time: "",
-        end_time: ""
+        category_id: -1
       },
       modalSetting: {
         show: false,
         loading: false,
         index: 0
-      },
-      formItem: {
-        data: {
-          goods_images: "",
-          goods_number: "",
-          category_id: "",
-          goods_name: "",
-          goods_sort: 0,
-          category_id: "",
-          seo: "",
-          goods_recommend_status: "1",
-          goods_detail: "",
-          goods_des: "",
-          sign: ""
-        },
-        special: []
-      },
-      ruleValidate: {
-        name: [{ required: true, message: "昵称不能为空", trigger: "blur" }]
       }
     };
   },
   created() {
     this.init();
     this.getList();
+    this.getSort();
   },
   methods: {
     init() {
@@ -469,23 +392,6 @@ export default {
       });
     },
     cancel() {
-      this.formItem = {
-        // id: 0,
-        data: {
-          goods_images: "",
-          goods_number: "",
-          goods_name: "",
-          category_id: "",
-          goods_sort: 0,
-          category_id: "",
-          seo: "",
-          goods_recommend_status: "1",
-          goods_detail: "",
-          goods_des: "",
-          sign: ""
-        },
-        special: []
-      };
       // 移除图片
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -494,6 +400,19 @@ export default {
       this.iconList = [];
 
       this.modalSetting.show = false;
+    },
+    onMenuSelect(name) {
+      // console.log(name);
+    },
+    //分类
+    getSort() {
+      let vm = this;
+      axios.post("Goods/category_index", {}).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          vm.sortList = res.data.list;
+        }
+      });
     },
     handleAdd() {
       // this.index++;
@@ -527,11 +446,6 @@ export default {
           goods_id: 0
         }
       });
-      // //图片
-      // this.$nextTick(() => {
-      //   this.uploadList = this.$refs.upload.fileList;
-      // });
-      // this.modalSetting.show = true;
     },
     submit() {
       let self = this;
@@ -567,7 +481,9 @@ export default {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,
-            goods_name: vm.searchConf.title
+            goods_name: vm.searchConf.title,
+            category_id: vm.searchConf.category_id,
+            status: vm.searchConf.status
           }
         })
         .then(function(response) {
@@ -598,7 +514,6 @@ export default {
     },
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
-      console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
       this.formItem.data.goods_images = "";
     },
@@ -615,7 +530,7 @@ export default {
       this.$Message.error("文件大小不能超过10M");
     },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
+      const check = this.uploadList.length < 1;
       if (!check) {
         this.$Message.error("只能上传一张品牌图");
       }
@@ -623,25 +538,10 @@ export default {
     }
   },
   mounted() {
-    let vm = this;
-    this.editor = new wangEditor("#wangeditor");
-    this.editor.customConfig.uploadFileName = "image";
-    this.editor.customConfig.uploadImgMaxLength = 1;
-    this.editor.customConfig.uploadImgServer =
-      config.front_url + "file/qn_upload";
-    this.editor.customConfig.uploadImgHooks = {
-      customInsert: function(insertImg, result, editor) {
-        if (result.code == 1) {
-          insertImg(result.data.filePath);
-        }
-      }
-    };
-    this.editor.customConfig.onchange = function(html) {
-      vm.formItem.data.goods_detail = html;
-    };
+    // this.UploadAction = config.front_url+'api/upload';
+    // this.uploadList = this.$refs.upload.fileList;
     this.UploadAction = config.front_url + "file/qn_upload";
     this.uploadList = this.$refs.upload.fileList;
-    this.editor.create();
   }
 };
 </script>
