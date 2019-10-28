@@ -15,7 +15,7 @@ use app\data\model\JoinOrder as JoinOrderAll;
  * Class JoinOrder
  * @package app\api\controller
  */
-class JoinOrder extends Controller
+class JoinOrder extends Base
 {
     /**
      * 城市合伙人订单

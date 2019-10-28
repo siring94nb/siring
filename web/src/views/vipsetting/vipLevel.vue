@@ -335,7 +335,7 @@ export default {
             let currentRowData = vm.tableData[param.index];
             return h("div", [
               editButton(vm, h, currentRowData, param.index),
-              // deleteButton(vm, h, currentRowData, param.index)
+             // deleteButton(vm, h, currentRowData, param.index)
             ]);
           };
         }
