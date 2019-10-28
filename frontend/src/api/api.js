@@ -83,3 +83,10 @@ export const GetDiscount = params => {
 export const Payment = params => {
   return axios.post('api/api/JoinOrder/get_pay', params);
 }
+
+/**
+ * 快捷估价 表格数据
+ */
+export const GetTableData = params => {
+  return axios.get('api/api/Evaluate/get_plate_list', params);
+}

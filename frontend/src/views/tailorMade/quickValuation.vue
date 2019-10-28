@@ -144,7 +144,7 @@ export default {
         }
       });
       if (this.hasChooseType) {
-        this.$router.push('/selectFunction')
+        this.$router.push({path: '/selectFunction', query: {id: this.selectTypeList}})
       } else {
         this.$message.error("请选择开发类型");
       }

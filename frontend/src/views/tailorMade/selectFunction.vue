@@ -60,7 +60,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
-
+import { GetTableData } from '@/api/api'
 export default {
   components: {
     Myheader,
@@ -82,6 +82,7 @@ export default {
         }
       ],
       typeIndex: 0,
+      queryId: [],
       tableData: [
         {
           name: "基本功能",
@@ -119,6 +120,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.getTableData();
+  },
   methods: {
     chooseType(index) {
       this.typeIndex = index;
@@ -141,6 +145,13 @@ export default {
     handleCheckedCitiesChange(value, row) {
       let checkedCount = value.length;
       row.checkAll = checkedCount === row.thrname.length;
+    },
+    getTableData() {
+      GetTableData({
+        id: this.$route.query.id
+      }).then(res => {
+        console.log(res)
+      })
     }
   }
 };
