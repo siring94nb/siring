@@ -5,7 +5,7 @@ namespace app\api\controller;
 use think\Controller;
 use think\Request;
 use \tp5er\Backup;
-class Banner extends Controller
+class Banner extends Base
 {
     /**
      * 显示资源列表
