@@ -28,6 +28,16 @@ export default new Router({
       path: '/join',
       name: 'join',
       component: () => import('@/views/join')
+    },
+    {
+      path: '/quickValuation',
+      name: 'quickValuation',
+      component: () => import('@/views/tailorMade/quickValuation')
+    },
+    {
+      path: '/selectFunction',
+      name: 'selectFunction',
+      component: () => import('@/views/tailorMade/selectFunction')
     }
   ]
 })

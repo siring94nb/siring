@@ -59,6 +59,12 @@ Route::group('api', function () {
         Route::any('get_pay','api/JoinOrder/get_pay'); //支付
     });
 
+    //快捷估价
+    Route::group('Evaluate',function(){
+        Route::any('get_plate_form','api/Evaluate/get_plate_form'); //获取快捷平台的list
+        Route::any('get_plate_list','api/Evaluate/get_plate_list'); //获取快捷平台的list
+    });
+
 
 });
 $afterBehavior = [
