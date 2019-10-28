@@ -37,7 +37,7 @@ class Evaluate extends Controller{
         $request=Request::instance();
         $plate_id=$request->get('id');
         //postman测试模拟
-        $plate_id=explode(',',$plate_id);
+        // $plate_id=explode(',',$plate_id);
         $plate_list=[];
         foreach($plate_id as $k =>$v){
             //1.获取平台
@@ -59,8 +59,7 @@ class Evaluate extends Controller{
                     $plate_list[$v]['model'][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
                 }
         }
-        halt($plate_list);
-
+        return $plate_list ? returnJson(1,'获取成功',$plate_list) : returnJson(0,'获取失败',$plate_list);
     }
 
 
