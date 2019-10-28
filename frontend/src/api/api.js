@@ -88,5 +88,5 @@ export const Payment = params => {
  * 快捷估价 表格数据
  */
 export const GetTableData = params => {
-  return axios.get('api/api/Evaluate/get_plate_list', params);
+  return axios.post('api/api/Evaluate/get_plate_list', params);
 }

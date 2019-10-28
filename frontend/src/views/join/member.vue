@@ -1,13 +1,13 @@
 <template>
   <div class="join">
     <myheader />
-    <myaside />
+    <join-enter />
     <myswiper />
 
     <div class="join-cont">
-      <h2 class="title">城市合伙人</h2>
+      <h2 class="title">等级会员</h2>
       <div class="join-step">
-        <h3 class="step-title">加盟流程</h3>
+        <h3 class="step-title">升级会员流程</h3>
         <div class="step-list">
           <div
             :class="{'step-item': true, 'step-on': stepFlag==index}"
@@ -165,7 +165,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import Myaside from "@/components/aside";
+import JoinEnter from "@/components/join/cmp";
 import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
 import {
@@ -179,7 +179,7 @@ import {
 export default {
   components: {
     Myheader,
-    Myaside,
+    JoinEnter,
     Myswiper,
     Myfooter
   },
@@ -187,16 +187,16 @@ export default {
     return {
       stepList: [
         {
-          name: "选择城市",
-          desc: "不同的城市收益比例不同 ，城市等级越高，收益越大！"
+          name: "选择等级",
+          desc: "选择不同等级，获得不同收益等级越高，收益越大"
         },
         {
           name: "缴费申请",
-          desc: "不同等级城市，费用不同通过权益双方利益保障"
+          desc: "为了彼此双赢，通过会员权益双方利益保障"
         },
         {
-          name: "成为城市合伙人",
-          desc: "一旦升级为城市合伙人后您的账号将会有等级图标显示"
+          name: "成为等级会员",
+          desc: "一旦升级为会员后，您的账号将会有等级图标显示"
         }
       ],
       stepFlag: 0,
@@ -432,17 +432,17 @@ export default {
           }
           &.step-on {
             .step-name-box {
-              border-color: rgb(184, 159, 95);
-              color: rgb(184, 159, 95);
+              border-color: rgb(0, 189, 189);
+              color: rgb(0, 189, 189);
               .step-num {
-                color: rgb(184, 159, 95);
+                color: rgb(0, 189, 189);
               }
             }
             .step-desc {
               display: table-cell;
               vertical-align: middle;
               color: #ffffff;
-              background-color: rgb(184, 159, 95);
+              background-color: rgb(0, 189, 189);
               font-size: 20px;
               padding: 0 15px;
             }
