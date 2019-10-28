@@ -357,7 +357,7 @@ export default {
       }).then(res => {
         let { code, data, msg } = res.data;
         if (code === 1) {
-          console.log(data)
+          this.percent = data.user_discount;
         }
       });
     }

@@ -60,6 +60,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
+
 export default {
   components: {
     Myheader,
@@ -131,14 +132,15 @@ export default {
       }
     },
     handleCheckAllChange(val, row) {
-      
-      // row.checkedCities = val ? row.thrname : [];
+      let arr = [];
+      row.thrname.forEach(ele => {
+        arr.push(ele.name);
+      })
+      row.checkedCities = val ? arr : [];
     },
     handleCheckedCitiesChange(value, row) {
       let checkedCount = value.length;
       row.checkAll = checkedCount === row.thrname.length;
-      row.isIndeterminate =
-        checkedCount > 0 && checkedCount < row.thrname.length;
     }
   }
 };
