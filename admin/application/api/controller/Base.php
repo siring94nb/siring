@@ -14,6 +14,15 @@ use think\Controller;
 
 class Base extends Controller {
 
+    public function __construct(){
+        parent::__construct();
+        //允许跨站提交
+        header("Access-Control-Allow-Origin:*");
+        header("Access-Control-Allow-Methods:GET, POST, OPTIONS, DELETE");
+        header("Access-Control-Allow-Headers:DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type, Accept-Language, Origin, Accept-Encoding");
+
+    }
+
     private $debug = [];
     protected $userInfo = [];
 

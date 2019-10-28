@@ -3,9 +3,9 @@
     <Row>
       <Col span="24">
         <Card>
-          <p slot="title" style="height: 32px">
-            <Button type="primary" @click="alertAdd" icon="md-add">新增</Button>
-          </p>
+          <!--<p slot="title" style="height: 32px">-->
+            <!--<Button type="primary" @click="alertAdd" icon="md-add">新增</Button>-->
+          <!--</p>-->
           <div>
             <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
           </div>
@@ -335,7 +335,7 @@ export default {
             let currentRowData = vm.tableData[param.index];
             return h("div", [
               editButton(vm, h, currentRowData, param.index),
-              deleteButton(vm, h, currentRowData, param.index)
+             // deleteButton(vm, h, currentRowData, param.index)
             ]);
           };
         }

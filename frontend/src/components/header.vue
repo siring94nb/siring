@@ -99,7 +99,7 @@
         </div>
         <div class="sp-bt">
           <router-link to="/">定制需求</router-link>
-          <router-link to="/" class="kjgj">快捷估价</router-link>
+          <router-link to="/quickValuation" class="kjgj">快捷估价</router-link>
         </div>
       </div>
     </el-col>
@@ -431,6 +431,9 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      .logo-box{
+        cursor: pointer;
+      }
     }
     .comp-feature {
       h2 {

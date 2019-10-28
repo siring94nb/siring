@@ -141,7 +141,7 @@ function    returnJson($code,$msg,$data = null,$page = null){
  * @param $data
  */
 function returnArray($data){
-    $data ? $data->toArray() : returnJson(0,'数据有误');
+     $data ? $data->toArray() : returnJson(0,'数据有误');
 }
 
 /**

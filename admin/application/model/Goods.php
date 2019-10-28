@@ -62,3 +62,6 @@ class Goods extends Base
     }
 
 }
+
+
+
