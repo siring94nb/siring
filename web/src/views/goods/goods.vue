@@ -118,8 +118,13 @@
                 style="width:1000px;"
               />
             </FormItem>
-            <FormItem >
-                <DatePicker type="datetime" v-model="comment.start_time" placeholder="请选择时间" style="width: 200px"></DatePicker>
+            <FormItem>
+              <DatePicker
+                type="datetime"
+                v-model="comment.start_time"
+                placeholder="请选择时间"
+                style="width: 200px"
+              ></DatePicker>
             </FormItem>
             <FormItem label="官方回复" porp>
               <Input
@@ -129,8 +134,13 @@
                 style="width:1000px;"
               />
             </FormItem>
-            <FormItem >
-                <DatePicker type="datetime" v-model="comment.end_time" placeholder="请选择时间" style="width: 200px"></DatePicker>
+            <FormItem>
+              <DatePicker
+                type="datetime"
+                v-model="comment.end_time"
+                placeholder="请选择时间"
+                style="width: 200px"
+              ></DatePicker>
             </FormItem>
           </Form>
           <div slot="footer">
@@ -344,12 +354,12 @@ export default {
         }
       ],
       comment: {
-        number: '',
-        grade: '',
-        menber_comment: '',
-        start_time: '',
-        reply: '',
-        end_time: '',
+        number: "",
+        grade: "",
+        menber_comment: "",
+        start_time: "",
+        reply: "",
+        end_time: ""
       },
       tableData: [],
       tableShow: {
@@ -387,6 +397,68 @@ export default {
               editButton(vm, h, currentRowData, param.index),
               deleteButton(vm, h, currentRowData, param.index)
             ]);
+          };
+        }
+        if (item.key === "status") {
+          item.render = (h, param) => {
+            let currentRowData = vm.tableData[param.index];
+            return h(
+              "i-switch",
+              {
+                attrs: {
+                  size: "large"
+                },
+                props: {
+                  "true-value": 1,
+                  "false-value": 0,
+                  value: currentRowData.status
+                },
+                on: {
+                  "on-change": function(status) {
+                    axios
+                      .get("User/changeStatus", {
+                        params: {
+                          status: status,
+                          id: currentRowData.id
+                        }
+                      })
+                      .then(function(response) {
+                        let res = response.data;
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          if (res.code === -14) {
+                            vm.$store.commit("logout", vm);
+                            vm.$router.push({
+                              name: "login"
+                            });
+                          } else {
+                            vm.$Message.error(res.msg);
+                            vm.getList();
+                          }
+                        }
+                        vm.cancel();
+                      });
+                  }
+                }
+              },
+              [
+                h(
+                  "span",
+                  {
+                    slot: "open"
+                  },
+                  "启用"
+                ),
+                h(
+                  "span",
+                  {
+                    slot: "close"
+                  },
+                  "禁用"
+                )
+              ]
+            );
           };
         }
       });
