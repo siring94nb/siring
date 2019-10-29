@@ -29,9 +29,9 @@ class Goods extends Base{
         $goods_name = $this->request->get('goods_name', '');
         $category_id = $this->request->get('category_id', '');
         $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        if ($category_id !== '-1') {
-            $where['category_id'] = $category_id;
-        }
+        // if ($category_id !== '-1') {
+        //     $where['category_id'] = $category_id;
+        // }
         if ($goods_recommend_staus !== '-1') {
             $where['goods_recommend_staus'] = $goods_recommend_staus;
         }
@@ -62,6 +62,8 @@ class Goods extends Base{
         }
         unset($postData['data']['id']);
         $postData['data']['create_time']=time();
+        $postData['data']['period']=$postData['special'][0]['cycle_time'];  
+        $postData['data']['original_price']=$postData['special'][0]['price'];  
         $res = Good::create($postData['data'])->toArray();
         if ($res) {
                 //获取新增的goods_id($res->id)
@@ -89,12 +91,13 @@ class Goods extends Base{
         }
         //获取参数id-商品id
         $postData['data']['update_time']=time();
+        $postData['data']['period']=$postData['special'][0]['cycle_time'];  
+        $postData['data']['original_price']=$postData['special'][0]['price'];  
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
             $goods_info2=Special::update($postData['special'][$k]);
         }
         // $goods_info['special']=Special::getSpecialInfo($id);
-        
         if($goods_info !==false){
             return $this->buildSuccess([
                 'data'=>$goods_info

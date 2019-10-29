@@ -25,9 +25,19 @@ export default new Router({
       component: () => import('@/views/index')
     },
     {
-      path: '/join',
-      name: 'join',
-      component: () => import('@/views/join')
+      path: '/city',
+      name: 'city',
+      component: () => import('@/views/join/city')
+    },
+    {
+      path: '/member',
+      name: 'member',
+      component: () => import('@/views/join/member')
+    },
+    {
+      path: '/contractor',
+      name: 'contractor',
+      component: () => import('@/views/join/contractor')
     },
     {
       path: '/quickValuation',
@@ -38,6 +48,11 @@ export default new Router({
       path: '/selectFunction',
       name: 'selectFunction',
       component: () => import('@/views/tailorMade/selectFunction')
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: () => import('@/views/aboutUs')
     }
   ]
 })

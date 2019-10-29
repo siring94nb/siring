@@ -85,13 +85,13 @@
             <p class="en-name">Investment</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/join">
+          <router-link to="/city">
             <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
             <span>角色加盟</span>
             <p class="en-name">Agency</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/aboutUs">
             <i class="icon iconfont icon-guanyuwomen"></i>
             <span>Siring思锐</span>
             <p class="en-name">About us</p>
