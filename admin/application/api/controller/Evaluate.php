@@ -42,25 +42,34 @@ class Evaluate extends Controller{
         $plate_list=[];
         foreach($plate_id['id'] as $k =>$v){
             //1.获取平台
-            $plate_list[$v]['plate_from']=Eva::getStatusAttr($v);
-            $plate_list[$v]['plate_from_id']=$v;                                //平台id
-            //2.获取分类对应的模块
-                //获取分类下面的模型
-           $model=Eva::getEvaluate_model($v);     //$v=>平台id 
-                //3.获取对应模型下面的功能点
-            foreach($model as $k3 =>$v3){
-                    $plate_list[$v]['model'][$k3]['evaluate_type']=Eva::getEvaluate_type($v,$v3['model']);
-                    if($k3==0){
-                        //统计分类下的model数量
-                        $plate_list[$v]['model'][$k3]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$plate_list[$v]['model'][$k3]['evaluate_type']])->group('model')->count();
-                    }else{
-                        $plate_list[$v]['model'][$k3]['model_num']=0;
+            $plate_list[$k]['plate_from']=Eva::getStatusAttr($v);
+            $plate_list[$k]['plate_from_id']=$v;                                //平台id
+            //2.获取平台对应的分类
+            $evaluate_type=Eva::getEvaluate_type($v);     //$v=>平台id 
+            //3.获取分类下对应的model
+            foreach($evaluate_type as $k2 =>$v2){
+                $mo=Eva::getEvaluate_model($v,$v2);  
+                $model2[$k2]=$mo; 
+            }
+            //4.获取对应模型下面的功能点
+            foreach($model2 as $k4 =>$v4){
+                foreach($v4 as $k3 =>$v3){
+                    $evaluate_name=Db::table('evaluate')->where(['plate_form'=>$v,'model'=>$v3['model']])->field('evaluate_type')->find();
+                        $model[$k][$k4][$k3]['evaluate_type']=$evaluate_name['evaluate_type'];
+                        if($k3==0){
+                            //统计分类下的model数量
+                            $model[$k][$k4][$k3]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$model[$k][$k4][$k3]['evaluate_type']])->group('model')->count();
+                        }else{
+                            $model[$k][$k4][$k3]['model_num']=0;
+                        }
+                        $model[$k][$k4][$k3]['model_name']=$v3['model'];
+                        $model[$k][$k4][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
                     }
-                    $plate_list[$v]['model'][$k3]['model_name']=$v3['model'];
-                    $plate_list[$v]['model'][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
-                }
+            }
         }
-        return $plate_list ? returnJson(1,'获取成功',$plate_list) : returnJson(0,'获取失败',$plate_list);
+        $data['plate_form']=$plate_list;
+        $data['model']=$model;
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
 

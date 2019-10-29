@@ -25,9 +25,19 @@ export default new Router({
       component: () => import('@/views/index')
     },
     {
-      path: '/join',
-      name: 'join',
-      component: () => import('@/views/join')
+      path: '/city',
+      name: 'city',
+      component: () => import('@/views/join/city')
+    },
+    {
+      path: '/member',
+      name: 'member',
+      component: () => import('@/views/join/member')
+    },
+    {
+      path: '/contractor',
+      name: 'contractor',
+      component: () => import('@/views/join/contractor')
     },
     {
       path: '/quickValuation',

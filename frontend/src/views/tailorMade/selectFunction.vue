@@ -25,27 +25,25 @@
               border
               style="width: 100%; margin-top: 20px"
             >
-              <el-table-column prop="name" label="分类" width="180"></el-table-column>
+              <el-table-column prop="evaluate_type" label="分类" width="180"></el-table-column>
               <el-table-column label="模块">
                 <div slot-scope="scope">
                   <el-checkbox
-                    v-model="scope.row.checkAll"
                     @change="handleCheckAllChange($event, scope.row)"
-                  >{{scope.row.subname}}</el-checkbox>
+                  >{{scope.row.model_name}}</el-checkbox>
                 </div>
               </el-table-column>
               <el-table-column label="功能点">
-                <el-checkbox-group
+                <!-- <el-checkbox-group
                   slot-scope="scope"
-                  v-model="scope.row.checkedCities"
                   @change="handleCheckedCitiesChange($event, scope.row)"
                 >
                   <el-checkbox
-                    v-for="item in scope.row.thrname"
-                    :label="item.name"
-                    :key="item.name"
-                  >{{item.name}}</el-checkbox>
-                </el-checkbox-group>
+                    v-for="item in scope.row.function_point"
+                    :label="item.function_point"
+                    :key="item.id"
+                  >{{item.function_point}}</el-checkbox>
+                </el-checkbox-group> -->
               </el-table-column>
             </el-table>
           </div>
@@ -60,6 +58,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
+import { GetTableData } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -81,6 +80,8 @@ export default {
         }
       ],
       typeIndex: 0,
+      queryId: [],
+      dataList: [],
       tableData: [
         {
           name: "基本功能",
@@ -118,6 +119,9 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.getTableData();
+  },
   methods: {
     chooseType(index) {
       this.typeIndex = index;
@@ -125,20 +129,41 @@ export default {
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0) {
         return {
-          rowspan: row.length,
+          rowspan: row.model_num,
           colspan: 1
         };
       }
     },
     handleCheckAllChange(val, row) {
-      
-      // row.checkedCities = val ? row.thrname : [];
+      let arr = [];
+      // row.thrname.forEach(ele => {
+      //   arr.push(ele.name);
+      // });
+      row.checkedCities = val ? arr : [];
     },
     handleCheckedCitiesChange(value, row) {
-      let checkedCount = value.length;
-      row.checkAll = checkedCount === row.thrname.length;
-      row.isIndeterminate =
-        checkedCount > 0 && checkedCount < row.thrname.length;
+      let checkedCount = value.model_num;
+      row.checkAll = checkedCount === row.thrname.model_num;
+    },
+    getTableData() {
+      GetTableData({
+        id: this.$route.query.id
+      }).then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          console.log(data)
+          this.tableData = data[1].model;
+          data[1].model.forEach((v, i) => {
+            v.checkedCities = [];
+            v.checkAll = false;
+            if(i == 2){
+              v.model_num = 2;
+            }
+          })
+          console.log(data[1].model)
+          // console.log(data);
+        }
+      });
     }
   }
 };

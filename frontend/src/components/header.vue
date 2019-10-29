@@ -85,7 +85,7 @@
             <p class="en-name">Investment</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/join">
+          <router-link to="/city">
             <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
             <span>角色加盟</span>
             <p class="en-name">Agency</p>

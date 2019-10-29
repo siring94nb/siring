@@ -21,12 +21,22 @@ class Evaluate extends Model
 
     /**
      * lilu
-     * 获取快捷估价的平台
+     * 获取快捷估价平台下的分类（1个平台）
      */
-    public static function getEvaluate_type($value,$model){
+    public static function getEvaluate_type($value){
         $evaluate= new Evaluate();
-        $plate_form=$evaluate->where(['plate_form'=>$value,'model'=>$model])->field('evaluate_type')->group('evaluate_type')->order('id')->find()->toArray();
-        return $plate_form['evaluate_type'];
+        $plate_form=$evaluate->where('plate_form',$value)->field('evaluate_type')->group('evaluate_type')->order('id')->select()->toArray();
+        return $plate_form;
+    }
+   
+    /**
+     * lilu
+     * 获取快捷估价平台下的分类（1个平台下的当前分类）
+     */
+    public static function getEvaluate_type2($value,$model){
+        $evaluate= new Evaluate();
+        $evaluate_type=$evaluate->where(['plate_form'=>$value,'model'=>$model])->field('evaluate_type')->group('evaluate_type')->find()->toArray();
+        return $evaluate_type['evaluate_type'];
     }
 
     /**
@@ -34,9 +44,9 @@ class Evaluate extends Model
      * 获取快捷估价分类下的model
      * parsm  $plate_form   (平台id)
      */
-    public static function getEvaluate_model($plate_form){
+    public static function getEvaluate_model($plate_form,$evaluate_type){
         $evaluate= new Evaluate();
-        $model=$evaluate->where('plate_form',$plate_form)->field('model')->group('model')->order('id')->select()->toArray();
+        $model=$evaluate->where(['evaluate_type'=>$evaluate_type['evaluate_type'],'plate_form'=>$plate_form])->field('model')->group('model')->order('id')->select()->toArray();
         return $model;
     }
 
