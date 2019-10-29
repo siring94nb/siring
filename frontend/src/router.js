@@ -48,6 +48,11 @@ export default new Router({
       path: '/selectFunction',
       name: 'selectFunction',
       component: () => import('@/views/tailorMade/selectFunction')
+    },
+    {
+      path: '/aboutUs',
+      name: 'aboutUs',
+      component: () => import('@/views/aboutUs')
     }
   ]
 })
