@@ -88,6 +88,7 @@
                 v-model="myComment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                format="yyyy-MM-dd HH:mm" 
               ></DatePicker>
             </FormItem>
             <FormItem label="官方回复">
@@ -105,6 +106,7 @@
                 v-model="myComment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                format="yyyy-MM-dd HH:mm" 
               ></DatePicker>
             </FormItem>
             <FormItem>
@@ -116,10 +118,7 @@
               >确定</Button>
             </FormItem>
           </Form>
-          <!-- <div slot="footer">
-            <Button type="text" @click="cancelComment('myComment')" style="margin-right: 8px">取消</Button>
-              <Button type="primary" @click="submitComment('myComment')" :loading="modalSetting.loading">确定</Button>
-          </div>-->
+          
         </TabPane>
         <TabPane label="历史评论" name="name2">
           <Row type="flex" justify="center" align="middle" class="row-box">
@@ -175,6 +174,7 @@ const addCommentButton = (vm, h, currentRow, index) => {
           vm.getHorse();
           console.log(currentRow)
           vm.myComment.data.goods_id = currentRow.id;
+          vm.myComment.special.goods_id = currentRow.id;
           vm.modalSetting.show = true;
         }
       }
@@ -366,12 +366,15 @@ export default {
           user_id: "",
           con: "",
           create_at: "",
-          cid: 0
+          cid: 0,
+          type: 1
         },
         special: {
           user_id: 0,
           con: "",
-          create_at: ""
+          create_at: "",
+          goods_id: "",
+          type: 1
         }
       },
       tableData: [],
@@ -489,12 +492,15 @@ export default {
           user_id: "",
           con: "",
           create_at: "",
-          cid: 0
+          cid: 0,
+          type: 1
         },
         special: {
           user_id: 0,
           con: "",
-          create_at: ""
+          create_at: "",
+          goods_id: "",
+          type: 1
         }
       },
       this.modalSetting.show = false;
