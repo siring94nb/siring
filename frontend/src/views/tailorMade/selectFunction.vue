@@ -38,12 +38,13 @@
                 <el-checkbox-group
                   v-model="scope.row.checkedCities"
                   slot-scope="scope"
-                  @change="handleCheckedCitiesChange($event, scope.row)"
+                  @change="handleFunction($event, scope.row)"
                 >
                   <el-checkbox
                     v-for="item in scope.row.function_point"
                     :label="item.function_point"
                     :key="item.id"
+                    @change="handleAddFunItem($event, item)"
                   >{{item.function_point}}</el-checkbox>
                 </el-checkbox-group>
               </el-table-column>
@@ -83,22 +84,14 @@ export default {
       queryId: [],
       dataList: [],
       tableData: [],
-      checkedObj: {}
+      checkedObj: {},
+      minPrice: 0,
+      maxPrice: 0,
+      date: 0
     };
   },
   mounted() {
     this.getTableData();
-  },
-  computed: {
-    minPrice() {
-      return 0;
-    },
-    maxPrice() {
-      return 0;
-    },
-    date() {
-      return 0;
-    }
   },
   methods: {
     chooseType(index, id) {
@@ -122,32 +115,55 @@ export default {
       if (val) {
         row.function_point.forEach(v => {
           this.checkedObj[v.id] = v;
+          this.addData(v);
         });
       } else {
         row.function_point.forEach(v => {
           delete this.checkedObj[v.id];
+          this.minusData(v);
         });
       }
-      console.log(this.checkedObj)
+      console.log(row);
     },
-    handleCheckedCitiesChange(value, row) {
-      let checkedCount = value.length;
+    handleFunction(val, row) {
+      let checkedCount = val.length;
       row.checkAll = checkedCount === row.function_point.length;
-      if (value.length === 0) {
-        row.function_point.forEach(v => {
-          delete this.checkedObj[v.id];
-        });
+    },
+    handleAddFunItem(val, item) {
+      if (val) {
+        this.checkedObj[item.id] = item;
+        this.addData(item);
       } else {
-        const function_point = row.function_point;
-        for (var i = 0; i < value.length; i++) {
-          for (var j = 0; j < function_point.length; j++) {
-            if (value[i] == function_point[j].function_point) {
-              this.checkedObj[function_point[j].id] = function_point[j];
-            }
-          }
-        }
+        delete this.checkedObj[item.id];
+        this.minusData(item);
       }
-      console.log(this.checkedObj)
+    },
+    addData(item) {
+      this.minPrice += item.price_down;
+      this.maxPrice += item.price_up;
+      // this.date += item.work_hours;
+      this.date = Number((this.date + item.work_hours).toFixed(1));
+    },
+    minusData(item) {
+      this.minPrice -= item.price_down;
+      this.maxPrice -= item.price_up;
+      // this.date -= item.work_hours;
+      this.date = Number((this.date - item.work_hours).toFixed(1));
+    },
+    floatAdd(arg1, arg2) {
+      var r1, r2, m;
+      try {
+        r1 = arg1.toString().split(".")[1].length;
+      } catch (e) {
+        r1 = 0;
+      }
+      try {
+        r2 = arg2.toString().split(".")[1].length;
+      } catch (e) {
+        r2 = 0;
+      }
+      m = Math.pow(10, Math.max(r1, r2));
+      return (arg1 * m + arg2 * m) / m;
     },
     getTableData() {
       const id = JSON.parse(sessionStorage.getItem("typeidList"));
