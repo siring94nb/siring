@@ -174,7 +174,7 @@ const addCommentButton = (vm, h, currentRow, index) => {
         click: () => {
           vm.getHorse();
           console.log(currentRow)
-          vm.goods_id = currentRow.id;
+          vm.myComment.data.goods_id = currentRow.id;
           vm.modalSetting.show = true;
         }
       }
