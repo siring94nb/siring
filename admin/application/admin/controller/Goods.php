@@ -392,9 +392,11 @@ class Goods extends Base{
     public function add_comment(){
         $request=Request::instance();
         $datapost=$request->param();
-        halt($datapost);
-        $res=Reviews::create($datapost)->toArray();
+        $res=Reviews::create($datapost['data'])->toArray();
         if($res){
+            //增加官方回复
+            $datapost['special']['cid']=$res['id'];
+            $re=Reviews::create($datapost['special'])->toArray();
             return $this->buildSuccess([]);
         }else{
             return $this->buildFailed('0','操作失败');
