@@ -427,6 +427,32 @@ class Goods extends Base{
             return $this->buildFailed('0','缺少必须参数');
         }
     }
+    
+    /**
+     * lilu
+     * 历史评论删除
+     * param   id  (商品ID)
+     */
+    public function comment_del()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //删除商品的评论
+            $goods_model=new GoodModel();
+            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            if($comment_list){
+                return $this->buildSuccess([
+                    'data'=>$comment_list,
+                ]);
+            }else{
+                return $this->buildFailed('0','获取失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
+        }
+    }
 
 
 

@@ -598,6 +598,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/comment_list',        //历史评论
             ['method' => 'post']
         ],
+        'comment_del'   => [
+            'admin/Goods/comment_del',        //历史评论删除
+            ['method' => 'post']
+        ],
         'made'   => [
             'admin/Goods/made',           //定制案列列表
             ['method' => 'post']

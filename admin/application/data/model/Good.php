@@ -181,7 +181,7 @@ class Good extends Model
     }
 
     /**
-     * 商品评论
+     * 商品评论（查询）
      * @param $goods_id
      * @return false|\PDOStatement|string|\think\Collection
      * @throws \think\db\exception\DataNotFoundException
@@ -232,6 +232,25 @@ class Good extends Model
 //        return $this->hasOne('Reviews','id','cid');
 //
 //    }
+
+/**
+     * 商品评论（删除）
+     * @param $id   评论ID
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function good_review_del($id)
+    {
+        $res = Reviews::where('id',$id)->select();
+        foreach ($res as $k=>$v){
+            //二级评论
+            $res[$k]['relpay'] = Reviews::two_level($v['id']);
+        }
+        return $res;
+
+    }
 
 
 
