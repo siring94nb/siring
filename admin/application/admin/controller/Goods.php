@@ -85,7 +85,7 @@ class Goods extends Base{
      */
     public function edit(){
         $groups = '';
-        $postData = $this->request->post();  //获取传参
+        $postData = $this->request->param();  //获取传参
         //判断商品的名字是否重复
         $is_use=Good::all(['goods_name'=>$postData['data']['goods_name']]);
         if(count($is_use) >= 2){
@@ -93,8 +93,9 @@ class Goods extends Base{
         }
         //获取参数id-商品id
         $postData['data']['update_time']=time();
+        $postData['data']['create_time']=strtotime($postData['data']['create_time']);
         $postData['data']['period']=$postData['special'][0]['cycle_time'];  
-        $postData['data']['original_price']=$postData['special'][0]['price'];  
+        $postData['data']['original_price']=$postData['special'][0]['price']; 
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
             $goods_info2=Special::update($postData['special'][$k]);
@@ -294,20 +295,16 @@ class Goods extends Base{
 
     /**
      * lilu
-     * 商品管理-软件定制商品-定制商品
+     * 商品管理-软件定制商品-定制商品(案例)
      */
     public function made(){
-        $where['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
-        $where['page'] = $this->request->get('page', 1);
-        $goods_name = $this->request->get('goods_name', '');
-        $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        if (!empty($goods_recommend_staus)) {
-            $where['goods_recommend_staus'] = $goods_recommend_staus;
+        $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->get('page', 1);
+        $project_name = $this->request->get('project_name', '');
+        if ($project_name) {
+            $where['project_name'] = ['like', "%{$goods_name}%"];
         }
-        if ($goods_name) {
-            $where['goods_name'] = ['like', "%{$goods_name}%"];
-        }
-        $list=Good::getGoodsList($where);
+        $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page]);
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,

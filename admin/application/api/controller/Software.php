@@ -78,4 +78,16 @@ class Software extends Base
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
+    /**
+     * 推荐商品
+     * @return $data
+     */
+    public function soft_push()
+    {
+        $data = db('good')->orderRaw('rand()')->where(['del_time'=>null])
+            ->field('id,goods_name,goods_images,period')->limit(6)->select();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
 }

@@ -191,19 +191,48 @@ class Good extends Model
     public function good_review($goods_id)
     {
         $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
-
         foreach ($res as $k=>$v){
+            //个人信息
             $user = new User();
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
+            $res[$k]['img'] = $user_all['img'];
+            //会员等级信息
+            $join_role = JoinRole::member_details($user_all['grade']);
+            $res[$k]['ico'] = $join_role['img'];
+            $res[$k]['grade_name'] = $join_role['title'];
+            //二级评论
             $res[$k]['grade'] = $user_all['grade'];
             $res[$k]['relpay'] = Reviews::two_level($v['id']);
-
         }
-
         return $res;
 
     }
+//    public function good_review($goods_id){
+//        $Member=new Reviews();
+//        $data=$Member->with(['user'])->where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
+//        return $data;
+//
+//    }
+//
+//    public function user(){
+//        //hasOne()方法中第一个为关联的模型名称，第二个为关联的外键，
+//        //所以这里分别是Profile模型和profile_id外键
+//        return $this->hasOne('User','id','user_id');
+//    }
+//
+//
+//    /**
+//     * @return \think\model\relation\HasMany
+//     * 这里是关联的一对多的情况，方法名同样为表明，记住了
+//     */
+//
+//    public function reviews(){
+//
+//        return $this->hasOne('Reviews','id','cid');
+//
+//    }
+
 
 
 
