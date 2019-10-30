@@ -65,6 +65,14 @@ Route::group('api', function () {
         Route::any('get_plate_list','api/Evaluate/get_plate_list'); //获取快捷平台的list
     });
 
+    //角色加盟订单
+    Route::group('Software',function (){
+        Route::any('soft_type','api/Software/soft_type'); //软件定制分类
+        Route::any('soft_list','api/Software/soft_list'); //商品列表
+        Route::any('soft_detail','api/Software/soft_detail'); //
+        Route::any('soft_reviews','api/Software/soft_reviews'); //
+    });
+
 
 });
 $afterBehavior = [
