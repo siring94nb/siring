@@ -85,7 +85,7 @@ class Goods extends Base{
      */
     public function edit(){
         $groups = '';
-        $postData = $this->request->post();  //获取传参
+        $postData = $this->request->param();  //获取传参
         //判断商品的名字是否重复
         $is_use=Good::all(['goods_name'=>$postData['data']['goods_name']]);
         if(count($is_use) >= 2){
@@ -93,8 +93,9 @@ class Goods extends Base{
         }
         //获取参数id-商品id
         $postData['data']['update_time']=time();
+        $postData['data']['create_time']=strtotime($postData['data']['create_time']);
         $postData['data']['period']=$postData['special'][0]['cycle_time'];  
-        $postData['data']['original_price']=$postData['special'][0]['price'];  
+        $postData['data']['original_price']=$postData['special'][0]['price']; 
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
             $goods_info2=Special::update($postData['special'][$k]);
@@ -357,8 +358,9 @@ class Goods extends Base{
     /**
      * lilu
      * 商品管理-定制商品--商品删除
+     * param   id   商品id
      */
-    public function made_delete(){
+    public function made_del(){
 
     }
 
@@ -412,6 +414,32 @@ class Goods extends Base{
         if($dataPost['id'])
         {
             //获取商品的评论
+            $goods_model=new GoodModel();
+            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            if($comment_list){
+                return $this->buildSuccess([
+                    'data'=>$comment_list,
+                ]);
+            }else{
+                return $this->buildFailed('0','获取失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
+        }
+    }
+    
+    /**
+     * lilu
+     * 历史评论删除
+     * param   id  (商品ID)
+     */
+    public function comment_del()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //删除商品的评论
             $goods_model=new GoodModel();
             $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
             if($comment_list){

@@ -88,6 +88,7 @@
                 v-model="myComment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                @on-change="dataCreate"
               ></DatePicker>
             </FormItem>
             <FormItem label="官方回复">
@@ -96,6 +97,7 @@
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
+                
               />
               <p style="color: rgb(197,200,206);">*非必填项</p>
             </FormItem>
@@ -105,6 +107,7 @@
                 v-model="myComment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                @on-change="specialCreate"
               ></DatePicker>
             </FormItem>
             <FormItem>
@@ -116,19 +119,16 @@
               >确定</Button>
             </FormItem>
           </Form>
-          <!-- <div slot="footer">
-            <Button type="text" @click="cancelComment('myComment')" style="margin-right: 8px">取消</Button>
-              <Button type="primary" @click="submitComment('myComment')" :loading="modalSetting.loading">确定</Button>
-          </div>-->
+          
         </TabPane>
         <TabPane label="历史评论" name="name2">
-          <Row type="flex" justify="center" align="middle" class="row-box">
+          <Row type="flex" justify="center" align="middle" class="row-box" v-for="(item, index) in commentsList" :key="index">
             <Col span="4" style="text-align:center;">
               <Button type="error">删除</Button>
             </Col>
-            <Col span="4" style="text-align:center;">
+            <Col span="4" style="text-align:center;line-height:30px;">
               <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large" />
-              <div>139****2345</div>
+              <div>{{geTel(item.phone)}}</div>
               <div>
                 <img
                   style="width:20px;height:20px;display:inline-block;"
@@ -138,12 +138,12 @@
             </Col>
             <Col span="16">
               <div class="comments">
-                设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                <div style>2019年01月20日 19：27</div>
+                {{item.con}}
+                <div style>{{item.create_at}}</div>
               </div>
-              <div class="comments comments-gf" v-if="sd">
-                <span style="color:rgb(255,153,204);">【官方回复】</span>设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                <div>2019年01月20日 19：27</div>
+              <div class="comments comments-gf" v-if="item.relpay != ''">
+                <span style="color:rgb(255,153,204);">【官方回复】</span>{{item.relpay[0].con}}
+                <div>{{item.relpay[0].create_at}}</div>
               </div>
             </Col>
           </Row>
@@ -172,9 +172,10 @@ const addCommentButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
+          vm.commentList(currentRow.id);
           vm.getHorse();
-          console.log(currentRow)
           vm.myComment.data.goods_id = currentRow.id;
+          vm.myComment.special.goods_id = currentRow.id;
           vm.modalSetting.show = true;
         }
       }
@@ -283,6 +284,7 @@ export default {
       iconList: [],
       sortList: [],
       horseList: [],
+      commentsList: [],
       sd: true,
       // 图片
       columnsList: [
@@ -366,12 +368,15 @@ export default {
           user_id: "",
           con: "",
           create_at: "",
-          cid: 0
+          cid: 0,
+          type: 1
         },
         special: {
           user_id: 0,
           con: "",
-          create_at: ""
+          create_at: "",
+          goods_id: "",
+          type: 1
         }
       },
       tableData: [],
@@ -422,9 +427,9 @@ export default {
                   size: "large"
                 },
                 props: {
-                  "true-value": 1,
-                  "false-value": 0,
-                  value: currentRowData.status
+                  "true-value": "1",
+                  "false-value": "0",
+                  value: currentRowData.goods_recommend_status
                 },
                 on: {
                   "on-change": function(status) {
@@ -489,12 +494,15 @@ export default {
           user_id: "",
           con: "",
           create_at: "",
-          cid: 0
+          cid: 0,
+          type: 1
         },
         special: {
           user_id: 0,
           con: "",
-          create_at: ""
+          create_at: "",
+          goods_id: "",
+          type: 1
         }
       },
       this.modalSetting.show = false;
@@ -587,19 +595,41 @@ export default {
     submitComment(name) {
       let self = this;
       self.modalSetting.loading = true;
-
-      // data.formItem = this.formItem;
-      // data.special = this.special;
       axios.post("Goods/add_comment", self.myComment).then(function(response) {
         self.modalSetting.loading = false;
         console.log(response);
         if (response.data.code === 1) {
           self.$Message.success(response.data.msg);
-          self.cancel();
+          setTimeout(function(){
+            self.cancel();
+          },1000)
         } else {
           self.$Message.error(response.data.msg);
         }
       });
+    },
+    //评论历史
+    commentList(id){
+      let self = this;
+      axios.post("Goods/comment_list", {id: id}).then(function(response) {
+        let res = response.data;
+        console.log(res.data);
+        if (res.code === 1) {
+          self.commentsList = res.data.data;
+        } else {
+          self.commentsList = [];
+        }
+      });
+    },
+    geTel(tel){
+      var reg = /^(\d{3})\d{4}(\d{4})$/;  
+      return tel.replace(reg, "$1****$2");
+    },
+    dataCreate(time) {
+      this.myComment.data.create_at = time;
+    },
+    specialCreate(time) {
+      this.myComment.special.create_at = time;
     },
     getList() {
       let vm = this;
