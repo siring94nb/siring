@@ -62,82 +62,91 @@
     </Row>
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
       <Tabs value="name1">
-        <TabPane label="添加评论" name="name1" >
-          <Form ref="comments" :model="comment" :label-width="100">
+        <TabPane label="添加评论" name="name1">
+          <Form ref="myComment" :model="myComment" :label-width="100">
             <FormItem label="马甲会员账号">
-             <Select v-model="comment.data.user_id" style="width: 400px;">
+              <Select v-model="myComment.data.user_id" style="width: 400px;">
                 <Option
                   v-for="(item, index) in horseList"
                   :value="item.id"
                   :key="index"
-                >{{ item.id }}</Option>
+                >{{ item.realname }}</Option>
               </Select>
             </FormItem>
-           
-            <FormItem label="会员评论" porp>
+
+            <FormItem label="会员评论">
               <Input
-                v-model="comment.data.con"
+                v-model="myComment.data.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
               />
             </FormItem>
-            <FormItem label="">
+            <FormItem label>
               <DatePicker
                 type="datetime"
-                v-model="comment.data.create_at"
+                v-model="myComment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
               ></DatePicker>
             </FormItem>
-            <FormItem label="官方回复" porp>
+            <FormItem label="官方回复">
               <Input
-                v-model="comment.special.con"
+                v-model="myComment.special.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
               />
               <p style="color: rgb(197,200,206);">*非必填项</p>
             </FormItem>
-            <FormItem label="">
+            <FormItem label>
               <DatePicker
                 type="datetime"
-                v-model="comment.special.create_at"
+                v-model="myComment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
               ></DatePicker>
             </FormItem>
             <FormItem>
-              <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
-              <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+              <Button type="text" @click="cancelComment('myComment')" style="margin-right: 8px">取消</Button>
+              <Button
+                type="primary"
+                @click="submitComment('myComment')"
+                :loading="modalSetting.loading"
+              >确定</Button>
             </FormItem>
           </Form>
           <!-- <div slot="footer">
-            
-          </div> -->
+            <Button type="text" @click="cancelComment('myComment')" style="margin-right: 8px">取消</Button>
+              <Button type="primary" @click="submitComment('myComment')" :loading="modalSetting.loading">确定</Button>
+          </div>-->
         </TabPane>
         <TabPane label="历史评论" name="name2">
           <Row type="flex" justify="center" align="middle" class="row-box">
-            <Col span="4"  style="text-align:center;">
+            <Col span="4" style="text-align:center;">
               <Button type="error">删除</Button>
             </Col>
-            <Col span="4"  style="text-align:center;">
-              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"  size="large"/>
+            <Col span="4" style="text-align:center;">
+              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large" />
               <div>139****2345</div>
-              <div><img style="width:20px;height:20px;display:inline-block;" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>皇冠会员</div>
+              <div>
+                <img
+                  style="width:20px;height:20px;display:inline-block;"
+                  src="https://i.loli.net/2017/08/21/599a521472424.jpg"
+                />皇冠会员
+              </div>
             </Col>
             <Col span="16">
-                <div class="comments">
-                  设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                  <div style="">2019年01月20日 19：27</div>
-                </div>
-                <div class="comments comments-gf" v-if="sd">
-                  <span style="color:rgb(255,153,204);">【官方回复】</span>设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                  <div >2019年01月20日 19：27</div>
-                </div>
+              <div class="comments">
+                设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
+                <div style>2019年01月20日 19：27</div>
+              </div>
+              <div class="comments comments-gf" v-if="sd">
+                <span style="color:rgb(255,153,204);">【官方回复】</span>设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
+                <div>2019年01月20日 19：27</div>
+              </div>
             </Col>
           </Row>
-          
         </TabPane>
       </Tabs>
     </Modal>
@@ -160,6 +169,7 @@ const addCommentButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
+          vm.getHorse();
           vm.modalSetting.show = true;
         }
       }
@@ -268,7 +278,7 @@ export default {
       iconList: [],
       sortList: [],
       horseList: [],
-      sd:true,
+      sd: true,
       // 图片
       columnsList: [
         {
@@ -345,17 +355,17 @@ export default {
           handle: ["comments", "copy", "edit", "delete"]
         }
       ],
-      comment: {
+      myComment: {
         data: {
           id: 0,
-          user_id:"",
+          user_id: "",
           con: "",
-          create_at:"",
+          create_at: "",
           cid: 0
         },
         special: {
           user_id: 0,
-          con:"",
+          con: "",
           create_at: ""
         }
       },
@@ -381,7 +391,6 @@ export default {
     this.init();
     this.getList();
     this.getSort();
-    this.getHorse();
   },
   methods: {
     init() {
@@ -485,14 +494,14 @@ export default {
         }
       });
     },
-    //马家会员列表
+    //马甲会员列表
     getHorse() {
       let vm = this;
       axios.post("Goods/get_horse_member", {}).then(function(response) {
         let res = response.data;
-        console.log(res)
+        console.log(res.data);
         if (res.code === 1) {
-          vm.horseList = res.data.list;
+          vm.horseList = res.data[0];
         }
       });
     },
@@ -556,6 +565,24 @@ export default {
         }
       });
     },
+    //添加评论
+    submitComment(name) {
+      let self = this;
+      self.modalSetting.loading = true;
+
+      // data.formItem = this.formItem;
+      // data.special = this.special;
+      axios.post("Goods/add_comment", self.myComment).then(function(response) {
+        self.modalSetting.loading = false;
+        console.log(response);
+        if (response.data.code === 1) {
+          self.$Message.success(response.data.msg);
+        } else {
+          self.$Message.error(response.data.msg);
+        }
+      });
+    },
+    cancelComment() {},
     getList() {
       let vm = this;
       axios
@@ -620,7 +647,6 @@ export default {
     }
   },
   mounted() {
-
     // this.UploadAction = config.front_url + "file/qn_upload";
     // this.uploadList = this.$refs.upload.fileList;
   }
