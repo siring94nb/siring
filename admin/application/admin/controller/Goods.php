@@ -392,6 +392,7 @@ class Goods extends Base{
     public function add_comment(){
         $request=Request::instance();
         $datapost=$request->param();
+        halt($datapost);
         $res=Reviews::create($datapost)->toArray();
         if($res){
             return $this->buildSuccess([]);
