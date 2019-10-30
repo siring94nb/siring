@@ -36,10 +36,10 @@ class Evaluate extends Controller{
     public function get_plate_list(){
         $request=Request::instance();
         $plate_id=$request->post();
+        halt($plate_id);
         // $plate_id=explode(',',$plate_id['id']);
         $plate_list=[];
         foreach($plate_id['id'] as $k =>$v){
-            halt($v);
             //1.获取平台
             $plate_list[$k]['plate_from']=Eva::getStatusAttr($v);
             $plate_list[$k]['plate_from_id']=$v;                                //平台id
