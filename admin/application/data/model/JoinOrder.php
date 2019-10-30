@@ -13,7 +13,22 @@ class JoinOrder extends Model
 {
     protected $table = "join_order";
     protected $resultSetType = 'collection';
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'created_at';
+    protected $updateTime = 'updated_at';
 //    protected $hidden = ['created_at','updated_at'];
+//    protected $auto = ['created_at'];
+//    protected $update = ['updated_at'];
+//    public function setTimeAttr()
+//    {
+//        return time();
+//    }
+//
+//    public function setTimeUpdateAttr()
+//    {
+//        return time();
+//    }
+
     //新增订单
     public function order_add($role_type,$uid,$pay_type,$num,$money,$dev,$grade,$con)
     {
