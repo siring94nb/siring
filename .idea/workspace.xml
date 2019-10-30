@@ -2,13 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Software.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Software.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/Goods.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/Goods.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/adminRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/adminRoute.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Evaluate.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Evaluate.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/data/model/Good.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Good.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/header.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/header.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/store.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/tailorMade/quickValuation.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/tailorMade/quickValuation.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/views/tailorMade/selectFunction.vue" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/views/tailorMade/selectFunction.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/goods/goods.less" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/goods.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/goods/goods.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/goods.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -124,8 +128,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/Good.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="386">
-              <caret line="194" column="33" lean-forward="true" selection-start-line="194" selection-start-column="33" selection-end-line="194" selection-end-column="33" />
+            <state relative-caret-position="223">
+              <caret line="197" column="51" lean-forward="true" selection-start-line="197" selection-start-column="51" selection-end-line="197" selection-end-column="51" />
               <folding>
                 <element signature="e#34#50#0#PHP" expanded="true" />
               </folding>
@@ -277,7 +281,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -422,12 +426,12 @@
       <workItem from="1572243023716" duration="9313000" />
       <workItem from="1572330257610" duration="13678000" />
       <workItem from="1572398371027" duration="4619000" />
-      <workItem from="1572415645496" duration="5257000" />
+      <workItem from="1572415645496" duration="5386000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="129232000" />
+    <option name="totallyTimeSpent" value="129361000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -757,8 +761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/Good.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="386">
-          <caret line="194" column="33" lean-forward="true" selection-start-line="194" selection-start-column="33" selection-end-line="194" selection-end-column="33" />
+        <state relative-caret-position="223">
+          <caret line="197" column="51" lean-forward="true" selection-start-line="197" selection-start-column="51" selection-end-line="197" selection-end-column="51" />
           <folding>
             <element signature="e#34#50#0#PHP" expanded="true" />
           </folding>

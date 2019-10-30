@@ -259,7 +259,13 @@ export default {
       protocol: false
     };
   },
+  mounted() {
+    this.isLogin();
+  },
   methods: {
+    isLogin() {
+        this.ifLogin = !!this.$store.state.user_id
+    },
     handleCommand(command) {
       this.$message("click on item " + command);
     },
@@ -348,6 +354,8 @@ export default {
         if (code === 1) {
           // 存储user_id
           this.$store.commit("setUserId", data.user_id);
+          this.$store.commit("setPhone", data.phone);
+          this.ifLogin = true;
           this.handleClose();
         }
       });

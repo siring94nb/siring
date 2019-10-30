@@ -191,7 +191,6 @@ class Good extends Model
     public function good_review($goods_id)
     {
         $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
-
         foreach ($res as $k=>$v){
             //个人信息
             $user = new User();
@@ -203,10 +202,9 @@ class Good extends Model
             $res[$k]['ico'] = $join_role['img'];
             $res[$k]['grade_name'] = $join_role['title'];
             //二级评论
+            $res[$k]['grade'] = $user_all['grade'];
             $res[$k]['relpay'] = Reviews::two_level($v['id']);
-
         }
-
         return $res;
 
     }

@@ -13,6 +13,8 @@ use think\Request;
 use app\util\ReturnCode;
 use app\util\Tools;
 use app\model\Goods as Good;
+use app\data\model\Good as GoodModel;
+use app\data\model\Reviews;
 use app\model\Special;
 use think\Validate;
 
@@ -132,6 +134,29 @@ class Goods extends Base{
      * 商品管理-商品/软件开发定制--商品复制
      */
     public function copy(){
+        //复制当前的商品信息新生成一天记录
+        $request=Request::instance();
+        $id=$request->param();
+        if($id){
+            //获取商品的信息
+            $data['data']=Goods::get($id['id']);
+            $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
+            unset($data['data']['id']);
+            $data['data']['create_time']=time();
+            $data['data']['update_time']=null;
+            $res=Good::create($data['data'])->toArray();
+            foreach($special as $k =>$v){
+                //获取新增的goods_id($res->id)
+                foreach($data['special'] as $k2 =>$v2){
+                    unset($data['special'][$k2]['id']);
+                    $data['special'][$k2]['goods_id']=$res['id'];
+                    Special::create($data['special'][$k2]);
+                }
+            }
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要参数');
+        }
 
     }
     /**
@@ -269,20 +294,16 @@ class Goods extends Base{
 
     /**
      * lilu
-     * 商品管理-软件定制商品-定制商品
+     * 商品管理-软件定制商品-定制商品(案例)
      */
     public function made(){
-        $where['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
-        $where['page'] = $this->request->get('page', 1);
-        $goods_name = $this->request->get('goods_name', '');
-        $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        if (!empty($goods_recommend_staus)) {
-            $where['goods_recommend_staus'] = $goods_recommend_staus;
+        $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->get('page', 1);
+        $project_name = $this->request->get('project_name', '');
+        if ($project_name) {
+            $where['project_name'] = ['like', "%{$goods_name}%"];
         }
-        if ($goods_name) {
-            $where['goods_name'] = ['like', "%{$goods_name}%"];
-        }
-        $list=Good::getGoodsList($where);
+        $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page]);
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,
@@ -340,6 +361,71 @@ class Goods extends Base{
     public function made_delete(){
 
     }
+
+    /**
+     * lilu
+     * 获取马甲会员
+     */
+    public function get_horse_member(){
+        $limit = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $start = $this->request->get('page', 1);
+        $where['status']='1';
+        $where['vest']='2';
+        $member_list=Db::table('user')->where($where)->order('id asc')->field('id,realname')->select();
+        if($member_list){
+            return $this->buildSuccess([
+                $member_list
+            ]);
+        }else{
+            return $this->buildFailed('0','获取数据失败');
+        }
+
+    } 
+    
+    /**
+     * lilu
+     * 添加评论
+     */
+    public function add_comment(){
+        $request=Request::instance();
+        $datapost=$request->param();
+        $res=Reviews::create($datapost['data'])->toArray();
+        if($res){
+            //增加官方回复
+            $datapost['special']['cid']=$res['id'];
+            $re=Reviews::create($datapost['special'])->toArray();
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','操作失败');
+        }
+    }
+
+    /**
+     * lilu
+     * 历史评论
+     * param   id  (商品ID)
+     */
+    public function comment_list()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //获取商品的评论
+            $goods_model=new GoodModel();
+            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            if($comment_list){
+                return $this->buildSuccess([
+                    'data'=>$comment_list,
+                ]);
+            }else{
+                return $this->buildFailed('0','获取失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
+        }
+    }
+
 
 
 

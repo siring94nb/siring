@@ -12,10 +12,10 @@
               :class="{'type-item': true, 'on': typeIndex==index}"
               v-for="(item, index) in typeList"
               :key="index"
-              @click="chooseType(index)"
+              @click="chooseType(index, item.plate_from_id)"
             >
               <i :class="item.className"></i>
-              <p class="type-name">{{ item.name }}</p>
+              <p class="type-name">{{ item.plate_from }}</p>
             </div>
           </div>
           <div class="table-box">
@@ -29,21 +29,24 @@
               <el-table-column label="模块">
                 <div slot-scope="scope">
                   <el-checkbox
+                    v-model="scope.row.checkAll"
                     @change="handleCheckAllChange($event, scope.row)"
                   >{{scope.row.model_name}}</el-checkbox>
                 </div>
               </el-table-column>
               <el-table-column label="功能点">
-                <!-- <el-checkbox-group
+                <el-checkbox-group
+                  v-model="scope.row.checkedCities"
                   slot-scope="scope"
-                  @change="handleCheckedCitiesChange($event, scope.row)"
+                  @change="handleFunction($event, scope.row)"
                 >
                   <el-checkbox
                     v-for="item in scope.row.function_point"
                     :label="item.function_point"
                     :key="item.id"
+                    @change="handleAddFunItem($event, item)"
                   >{{item.function_point}}</el-checkbox>
-                </el-checkbox-group> -->
+                </el-checkbox-group>
               </el-table-column>
             </el-table>
           </div>
@@ -51,6 +54,15 @@
       </div>
     </div>
     <myfooter />
+    <!-- 报价窗 -->
+    <div class="quoted-price">
+      <p class="tit">报价预估：</p>
+      <div class="price-interval">￥{{minPrice}}-{{maxPrice}}</div>
+      <p>总计工时预估：</p>
+      <div class="time-interval">
+        <span>{{date}}</span>个工作日
+      </div>
+    </div>
   </div>
 </template>
 
@@ -67,64 +79,24 @@ export default {
   },
   data() {
     return {
-      typeList: [
-        {
-          className: "iconfont icon-gongyinglian",
-          name: "原型UI",
-          id: 1
-        },
-        {
-          className: "iconfont icon-shezhi-",
-          name: "后台",
-          id: 2
-        }
-      ],
+      typeList: [],
       typeIndex: 0,
       queryId: [],
       dataList: [],
-      tableData: [
-        {
-          name: "基本功能",
-          length: 2,
-          subname: "注册登录",
-          checkedCities: [],
-          checkAll: false,
-          thrname: [
-            {
-              name: "账号绑定"
-            },
-            {
-              name: "邮箱"
-            },
-            {
-              name: "手机"
-            },
-            {
-              name: "密码找回"
-            }
-          ]
-        },
-        {
-          name: "基本功能",
-          length: 0,
-          subname: "功能列表",
-          checkedCities: [],
-          checkAll: false,
-          thrname: [
-            {
-              name: "账号绑定"
-            }
-          ]
-        }
-      ]
+      tableData: [],
+      checkedObj: {},
+      minPrice: 0,
+      maxPrice: 0,
+      date: 0
     };
   },
   mounted() {
     this.getTableData();
   },
   methods: {
-    chooseType(index) {
+    chooseType(index, id) {
       this.typeIndex = index;
+      this.tableData = this.dataList[index];
     },
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0) {
@@ -136,32 +108,98 @@ export default {
     },
     handleCheckAllChange(val, row) {
       let arr = [];
-      // row.thrname.forEach(ele => {
-      //   arr.push(ele.name);
-      // });
+      row.function_point.forEach(ele => {
+        arr.push(ele.function_point);
+      });
       row.checkedCities = val ? arr : [];
+      if (val) {
+        row.function_point.forEach(v => {
+          this.checkedObj[v.id] = v;
+          this.addData(v);
+        });
+      } else {
+        row.function_point.forEach(v => {
+          delete this.checkedObj[v.id];
+          this.minusData(v);
+        });
+      }
+      console.log(row);
     },
-    handleCheckedCitiesChange(value, row) {
-      let checkedCount = value.model_num;
-      row.checkAll = checkedCount === row.thrname.model_num;
+    handleFunction(val, row) {
+      let checkedCount = val.length;
+      row.checkAll = checkedCount === row.function_point.length;
+    },
+    handleAddFunItem(val, item) {
+      if (val) {
+        this.checkedObj[item.id] = item;
+        this.addData(item);
+      } else {
+        delete this.checkedObj[item.id];
+        this.minusData(item);
+      }
+    },
+    addData(item) {
+      this.minPrice += item.price_down;
+      this.maxPrice += item.price_up;
+      // this.date += item.work_hours;
+      this.date = Number((this.date + item.work_hours).toFixed(1));
+    },
+    minusData(item) {
+      this.minPrice -= item.price_down;
+      this.maxPrice -= item.price_up;
+      // this.date -= item.work_hours;
+      this.date = Number((this.date - item.work_hours).toFixed(1));
+    },
+    floatAdd(arg1, arg2) {
+      var r1, r2, m;
+      try {
+        r1 = arg1.toString().split(".")[1].length;
+      } catch (e) {
+        r1 = 0;
+      }
+      try {
+        r2 = arg2.toString().split(".")[1].length;
+      } catch (e) {
+        r2 = 0;
+      }
+      m = Math.pow(10, Math.max(r1, r2));
+      return (arg1 * m + arg2 * m) / m;
     },
     getTableData() {
+      const id = JSON.parse(sessionStorage.getItem("typeidList"));
       GetTableData({
-        id: this.$route.query.id
+        id: id
       }).then(res => {
         let { code, data, msg } = res.data;
         if (code === 1) {
-          console.log(data)
-          this.tableData = data[1].model;
-          data[1].model.forEach((v, i) => {
-            v.checkedCities = [];
-            v.checkAll = false;
-            if(i == 2){
-              v.model_num = 2;
+          data.plate_form.forEach(v => {
+            switch (v.plate_from_id) {
+              case 1:
+                v.className = "iconfont icon-gongyinglian";
+                break;
+              case 2:
+                v.className = "iconfont icon-shezhi-";
+                break;
+              case 3:
+                v.className = "iconfont icon-diannao";
+                break;
+              case 4:
+                v.className = "iconfont icon-h5";
+                break;
+              case 5:
+                v.className = "iconfont icon-pingguo";
+                break;
+              case 6:
+                v.className = "iconfont icon-anzhuologo";
+                break;
+              case 7:
+                v.className = "iconfont icon-weixinxiaochengxu";
+                break;
             }
-          })
-          console.log(data[1].model)
-          // console.log(data);
+          });
+          this.typeList = data.plate_form;
+          this.dataList = data.model;
+          this.tableData = data.model[0];
         }
       });
     }
@@ -229,8 +267,44 @@ export default {
         .table-box {
           background-color: #ffffff;
           min-height: 674px;
-          padding: 15px 30px 0;
+          padding: 15px 30px;
         }
+      }
+    }
+  }
+  .quoted-price {
+    background-color: rgb(198, 230, 248);
+    position: fixed;
+    right: 0;
+    top: 30%;
+    width: 180px;
+    border-radius: 20px;
+    padding: 20px;
+    color: #333333;
+    z-index: 998;
+    p {
+      font-size: 14px;
+      &.tit {
+        font-size: 16px;
+        font-weight: 700;
+      }
+    }
+    .price-interval {
+      width: 90%;
+      margin: 15px auto;
+      background-color: #ffffff;
+      border-radius: 5px;
+      height: 40px;
+      line-height: 40px;
+      text-align: center;
+      color: #ff0000;
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .time-interval {
+      margin: 15px 0;
+      span {
+        color: #ff0000;
       }
     }
   }
