@@ -244,10 +244,8 @@ class Good extends Model
     public function good_review_del($id)
     {
         $res = Reviews::where('id',$id)->update(['delect_at'=>time()]);
-            //删除二级评论
-        $res = Reviews::update(['cid'=>$id],'delect_at'=>time()]);
+        $re = Reviews::where('cid',$id)->update(['delect_at'=>time()]);
         return true;
-
     }
 
 
