@@ -88,7 +88,6 @@
                 v-model="myComment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
-                format="yyyy-MM-dd HH:mm" 
               ></DatePicker>
             </FormItem>
             <FormItem label="官方回复">
@@ -106,7 +105,6 @@
                 v-model="myComment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
-                format="yyyy-MM-dd HH:mm" 
               ></DatePicker>
             </FormItem>
             <FormItem>
