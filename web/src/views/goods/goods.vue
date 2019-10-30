@@ -65,18 +65,18 @@
         <TabPane label="添加评论" name="name1" >
           <Form ref="comments" :model="comment" :label-width="100">
             <FormItem label="马甲会员账号">
-             <Select v-model="comment.grade" style="width: 400px;">
+             <Select v-model="comment.data.user_id" style="width: 400px;">
                 <Option
-                  v-for="(item, index) in sortList"
+                  v-for="(item, index) in horseList"
                   :value="item.id"
                   :key="index"
-                >{{ item.category_name }}</Option>
+                >{{ item.id }}</Option>
               </Select>
             </FormItem>
            
             <FormItem label="会员评论" porp>
               <Input
-                v-model="comment.menber_comment"
+                v-model="comment.data.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
@@ -85,14 +85,14 @@
             <FormItem label="">
               <DatePicker
                 type="datetime"
-                v-model="comment.start_time"
+                v-model="comment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
               ></DatePicker>
             </FormItem>
             <FormItem label="官方回复" porp>
               <Input
-                v-model="comment.reply"
+                v-model="comment.special.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
@@ -102,7 +102,7 @@
             <FormItem label="">
               <DatePicker
                 type="datetime"
-                v-model="comment.end_time"
+                v-model="comment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
               ></DatePicker>
@@ -267,6 +267,7 @@ export default {
       uploadList: [],
       iconList: [],
       sortList: [],
+      horseList: [],
       sd:true,
       // 图片
       columnsList: [
@@ -345,12 +346,18 @@ export default {
         }
       ],
       comment: {
-        number: "",
-        grade: "",
-        menber_comment: "",
-        start_time: "",
-        reply: "",
-        end_time: ""
+        data: {
+          id: 0,
+          user_id:"",
+          con: "",
+          create_at:"",
+          cid: 0
+        },
+        special: {
+          user_id: 0,
+          con:"",
+          create_at: ""
+        }
       },
       tableData: [],
       tableShow: {
@@ -374,6 +381,7 @@ export default {
     this.init();
     this.getList();
     this.getSort();
+    this.getHorse();
   },
   methods: {
     init() {
@@ -477,6 +485,17 @@ export default {
         }
       });
     },
+    //马家会员列表
+    getHorse() {
+      let vm = this;
+      axios.post("Goods/get_horse_member", {}).then(function(response) {
+        let res = response.data;
+        console.log(res)
+        if (res.code === 1) {
+          vm.horseList = res.data.list;
+        }
+      });
+    },
     handleAdd() {
       // this.index++;
       this.formItem.special.push({
@@ -575,11 +594,11 @@ export default {
     handleView(file) {
       this.visible = true;
     },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.data.goods_images = "";
-    },
+    // handleRemove(file) {
+    //   const fileList = this.$refs.upload.fileList;
+    //   this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    //   this.formItem.data.goods_images = "";
+    // },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
@@ -601,10 +620,9 @@ export default {
     }
   },
   mounted() {
-    // this.UploadAction = config.front_url+'api/upload';
+
+    // this.UploadAction = config.front_url + "file/qn_upload";
     // this.uploadList = this.$refs.upload.fileList;
-    this.UploadAction = config.front_url + "file/qn_upload";
-    this.uploadList = this.$refs.upload.fileList;
   }
 };
 </script>
