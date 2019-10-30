@@ -127,7 +127,7 @@
             <Col span="4" style="text-align:center;">
               <Poptip
                 confirm
-                title="您确定要删除该评论吗？"
+                title="确定删除吗？"
                 @on-ok="commentDel(item.id)"
                 @on-cancel="cancel"
               >
