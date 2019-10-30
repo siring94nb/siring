@@ -33,4 +33,18 @@ class Reviews extends Model
         return self::where(['cid'=>$cid,'delect_at'=>null])->select();
 
     }
+    
+    /**
+     * 二级评论
+     * @param $cid
+     * @return false|\PDOStatement|string|\think\Collection
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function two_level_del($cid)
+    {
+        return self::where(['cid'=>$cid,'delect_at'=>null])->select();
+
+    }
 }

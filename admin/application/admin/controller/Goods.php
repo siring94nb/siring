@@ -358,8 +358,9 @@ class Goods extends Base{
     /**
      * lilu
      * 商品管理-定制商品--商品删除
+     * param   id   商品id
      */
-    public function made_delete(){
+    public function made_del(){
 
     }
 
@@ -413,6 +414,32 @@ class Goods extends Base{
         if($dataPost['id'])
         {
             //获取商品的评论
+            $goods_model=new GoodModel();
+            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            if($comment_list){
+                return $this->buildSuccess([
+                    'data'=>$comment_list,
+                ]);
+            }else{
+                return $this->buildFailed('0','获取失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
+        }
+    }
+    
+    /**
+     * lilu
+     * 历史评论删除
+     * param   id  (商品ID)
+     */
+    public function comment_del()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //删除商品的评论
             $goods_model=new GoodModel();
             $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
             if($comment_list){
