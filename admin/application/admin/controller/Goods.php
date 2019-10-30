@@ -374,10 +374,10 @@ class Goods extends Base{
         $start = $this->request->get('page', 1);
         $where['status']='1';
         $where['vest']='2';
-        $member_list=Db::table('user')->where($where)->order('id asc')->paginate($limit, false , array( 'page' => $start ) ) -> toArray();
+        $member_list=Db::table('user')->where($where)->order('id asc')->field('id,realname')->select();
         if($member_list){
             return $this->buildSuccess([
-                'data'=>$member_list,
+                $member_list,
             ]);
         }else{
             return $this->buildFailed('0','获取数据失败');
