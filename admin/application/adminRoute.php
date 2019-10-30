@@ -590,8 +590,12 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/del',          //软件开发商品删除
             ['method' => 'post']
         ],
-        'comment'   => [
-            'admin/Goods/comment',        //评论
+        'add_comment'   => [
+            'admin/Goods/add_comment',        //添加评论
+            ['method' => 'post']
+        ],
+        'comment_list'   => [
+            'admin/Goods/comment_list',        //历史评论
             ['method' => 'post']
         ],
         'made'   => [

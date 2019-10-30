@@ -62,47 +62,10 @@
     </Row>
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
       <Tabs value="name1">
-        <TabPane label="添加评论" name="name1">
-          <Form ref="comments" :model="comment">
+        <TabPane label="添加评论" name="name1" >
+          <Form ref="comments" :model="comment" :label-width="100">
             <FormItem label="马甲会员账号">
-              <Input v-model="comment.number" placeholder="请输入" style="width: 500px;" />
-            </FormItem>
-            <FormItem label="会员头像" prop="img">
-              <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
-                <template v-if="item.status === 'finished'">
-                  <img :src="item.url" />
-                  <div class="demo-upload-list-cover">
-                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                  </div>
-                </template>
-                <template v-else>
-                  <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-                </template>
-              </div>
-              <Upload
-                multiple
-                ref="upload"
-                :show-upload-list="false"
-                :default-file-list="iconList"
-                :on-success="handleSuccess"
-                :format="['jpg','jpeg','png']"
-                :max-size="10240"
-                :on-format-error="handleFormatError"
-                :on-exceeded-size="handleMaxSize"
-                :before-upload="handleBeforeUpload"
-                type="drag"
-                name="image"
-                :action="UploadAction"
-                style="display: inline-block;width:58px;"
-              >
-                <div style="width: 58px;height:58px;line-height: 58px;">
-                  <Icon type="ios-camera" size="20"></Icon>
-                </div>
-              </Upload>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <span>会员等级</span>
-              <Select v-model="comment.grade" style="width: 400px;">
+             <Select v-model="comment.grade" style="width: 400px;">
                 <Option
                   v-for="(item, index) in sortList"
                   :value="item.id"
@@ -110,15 +73,16 @@
                 >{{ item.category_name }}</Option>
               </Select>
             </FormItem>
+           
             <FormItem label="会员评论" porp>
               <Input
                 v-model="comment.menber_comment"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
-                style="width:1000px;"
+                style="width:500px;"
               />
             </FormItem>
-            <FormItem>
+            <FormItem label="">
               <DatePicker
                 type="datetime"
                 v-model="comment.start_time"
@@ -131,10 +95,11 @@
                 v-model="comment.reply"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
-                style="width:1000px;"
+                style="width:500px;"
               />
+              <p style="color: rgb(197,200,206);">*非必填项</p>
             </FormItem>
-            <FormItem>
+            <FormItem label="">
               <DatePicker
                 type="datetime"
                 v-model="comment.end_time"
@@ -142,13 +107,38 @@
                 style="width: 200px"
               ></DatePicker>
             </FormItem>
+            <FormItem>
+              <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
+              <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+            </FormItem>
           </Form>
-          <div slot="footer">
-            <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
-            <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
-          </div>
+          <!-- <div slot="footer">
+            
+          </div> -->
         </TabPane>
-        <TabPane label="历史评论" name="name2">标签二的内容</TabPane>
+        <TabPane label="历史评论" name="name2">
+          <Row type="flex" justify="center" align="middle" class="row-box">
+            <Col span="4"  style="text-align:center;">
+              <Button type="error">删除</Button>
+            </Col>
+            <Col span="4"  style="text-align:center;">
+              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"  size="large"/>
+              <div>139****2345</div>
+              <div><img style="width:20px;height:20px;display:inline-block;" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>皇冠会员</div>
+            </Col>
+            <Col span="16">
+                <div class="comments">
+                  设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
+                  <div style="">2019年01月20日 19：27</div>
+                </div>
+                <div class="comments comments-gf" v-if="sd">
+                  <span style="color:rgb(255,153,204);">【官方回复】</span>设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
+                  <div >2019年01月20日 19：27</div>
+                </div>
+            </Col>
+          </Row>
+          
+        </TabPane>
       </Tabs>
     </Modal>
   </div>
@@ -277,6 +267,7 @@ export default {
       uploadList: [],
       iconList: [],
       sortList: [],
+      sd:true,
       // 图片
       columnsList: [
         {

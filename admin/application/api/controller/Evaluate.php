@@ -66,19 +66,6 @@ class Evaluate extends Controller{
                 }
                 $model[$k][$k4]['model_name']=$v4['model'];
                 $model[$k][$k4]['function_point']=Eva::getEvaluate_function($v,$v4['model']);   //获取功能点
-                //统计分类下的model数量
-                // foreach($v4 as $k3 =>$v3){
-                //     $evaluate_name=Db::table('evaluate')->where(['plate_form'=>$v,'model'=>$v3['model']])->field('evaluate_type')->find();
-                //         $model[$k][$k4][$k3]['evaluate_type']=$evaluate_name['evaluate_type'];
-                //         if($k3==0){
-                //             //统计分类下的model数量
-                //             $model[$k][$k4][$k3]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$model[$k][$k4][$k3]['evaluate_type']])->group('model')->count();
-                //         }else{
-                //             $model[$k][$k4][$k3]['model_num']=0;
-                //         }
-                //         $model[$k][$k4][$k3]['model_name']=$v3['model'];
-                //         $model[$k][$k4][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
-                //     }
             }
         }
         $data['plate_form']=$plate_list;

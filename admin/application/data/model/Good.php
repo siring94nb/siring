@@ -197,7 +197,6 @@ class Good extends Model
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
             $res[$k]['grade'] = $user_all['grade'];
-
             $res[$k]['relpay'] = Reviews::two_level($v['id']);
 
         }
