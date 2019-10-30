@@ -125,7 +125,14 @@
             :key="index"
           >
             <Col span="4" style="text-align:center;">
-              <Button type="error" @click="commentDel(item.id)">删除</Button>
+              <Poptip
+                confirm
+                title="您确定要删除该评论吗？"
+                @on-ok="commentDel(item.id)"
+                @on-cancel="cancel"
+              >
+                <Button type="error">删除</Button>
+              </Poptip>
             </Col>
             <Col span="4" style="text-align:center;line-height:30px;">
               <Avatar :src="item.img" size="large" />
