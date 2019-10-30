@@ -13,6 +13,7 @@ use think\Request;
 use app\util\ReturnCode;
 use app\util\Tools;
 use app\model\Goods as Good;
+use app\data\model\Good as GoodModel;
 use app\model\Special;
 use think\Validate;
 
@@ -383,6 +384,47 @@ class Goods extends Base{
         }
 
     } 
+    
+    /**
+     * lilu
+     * 添加评论
+     */
+    public function add_comment(){
+        $request=Request::instance();
+        $datapost=$request->param();
+        $res=Reviews::create($datapost)->toArray();
+        if($res){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','操作失败');
+        }
+    }
+
+    /**
+     * lilu
+     * 历史评论
+     * param   id  (商品ID)
+     */
+    public function comment_list()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //获取商品的评论
+            $goods_model=new GoodModel();
+            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            if($comment_list){
+                return $this->buildSuccess([
+                    'data'=>$comment_list,
+                ]);
+            }else{
+                return $this->buildFailed('0','获取失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
+        }
+    }
 
 
 
