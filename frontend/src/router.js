@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from './store.js'
 
 Vue.use(Router)
 
@@ -7,8 +8,10 @@ Vue.use(Router)
 * 刷新页面时，重新赋值user_id
 */
 const userid = sessionStorage.getItem('user_id');
+const phone = sessionStorage.getItem('phone');
 if(userid){
   store.commit('setUserId', userid);
+  store.commit('setPhone', phone);
 }
 
 export default new Router({
