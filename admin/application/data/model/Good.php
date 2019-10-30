@@ -191,16 +191,13 @@ class Good extends Model
     public function good_review($goods_id)
     {
         $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
-
         foreach ($res as $k=>$v){
             $user = new User();
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
             $res[$k]['grade'] = $user_all['grade'];
             $res[$k]['relpay'] = Reviews::two_level($v['id']);
-
         }
-
         return $res;
 
     }

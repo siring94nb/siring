@@ -36,7 +36,7 @@ class Evaluate extends Controller{
     public function get_plate_list(){
         $request=Request::instance();
         $plate_id=$request->param();
-         //halt($plate_id);
+        halt($plate_id);
         //postman测试模拟
         // $plate_id=explode(',',$plate_id['id']);
         $plate_list=[];

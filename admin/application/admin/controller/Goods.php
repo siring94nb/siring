@@ -294,20 +294,16 @@ class Goods extends Base{
 
     /**
      * lilu
-     * 商品管理-软件定制商品-定制商品
+     * 商品管理-软件定制商品-定制商品(案例)
      */
     public function made(){
-        $where['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
-        $where['page'] = $this->request->get('page', 1);
-        $goods_name = $this->request->get('goods_name', '');
-        $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        if (!empty($goods_recommend_staus)) {
-            $where['goods_recommend_staus'] = $goods_recommend_staus;
+        $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->get('page', 1);
+        $project_name = $this->request->get('project_name', '');
+        if ($project_name) {
+            $where['project_name'] = ['like', "%{$goods_name}%"];
         }
-        if ($goods_name) {
-            $where['goods_name'] = ['like', "%{$goods_name}%"];
-        }
-        $list=Good::getGoodsList($where);
+        $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page]);
         $listInfo = $list;
         return $this->buildSuccess([
             'list'  => $listInfo,
@@ -418,6 +414,7 @@ class Goods extends Base{
             //获取商品的评论
             $goods_model=new GoodModel();
             $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            halt($comment_list);
             if($comment_list){
                 return $this->buildSuccess([
                     'data'=>$comment_list,
