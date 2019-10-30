@@ -414,7 +414,6 @@ class Goods extends Base{
             //获取商品的评论
             $goods_model=new GoodModel();
             $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
-            halt($comment_list);
             if($comment_list){
                 return $this->buildSuccess([
                     'data'=>$comment_list,
