@@ -34,23 +34,4 @@ class Reviews extends Model
 
     }
     
-    /**
-     * 二级评论
-     * @param $cid
-     * @return false|\PDOStatement|string|\think\Collection
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public static function two_level_del($cid)
-    {
-       $comment_list=self::where(['cid'=>$cid,'delect_at'=>null])->select();
-       foreach($comment_list as $k =>$v)
-       {
-            self::deatory($v['id']);
-       }
-       return true;
-
-
-    }
 }
