@@ -151,9 +151,6 @@ class JoinRole extends Model
             case 3:
                 return self::get(['id',5]);
                 break;
-            default:
-                return '';
-                break;
         }
     }
 
