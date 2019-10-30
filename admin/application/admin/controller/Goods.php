@@ -377,7 +377,7 @@ class Goods extends Base{
         $member_list=Db::table('user')->where($where)->order('id asc')->field('id,realname')->select();
         if($member_list){
             return $this->buildSuccess([
-                $member_list,
+                $member_list
             ]);
         }else{
             return $this->buildFailed('0','获取数据失败');
@@ -392,6 +392,7 @@ class Goods extends Base{
     public function add_comment(){
         $request=Request::instance();
         $datapost=$request->param();
+        halt($datapost);
         $res=Reviews::create($datapost)->toArray();
         if($res){
             return $this->buildSuccess([]);

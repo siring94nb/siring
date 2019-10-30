@@ -599,7 +599,15 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
         'made'   => [
-            'admin/Goods/made',           //定制商品列表
+            'admin/Goods/made',           //定制案列列表
+            ['method' => 'post']
+        ],
+        'made_edit'   => [
+            'admin/Goods/made_edit',           //定制案列编辑
+            ['method' => 'post']
+        ],
+        'made_del'   => [
+            'admin/Goods/made_del',           //定制案列删除
             ['method' => 'post']
         ],
         'evaluate'   => [
