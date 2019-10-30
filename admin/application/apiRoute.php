@@ -69,8 +69,9 @@ Route::group('api', function () {
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
         Route::any('soft_list','api/Software/soft_list'); //商品列表
-        Route::any('soft_detail','api/Software/soft_detail'); //
-        Route::any('soft_reviews','api/Software/soft_reviews'); //
+        Route::any('soft_detail','api/Software/soft_detail'); //商品详情
+        Route::any('soft_reviews','api/Software/soft_reviews'); //商品评论
+        Route::any('soft_push','api/Software/soft_push'); //推荐商品
     });
 
 

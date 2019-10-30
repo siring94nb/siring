@@ -16,6 +16,23 @@ class User extends Model
     protected $table = "user";
     protected $resultSetType = 'collection';
 
+//    public function getGradeAttr($val)
+//    {
+//        switch ($val){
+//            case 1:
+//                return '金牌';
+//                    break;
+//            case 2:
+//                return '钻石';
+//                break;
+//            case 3:
+//                return '皇冠';
+//                break;
+//            default:
+//                return '普通会员';
+//                break;
+//        }
+//    }
     //新增
     public function add($param)
     {
