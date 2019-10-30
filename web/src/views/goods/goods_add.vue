@@ -325,7 +325,9 @@ export default {
               if (res.data.data.goods_images != "") {
                 var str = res.data.data.goods_images.split(',');
                 for(let i = 0; i < str.length; i ++) {
-                  vm.iconList.push({ name: "", url: str[i] })
+                  if(str[i] != "") {
+                    vm.iconList.push({ name: "", url: str[i] })
+                  }
                 }
                 // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
               }
