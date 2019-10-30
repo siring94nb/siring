@@ -245,7 +245,7 @@ class Good extends Model
     {
         $res = Reviews::where('id',$id)->update(['delect_at'=>time()]);
             //删除二级评论
-        $res = Reviews::update(['cid'=>$v['id'],'delect_at'=>time()]);
+        $res = Reviews::update(['cid'=>$id],'delect_at'=>time()]);
         return true;
 
     }
