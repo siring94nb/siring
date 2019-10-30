@@ -108,10 +108,10 @@
               ></DatePicker>
             </FormItem>
             <FormItem>
-              <Button type="text" @click="cancelComment('myComment')" style="margin-right: 8px">取消</Button>
+              <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
               <Button
                 type="primary"
-                @click="submitComment('myComment')"
+                @click="submitComment"
                 :loading="modalSetting.loading"
               >确定</Button>
             </FormItem>
@@ -149,6 +149,9 @@
           </Row>
         </TabPane>
       </Tabs>
+      <div slot="footer">
+            <Button type="warning" @click="cancel" style="margin-right: 8px">取消</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -170,6 +173,8 @@ const addCommentButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.getHorse();
+          console.log(currentRow)
+          vm.goods_id = currentRow.id;
           vm.modalSetting.show = true;
         }
       }
@@ -357,7 +362,7 @@ export default {
       ],
       myComment: {
         data: {
-          id: 0,
+          goods_id: "",
           user_id: "",
           con: "",
           create_at: "",
@@ -478,7 +483,20 @@ export default {
         this.handleRemove(this.uploadList[i]);
       }
       this.iconList = [];
-
+      this.myComment= {
+        data: {
+          goods_id: "",
+          user_id: "",
+          con: "",
+          create_at: "",
+          cid: 0
+        },
+        special: {
+          user_id: 0,
+          con: "",
+          create_at: ""
+        }
+      },
       this.modalSetting.show = false;
     },
     onMenuSelect(name) {
@@ -577,12 +595,12 @@ export default {
         console.log(response);
         if (response.data.code === 1) {
           self.$Message.success(response.data.msg);
+          self.cancel();
         } else {
           self.$Message.error(response.data.msg);
         }
       });
     },
-    cancelComment() {},
     getList() {
       let vm = this;
       axios
