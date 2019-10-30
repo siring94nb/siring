@@ -245,8 +245,8 @@ class Good extends Model
     {
         $res = Reviews::where('id',$id)->select();
         foreach ($res as $k=>$v){
-            //二级评论
-            $res[$k]['relpay'] = Reviews::two_level($v['id']);
+            //删除二级评论
+            $res = Reviews::two_level_del($v['id']);
         }
         return $res;
 

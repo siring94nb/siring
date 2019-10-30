@@ -44,7 +44,13 @@ class Reviews extends Model
      */
     public static function two_level_del($cid)
     {
-        return self::where(['cid'=>$cid,'delect_at'=>null])->select();
+       $comment_list=self::where(['cid'=>$cid,'delect_at'=>null])->select();
+       foreach($comment_list as $k =>$v)
+       {
+            self::deatory($v['id']);
+       }
+       return true;
+
 
     }
 }
