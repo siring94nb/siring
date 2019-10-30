@@ -127,18 +127,18 @@
               <Button type="error">删除</Button>
             </Col>
             <Col span="4" style="text-align:center;line-height:30px;">
-              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large" />
+              <Avatar :src="item.img" size="large" />
               <div>{{geTel(item.phone)}}</div>
               <div>
                 <img
                   style="width:20px;height:20px;display:inline-block;"
-                  src="https://i.loli.net/2017/08/21/599a521472424.jpg"
+                  :src="item.icn"
                 />皇冠会员
               </div>
             </Col>
             <Col span="16">
               <div class="comments">
-                {{item.con}}
+                {{item.ico}}
                 <div style>{{item.create_at}}</div>
               </div>
               <div class="comments comments-gf" v-if="item.relpay != ''">
