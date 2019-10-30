@@ -425,7 +425,7 @@ export default {
       this.$Message.error("文件大小不能超过10M");
     },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
+      const check = this.uploadList.length < 6;
       if (!check) {
         this.$Message.error("只能上传五张品牌图");
       }

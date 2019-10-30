@@ -38,33 +38,47 @@ class Evaluate extends Controller{
         $plate_id=$request->param();
          //halt($plate_id);
         //postman测试模拟
-        $plate_id=explode(',',$plate_id['id']);
+        // $plate_id=explode(',',$plate_id['id']);
         $plate_list=[];
-        foreach($plate_id as $k =>$v){
+        foreach($plate_id['id'] as $k =>$v){
             //1.获取平台
             $plate_list[$k]['plate_from']=Eva::getStatusAttr($v);
             $plate_list[$k]['plate_from_id']=$v;                                //平台id
             //2.获取平台对应的分类
             $evaluate_type=Eva::getEvaluate_type($v);     //$v=>平台id 
             //3.获取分类下对应的model
+            $model2=[];
             foreach($evaluate_type as $k2 =>$v2){
-                $mo=Eva::getEvaluate_model($v,$v2);  
-                $model2[$k2]=$mo; 
+                $mo=Eva::getEvaluate_model($v,$v2);
+                $model2=array_merge($model2,$mo); 
             }
             //4.获取对应模型下面的功能点
             foreach($model2 as $k4 =>$v4){
-                foreach($v4 as $k3 =>$v3){
-                    $evaluate_name=Db::table('evaluate')->where(['plate_form'=>$v,'model'=>$v3['model']])->field('evaluate_type')->find();
-                        $model[$k][$k4][$k3]['evaluate_type']=$evaluate_name['evaluate_type'];
-                        if($k3==0){
-                            //统计分类下的model数量
-                            $model[$k][$k4][$k3]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$model[$k][$k4][$k3]['evaluate_type']])->group('model')->count();
-                        }else{
-                            $model[$k][$k4][$k3]['model_num']=0;
-                        }
-                        $model[$k][$k4][$k3]['model_name']=$v3['model'];
-                        $model[$k][$k4][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
-                    }
+                $model[$k][$k4]['evaluate_type']=$v4['evaluate_type'];
+                $model[$k][$k4]['checkedCities']=[];
+                $model[$k][$k4]['checkAll']=false;
+                if($k4==0){
+                    $model[$k][$k4]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$v4['evaluate_type']])->group('model')->count();
+                }elseif($model2[$k4-1]['evaluate_type'] == $model2[$k4]['evaluate_type']){
+                    $model[$k][$k4]['model_num']=0;
+                }else{
+                    $model[$k][$k4]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$v4['evaluate_type']])->group('model')->count();
+                }
+                $model[$k][$k4]['model_name']=$v4['model'];
+                $model[$k][$k4]['function_point']=Eva::getEvaluate_function($v,$v4['model']);   //获取功能点
+                //统计分类下的model数量
+                // foreach($v4 as $k3 =>$v3){
+                //     $evaluate_name=Db::table('evaluate')->where(['plate_form'=>$v,'model'=>$v3['model']])->field('evaluate_type')->find();
+                //         $model[$k][$k4][$k3]['evaluate_type']=$evaluate_name['evaluate_type'];
+                //         if($k3==0){
+                //             //统计分类下的model数量
+                //             $model[$k][$k4][$k3]['model_num']=Db::table('evaluate')->where(['plate_form'=>$v,'evaluate_type'=>$model[$k][$k4][$k3]['evaluate_type']])->group('model')->count();
+                //         }else{
+                //             $model[$k][$k4][$k3]['model_num']=0;
+                //         }
+                //         $model[$k][$k4][$k3]['model_name']=$v3['model'];
+                //         $model[$k][$k4][$k3]['function_point']=Eva::getEvaluate_function($v,$v3['model']);   //获取功能点
+                //     }
             }
         }
         $data['plate_form']=$plate_list;
