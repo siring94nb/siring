@@ -46,7 +46,7 @@ class Evaluate extends Model
      */
     public static function getEvaluate_model($plate_form,$evaluate_type){
         $evaluate= new Evaluate();
-        $model=$evaluate->where(['evaluate_type'=>$evaluate_type['evaluate_type'],'plate_form'=>$plate_form])->field('model')->group('model')->order('id')->select()->toArray();
+        $model=$evaluate->where(['evaluate_type'=>$evaluate_type['evaluate_type'],'plate_form'=>$plate_form])->field('model,evaluate_type')->group('model')->order('id')->select()->toArray();
         return $model;
     }
 

@@ -15,6 +15,7 @@ class User extends Model
      */
     protected $table = "user";
     protected $resultSetType = 'collection';
+
     //新增
     public function add($param)
     {
@@ -29,6 +30,7 @@ class User extends Model
         ]);
         return $user  !== false ? $user : false;
     }
+
     //修改密码
     public function editPassword($tel, $password)
     {
@@ -36,6 +38,7 @@ class User extends Model
             'password' => $password,
         ],['phone_number' => $tel,]);
     }
+
     //修改手机号
     public function edit_tel($uid, $phone)
     {
@@ -43,19 +46,28 @@ class User extends Model
             'phone' => $phone,
         ],['id' => $uid,]);
     }
+
     //获取是否有验证码信息
     public function invitation($my_invitation)
     {
         return self::get(['invitation'=>$my_invitation]) ? self::get(['invitation'=>$my_invitation])->toArray() : returnJson(0,'邀请码有误');
     }
+
     //获取个人信息
     public function user_index($uid)
     {
         return self::get(['id'=>$uid]) ? self::get(['id'=>$uid])->toArray() : returnJson(0,'数据有误');
     }
+
     //获取是否有该手机号
     public static function phone($tel)
     {
         return self::get(['phone'=>$tel]) ? self::get(['phone'=>$tel])->toArray() : returnJson(0,'账号或手机号不存在, 请先注册');
+    }
+
+    //用户个人信息
+    public function user_detail($uid)
+    {
+        return self::get(['id'=>$uid]) ? self::get(['id'=>$uid])->toArray() : returnJson(0,'数据有误');
     }
 }
