@@ -358,8 +358,9 @@ class Goods extends Base{
     /**
      * lilu
      * 商品管理-定制商品--商品删除
+     * param   id   商品id
      */
-    public function made_delete(){
+    public function made_del(){
 
     }
 
