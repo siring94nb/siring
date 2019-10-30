@@ -441,7 +441,7 @@ class Goods extends Base{
         {
             //删除商品的评论
             $goods_model=new GoodModel();
-            $comment_list=$goods_model->good_review_del($dataPost['id'])->toArray();
+            $comment_list=$goods_model->good_review_del($dataPost['id']);
             if($comment_list){
                 return $this->buildSuccess([]);
             }else{
