@@ -14,6 +14,7 @@ use app\util\ReturnCode;
 use app\util\Tools;
 use app\model\Goods as Good;
 use app\data\model\Good as GoodModel;
+use app\data\model\Reviews;
 use app\model\Special;
 use think\Validate;
 
