@@ -654,6 +654,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/get_horse_member',  //马甲会员列表
             ['method' => 'post']
         ],
+        'change_goods_status' => [
+            'admin/Goods/change_goods_status',  //马甲会员列表
+            ['method' => 'post']
+        ],
 
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理

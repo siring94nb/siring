@@ -290,7 +290,7 @@ export default {
       const phone = this.dataObj.phone;
       if (phone) {
         GetCode({ phone: this.dataObj.phone }).then(res => {
-          let { data, msg, code } = res.data;
+          let { data, msg, code } = data;
           this.showMsg(msg, code);
         });
       } else {
@@ -336,7 +336,7 @@ export default {
         code: this.dataObj.code
       };
       Register(params).then(res => {
-        let { data, msg, code } = res.data;
+        let { data, msg, code } = data;
         this.showMsg(msg, code);
         this.handleClose();
       });
@@ -348,7 +348,7 @@ export default {
         password: this.dataObj.password
       };
       Login(params).then(res => {
-        let { data, msg, code } = res.data;
+        let { data, msg, code } = res;
         this.showMsg(msg, code);
         console.log(res);
         if (code === 1) {

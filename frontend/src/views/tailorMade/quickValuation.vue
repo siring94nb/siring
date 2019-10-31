@@ -135,6 +135,7 @@ export default {
       } else {
         this.$set(this.selectTypeList, index);
       }
+      console.log(this.selectTypeList)
     },
     next() {
       this.hasChooseType = 0;
