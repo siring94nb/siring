@@ -15,6 +15,7 @@ use app\util\Tools;
 use app\model\Goods as Good;
 use app\data\model\Good as GoodModel;
 use app\data\model\Reviews;
+use app\data\model\Evaluate;
 use app\model\Special;
 use think\Validate;
 
@@ -165,6 +166,21 @@ class Goods extends Base{
      * 商品管理-商品/软件开发定制--添加评论
      */
     public function evaluate(){
+        $evaluate=new Evaluate();
+        $list=Evaluate::all()->toArray();
+        $listcount=Evaluate::count();
+        if($list){
+            foreach($list as $k =>$v ){
+                $list[$k]['plate_name']=Evaluate::getStatusAttr($v['plate_form']);
+            }
+            return $this->buildSuccess([
+                'data'=>$list,
+                'listCount'=>$listcount
+            ]);
+        }else{
+            return $this->buildFailed('0','获取失败');
+        }
+
 
     }
     /**
@@ -368,6 +384,14 @@ class Goods extends Base{
      * param   id   商品id
      */
     public function made_del(){
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Db::table('made_good')->update(['id'=>$postData['id'],'del_time'=>time()]);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要参数');
+        }
 
     }
 
