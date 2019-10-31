@@ -306,8 +306,8 @@ class Goods extends Base{
             $where['project_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
-        foreach($list as $k =>$v){
-            $list[$k]['develop']=json_decode($v['develop']);
+        foreach($list['data'] as $k =>$v){
+            $list['data'][$k]['develop']=json_decode($v['develop'],true);
         }
         $listcount=Db::table('made_good')->where($where)->count();
         return $this->buildSuccess([
