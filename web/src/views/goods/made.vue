@@ -46,13 +46,13 @@
         </FormItem>
         <FormItem label="需求类型" prop="category_id">
           <Select v-model="formValidate.category_id" style="width: 450px;">
-              <Option value="1">智能硬件</Option>
-                <Option value="2">电子商务</Option>
-                <Option value="3">生活娱乐</Option>
-                <Option value="4">金融</Option>
-                <Option value="5">媒体</Option>
-                <Option value="6">企业服务</Option>
-                <Option value="7">政府服务</Option>
+            <Option value="1">智能硬件</Option>
+            <Option value="2">电子商务</Option>
+            <Option value="3">生活娱乐</Option>
+            <Option value="4">金融</Option>
+            <Option value="5">媒体</Option>
+            <Option value="6">企业服务</Option>
+            <Option value="7">政府服务</Option>
           </Select>
         </FormItem>
         <FormItem label="需求预算" prop="project_price_up">
@@ -149,12 +149,22 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          vm.$router.push({
-            name: "goods_add",
-            params: {
-              goods_id: currentRow.id
+            console.log(currentRow)
+             //图片
+          if (currentRow.goods_images != "") {
+            var str = currentRow.goods_images.split(",");
+            for (let i = 0; i < str.length; i++) {
+              if (str[i] != "") {
+                vm.iconList.push({ name: "", url: str[i] });
+              }
             }
+            // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+          }
+          vm.$nextTick(() => {
+            vm.uploadList = vm.$refs.upload.fileList;
           });
+          vm.formValidate = currentRow;
+          vm.modalSetting.show = true;
         }
       }
     },
@@ -173,11 +183,10 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Goods/del", {
+            .post("Goods/made_del", {
               id: currentRow.id
             })
             .then(function(response) {
-              console.log(response);
               currentRow.loading = false;
               if (response.data.code === 1) {
                 vm.tableData.splice(index, 1);
@@ -237,33 +246,28 @@ export default {
         {
           title: "需求名称",
           align: "center",
-          key: "goods_number"
+          key: "project_name"
         },
         {
           title: "商品分类",
           align: "center",
-          key: "goods_number"
+          key: "category_id"
         },
         {
           title: "终端选择",
           align: "center",
-          key: "goods_number"
+          key: "develop"
         },
         {
           title: "需求描述",
           align: "center",
-          key: "goods_number"
-        },
-        {
-          title: "排序",
-          align: "center",
-          key: "goods_number"
+          key: "project_detail"
         },
         {
           title: "操作",
           align: "center",
           key: "handle",
-          width: 400,
+          width: 300,
           handle: ["edit", "delete"]
         }
       ],
@@ -300,7 +304,13 @@ export default {
           }
         ],
         develop: [
-             { required: true, type: 'array', min: 1, message: '开发终端至少选一个', trigger: 'change' }
+          {
+            required: true,
+            type: "array",
+            min: 1,
+            message: "开发终端至少选一个",
+            trigger: "change"
+          }
         ],
         project_detail: [
           {
@@ -313,7 +323,8 @@ export default {
     };
   },
   created() {
-      this.getMade(this.tableShow);
+    this.init();
+    this.getMade(this.tableShow);
   },
   methods: {
     init() {
@@ -361,10 +372,10 @@ export default {
           }
           axios.post(target, self.formValidate).then(function(response) {
             self.modalSetting.loading = false;
-            console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
               self.cancel();
+              self.getMade(self.tableShow);
             } else {
               self.$Message.error(response.data.msg);
             }
@@ -373,26 +384,26 @@ export default {
       });
     },
     getMade(data) {
-        axios.post("Goods/made", data).then(function(response) {
-            console.log(response);
-            if (response.data.code === 1) {
-              self.$Message.success(response.data.msg);
-            } else {
-              self.$Message.error(response.data.msg);
-            }
-          });
+      let vm = this;
+      axios.post("Goods/made", data).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          vm.tableData = res.data.list.data;
+          vm.tableShow.listCount = res.data.listCount;
+        }
+      });
     },
     changePage(page) {
       this.tableShow.currentPage = page;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     changeSize(size) {
       this.tableShow.pageSize = size;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     search() {
       this.tableShow.currentPage = 1;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     alertAdd() {
       this.modalSetting.show = true;
@@ -411,7 +422,7 @@ export default {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-    this.formValidate.goods_images += res.data.filePath + ",";
+      this.formValidate.goods_images += res.data.filePath + ",";
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
