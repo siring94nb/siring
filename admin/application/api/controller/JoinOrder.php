@@ -180,7 +180,7 @@ class JoinOrder extends Base
             if (!$order)returnJson(0, '当前订单不存在');
     //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
 
-            $title = '软件/定制商品';
+            $title = '代理加盟';
             $wechatpay = new WechatPay();
             $res = $wechatpay->pay($title,['no'], $pay, $url);
 
