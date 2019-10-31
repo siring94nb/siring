@@ -230,7 +230,7 @@ class Software extends Base
                 //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
                 $title = '软件/定制商品';
                 $wechatpay = new WechatPay();
-                $res = $wechatpay->pay($title,['no'], $pay, $url);
+                $res = $wechatpay->pay($title,$order['no'], $pay, $url);
 
                 return $res;exit();
                 break;   // 跳出循环

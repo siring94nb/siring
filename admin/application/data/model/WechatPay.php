@@ -1,7 +1,7 @@
 <?php
 
 namespace app\data\model;
-use think\Conf;
+use think\Config;
 use think\Model;
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Payment\Order;
@@ -22,7 +22,7 @@ class WechatPay extends Model
         $attributes = [
             'trade_type'       => 'NATIVE', // JSAPI，NATIVE，APP
             'body'             => $title,//标题
-            'detail'           => '思锐支付订单',//详情
+            'detail'           => 'Siring支付订单',//详情
             'out_trade_no'     => $no,//订单号
             'total_fee'        => $cost * 100, // 单位：分
             'notify_url'       => $url, // 支付结果通知网址，如果不设置则会使用配置里的默认地址
