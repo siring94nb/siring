@@ -225,12 +225,12 @@ class Software extends Base
                 $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
                 $order = db('soft_order')->getById($id);
 
-                $pay = 1;//先测试1分钱
+                $pay = 0.1;//先测试1分钱
                 if (!$order)returnJson(0, '当前订单不存在');
                 //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
-
+                $title = '软件/定制商品';
                 $wechatpay = new WechatPay();
-                $res = $wechatpay->pay($order['no'], $pay, $url);
+                $res = $wechatpay->pay($title,['no'], $pay, $url);
 
                 return $res;exit();
                 break;   // 跳出循环
