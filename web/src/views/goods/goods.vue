@@ -129,7 +129,7 @@
                 confirm
                 title="确定删除吗？"
                 content="content"
-                @on-ok="commentDel(item.id)"
+                @on-ok="commentDel(item.id,item.goods_id)"
               >
                 <Button type="error">删除</Button>
               </Poptip>
@@ -440,28 +440,16 @@ export default {
                 on: {
                   "on-change": function(status) {
                     axios
-                      .get("User/changeStatus", {
-                        params: {
-                          status: status,
-                          id: currentRowData.id
-                        }
-                      })
+                      .post("Goods/change_goods_status", {
+                         goods_recommend_status: status,
+                          id: currentRowData.id})
                       .then(function(response) {
                         let res = response.data;
                         if (res.code === 1) {
                           vm.$Message.success(res.msg);
                         } else {
-                          if (res.code === -14) {
-                            vm.$store.commit("logout", vm);
-                            vm.$router.push({
-                              name: "login"
-                            });
-                          } else {
-                            vm.$Message.error(res.msg);
-                            vm.getList();
-                          }
+                          vm.$Message.error(res.msg);
                         }
-                        vm.cancel();
                       });
                   }
                 }
@@ -628,12 +616,13 @@ export default {
       });
     },
     //删除评论
-    commentDel(id) {
+    commentDel(id,goods_id) {
       let self = this;
       axios.post("Goods/comment_del", { id: id }).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
           self.$Message.success(response.data.msg);
+          self.commentList(goods_id)
         } else {
           self.$Message.error(response.data.msg);
         }

@@ -399,7 +399,7 @@ export const appRouter = [
                 icon: 'ios-pint',
                 name: 'goods',
                 title: '软件/定制',
-                component: () => import('@/views/goods/goods.vue'),
+                component: () => import('@/views/goods/goodsMain.vue'),
                 children: [
                     {
                         path: 'develop_goods',
@@ -407,7 +407,7 @@ export const appRouter = [
                         name: 'develop_goods',
                         access: 'admin/Goods/index',
                         title: '软件/开发',
-                        component: () => import('@/views/goods/made.vue')
+                        component: () => import('@/views/goods/goods.vue')
                     },
                     {
                         path: 'made_example',
