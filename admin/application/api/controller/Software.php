@@ -228,9 +228,9 @@ class Software extends Base
                 $pay = 1;//先测试1分钱
                 if (!$order)returnJson(0, '当前订单不存在');
                 //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
-
+                $title = '软件/定制商品';
                 $wechatpay = new WechatPay();
-                $res = $wechatpay->pay($order['no'], $pay, $url);
+                $res = $wechatpay->pay($title,$order['no'], $pay, $url);
 
                 return $res;exit();
                 break;   // 跳出循环
