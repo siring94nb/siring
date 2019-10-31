@@ -301,6 +301,7 @@ class Goods extends Base{
         $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
         $page = $this->request->get('page', 1);
         $project_name = $this->request->get('project_name', '');
+        $where['del_time']='null';
         if ($project_name) {
             $where['project_name'] = ['like', "%{$goods_name}%"];
         }
