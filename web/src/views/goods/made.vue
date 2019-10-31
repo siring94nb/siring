@@ -315,7 +315,9 @@ export default {
       }
     };
   },
-  created() {},
+  created() {
+      this.getMade();
+  },
   methods: {
     init() {
       let vm = this;
@@ -351,7 +353,6 @@ export default {
     },
     submit() {
       let self = this;
-      console.log(self.formValidate)
       this.$refs["addOredit"].validate(valid => {
         if (valid) {
           self.modalSetting.loading = true;
@@ -366,13 +367,23 @@ export default {
             console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
-            //   self.cancel();
+              self.cancel();
             } else {
               self.$Message.error(response.data.msg);
             }
           });
         }
       });
+    },
+    getMade() {
+        axios.post("made", {}).then(function(response) {
+            console.log(response);
+            if (response.data.code === 1) {
+              self.$Message.success(response.data.msg);
+            } else {
+              self.$Message.error(response.data.msg);
+            }
+          });
     },
     changePage(page) {
       this.tableShow.currentPage = page;
