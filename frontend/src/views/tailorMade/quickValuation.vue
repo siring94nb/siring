@@ -135,7 +135,6 @@ export default {
       } else {
         this.$set(this.selectTypeList, index);
       }
-      console.log(this.selectTypeList)
     },
     next() {
       this.hasChooseType = 0;
@@ -216,7 +215,7 @@ export default {
         .base-cont {
           background-color: #ffffff;
           padding: 20px 0 0 30px;
-          height: 654px;
+          height: 684px;
           .base-title {
             font-size: 14px;
             color: #797979;
