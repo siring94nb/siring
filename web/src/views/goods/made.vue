@@ -376,7 +376,7 @@ export default {
       });
     },
     getMade() {
-        axios.post("made", {}).then(function(response) {
+        axios.post("Goods/made", {}).then(function(response) {
             console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
