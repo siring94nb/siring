@@ -1,7 +1,7 @@
 <?php
 
 namespace app\data\model;
-use think\Conf;
+use think\Config;
 use think\Model;
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Payment\Order;
@@ -16,12 +16,12 @@ class WechatPay extends Model
      * @param $openid
      * @return array|string|\think\response\Json
      */
-    public function pay($title,$no,$cost,$url)
+    public function pay($no,$cost,$url)
     {
         //支付相关参数
         $attributes = [
             'trade_type'       => 'NATIVE', // JSAPI，NATIVE，APP
-            'body'             => $title,//标题
+            'body'             => 'Siring支付',//标题
             'detail'           => '思锐支付订单',//详情
             'out_trade_no'     => $no,//订单号
             'total_fee'        => $cost * 100, // 单位：分
