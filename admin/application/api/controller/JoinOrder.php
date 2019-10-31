@@ -182,7 +182,7 @@ class JoinOrder extends Base
 
             $title = '代理加盟';
             $wechatpay = new WechatPay();
-            $res = $wechatpay->pay(['no'], $pay, $url);
+            $res = $wechatpay->pay($title,$order['no'], $pay, $url);
 
             return $res;exit();
                 break;   // 跳出循环

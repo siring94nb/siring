@@ -16,13 +16,13 @@ class WechatPay extends Model
      * @param $openid
      * @return array|string|\think\response\Json
      */
-    public function pay($no,$cost,$url)
+    public function pay($title,$no,$cost,$url)
     {
         //支付相关参数
         $attributes = [
             'trade_type'       => 'NATIVE', // JSAPI，NATIVE，APP
-            'body'             => 'Siring支付',//标题
-            'detail'           => '思锐支付订单',//详情
+            'body'             => $title,//标题
+            'detail'           => 'Siring支付订单',//详情
             'out_trade_no'     => $no,//订单号
             'total_fee'        => $cost * 100, // 单位：分
             'notify_url'       => $url, // 支付结果通知网址，如果不设置则会使用配置里的默认地址
