@@ -452,6 +452,24 @@ class Goods extends Base{
         }
     }
 
+    /**
+     * lilu
+     * 切换软件开发商品的推荐状态
+     * param   id    商品ID
+     * param   goods_recommend_status    1  推荐    0   不推荐
+     */
+    public function change_goods_status()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Good::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
+    }
+
 
 
 
