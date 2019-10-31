@@ -306,8 +306,10 @@ class Goods extends Base{
             $where['project_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
+        $listcount=Db::table('made_good')->where($where)->count();
         return $this->buildSuccess([
             'list'  => $list,
+            'listCount'=>$listcount,
         ]);
     }
 
