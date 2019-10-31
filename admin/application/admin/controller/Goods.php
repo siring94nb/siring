@@ -295,37 +295,43 @@ class Goods extends Base{
 
     /**
      * lilu
-     * 商品管理-软件定制商品-定制商品(案例)
+     * 商品管理-软件定制商品-定制案例
      */
     public function made(){
-        $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
-        $page = $this->request->get('page', 1);
-        $project_name = $this->request->get('project_name', '');
+        $size = $this->request->post('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->post('page', 1);
+        $project_name = $this->request->post('project_name', '');
+        $where['del_time']=NULL;
         if ($project_name) {
-            $where['project_name'] = ['like', "%{$goods_name}%"];
+            $where['project_name'] = ['like', "%{$project_name}%"];
         }
-        $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page]);
-        $listInfo = $list;
+        $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
+        foreach($list['data'] as $k =>$v){
+            $list['data'][$k]['develop']=json_decode($v['develop'],true);
+        }
+        $listcount=Db::table('made_good')->where($where)->count();
         return $this->buildSuccess([
-            'list'  => $listInfo,
+            'list'  => $list,
+            'listCount'=>$listcount,
         ]);
     }
 
     /** 
      * lilu
-     * 商品管理-定制商品--商品添加
+     * 商品管理-定制案例--商品添加
      */
     public function made_add(){
         $groups = '';
-        $postData = $this->request->post();
+        $postData = $this->request->param();
         //判断商品的名字是否重复
-        $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->find();
+        $is_use=Db::table('made_good')->where('project_name',$postData['project_name'])->find();
         if($is_use){
-            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
+            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '定制案例已存在');
         }
         unset($postData['data']['id']);
         $postData['create_time']=time();
-        $res = Db::teble('made_goods')->insert($postData);
+        $postData['develop']=json_encode($postData['develop']);
+        $res = Db::table('made_good')->insert($postData);
         if ($res) {
                 return $this->buildSuccess([]);
             } else {
@@ -334,19 +340,20 @@ class Goods extends Base{
     }
     /**
      * lilu
-     * 商品管理-定制商品--商品编辑
+     * 商品管理-定制案例--商品编辑
      */
     public function made_edit(){
         $groups = '';
-        $postData = $this->request->post();  //获取传参
+        $postData = $this->request->param();  //获取传参
         //判断商品的名字是否重复
-        $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->count();
+        $is_use=Db::table('made_good')->where('project_name',$postData['project_name'])->count();
         if($is_use >= 2){
             return $this->buildField(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
         }
         //获取参数id-商品id
         $postData['update_time']=time();
-        $goods_info=Db::table('made_goods')->update($postData);
+        $postData['develop']=json_encode($postData['develop']);
+        $goods_info=Db::table('made_good')->update($postData);
         if($goods_info !==false){
             return $this->buildSuccess([
                 'data'=>$goods_info
@@ -441,16 +448,32 @@ class Goods extends Base{
         {
             //删除商品的评论
             $goods_model=new GoodModel();
-            $comment_list=$goods_model->good_review($dataPost['id'])->toArray();
+            $comment_list=$goods_model->good_review_del($dataPost['id']);
             if($comment_list){
-                return $this->buildSuccess([
-                    'data'=>$comment_list,
-                ]);
+                return $this->buildSuccess([]);
             }else{
                 return $this->buildFailed('0','获取失败');
             }
         }else{
             return $this->buildFailed('0','缺少必须参数');
+        }
+    }
+
+    /**
+     * lilu
+     * 切换软件开发商品的推荐状态
+     * param   id    商品ID
+     * param   goods_recommend_status    1  推荐    0   不推荐
+     */
+    public function change_goods_status()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Good::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
         }
     }
 

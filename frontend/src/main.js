@@ -6,6 +6,10 @@ import router from './router'
 import store from './store'
 import '@/assets/style/index.scss'
 
+
+import qs from 'qs';
+Vue.prototype.$qs = qs;
+
 Vue.use(ElementUI);
 
 Vue.config.productionTip = false

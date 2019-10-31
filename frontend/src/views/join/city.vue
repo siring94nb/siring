@@ -143,7 +143,7 @@
     </div>
 
     <!-- 选择支付方式 -->
-    <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="30%" center>
+    <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="500px" center>
       <el-form ref="payway" :model="payway" :rules="wayRule" label-width="80px">
         <el-form-item label="支付方式" prop="way">
           <el-radio-group v-model="payway.way" @change="selectway">
@@ -151,10 +151,11 @@
             <el-radio :label="2">支付宝</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item>
-          <el-image style="width: 300px; height: 300px" :src="payqrcode"></el-image>
-        </el-form-item>
       </el-form>
+      <div class="code-box">
+        <img :src="payqrcode" alt />
+      </div>
+
       <span slot="footer" class="dialog-footer">
         <el-button @click="showPayWayFlag = false">取 消</el-button>
         <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
@@ -234,7 +235,7 @@ export default {
       percent: 100,
       showPayWayFlag: false,
       payway: {
-        way: 0
+        way: 1
       },
       wayRule: {
         way: [
@@ -267,8 +268,8 @@ export default {
       this.stepFlag = index;
     },
     getProvince() {
-      GetProvince({ type: 2 }).then(res => {
-        let { code, data, msg } = res.data;
+      GetProvince().then(res => {
+        let { code, data, msg } = res;
         if (code === 1) {
           this.prov = data;
         }
@@ -276,7 +277,7 @@ export default {
     },
     getLevelList() {
       GetLevelList().then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = res;
         if (code === 1) {
           this.level = data;
         }
@@ -311,7 +312,7 @@ export default {
         pid: this.ruleForm.provVal,
         type: this.ruleForm.levelVal
       }).then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = res;
         if (code === 1) {
           this.city = data;
         }
@@ -328,9 +329,10 @@ export default {
             price: this.total,
             user_id: 1
           }).then(res => {
-            let { code, data, msg } = res.data;
+            let { code, data, msg } = res;
             if (code === 1) {
               this.orderId = data;
+              this.selectway();
             }
           });
         }
@@ -343,7 +345,7 @@ export default {
             type: this.payway.way,
             order_id: this.orderId
           }).then(res => {
-            let { code, imgData, msg } = res.data;
+            let { code, imgData, msg } = res;
             if (code === 1) {
               this.payqrcode = imgData;
             }
@@ -352,10 +354,10 @@ export default {
       });
     },
     getdiscount() {
-      GetDiscount({
-        id: 31
-      }).then(res => {
-        let { code, data, msg } = res.data;
+      let data = new FormData();
+      data.append("id", 31);
+      GetDiscount(data).then(res => {
+        let { code, data, msg } = res;
         if (code === 1) {
           this.percent = data.user_discount;
         }
@@ -547,6 +549,13 @@ export default {
           cursor: pointer;
         }
       }
+    }
+  }
+  .code-box{
+    text-align: center;
+    img{
+      width: 300px;
+      height: 300px;
     }
   }
 }

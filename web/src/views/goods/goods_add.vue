@@ -382,7 +382,9 @@ export default {
               console.log(response);
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
-                self.sortCancel();
+                setTimeout(function(){
+                  self.sortCancel();
+                },1000)
               } else {
                 self.$Message.error(response.data.msg);
               }

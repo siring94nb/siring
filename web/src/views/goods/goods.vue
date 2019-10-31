@@ -97,7 +97,6 @@
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
-                
               />
               <p style="color: rgb(197,200,206);">*非必填项</p>
             </FormItem>
@@ -112,37 +111,44 @@
             </FormItem>
             <FormItem>
               <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
-              <Button
-                type="primary"
-                @click="submitComment"
-                :loading="modalSetting.loading"
-              >确定</Button>
+              <Button type="primary" @click="submitComment" :loading="modalSetting.loading">确定</Button>
             </FormItem>
           </Form>
-          
         </TabPane>
         <TabPane label="历史评论" name="name2">
-          <Row type="flex" justify="center" align="middle" class="row-box" v-for="(item, index) in commentsList" :key="index">
-            <Col span="4" style="text-align:center;">
-              <Button type="error">删除</Button>
+          <Row
+            type="flex"
+            justify="center"
+            align="middle"
+            class="row-box"
+            v-for="(item, index) in commentsList"
+            :key="index"
+          >
+            <Col span="4" style="padding-left:80px;">
+              <Poptip
+                confirm
+                title="确定删除吗？"
+                content="content"
+                @on-ok="commentDel(item.id,item.goods_id)"
+              >
+                <Button type="error">删除</Button>
+              </Poptip>
             </Col>
             <Col span="4" style="text-align:center;line-height:30px;">
-              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg" size="large" />
+              <Avatar :src="item.img" size="large" />
               <div>{{geTel(item.phone)}}</div>
               <div>
-                <img
-                  style="width:20px;height:20px;display:inline-block;"
-                  src="https://i.loli.net/2017/08/21/599a521472424.jpg"
-                />皇冠会员
+                <img style="width:20px;height:20px;display:inline-block;" :src="item.icn" />皇冠会员
               </div>
             </Col>
             <Col span="16">
               <div class="comments">
-                {{item.con}}
+                {{item.ico}}
                 <div style>{{item.create_at}}</div>
               </div>
               <div class="comments comments-gf" v-if="item.relpay != ''">
-                <span style="color:rgb(255,153,204);">【官方回复】</span>{{item.relpay[0].con}}
+                <span style="color:rgb(255,153,204);">【官方回复】</span>
+                {{item.relpay[0].con}}
                 <div>{{item.relpay[0].create_at}}</div>
               </div>
             </Col>
@@ -150,7 +156,7 @@
         </TabPane>
       </Tabs>
       <div slot="footer">
-            <Button type="warning" @click="cancel" style="margin-right: 8px">取消</Button>
+        <Button type="warning" @click="cancel" style="margin-right: 8px">取消</Button>
       </div>
     </Modal>
   </div>
@@ -285,7 +291,6 @@ export default {
       sortList: [],
       horseList: [],
       commentsList: [],
-      sd: true,
       // 图片
       columnsList: [
         {
@@ -434,28 +439,16 @@ export default {
                 on: {
                   "on-change": function(status) {
                     axios
-                      .get("User/changeStatus", {
-                        params: {
-                          status: status,
-                          id: currentRowData.id
-                        }
-                      })
+                      .post("Goods/change_goods_status", {
+                         goods_recommend_status: status,
+                          id: currentRowData.id})
                       .then(function(response) {
                         let res = response.data;
                         if (res.code === 1) {
                           vm.$Message.success(res.msg);
                         } else {
-                          if (res.code === -14) {
-                            vm.$store.commit("logout", vm);
-                            vm.$router.push({
-                              name: "login"
-                            });
-                          } else {
-                            vm.$Message.error(res.msg);
-                            vm.getList();
-                          }
+                          vm.$Message.error(res.msg);
                         }
-                        vm.cancel();
                       });
                   }
                 }
@@ -488,7 +481,7 @@ export default {
         this.handleRemove(this.uploadList[i]);
       }
       this.iconList = [];
-      this.myComment= {
+      (this.myComment = {
         data: {
           goods_id: "",
           user_id: "",
@@ -504,8 +497,8 @@ export default {
           goods_id: "",
           type: 1
         }
-      },
-      this.modalSetting.show = false;
+      }),
+        (this.modalSetting.show = false);
     },
     onMenuSelect(name) {
       // console.log(name);
@@ -600,18 +593,18 @@ export default {
         console.log(response);
         if (response.data.code === 1) {
           self.$Message.success(response.data.msg);
-          setTimeout(function(){
+          setTimeout(function() {
             self.cancel();
-          },1000)
+          }, 1000);
         } else {
           self.$Message.error(response.data.msg);
         }
       });
     },
     //评论历史
-    commentList(id){
+    commentList(id) {
       let self = this;
-      axios.post("Goods/comment_list", {id: id}).then(function(response) {
+      axios.post("Goods/comment_list", { id: id }).then(function(response) {
         let res = response.data;
         console.log(res.data);
         if (res.code === 1) {
@@ -621,8 +614,21 @@ export default {
         }
       });
     },
-    geTel(tel){
-      var reg = /^(\d{3})\d{4}(\d{4})$/;  
+    //删除评论
+    commentDel(id,goods_id) {
+      let self = this;
+      axios.post("Goods/comment_del", { id: id }).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          self.$Message.success(response.data.msg);
+          self.commentList(goods_id)
+        } else {
+          self.$Message.error(response.data.msg);
+        }
+      });
+    },
+    geTel(tel) {
+      var reg = /^(\d{3})\d{4}(\d{4})$/;
       return tel.replace(reg, "$1****$2");
     },
     dataCreate(time) {
