@@ -298,9 +298,9 @@ class Goods extends Base{
      * 商品管理-软件定制商品-定制案例
      */
     public function made(){
-        $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
-        $page = $this->request->get('page', 1);
-        $project_name = $this->request->get('project_name', '');
+        $size = $this->request->post('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->post('page', 1);
+        $project_name = $this->request->post('project_name', '');
         $where['del_time']=NULL;
         if ($project_name) {
             $where['project_name'] = ['like', "%{$project_name}%"];
