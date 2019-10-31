@@ -5,7 +5,7 @@
         <Card style="margin-bottom: 10px">
           <Form ref="myForm" :model="tableShow" inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="tableShow.project_name" placeholder="请输入需求名称" />
+              <Input v-model="tableShow.model_name" placeholder="请输入需求名称" />
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">立即搜索</Button>
@@ -26,8 +26,8 @@
           <div class="margin-top-15" style="text-align: center">
             <Page
               :total="tableShow.listCount"
-              :current="tableShow.currentPage"
-              :page-size="tableShow.pageSize"
+              :current="tableShow.page"
+              :page-size="tableShow.size"
               @on-change="changePage"
               @on-page-size-change="changeSize"
               show-elevator
@@ -48,7 +48,7 @@
           </RadioGroup>
         </FormItem>
         <FormItem label="行业模板名称" prop="model_name">
-          <Input v-model="formValidate.model_name" placeholder="请输入商品名称" style="width:400px;"/>
+          <Input v-model="formValidate.model_name" placeholder="请输入商品名称" style="width:400px;" />
         </FormItem>
         <FormItem label="商品主图" prop="img">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
@@ -123,14 +123,14 @@ const editButton = (vm, h, currentRow, index) => {
         click: () => {
           console.log(currentRow);
           //图片
-          if (currentRow.goods_images != "") {
-            var str = currentRow.goods_images.split(",");
+          if (currentRow.model_image != "") {
+            var str = currentRow.model_image.split(",");
             for (let i = 0; i < str.length; i++) {
               if (str[i] != "") {
                 vm.iconList.push({ name: "", url: str[i] });
               }
             }
-            // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+            // vm.iconList = [{ name: "", url: res.data.data.model_image }];
           }
           vm.$nextTick(() => {
             vm.uploadList = vm.$refs.upload.fileList;
@@ -155,7 +155,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Goods/made_del", {
+            .post("AppletManage/del", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -198,9 +198,9 @@ export default {
       UploadAction: "",
       tableShow: {
         currentPage: 1,
-        pageSize: 10,
+        size: 10,
         listCount: 0,
-        project_name: ""
+        model_name: ""
       },
       modalSetting: {
         show: false,
@@ -228,7 +228,21 @@ export default {
         {
           title: "模板展示图",
           align: "center",
-          key: "model_image"
+          key: "model_images",
+          width: 150,
+          render: (h, param) => {
+            let model_image = param.row.model_image.split(",")[0];
+            return h("img", {
+              attrs: {
+                src: model_image
+              },
+              style: {
+                width: "100px",
+                height: "90px",
+                padding: "5px 0 0 0"
+              }
+            });
+          }
         },
         {
           title: "模板简介",
@@ -292,6 +306,57 @@ export default {
             ]);
           };
         }
+        if (item.key === "status") {
+          item.render = (h, param) => {
+            let currentRowData = vm.tableData[param.index];
+            return h(
+              "i-switch",
+              {
+                attrs: {
+                  size: "large"
+                },
+                props: {
+                  "true-value": "1",
+                  "false-value": "0",
+                  value: currentRowData.model_status
+                },
+                on: {
+                  "on-change": function(status) {
+                    axios
+                      .post("AppletManage/change_model_status", {
+                        model_status: status,
+                        id: currentRowData.id
+                      })
+                      .then(function(response) {
+                        let res = response.data;
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          vm.$Message.error(res.msg);
+                        }
+                      });
+                  }
+                }
+              },
+              [
+                h(
+                  "span",
+                  {
+                    slot: "open"
+                  },
+                  "启用"
+                ),
+                h(
+                  "span",
+                  {
+                    slot: "close"
+                  },
+                  "禁用"
+                )
+              ]
+            );
+          };
+        }
       });
     },
     cancel() {
@@ -326,7 +391,7 @@ export default {
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
               self.cancel();
-            //   self.getMade(self.tableShow);
+              self.getMade(self.tableShow);
             } else {
               self.$Message.error(response.data.msg);
             }
@@ -336,24 +401,24 @@ export default {
     },
     getMade(data) {
       let vm = this;
-      axios.post("Goods/made", data).then(function(response) {
+      axios.post("AppletManage/index", data).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
-          vm.tableData = res.data.list.data;
+          vm.tableData = res.data.data.data;
           vm.tableShow.listCount = res.data.listCount;
         }
       });
     },
     changePage(page) {
-      this.tableShow.currentPage = page;
+      this.tableShow.page = page;
       this.getMade(this.tableShow);
     },
     changeSize(size) {
-      this.tableShow.pageSize = size;
+      this.tableShow.size = size;
       this.getMade(this.tableShow);
     },
     search() {
-      this.tableShow.currentPage = 1;
+      this.tableShow.page = 1;
       this.getMade(this.tableShow);
     },
     alertAdd() {
@@ -367,13 +432,13 @@ export default {
       const fileList = this.$refs.upload.fileList;
       // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formValidate.goods_images = "";
+      this.formValidate.model_image = "";
     },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formValidate.goods_images += res.data.filePath + ",";
+      this.formValidate.model_image += res.data.filePath + ",";
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
