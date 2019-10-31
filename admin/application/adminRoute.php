@@ -654,24 +654,32 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/get_horse_member',  //马甲会员列表
             ['method' => 'post']
         ],
+        'change_goods_status' => [
+            'admin/Goods/change_goods_status',  //马甲会员列表
+            ['method' => 'post']
+        ],
 
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
     Route::group('AppletManage', [
-        'index' => [
+        'index' => [                        //行业模板列表
             'admin/AppletManage/index',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
-        'add'   => [
+        'add'   => [                        //行业模版添加
             'admin/AppletManage/add',
             ['method' => 'post']
         ],
-        'upd'   => [
-            'admin/AppletManage/upd',
+        'edit'   => [
+            'admin/AppletManage/edit',
             ['method' => 'post']
         ],
         'del'   => [
             'admin/AppletManage/del',
+            ['method' => 'post']
+        ],
+        'change_show_status'   => [         //切换模板展示状态
+            'admin/AppletManage/change_show_status',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);

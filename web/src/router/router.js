@@ -399,7 +399,7 @@ export const appRouter = [
                 icon: 'ios-pint',
                 name: 'goods',
                 title: '软件/定制',
-                component: () => import('@/views/goods/goods.vue'),
+                component: () => import('@/views/goods/goodsMain.vue'),
                 children: [
                     {
                         path: 'develop_goods',
@@ -407,7 +407,7 @@ export const appRouter = [
                         name: 'develop_goods',
                         access: 'admin/Goods/index',
                         title: '软件/开发',
-                        component: () => import('@/views/goods/made.vue')
+                        component: () => import('@/views/goods/goods.vue')
                     },
                     {
                         path: 'made_example',
@@ -432,32 +432,24 @@ export const appRouter = [
                 icon: 'ios-pint',
                 title: '小程序管理',
                 name: 'applet',
-                component: () => import('@/views/goods/made.vue'),
+                component: () => import('@/views/applet/appletMain.vue'),
                 children: [
                     {
-                        path: 'templete',
+                        path: 'industryModule',
                         icon: 'ios-pint',
-                        name: 'templete',
-                        access: 'admin/Goods/templete',
-                        title: '软件/定制',
-                        component: () => import('@/views/goods/goods.vue'),
+                        name: 'industryModule',
+                        access: 'admin/AppletManage/index',
+                        title: '行业模块',
+                        component: () => import('@/views/applet/industryModule.vue'),
                     },
                     {
-                        path: 'made',
+                        path: 'model_meal',
                         icon: 'ios-pint',
-                        name: 'made',
-                        access: 'admin/Goods/made',
-                        title: '定制案例',
-                        component: () => import('@/views/goods/made.vue'),
-                    },
-                    {
-                        path: 'evaluate',
-                        icon: 'ios-pint',
-                        name: 'evaluate',
-                        access: 'admin/Goods/evaluate',
-                        title: '快捷估价',
-                        component: () => import('@/views/goods/evaluate.vue'),
-                    },
+                        name: 'model_meal',
+                        access: 'admin/AppletManage/model_meal',
+                        title: '模板套餐',
+                        component: () => import('@/views/applet/templatePackage.vue'),
+                    }
                 ]
             },
             {

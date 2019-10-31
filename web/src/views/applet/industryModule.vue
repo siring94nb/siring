@@ -5,7 +5,7 @@
         <Card style="margin-bottom: 10px">
           <Form ref="myForm" :model="tableShow" inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="tableShow.project_name" placeholder="请输入需求名称" />
+              <Input v-model="tableShow.model_name" placeholder="请输入需求名称" />
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">立即搜索</Button>
@@ -18,7 +18,7 @@
       <Col span="24">
         <Card>
           <p slot="title" style="height: 32px">
-            <Button type="primary" @click="alertAdd" icon="md-add">添加案例</Button>
+            <Button type="primary" @click="alertAdd" icon="md-add">添加行业模块</Button>
           </p>
           <div>
             <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
@@ -26,8 +26,8 @@
           <div class="margin-top-15" style="text-align: center">
             <Page
               :total="tableShow.listCount"
-              :current="tableShow.currentPage"
-              :page-size="tableShow.pageSize"
+              :current="tableShow.page"
+              :page-size="tableShow.size"
               @on-change="changePage"
               @on-page-size-change="changeSize"
               show-elevator
@@ -40,56 +40,15 @@
     </Row>
 
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
-      <Form ref="addOredit" :model="formValidate" :rules="ruleValidate" :label-width="100">
-        <FormItem label="需求名称" prop="project_name">
-          <Input v-model="formValidate.project_name" placeholder="请输入" style="width: 450px;" />
+      <Form ref="forms" :model="formValidate" :rules="ruleValidate" :label-width="100">
+        <FormItem label="模板分类" prop="model_type">
+          <RadioGroup v-model="formValidate.model_type">
+            <Radio label="1">DIY样式</Radio>
+            <Radio label="2">固定样式</Radio>
+          </RadioGroup>
         </FormItem>
-        <FormItem label="需求类型" prop="category_id">
-          <Select v-model="formValidate.category_id" style="width: 450px;">
-            <Option value="1">智能硬件</Option>
-            <Option value="2">电子商务</Option>
-            <Option value="3">生活娱乐</Option>
-            <Option value="4">金融</Option>
-            <Option value="5">媒体</Option>
-            <Option value="6">企业服务</Option>
-            <Option value="7">政府服务</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="需求预算" prop="project_price_up">
-          <Input v-model="formValidate.project_price_up" placeholder="请输入" style="width: 200px;" />元 ~
-          <Input v-model="formValidate.project_price_down" placeholder="请输入" style="width: 200px;" />元
-        </FormItem>
-        <FormItem label="开发终端" prop="develop">
-          <CheckboxGroup v-model="formValidate.develop">
-            <Checkbox label="PC">
-              <Icon type="ios-desktop-outline" size="23" />PC
-            </Checkbox>
-            <Checkbox label="APP安卓">
-              <Icon type="logo-android" size="23" />APP安卓
-            </Checkbox>
-            <Checkbox label="APP苹果">
-              <Icon type="logo-apple" size="23" />APP苹果
-            </Checkbox>
-            <Checkbox label="公众号">
-              <Icon type="ios-chatbubbles" size="23" />公众号
-            </Checkbox>
-            <Checkbox label="小程序">
-              <Icon type="ios-code" size="23" />小程序
-            </Checkbox>
-            <Checkbox label="H5">
-              <Icon type="logo-html5" size="23" />H5
-            </Checkbox>
-            <!-- <Checkbox label="其他"></Checkbox>
-            <Input v-model="formValidate.project_price_up" placeholder="说明，不超过10个字" style="width: 200px;" />-->
-          </CheckboxGroup>
-        </FormItem>
-        <FormItem label="需求描述" prop="project_detail">
-          <Input
-            v-model="formValidate.project_detail"
-            type="textarea"
-            :autosize="{minRows: 4,maxRows: 8}"
-            style="width:500px;"
-          />
+        <FormItem label="行业模板名称" prop="model_name">
+          <Input v-model="formValidate.model_name" placeholder="请输入商品名称" style="width:400px;" />
         </FormItem>
         <FormItem label="商品主图" prop="img">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
@@ -123,7 +82,20 @@
               <Icon type="ios-camera" size="20"></Icon>
             </div>
           </Upload>
-          <p>添加5张，建议尺寸：464*764像素，实现轮播效果</p>
+        </FormItem>
+        <FormItem label="模板简介" prop="model_des">
+          <Input
+            v-model="formValidate.model_des"
+            type="textarea"
+            :autosize="{minRows: 4,maxRows: 8}"
+            style="width:500px;"
+          />
+        </FormItem>
+        <FormItem label="状态" prop="model_status">
+          <RadioGroup v-model="formValidate.model_status">
+            <Radio label="1">展示</Radio>
+            <Radio label="2">不展示</Radio>
+          </RadioGroup>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -149,16 +121,16 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-            console.log(currentRow)
-             //图片
-          if (currentRow.goods_images != "") {
-            var str = currentRow.goods_images.split(",");
+          console.log(currentRow);
+          //图片
+          if (currentRow.model_image != "") {
+            var str = currentRow.model_image.split(",");
             for (let i = 0; i < str.length; i++) {
               if (str[i] != "") {
                 vm.iconList.push({ name: "", url: str[i] });
               }
             }
-            // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+            // vm.iconList = [{ name: "", url: res.data.data.model_image }];
           }
           vm.$nextTick(() => {
             vm.uploadList = vm.$refs.upload.fileList;
@@ -183,7 +155,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Goods/made_del", {
+            .post("AppletManage/del", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -226,9 +198,9 @@ export default {
       UploadAction: "",
       tableShow: {
         currentPage: 1,
-        pageSize: 10,
+        size: 10,
         listCount: 0,
-        project_name: ""
+        model_name: ""
       },
       modalSetting: {
         show: false,
@@ -244,24 +216,44 @@ export default {
           key: "id"
         },
         {
-          title: "需求名称",
+          title: "模板分类",
           align: "center",
-          key: "project_name"
+          key: "model_type"
         },
         {
-          title: "商品分类",
+          title: "行业模板名称",
           align: "center",
-          key: "category_id"
+          key: "model_name"
         },
         {
-          title: "终端选择",
+          title: "模板展示图",
           align: "center",
-          key: "develop"
+          key: "model_images",
+          width: 150,
+          render: (h, param) => {
+            let model_image = param.row.model_image.split(",")[0];
+            return h("img", {
+              attrs: {
+                src: model_image
+              },
+              style: {
+                width: "100px",
+                height: "90px",
+                padding: "5px 0 0 0"
+              }
+            });
+          }
         },
         {
-          title: "需求描述",
+          title: "模板简介",
           align: "center",
-          key: "project_detail"
+          key: "model_des"
+        },
+        {
+          title: "状态",
+          align: "center",
+          key: "status",
+          width: 100
         },
         {
           title: "操作",
@@ -273,49 +265,24 @@ export default {
       ],
       formValidate: {
         id: 0,
-        project_name: "",
-        category_id: "",
-        project_price_up: "",
-        project_price_down: "",
-        develop: [],
-        project_detail: "",
-        goods_images: ""
+        model_name: "",
+        model_image: "",
+        model_type: "1",
+        model_des: "",
+        model_status: "1"
       },
       ruleValidate: {
-        project_name: [
+        model_name: [
           {
             required: true,
-            message: "需求名称不能为空",
+            message: "模板名称不能为空",
             trigger: "blur"
           }
         ],
-        category_id: [
+        model_des: [
           {
             required: true,
-            message: "需求类型不能为空",
-            trigger: "blur"
-          }
-        ],
-        project_price_up: [
-          {
-            required: true,
-            message: "需求预算不能为空",
-            trigger: "blur"
-          }
-        ],
-        develop: [
-          {
-            required: true,
-            type: "array",
-            min: 1,
-            message: "开发终端至少选一个",
-            trigger: "change"
-          }
-        ],
-        project_detail: [
-          {
-            required: true,
-            message: "需求描述不能为空",
+            message: "简介不能为空",
             trigger: "blur"
           }
         ]
@@ -339,18 +306,67 @@ export default {
             ]);
           };
         }
+        if (item.key === "status") {
+          item.render = (h, param) => {
+            let currentRowData = vm.tableData[param.index];
+            return h(
+              "i-switch",
+              {
+                attrs: {
+                  size: "large"
+                },
+                props: {
+                  "true-value": "1",
+                  "false-value": "0",
+                  value: currentRowData.model_status
+                },
+                on: {
+                  "on-change": function(status) {
+                    axios
+                      .post("AppletManage/change_model_status", {
+                        model_status: status,
+                        id: currentRowData.id
+                      })
+                      .then(function(response) {
+                        let res = response.data;
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          vm.$Message.error(res.msg);
+                        }
+                      });
+                  }
+                }
+              },
+              [
+                h(
+                  "span",
+                  {
+                    slot: "open"
+                  },
+                  "启用"
+                ),
+                h(
+                  "span",
+                  {
+                    slot: "close"
+                  },
+                  "禁用"
+                )
+              ]
+            );
+          };
+        }
       });
     },
     cancel() {
       this.formValidate = {
         id: 0,
-        project_name: "",
-        category_id: "",
-        project_price_up: "",
-        project_price_down: "",
-        develop: [],
-        project_detail: "",
-        goods_images: ""
+        model_name: "",
+        model_image: "",
+        model_type: "",
+        model_des: "",
+        model_status: ""
       };
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -361,14 +377,14 @@ export default {
     },
     submit() {
       let self = this;
-      this.$refs["addOredit"].validate(valid => {
+      this.$refs["forms"].validate(valid => {
         if (valid) {
           self.modalSetting.loading = true;
           let target = "";
           if (self.formValidate.id == 0) {
-            target = "Goods/made_add";
+            target = "AppletManage/add";
           } else {
-            target = "Goods/made_edit";
+            target = "AppletManage/edit";
           }
           axios.post(target, self.formValidate).then(function(response) {
             self.modalSetting.loading = false;
@@ -385,24 +401,24 @@ export default {
     },
     getMade(data) {
       let vm = this;
-      axios.post("Goods/made", data).then(function(response) {
+      axios.post("AppletManage/index", data).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
-          vm.tableData = res.data.list.data;
+          vm.tableData = res.data.data.data;
           vm.tableShow.listCount = res.data.listCount;
         }
       });
     },
     changePage(page) {
-      this.tableShow.currentPage = page;
+      this.tableShow.page = page;
       this.getMade(this.tableShow);
     },
     changeSize(size) {
-      this.tableShow.pageSize = size;
+      this.tableShow.size = size;
       this.getMade(this.tableShow);
     },
     search() {
-      this.tableShow.currentPage = 1;
+      this.tableShow.page = 1;
       this.getMade(this.tableShow);
     },
     alertAdd() {
@@ -416,13 +432,13 @@ export default {
       const fileList = this.$refs.upload.fileList;
       // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formValidate.goods_images = "";
+      this.formValidate.model_image = "";
     },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formValidate.goods_images += res.data.filePath + ",";
+      this.formValidate.model_image += res.data.filePath + ",";
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
@@ -447,5 +463,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "./goods.less";
+@import "./applet.less";
 </style>
