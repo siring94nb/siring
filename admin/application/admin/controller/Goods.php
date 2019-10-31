@@ -303,7 +303,7 @@ class Goods extends Base{
         $project_name = $this->request->get('project_name', '');
         $where['del_time']=NULL;
         if ($project_name) {
-            $where['project_name'] = ['like', "%{$goods_name}%"];
+            $where['project_name'] = ['like', "%{$project_name}%"];
         }
         $list=Db::table('made_good')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
         foreach($list['data'] as $k =>$v){
