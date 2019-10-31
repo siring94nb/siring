@@ -325,7 +325,7 @@ class Goods extends Base{
         }
         unset($postData['data']['id']);
         $postData['create_time']=time();
-        $postData['develp']=json_encode($postData['develop']);
+        $postData['develop']=json_encode($postData['develop']);
         $res = Db::table('made_good')->insert($postData);
         if ($res) {
                 return $this->buildSuccess([]);
@@ -347,7 +347,7 @@ class Goods extends Base{
         }
         //获取参数id-商品id
         $postData['update_time']=time();
-        $postData['develp']=json_encode($postData['develop']);
+        $postData['develop']=json_encode($postData['develop']);
         $goods_info=Db::table('made_good')->update($postData);
         if($goods_info !==false){
             return $this->buildSuccess([
