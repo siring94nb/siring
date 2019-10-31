@@ -432,32 +432,24 @@ export const appRouter = [
                 icon: 'ios-pint',
                 title: '小程序管理',
                 name: 'applet',
-                component: () => import('@/views/goods/made.vue'),
+                component: () => import('@/views/applet/appletMain.vue'),
                 children: [
                     {
                         path: 'templete',
                         icon: 'ios-pint',
                         name: 'templete',
                         access: 'admin/Goods/templete',
-                        title: '软件/定制',
-                        component: () => import('@/views/goods/goods.vue'),
+                        title: '行业模块',
+                        component: () => import('@/views/applet/industryModule.vue'),
                     },
                     {
                         path: 'made',
                         icon: 'ios-pint',
                         name: 'made',
                         access: 'admin/Goods/made',
-                        title: '定制案例',
-                        component: () => import('@/views/goods/made.vue'),
-                    },
-                    {
-                        path: 'evaluate',
-                        icon: 'ios-pint',
-                        name: 'evaluate',
-                        access: 'admin/Goods/evaluate',
-                        title: '快捷估价',
-                        component: () => import('@/views/goods/evaluate.vue'),
-                    },
+                        title: '模板套餐',
+                        component: () => import('@/views/applet/templatePackage.vue'),
+                    }
                 ]
             },
             {

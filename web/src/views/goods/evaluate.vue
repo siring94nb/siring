@@ -12,8 +12,8 @@
           <div class="margin-top-15" style="text-align: center">
             <Page
               :total="tableShow.listCount"
-              :current="tableShow.currentPage"
-              :page-size="tableShow.pageSize"
+              :current="tableShow.page"
+              :page-size="tableShow.size"
               @on-change="changePage"
               @on-page-size-change="changeSize"
               show-elevator
@@ -35,19 +35,10 @@ export default {
   data() {
     return {
       tableData: [],
-      uploadList: [],
-      iconList: [],
-      typeList: [],
-      UploadAction: "",
       tableShow: {
         currentPage: 1,
-        pageSize: 10,
+        size: 10,
         listCount: 0
-      },
-      modalSetting: {
-        show: false,
-        loading: false,
-        index: 0
       },
       columnsList: [
         {
@@ -102,29 +93,30 @@ export default {
   methods: {
     init() {
       let vm = this;
-      this.columnsList.forEach(item => {});
+    //   this.columnsList.forEach(item => {});
     },
-    getMade(data) {
+    getMade() {
       let vm = this;
-      axios.post("Goods/evaluate", data).then(function(response) {
+      axios.post("Goods/evaluate", vm.tableShow).then(function(response) {
         let res = response.data;
+            console.log(res)
         if (res.code === 1) {
-          vm.tableData = res.data.list.data;
+          vm.tableData = res.data.data.data;
           vm.tableShow.listCount = res.data.listCount;
         }
       });
     },
     changePage(page) {
-      this.tableShow.currentPage = page;
-      this.getMade(this.tableShow);
+      this.tableShow.page = page;
+      this.getMade();
     },
     changeSize(size) {
-      this.tableShow.pageSize = size;
-      this.getMade(this.tableShow);
+      this.tableShow.size = size;
+      this.getMade();
     },
     search() {
-      this.tableShow.currentPage = 1;
-      this.getMade(this.tableShow);
+      this.tableShow.page = 1;
+      this.getMade();
     },
     
   },
