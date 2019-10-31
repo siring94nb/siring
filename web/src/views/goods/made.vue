@@ -403,9 +403,7 @@ export default {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formValidate.goods_images == ""
-        ? (this.formValidate.goods_images += res.data.filePath + ",")
-        : (this.formValidate.goods_images += "," + res.data.filePath);
+    this.formValidate.goods_images += res.data.filePath + ",";
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
