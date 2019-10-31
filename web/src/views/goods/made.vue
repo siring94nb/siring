@@ -148,14 +148,7 @@ const editButton = (vm, h, currentRow, index) => {
         margin: "0 5px"
       },
       on: {
-        click: () => {
-          vm.$router.push({
-            name: "goods_add",
-            params: {
-              goods_id: currentRow.id
-            }
-          });
-        }
+        click: () => {}
       }
     },
     "编辑"
@@ -258,7 +251,7 @@ export default {
           title: "操作",
           align: "center",
           key: "handle",
-          width: 400,
+          width: 300,
           handle: ["edit", "delete"]
         }
       ],
@@ -374,15 +367,19 @@ export default {
       });
     },
     getMade(data) {
+        let vm = this;
       axios.post("Goods/made", data).then(function(response) {
-        console.log(response);
-        if (response.data.code === 1) {
-          for (let i = 0; i < res.data.list.length; i++) {
-            var str = res.data.list[i].goods_images.split(",");
-            res.data.list[i].goods_images = str[0];
+          let res = response.data;
+        console.log(res);
+        if (res.code === 1) {
+          for (let i = 0; i < res.data.list.data.length; i++) {
+              console.log(res.data.list.data[i])
+            var str = res.data.list.data[i].goods_images.split(",");
+            res.data.list.data[i].goods_images = str[0];
           }
-          vm.tableData = res.data.list;
-          vm.tableShow.listCount = res.data.count;
+          vm.tableData = res.data.list.data;
+        //   console.log(vm.tableData)
+          vm.tableShow.listCount = res.data.listCount;
         }
       });
     },
