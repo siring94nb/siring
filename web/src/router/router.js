@@ -435,18 +435,18 @@ export const appRouter = [
                 component: () => import('@/views/applet/appletMain.vue'),
                 children: [
                     {
-                        path: 'templete',
+                        path: 'index',
                         icon: 'ios-pint',
-                        name: 'templete',
-                        access: 'admin/Goods/templete',
+                        name: 'index',
+                        access: 'admin/AppletManage/index',
                         title: '行业模块',
                         component: () => import('@/views/applet/industryModule.vue'),
                     },
                     {
-                        path: 'made',
+                        path: 'model_meal',
                         icon: 'ios-pint',
-                        name: 'made',
-                        access: 'admin/Goods/made',
+                        name: 'model_meal',
+                        access: 'admin/AppletManage/model_meal',
                         title: '模板套餐',
                         component: () => import('@/views/applet/templatePackage.vue'),
                     }
