@@ -441,20 +441,15 @@ export default {
                   "on-change": function(status) {
                     axios
                       .post("Goods/change_goods_status", {
-                        params: {
-                          goods_recommend_status: status,
-                          id: currentRowData.id
-                        }
-                      })
+                         goods_recommend_status: status,
+                          id: currentRowData.id})
                       .then(function(response) {
                         let res = response.data;
-                        console.log(res)
-                        // if (res.code === 1) {
-                        //   vm.$Message.success(res.msg);
-                        // } else {
-                         
-                        // }
-                        vm.cancel();
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          vm.$Message.error(res.msg);
+                        }
                       });
                   }
                 }
