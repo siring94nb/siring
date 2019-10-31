@@ -124,12 +124,12 @@
             v-for="(item, index) in commentsList"
             :key="index"
           >
-            <Col span="4" style="text-align:center;">
+            <Col span="4" style="padding-left:80px;">
               <Poptip
                 confirm
                 title="确定删除吗？"
+                content="content"
                 @on-ok="commentDel(item.id)"
-                @on-cancel="cancel"
               >
                 <Button type="error">删除</Button>
               </Poptip>

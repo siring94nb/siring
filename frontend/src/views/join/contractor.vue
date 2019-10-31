@@ -268,7 +268,7 @@ export default {
     },
     getProvince() {
       GetProvince({ type: 2 }).then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = data;
         if (code === 1) {
           this.prov = data;
         }
@@ -276,7 +276,7 @@ export default {
     },
     getLevelList() {
       GetLevelList().then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = data;
         if (code === 1) {
           this.level = data;
         }
@@ -311,7 +311,7 @@ export default {
         pid: this.ruleForm.provVal,
         type: this.ruleForm.levelVal
       }).then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = data;
         if (code === 1) {
           this.city = data;
         }
@@ -328,7 +328,7 @@ export default {
             price: this.total,
             user_id: 1
           }).then(res => {
-            let { code, data, msg } = res.data;
+            let { code, data, msg } = data;
             if (code === 1) {
               this.orderId = data;
             }
@@ -343,7 +343,7 @@ export default {
             type: this.payway.way,
             order_id: this.orderId
           }).then(res => {
-            let { code, imgData, msg } = res.data;
+            let { code, imgData, msg } = data;
             if (code === 1) {
               this.payqrcode = imgData;
             }
@@ -355,7 +355,7 @@ export default {
       GetDiscount({
         id: 31
       }).then(res => {
-        let { code, data, msg } = res.data;
+        let { code, data, msg } = data;
         if (code === 1) {
           this.percent = data.user_discount;
         }
