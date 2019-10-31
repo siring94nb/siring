@@ -28,7 +28,7 @@ export default {
   methods: {
      getBannerList() {
       GetBannerList().then(res => {
-        let { code, msg, data } = res.data;
+        let { code, msg, data } = res;
         if(code === 1){
           this.swiperlist = data;
         }
