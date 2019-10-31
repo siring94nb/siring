@@ -291,7 +291,6 @@ export default {
       sortList: [],
       horseList: [],
       commentsList: [],
-      sd: true,
       // 图片
       columnsList: [
         {

@@ -148,7 +148,24 @@ const editButton = (vm, h, currentRow, index) => {
         margin: "0 5px"
       },
       on: {
-        click: () => {}
+        click: () => {
+            console.log(currentRow)
+             //图片
+          if (currentRow.goods_images != "") {
+            var str = currentRow.goods_images.split(",");
+            for (let i = 0; i < str.length; i++) {
+              if (str[i] != "") {
+                vm.iconList.push({ name: "", url: str[i] });
+              }
+            }
+            // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+          }
+          vm.$nextTick(() => {
+            vm.uploadList = vm.$refs.upload.fileList;
+          });
+          vm.formValidate = currentRow;
+          vm.modalSetting.show = true;
+        }
       }
     },
     "编辑"
@@ -166,11 +183,10 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Goods/del", {
+            .post("Goods/made_del", {
               id: currentRow.id
             })
             .then(function(response) {
-              console.log(response);
               currentRow.loading = false;
               if (response.data.code === 1) {
                 vm.tableData.splice(index, 1);
@@ -307,6 +323,7 @@ export default {
     };
   },
   created() {
+    this.init();
     this.getMade(this.tableShow);
   },
   methods: {
@@ -355,10 +372,10 @@ export default {
           }
           axios.post(target, self.formValidate).then(function(response) {
             self.modalSetting.loading = false;
-            console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
               self.cancel();
+              self.getMade(self.tableShow);
             } else {
               self.$Message.error(response.data.msg);
             }
@@ -367,33 +384,26 @@ export default {
       });
     },
     getMade(data) {
-        let vm = this;
+      let vm = this;
       axios.post("Goods/made", data).then(function(response) {
-          let res = response.data;
-        console.log(res);
+        let res = response.data;
         if (res.code === 1) {
-          for (let i = 0; i < res.data.list.data.length; i++) {
-              console.log(res.data.list.data[i])
-            var str = res.data.list.data[i].goods_images.split(",");
-            res.data.list.data[i].goods_images = str[0];
-          }
           vm.tableData = res.data.list.data;
-        //   console.log(vm.tableData)
           vm.tableShow.listCount = res.data.listCount;
         }
       });
     },
     changePage(page) {
       this.tableShow.currentPage = page;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     changeSize(size) {
       this.tableShow.pageSize = size;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     search() {
       this.tableShow.currentPage = 1;
-      this.getList();
+      this.getMade(this.tableShow);
     },
     alertAdd() {
       this.modalSetting.show = true;
