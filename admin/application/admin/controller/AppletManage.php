@@ -94,6 +94,14 @@ class AppletManage extends Base{
      */
     public function change_model_status()
     {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Templete::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
 
     }
     
