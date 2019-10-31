@@ -325,7 +325,9 @@ export default {
               if (res.data.data.goods_images != "") {
                 var str = res.data.data.goods_images.split(',');
                 for(let i = 0; i < str.length; i ++) {
-                  vm.iconList.push({ name: "", url: str[i] })
+                  if(str[i] != "") {
+                    vm.iconList.push({ name: "", url: str[i] })
+                  }
                 }
                 // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
               }
@@ -380,7 +382,9 @@ export default {
               console.log(response);
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
-                self.sortCancel();
+                setTimeout(function(){
+                  self.sortCancel();
+                },1000)
               } else {
                 self.$Message.error(response.data.msg);
               }

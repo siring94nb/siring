@@ -138,4 +138,20 @@ class JoinRole extends Model
         return self::get(['id'=>$id]) ? self::get(['id'=>$id])->toArray() : returnJson(0,'数据有误');
     }
 
+    //等级显示
+    public static function member_details($grade)
+    {
+        switch ($grade){
+            case 1:
+                return   self::get(['id',3])->toArray();
+                break;
+            case 2:
+                return self::get(['id',4]);
+                break;
+            case 3:
+                return self::get(['id',5]);
+                break;
+        }
+    }
+
 }

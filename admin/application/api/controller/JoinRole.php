@@ -143,7 +143,7 @@ class JoinRole extends Base
                 returnJson(1,'获取成功',$list);exit();
                 break;
             case 3:
-                $jid = 14;
+                $jid = 5;
                 $res = $Join->join_user($jid);
 
                 $list['user_discount'] = $res['discount'];

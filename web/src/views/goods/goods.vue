@@ -62,84 +62,102 @@
     </Row>
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
       <Tabs value="name1">
-        <TabPane label="添加评论" name="name1" >
-          <Form ref="comments" :model="comment" :label-width="100">
+        <TabPane label="添加评论" name="name1">
+          <Form ref="myComment" :model="myComment" :label-width="100">
             <FormItem label="马甲会员账号">
-             <Select v-model="comment.grade" style="width: 400px;">
+              <Select v-model="myComment.data.user_id" style="width: 400px;">
                 <Option
-                  v-for="(item, index) in sortList"
+                  v-for="(item, index) in horseList"
                   :value="item.id"
                   :key="index"
-                >{{ item.category_name }}</Option>
+                >{{ item.realname }}</Option>
               </Select>
             </FormItem>
-           
-            <FormItem label="会员评论" porp>
+
+            <FormItem label="会员评论">
               <Input
-                v-model="comment.menber_comment"
+                v-model="myComment.data.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
               />
             </FormItem>
-            <FormItem label="">
+            <FormItem label>
               <DatePicker
                 type="datetime"
-                v-model="comment.start_time"
+                v-model="myComment.data.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                @on-change="dataCreate"
               ></DatePicker>
             </FormItem>
-            <FormItem label="官方回复" porp>
+            <FormItem label="官方回复">
               <Input
-                v-model="comment.reply"
+                v-model="myComment.special.con"
                 type="textarea"
                 :autosize="{minRows: 4,maxRows: 8}"
                 style="width:500px;"
               />
               <p style="color: rgb(197,200,206);">*非必填项</p>
             </FormItem>
-            <FormItem label="">
+            <FormItem label>
               <DatePicker
                 type="datetime"
-                v-model="comment.end_time"
+                v-model="myComment.special.create_at"
                 placeholder="请选择时间"
                 style="width: 200px"
+                @on-change="specialCreate"
               ></DatePicker>
             </FormItem>
             <FormItem>
               <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
-              <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+              <Button type="primary" @click="submitComment" :loading="modalSetting.loading">确定</Button>
             </FormItem>
           </Form>
-          <!-- <div slot="footer">
-            
-          </div> -->
         </TabPane>
         <TabPane label="历史评论" name="name2">
-          <Row type="flex" justify="center" align="middle" class="row-box">
-            <Col span="4"  style="text-align:center;">
-              <Button type="error">删除</Button>
+          <Row
+            type="flex"
+            justify="center"
+            align="middle"
+            class="row-box"
+            v-for="(item, index) in commentsList"
+            :key="index"
+          >
+            <Col span="4" style="padding-left:80px;">
+              <Poptip
+                confirm
+                title="确定删除吗？"
+                content="content"
+                @on-ok="commentDel(item.id)"
+              >
+                <Button type="error">删除</Button>
+              </Poptip>
             </Col>
-            <Col span="4"  style="text-align:center;">
-              <Avatar src="https://i.loli.net/2017/08/21/599a521472424.jpg"  size="large"/>
-              <div>139****2345</div>
-              <div><img style="width:20px;height:20px;display:inline-block;" src="https://i.loli.net/2017/08/21/599a521472424.jpg"/>皇冠会员</div>
+            <Col span="4" style="text-align:center;line-height:30px;">
+              <Avatar :src="item.img" size="large" />
+              <div>{{geTel(item.phone)}}</div>
+              <div>
+                <img style="width:20px;height:20px;display:inline-block;" :src="item.icn" />皇冠会员
+              </div>
             </Col>
             <Col span="16">
-                <div class="comments">
-                  设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                  <div style="">2019年01月20日 19：27</div>
-                </div>
-                <div class="comments comments-gf" v-if="sd">
-                  <span style="color:rgb(255,153,204);">【官方回复】</span>设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的
-                  <div >2019年01月20日 19：27</div>
-                </div>
+              <div class="comments">
+                {{item.ico}}
+                <div style>{{item.create_at}}</div>
+              </div>
+              <div class="comments comments-gf" v-if="item.relpay != ''">
+                <span style="color:rgb(255,153,204);">【官方回复】</span>
+                {{item.relpay[0].con}}
+                <div>{{item.relpay[0].create_at}}</div>
+              </div>
             </Col>
           </Row>
-          
         </TabPane>
       </Tabs>
+      <div slot="footer">
+        <Button type="warning" @click="cancel" style="margin-right: 8px">取消</Button>
+      </div>
     </Modal>
   </div>
 </template>
@@ -160,6 +178,10 @@ const addCommentButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
+          vm.commentList(currentRow.id);
+          vm.getHorse();
+          vm.myComment.data.goods_id = currentRow.id;
+          vm.myComment.special.goods_id = currentRow.id;
           vm.modalSetting.show = true;
         }
       }
@@ -267,7 +289,9 @@ export default {
       uploadList: [],
       iconList: [],
       sortList: [],
-      sd:true,
+      horseList: [],
+      commentsList: [],
+      sd: true,
       // 图片
       columnsList: [
         {
@@ -344,13 +368,22 @@ export default {
           handle: ["comments", "copy", "edit", "delete"]
         }
       ],
-      comment: {
-        number: "",
-        grade: "",
-        menber_comment: "",
-        start_time: "",
-        reply: "",
-        end_time: ""
+      myComment: {
+        data: {
+          goods_id: "",
+          user_id: "",
+          con: "",
+          create_at: "",
+          cid: 0,
+          type: 1
+        },
+        special: {
+          user_id: 0,
+          con: "",
+          create_at: "",
+          goods_id: "",
+          type: 1
+        }
       },
       tableData: [],
       tableShow: {
@@ -400,9 +433,9 @@ export default {
                   size: "large"
                 },
                 props: {
-                  "true-value": 1,
-                  "false-value": 0,
-                  value: currentRowData.status
+                  "true-value": "1",
+                  "false-value": "0",
+                  value: currentRowData.goods_recommend_status
                 },
                 on: {
                   "on-change": function(status) {
@@ -461,8 +494,24 @@ export default {
         this.handleRemove(this.uploadList[i]);
       }
       this.iconList = [];
-
-      this.modalSetting.show = false;
+      (this.myComment = {
+        data: {
+          goods_id: "",
+          user_id: "",
+          con: "",
+          create_at: "",
+          cid: 0,
+          type: 1
+        },
+        special: {
+          user_id: 0,
+          con: "",
+          create_at: "",
+          goods_id: "",
+          type: 1
+        }
+      }),
+        (this.modalSetting.show = false);
     },
     onMenuSelect(name) {
       // console.log(name);
@@ -474,6 +523,17 @@ export default {
         let res = response.data;
         if (res.code === 1) {
           vm.sortList = res.data.list;
+        }
+      });
+    },
+    //马甲会员列表
+    getHorse() {
+      let vm = this;
+      axios.post("Goods/get_horse_member", {}).then(function(response) {
+        let res = response.data;
+        console.log(res.data);
+        if (res.code === 1) {
+          vm.horseList = res.data[0];
         }
       });
     },
@@ -537,6 +597,58 @@ export default {
         }
       });
     },
+    //添加评论
+    submitComment(name) {
+      let self = this;
+      self.modalSetting.loading = true;
+      axios.post("Goods/add_comment", self.myComment).then(function(response) {
+        self.modalSetting.loading = false;
+        console.log(response);
+        if (response.data.code === 1) {
+          self.$Message.success(response.data.msg);
+          setTimeout(function() {
+            self.cancel();
+          }, 1000);
+        } else {
+          self.$Message.error(response.data.msg);
+        }
+      });
+    },
+    //评论历史
+    commentList(id) {
+      let self = this;
+      axios.post("Goods/comment_list", { id: id }).then(function(response) {
+        let res = response.data;
+        console.log(res.data);
+        if (res.code === 1) {
+          self.commentsList = res.data.data;
+        } else {
+          self.commentsList = [];
+        }
+      });
+    },
+    //删除评论
+    commentDel(id) {
+      let self = this;
+      axios.post("Goods/comment_del", { id: id }).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          self.$Message.success(response.data.msg);
+        } else {
+          self.$Message.error(response.data.msg);
+        }
+      });
+    },
+    geTel(tel) {
+      var reg = /^(\d{3})\d{4}(\d{4})$/;
+      return tel.replace(reg, "$1****$2");
+    },
+    dataCreate(time) {
+      this.myComment.data.create_at = time;
+    },
+    specialCreate(time) {
+      this.myComment.special.create_at = time;
+    },
     getList() {
       let vm = this;
       axios
@@ -575,11 +687,11 @@ export default {
     handleView(file) {
       this.visible = true;
     },
-    handleRemove(file) {
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
-      this.formItem.data.goods_images = "";
-    },
+    // handleRemove(file) {
+    //   const fileList = this.$refs.upload.fileList;
+    //   this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    //   this.formItem.data.goods_images = "";
+    // },
     handleSuccess(res, file) {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
@@ -601,10 +713,8 @@ export default {
     }
   },
   mounted() {
-    // this.UploadAction = config.front_url+'api/upload';
+    // this.UploadAction = config.front_url + "file/qn_upload";
     // this.uploadList = this.$refs.upload.fileList;
-    this.UploadAction = config.front_url + "file/qn_upload";
-    this.uploadList = this.$refs.upload.fileList;
   }
 };
 </script>

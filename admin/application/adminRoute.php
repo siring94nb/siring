@@ -598,8 +598,20 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/comment_list',        //历史评论
             ['method' => 'post']
         ],
+        'comment_del'   => [
+            'admin/Goods/comment_del',        //历史评论删除
+            ['method' => 'post']
+        ],
         'made'   => [
-            'admin/Goods/made',           //定制商品列表
+            'admin/Goods/made',           //定制案列列表
+            ['method' => 'post']
+        ],
+        'made_edit'   => [
+            'admin/Goods/made_edit',           //定制案列编辑
+            ['method' => 'post']
+        ],
+        'made_del'   => [
+            'admin/Goods/made_del',           //定制案列删除
             ['method' => 'post']
         ],
         'evaluate'   => [
@@ -636,6 +648,10 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'made_del' => [
             'admin/Goods/made_del',      //定制商品编辑
+            ['method' => 'post']
+        ],
+        'get_horse_member' => [
+            'admin/Goods/get_horse_member',  //马甲会员列表
             ['method' => 'post']
         ],
 

@@ -33,4 +33,5 @@ class Reviews extends Model
         return self::where(['cid'=>$cid,'delect_at'=>null])->select();
 
     }
+    
 }
