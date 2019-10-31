@@ -295,7 +295,7 @@ class Goods extends Base{
 
     /**
      * lilu
-     * 商品管理-软件定制商品-定制商品(案例)
+     * 商品管理-软件定制商品-定制案例
      */
     public function made(){
         $size = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
@@ -313,15 +313,15 @@ class Goods extends Base{
 
     /** 
      * lilu
-     * 商品管理-定制商品--商品添加
+     * 商品管理-定制案例--商品添加
      */
     public function made_add(){
         $groups = '';
-        $postData = $this->request->post();
+        $postData = $this->request->param();
         //判断商品的名字是否重复
         $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->find();
         if($is_use){
-            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '商品名称已存在');
+            return $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '定制案例已存在');
         }
         unset($postData['data']['id']);
         $postData['create_time']=time();
@@ -334,11 +334,11 @@ class Goods extends Base{
     }
     /**
      * lilu
-     * 商品管理-定制商品--商品编辑
+     * 商品管理-定制案例--商品编辑
      */
     public function made_edit(){
         $groups = '';
-        $postData = $this->request->post();  //获取传参
+        $postData = $this->request->param();  //获取传参
         //判断商品的名字是否重复
         $is_use=Db::table('made_goods')->where('project_name',$postData['project_name'])->count();
         if($is_use >= 2){

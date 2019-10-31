@@ -662,20 +662,24 @@ Route::group('admin', function () use ($afterBehavior) {
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
     Route::group('AppletManage', [
-        'index' => [
+        'index' => [                        //行业模板列表
             'admin/AppletManage/index',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
-        'add'   => [
+        'add'   => [                        //行业模版添加
             'admin/AppletManage/add',
             ['method' => 'post']
         ],
-        'upd'   => [
-            'admin/AppletManage/upd',
+        'edit'   => [
+            'admin/AppletManage/edit',
             ['method' => 'post']
         ],
         'del'   => [
             'admin/AppletManage/del',
+            ['method' => 'post']
+        ],
+        'change_show_status'   => [         //切换模板展示状态
+            'admin/AppletManage/change_show_status',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
