@@ -3,9 +3,9 @@
     <Row>
       <Col span="24">
         <Card style="margin-bottom: 10px">
-          <Form ref="myForm" :model="searchConf" inline>
+          <Form ref="myForm" :model="tableShow" inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="searchConf.title" placeholder="请输入需求名称" />
+              <Input v-model="tableShow.project_name" placeholder="请输入需求名称" />
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">立即搜索</Button>
@@ -210,7 +210,6 @@ const deleteButton = (vm, h, currentRow, index) => {
 export default {
   data() {
     return {
-      searchConf: [],
       tableData: [],
       uploadList: [],
       iconList: [],
@@ -219,10 +218,8 @@ export default {
       tableShow: {
         currentPage: 1,
         pageSize: 10,
-        listCount: 0
-      },
-      searchConf: {
-        title: ""
+        listCount: 0,
+        project_name: ""
       },
       modalSetting: {
         show: false,
@@ -316,7 +313,7 @@ export default {
     };
   },
   created() {
-      this.getMade();
+      this.getMade(this.tableShow);
   },
   methods: {
     init() {
@@ -375,8 +372,8 @@ export default {
         }
       });
     },
-    getMade() {
-        axios.post("Goods/made", {}).then(function(response) {
+    getMade(data) {
+        axios.post("Goods/made", data).then(function(response) {
             console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
