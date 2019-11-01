@@ -79,7 +79,7 @@ export default {};
     }
     .recomment-list {
       margin: 0 auto;
-      height: 490px;
+      height: 520px;
       overflow-y: auto;
       &::-webkit-scrollbar {
         width: 0;

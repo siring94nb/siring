@@ -9,7 +9,7 @@ Vue.use(Router)
 */
 const userid = sessionStorage.getItem('user_id');
 const phone = sessionStorage.getItem('phone');
-if(userid){
+if (userid) {
   store.commit('setUserId', userid);
   store.commit('setPhone', phone);
 }
@@ -51,6 +51,17 @@ export default new Router({
       path: '/selectFunction',
       name: 'selectFunction',
       component: () => import('@/views/tailorMade/selectFunction')
+    },
+    {
+      path: '/fillDemand',
+      name: 'fillDemand',
+      component: () => import('@/views/tailorDemand/fillDemand')
+
+    },
+    {
+      path: '/goods',
+      name: 'goods',
+      component: () => import('@/views/goods/goods')
     },
     {
       path: '/aboutUs',

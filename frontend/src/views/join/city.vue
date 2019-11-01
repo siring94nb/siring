@@ -493,6 +493,8 @@ export default {
         margin-bottom: 30px;
       }
       .sel-cont {
+        width: 70%;
+        margin: 0 auto;
         .el-select {
           margin-right: 20px;
         }
