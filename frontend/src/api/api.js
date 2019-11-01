@@ -101,3 +101,10 @@ export const Payment = params => {
 export const GetTableData = params => {
   return axios.post(`${base_url}api/Evaluate/get_plate_list`, qs.stringify(params)).then(res => res.data);
 }
+
+/**
+ * 软件定制 定制类型
+ */
+export const GetDevlopType = params => {
+  return axios.get(`${base_url}api/Software/soft_type`, { params: params });
+}
