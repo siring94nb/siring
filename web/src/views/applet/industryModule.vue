@@ -5,7 +5,7 @@
         <Card style="margin-bottom: 10px">
           <Form ref="myForm" :model="tableShow" inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="tableShow.model_name" placeholder="请输入需求名称" />
+              <Input v-model="tableShow.model_name" placeholder="请输入模板名称" />
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">立即搜索</Button>
@@ -218,7 +218,15 @@ export default {
         {
           title: "模板分类",
           align: "center",
-          key: "model_type"
+          key: "model_type",
+          render: (h, param) => {
+              let types;
+              console.log(param)
+              param.row.model_type == "1" ? types = "diy" : types="固定样式";
+              return h("div", {
+                    types
+              })
+          }
         },
         {
           title: "行业模板名称",
