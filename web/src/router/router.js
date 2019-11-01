@@ -435,9 +435,9 @@ export const appRouter = [
                 component: () => import('@/views/applet/appletMain.vue'),
                 children: [
                     {
-                        path: 'index',
+                        path: 'industryModule',
                         icon: 'ios-pint',
-                        name: 'index',
+                        name: 'industryModule',
                         access: 'admin/AppletManage/index',
                         title: '行业模块',
                         component: () => import('@/views/applet/industryModule.vue'),
