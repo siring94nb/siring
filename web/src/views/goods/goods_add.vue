@@ -18,11 +18,11 @@
         style="margin: 0 0 10px 80px;"
       >
         <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" />
-        <Button type="primary" @click="editSort(index)">编辑</Button>
+        <Button type="primary" @click="editSort(index, item.id)">编辑</Button>
       </div>
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
       <Form ref="sortForm" :rules="ruleValidate" :model="sortMain" :label-width="80">
-        <FormItem label="分类名称" prop="type_name">
+        <FormItem label="分类名称" prop="category_name">
           <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"/>
         </FormItem>
       </Form>
@@ -44,7 +44,6 @@
       </FormItem>
       <FormItem label="归属分类">
         <Select v-model="formItem.data.category_id" style="width: 400px;">
-          <Option :value="0">顶级菜单</Option>
           <Option
             v-for="(item, index) in tableData"
             :value="item.id"
@@ -205,7 +204,7 @@ export default {
           id:0,
           goods_images: "",
           goods_number: "",
-          category_id: 0,
+          category_id: "",
           goods_name: "",
           goods_sort: 0,
           seo: "",
@@ -217,7 +216,7 @@ export default {
         special: []
       },
       ruleValidate: {
-        type_name: [{ required: true, message: "分类名称不能为空", trigger: "blur" }],
+        category_name: [{ required: true, message: "分类名称不能为空", trigger: "blur" }],
        
         // goods_name: [{ required: true, message: "商品名称不能为空", trigger: "blur" }],
         // goods_number: [{ required: true, message: "商品编号不能为空", trigger: "blur" }],
@@ -244,7 +243,7 @@ export default {
           goods_images: "",
           goods_number: "",
           goods_name: "",
-          category_id: 0,
+          category_id: "",
           goods_sort: 0,
           seo: "",
           goods_recommend_status: "1",
@@ -353,11 +352,11 @@ export default {
     addSort() {
       this.modalSetting.show = true;
     },
-    editSort(index) {
+    editSort(index, id) {
       let self = this;
       axios
         .post("Goods/category_edit", {
-          id: index,
+          id: id,
           category_name: self.tableData[index].category_name
         })
         .then(function(response) {
