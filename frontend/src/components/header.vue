@@ -43,7 +43,7 @@
             <p class="en-name">Index</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/goods">
             <i class="icon iconfont icon-ruanjiandingzhi"></i>
             <span>软件/定制</span>
             <p class="en-name">Software develop</p>
@@ -98,7 +98,7 @@
           </router-link>
         </div>
         <div class="sp-bt">
-          <router-link to="/">定制需求</router-link>
+          <router-link to="/fillDemand">定制需求</router-link>
           <router-link to="/quickValuation" class="kjgj">快捷估价</router-link>
         </div>
       </div>
