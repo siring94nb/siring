@@ -76,6 +76,12 @@ Route::group('api', function () {
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
     });
 
+    //用户优惠券
+    Route::group('UserDiscount',function(){
+        Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
+        Route::any('user_fund','api/UserDiscount/user_fund'); //用户余额
+    });
+
 
 });
 $afterBehavior = [
