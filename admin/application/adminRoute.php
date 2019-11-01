@@ -678,8 +678,8 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/AppletManage/del',
             ['method' => 'post']
         ],
-        'change_show_status'   => [         //切换模板展示状态
-            'admin/AppletManage/change_show_status',
+        'change_model_status'   => [         //切换模板展示状态
+            'admin/AppletManage/change_model_status',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
