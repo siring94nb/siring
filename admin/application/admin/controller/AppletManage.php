@@ -64,6 +64,7 @@ class AppletManage extends Base{
     {
         $request=Request::instance();
         $postData=$request->param();
+        $postData['update_time']=time();
         if($postData){
             $res=Templete::update($postData)->toArray();
             return $this->buildSuccess([]);

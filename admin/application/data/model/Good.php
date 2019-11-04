@@ -233,7 +233,7 @@ class Good extends Model
 //
 //    }
 
-/**
+    /**
      * 商品评论（删除）
      * @param $id   评论ID
      * @return false|\PDOStatement|string|\think\Collection
