@@ -222,7 +222,7 @@ class Software extends Base
         switch($type) {
             case 1:
                 // 查询订单信息
-                $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
+                $url = 'https://manage.siring.com.cn/api/Software/app_notice';
                 $order = db('soft_order')->getById($id);
 
                 $pay = 1;//先测试1分钱

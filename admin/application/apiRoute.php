@@ -57,6 +57,7 @@ Route::group('api', function () {
         Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
         Route::any('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
         Route::any('get_pay','api/JoinOrder/get_pay'); //支付
+        Route::any('app_notice','api/JoinOrder/app_notice'); //支付回调
     });
 
     //快捷估价

@@ -24,7 +24,7 @@ class WechatPay extends Model
             'body'             => $title,//标题
             'detail'           => 'Siring支付订单',//详情
             'out_trade_no'     => $no,//订单号
-            'total_fee'        => $cost * 100, // 单位：分
+            'total_fee'        => $cost, // 单位：分
             'notify_url'       => $url, // 支付结果通知网址，如果不设置则会使用配置里的默认地址
 //            'openid'           => $openid, // trade_type=JSAPI，此参数必传，用户在商户appid下的唯一标识，
             // ...
