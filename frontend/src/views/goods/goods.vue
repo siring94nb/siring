@@ -8,40 +8,45 @@
           <div class="search-type">
             <div class="search-title">软件/定制类型</div>
             <div class="search-cont">
-              <div class="search-items">
-                <div class="search-item curr">
+              <div :class="{'search-items': true, 'autoHeight': typeListShowMore}">
+                <div
+                  :class="{'search-item': true, 'curr': -1==typeCurrIndex}"
+                  @click="searchType(-1, 0)"
+                >
                   <span>全部</span>
                 </div>
-                <div class="search-item">
-                  <span>区块链电商</span>
+                <div
+                  v-for="(item, index) in typeList"
+                  :key="item.id"
+                  :class="{'search-item': true, 'curr': index==typeCurrIndex}"
+                  @click="searchType(index, item.id)"
+                >
+                  <span>{{ item.category_name }}</span>
                 </div>
               </div>
-              <div class="search-more">
+              <div class="search-more" @click="showMore">
                 更多
-                <i class="iconfont icon-changyongtubiao-xianxingdaochu-zhuanqu-1"></i>
+                <i :class="[typeListShowMore ? 'el-icon-arrow-up': 'el-icon-arrow-down']"></i>
               </div>
             </div>
           </div>
           <div class="sort-section">
             <div class="sort-type">
-              <div class="sort-all sort-on">全部排序</div>
-              <div class="desc">
-                按价格
-                <span>
-                  <i class="iconfont icon-quanxianfuzhi caret-top"></i>
-                  <i class="iconfont icon-sanjiaodown caret-bot"></i>
-                </span>
-              </div>
-              <div class="asce">
-                按销量
-                <span>
-                  <i class="iconfont icon-quanxianfuzhi caret-top"></i>
-                  <i class="iconfont icon-sanjiaodown caret-bot"></i>
+              <div
+                v-for="(item, index) in sortDataList"
+                :key="index"
+                :class="['sort-type-item', 'asce', {'sort-on':sortCurIndex==index}]"
+                @click="sortEvent(index)"
+              >
+                {{item}}
+                <span v-if="index>0">
+                  <i class="el-icon-caret-top caret-top"></i>
+                  <i class="el-icon-caret-bottom caret-bot"></i>
                 </span>
               </div>
             </div>
             <div class="search-box">
-              <el-input v-model="input" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
+              <el-input v-model="searchCont" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
               <el-button type="danger">搜索</el-button>
             </div>
             <div class="collect-order">
@@ -55,6 +60,45 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="rjdz-goods">
+          <div class="goods-list">
+            <div class="goods-item" v-for="(item, index) in 12" :key="index">
+              <div class="goods-img">
+                <img :src="require('@/assets/images/model_mall.png')" width="260" height="165" alt />
+              </div>
+              <div class="model_mall_info_box">
+                <div class="name_box">
+                  <div class="top">
+                    <div>
+                      <i class="iconfont icon-hotchunse"></i>
+                      <span class="goods_name">B2C电商</span>
+                    </div>
+                    <i class="el-icon-star-off el-icon-star-on" @click="favoriteGood"></i>
+                  </div>
+                  <div class="bottom">
+                    <span class="desc_span">APP|小程序|公众号|H5</span>
+                    <span class="ljgm">
+                      <a href="javascript:;">&gt;&gt;立即购买</a>
+                    </span>
+                  </div>
+                </div>
+                <div class="time_box">
+                  <div class="brand">
+                    <i class="iconfont icon-fenleishouye"></i>
+                    <span>区块链电商</span>
+                  </div>
+                  <p>
+                    <i class="iconfont icon-time"></i>
+                    <span>10天</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pagi-box">
+          <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
         </div>
       </div>
     </div>
@@ -70,6 +114,7 @@ import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
 import Sjhy from "@/components/sjhy";
 import Jdyh from "@/components/jdyh";
+import { GetDevlopType, GetGoods } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -80,12 +125,68 @@ export default {
   },
   data() {
     return {
-      input: ""
+      searchCont: "",
+      typeList: [],
+      typeCurrIndex: -1,
+      typeListShowMore: false,
+      sortCurIndex: 0,
+      asceOrDesc: false,
+      sortDataList: ["全部排序", "按价格", "按销量"],
+      sortId: 1,
+      typeId: 0
     };
   },
-  methods: {}
+  mounted() {
+    this.init();
+  },
+  methods: {
+    init() {
+      this.getDevlopType();
+    },
+    getDevlopType() {
+      GetDevlopType().then(res => {
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          this.typeList = data;
+        }
+      });
+    },
+    getGoods() {
+      let params = {
+        type: this.sortId,
+        category_id: this.typeId,
+        title: this.searchCont,
+        page: 1
+      };
+    },
+    showMore() {
+      this.typeListShowMore = !this.typeListShowMore;
+    },
+    searchType(index, id) {
+      this.typeCurrIndex = index;
+      this.typeId = id;
+    },
+    favoriteGood() {},
+    sortEvent(index) {
+      this.sortCurIndex = index;
+      if (index === 0) {
+        return false;
+      }
+      var e = event;
+      if (e.target.className.indexOf("asce") != -1) {
+        console.log(1)
+        e.target.className = "sort-type-item desc sort-on";
+        // console.log(index===1?'2': '3')
+      } 
+      else if (e.target.className.indexOf("desc") != -1) {
+        console.log(2)
+        e.target.className = "sort-type-item asce sort-on";
+      }
+    }
+  }
 };
 </script>
+
 
 <style lang="css" scoped>
 .search-box >>> input {
@@ -100,6 +201,9 @@ export default {
   border-bottom-left-radius: 0;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
+}
+.pagi-box >>> .el-pager .number {
+  background-color: rgb(238, 238, 238);
 }
 </style>
 <style scoped lang='scss'>
@@ -132,6 +236,9 @@ export default {
             width: 90%;
             height: 35px;
             overflow: hidden;
+            &.autoHeight {
+              height: auto;
+            }
             .search-item {
               display: inline-block;
               font-size: 14px;
@@ -179,7 +286,7 @@ export default {
       margin-left: 132px;
       .sort-type {
         display: flex;
-        div {
+        .sort-type-item {
           font-size: 14px;
           height: 30px;
           padding: 4px 14px;
@@ -189,6 +296,16 @@ export default {
           line-height: 22px;
           cursor: pointer;
           user-select: none;
+          &.asce {
+            .caret-bot {
+              color: #9f0010;
+            }
+          }
+          &.desc {
+            .caret-top {
+              color: #9f0010;
+            }
+          }
           span {
             display: inline-block;
             position: relative;
@@ -234,6 +351,116 @@ export default {
             font-size: 30px;
           }
         }
+      }
+    }
+    .rjdz-goods {
+      width: 100%;
+      background-color: rgb(244, 245, 249);
+      padding: 20px 0;
+      .goods-list {
+        width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        .goods-item {
+          background-color: #fff;
+          box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
+          margin-bottom: 40px;
+          .goods-img {
+            overflow: hidden;
+            &:hover img {
+              transform: scale(1.2);
+            }
+            img {
+              transition: transform 0.8s;
+            }
+          }
+          .name_box {
+            width: 100%;
+            border-bottom: 1px solid #999;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            .top,
+            .bottom {
+              width: 100%;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            }
+            .top {
+              .icon-hotchunse {
+                color: #ff0000;
+                font-size: 10px;
+                vertical-align: middle;
+              }
+              .el-icon-star-off {
+                font-size: 20px;
+                color: #999999;
+              }
+              .el-icon-star-on {
+                font-size: 20px;
+                color: rgb(244, 234, 42);
+              }
+              span {
+                vertical-align: middle;
+              }
+            }
+            .bottom {
+              .desc_span {
+                font-size: 14px;
+                color: #6b6b6b;
+                width: 130px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+              }
+              .ljgm a {
+                text-decoration: none;
+                font-size: 14px;
+                color: #ff0000;
+              }
+            }
+          }
+          .time_box {
+            position: relative;
+            padding: 8px;
+            .brand {
+              position: absolute;
+              left: 5px;
+              top: 50%;
+              transform: translateY(-50%);
+              span {
+                display: inline-block;
+                width: 100px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                vertical-align: middle;
+              }
+              i {
+                vertical-align: middle;
+                margin-right: 5px;
+              }
+            }
+            p {
+              width: 100%;
+              text-align: right;
+              span {
+                color: #666;
+              }
+            }
+          }
+        }
+      }
+    }
+    .pagi-box {
+      display: flex;
+      justify-content: center;
+      .el-pagination {
+        margin-bottom: 20px;
       }
     }
   }
