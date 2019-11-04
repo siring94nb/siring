@@ -9,6 +9,8 @@ use think\Validate;
 use think\Session;
 use think\Db;
 use app\data\model\JoinOrder as JoinOrderAll;
+use think\Config;
+use EasyWeChat\Foundation\Application;
 
 /**
  * 角色加盟订单
