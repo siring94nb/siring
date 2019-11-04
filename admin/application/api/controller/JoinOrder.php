@@ -229,7 +229,7 @@ class JoinOrder extends Base
                     //用户表
                     $user = Db::table('user')->where('id',$orderArr['user_id'])->update(array('type' => 2));
                     //订单表
-                    $order_data = Db::table('join_order')->where($where)->update(array('payment' => 2, "pay_time" => time()));
+                    $order_data = Db::table('join_order')->where($where)->update(array('payment' => 2,'status' => 2, "pay_time" => time()));
 
                     return $user && $order_data ? true : false;
 
@@ -237,7 +237,6 @@ class JoinOrder extends Base
 
             }
             return $result  ? returnJson(1,'支付成功') : returnJson(0,'支付失败');
-            //returnJson(1,'订单已完成'); // 返回处理完成
         });
         // 将响应输出
         return $response;
