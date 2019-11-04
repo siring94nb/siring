@@ -11,7 +11,7 @@
               <div :class="{'search-items': true, 'autoHeight': typeListShowMore}">
                 <div
                   :class="{'search-item': true, 'curr': -1==typeCurrIndex}"
-                  @click="sortType(-1)"
+                  @click="searchType(-1, 0)"
                 >
                   <span>全部</span>
                 </div>
@@ -19,7 +19,7 @@
                   v-for="(item, index) in typeList"
                   :key="item.id"
                   :class="{'search-item': true, 'curr': index==typeCurrIndex}"
-                  @click="sortType(index)"
+                  @click="searchType(index, item.id)"
                 >
                   <span>{{ item.category_name }}</span>
                 </div>
@@ -32,24 +32,21 @@
           </div>
           <div class="sort-section">
             <div class="sort-type">
-              <div class="sort-all sort-on">全部排序</div>
-              <div class="desc">
-                按价格
-                <span>
-                  <i class="iconfont icon-quanxianfuzhi caret-top"></i>
-                  <i class="iconfont icon-sanjiaodown caret-bot"></i>
-                </span>
-              </div>
-              <div class="asce">
-                按销量
-                <span>
-                  <i class="iconfont icon-quanxianfuzhi caret-top"></i>
-                  <i class="iconfont icon-sanjiaodown caret-bot"></i>
+              <div
+                v-for="(item, index) in sortDataList"
+                :key="index"
+                :class="['sort-type-item', 'asce', {'sort-on':sortCurIndex==index}]"
+                @click="sortEvent(index)"
+              >
+                {{item}}
+                <span v-if="index>0">
+                  <i class="el-icon-caret-top caret-top"></i>
+                  <i class="el-icon-caret-bottom caret-bot"></i>
                 </span>
               </div>
             </div>
             <div class="search-box">
-              <el-input v-model="input" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
+              <el-input v-model="searchCont" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
               <el-button type="danger">搜索</el-button>
             </div>
             <div class="collect-order">
@@ -77,7 +74,7 @@
                       <i class="iconfont icon-hotchunse"></i>
                       <span class="goods_name">B2C电商</span>
                     </div>
-                    <a href="javascript:void(0);" class="star-off"></a>
+                    <i class="el-icon-star-off el-icon-star-on" @click="favoriteGood"></i>
                   </div>
                   <div class="bottom">
                     <span class="desc_span">APP|小程序|公众号|H5</span>
@@ -117,7 +114,7 @@ import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
 import Sjhy from "@/components/sjhy";
 import Jdyh from "@/components/jdyh";
-import { GetDevlopType } from "@/api/api";
+import { GetDevlopType, GetGoods } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -128,10 +125,15 @@ export default {
   },
   data() {
     return {
-      input: "",
+      searchCont: "",
       typeList: [],
       typeCurrIndex: -1,
-      typeListShowMore: false
+      typeListShowMore: false,
+      sortCurIndex: 0,
+      asceOrDesc: false,
+      sortDataList: ["全部排序", "按价格", "按销量"],
+      sortId: 1,
+      typeId: 0
     };
   },
   mounted() {
@@ -144,17 +146,42 @@ export default {
     getDevlopType() {
       GetDevlopType().then(res => {
         let { code, data, msg } = res.data;
-        console.log(data);
         if (code === 1) {
           this.typeList = data;
         }
       });
     },
+    getGoods() {
+      let params = {
+        type: this.sortId,
+        category_id: this.typeId,
+        title: this.searchCont,
+        page: 1
+      };
+    },
     showMore() {
       this.typeListShowMore = !this.typeListShowMore;
     },
-    sortType(index) {
+    searchType(index, id) {
       this.typeCurrIndex = index;
+      this.typeId = id;
+    },
+    favoriteGood() {},
+    sortEvent(index) {
+      this.sortCurIndex = index;
+      if (index === 0) {
+        return false;
+      }
+      var e = event;
+      if (e.target.className.indexOf("asce") != -1) {
+        console.log(1)
+        e.target.className = "sort-type-item desc sort-on";
+        // console.log(index===1?'2': '3')
+      } 
+      else if (e.target.className.indexOf("desc") != -1) {
+        console.log(2)
+        e.target.className = "sort-type-item asce sort-on";
+      }
     }
   }
 };
@@ -259,7 +286,7 @@ export default {
       margin-left: 132px;
       .sort-type {
         display: flex;
-        div {
+        .sort-type-item {
           font-size: 14px;
           height: 30px;
           padding: 4px 14px;
@@ -269,6 +296,16 @@ export default {
           line-height: 22px;
           cursor: pointer;
           user-select: none;
+          &.asce {
+            .caret-bot {
+              color: #9f0010;
+            }
+          }
+          &.desc {
+            .caret-top {
+              color: #9f0010;
+            }
+          }
           span {
             display: inline-block;
             position: relative;
@@ -354,10 +391,18 @@ export default {
               align-items: center;
             }
             .top {
-              i {
+              .icon-hotchunse {
                 color: #ff0000;
                 font-size: 10px;
                 vertical-align: middle;
+              }
+              .el-icon-star-off {
+                font-size: 20px;
+                color: #999999;
+              }
+              .el-icon-star-on {
+                font-size: 20px;
+                color: rgb(244, 234, 42);
               }
               span {
                 vertical-align: middle;
@@ -396,7 +441,6 @@ export default {
                 vertical-align: middle;
               }
               i {
-                font-size: 24px;
                 vertical-align: middle;
                 margin-right: 5px;
               }
