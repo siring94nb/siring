@@ -172,7 +172,6 @@ class AppletManage extends Base{
         }else{
             return $this->buildFailed('0','获取参数失败');
         }
-
     }
 
 
