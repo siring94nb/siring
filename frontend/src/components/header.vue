@@ -70,10 +70,13 @@
                 <p class="en-name">API Enabling</p>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="a">SaaS平台</el-dropdown-item>
                 <el-dropdown-item command="b">支付平台</el-dropdown-item>
                 <el-dropdown-item command="c">
-                  <a href="http://117.48.217.182:9001/#/login" target="_blank" style="color: #333333;">短信平台</a>
+                  <a
+                    href="http://117.48.217.182:9001/#/login"
+                    target="_blank"
+                    style="color: #333333;"
+                  >短信平台</a>
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
@@ -85,10 +88,25 @@
             <p class="en-name">Investment</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/city">
-            <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
-            <span>角色加盟</span>
-            <p class="en-name">Agency</p>
+          <router-link to="/">
+            <el-dropdown @command="handleCommand" placement="bottom">
+              <span class="el-dropdown-link">
+                <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
+                <span>角色加盟</span>
+                <p class="en-name">Agency</p>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="a">
+                  <router-link to="/city" style="color: #333;">合伙人</router-link>
+                </el-dropdown-item>
+                <el-dropdown-item command="b">
+                  <router-link to="/member" style="color: #333;">等级会员</router-link>
+                </el-dropdown-item>
+                <el-dropdown-item command="c">
+                  <router-link to="/contractor" style="color: #333;">分包商</router-link>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/aboutUs">
@@ -264,10 +282,10 @@ export default {
   },
   methods: {
     isLogin() {
-        this.ifLogin = !!this.$store.state.user_id
+      this.ifLogin = !!this.$store.state.user_id;
     },
     handleCommand(command) {
-      this.$message("click on item " + command);
+      // this.$message("click on item " + command);
     },
     handleClose(done) {
       this.resetFie();
@@ -365,13 +383,11 @@ export default {
   }
 };
 </script>
-<style lang="scss">
-.router-link-active {
-  .el-dropdown {
-    height: 16px;
-    font-size: 16px;
-    color: #333333;
-  }
+<style scoped>
+.router-link-active >>> .el-dropdown {
+  height: 16px;
+  font-size: 16px;
+  color: #333333;
 }
 .el-dropdown-menu {
   top: 92px !important;
@@ -439,7 +455,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      .logo-box{
+      .logo-box {
         cursor: pointer;
       }
     }
