@@ -242,4 +242,48 @@ class Software extends Base
         }
     }
 
+    /**
+     * 店铺支付成功微信回调demo
+     * @throws \EasyWeChat\Core\Exceptions\FaultException
+     */
+    public function app_notice(){
+
+        //初始化微信sdk
+        $wxConf = config('wechat');
+
+        $app = new Application($wxConf);
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
+            $rstArr = json_decode($notify,true);
+
+            $where = array('no'=>$rstArr['out_trade_no']);
+
+            $orderArr = Db::table('join_order')->where($where)->field('id,user_id,payment,status,no')->find();
+            if (empty($orderArr)) {
+                // 如果订单不存在
+                returnJson(0,'订单不存在');
+            }
+            if ($orderArr['payment'] == 2) {
+                returnJson(0,'订单已支付'); // 已经支付成功了就不再更新了
+            }
+            // 用户是否支付成功
+            if ($successful) {
+                // 不是已经支付状态则修改为已经支付状态
+                $result = Db::transaction(function()use ( $orderArr,$where ){
+                    //用户表
+                    $user = Db::table('user')->where('id',$orderArr['user_id'])->update(array('type' => 2));
+                    //订单表
+                    $order_data = Db::table('join_order')->where($where)->update(array('payment' => 2,'status' => 2, "pay_time" => time()));
+
+                    return $user && $order_data ? true : false;
+
+                });
+
+            }
+            return $result  ? returnJson(1,'支付成功') : returnJson(0,'支付失败');
+        });
+        // 将响应输出
+        return $response;
+    }
+
 }
