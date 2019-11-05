@@ -664,7 +664,7 @@ Route::group('admin', function () use ($afterBehavior) {
     Route::group('AppletManage', [
         'index' => [                        //行业模板列表
             'admin/AppletManage/index',
-            ['method' => 'post']
+            ['method' => 'get']
         ],
         'add'   => [                        //行业模版添加
             'admin/AppletManage/add',
