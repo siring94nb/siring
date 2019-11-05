@@ -112,14 +112,21 @@ class AppletManage extends Base{
      */
     public function model_meal()
     {      
-        $request=Request::instance();
-        $postData=$request->param();
-        if($postData){
-            unset($postData['id']);
-            $res=Db::table('model_meal')->insert($postData);
-            return $this->buildSuccess([]);
+        $size = $this->request->post('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
+        $page = $this->request->post('page', 1);
+        $where['del_time']=NULL;
+        if ($model_name) {
+            $where['model_name'] = ['like', "%{$model_name}%"];
+        }
+        $list=Db::table('model_meal')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->select();
+        $listcount=Db::table('model_meal')->where($where)->count();
+        if($list){
+            return $this->buildSuccess([
+                'data'=>$list,
+                'listCount'=>$listcount,
+            ]);
         }else{
-            return $this->buildFailed('0','获取参数失败');
+            return $this->buildFailed('0','获取数据失败');
         }
     }
     /**
@@ -153,7 +160,7 @@ class AppletManage extends Base{
             return $this->buildFailed('0','获取参数失败');
         }
     }
-    
+
     /**
      * lilu
      * 行业模板-模板套餐
