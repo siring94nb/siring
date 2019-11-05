@@ -688,15 +688,15 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'model_meal_add'   => [                  //模板套餐
             'admin/AppletManage/model_meal_add',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'model_meal_edit'   => [                  //模板套餐
             'admin/AppletManage/model_meal_edit',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'model_meal_del'   => [                  //模板套餐
             'admin/AppletManage/model_meal_del',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--推广运营
