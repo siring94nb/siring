@@ -74,6 +74,10 @@ class Good extends Model
        //pp($list);die;
         foreach ($list['data'] as $key => $val){
             $list['data'][$key]['category_title'] = $val['category']['category_name'];
+            //取一张图
+            $att=explode(',',$val["goods_images"]);
+            $list['data'][$key]['img'] = $att[0];
+            unset( $list['data'][$key]['goods_images']);
             unset($list['data'][$key]['category']);
         }
 
@@ -143,6 +147,10 @@ class Good extends Model
         foreach ($list['data'] as $key => $val){
             $list['data'][$key]['category_title'] = $val['category']['category_name'];
             $list['data'][$key]['follow'] = $res->user_pro($val['id'], $uid);
+            //取一张图
+            $att=explode(',',$val["goods_images"]);
+            $list['data'][$key]['img'] = $att[0];
+            unset( $list['data'][$key]['goods_images']);
             unset($list['data'][$key]['category']);
         }
 
