@@ -115,10 +115,7 @@ class AppletManage extends Base{
         $size = $this->request->post('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
         $page = $this->request->post('page', 1);
         $where['del_time']=NULL;
-        if ($model_name) {
-            $where['model_name'] = ['like', "%{$model_name}%"];
-        }
-        $list=Db::table('model_meal')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->select();
+        $list=Db::table('model_meal')->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
         $listcount=Db::table('model_meal')->where($where)->count();
         if($list){
             return $this->buildSuccess([
