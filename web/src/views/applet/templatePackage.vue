@@ -43,9 +43,8 @@
         <FormItem label="套餐价格" prop="model_meal_price">
           <span style="color: rgb(197,200,206);">年套餐价</span>  <Input v-model="formValidate.model_meal_price" style="width:200px;" />  元
         </FormItem>
-        <FormItem label="套餐排序" prop="model_rank">
+        <FormItem label="套餐排序">
           <InputNumber :min="1" v-model="formValidate.model_rank" style="width: 400px;"></InputNumber>
-          <!-- <Input type="text"  v-model="formValidate.model_rank" number  style="width: 400px;"></Input> -->
           <div style="color: rgb(197,200,206);">*填写正整数，从大到小排序</div>
         </FormItem>
       </Form>
@@ -92,7 +91,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("AppletManage/del", {
+            .post("AppletManage/model_meal_del", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -184,7 +183,7 @@ export default {
         mode_grade: "",
         model_meal_category: "1",
         model_meal_price: "",
-        model_rank: "1",
+        model_rank: 1,
       },
       ruleValidate: {
         mode_grade: [
@@ -287,7 +286,7 @@ export default {
         mode_grade: "",
         model_meal_category: "1",
         model_meal_price: "",
-        model_rank: "1",
+        model_rank: 1,
       };
       this.modalSetting.show = false;
     },
@@ -328,9 +327,10 @@ export default {
         })
         .then(function(response) {
           let res = response.data;
+          console.log(res)
           if (res.code === 1) {
-            vm.tableData = res.data.list;
-            vm.tableShow.listCount = res.data.count;
+            vm.tableData = res.data.data.data;
+            vm.tableShow.listCount = res.data.listCount;
           } 
         });
     },
