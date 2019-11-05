@@ -221,11 +221,8 @@ export default {
           key: "model_type",
           render: (h, param) => {
               let types;
-              console.log(h)
               param.row.model_type == "1" ? types = "diy" : types="固定样式";
-              return h("div", {
-                    types
-              })
+              return h("div", [types])
           }
         },
         {
