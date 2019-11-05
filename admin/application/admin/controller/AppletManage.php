@@ -111,6 +111,53 @@ class AppletManage extends Base{
      * 行业模板-模板套餐
      */
     public function model_meal()
+    {      
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            unset($postData['id']);
+            $res=Db::table('model_meal')->insert($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','获取参数失败');
+        }
+    }
+    /**
+     * lilu
+     * 行业模板-模板套餐
+     */
+    public function model_meal_add()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            unset($postData['id']);
+            $res=Db::table('model_meal')->insert($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','获取参数失败');
+        }
+    }
+    /**
+     * lilu
+     * 行业模板-模板套餐
+     */
+    public function model_meal_edit()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Db::table('model_meal')->update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','获取参数失败');
+        }
+    }
+    /**
+     * lilu
+     * 行业模板-模板套餐
+     */
+    public function model_meal_del()
     {
 
     }
