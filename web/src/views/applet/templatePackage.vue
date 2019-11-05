@@ -2,20 +2,6 @@
   <div>
     <Row>
       <Col span="24">
-        <Card style="margin-bottom: 10px">
-          <Form ref="myForm" :model="tableShow" inline>
-            <FormItem style="margin-bottom: 0">
-              <Input v-model="tableShow.model_name" placeholder="请输入模板名称" />
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
-              <Button type="primary" @click="search">立即搜索</Button>
-            </FormItem>
-          </Form>
-        </Card>
-      </Col>
-    </Row>
-    <Row>
-      <Col span="24">
         <Card>
           <p slot="title" style="height: 32px">
             <Button type="primary" @click="alertAdd" icon="md-add">添加行业模块</Button>
@@ -41,61 +27,26 @@
 
     <Modal v-model="modalSetting.show" width="998" :styles="{top: '30px'}">
       <Form ref="forms" :model="formValidate" :rules="ruleValidate" :label-width="100">
-        <FormItem label="模板分类" prop="model_type">
-          <RadioGroup v-model="formValidate.model_type">
+        <FormItem label="模板分类" prop="model_meal_category">
+          <RadioGroup v-model="formValidate.model_meal_category">
             <Radio label="1">DIY样式</Radio>
             <Radio label="2">固定样式</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem label="行业模板名称" prop="model_name">
-          <Input v-model="formValidate.model_name" placeholder="请输入商品名称" style="width:400px;" />
+        <FormItem label="套餐版本" prop="mode_grade">
+            <Select v-model="formValidate.mode_grade" style="width: 400px;">
+                <Option value="1">普通套餐</Option>
+                <Option value="2">精装套餐</Option>
+                <Option value="3">豪华套餐</Option>
+            </Select>
         </FormItem>
-        <FormItem label="商品主图" prop="img">
-          <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
-            <template v-if="item.status === 'finished'">
-              <img :src="item.url" />
-              <div class="demo-upload-list-cover">
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-              </div>
-            </template>
-            <template v-else>
-              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-            </template>
-          </div>
-          <Upload
-            multiple
-            ref="upload"
-            :show-upload-list="false"
-            :default-file-list="iconList"
-            :on-success="handleSuccess"
-            :format="['jpg','jpeg','png']"
-            :max-size="10240"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload"
-            type="drag"
-            name="image"
-            :action="UploadAction"
-            style="display: inline-block;width:58px;"
-          >
-            <div style="width: 58px;height:58px;line-height: 58px;">
-              <Icon type="ios-camera" size="20"></Icon>
-            </div>
-          </Upload>
+        <FormItem label="套餐价格" prop="model_meal_price">
+          <span style="color: rgb(197,200,206);">年套餐价</span>  <Input v-model="formValidate.model_meal_price" style="width:200px;" />  元
         </FormItem>
-        <FormItem label="模板简介" prop="model_des">
-          <Input
-            v-model="formValidate.model_des"
-            type="textarea"
-            :autosize="{minRows: 4,maxRows: 8}"
-            style="width:500px;"
-          />
-        </FormItem>
-        <FormItem label="状态" prop="model_status">
-          <RadioGroup v-model="formValidate.model_status">
-            <Radio label="1">展示</Radio>
-            <Radio label="2">不展示</Radio>
-          </RadioGroup>
+        <FormItem label="套餐排序" prop="model_rank">
+          <InputNumber :min="1" v-model="formValidate.model_rank" style="width: 400px;"></InputNumber>
+          <!-- <Input type="text"  v-model="formValidate.model_rank" number  style="width: 400px;"></Input> -->
+          <div style="color: rgb(197,200,206);">*填写正整数，从大到小排序</div>
         </FormItem>
       </Form>
       <div slot="footer">
@@ -121,20 +72,6 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          console.log(currentRow);
-          //图片
-          if (currentRow.model_image != "") {
-            var str = currentRow.model_image.split(",");
-            for (let i = 0; i < str.length; i++) {
-              if (str[i] != "") {
-                vm.iconList.push({ name: "", url: str[i] });
-              }
-            }
-            // vm.iconList = [{ name: "", url: res.data.data.model_image }];
-          }
-          vm.$nextTick(() => {
-            vm.uploadList = vm.$refs.upload.fileList;
-          });
           vm.formValidate = currentRow;
           vm.modalSetting.show = true;
         }
@@ -200,7 +137,6 @@ export default {
         currentPage: 1,
         size: 10,
         listCount: 0,
-        model_name: ""
       },
       modalSetting: {
         show: false,
@@ -208,56 +144,31 @@ export default {
         index: 0
       },
       columnsList: [
-        {
-          title: "序号",
-          type: "index",
-          width: 65,
-          align: "center",
-          key: "id"
-        },
+        
         {
           title: "模板分类",
           align: "center",
-          key: "model_type",
+          key: "model_meal_category",
           render: (h, param) => {
               let types;
-              param.row.model_type == "1" ? types = "diy" : types="固定样式";
+              param.row.model_meal_category == "1" ? types = "diy" : types="固定样式";
               return h("div", [types])
           }
         },
         {
-          title: "行业模板名称",
+          title: "等级名称",
           align: "center",
-          key: "model_name"
+          key: "mode_grade"
         },
         {
-          title: "模板展示图",
+          title: "等级价格（年费）",
           align: "center",
-          key: "model_images",
-          width: 150,
-          render: (h, param) => {
-            let model_image = param.row.model_image.split(",")[0];
-            return h("img", {
-              attrs: {
-                src: model_image
-              },
-              style: {
-                width: "100px",
-                height: "90px",
-                padding: "5px 0 0 0"
-              }
-            });
-          }
+          key: "model_meal_price"
         },
         {
-          title: "模板简介",
+          title: "排序",
           align: "center",
-          key: "model_des"
-        },
-        {
-          title: "状态",
-          align: "center",
-          key: "status",
+          key: "model_rank",
           width: 100
         },
         {
@@ -270,33 +181,39 @@ export default {
       ],
       formValidate: {
         id: 0,
-        model_name: "",
-        model_image: "",
-        model_type: "1",
-        model_des: "",
-        model_status: "1"
+        mode_grade: "",
+        model_meal_category: "1",
+        model_meal_price: "",
+        model_rank: "1",
       },
       ruleValidate: {
-        model_name: [
+        mode_grade: [
           {
             required: true,
-            message: "模板名称不能为空",
+            message: "套餐版本不能为空",
             trigger: "blur"
           }
         ],
-        model_des: [
+        model_meal_category: [
           {
             required: true,
-            message: "简介不能为空",
+            message: "模板分类不能为空",
             trigger: "blur"
           }
-        ]
+        ],
+        model_meal_price: [
+          {
+            required: true,
+            message: "套餐价格不能为空",
+            trigger: "blur"
+          }
+        ],
       }
     };
   },
   created() {
     this.init();
-    this.getMade(this.tableShow);
+    this.getMade();
   },
   methods: {
     init() {
@@ -367,17 +284,11 @@ export default {
     cancel() {
       this.formValidate = {
         id: 0,
-        model_name: "",
-        model_image: "",
-        model_type: "",
-        model_des: "",
-        model_status: ""
+        mode_grade: "",
+        model_meal_category: "1",
+        model_meal_price: "",
+        model_rank: "1",
       };
-      this.visible = false;
-      for (var i = 0; i < this.uploadList.length; i++) {
-        this.handleRemove(this.uploadList[i]);
-      }
-      this.iconList = [];
       this.modalSetting.show = false;
     },
     submit() {
@@ -387,9 +298,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (self.formValidate.id == 0) {
-            target = "AppletManage/add";
+            target = "AppletManage/model_meal_add";
           } else {
-            target = "AppletManage/edit";
+            target = "AppletManage/model_meal_edit";
           }
           axios.post(target, self.formValidate).then(function(response) {
             self.modalSetting.loading = false;
@@ -408,13 +319,11 @@ export default {
     getMade(data) {
       let vm = this;
       axios
-        .get("Goods/index", {
+        .get("AppletManage/model_meal", {
           params: {
             page: vm.tableShow.currentPage,
-            size: vm.tableShow.pageSize,
-            goods_name: vm.searchConf.title,
-            category_id: vm.searchConf.category_id,
-            status: vm.searchConf.status
+            size: vm.tableShow.size,
+            listCount: vm.tableShow.listCount,
           }
         })
         .then(function(response) {
@@ -422,8 +331,7 @@ export default {
           if (res.code === 1) {
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
-          } else {
-          }
+          } 
         });
     },
     changePage(page) {
@@ -432,10 +340,6 @@ export default {
     },
     changeSize(size) {
       this.tableShow.size = size;
-      this.getMade(this.tableShow);
-    },
-    search() {
-      this.tableShow.page = 1;
       this.getMade(this.tableShow);
     },
     alertAdd() {
