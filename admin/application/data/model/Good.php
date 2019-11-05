@@ -67,7 +67,7 @@ class Good extends Model
         if(empty($param['size'])){
             $param['size'] = 16;
         }
-        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period';
+        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
 
         $list = Good::with('category') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -139,7 +139,7 @@ class Good extends Model
         if(empty($param['size'])){
             $param['size'] = 16;
         }
-        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period';
+        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
 
         $list = Good::with('category') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
