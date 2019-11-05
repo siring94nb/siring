@@ -407,7 +407,6 @@ export default {
     //列表
     getMade(data) {
       let vm = this;
-      let vm = this;
       axios
         .get("Goods/index", {
           params: {
