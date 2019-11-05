@@ -5,10 +5,10 @@ import qs from 'qs';
 let base_url = 'https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
-const env = process.env.NODE_ENV;
-if (env === 'development') {
-  base_url = 'https://manage.siring.com.cn/'
-}
+// const env = process.env.NODE_ENV;
+// if (env === 'development') {
+//   base_url = 'https://manage.siring.com.cn/'
+// }
 
 
 /**
@@ -100,4 +100,18 @@ export const Payment = params => {
  */
 export const GetTableData = params => {
   return axios.post(`${base_url}api/Evaluate/get_plate_list`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * 软件定制 定制类型
+ */
+export const GetDevlopType = params => {
+  return axios.get(`${base_url}api/Software/soft_type`, { params: params });
+}
+
+/**
+ * 软件定制 商品列表d
+ */
+export const GetGoods = data => {
+  return axios.POST(`${base_url}api/Software/soft_list`, data).then(res => res.data);
 }

@@ -57,6 +57,7 @@ Route::group('api', function () {
         Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
         Route::any('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
         Route::any('get_pay','api/JoinOrder/get_pay'); //支付
+        Route::any('app_notice','api/JoinOrder/app_notice'); //支付回调
     });
 
     //快捷估价
@@ -74,6 +75,13 @@ Route::group('api', function () {
         Route::any('soft_push','api/Software/soft_push'); //推荐商品
         Route::any('soft_order_add','api/Software/soft_order_add'); //软件定制订单
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
+        Route::any('app_notice','api/Software/app_notice'); //支付回调
+    });
+
+    //用户优惠券
+    Route::group('UserDiscount',function(){
+        Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
+        Route::any('user_fund','api/UserDiscount/user_fund'); //用户余额
     });
 
 
