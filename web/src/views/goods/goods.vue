@@ -331,7 +331,16 @@ export default {
         {
           title: "商品分类",
           align: "center",
-          key: "category_id"
+          key: "category_id",
+          render: (h, param) => {
+            for(let i = 0; i < this.sortList.length; i ++ ) {
+              var category_id;
+              if(Number(param.row.category_id) == Number(this.sortList[i].id)) {
+                category_id = this.sortList[i].category_name;
+              }
+            }
+            return h("div", [category_id]);
+          }
         },
         {
           title: "终端版本",
@@ -655,9 +664,6 @@ export default {
             for (let i = 0; i < res.data.list.length; i++) {
               var str = res.data.list[i].goods_images.split(",");
               res.data.list[i].goods_images = str[0];
-              //分类
-              var lid = res.data.list[i].category_id - 1;
-              res.data.list[i].category_id = vm.sortList[lid].category_name;
             }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
