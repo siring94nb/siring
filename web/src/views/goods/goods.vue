@@ -404,8 +404,8 @@ export default {
   },
   created() {
     this.init();
-    this.getList();
     this.getSort();
+    this.getList();
   },
   methods: {
     init() {
@@ -655,6 +655,9 @@ export default {
             for (let i = 0; i < res.data.list.length; i++) {
               var str = res.data.list[i].goods_images.split(",");
               res.data.list[i].goods_images = str[0];
+              //分类
+              var lid = res.data.list[i].category_id - 1;
+              res.data.list[i].category_id = vm.sortList[lid].category_name;
             }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
