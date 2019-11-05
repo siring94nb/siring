@@ -682,6 +682,22 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/AppletManage/change_model_status',
             ['method' => 'post']
         ],
+        'model_meal'   => [                  //模板套餐
+            'admin/AppletManage/model_meal',
+            ['method' => 'get']
+        ],
+        'model_meal_add'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_add',
+            ['method' => 'post']
+        ],
+        'model_meal_edit'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_edit',
+            ['method' => 'post']
+        ],
+        'model_meal_del'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_del',
+            ['method' => 'post']
+        ],
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--推广运营
     Route::group('BusinessSpread', [
