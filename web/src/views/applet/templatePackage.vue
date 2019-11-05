@@ -4,7 +4,7 @@
       <Col span="24">
         <Card>
           <p slot="title" style="height: 32px">
-            <Button type="primary" @click="alertAdd" icon="md-add">添加行业模块</Button>
+            <Button type="primary" @click="alertAdd" icon="md-add">添加套餐</Button>
           </p>
           <div>
             <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
@@ -128,10 +128,6 @@ export default {
   data() {
     return {
       tableData: [],
-      uploadList: [],
-      iconList: [],
-      typeList: [],
-      UploadAction: "",
       tableShow: {
         currentPage: 1,
         size: 10,
@@ -336,11 +332,11 @@ export default {
     },
     changePage(page) {
       this.tableShow.page = page;
-      this.getMade(this.tableShow);
+      this.getMade();
     },
     changeSize(size) {
       this.tableShow.size = size;
-      this.getMade(this.tableShow);
+      this.getMade();
     },
     alertAdd() {
       this.modalSetting.show = true;
