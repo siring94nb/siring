@@ -223,6 +223,7 @@ export default {
       uploadList: [],
       iconList: [],
       typeList: [],
+      sortList: [],
       UploadAction: "",
       tableShow: {
         currentPage: 1,
@@ -251,7 +252,16 @@ export default {
         {
           title: "商品分类",
           align: "center",
-          key: "category_id"
+          key: "category_id",
+          render: (h, param) => {
+            for(let i = 0; i < this.sortList.length; i ++ ) {
+              var category_id;
+              if(Number(param.row.category_id) == Number(this.sortList[i].id)) {
+                category_id = this.sortList[i].category_name;
+              }
+            }
+            return h("div", [category_id]);
+          }
         },
         {
           title: "终端选择",
@@ -324,6 +334,7 @@ export default {
   },
   created() {
     this.init();
+    this.getSort();
     this.getMade(this.tableShow);
   },
   methods: {
@@ -383,6 +394,17 @@ export default {
         }
       });
     },
+    //分类
+    getSort() {
+      let vm = this;
+      axios.post("Goods/category_index", {}).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          vm.sortList = res.data.list;
+        }
+      });
+    },
+    //主列表
     getMade(data) {
       let vm = this;
       axios.post("Goods/made", data).then(function(response) {

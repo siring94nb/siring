@@ -56,7 +56,7 @@
       </div>
     </div>
     <div class="square" @click.self="showLevelMsg">
-      <i class="icon iconfont icon-liuyan"  @click.self="showLevelMsg"/>
+      <i class="icon iconfont icon-liuyan" @click.self="showLevelMsg" />
       <p @click.self="showLevelMsg">留言</p>
       <div class="float-cont" v-show="levelMsgBool">
         <div class="float-title">
@@ -66,7 +66,7 @@
         <button class="send-lm" @click="sendMsg">发送</button>
       </div>
     </div>
-    <div class="square">
+    <div class="square" style="opacity: 0;" :class="{'topBtn': showBtnTop}" @click="backTop">
       <i class="icon el-icon-caret-top" />
     </div>
   </div>
@@ -77,7 +77,11 @@ export default {
   data() {
     return {
       levelMsgBool: false,
-    }
+      showBtnTop: false
+    };
+  },
+  mounted() {
+    window.addEventListener("scroll", this.scrollTop);
   },
   methods: {
     showLevelMsg() {
@@ -85,6 +89,29 @@ export default {
     },
     sendMsg() {
       this.showLevelMsg();
+    },
+    scrollTop() {
+      let scrollTop =
+        window.pageYOffset ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop;
+      this.scrollTop = scrollTop;
+      if (this.scrollTop > 100) {
+        this.showBtnTop = true;
+      } else {
+        this.showBtnTop = false;
+      }
+    },
+    backTop() {
+      const that = this;
+      let timer = setInterval(() => {
+        let ispeed = Math.floor(-that.scrollTop / 5);
+        document.documentElement.scrollTop = document.body.scrollTop =
+          that.scrollTop + ispeed;
+        if (that.scrollTop === 0) {
+          clearInterval(timer);
+        }
+      }, 16);
     }
   }
 };
@@ -173,12 +200,16 @@ export default {
         color: #fff;
       }
     }
-    &:nth-last-child(2) .float-cont{
+    &:nth-last-child(2) .float-cont {
       display: block;
     }
     &:not(:nth-last-child(2)):hover .float-cont {
       display: block;
     }
+  }
+  .topBtn {
+    opacity: 1 !important;
+    transition: opacity .4s;
   }
 }
 </style>

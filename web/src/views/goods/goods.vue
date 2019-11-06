@@ -331,7 +331,16 @@ export default {
         {
           title: "商品分类",
           align: "center",
-          key: "category_id"
+          key: "category_id",
+          render: (h, param) => {
+            for(let i = 0; i < this.sortList.length; i ++ ) {
+              var category_id;
+              if(Number(param.row.category_id) == Number(this.sortList[i].id)) {
+                category_id = this.sortList[i].category_name;
+              }
+            }
+            return h("div", [category_id]);
+          }
         },
         {
           title: "终端版本",
@@ -404,8 +413,8 @@ export default {
   },
   created() {
     this.init();
-    this.getList();
     this.getSort();
+    this.getList();
   },
   methods: {
     init() {

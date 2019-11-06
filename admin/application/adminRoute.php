@@ -664,7 +664,7 @@ Route::group('admin', function () use ($afterBehavior) {
     Route::group('AppletManage', [
         'index' => [                        //行业模板列表
             'admin/AppletManage/index',
-            ['method' => 'get']
+            ['method' => 'post']
         ],
         'add'   => [                        //行业模版添加
             'admin/AppletManage/add',
@@ -680,6 +680,22 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'change_model_status'   => [         //切换模板展示状态
             'admin/AppletManage/change_model_status',
+            ['method' => 'post']
+        ],
+        'model_meal'   => [                  //模板套餐
+            'admin/AppletManage/model_meal',
+            ['method' => 'get']
+        ],
+        'model_meal_add'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_add',
+            ['method' => 'post']
+        ],
+        'model_meal_edit'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_edit',
+            ['method' => 'post']
+        ],
+        'model_meal_del'   => [                  //模板套餐
+            'admin/AppletManage/model_meal_del',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);

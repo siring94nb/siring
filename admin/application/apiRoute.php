@@ -66,6 +66,11 @@ Route::group('api', function () {
         Route::any('get_plate_list','api/Evaluate/get_plate_list'); //获取快捷平台的list
     });
 
+    //Saas行业模板
+    Route::group('AppletManage',function(){
+        Route::any('get_model_list','api/AppletManage/get_model_list'); //获取行业模板的list
+    });
+
     //角色加盟订单
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类

@@ -35,7 +35,7 @@
               <div
                 v-for="(item, index) in sortDataList"
                 :key="index"
-                :class="['sort-type-item', 'asce', {'sort-on':sortCurIndex==index}]"
+                :class="['sort-type-item', sortCurIndex==index && up?'desc':'asce', {'sort-on':sortCurIndex==index}]"
                 @click="sortEvent(index)"
               >
                 {{item}}
@@ -47,7 +47,7 @@
             </div>
             <div class="search-box">
               <el-input v-model="searchCont" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
-              <el-button type="danger">搜索</el-button>
+              <el-button type="danger" @click="getGoods">搜索</el-button>
             </div>
             <div class="collect-order">
               <div>
@@ -63,16 +63,17 @@
         </div>
         <div class="rjdz-goods">
           <div class="goods-list">
-            <div class="goods-item" v-for="(item, index) in 12" :key="index">
+            <div class="goods-item" v-for="item in goodsData.data" :key="item.id">
               <div class="goods-img">
-                <img :src="require('@/assets/images/model_mall.png')" width="260" height="165" alt />
+                <img :src="item.img" width="260" height="165" alt />
               </div>
               <div class="model_mall_info_box">
                 <div class="name_box">
                   <div class="top">
                     <div>
-                      <i class="iconfont icon-hotchunse"></i>
-                      <span class="goods_name">B2C电商</span>
+                      <i class="iconfont icon-hotchunse" v-if="item.sign == 1"></i>
+                      <i class="iconfont icon-cu" v-if="item.sign == 2"></i>
+                      <span class="goods_name">{{ item.goods_name }}</span>
                     </div>
                     <i class="el-icon-star-off el-icon-star-on" @click="favoriteGood"></i>
                   </div>
@@ -86,19 +87,28 @@
                 <div class="time_box">
                   <div class="brand">
                     <i class="iconfont icon-fenleishouye"></i>
-                    <span>区块链电商</span>
+                    <span>{{item.category_title}}</span>
                   </div>
                   <p>
                     <i class="iconfont icon-time"></i>
-                    <span>10天</span>
+                    <span>{{item.period}}天</span>
                   </p>
                 </div>
               </div>
             </div>
+            <div class="goods-item-holder"></div>
+            <div class="goods-item-holder"></div>
+            <div class="goods-item-holder"></div>
           </div>
         </div>
         <div class="pagi-box">
-          <el-pagination background layout="prev, pager, next" :total="1000"></el-pagination>
+          <el-pagination
+            background
+            layout="prev, pager, next"
+            :hide-on-single-page="true"
+            :page-size="12"
+            :total="11"
+          ></el-pagination>
         </div>
       </div>
     </div>
@@ -125,15 +135,17 @@ export default {
   },
   data() {
     return {
-      searchCont: "",
+      searchCont: "", //搜索内容
       typeList: [],
       typeCurrIndex: -1,
       typeListShowMore: false,
       sortCurIndex: 0,
       asceOrDesc: false,
       sortDataList: ["全部排序", "按价格", "按销量"],
-      sortId: 1,
-      typeId: 0
+      sortId: 1, // 商品按照价格、销量升降序ID 1：全部，2：价格降序，3：价格升序，4：销量降序，5：销量升序
+      typeId: 0, // 商品、软件定制类型ID
+      up: false, //控制箭头上下亮
+      goodsData: {},
     };
   },
   mounted() {
@@ -142,6 +154,7 @@ export default {
   methods: {
     init() {
       this.getDevlopType();
+      this.getGoods();
     },
     getDevlopType() {
       GetDevlopType().then(res => {
@@ -158,6 +171,15 @@ export default {
         title: this.searchCont,
         page: 1
       };
+      GetGoods(params).then(res => {
+        let {code, data, msg} = res;
+        // console.log(data)
+        if(code !== 1){
+          this.$message.error(msg)
+        }else{
+          this.goodsData = data;
+        }
+      })
     },
     showMore() {
       this.typeListShowMore = !this.typeListShowMore;
@@ -165,23 +187,27 @@ export default {
     searchType(index, id) {
       this.typeCurrIndex = index;
       this.typeId = id;
+      this.getGoods();
     },
     favoriteGood() {},
     sortEvent(index) {
+      if (this.sortCurIndex === 0 && this.sortCurIndex === index) {
+        return;
+      }
       this.sortCurIndex = index;
-      if (index === 0) {
-        return false;
+      this.up = !this.up;
+      switch (index) {
+        case 0:
+          this.sortId = 1;
+          break;
+        case 1:
+          this.sortId = this.up ? 2 : 3;
+          break;
+        case 2:
+          this.sortId = this.up ? 4 : 5;
+          break;
       }
-      var e = event;
-      if (e.target.className.indexOf("asce") != -1) {
-        console.log(1)
-        e.target.className = "sort-type-item desc sort-on";
-        // console.log(index===1?'2': '3')
-      } 
-      else if (e.target.className.indexOf("desc") != -1) {
-        console.log(2)
-        e.target.className = "sort-type-item asce sort-on";
-      }
+      this.getGoods();
     }
   }
 };
@@ -395,6 +421,13 @@ export default {
                 color: #ff0000;
                 font-size: 10px;
                 vertical-align: middle;
+                margin-right: 3px;
+              }
+              .icon-cu{
+                color: rgb(255,102,0);
+                vertical-align: middle;
+                margin-right: 3px;
+                font-size: 10px;
               }
               .el-icon-star-off {
                 font-size: 20px;
@@ -453,6 +486,12 @@ export default {
               }
             }
           }
+        }
+        .goods-item-holder{
+          width: 260px;
+          height: 0;
+          margin: 0;
+          padding: 0;
         }
       }
     }
