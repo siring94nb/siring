@@ -110,8 +110,8 @@ export const GetDevlopType = params => {
 }
 
 /**
- * 软件定制 商品列表d
+ * 软件定制 商品列表
  */
 export const GetGoods = data => {
-  return axios.POST(`${base_url}api/Software/soft_list`, data).then(res => res.data);
+  return axios.post(`${base_url}api/Software/soft_list`, qs.stringify(data)).then(res => res.data);
 }
