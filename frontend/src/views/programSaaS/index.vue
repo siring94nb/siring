@@ -72,6 +72,7 @@ import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
 import Sjhy from "@/components/sjhy";
 import Jdyh from "@/components/jdyh";
+import { GetTemplate} from "@/api/api";
 export default {
   name: "index",
   components: {
@@ -88,10 +89,29 @@ export default {
         guHui:false,
         guSel:true,
         prog_name:"",
-        arr:""
+        arr:"",
+        typeList:[]
     };
   },
+  mounted() {
+    this.init();
+  },
   methods: {
+      init(){
+        this.getTemplate();
+      },
+      getTemplate(){
+        var model_type,params;
+        if(this.diySel) model_type = 1;
+        else model_type = 2;
+        GetTemplate(params={"model_type": model_type}).then(res => {
+          console.log(res)
+          let { code, data, msg } = res.data;
+          if (code === 1) {
+            this.typeList = data;
+          }
+        });
+      },
       handleAvatarSuccess(res, file) {
         this.imageUrl = URL.createObjectURL(file.raw);
       },
@@ -112,6 +132,7 @@ export default {
         this.diySel=!this.diySel;
         this.guHui=!this.guHui;
         this.guSel=!this.guSel;
+        this.getTemplate();
       }
   },
   computed: {},
