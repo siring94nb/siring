@@ -35,7 +35,7 @@
             <div class="abstract-r">
                 <div class="input-box">
                     <div style="width:120px;display:inline-block;font-size:18px;">小程序名称<span style="color:red;">*</span></div>
-                    <input type="text" placeholder="给即将开通的小程序起个名字吧~！">
+                    <input type="text" placeholder="给即将开通的小程序起个名字吧~！" v-model="prog_name">
                 </div>
                 <div class="upload-img">
                     <div style="width:150px;font-size:18px;">小程序logo<span style="color:red;">*</span></div>
@@ -59,7 +59,7 @@
         <div class="stencil">
             <div class="stencil_chil">
                 <img src="../../assets/images/u2931.png" alt="">
-                <div><input type="radio" name="bar"><span>通用模板</span></div>
+                <div><input type="radio" name="bar" v-model="arr"><span>通用模板</span></div>
             </div>
         </div>
     </div>
@@ -86,7 +86,9 @@ export default {
         diyHui:true,
         diySel:false,
         guHui:false,
-        guSel:true
+        guSel:true,
+        prog_name:"",
+        arr:""
     };
   },
   methods: {
