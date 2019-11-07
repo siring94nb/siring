@@ -81,6 +81,7 @@ class JoinOrder extends Base {
      }
 
     /**
+     * 城市合伙人您订单
      * @return array
      * @throws \think\exception\DbException
      */
