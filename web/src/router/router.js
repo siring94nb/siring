@@ -226,6 +226,140 @@ export const appRouter = [
         ]
     },
     {
+        path: '/Goods',
+        icon: 'md-basket',
+        title: '商品管理',
+        name: 'Goods',
+        component: Main,
+        children: [
+            {
+                path: 'goods',
+                icon: 'ios-pint',
+                name: 'goods',
+                title: '软件/定制',
+                component: () => import('@/views/goods/goodsMain.vue'),
+                children: [
+                    {
+                        path: 'develop_goods',
+                        icon: 'ios-pint',
+                        name: 'develop_goods',
+                        access: 'admin/Goods/index',
+                        title: '软件/开发',
+                        component: () => import('@/views/goods/goods.vue')
+                    },
+                    {
+                        path: 'made_example',
+                        icon: 'ios-pint',
+                        name: 'made_example',
+                        access: 'admin/Goods/made',
+                        title: '定制案例',
+                        component: () => import('@/views/goods/made.vue')
+                    },
+                    {
+                        path: 'evaluate',
+                        icon: 'ios-pint',
+                        name: 'evaluate',
+                        access: 'admin/Goods/evaluate',
+                        title: '快捷估价',
+                        component: () => import('@/views/goods/evaluate.vue'),
+                    },
+                ]
+            },
+            {
+                path: 'applet',
+                icon: 'ios-pint',
+                title: '小程序管理',
+                name: 'applet',
+                component: () => import('@/views/applet/appletMain.vue'),
+                children: [
+                    {
+                        path: 'industryModule',
+                        icon: 'ios-pint',
+                        name: 'industryModule',
+                        access: 'admin/AppletManage/index',
+                        title: '行业模块',
+                        component: () => import('@/views/applet/industryModule.vue'),
+                    },
+                    {
+                        path: 'model_meal',
+                        icon: 'ios-pint',
+                        name: 'model_meal',
+                        access: 'admin/AppletManage/model_meal',
+                        title: '模板套餐',
+                        component: () => import('@/views/applet/templatePackage.vue'),
+                    }
+                ]
+            },
+            {
+                path: 'spread',
+                icon: 'md-basket',
+                title: '推广运营',
+                name: 'spread',
+                component: () => import('@/views/goods/made.vue'),
+                // children: [
+                // {
+                //     path: 'templete',
+                //     icon: 'ios-pint',
+                //     name: 'templete',
+                //     access: 'admin/Goods/templete',
+                //     title: '软件/定制',
+                //     component: () => import('@/views/goods/goods.vue'),
+                // },
+                // {
+                //     path: 'made',
+                //     icon: 'ios-pint',
+                //     name: 'made',
+                //     access: 'admin/Goods/made',
+                //     title: '定制案例',
+                //     component: () => import('@/views/goods/made.vue'),
+                // },
+                // {
+                //     path: 'evaluate',
+                //     icon: 'ios-pint',
+                //     name: 'evaluate',
+                //     access: 'admin/Goods/evaluate',
+                //     title: '快捷估价',
+                //     component: () => import('@/views/goods/evaluate.vue'),
+                // },
+                // ]
+            },
+            {
+                path: 'app',
+                icon: 'md-basket',
+                title: '投融介',
+                name: 'app',
+                component: () => import('@/views/goods/made.vue'),
+                // children: [
+                // {
+                //     path: 'templete',
+                //     icon: 'ios-pint',
+                //     name: 'templete',
+                //     access: 'admin/Goods/templete',
+                //     title: '软件/定制',
+                //     component: () => import('@/views/goods/goods.vue'),
+                // },
+                // {
+                //     path: 'made',
+                //     icon: 'ios-pint',
+                //     name: 'made',
+                //     access: 'admin/Goods/made',
+                //     title: '定制案例',
+                //     component: () => import('@/views/goods/made.vue'),
+                // },
+                // {
+                //     path: 'evaluate',
+                //     icon: 'ios-pint',
+                //     name: 'evaluate',
+                //     access: 'admin/Goods/evaluate',
+                //     title: '快捷估价',
+                //     component: () => import('@/views/goods/evaluate.vue'),
+                // },
+                // ]
+            },
+
+        ]
+    },
+    {
         path: '/Information',
         icon: 'logo-buffer',
         title: '订单管理',
@@ -233,21 +367,39 @@ export const appRouter = [
         component: Main,
         children: [
             {
-                path: 'member_order',
-                icon: 'ios-clipboard',
-                name: 'member_order',
-                access: 'admin/JoinOrder/index',
-                title: '会员订单',
-                component: () => import('@/views/order/index.vue')
+                path: 'order',
+                icon: 'ios-pint',
+                name: 'order',
+                title: '加盟/角色订单',
+                component: () => import('@/views/order/order.vue'),
+                children: [
+                    {
+                        path: 'member_order',
+                        icon: 'ios-clipboard',
+                        name: 'member_order',
+                        access: 'admin/JoinOrder/index',
+                        title: '会员订单',
+                        component: () => import('@/views/order/index.vue')
+                    },
+                    {
+                        path: 'partner_order',
+                        icon: 'ios-clipboard',
+                        name: 'partner_order',
+                        access: 'admin/JoinOrder/partner',
+                        title: '合伙人订单',
+                        component: () => import('@/views/order/partner.vue')
+                    },
+                    {
+                        path: 'merchant_order',
+                        icon: 'ios-clipboard',
+                        name: 'merchant_order',
+                        access: 'admin/JoinOrder/merchant',
+                        title: '分包商订单',
+                        component: () => import('@/views/order/partner.vue')
+                    },
+                ]
             },
-            {
-                path: 'partner_order',
-                icon: 'ios-clipboard',
-                name: 'partner_order',
-                access: 'admin/JoinOrder/partner',
-                title: '合伙人订单',
-                component: () => import('@/views/order/partner.vue')
-            },
+
         ]
     },
     {
@@ -387,140 +539,7 @@ export const appRouter = [
 
         ]
     },
-    {
-        path: '/Goods',
-        icon: 'md-basket',
-        title: '商品管理',
-        name: 'Goods',
-        component: Main,
-        children: [
-            {
-                path: 'goods',
-                icon: 'ios-pint',
-                name: 'goods',
-                title: '软件/定制',
-                component: () => import('@/views/goods/goodsMain.vue'),
-                children: [
-                    {
-                        path: 'develop_goods',
-                        icon: 'ios-pint',
-                        name: 'develop_goods',
-                        access: 'admin/Goods/index',
-                        title: '软件/开发',
-                        component: () => import('@/views/goods/goods.vue')
-                    },
-                    {
-                        path: 'made_example',
-                        icon: 'ios-pint',
-                        name: 'made_example',
-                        access: 'admin/Goods/made',
-                        title: '定制案例',
-                        component: () => import('@/views/goods/made.vue')
-                    },
-                    {
-                        path: 'evaluate',
-                        icon: 'ios-pint',
-                        name: 'evaluate',
-                        access: 'admin/Goods/evaluate',
-                        title: '快捷估价',
-                        component: () => import('@/views/goods/evaluate.vue'),
-                    },
-                ]
-            },
-            {
-                path: 'applet',
-                icon: 'ios-pint',
-                title: '小程序管理',
-                name: 'applet',
-                component: () => import('@/views/applet/appletMain.vue'),
-                children: [
-                    {
-                        path: 'industryModule',
-                        icon: 'ios-pint',
-                        name: 'industryModule',
-                        access: 'admin/AppletManage/index',
-                        title: '行业模块',
-                        component: () => import('@/views/applet/industryModule.vue'),
-                    },
-                    {
-                        path: 'model_meal',
-                        icon: 'ios-pint',
-                        name: 'model_meal',
-                        access: 'admin/AppletManage/model_meal',
-                        title: '模板套餐',
-                        component: () => import('@/views/applet/templatePackage.vue'),
-                    }
-                ]
-            },
-            {
-                path: 'spread',
-                icon: 'md-basket',
-                title: '推广运营',
-                name: 'spread',
-                component: () => import('@/views/goods/made.vue'),
-                // children: [
-                    // {
-                    //     path: 'templete',
-                    //     icon: 'ios-pint',
-                    //     name: 'templete',
-                    //     access: 'admin/Goods/templete',
-                    //     title: '软件/定制',
-                    //     component: () => import('@/views/goods/goods.vue'),
-                    // },
-                    // {
-                    //     path: 'made',
-                    //     icon: 'ios-pint',
-                    //     name: 'made',
-                    //     access: 'admin/Goods/made',
-                    //     title: '定制案例',
-                    //     component: () => import('@/views/goods/made.vue'),
-                    // },
-                    // {
-                    //     path: 'evaluate',
-                    //     icon: 'ios-pint',
-                    //     name: 'evaluate',
-                    //     access: 'admin/Goods/evaluate',
-                    //     title: '快捷估价',
-                    //     component: () => import('@/views/goods/evaluate.vue'),
-                    // },
-                // ]
-            },
-            {
-                path: 'app',
-                icon: 'md-basket',
-                title: '投融介',
-                name: 'app',
-                component: () => import('@/views/goods/made.vue'),
-                // children: [
-                    // {
-                    //     path: 'templete',
-                    //     icon: 'ios-pint',
-                    //     name: 'templete',
-                    //     access: 'admin/Goods/templete',
-                    //     title: '软件/定制',
-                    //     component: () => import('@/views/goods/goods.vue'),
-                    // },
-                    // {
-                    //     path: 'made',
-                    //     icon: 'ios-pint',
-                    //     name: 'made',
-                    //     access: 'admin/Goods/made',
-                    //     title: '定制案例',
-                    //     component: () => import('@/views/goods/made.vue'),
-                    // },
-                    // {
-                    //     path: 'evaluate',
-                    //     icon: 'ios-pint',
-                    //     name: 'evaluate',
-                    //     access: 'admin/Goods/evaluate',
-                    //     title: '快捷估价',
-                    //     component: () => import('@/views/goods/evaluate.vue'),
-                    // },
-                // ]
-            },
 
-        ]
-    },
 
 ];
 

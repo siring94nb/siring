@@ -182,7 +182,10 @@ class Good extends Model
         $res['category_title'] = $res['category']['category_name'];
         $res['reviews_num'] =  Reviews::num($res['id']);//商品评论总数量
         $res['special'] = Special::spec_pro($res['id']);//规格
-
+        //取一张图
+        $att=explode(',',$res["goods_images"]);
+        $res['img'] = $att[0];
+        unset( $res['goods_images']);
         unset($res['category']);
 
         return $res;
