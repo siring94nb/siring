@@ -23,11 +23,7 @@ class AppletManage extends Base {
     {
         $request=Request::instance();
         $postAData=$request->param();
-        $model_list=Templete::all(function($query){
-            $where['model_status']=0;
-            $where['model_type']=$postAData['model_type'];
-            $query->where($where)->field('id,model_name,model_image,model_type,model_des');
-        })->toArray();
+        $model_list=Templete::all()->toArray();
         if($model_list){
             return json(['code'=>1,'msg'=>'获取列表成功','data'=>$model_list]);
         }else{
