@@ -9,8 +9,8 @@
             </el-steps>
         </div>
         <div class="title">
-            <div class="all hui">DIY样式</div>
-            <div class="all selected">固定样式</div>
+            <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
+            <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
             <div style="flex:1"></div>
             <div class="appreciation">增值服务</div>
         </div>
@@ -53,8 +53,14 @@
                 <div class="sub-btn">确定，选择套餐</div>
             </div>
         </div>
-        <div class="">
+        <div class="title-bar">
             选择适合自己的行业模板
+        </div>
+        <div class="stencil">
+            <div class="stencil_chil">
+                <img src="../../assets/images/u2931.png" alt="">
+                <div><input type="radio" name="bar"><span>通用模板</span></div>
+            </div>
         </div>
     </div>
   </div>
@@ -76,7 +82,11 @@ export default {
   },
   data() {
     return {
-        imageUrl:""
+        imageUrl:"",
+        diyHui:true,
+        diySel:false,
+        guHui:false,
+        guSel:true
     };
   },
   methods: {
@@ -94,8 +104,15 @@ export default {
           this.$message.error('上传头像图片大小不能超过 2MB!');
         }
         return isJPG && isLt2M;
+      },
+      diyGb() {
+        this.diyHui=!this.diyHui;
+        this.diySel=!this.diySel;
+        this.guHui=!this.guHui;
+        this.guSel=!this.guSel;
       }
-  }
+  },
+  computed: {},
 };
 </script>
 <style lang="scss" scoped>
@@ -112,8 +129,8 @@ export default {
       border-bottom: 1px solid rgb(26,188,156);
       div{color: #fff;font-size: 18px;text-align: center;}
       .all {width: 150px;line-height: 38px;border-top-left-radius:5px;border-top-right-radius:5px; }
-      .hui{background-color: rgb(174,174,174); margin-bottom: -1px;}
-      .selected {background-color: rgb(26,188,156);}
+      .hui{background-color: rgb(174,174,174); margin-bottom: -1px;cursor: pointer;}
+      .selected {background-color: rgb(26,188,156);cursor: pointer;}
       .appreciation{margin-right: 20px;background-color: rgb(255,153,0);width: 130px;line-height: 36px;height: 36px;font-weight: 700;}
   }
   .abstract{
@@ -136,13 +153,23 @@ export default {
       .abstract-r {
           margin-top: 150px;
           div{width: 100%;}
-          .upload-img{display: flex;margin: 10px 0;}
+          .upload-img{display: flex;margin: 20px 0;}
           .tips{text-align: center;color: rgb(199,203,225);font-size: 14px;}
           .sub-btn{color: #fff;width: 200px;background-color: red;text-align: center;line-height: 38px;margin: 20px 0;float: right;}
           .input-box{
               input{width: 230px;padding: 5px;}
           }
       }
+  }
+  .title-bar {color: rgb(26,188,156);height: 30px;line-height: 30px;background-color: rgb(242,242,242);padding: 8px;font-weight: 700;}
+  .stencil{
+    padding: 20px 0;
+    display: flex;
+    flex-wrap:wrap;
+    .stencil_chil{
+      img{width: 230px;height: 420px;}
+      margin-right: 10px;
+    }
   }
   /*图片上传 */
   .avatar-uploader .el-upload {
