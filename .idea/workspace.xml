@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web/src/views/order/merchant.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/views/order/order.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/adminRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/adminRoute.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/data/model/Good.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Good.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/order/partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/order/partner.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,14 +49,14 @@
         <counts>
           <entry key="dummy" value="1" />
           <entry key="js" value="36" />
-          <entry key="php" value="6100" />
+          <entry key="php" value="6101" />
           <entry key="vue" value="285" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="36" />
-          <entry key="PHP" value="6100" />
+          <entry key="PHP" value="6101" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="Vue.js" value="285" />
         </counts>
@@ -94,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/Good.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="177" column="5" lean-forward="true" selection-start-line="177" selection-start-column="5" selection-end-line="177" selection-end-column="5" />
+            <state relative-caret-position="362">
+              <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
               <folding>
                 <element signature="e#34#50#0#PHP" expanded="true" />
               </folding>
@@ -301,7 +293,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-29" />
     <option name="y" value="-21" />
     <option name="width" value="1936" />
@@ -480,12 +472,12 @@
       <workItem from="1572835489095" duration="3855000" />
       <workItem from="1572937836441" duration="3176000" />
       <workItem from="1573006186911" duration="613000" />
-      <workItem from="1573109055624" duration="5096000" />
+      <workItem from="1573109055624" duration="5610000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174306000" />
+    <option name="totallyTimeSpent" value="174820000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -859,8 +851,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/Good.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="177" column="5" lean-forward="true" selection-start-line="177" selection-start-column="5" selection-end-line="177" selection-end-column="5" />
+        <state relative-caret-position="362">
+          <caret line="178" column="45" selection-start-line="178" selection-start-column="45" selection-end-line="178" selection-end-column="45" />
           <folding>
             <element signature="e#34#50#0#PHP" expanded="true" />
           </folding>
