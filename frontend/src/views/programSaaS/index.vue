@@ -53,16 +53,6 @@
                       <img width="100%" :src="valData.imageUrl" alt="">
                     </el-dialog>
                       <!-- <div class="tips">建议长传144*144大小图片</div> -->
-                    <!-- <el-upload
-                        class="avatar-uploader"
-                        action="https://jsonplaceholder.typicode.com/posts/"
-                        :show-file-list="false"
-                        :on-success="handleAvatarSuccess"
-                        :before-upload="beforeAvatarUpload">
-                        <img v-if="valData.imageUrl" :src="valData.imageUrl" class="avatar">
-                        <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-                        <div class="tips">建议长传144*144大小图片</div>
-                    </el-upload> -->
                 </div>
                 <div class="sub-btn">确定，选择套餐</div>
             </div>
@@ -85,18 +75,12 @@
 <script>
 // @ is an alias to /src
 import Myheader from "@/components/header";
-import Myaside from "@/components/aside";
-import Sjhy from "@/components/sjhy";
-import Jdyh from "@/components/jdyh";
 import { GetTemplate} from "@/api/api";
 import config from '../../../../web/build/config';
 export default {
   name: "index",
   components: {
     Myheader,
-    Myaside,
-    Sjhy,
-    Jdyh
   },
   data() {
     return {

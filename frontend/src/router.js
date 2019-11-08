@@ -70,8 +70,10 @@ export default new Router({
     },
     {
       path: '/programSaaS',
+      // path: '/selectCombo',
       name: 'aboutUs',
-      component: () => import('@/views/programSaaS/index')
+      // component: () => import('@/views/programSaaS/index')
+      component: () => import('@/views/programSaaS/selectCombo')
     }
   ]
 })
