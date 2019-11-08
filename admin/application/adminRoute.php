@@ -707,6 +707,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/AppletManage/model_meal_del',
             ['method' => 'post']
         ],
+        'change_model_rank'   => [                  //行业模板-更改当前行业模板的排序
+            'admin/AppletManage/change_model_rank',
+            ['method' => 'post']
+        ],
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--推广运营
     Route::group('BusinessSpread', [

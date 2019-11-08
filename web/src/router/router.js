@@ -395,7 +395,7 @@ export const appRouter = [
                         name: 'merchant_order',
                         access: 'admin/JoinOrder/merchant',
                         title: '分包商订单',
-                        component: () => import('@/views/order/partner.vue')
+                        component: () => import('@/views/order/merchant.vue')
                     },
                 ]
             },

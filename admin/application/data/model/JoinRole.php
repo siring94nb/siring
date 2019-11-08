@@ -114,31 +114,14 @@ class JoinRole extends Model
         return $res;
     }
 
-    //城市合伙人等级费用
-    public function grade_index()
-    {
-        return JoinRole::where('type',2)->select() ? JoinRole::where('type',2)->field('sort,title,money')->select() : returnJson(0,'数据不存在');
-    }
 
-    //会员套餐费用
-    public function member_index()
-    {
-        return JoinRole::where('type',1)->select() ? JoinRole::where('type',1)->field('id,title,img,money,policy')->select() : returnJson(0,'数据不存在');
-    }
-
-    //分包商套餐费用
-    public function join_index($policy)
-    {
-        return JoinRole::where('policy',$policy)->select() ? JoinRole::where('policy',$policy)->field('id,title,money,policy')->select() : returnJson(0,'数据不存在');
-    }
-
-    //用户套餐折扣信息
-    public function join_user($id)
-    {
-        return self::get(['id'=>$id]) ? self::get(['id'=>$id])->toArray() : returnJson(0,'数据有误');
-    }
-
-    //等级显示
+    /**
+     * 等级显示
+     * @param $grade
+     * @return JoinRole|array|null
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     */
     public static function member_details($grade)
     {
         switch ($grade){
@@ -152,6 +135,19 @@ class JoinRole extends Model
                 return self::get(['id',5]);
                 break;
         }
+    }
+
+    /**
+     * 申请等级
+     * @param $grade
+     * @return array|false|\PDOStatement|string|Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function grade_type($grade)
+    {
+        return self::where('id',$grade)->find();
     }
 
 }

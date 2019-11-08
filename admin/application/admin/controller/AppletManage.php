@@ -29,7 +29,7 @@ class AppletManage extends Base{
             $where['model_name'] = ['like', "%{$model_name}%"];
         }
         $templete= new Templete();
-        $list=$templete->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
+        $list=$templete->where($where)->order('model_rank asc')->paginate($size, false, ['page' => $page])->toArray();
         $listcount=$templete->count();
         if($list){
             return $this->buildSuccess([
@@ -173,6 +173,25 @@ class AppletManage extends Base{
         }else{
             return $this->buildFailed('0','获取参数失败');
         }
+    }
+
+    /**
+     * lilu
+     * 行业模板-更改当前行业模板的排序
+     * param     id     模板的id
+     * param     model_rank     模板的排序   越小越靠前
+     */
+    public function change_model_rank()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Templete::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
+
     }
 
 
