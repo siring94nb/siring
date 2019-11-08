@@ -390,7 +390,7 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
-     //订单审核管理
+     //角色订单审核管理
      Route::group('JoinOrder', [
          //会员订单
         'index' => [
@@ -406,15 +406,20 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/JoinOrder/partner',
             ['method' => 'get']
         ],
-        'add'   => [
-            'admin/JoinOrder/add',
+        'partner_upd'   => [
+            'admin/JoinOrder/partner_upd',
             ['method' => 'post']
         ],
+         //加盟商订单
+         'merchant' => [
+             'admin/JoinOrder/merchant',
+             ['method' => 'get']
+         ],
+         'merchant_upd'   => [
+             'admin/JoinOrder/merchant_upd',
+             ['method' => 'post']
+         ],
 
-        'del'   => [
-            'admin/JoinOrder/del',
-            ['method' => 'post']
-        ]
     ], ['after_behavior' => $afterBehavior]);
 
     //消息管理

@@ -4,7 +4,7 @@ namespace app\admin\controller;
 use think\Request;
 use think\Db;
 use think\Validate;
-
+use app\data\model\JoinOrder as JoinOrderAll;
 class JoinOrder extends Base {
 	/**
      * 会员订单列表
@@ -50,11 +50,11 @@ class JoinOrder extends Base {
 //             $list[$k]['pay_type'] = $v['pay_type'] == 1 ? '支付宝' : ( $v['pay_type'] == 2 ? '微信' : '汇款' );
 //             $list[$k]['status'] = $v['status'] == 1 ? '未审核' : ( $v['status'] == 2 ? '已审核' : '失败' );
 //        }
-     return $this -> buildSuccess([
-       'count'=>$count,
-       'list'=>$list,
-   ]);
-}
+         return $this -> buildSuccess([
+           'count'=>$count,
+           'list'=>$list,
+       ]);
+    }
      /**
      * 订单审核
      * @author fyk
@@ -78,11 +78,27 @@ class JoinOrder extends Base {
             return $res !== false ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1001 , '失败' );
 
         }
-  }
+     }
 
+    /**
+     * 城市合伙人您订单
+     * @return array
+     * @throws \think\exception\DbException
+     */
     public function partner()
     {
-        
+        $request = Request::instance();
+        $param = $request->param();
+        $param['type'] = 2 ;
+
+        $partner = new JoinOrderAll();
+
+        $data = $partner->join_list($param);
+        //pp($data);die;
+        return $this -> buildSuccess( array(
+            'list' => $data['data'],
+            'count' => $data['total'],
+        ) );
     }
 
 }
