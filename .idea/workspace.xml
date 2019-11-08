@@ -3,17 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Software.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Software.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/Good.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Good.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Provinces.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/router/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/order/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/order/index.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/order/merchant.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/order/merchant.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/order/partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/order/partner.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,8 +86,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1049">
-              <caret line="80" column="64" lean-forward="true" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
+            <state relative-caret-position="185">
+              <caret line="65" column="64" selection-start-line="65" selection-start-column="64" selection-end-line="65" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -415,12 +404,12 @@
       <workItem from="1572937836441" duration="3176000" />
       <workItem from="1573006186911" duration="613000" />
       <workItem from="1573109055624" duration="12658000" />
-      <workItem from="1573177478969" duration="6165000" />
+      <workItem from="1573177478969" duration="7974000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="188033000" />
+    <option name="totallyTimeSpent" value="189842000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -432,7 +421,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21428572" />
@@ -769,8 +758,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1049">
-          <caret line="80" column="64" lean-forward="true" selection-start-line="80" selection-start-column="64" selection-end-line="80" selection-end-column="64" />
+        <state relative-caret-position="185">
+          <caret line="65" column="64" selection-start-line="65" selection-start-column="64" selection-end-line="65" selection-end-column="64" />
         </state>
       </provider>
     </entry>
