@@ -9,7 +9,7 @@
     </div>
     <div class="line"></div>
     <div>
-        <img src="" alt="">
+        <img src="../../assets/images/u3009.png" alt="">
         <span>温馨提示：您可以选择年套餐更实惠，您还可以选择月套餐逐步熟练和熟悉后再用年套餐！</span>
     </div>
     <div>
@@ -19,7 +19,7 @@
         </div>
         <div>￥3888/年</div>
         <div>
-            
+
         </div>
     </div>
   </div>
