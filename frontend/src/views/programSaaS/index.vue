@@ -16,39 +16,53 @@
         </div>
         <div class="abstract">
             <div class="abstract-l">
-                <h1>行业模板：餐饮</h1>
+                <h1>行业模板：{{showTemp.model_name}}</h1>
                 <p>模板简介：</p>
-                <span>这是一个针对店铺介绍以及店铺活动点餐还有到店点单的小程序；同城配送、各种美食优惠活动，还有会员专属特权等你领</span>
+                <span>{{showTemp.model_des}}</span>
                 <p>模板分类：</p>
                 <span>微信小程序</span>
-                <div class="appreciate">
+                <!-- <div class="appreciate">
                     <div>样式欣赏:</div>
                     <div style="flex:1;"></div>
                     <div>
                         <img src="../../assets/images/u2945.png" alt="">
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="abstract-img">
-                <img src="../../assets/images/u2931.png" alt="">
+                <img :src="showTemp.model_image" alt="">
             </div>
             <div class="abstract-r">
                 <div class="input-box">
                     <div style="width:120px;display:inline-block;font-size:18px;">小程序名称<span style="color:red;">*</span></div>
-                    <input type="text" placeholder="给即将开通的小程序起个名字吧~！" v-model="prog_name">
+                    <input type="text" placeholder="给即将开通的小程序起个名字吧~！" v-model="valData.prog_name">
                 </div>
                 <div class="upload-img">
                     <div style="width:150px;font-size:18px;">小程序logo<span style="color:red;">*</span></div>
                     <el-upload
+                    name="image"
+                      :action="UploadAction"
+                      list-type="picture-card"
+                      :on-preview="handlePictureCardPreview"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload"
+                      :on-remove="handleRemove">
+                      <i class="el-icon-plus"></i>
+                    </el-upload>
+                    <el-dialog :visible.sync="dialogVisible" size="tiny">
+                      <img width="100%" :src="valData.imageUrl" alt="">
+                    </el-dialog>
+                      <!-- <div class="tips">建议长传144*144大小图片</div> -->
+                    <!-- <el-upload
                         class="avatar-uploader"
                         action="https://jsonplaceholder.typicode.com/posts/"
                         :show-file-list="false"
                         :on-success="handleAvatarSuccess"
                         :before-upload="beforeAvatarUpload">
-                        <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                        <img v-if="valData.imageUrl" :src="valData.imageUrl" class="avatar">
                         <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                         <div class="tips">建议长传144*144大小图片</div>
-                    </el-upload>
+                    </el-upload> -->
                 </div>
                 <div class="sub-btn">确定，选择套餐</div>
             </div>
@@ -57,9 +71,11 @@
             选择适合自己的行业模板
         </div>
         <div class="stencil">
-            <div class="stencil_chil">
-                <img src="../../assets/images/u2931.png" alt="">
-                <div><input type="radio" name="bar" v-model="arr"><span>通用模板</span></div>
+            <div class="stencil_chil" >
+              <el-radio-group v-model="valData.arr" @change="radioChange" v-for="item in tempList" :key="item.id">
+                    <img :src="item.model_image" alt="">
+                    <div><el-radio  :label="item.id">{{item.model_name}}</el-radio></div>
+                </el-radio-group>
             </div>
         </div>
     </div>
@@ -73,6 +89,7 @@ import Myaside from "@/components/aside";
 import Sjhy from "@/components/sjhy";
 import Jdyh from "@/components/jdyh";
 import { GetTemplate} from "@/api/api";
+import config from '../../../../web/build/config';
 export default {
   name: "index",
   components: {
@@ -83,18 +100,26 @@ export default {
   },
   data() {
     return {
-        imageUrl:"",
+      dialogVisible: false,
         diyHui:true,
         diySel:false,
         guHui:false,
         guSel:true,
-        prog_name:"",
-        arr:"",
-        typeList:[]
+        tempList:[],
+        showTemp: {},
+        valData: {
+          arr:"",
+          prog_name:"",
+          imageUrl:""
+        },
+        UploadAction: '',
+        fileList:[],
+        uploadList:[]
     };
   },
   mounted() {
     this.init();
+    this.UploadAction = config.front_url+'file/qn_upload';
   },
   methods: {
       init(){
@@ -105,27 +130,37 @@ export default {
         if(this.diySel) model_type = 1;
         else model_type = 2;
         GetTemplate(params={"model_type": model_type}).then(res => {
-          console.log(res)
           let { code, data, msg } = res.data;
           if (code === 1) {
-            this.typeList = data;
+            this.tempList = data;
+            this.showTemp = data[0];
+            this.valData.arr = data[0].id;
           }
         });
       },
+      radioChange(val){
+        console.log(val)
+      },
+      handleRemove(file, fileList) {
+        this.uploadList.splice(this.uploadList.indexOf(file), 1);
+        this.valData.imageUrl = '';
+      },
       handleAvatarSuccess(res, file) {
-        this.imageUrl = URL.createObjectURL(file.raw);
+        this.uploadList.push(res.data.filePath);
       },
       beforeAvatarUpload(file) {
-        const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 2;
-
-        if (!isJPG) {
-          this.$message.error('上传头像图片只能是 JPG 格式!');
+        const check = this.uploadList.length < 1;
+        if (!check) {
+            this.$notify.error({
+              title: '错误',
+              message:'只能上传一张品牌图'
+              });
         }
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 2MB!');
-        }
-        return isJPG && isLt2M;
+        return check;
+      },
+      handlePictureCardPreview(file) {
+        this.valData.imageUrl = file.url;
+        this.dialogVisible = true;
       },
       diyGb() {
         this.diyHui=!this.diyHui;
@@ -134,8 +169,7 @@ export default {
         this.guSel=!this.guSel;
         this.getTemplate();
       }
-  },
-  computed: {},
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -172,9 +206,12 @@ export default {
                 img{display: inline-block;}
           }
       }
-      .abstract-img{text-align: center;margin: 20px 0;}
+      .abstract-img{
+        text-align: center;margin: 20px 0;
+        img{width: 230px;height: 420px;}
+      }
       .abstract-r {
-          margin-top: 150px;
+          margin-top: 20px;
           div{width: 100%;}
           .upload-img{display: flex;margin: 20px 0;}
           .tips{text-align: center;color: rgb(199,203,225);font-size: 14px;}
@@ -191,7 +228,9 @@ export default {
     flex-wrap:wrap;
     .stencil_chil{
       img{width: 230px;height: 420px;}
-      margin-right: 10px;
+      div{
+       margin: 20px 10px 0 0;
+      }
     }
   }
   /*图片上传 */
