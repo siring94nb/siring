@@ -663,6 +663,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/change_goods_status',  //马甲会员列表
             ['method' => 'post']
         ],
+        'goods_special_del' => [
+            'admin/Goods/goods_special_del',  //软件开发商品规格删除
+            ['method' => 'post']
+        ],
 
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
