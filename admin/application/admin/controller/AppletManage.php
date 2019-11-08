@@ -175,6 +175,25 @@ class AppletManage extends Base{
         }
     }
 
+    /**
+     * lilu
+     * 行业模板-更改当前行业模板的排序
+     * param     id     模板的id
+     * param     model_rank     模板的排序   越小越靠前
+     */
+    public function change_model_rank()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Templete::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
+
+    }
+
 
 
 

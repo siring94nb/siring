@@ -70,6 +70,10 @@ Route::group('api', function () {
     Route::group('AppletManage',function(){
         Route::any('get_model_list','api/AppletManage/get_model_list'); //获取行业模板的list
     });
+    //Saas模板套餐
+    Route::group('ModelMeal',function(){
+        Route::any('model_meal_list','api/ModelMeal/model_meal_list'); //获取模板套餐
+    });
 
     //角色加盟订单
     Route::group('Software',function (){
