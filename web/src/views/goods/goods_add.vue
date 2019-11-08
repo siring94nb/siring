@@ -93,7 +93,7 @@
           <Input v-model="item.cycle_time" placeholder="请输入" style="width: 150px;">
             <span slot="prepend">开发周期</span>
           </Input>
-          <Button @click="tableRemove(index)" type="error" style="margin-left:10px;">删除</Button>
+          <Button @click="tableRemove(index,item.goods_id)" type="error" style="margin-left:10px;">删除</Button>
         </div>
       </FormItem>
 
@@ -273,8 +273,18 @@ export default {
         cycle_time: ""
       });
     },
-    tableRemove(index) {
+    tableRemove(index,goods_id) {
       this.formItem.special.splice(index, 1);
+      if(goods_id){
+        axios.post("Goods/goods_special_del", {"id": goods_id}).then(function(response) {
+            // console.log(response);
+            if (response.data.code === 1) {
+              self.$Message.success(response.data.msg);
+            } else {
+              self.$Message.error(response.data.msg);
+            }
+          });
+      }
     },
 
     submit() {
