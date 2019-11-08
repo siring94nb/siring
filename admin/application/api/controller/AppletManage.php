@@ -40,16 +40,12 @@ class AppletManage extends Base {
     {
         $request=Request::instance();
         $postAData=$request->param();
-        $model_list=Templete::all(function($query){
-            $where['model_meal_category']=$postAData['model_meal_category'];
-            $query->where($where)->field('id,model_name,model_image,model_type')->order('model_rank');
-        })->toArray();
+        $model_list=Templete::all()->toArray();
         if($model_list){
             return json(['code'=>1,'msg'=>'获取模板套餐成功','data'=>$model_list]);
         }else{
             return json(['code'=>0,'msg'=>'获取模板套餐失败']);
         }
-
     }
 
 

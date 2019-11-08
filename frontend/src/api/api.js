@@ -115,3 +115,10 @@ export const GetDevlopType = params => {
 export const GetGoods = data => {
   return axios.post(`${base_url}api/Software/soft_list`, qs.stringify(data)).then(res => res.data);
 }
+
+/**
+ * 小程序SaaS 模板列表
+ */
+export const GetTemplate = params => {
+  return axios.get(`${base_url}api/AppletManage/get_model_list`, { params: params });
+}

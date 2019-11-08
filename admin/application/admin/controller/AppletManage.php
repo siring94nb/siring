@@ -29,7 +29,7 @@ class AppletManage extends Base{
             $where['model_name'] = ['like', "%{$model_name}%"];
         }
         $templete= new Templete();
-        $list=$templete->where($where)->order('id desc')->paginate($size, false, ['page' => $page])->toArray();
+        $list=$templete->where($where)->order('model_rank asc')->paginate($size, false, ['page' => $page])->toArray();
         $listcount=$templete->count();
         if($list){
             return $this->buildSuccess([
