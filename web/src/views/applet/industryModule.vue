@@ -63,7 +63,6 @@
             </template>
           </div>
           <Upload
-            multiple
             ref="upload"
             :show-upload-list="false"
             :default-file-list="iconList"
@@ -121,22 +120,15 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          console.log(currentRow);
+          vm.formValidate = currentRow;
+          vm.modalSetting.show = true;
           //图片
           if (currentRow.model_image != "") {
-            var str = currentRow.model_image.split(",");
-            for (let i = 0; i < str.length; i++) {
-              if (str[i] != "") {
-                vm.iconList.push({ name: "", url: str[i] });
-              }
-            }
-            // vm.iconList = [{ name: "", url: res.data.data.model_image }];
+            vm.iconList = [{ name: "", url: currentRow.model_image }];
           }
           vm.$nextTick(() => {
             vm.uploadList = vm.$refs.upload.fileList;
           });
-          vm.formValidate = currentRow;
-          vm.modalSetting.show = true;
         }
       }
     },
@@ -220,9 +212,11 @@ export default {
           align: "center",
           key: "model_type",
           render: (h, param) => {
-              let types;
-              param.row.model_type == "1" ? types = "diy" : types="固定样式";
-              return h("div", [types])
+            let types;
+            param.row.model_type == "1"
+              ? (types = "diy")
+              : (types = "固定样式");
+            return h("div", [types]);
           }
         },
         {
@@ -243,7 +237,7 @@ export default {
               },
               style: {
                 width: "100px",
-                height: "90px",
+                height: "150px",
                 padding: "5px 0 0 0"
               }
             });
@@ -369,9 +363,9 @@ export default {
         id: 0,
         model_name: "",
         model_image: "",
-        model_type: "",
+        model_type: "1",
         model_des: "",
-        model_status: ""
+        model_status: "1"
       };
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
@@ -427,6 +421,10 @@ export default {
       this.getMade(this.tableShow);
     },
     alertAdd() {
+      //图片
+      this.$nextTick(() => {
+        this.uploadList = this.$refs.upload.fileList;
+      });
       this.modalSetting.show = true;
     },
     // 图片上传
@@ -443,7 +441,7 @@ export default {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formValidate.model_image += res.data.filePath + ",";
+      this.formValidate.model_image = res.data.filePath;
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
@@ -452,9 +450,9 @@ export default {
       this.$Message.error("文件大小不能超过10M");
     },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 5;
+      const check = this.uploadList.length < 1;
       if (!check) {
-        this.$Message.error("只能上传五张品牌图");
+        this.$Message.error("只能上传一张品牌图");
       }
       return check;
     }

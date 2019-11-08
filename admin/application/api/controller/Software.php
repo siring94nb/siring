@@ -87,8 +87,12 @@ class Software extends Base
      */
     public function soft_push()
     {
-        $data = db('good')->orderRaw('rand()')->where(['del_time'=>null])
-            ->field('id,goods_name,goods_images,period')->limit(6)->select();
+        $data = db('good')->orderRaw('rand()')
+            ->alias('a')->join('category b','a.category_id=b.id','left')
+            ->where(['a.del_time'=>null])
+            ->field('a.id,a.goods_name,a.goods_images,a.period,a.category_id,b.category_name')
+            ->limit(6)->select();
+        
         foreach ($data as $k=>$v){
             $att=explode(',',$v["goods_images"]);
             $data[$k]['img'] = $att[0];
