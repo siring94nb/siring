@@ -132,19 +132,11 @@
                         title: '支付时间',
                         align: 'center',
                         key: 'pay_time',
-                        render: ( h , param ) => {
-                            if(param.row.pay_time == null){
-                                return h('div','未支付');
-                            }else{
-                                return h('div',new
-                                Date(param.row.pay_time), 'yyyy-MM-dd hh:mm');
-                            }
-                        }
                     },
                     {
                         title: '申请城市',
                         align: 'center',
-                        key: 'grade'
+                        key: 'city_title'
                     },
                     {
                         title: '状态',

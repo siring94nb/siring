@@ -1,10 +1,12 @@
 <?php
 
 namespace app\admin\controller;
+use app\data\model\Provinces;
 use think\Request;
 use think\Db;
 use think\Validate;
 use app\data\model\JoinOrder as JoinOrderAll;
+use app\data\model\JoinRole;
 class JoinOrder extends Base {
 	/**
      * 会员订单列表
@@ -12,48 +14,24 @@ class JoinOrder extends Base {
      * @time 2019/10/09
      */
     public function index(){
-     $request = Request::instance();
-     $param = $request->param();
+        $request = Request::instance();
+        $param = $request->param();
+        $param['type'] = 1 ;
 
-     if(!empty($param['nickname'])){
-          $where['b.nickname'] = ['like','%'.$param['nickname'].'%'];
-     }
-     if(!empty($param['start_time'])){
-          $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
-          $where['a.created_at'] = ['gt',$param['start_time']];
-     }
-     if(!empty($param['end_time'])){
-          $param['end_time'] = date('Y-m-d H:i:s',strtotime($param['end_time']));
-          $where['a.created_at'] = ['lt',$param['end_time']];
-     }
-     if(!empty($param['start_time']) && !empty($param['end_time'])){
-          $where['a.created_at'] = ['between',[$param['start_time'],$param['end_time']]];
-     }
-     if(empty($param['page'])){
-          $param['page'] = 1;
-     }
-     if(empty($param['size'])){
-          $param['size'] = 10;
-     }
-     //条件
-     $where['role_type'] = 1;
-     $field = 'a.id,a.role_type,a.user_id,a.pay_type,a.created_at,
-     a.no,a.money,a.payment,a.status,a.grade,a.updated_at,b.phone';
-     $order = 'a.id desc';
-     $count = Db::table('join_order')->alias('a')->join('user b','a.user_id=b.id','inner')
-     ->where($where)->count();
+        $partner = new JoinOrderAll();
 
-     $list = Db::table('join_order')->alias('a')->join('user b','a.user_id=b.id','inner')
-     ->where($where)->field($field)->order($order)->page($param['page'],$param['size'])->select();//join查询表的数据
+        $data = $partner->join_list($param);
+        foreach ($data['data'] as $k => $v){
+            $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
+            //查询等级
+            $grade_name = JoinRole::grade_type($v['grade']);
 
-//        foreach ( $list as $k => $v ){
-//             $list[$k]['pay_type'] = $v['pay_type'] == 1 ? '支付宝' : ( $v['pay_type'] == 2 ? '微信' : '汇款' );
-//             $list[$k]['status'] = $v['status'] == 1 ? '未审核' : ( $v['status'] == 2 ? '已审核' : '失败' );
-//        }
-         return $this -> buildSuccess([
-           'count'=>$count,
-           'list'=>$list,
-       ]);
+            $data['data'][$k]['grade_title'] = $grade_name['title'];
+        }
+        return $this -> buildSuccess( array(
+            'list' => $data['data'],
+            'count' => $data['total'],
+        ) );
     }
      /**
      * 订单审核
@@ -81,7 +59,7 @@ class JoinOrder extends Base {
      }
 
     /**
-     * 城市合伙人您订单
+     * 城市合伙人订单
      * @return array
      * @throws \think\exception\DbException
      */
@@ -94,6 +72,40 @@ class JoinOrder extends Base {
         $partner = new JoinOrderAll();
 
         $data = $partner->join_list($param);
+        foreach ($data['data'] as $k => $v){
+            $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
+            //查询城市
+            $city_name = Provinces::province_query($v['grade']);
+            $data['data'][$k]['city_title'] = $city_name['name'];
+        }
+        return $this -> buildSuccess( array(
+            'list' => $data['data'],
+            'count' => $data['total'],
+        ) );
+    }
+
+
+    /**
+     * 分包商订单
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function merchant()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $param['type'] = 3 ;
+
+        $partner = new JoinOrderAll();
+
+        $data = $partner->join_list($param);
+        foreach ($data['data'] as $k => $v){
+            $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
+            //查询技能
+            $dev = json_decode($v['dev'],true);
+
+            $data['data'][$k]['dev_name'] = '技能:'.$dev['skill'].'/'.'语言:'.$dev['language'];
+        }
         //pp($data);die;
         return $this -> buildSuccess( array(
             'list' => $data['data'],

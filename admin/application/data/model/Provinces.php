@@ -109,4 +109,10 @@ class Provinces extends Model
 
         return $res;
     }
+
+    //查询城市名
+    public static function province_query($cid)
+    {
+        return self::get(['id'=>$cid]);
+    }
 }

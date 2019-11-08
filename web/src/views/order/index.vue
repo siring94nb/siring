@@ -1,5 +1,5 @@
 <style lang="less" scoped>
-   
+
 </style>
 <template>
     <div>
@@ -134,7 +134,7 @@
                   {
                       title: '申请等级',
                       align: 'center',
-                      key: 'grade'
+                      key: 'grade_title'
                   },
                   {
                       title: '状态',
@@ -252,7 +252,7 @@
                 // }
                 // this.iconList = [];
                 this.getList();
-                
+
             },
             changePage (page) {
                 this.tableShow.currentPage = page;
