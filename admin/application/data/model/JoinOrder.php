@@ -83,6 +83,20 @@ class JoinOrder extends Model
 
         $where = [];
         $where['role_type'] = $param['type'];
+        if(!empty($param['phone'])){
+            $where['b.phone'] = ['like','%'.$param['phone'].'%'];
+        }
+        if(!empty($param['start_time'])){
+            $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
+            $where['a.created_at'] = ['gt',$param['start_time']];
+        }
+        if(!empty($param['end_time'])){
+            $param['end_time'] = date('Y-m-d H:i:s',strtotime($param['end_time']));
+            $where['a.created_at'] = ['lt',$param['end_time']];
+        }
+        if(!empty($param['start_time']) && !empty($param['end_time'])){
+            $where['a.created_at'] = ['between',[$param['start_time'],$param['end_time']]];
+        }
         if(empty($param['page'])){
             $param['page'] = 1;
         }
@@ -90,7 +104,7 @@ class JoinOrder extends Model
             $param['size'] = 10;
         }
         $field = 'a.id,a.role_type,a.user_id,a.pay_type,a.pay_time,a.created_at,
-        a.no,a.money,a.payment,a.status,a.grade,a.updated_at,b.phone';
+        a.no,a.money,a.payment,a.status,a.grade,a.dev,a.updated_at,b.phone';
         $order = 'a.id desc';
 
         $list =  JoinOrder::where( $where )

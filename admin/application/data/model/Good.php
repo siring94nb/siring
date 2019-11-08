@@ -201,13 +201,14 @@ class Good extends Model
      */
     public function good_review($goods_id)
     {
-        $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
+        $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select()->toArray();
         foreach ($res as $k=>$v){
             //个人信息
             $user = new User();
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
             $res[$k]['img'] = $user_all['img'];
+            pp($res);die;
             //会员等级信息
             $join_role = JoinRole::member_details($user_all['grade']);
             $res[$k]['ico'] = $join_role['img'];

@@ -83,7 +83,8 @@ class Software extends Base
 
     /**
      * 推荐商品
-     * @return $data
+     * @author fyk
+     * @return \think\Response
      */
     public function soft_push()
     {
@@ -92,12 +93,22 @@ class Software extends Base
             ->where(['a.del_time'=>null])
             ->field('a.id,a.goods_name,a.goods_images,a.period,a.category_id,b.category_name')
             ->limit(6)->select();
-        
+
         foreach ($data as $k=>$v){
             $att=explode(',',$v["goods_images"]);
             $data[$k]['img'] = $att[0];
             unset($data[$k]['goods_images']);
         }
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     * 商品演示
+     * @param $goods_id
+     */
+    public function soft_demo($goods_id)
+    {
+        $data = Good::where('id',$goods_id)->value('goods_detail');
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 

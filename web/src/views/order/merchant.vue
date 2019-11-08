@@ -134,7 +134,7 @@
                     {
                         title: '申请技能',
                         align: 'center',
-                        key: 'grade'
+                        key: 'dev_name'
                     },
                     {
                         title: '状态',
