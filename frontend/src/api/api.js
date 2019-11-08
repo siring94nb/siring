@@ -122,3 +122,10 @@ export const GetGoods = data => {
 export const GetTemplate = params => {
   return axios.get(`${base_url}api/AppletManage/get_model_list`, { params: params });
 }
+
+/**
+ * 小程序SaaS 模板列表
+ */
+export const GetTempList = data => {
+  return axios.post(`${base_url}api/AppletManage/model_meal_list`, qs.stringify(data)).then(res => res.data);
+}
