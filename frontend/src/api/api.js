@@ -127,5 +127,5 @@ export const GetTemplate = params => {
  * 小程序SaaS 模板列表
  */
 export const GetTempList = data => {
-  return axios.post(`${base_url}api/AppletManage/model_meal_list`, qs.stringify(data)).then(res => res.data);
+  return axios.post(`${base_url}api/ModelMeal/model_meal_list`, qs.stringify(data)).then(res => res.data);
 }
