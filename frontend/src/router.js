@@ -64,6 +64,16 @@ export default new Router({
       component: () => import('@/views/goods/goods')
     },
     {
+      path: '/goods-detail/:id',
+      name: 'goods-detail',
+      component: () => import('@/views/goods/goods-detail')
+    },
+    {
+      path: '/demonstration/:id',
+      name: 'demonstration',
+      component: () => import('@/views/goods/demonstration')
+    },
+    {
       path: '/aboutUs',
       name: 'aboutUs',
       component: () => import('@/views/aboutUs')

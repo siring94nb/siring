@@ -64,13 +64,17 @@
         <div class="rjdz-goods">
           <div class="goods-list">
             <div class="goods-item" v-for="item in goodsData.data" :key="item.id">
-              <div class="goods-img">
+              <router-link
+                :to="{name: 'goods-detail', params: {id: item.id}}"
+                tag="div"
+                class="goods-img"
+              >
                 <img :src="item.img" width="260" height="165" alt />
-              </div>
+              </router-link>
               <div class="model_mall_info_box">
                 <div class="name_box">
                   <div class="top">
-                    <div>
+                    <div class="single-dot">
                       <i class="iconfont icon-hotchunse" v-if="item.sign == 1"></i>
                       <i class="iconfont icon-cu" v-if="item.sign == 2"></i>
                       <span class="goods_name">{{ item.goods_name }}</span>
@@ -80,7 +84,10 @@
                   <div class="bottom">
                     <span class="desc_span">APP|小程序|公众号|H5</span>
                     <span class="ljgm">
-                      <a href="javascript:;">&gt;&gt;立即购买</a>
+                      <router-link
+                        :to="{name: 'goods-detail', params: {id: item.id}}"
+                        href="javascript:;"
+                      >&gt;&gt;立即购买</router-link>
                     </span>
                   </div>
                 </div>
@@ -90,7 +97,7 @@
                     <span>{{item.category_title}}</span>
                   </div>
                   <p>
-                    <i class="iconfont icon-time"></i>
+                    <i class="el-icon-time"></i>
                     <span>{{item.period}}天</span>
                   </p>
                 </div>
@@ -112,7 +119,7 @@
         </div>
       </div>
     </div>
-    <sjhy />
+    <jsjm />
     <jdyh />
     <myfooter />
   </div>
@@ -122,7 +129,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
-import Sjhy from "@/components/sjhy";
+import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import { GetDevlopType, GetGoods } from "@/api/api";
 export default {
@@ -130,7 +137,7 @@ export default {
     Myheader,
     Myfooter,
     Myaside,
-    Sjhy,
+    Jsjm,
     Jdyh
   },
   data() {
@@ -145,7 +152,7 @@ export default {
       sortId: 1, // 商品按照价格、销量升降序ID 1：全部，2：价格降序，3：价格升序，4：销量降序，5：销量升序
       typeId: 0, // 商品、软件定制类型ID
       up: false, //控制箭头上下亮
-      goodsData: {},
+      goodsData: {}
     };
   },
   mounted() {
@@ -172,14 +179,14 @@ export default {
         page: 1
       };
       GetGoods(params).then(res => {
-        let {code, data, msg} = res;
+        let { code, data, msg } = res;
         // console.log(data)
-        if(code !== 1){
-          this.$message.error(msg)
-        }else{
+        if (code !== 1) {
+          this.$message.error(msg);
+        } else {
           this.goodsData = data;
         }
-      })
+      });
     },
     showMore() {
       this.typeListShowMore = !this.typeListShowMore;
@@ -395,6 +402,7 @@ export default {
           margin-bottom: 40px;
           .goods-img {
             overflow: hidden;
+            cursor: pointer;
             &:hover img {
               transform: scale(1.2);
             }
@@ -417,14 +425,17 @@ export default {
               align-items: center;
             }
             .top {
+              .single-dot{
+                max-width: 210px;
+              }
               .icon-hotchunse {
                 color: #ff0000;
                 font-size: 10px;
                 vertical-align: middle;
                 margin-right: 3px;
               }
-              .icon-cu{
-                color: rgb(255,102,0);
+              .icon-cu {
+                color: rgb(255, 102, 0);
                 vertical-align: middle;
                 margin-right: 3px;
                 font-size: 10px;
@@ -487,7 +498,7 @@ export default {
             }
           }
         }
-        .goods-item-holder{
+        .goods-item-holder {
           width: 260px;
           height: 0;
           margin: 0;
