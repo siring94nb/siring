@@ -170,7 +170,7 @@ export default {
       GetTableData({
         id: id
       }).then(res => {
-        let { code, data, msg } = data;
+        let { code, data, msg } = res;
         if (code === 1) {
           data.plate_form.forEach(v => {
             switch (v.plate_from_id) {

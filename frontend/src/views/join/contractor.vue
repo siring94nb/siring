@@ -135,7 +135,6 @@ export default {
 </script>
 <style scoped lang='scss'>
 .join {
-  margin-top: 100px;
   .join-cont {
     width: 1200px;
     margin: 0 auto 80px;

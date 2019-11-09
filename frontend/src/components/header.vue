@@ -88,7 +88,7 @@
             <p class="en-name">Investment</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <a class="router-link-active" href="javascript:void(0);">
             <el-dropdown @command="handleCommand" placement="bottom">
               <span class="el-dropdown-link">
                 <i class="icon iconfont icon-dailizizhizizhiqiyezizhi"></i>
@@ -107,7 +107,7 @@
                 </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-          </router-link>
+          </a>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/aboutUs">
             <i class="icon iconfont icon-guanyuwomen"></i>

@@ -15,7 +15,7 @@
 // @ is an alias to /src
 import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
-import Sjhy from "@/components/sjhy";
+import Sjhy from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
@@ -37,7 +37,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .index {
-    margin-top: 100px;
     .title-top {
         text-align: center;
     }
