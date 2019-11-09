@@ -86,7 +86,6 @@
 // @ is an alias to /src
 import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
-import Sjhy from "@/components/sjhy";
 import Jdyh from "@/components/jdyh";
 import { GetTemplate} from "@/api/api";
 import config from '../../../../web/build/config';
@@ -95,7 +94,6 @@ export default {
   components: {
     Myheader,
     Myaside,
-    Sjhy,
     Jdyh
   },
   data() {

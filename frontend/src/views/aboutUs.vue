@@ -15,7 +15,7 @@
 // @ is an alias to /src
 import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
-import Sjhy from "@/components/jsjm";
+import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
@@ -24,7 +24,7 @@ export default {
   components: {
     Myheader,
     Myaside,
-    Sjhy,
+    Jsjm,
     Jdyh,
     Myfooter,
     Myswiper

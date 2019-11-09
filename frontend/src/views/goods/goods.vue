@@ -119,7 +119,7 @@
         </div>
       </div>
     </div>
-    <sjhy />
+    <jsjm />
     <jdyh />
     <myfooter />
   </div>
@@ -129,7 +129,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
-import Sjhy from "@/components/jsjm";
+import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import { GetDevlopType, GetGoods } from "@/api/api";
 export default {
@@ -137,7 +137,7 @@ export default {
     Myheader,
     Myfooter,
     Myaside,
-    Sjhy,
+    Jsjm,
     Jdyh
   },
   data() {
