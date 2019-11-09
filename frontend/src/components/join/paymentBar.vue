@@ -17,13 +17,7 @@
           </p>
         </div>
         <div class="symbol">×</div>
-        <el-input-number
-          v-model="num"
-          controls-position="right"
-          @change="numChange"
-          :min="1"
-          :max="10"
-        ></el-input-number>
+        <el-input-number v-model="num" controls-position="right" :min="1" :max="10"></el-input-number>
         <div class="symbol">=</div>
         <div>
           <div class="bgw">￥{{total}}</div>
@@ -34,8 +28,8 @@
 
     <!-- 选择支付方式 -->
     <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="500px" center>
-      <el-form ref="payway" :model="payway" :rules="wayRule" label-width="80px">
-        <el-form-item label="支付方式" prop="way">
+      <el-form ref="payway" :model="payway" label-width="80px">
+        <el-form-item label="支付方式">
           <el-radio-group v-model="payway.way" @change="selectway">
             <el-radio :label="1">微信</el-radio>
             <el-radio :label="2">支付宝</el-radio>
@@ -45,22 +39,21 @@
       <div class="code-box">
         <img :src="payqrcode" alt />
       </div>
-
       <span slot="footer" class="dialog-footer">
-        <el-button @click="showPayWayFlag = false">取 消</el-button>
-        <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
+        <el-button @click="$emit('hide-dialog')">取 消</el-button>
+        <el-button type="primary" @click="$emit('hide-dialog')">确 定</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { Payment } from "@/api/api";
 export default {
-  props: ["showPaymentFlag", "price", "percent"],
+  props: ["showPaymentFlag", "showPayWayFlag", "price", "percent", "pay"],
   data() {
     return {
       num: 1,
-      showPayWayFlag: false,
       payway: {
         way: 1
       },
@@ -73,7 +66,8 @@ export default {
           }
         ]
       },
-      payqrcode: ""
+      payqrcode: "",
+      orderid: 0
     };
   },
   computed: {
@@ -82,41 +76,19 @@ export default {
     }
   },
   methods: {
-    numChange(value) {},
-    pay() {
-      this.$refs["ruleForm"].validate(valid => {
-        if (valid) {
-          this.showPayWayFlag = true;
-          CityOrderAdd({
-            grade: this.ruleForm.cityVal,
-            con: this.ruleForm.textarea,
-            num: this.num,
-            price: this.total,
-            user_id: 1
-          }).then(res => {
-            let { code, data, msg } = res;
-            if (code === 1) {
-              this.orderId = data;
-              this.selectway();
-            }
-          });
+    selectway() {
+      Payment({
+        type: this.payway.way,
+        order_id: this.orderid
+      }).then(res => {
+        let { code, imgData, msg } = res;
+        if (code === 1) {
+          this.payqrcode = imgData;
         }
       });
     },
-    selectway() {
-      this.$refs["payway"].validate(valid => {
-        if (valid) {
-          Payment({
-            type: this.payway.way,
-            order_id: this.orderId
-          }).then(res => {
-            let { code, imgData, msg } = res;
-            if (code === 1) {
-              this.payqrcode = imgData;
-            }
-          });
-        }
-      });
+    getOrderId(orderid) {
+      this.orderid = orderid;
     }
   }
 };
@@ -132,14 +104,16 @@ export default {
   height: 80px;
   background-color: rgb(204, 235, 248);
   &.show {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .payment-inner {
     float: right;
     display: flex;
     align-items: baseline;
-    margin-top: 10px;
-    margin-right: 40px;
+    // margin-top: 10px;
+    // margin-right: 40px;
     .bgw {
       background-color: #ffffff;
       padding: 10px 30px;
