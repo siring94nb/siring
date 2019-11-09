@@ -26,40 +26,49 @@
         </div>
         <div class="rjdz-goods">
           <div class="goods-list">
-            <div class="goods-item" v-for="(item, index) in 8" :key="index">
+            <div class="goods-item" v-for="(item, index) in goodsList.data" :key="index">
               <div class="goods-img">
-                <img :src="require('@/assets/images/model_mall.png')" width="260" height="165" alt />
+                <router-link
+                  :to="{name: 'goods-detail', params: {id: item.id}}"
+                  tag="div"
+                  class="goods-img"
+                >
+                  <img :src="item.img" width="260" height="165" alt />
+                </router-link>
               </div>
               <div class="model_mall_info_box">
                 <div class="name_box">
                   <div class="top">
                     <div>
-                      <i class="iconfont icon-hotchunse"></i>
-                      <span class="goods_name">B2C电商</span>
+                      <!-- <i class="iconfont icon-hotchunse"></i> -->
+                      <span class="goods_name single-dot">{{item.goods_name}}</span>
                     </div>
                     <a href="javascript:void(0);" class="star-off"></a>
                   </div>
                   <div class="bottom">
                     <span class="desc_span">APP|小程序|公众号|H5</span>
                     <span class="ljgm">
-                      <a href="javascript:;">&gt;&gt;立即购买</a>
+                      <router-link
+                        :to="{name: 'goods-detail', params: {id: item.id}}"
+                        href="javascript:;"
+                      >&gt;&gt;立即购买</router-link>
                     </span>
                   </div>
                 </div>
                 <div class="time_box">
                   <div class="brand">
                     <i class="iconfont icon-fenleishouye"></i>
-                    <span>区块链电商</span>
+                    <span>{{item.category_title}}</span>
                   </div>
                   <p>
-                    <i class="iconfont icon-time"></i>
-                    <span>10天</span>
+                    <i class="el-icon-time"></i>
+                    <span>{{item.period}}天</span>
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <router-link to="/" class="more">更多</router-link>
+          <router-link to="/goods" class="more">更多</router-link>
         </div>
       </div>
       <div class="xcx">
@@ -172,7 +181,7 @@
           </div>
         </div>
       </div>
-      <sjhy />
+      <jsjm />
       <jdyh />
     </div>
     <myfooter />
@@ -183,16 +192,17 @@
 // @ is an alias to /src
 import Myheader from "@/components/header";
 import Myaside from "@/components/aside";
-import Sjhy from '@/components/sjhy';
-import Jdyh from '@/components/jdyh';
-import Myfooter from '@/components/footer';
-import Myswiper from '@/components/mySwiper'
+import Jsjm from "@/components/jsjm";
+import Jdyh from "@/components/jdyh";
+import Myfooter from "@/components/footer";
+import Myswiper from "@/components/mySwiper";
+import { GetGoods } from "@/api/api";
 export default {
   name: "index",
   components: {
     Myheader,
     Myaside,
-    Sjhy,
+    Jsjm,
     Jdyh,
     Myfooter,
     Myswiper
@@ -355,8 +365,12 @@ export default {
             "利用健身小程序向会员推送私人教练或团操课程<br />通过智能化的手段服务健身市场，全方位应对健身行业问题"
         }
       ],
-      mgtop: 0
+      mgtop: 0,
+      goodsList: []
     };
+  },
+  mounted() {
+    this.getGoods();
   },
   methods: {
     xcxnavClick(index) {
@@ -364,12 +378,25 @@ export default {
       this.mgtop = -(index * 325);
       console.log(this.mgtop);
     },
+    getGoods() {
+      let params = {
+        type: 1
+      };
+      GetGoods(params).then(res => {
+        let { code, data, msg } = res;
+        console.log(data);
+        if (code !== 1) {
+          this.$message.error(msg);
+        } else {
+          this.goodsList = data;
+        }
+      });
+    }
   }
 };
 </script>
 <style lang="scss" scoped>
 .index {
-  margin-top: 100px;
   .about {
     min-width: 1200px;
     .about-cont {

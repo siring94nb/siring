@@ -2,13 +2,13 @@ import axios from 'axios'
 import qs from 'qs';
 
 // https://manage.siring.com.cn/
-let base_url = 'https://manage.siring.com.cn/';
+let base_url = '/api/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
-// const env = process.env.NODE_ENV;
-// if (env === 'development') {
-//   base_url = 'https://manage.siring.com.cn/'
-// }
+const env = process.env.NODE_ENV;
+if (env === 'production') {
+  base_url = '/'
+}
 
 
 /**
@@ -99,7 +99,7 @@ export const Payment = params => {
  * 快捷估价 表格数据
  */
 export const GetTableData = params => {
-  return axios.post(`${base_url}api/Evaluate/get_plate_list`, qs.stringify(params)).then(res => res.data);
+  return axios.post(`${base_url}api/Evaluate/get_plate_list`, params).then(res => res.data);
 }
 
 /**
@@ -112,8 +112,36 @@ export const GetDevlopType = params => {
 /**
  * 软件定制 商品列表
  */
-export const GetGoods = data => {
-  return axios.post(`${base_url}api/Software/soft_list`, qs.stringify(data)).then(res => res.data);
+export const GetGoods = params => {
+  return axios.post(`${base_url}api/Software/soft_list`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * 软件定制 商品详情
+ */
+export const GetGoodsDetail = params => {
+  return axios.post(`${base_url}api/Software/soft_detail`, params).then(res => res.data);
+}
+
+/**
+ * 软件定制 商品推荐
+ */
+export const GetRecommend = params => {
+  return axios.get(`${base_url}api/Software/soft_push`, { params: params });
+}
+
+/**
+ * 软件定制 评论
+ */
+export const GetComment = params => {
+  return axios.post(`${base_url}api/Software/soft_reviews`, params).then(res => res.data);
+}
+
+/**
+ * 软件定制 商品演示
+ */
+export const GetDemonstration = params => {
+  return axios.post(`${base_url}api/Software/soft_demo`, params).then(res => res.data);
 }
 
 /**
