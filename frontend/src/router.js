@@ -77,6 +77,11 @@ export default new Router({
       path: '/aboutUs',
       name: 'aboutUs',
       component: () => import('@/views/aboutUs')
+    },
+    {
+      path: '/programSaaS',
+      name: 'aboutUs',
+      component: () => import('@/views/programSaaS/index')
     }
   ]
 })

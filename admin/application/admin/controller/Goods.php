@@ -32,9 +32,6 @@ class Goods extends Base{
         $goods_name = $this->request->get('goods_name', '');
         $category_id = $this->request->get('category_id', '');
         $goods_recommend_staus = $this->request->get('goods_recommend_staus', '');
-        // if ($category_id !== '-1') {
-        //     $where['category_id'] = $category_id;
-        // }
         if ($goods_recommend_staus !== '-1') {
             $where['goods_recommend_staus'] = $goods_recommend_staus;
         }
@@ -44,7 +41,7 @@ class Goods extends Base{
         $list=Good::getGoodsList($where);
         foreach($list as $k =>$v){
             //获取当前id对应的规格
-            $list[$k]['special']=Special::get($v['id']);
+            $list[$k]['special']=Special::getSpecialInfo($v['id']);
         }
         $listInfo = $list;
         return $this->buildSuccess([
@@ -99,7 +96,13 @@ class Goods extends Base{
         $postData['data']['original_price']=$postData['special'][0]['price']; 
         $goods_info=Good::update($postData['data']);
         foreach($postData['special'] as $k =>$v){
-            $goods_info2=Special::update($postData['special'][$k]);
+            if(array_key_exists('id',$v)){
+                $goods_info2=Special::update($postData['special'][$k]);
+            }else{
+                $postData['special'][$k]['create_time']=time();
+                $postData['special'][$k]['goods_id']=$postData['data']['id'];
+                $goods_info2=Special::insert($postData['special'][$k]);
+            }
         }
         // $goods_info['special']=Special::getSpecialInfo($id);
         if($goods_info !==false){
@@ -500,6 +503,30 @@ class Goods extends Base{
             return $this->buildSuccess([]);
         }else{
             return $this->buildFailed('0','缺少必要的参数');
+        }
+    }
+
+    /**
+     * lilu
+     * 软件开发商品规格删除
+     * param     id    规格表id
+     */
+    public function goods_special_del()
+    {
+        $request=Request::instance();
+        $dataPost=$request->param();
+        if($dataPost['id'])
+        {
+            //删除商品的评论
+            $special=new Special();
+            $comment_list=$special->update(['id'=>$dataPost['id'],'del_time'=>time()]);
+            if($comment_list){
+                return $this->buildSuccess([]);
+            }else{
+                return $this->buildFailed('0','删除失败');
+            }
+        }else{
+            return $this->buildFailed('0','缺少必须参数');
         }
     }
 

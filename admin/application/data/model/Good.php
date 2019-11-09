@@ -176,13 +176,16 @@ class Good extends Model
      */
     public function good_detail($goods_id)
     {
-        $field = 'id,goods_name,category_id,goods_images,period,goods_des';
+        $field = 'id,goods_name,goods_number,category_id,goods_images,period,goods_des';
 
         $res = Good::with('category')->where('id',$goods_id)->field($field)->find();
         $res['category_title'] = $res['category']['category_name'];
         $res['reviews_num'] =  Reviews::num($res['id']);//商品评论总数量
         $res['special'] = Special::spec_pro($res['id']);//规格
-
+        //取一张图
+        $att=explode(',',$res["goods_images"]);
+        $res['img'] = $att[0];
+        unset( $res['goods_images']);
         unset($res['category']);
 
         return $res;
@@ -198,13 +201,14 @@ class Good extends Model
      */
     public function good_review($goods_id)
     {
-        $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select();
+        $res = Reviews::where(['goods_id'=>$goods_id,'cid'=>0,'delect_at'=>null])->select()->toArray();
         foreach ($res as $k=>$v){
             //个人信息
             $user = new User();
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
             $res[$k]['img'] = $user_all['img'];
+            pp($res);die;
             //会员等级信息
             $join_role = JoinRole::member_details($user_all['grade']);
             $res[$k]['ico'] = $join_role['img'];

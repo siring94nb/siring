@@ -66,6 +66,15 @@ Route::group('api', function () {
         Route::any('get_plate_list','api/Evaluate/get_plate_list'); //获取快捷平台的list
     });
 
+    //Saas行业模板
+    Route::group('AppletManage',function(){
+        Route::any('get_model_list','api/AppletManage/get_model_list'); //获取行业模板的list
+    });
+    //Saas模板套餐
+    Route::group('ModelMeal',function(){
+        Route::any('model_meal_list','api/ModelMeal/model_meal_list'); //获取模板套餐
+    });
+
     //角色加盟订单
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
@@ -73,6 +82,7 @@ Route::group('api', function () {
         Route::any('soft_detail','api/Software/soft_detail'); //商品详情
         Route::any('soft_reviews','api/Software/soft_reviews'); //商品评论
         Route::any('soft_push','api/Software/soft_push'); //推荐商品
+        Route::any('soft_demo','api/Software/soft_demo'); //商品演示
         Route::any('soft_order_add','api/Software/soft_order_add'); //软件定制订单
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
         Route::any('app_notice','api/Software/app_notice'); //支付回调

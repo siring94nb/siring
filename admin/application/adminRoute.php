@@ -390,7 +390,7 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
-     //订单审核管理
+     //角色订单审核管理
      Route::group('JoinOrder', [
          //会员订单
         'index' => [
@@ -406,15 +406,20 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/JoinOrder/partner',
             ['method' => 'get']
         ],
-        'add'   => [
-            'admin/JoinOrder/add',
+        'partner_upd'   => [
+            'admin/JoinOrder/partner_upd',
             ['method' => 'post']
         ],
+         //加盟商订单
+         'merchant' => [
+             'admin/JoinOrder/merchant',
+             ['method' => 'get']
+         ],
+         'merchant_upd'   => [
+             'admin/JoinOrder/merchant_upd',
+             ['method' => 'post']
+         ],
 
-        'del'   => [
-            'admin/JoinOrder/del',
-            ['method' => 'post']
-        ]
     ], ['after_behavior' => $afterBehavior]);
 
     //消息管理
@@ -658,6 +663,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/change_goods_status',  //马甲会员列表
             ['method' => 'post']
         ],
+        'goods_special_del' => [
+            'admin/Goods/goods_special_del',  //软件开发商品规格删除
+            ['method' => 'post']
+        ],
 
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
@@ -696,6 +705,10 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'model_meal_del'   => [                  //模板套餐
             'admin/AppletManage/model_meal_del',
+            ['method' => 'post']
+        ],
+        'change_model_rank'   => [                  //行业模板-更改当前行业模板的排序
+            'admin/AppletManage/change_model_rank',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);

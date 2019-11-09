@@ -98,6 +98,7 @@
                     {
                         title: '用户账号',
                         align: 'center',
+                        width: 120,
                         key: 'phone'
                     },
                     {
@@ -108,6 +109,7 @@
                     {
                         title: '支付方式',
                         align: 'center',
+                        width: 100,
                         key: 'pay_type',
                         render: ( h , param ) => {
                             if(param.row.pay_type == '1'){
@@ -129,12 +131,12 @@
                     {
                         title: '支付时间',
                         align: 'center',
-                        key: 'created_at'
+                        key: 'pay_time',
                     },
                     {
-                        title: '申请等级',
+                        title: '申请城市',
                         align: 'center',
-                        key: 'grade'
+                        key: 'city_title'
                     },
                     {
                         title: '状态',
@@ -152,7 +154,11 @@
                             }
                         }
                     },
-
+                    {
+                        title: '创建时间',
+                        align: 'center',
+                        key: 'created_at'
+                    },
                     {
                         title: '处理时间',
                         align: 'center',
@@ -268,7 +274,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('JoinOrder/index', {
+                axios.get('JoinOrder/partner', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,

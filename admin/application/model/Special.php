@@ -26,7 +26,8 @@ class Special extends Base
     public static function getSpecialInfo($goods_id){
         $special=new Special();
         $field="id,attr_title,price,bottom_price,cycle_time,goods_id";
-        $list = $special->field($field)-> where('goods_id',$goods_id )
+        $where['del_time']=null;
+        $list = $special->where($where)->field($field)-> where('goods_id',$goods_id )
         -> paginate( 10 , false , array( 'page' => 1 ) ) -> toArray();
         return $list;
     }

@@ -143,3 +143,10 @@ export const GetComment = params => {
 export const GetDemonstration = params => {
   return axios.post(`${base_url}api/Software/soft_demo`, params).then(res => res.data);
 }
+
+/**
+ * 小程序SaaS 模板列表
+ */
+export const GetTemplate = params => {
+  return axios.get(`${base_url}api/AppletManage/get_model_list`, { params: params });
+}

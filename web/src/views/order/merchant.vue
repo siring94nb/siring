@@ -5,22 +5,22 @@
     <div>
         <Row>
             <Col span="24">
-            <Card style="margin-bottom: 10px">
-                <Form inline>
-                    <FormItem style="margin-bottom: 0">
-                        <Input v-model="searchConf.phone" placeholder="请输入账号"></Input>
-                    </FormItem>
-                    <FormItem style="margin-bottom: 0">
-                        <DatePicker type="datetime" v-model="searchConf.start_time" placeholder="请输入开始时间" style="width: 200px"></DatePicker>
-                    </FormItem>
-                    <FormItem style="margin-bottom: 0">
-                        <DatePicker type="datetime" v-model="searchConf.end_time" placeholder="请输入结束时间" style="width: 200px"></DatePicker>
-                    </FormItem>
-                    <FormItem style="margin-bottom: 0">
-                        <Button type="primary" @click="search">查询/刷新</Button>
-                    </FormItem>
-                </Form>
-            </Card>
+                <Card style="margin-bottom: 10px">
+                    <Form inline>
+                        <FormItem style="margin-bottom: 0">
+                            <Input v-model="searchConf.phone" placeholder="请输入账号"></Input>
+                        </FormItem>
+                        <FormItem style="margin-bottom: 0">
+                            <DatePicker type="datetime" v-model="searchConf.start_time" placeholder="请输入开始时间" style="width: 200px"></DatePicker>
+                        </FormItem>
+                        <FormItem style="margin-bottom: 0">
+                            <DatePicker type="datetime" v-model="searchConf.end_time" placeholder="请输入结束时间" style="width: 200px"></DatePicker>
+                        </FormItem>
+                        <FormItem style="margin-bottom: 0">
+                            <Button type="primary" @click="search">查询/刷新</Button>
+                        </FormItem>
+                    </Form>
+                </Card>
             </Col>
         </Row>
         <Row>
@@ -84,115 +84,115 @@
     };
     export default {
         name: 'cash_list',
-      data () {
-          return {
-              confirmRefresh: false,
-              columnsList: [
-                  {
-                      title: '序号',
-                      type: 'index',
-                      width: 65,
-                      align: 'center',
-                      key: 'id'
-                  },
-                  {
-                      title: '用户账号',
-                      align: 'center',
-                      key: 'phone'
-                  },
-                  {
-                      title: '订单号',
-                      align: 'center',
-                      key: 'no'
-                  },
-                  {
-                      title: '支付方式',
-                      align: 'center',
-                      key: 'pay_type',
-                      render: ( h , param ) => {
-                          if(param.row.pay_type == '1'){
-                              return h('div','支付宝');
-                          }else if(param.row.pay_type == '2'){
-                              return h('div','微信');
-                          }else if(param.row.pay_type == '3'){
-                              return h('div','汇款');
-                          }else{
-                              return h('div','');
-                          }
-                      }
-                  },
-                  {
-                      title: '支付金额',
-                      align: 'center',
-                      key: 'money'
-                  },
-                  {
-                      title: '支付时间',
-                      align: 'center',
-                      key: 'created_at'
-                  },
-                  {
-                      title: '申请等级',
-                      align: 'center',
-                      key: 'grade_title'
-                  },
-                  {
-                      title: '状态',
-                      align: 'center',
-                      key: 'status',
-                      render: ( h , param ) => {
-                          if(param.row.status == '1'){
-                              return h('div','未审核');
-                          }else if(param.row.status == '2'){
-                              return h('div','已审核');
-                          }else if(param.row.status == '3'){
-                              return h('div','驳回');
-                          }else{
-                              return h('div','关闭');
-                          }
-                      }
-                  },
+        data () {
+            return {
+                confirmRefresh: false,
+                columnsList: [
+                    {
+                        title: '序号',
+                        type: 'index',
+                        width: 65,
+                        align: 'center',
+                        key: 'id'
+                    },
+                    {
+                        title: '用户账号',
+                        align: 'center',
+                        key: 'phone'
+                    },
+                    {
+                        title: '订单号',
+                        align: 'center',
+                        key: 'no'
+                    },
+                    {
+                        title: '支付方式',
+                        align: 'center',
+                        key: 'pay_type',
+                        render: ( h , param ) => {
+                            if(param.row.pay_type == '1'){
+                                return h('div','支付宝');
+                            }else if(param.row.pay_type == '2'){
+                                return h('div','微信');
+                            }else if(param.row.pay_type == '3'){
+                                return h('div','汇款');
+                            }else{
+                                return h('div','');
+                            }
+                        }
+                    },
+                    {
+                        title: '支付金额',
+                        align: 'center',
+                        key: 'money'
+                    },
+                    {
+                        title: '支付时间',
+                        align: 'center',
+                        key: 'created_at'
+                    },
+                    {
+                        title: '申请技能',
+                        align: 'center',
+                        key: 'dev_name'
+                    },
+                    {
+                        title: '状态',
+                        align: 'center',
+                        key: 'status',
+                        render: ( h , param ) => {
+                            if(param.row.status == '1'){
+                                return h('div','未审核');
+                            }else if(param.row.status == '2'){
+                                return h('div','已审核');
+                            }else if(param.row.status == '3'){
+                                return h('div','驳回');
+                            }else{
+                                return h('div','关闭');
+                            }
+                        }
+                    },
 
-                   {
-                      title: '处理时间',
-                      align: 'center',
-                      key: 'updated_at'
-                  },
+                    {
+                        title: '处理时间',
+                        align: 'center',
+                        key: 'updated_at'
+                    },
                     {
                         title: '操作',
                         align: 'center',
                         key: 'handle',
                         handle: ['edit']
                     }
-            ],
-            tableData: [],//视图加载tableData
+                ],
+                tableData: [],//视图加载tableData
                 tableShow: {
                     currentPage: 1,
                     pageSize: 10,
                     listCount: 0
-            },
-            formItem:{
-                status : '',
-            },
-            searchConf: {
-                phone: '',
-                start_time:'',
-                end_time:''
-            },
-            modalSetting: {
-                show: false,
-                loading: false,
-                index: 0
-            },
-            ruleValidate: {
-                // status: [
-                //     {required: true, message: '不能为空', trigger: 'blur'}
-                // ]
-            },
-             // 图片
+                },
+                formItem:{
+                    status : '',
+                },
+                searchConf: {
+                    phone: '',
+                    start_time:'',
+                    end_time:''
+                },
+                modalSetting: {
+                    show: false,
+                    loading: false,
+                    index: 0
+                },
+                ruleValidate: {
+                    // status: [
+                    //     {required: true, message: '不能为空', trigger: 'blur'}
+                    // ]
+                },
+                // 图片
                 visible: false,
                 // 图片
-        };
+            };
         },
         created () {
             this.init();
@@ -206,7 +206,7 @@
                         item.render = (h, param ) => {
                             let currentRowData = vm.tableData[param.index];//tableData视图加载页面
                             return h('div', [
-                               // stickButton(vm, h, currentRowData, param.index)// stickButton定义操作控件
+                                // stickButton(vm, h, currentRowData, param.index)// stickButton定义操作控件
                                 editButton(vm, h, currentRowData, param.index),
                             ]);
                         };
@@ -214,7 +214,7 @@
                 });
             },
             alertAdd () {
-              //图片
+                //图片
                 this.modalSetting.show = true;
             },
             submit () {
@@ -268,14 +268,14 @@
             },
             getList () {
                 let vm = this;
-                axios.get('JoinOrder/index', {
+                axios.get('JoinOrder/merchant', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,
                         phone: vm.searchConf.phone,
                         start_time: vm.searchConf.start_time,
                         end_time: vm.searchConf.end_time
-                       // is_examine: vm.searchConf.status
+                        // is_examine: vm.searchConf.status
                     }
                 }).then(function (response) {
                     let res = response.data;
