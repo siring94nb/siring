@@ -55,7 +55,7 @@ class JoinRole extends Base
        $grade = new \app\data\model\JoinRole();
 
        $data = $grade->grade_index();
-
+        pp($data);die;
        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
