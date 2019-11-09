@@ -483,6 +483,8 @@ export default {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 vertical-align: middle;
+                color: #6B6B6B;
+                font-size: 16px;
               }
               i {
                 vertical-align: middle;
@@ -494,6 +496,9 @@ export default {
               text-align: right;
               span {
                 color: #666;
+              }
+              .el-icon-time{
+                margin-right: 5px;
               }
             }
           }

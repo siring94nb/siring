@@ -109,9 +109,8 @@
         <el-button type="primary" @click="centerDialogVisible = false">知道了</el-button>
       </span>
     </el-dialog>
-
     <!-- 结算 -->
-    <div :class="{payment: true, show: showPaymentFlag}">
+    <!-- <div :class="{payment: true, show: showPaymentFlag}">
       <div class="payment-inner">
         <div>费用：</div>
         <div>
@@ -140,10 +139,10 @@
         </div>
         <el-button type="danger" @click="pay">立即支付</el-button>
       </div>
-    </div>
+    </div>-->
 
     <!-- 选择支付方式 -->
-    <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="500px" center>
+    <!-- <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="500px" center>
       <el-form ref="payway" :model="payway" :rules="wayRule" label-width="80px">
         <el-form-item label="支付方式" prop="way">
           <el-radio-group v-model="payway.way" @change="selectway">
@@ -160,7 +159,9 @@
         <el-button @click="showPayWayFlag = false">取 消</el-button>
         <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
       </span>
-    </el-dialog>
+    </el-dialog>-->
+
+    <payment-bar :showPaymentFlag="showPaymentFlag" :price="price" :percent="percent" />
   </div>
 </template>
 
@@ -169,6 +170,7 @@ import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
 import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
+import PaymentBar from "@/components/join/paymentBar";
 import {
   GetProvince,
   GetCityList,
@@ -182,7 +184,8 @@ export default {
     Myheader,
     JoinEnter,
     Myswiper,
-    Myfooter
+    Myfooter,
+    PaymentBar
   },
   data() {
     return {
@@ -552,9 +555,9 @@ export default {
       }
     }
   }
-  .code-box{
+  .code-box {
     text-align: center;
-    img{
+    img {
       width: 300px;
       height: 300px;
     }
