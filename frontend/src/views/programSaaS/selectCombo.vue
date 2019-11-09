@@ -15,17 +15,17 @@
     <div class="honour">
       <div
         class="honour-item"
-        @mouseenter="selectEvent(index)"
         v-for="(item, index) in versionData"
+        @mouseenter="selectEvent(index)"
+        :class="selectClassName[index === selectFlag && index]"
         :key="item.id">
-        <!-- :class="selectClassName[index === selectFlag && index]" -->
-        <div class="honour-top">
-          <div class="top-title">{{comboName[index]}}</div>
+        <div class="honour-top" :class="selectClassName_1[index === selectFlag && index]">
+          <div class="top-title" :class="selectClassName_2[index === selectFlag && index]">{{comboName[index]}}</div>
           <div v-if="index == 0">适合小微团队开店、个人或三个人以下运营的团队开店，满足本行业内的基础经营需求</div>
           <div v-if="index == 1">适合成长型团队或企业，满足推广获客、成交转化、客户留存、复购增购、分享裂变等核心经营需求</div>
           <div v-if="index == 2">适合规模化扩张，有多个经营场景需求的成熟商家，满足创新营销玩法等深度经营需求</div>
-          <div class="lines"></div>
-          <div class="top-price">￥{{item.model_meal_price}}/年</div>
+          <div class="lines" :class="selectClassName_3[index === selectFlag && index]"></div>
+          <div class="top-price" :class="selectClassName_3[index === selectFlag && index]">￥{{item.model_meal_price}}/年</div>
         </div>
         <div class="honour-bot">
           <div class="rights-title">尊享功能</div>
@@ -43,21 +43,59 @@
           </ul>
         </div>
         <div class="selectTemp">
-          <div class="sel">选择标准月套餐>></div>
+          <div class="sel" :class="selectClassName_4[index === selectFlag && index]" @click="selCombo">选择标准月套餐>></div>
           <div>
             <span class="red">*</span>最低低至
-            <span class="sel-price">399</span>元/月
+            <span class="sel-price" :class="index === selectFlag?'red':''">399</span>元/月
           </div>
         </div>
       </div>
     </div>
+    
+    <!-- 结算 -->
+    <div :class="{payment: true, show: showPaymentFlag}">
+      <div class="payment-inner">
+        <div>费用：</div>
+        <div>
+          <div class="bgw">￥{{price}}</div>
+          <p class="tip"><span class="red">*</span>金额</p>
+        </div>
+        <div class="symbol">×</div>
+        <div>
+          <div class="bgw">{{percent}}%</div>
+          <p class="tip">
+            <span class="red">*</span>会员折扣
+            <span class="ques">？</span>
+          </p>
+        </div>
+        <div class="symbol">×</div>
+        <div>
+        <el-input-number
+          v-model="num"
+          controls-position="right"
+          @change="numChange"
+          :min="1"
+          :max="10"
+        ></el-input-number>
+        <p class="tip">
+            <span class="red">*</span> 年限
+          </p>
+          </div>
+        <div class="symbol">=</div>
+        <div>
+          <div class="bgw">￥{{total}}</div>
+          <el-radio v-model="radio" label="1" style="margin-top:5px;">本人已确定，支付后执行下一流程</el-radio>
+        </div>
+        <el-button type="danger" @click="pay">立即支付</el-button>
+      </div>
+    </div>
+    <!-- 结算 -->
   </div>
 </template>
 
 <script>
 import Myheader from "@/components/header";
 import { GetTempList } from "@/api/api";
-import config from "../../../../web/build/config";
 
 export default {
   name: "selectCombo",
@@ -67,23 +105,52 @@ export default {
   data() {
     return {
       versionData:[],
-      comboName:['标准年套餐','精装套餐','豪华套餐']
+      comboName:['标准年套餐','精装套餐','豪华套餐'],
+      selectClassName: ['bz-border', 'jz-border', 'hh-border'], //边框
+      selectClassName_1: ['honour-top-bz', 'honour-top-jz', 'honour-top-hh'], //头部背景色
+      selectClassName_2: ['top-title-bz', 'top-title-jz', 'top-title-hh'], //套餐名背景颜色
+      selectClassName_3: ['top-price-bz', 'top-price-jz', 'top-price-hh'], //线条/年费背景色
+      selectClassName_4: ['sel-bz', 'sel-jz', 'sel-hh'], //选择套餐颜色
+      selectFlag:0, //mouseenter 给div[index]添加颜色
+      showPaymentFlag: false,
+      price:0,
+      percent:0.98,
+      num:1,
+      total:0,
+      radio:'',
+      model_meal_category: 2
     };
   },
   mounted() {
     this.init();
+    console.log(this.$route.params)
   },
   methods: {
     init() {
       this.getTempList();
+      this.model_meal_category = this.$route.params.model_meal_category;
     },
     //获取模板信息
     getTempList() {
-      GetTempList({ model_meal_category: 1 }).then(res => {
+      GetTempList({ model_meal_category: this.model_meal_category }).then(res => {
          this.versionData = res;
       });
     },
-    selectEvent(){}
+    selectEvent(index){
+      this.selectFlag = index;
+      this.price=this.versionData[index].model_meal_price;
+      this.total = Number(this.price)*Number(this.num)*Number(this.percent);
+    },
+    //选择套餐
+    selCombo(){
+      this.showPaymentFlag=true;
+    },
+    //改变年数
+    numChange(val){
+      this.total = Number(this.price)*Number(this.percent)*Number(val);
+    },
+    //结算
+    pay(){}
   }
 };
 </script>
@@ -109,6 +176,7 @@ export default {
       margin-right: 5px;
     }
   }
+  /*套餐*/
   .honour {
     display: flex;
     justify-content: space-between;
@@ -148,6 +216,17 @@ export default {
             rgba(201, 201, 201, 1) 100%
           );
         }
+        /*套餐名背景色 */
+        .top-title-bz{
+              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(0, 204, 204, 1) 44%, rgba(0, 204, 204, 1) 100%);
+        }
+        .top-title-jz{
+              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 153, 0, 1) 44%, rgba(255, 153, 0, 1) 100%);
+        }
+        .top-title-hh{
+              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(170, 151, 19, 1) 44%, rgba(170, 151, 19, 1) 100%);
+        }
+        /*套餐名背景色 */
         .top-price {
           color: #fff;
           font-size: 24px;
@@ -158,7 +237,17 @@ export default {
           border-radius: 5px;
           background-color: rgb(201, 201, 201);
         }
+        /*线条/年费背景色 */
+        .top-price-bz{background-color: rgb(0,204,204);}
+        .top-price-jz{background-color: rgb(255,167,38);}
+        .top-price-hh{background-color: rgb(170,151,19);}
+        /*线条/年费背景色 */
       }
+      /*头部背景色 */
+      .honour-top-bz{background-color:rgb(234,255,255);}
+      .honour-top-jz{background-color:rgb(255,248,238);}
+      .honour-top-hh{background-color:rgb(252,249,224);}
+      /*头部背景色 */
       .honour-bot {
         padding: 0 20px;
         .rights-title {
@@ -206,8 +295,10 @@ export default {
       margin-top: 60px;
       line-height: 26px;
       color: rgb(134, 134, 134);
-      .sel {
-      }
+      .sel:hover{font-weight: 700;cursor: pointer;}
+      .sel-bz {color: rgb(0,204,204);}
+      .sel-jz {color: rgb(255, 167, 38);}
+      .sel-hh {color: rgb(170, 151, 19);}
       .red {
         color: red;
       }
@@ -217,5 +308,58 @@ export default {
       }
     }
   }
+  /*套餐*/
+  /*结算*/
+  .payment {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background-color: rgb(204, 235, 248);
+    &.show {
+      display: block;
+    }
+    .payment-inner {
+      float: right;
+      display: flex;
+      align-items: baseline;
+      margin-top: 10px;
+      margin-right: 40px;
+      .bgw {
+        background-color: #ffffff;
+        padding: 10px 30px;
+        color: #ff0000;
+        min-width: 120px;
+        box-sizing: border-box;
+      }
+      .symbol {
+        margin: 0 20px;
+      }
+      .el-button {
+        margin-left: 20px;
+      }
+      .tip {
+        font-size: 14px;
+        color: #999999;
+        text-align: center;
+        margin-top: 5px;
+        .red{color: red;}
+        .ques {
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          line-height: 20px;
+          text-align: center;
+          border-radius: 50%;
+          background-color: #ff0000;
+          color: #ffffff;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  /*结算*/
 }
 </style>
