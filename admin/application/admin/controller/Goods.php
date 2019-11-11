@@ -46,7 +46,7 @@ class Goods extends Base{
         $listInfo = $list['data'];
         return $this->buildSuccess([
             'list'  => $listInfo,
-            'listCount'  => $list['total'],
+            'listcount'  => $list['total'],
         ]);
     }
     /** 
