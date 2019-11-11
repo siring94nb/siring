@@ -131,19 +131,23 @@ class UserManage extends Base{
             'realname' => $param['realname'],
             'img' => $param['img'],
             'phone' => $param['phone'],
+            'sex' => $param['sex'],
             'remark' =>$param['remark'],
+            'grade' =>$param['grade'],
             'password' => $cipher,
             'vest' => $param['vest'],
             'type' =>  1,
             'salt' => $salt,
-            'created_at' => date( 'Y-m-d H:i:s' )
+            //调取生成个人邀请码
+            'invitation' => create_invite_code(),
+            'created_at' => time()
         );
 
-        $res = Db::transaction( function() use ( $insert_user_data ){
+        $res = Db::transaction( function() use ( $insert_user_data,$param ){
 
             $res1 = (new User()) -> insertGetId( $insert_user_data );
 
-            $res2 = (new UserGrade()) -> insert(['user_id'=>$res1]);
+            $res2 = (new UserGrade()) -> insert(['user_id'=>$res1,'grade' =>$param['grade'],]);
 
             return $res1 && $res2 ? true : false;
         });
@@ -210,21 +214,23 @@ class UserManage extends Base{
             'realname' => $param['realname'],
             'img' =>$param['img'],
             'phone' => $param['phone'],
+            'sex' => $param['sex'],
             'remark' =>$param['remark'],
+            'grade' =>$param['grade'],
             'vest' => $param['vest'],
             'type' => 1,
         );
         if(!empty($param['password'])){
             $update_user_data['password'] = password_hash($param['password'],PASSWORD_DEFAULT);
         }
+        $grade = $param['grade'];
 
-        $res = Db::transaction( function() use ( $update_user_data , $id ){
+        $res = Db::transaction( function() use ( $update_user_data ,$grade, $id ){
             $res1 = (new User()) -> where( 'id = '.$id ) -> update( $update_user_data );
-            if( $res1 !== false ){
-                return true;
-            }else{
-                return false;
-            }
+
+            $res2 = (new UserGrade()) -> where( 'user_id = '.$id )-> update(['grade'=>$grade]);
+
+            return $res1!== false  && $res2!== false  ? true : false;
         });
 
         if( $res !== false ){
