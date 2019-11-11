@@ -71,7 +71,7 @@
         <div class="symbol">×</div>
         <div>
         <el-input-number
-          v-model="num"
+          v-model="years"
           controls-position="right"
           @change="numChange"
           :min="1"
@@ -114,8 +114,7 @@ export default {
       selectFlag:0, //mouseenter 给div[index]添加颜色
       showPaymentFlag: false,
       price:0,
-      percent:0.98,
-      num:1,
+      percent: 100,
       total:0,
       radio:'',
       model_meal_category: 2,
@@ -142,7 +141,7 @@ export default {
       this.selectFlag = index;
       this.price=this.versionData[index].model_meal_price;
       this.model_grade=this.versionData[index].model_grade;
-      this.total = Number(this.price)*Number(this.num)*Number(this.percent);
+      this.total = Number(this.price)*Number(this.years)*Number(this.percent) / 100;
     },
     //选择套餐
     selCombo(){
@@ -151,27 +150,32 @@ export default {
     //改变年数
     numChange(val){
       this.years = val;
-      this.total = Number(this.price)*Number(this.percent)*Number(val);
+      this.total = Number(this.price)*Number(this.percent)*Number(val) / 100;
     },
     //结算
     pay(){
-      var params = {
-        member_account: '13502882637',
-        model_type: this.model_meal_category,
-        model_meal_type: this.model_grade,
-        order_amount: this.total,
-        meal_end_time: this.years,
-        model_id: this.$route.params.arr,
-        applet_name: this.$route.params.prog_name,
-        applet_logo: this.$route.params.imageUrl
+      console.log(this.radio)
+      if(this.radio) {
+        var params = {
+          member_account: '13502882637',
+          model_type: this.model_meal_category,
+          model_meal_type: this.model_grade,
+          order_amount: this.total,
+          meal_end_time: this.years,
+          model_id: this.$route.params.arr,
+          applet_name: this.$route.params.prog_name,
+          applet_logo: this.$route.params.imageUrl
+        }
+        templatePay(params).then(res => {
+          console.log(res)
+           let { code, data, msg } = res;
+          // if (code === 1) {
+          //   this.city = data;
+          // }
+        });
+      } else {
+         this.$message.error("请确认");
       }
-      templatePay(params).then(res => {
-        console.log(res)
-         let { code, data, msg } = res;
-        // if (code === 1) {
-        //   this.city = data;
-        // }
-      });
     }
   }
 };
