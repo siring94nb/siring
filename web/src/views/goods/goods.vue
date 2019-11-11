@@ -750,8 +750,7 @@ export default {
               res.data.list[i].goods_images = str[0];
             }
             vm.tableData = res.data.list;
-            vm.tableShow.listCount = res.data.listCount;
-          } else {
+            vm.tableShow.listCount = res.data.listcount;
           }
         });
     },

@@ -442,6 +442,9 @@ export default {
         margin: 0 auto;
         .el-select {
           margin-right: 20px;
+          &:last-of-type{
+            margin-right: 0;
+          }
         }
         .el-textarea {
           width: 692px;

@@ -28,6 +28,13 @@ export const Register = params => {
 }
 
 /**
+ * 退出登录
+ */
+export const Logout = params => {
+  return axios.get(`${base_url}api/user/logout`, { params: params });
+}
+
+/**
  * 获取手机验证码
  * @param {phone}
  */
@@ -41,6 +48,13 @@ export const GetCode = params => {
  */
 export const ForgetPwd = params => {
   return axios.post(`${base_url}api/user/forget`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * seo优化
+ */
+export const Seo = params => {
+  return axios.get(`${base_url}api/Website/seo`, { params: params });
 }
 
 /**

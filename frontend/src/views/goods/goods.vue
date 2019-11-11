@@ -113,8 +113,8 @@
             background
             layout="prev, pager, next"
             :hide-on-single-page="true"
-            :page-size="12"
-            :total="11"
+            :page-size="goodsData.per_page"
+            :total="goodsData.total"
           ></el-pagination>
         </div>
       </div>
@@ -425,6 +425,7 @@ export default {
               align-items: center;
             }
             .top {
+              margin-bottom: 5px;
               .single-dot{
                 max-width: 210px;
               }

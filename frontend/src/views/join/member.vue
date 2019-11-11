@@ -23,6 +23,23 @@
           </div>
         </div>
       </div>
+
+      <div class="new-member">
+        <h3 class="title">新升级的等级会员</h3>
+        <div class="new-member-box">
+          <div class="img">
+            <img :src="require('@/assets/images/u4734.png')" alt />
+          </div>
+          <div class="marquee">
+            <ul class="marquee-list clearfix" style="width: 5000px">
+              <li class="marquee-item" v-for="item in 6" :key="item">
+                重庆会员（邀请码
+                <span class="code-color">JU4523</span>）升级为金牌会员
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <myfooter />
   </div>
@@ -137,6 +154,35 @@ export default {
               background-color: rgb(0, 189, 189);
               font-size: 20px;
               padding: 0 15px;
+            }
+          }
+        }
+      }
+    }
+    .new-member {
+      .title {
+        font-size: 28px;
+        color: #333333;
+      }
+      .new-member-box {
+        .img {
+          text-align: center;
+        }
+        .marquee {
+          margin: 0 75px;
+          overflow: hidden;
+          .marquee-list {
+            .marquee-item {
+              float: left;
+              width: 220px;
+              text-align: center;
+              margin: 0 20px;
+              color: #797979;
+              font-size: 22px;
+              line-height: 28px;
+              .code-color {
+                color: #199ed8;
+              }
             }
           }
         }

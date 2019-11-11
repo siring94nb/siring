@@ -270,7 +270,7 @@ export default {
                   width: "60px"
                 },
                 props: {
-                  type: "Number",
+                  type: "text",
                   value: params.row.model_rank //使用key的键值
                 },
                 on: {

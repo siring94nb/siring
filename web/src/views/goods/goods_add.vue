@@ -23,7 +23,7 @@
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
       <Form ref="sortForm" :rules="ruleValidate" :model="sortMain" :label-width="80">
         <FormItem label="分类名称" prop="category_name">
-          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;"/>
+          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -32,14 +32,12 @@
       </div>
     </Modal>
 
-
-    
-    <Form ref="myForm"  :model="formItem" :label-width="120">
+    <Form ref="myForm" :model="formItem" :label-width="120">
       <FormItem label="商品名称" prop="goods_name">
         <Input v-model="formItem.data.goods_name" placeholder="请输入" style="width: 500px;"></Input>
       </FormItem>
       <FormItem label="商品编号" prop="goods_number">
-        <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 500px;"/>
+        <Input v-model="formItem.data.goods_number" placeholder="请输入" style="width: 500px;" />
         <p>*模板化产品，规则按照MB+4位数字设定</p>
       </FormItem>
       <FormItem label="归属分类">
@@ -64,7 +62,7 @@
         <p>*填写正整数，从大到小排序</p>
       </FormItem>
       <FormItem label="SEO设置关键字" prop="seo">
-        <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 500px;"/>
+        <Input v-model="formItem.data.seo" placeholder="请输入" style="width: 500px;" />
         <p>*关键字中间用半角逗号,隔开</p>
       </FormItem>
       <FormItem label="终端版本">
@@ -79,7 +77,7 @@
         :key="index"
         :label="'规格-' + index"
         :prop="'item'+ index"
-        >
+      >
         <div style="display:flex;">
           <Input v-model="item.attr_title" placeholder="请输入" style="width: 150px;">
             <span slot="prepend">终端版本</span>
@@ -141,9 +139,16 @@
         <Input
           v-model="formItem.data.goods_des"
           type="textarea"
+<<<<<<< HEAD
           :autosize="{minRows: 4,maxRows: 8}" 
           style="width:1000px;"/>
       </FormItem> -->
+=======
+          :autosize="{minRows: 4,maxRows: 8}"
+          style="width:1000px;"
+        />
+      </FormItem>
+>>>>>>> b619efd174dc4ad6855fab5e0ba2b0d65e5783ce
       <FormItem label="推荐商品">
         <RadioGroup v-model="formItem.data.goods_recommend_status">
           <Radio label="1">推荐</Radio>
@@ -204,7 +209,7 @@ export default {
       goods_id: 0,
       formItem: {
         data: {
-          id:0,
+          id: 0,
           goods_images: "",
           goods_number: "",
           category_id: "",
@@ -219,8 +224,10 @@ export default {
         special: []
       },
       ruleValidate: {
-        category_name: [{ required: true, message: "分类名称不能为空", trigger: "blur" }],
-       
+        category_name: [
+          { required: true, message: "分类名称不能为空", trigger: "blur" }
+        ]
+
         // goods_name: [{ required: true, message: "商品名称不能为空", trigger: "blur" }],
         // goods_number: [{ required: true, message: "商品编号不能为空", trigger: "blur" }],
         // seo: [{ required: true, message: "SEO关键字不能为空", trigger: "blur" }],
@@ -280,8 +287,10 @@ export default {
     tableRemove(index, id) {
       let self = this;
       this.formItem.special.splice(index, 1);
-      if(this.formItem.data.id != 0){
-        axios.post("Goods/goods_special_del", {"id": id}).then(function(response) {
+      if (this.formItem.data.id != 0) {
+        axios
+          .post("Goods/goods_special_del", { id: id })
+          .then(function(response) {
             // console.log(response);
             if (response.data.code === 1) {
               self.$Message.success(response.data.msg);
@@ -326,8 +335,8 @@ export default {
       if (vm.goods_id != 0) {
         axios
           .post("Goods/get_goods", {
-              id: vm.goods_id
-              })
+            id: vm.goods_id
+          })
           .then(function(response) {
             let res = response.data;
 
@@ -340,10 +349,10 @@ export default {
 
               //图片
               if (res.data.data.goods_images != "") {
-                var str = res.data.data.goods_images.split(',');
-                for(let i = 0; i < str.length; i ++) {
-                  if(str[i] != "") {
-                    vm.iconList.push({ name: "", url: str[i] })
+                var str = res.data.data.goods_images.split(",");
+                for (let i = 0; i < str.length; i++) {
+                  if (str[i] != "") {
+                    vm.iconList.push({ name: "", url: str[i] });
                   }
                 }
                 // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
@@ -358,14 +367,12 @@ export default {
     },
     getSort() {
       let vm = this;
-      axios
-        .post("Goods/category_index", {})
-        .then(function(response) {
-          let res = response.data;
-          if (res.code === 1) {
-            vm.tableData = res.data.list;
-          }
-        });
+      axios.post("Goods/category_index", {}).then(function(response) {
+        let res = response.data;
+        if (res.code === 1) {
+          vm.tableData = res.data.list;
+        }
+      });
     },
     addSort() {
       this.modalSetting.show = true;
@@ -399,9 +406,9 @@ export default {
               console.log(response);
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
-                setTimeout(function(){
+                setTimeout(function() {
                   self.sortCancel();
-                },1000)
+                }, 1000);
               } else {
                 self.$Message.error(response.data.msg);
               }
@@ -436,8 +443,9 @@ export default {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formItem.data.goods_images == "" ? this.formItem.data.goods_images += res.data.filePath + ',': this.formItem.data.goods_images += "," + res.data.filePath;
-    
+      this.formItem.data.goods_images == ""
+        ? (this.formItem.data.goods_images += res.data.filePath + ",")
+        : (this.formItem.data.goods_images += "," + res.data.filePath);
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
