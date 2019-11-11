@@ -58,7 +58,7 @@ class Goods extends Base
         $goods = new Good();
         $list = $goods->field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
-        return $list['data'];
+        return $list;
     }
 
 }

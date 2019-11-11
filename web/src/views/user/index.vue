@@ -106,6 +106,13 @@
         <FormItem label="电话" prop="phone">
           <Input v-model="formItem.phone" placeholder="请输入电话号码" style="width: 300px;"></Input>
         </FormItem>
+        <FormItem label="性别"  prop="sex">
+          <RadioGroup v-model="formItem.sex">
+            <Radio :label="0" >隐藏</Radio>
+            <Radio :label="1" >男</Radio>
+            <Radio :label="2" >女</Radio>
+          </RadioGroup>
+        </FormItem>
         <FormItem label="备注" prop="remark">
           <Input style="width: 300px" v-model="formItem.remark" placeholder="请输入备注"></Input>
         </FormItem>
@@ -130,12 +137,22 @@
             type="password"
           ></Input>
         </FormItem>
+
+        <FormItem label="会员等级" prop="grade">
+          <Select v-model="formItem.grade" style="width:200px">
+            <Option :value="0" :key="0">{{'普通会员'}}</Option>
+            <Option :value="1" :key="1">{{'金牌会员'}}</Option>
+            <Option :value="2" :key="2">{{'钻石会员'}}</Option>
+            <Option :value="3" :key="3">{{'皇冠会员'}}</Option>
+          </Select>
+        </FormItem>
         <FormItem label="会员身份"  prop="vest">
           <RadioGroup v-model="formItem.vest">
             <Radio :label="1" >正常身份</Radio>
             <Radio :label="2" >马甲会员</Radio>
           </RadioGroup>
         </FormItem>
+
       </Form>
       <div slot="footer">
         <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
@@ -163,10 +180,12 @@ const editButton = (vm, h, currentRow, index) => {
           vm.formItem.id = currentRow.id;
           vm.formItem.realname = currentRow.realname;
           vm.formItem.img = currentRow.img;
+          vm.formItem.sex = currentRow.sex;
           vm.formItem.remark = currentRow.remark;
           vm.formItem.type = currentRow.type;
           vm.formItem.phone = currentRow.phone;
           vm.formItem.vest = currentRow.vest;
+          vm.formItem.grade = currentRow.grade;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -320,7 +339,18 @@ export default {
         {
           title: "会员等级",
           align: "center",
-          key: ""
+          key: "grade",
+            render: (h, param) => {
+                if (param.row.grade == "0") {
+                    return h("div", "普通会员");
+                } else if (param.row.grade == "1") {
+                    return h("div", "金牌会员");
+                }else if (param.row.grade == "2") {
+                    return h("div", "钻石会员");
+                }else if (param.row.grade == "3") {
+                    return h("div", "皇冠会员");
+                }
+            }
         },
           {
               title: "会员身份",
@@ -328,9 +358,9 @@ export default {
               key: "vest",
               render: (h, param) => {
                   if (param.row.vest == "1") {
-                      return h("div", "正常会员");
+                      return h("div", "正常");
                   } else if (param.row.vest == "2") {
-                      return h("div", "马甲会员");
+                      return h("div", "马甲");
                   }
               }
           },
@@ -362,6 +392,8 @@ export default {
       },
       formItem: {
           img: "",
+          sex:0,
+          grade:0,
           vest:1,
       },
       searchConf: {
