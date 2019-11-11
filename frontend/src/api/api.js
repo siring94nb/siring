@@ -51,6 +51,13 @@ export const ForgetPwd = params => {
 }
 
 /**
+ * seo优化
+ */
+export const Seo = params => {
+  return axios.get(`${base_url}api/Website/seo`, { params: params });
+}
+
+/**
  * 首页轮播图
  * 
  */

@@ -390,7 +390,7 @@ export default {
       };
       GetGoods(params).then(res => {
         let { code, data, msg } = res;
-        console.log(data);
+        // console.log(data);
         if (code !== 1) {
           this.$message.error(msg);
         } else {

@@ -221,7 +221,7 @@
         </ul>
       </div>
       <div class="bottom">
-        <p class="copyright">版权所有 © 1996-2018 深圳市思锐信息技术有限公司 All Rights Reserved. 粤ICP备17014906号</p>
+        <p class="copyright">{{copyright}}</p>
         <div class="bottom-right">
           <div>
             <span class="bottom-gt">&gt;</span>
@@ -238,9 +238,11 @@
 </template>
 
 <script>
+import { Seo } from "@/api/api";
 export default {
   data() {
     return {
+      copyright: '',
       curr: 0,
       loginway: [
         "icon-weixinxiaochengxu miniapp",
@@ -273,9 +275,20 @@ export default {
       ]
     };
   },
+  mounted() {
+    this.getSeo();
+  },
   methods: {
     hoverclass(index) {
       this.curr = index;
+    },
+    getSeo() {
+      Seo().then(res => {
+        let {data, code} = res.data;
+        if(code === 1){
+          this.copyright = data.copyright;
+        }
+      });
     }
   }
 };

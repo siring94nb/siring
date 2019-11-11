@@ -424,14 +424,8 @@ export default {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         console.log(res);
-        if (code === 1) {
-          // 存储用户信息
-          this.$store.commit("login", {
-            id: data.user_id,
-            phone: data.phone
-          });
-          this.reload();
-          // this.handleClose();
+        if(code === 1){
+          this.handleClose();
         }
       });
     },

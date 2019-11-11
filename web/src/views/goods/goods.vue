@@ -333,9 +333,11 @@ export default {
           align: "center",
           key: "category_id",
           render: (h, param) => {
-            for(let i = 0; i < this.sortList.length; i ++ ) {
+            for (let i = 0; i < this.sortList.length; i++) {
               var category_id;
-              if(Number(param.row.category_id) == Number(this.sortList[i].id)) {
+              if (
+                Number(param.row.category_id) == Number(this.sortList[i].id)
+              ) {
                 category_id = this.sortList[i].category_name;
               }
             }
@@ -449,8 +451,9 @@ export default {
                   "on-change": function(status) {
                     axios
                       .post("Goods/change_goods_status", {
-                         goods_recommend_status: status,
-                          id: currentRowData.id})
+                        goods_recommend_status: status,
+                        id: currentRowData.id
+                      })
                       .then(function(response) {
                         let res = response.data;
                         if (res.code === 1) {
@@ -624,13 +627,13 @@ export default {
       });
     },
     //删除评论
-    commentDel(id,goods_id) {
+    commentDel(id, goods_id) {
       let self = this;
       axios.post("Goods/comment_del", { id: id }).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
           self.$Message.success(response.data.msg);
-          self.commentList(goods_id)
+          self.commentList(goods_id);
         } else {
           self.$Message.error(response.data.msg);
         }
@@ -666,8 +669,7 @@ export default {
               res.data.list[i].goods_images = str[0];
             }
             vm.tableData = res.data.list;
-            vm.tableShow.listCount = res.data.count;
-          } else {
+            vm.tableShow.listCount = res.data.listcount;
           }
         });
     },
