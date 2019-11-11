@@ -33,8 +33,8 @@
             <Radio label="2">固定样式</Radio>
           </RadioGroup>
         </FormItem>
-        <FormItem label="套餐版本" prop="mode_grade">
-            <Select v-model="formValidate.mode_grade" style="width: 400px;">
+        <FormItem label="套餐版本" prop="model_grade">
+            <Select v-model="formValidate.model_grade" style="width: 400px;">
                 <Option value="1">普通套餐</Option>
                 <Option value="2">精装套餐</Option>
                 <Option value="3">豪华套餐</Option>
@@ -153,7 +153,7 @@ export default {
         {
           title: "等级名称",
           align: "center",
-          key: "mode_grade"
+          key: "model_grade"
         },
         {
           title: "等级价格（年费）",
@@ -176,13 +176,13 @@ export default {
       ],
       formValidate: {
         id: 0,
-        mode_grade: "",
+        model_grade: "",
         model_meal_category: "1",
         model_meal_price: "",
         model_rank: 1,
       },
       ruleValidate: {
-        mode_grade: [
+        model_grade: [
           {
             required: true,
             message: "套餐版本不能为空",
@@ -279,7 +279,7 @@ export default {
     cancel() {
       this.formValidate = {
         id: 0,
-        mode_grade: "",
+        model_grade: "",
         model_meal_category: "1",
         model_meal_price: "",
         model_rank: 1,

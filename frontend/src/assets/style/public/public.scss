@@ -20,3 +20,18 @@ h2.title {
     color: rgb(250, 41, 1);
   }
 }
+
+/* 单行打点 */
+.single-dot {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.double-dot {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

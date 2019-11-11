@@ -90,12 +90,16 @@
             style="width:500px;"
           />
         </FormItem>
+        <FormItem label="排序">
+          <InputNumber :min="1" v-model="formValidate.model_rank" style="width: 400px;"></InputNumber>
+        </FormItem>
         <FormItem label="状态" prop="model_status">
           <RadioGroup v-model="formValidate.model_status">
             <Radio label="1">展示</Radio>
             <Radio label="2">不展示</Radio>
           </RadioGroup>
         </FormItem>
+        
       </Form>
       <div slot="footer">
         <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
@@ -255,6 +259,12 @@ export default {
           width: 100
         },
         {
+          title: "排序",
+          align: "center",
+          key: "model_rank",
+          width: 100
+        },
+        {
           title: "操作",
           align: "center",
           key: "handle",
@@ -268,7 +278,8 @@ export default {
         model_image: "",
         model_type: "1",
         model_des: "",
-        model_status: "1"
+        model_status: "1",
+        model_rank: 1
       },
       ruleValidate: {
         model_name: [
@@ -365,7 +376,8 @@ export default {
         model_image: "",
         model_type: "1",
         model_des: "",
-        model_status: "1"
+        model_status: "1",
+        model_rank: 1
       };
       this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {

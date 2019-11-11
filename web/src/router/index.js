@@ -16,27 +16,33 @@ const RouterConfig = {
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
+    // console.log(0)
     let apiAuth = sessionStorage.getItem('apiAuth');
     iView.LoadingBar.start();
     Util.title(to.meta.title);
     if (sessionStorage.getItem('locking') === '1' && to.name !== 'locking') { // 判断当前是否是锁定状态
+        // console.log(1)
         next({
             replace: true,
             name: 'locking'
         });
     } else if (sessionStorage.getItem('locking') === '0' && to.name === 'locking') {
+        // console.log(2)
         next(false);
     } else {
         if (!apiAuth && to.name !== 'login') { // 判断是否已经登录且前往的页面不是登录页
+            // console.log(3)
             next({
                 name: 'login'
             });
         } else if (apiAuth && to.name === 'login') { // 判断是否已经登录且前往的是登录页
+            // console.log(4)
             Util.title();
             next({
                 name: 'home_index'
             });
         } else {
+            // console.log(5)
             // 统一处理请求的UserToken
             axios.defaults.baseURL = config.baseUrl;
             axios.interceptors.request.use(function (config) {

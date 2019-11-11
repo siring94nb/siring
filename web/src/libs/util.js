@@ -409,6 +409,7 @@ util.toDefaultPage = function (routers, name, route, next) {
     let notHandle = true;
     while (i < len) {
         if (routers[i].name === name && routers[i].children && routers[i].redirect === undefined) {
+            // console.log('in')
             route.replace({
                 name: routers[i].children[0].name
             });
@@ -418,7 +419,9 @@ util.toDefaultPage = function (routers, name, route, next) {
         }
         i++;
     }
+    // console.log(next)
     if (notHandle) {
+        // console.log('out')
         next();
     }
 };
