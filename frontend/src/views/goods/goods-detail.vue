@@ -40,6 +40,7 @@
                     value-key="id"
                     @change="chooseType"
                     placeholder="请选择"
+                    size="small"
                   >
                     <el-option
                       v-for="item in goodsDetail.special"
@@ -292,11 +293,15 @@ export default {
                 i {
                   font-size: 24px;
                   margin-right: 8px;
+                  vertical-align: sub;
                 }
               }
               .terminal {
                 font-size: 13px;
                 color: #333333;
+                .el-select{
+                  width: 250px;
+                }
               }
             }
             .btns {
@@ -446,6 +451,7 @@ export default {
                 margin-bottom: 10px;
                 .el-icon-time {
                   font-size: 20px;
+                  vertical-align: sub;
                 }
                 span {
                   color: #ff0000;

@@ -28,6 +28,13 @@ export const Register = params => {
 }
 
 /**
+ * 退出登录
+ */
+export const Logout = params => {
+  return axios.get(`${base_url}api/user/logout`, { params: params });
+}
+
+/**
  * 获取手机验证码
  * @param {phone}
  */

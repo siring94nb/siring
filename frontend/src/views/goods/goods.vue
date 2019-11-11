@@ -425,6 +425,7 @@ export default {
               align-items: center;
             }
             .top {
+              margin-bottom: 5px;
               .single-dot{
                 max-width: 210px;
               }

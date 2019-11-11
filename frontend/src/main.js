@@ -12,7 +12,13 @@ Vue.prototype.$qs = qs;
 
 Vue.use(ElementUI);
 
-Vue.config.productionTip = false
+// router.beforeEach((to, from, next) => {
+
+// })
+
+router.afterEach((to,from,next) => {
+  window.scrollTo(0,0);
+});
 
 new Vue({
   router,
