@@ -95,7 +95,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import { GetTempList } from "@/api/api";
+import {GetTempList, templatePay } from "@/api/api";
 
 export default {
   name: "selectCombo",
@@ -118,7 +118,9 @@ export default {
       num:1,
       total:0,
       radio:'',
-      model_meal_category: 2
+      model_meal_category: 2,
+      model_grade: 1,
+      years: 1,
     };
   },
   mounted() {
@@ -139,6 +141,7 @@ export default {
     selectEvent(index){
       this.selectFlag = index;
       this.price=this.versionData[index].model_meal_price;
+      this.model_grade=this.versionData[index].model_grade;
       this.total = Number(this.price)*Number(this.num)*Number(this.percent);
     },
     //选择套餐
@@ -147,10 +150,29 @@ export default {
     },
     //改变年数
     numChange(val){
+      this.years = val;
       this.total = Number(this.price)*Number(this.percent)*Number(val);
     },
     //结算
-    pay(){}
+    pay(){
+      var params = {
+        member_account: '13502882637',
+        model_type: this.model_meal_category,
+        model_meal_type: this.model_grade,
+        order_amount: this.total,
+        meal_end_time: this.years,
+        model_id: this.$route.params.arr,
+        applet_name: this.$route.params.prog_name,
+        applet_logo: this.$route.params.imageUrl
+      }
+      templatePay(params).then(res => {
+        console.log(res)
+         let { code, data, msg } = res;
+        // if (code === 1) {
+        //   this.city = data;
+        // }
+      });
+    }
   }
 };
 </script>
