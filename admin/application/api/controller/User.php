@@ -160,7 +160,11 @@ class User extends Base
                 Session::set('uid',$user['id']);
                 Session::set('user_salt',$user['salt']);
 
-            $res['user_id'] = $user['id'];
+            $res = [
+                'user_id'=>$user['id'],
+                'phone' =>$user['phone'],
+                'user_img' =>$user['img'],
+            ];
             return json(['code'=>1,'msg'=>'登录成功','data'=>$res]);
         }else {
             return json(['code'=>0,'msg'=>'密码错误']);
