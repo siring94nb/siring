@@ -24,6 +24,7 @@ Route::group('api', function () {
         Route::any('login','api/User/login');//登录
         Route::any('forget','api/User/forget');//忘记密码
         Route::any('upd_phone','api/User/edit_phone');//修改手机号
+        Route::any('logout','api/User/logout');//用户退出
     });
 
     //轮播接口接口

@@ -271,7 +271,16 @@ class User extends Base
             return json(['code'=>0,'msg'=>'密码错误']);
         }
 
+    }
 
+    /**
+     * 退出
+     */
+    public function logout(){
+        //销毁session
+        Session::clear();
+
+       returnJson(1,'退出成功');exit();
 
     }
 
