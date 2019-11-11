@@ -23,6 +23,7 @@ class MealOrder extends Base
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
+            $postData['order_number']='HY'.date('Ymdhis').
             $postData['create_time']=time();
             $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
             $postData['order_status']=1;    //  1   未付款
