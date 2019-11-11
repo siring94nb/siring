@@ -1,8 +1,21 @@
 <style lang="less" scoped>
 @import "./goods.less";
 </style>
+<style scoped>
+.goods >>> .subCol > ul > li {
+  margin: 0 -18px;
+  list-style: none;
+  text-align: center;
+  padding: 9px;
+  border-bottom: 1px solid rgb(232,234,236);
+  overflow-x: hidden;
+}
+.goods >>> .subCol > ul > li:last-child {
+  border-bottom: none;
+}
+</style>
 <template>
-  <div>
+  <div class="goods">
     <Row>
       <Col span="24">
         <Card style="margin-bottom: 10px">
@@ -333,9 +346,11 @@ export default {
           align: "center",
           key: "category_id",
           render: (h, param) => {
-            for(let i = 0; i < this.sortList.length; i ++ ) {
+            for (let i = 0; i < this.sortList.length; i++) {
               var category_id;
-              if(Number(param.row.category_id) == Number(this.sortList[i].id)) {
+              if (
+                Number(param.row.category_id) == Number(this.sortList[i].id)
+              ) {
                 category_id = this.sortList[i].category_name;
               }
             }
@@ -345,17 +360,84 @@ export default {
         {
           title: "终端版本",
           align: "center",
-          key: "attr_title"
+          key: "attr_title",
+          width: 250,
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.attr_title);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "开发周期",
           align: "center",
-          key: "cycle_time"
+          key: "cycle_time",
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.cycle_time);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "价格",
           align: "center",
-          key: "price"
+          key: "price",
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.bottom_price);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "排序",
@@ -449,8 +531,9 @@ export default {
                   "on-change": function(status) {
                     axios
                       .post("Goods/change_goods_status", {
-                         goods_recommend_status: status,
-                          id: currentRowData.id})
+                        goods_recommend_status: status,
+                        id: currentRowData.id
+                      })
                       .then(function(response) {
                         let res = response.data;
                         if (res.code === 1) {
@@ -483,6 +566,7 @@ export default {
         }
       });
     },
+
     cancel() {
       // 移除图片
       this.visible = false;
@@ -624,13 +708,13 @@ export default {
       });
     },
     //删除评论
-    commentDel(id,goods_id) {
+    commentDel(id, goods_id) {
       let self = this;
       axios.post("Goods/comment_del", { id: id }).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
           self.$Message.success(response.data.msg);
-          self.commentList(goods_id)
+          self.commentList(goods_id);
         } else {
           self.$Message.error(response.data.msg);
         }

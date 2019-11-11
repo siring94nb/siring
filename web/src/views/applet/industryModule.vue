@@ -99,7 +99,6 @@
             <Radio label="2">不展示</Radio>
           </RadioGroup>
         </FormItem>
-        
       </Form>
       <div slot="footer">
         <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
@@ -262,7 +261,37 @@ export default {
           title: "排序",
           align: "center",
           key: "model_rank",
-          width: 100
+          width: 100,
+          render: (h, params) => {
+            let vm = this;
+            return h("div", [
+              h("Input", {
+                style: {
+                  width: "60px"
+                },
+                props: {
+                  type: "Number",
+                  value: params.row.model_rank //使用key的键值
+                },
+                on: {
+                  input: event => {
+                    axios.post("AppletManage/change_model_rank", {
+                        id: params.row.id,
+                        model_rank: event
+                      })
+                      .then(function(response) {
+                        let res = response.data;
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          vm.$Message.error(res.msg);
+                        }
+                      });
+                  }
+                }
+              })
+            ]);
+          }
         },
         {
           title: "操作",

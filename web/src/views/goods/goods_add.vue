@@ -135,12 +135,15 @@
         <div id="wangeditor" v-model="formItem.data.goods_detail" style="width:1000px;"></div>
       </FormItem>
       <FormItem label="功能描述">
+        <div id="wangeditor1" v-model="formItem.data.goods_des" style="width:1000px;"></div>
+      </FormItem>
+      <!-- <FormItem label="功能描述">
         <Input
           v-model="formItem.data.goods_des"
           type="textarea"
           :autosize="{minRows: 4,maxRows: 8}" 
           style="width:1000px;"/>
-      </FormItem>
+      </FormItem> -->
       <FormItem label="推荐商品">
         <RadioGroup v-model="formItem.data.goods_recommend_status">
           <Radio label="1">推荐</Radio>
@@ -223,7 +226,8 @@ export default {
         // seo: [{ required: true, message: "SEO关键字不能为空", trigger: "blur" }],
         // img: [{ required: true, message: "商品图片不能为空", trigger: "blur" }],
       },
-      html: ""
+      html: "",
+      html1: ''
     };
   },
   created() {
@@ -330,6 +334,9 @@ export default {
             if (res.code === 1) {
               vm.editor.txt.html(res.data.data.goods_detail);
               vm.html = res.data.data.goods_detail;
+
+              vm.editor1.txt.html(res.data.data.goods_des);
+              vm.html1 = res.data.data.goods_des;
 
               //图片
               if (res.data.data.goods_images != "") {
@@ -463,9 +470,27 @@ export default {
     this.editor.customConfig.onchange = function(html) {
       vm.formItem.data.goods_detail = html;
     };
+    this.editor.create();
+    //第二个编辑器
+    this.editor1 = new wangEditor("#wangeditor1");
+    this.editor1.customConfig.uploadFileName = "image";
+    this.editor1.customConfig.uploadImgMaxLength = 1;
+    this.editor1.customConfig.uploadImgServer =
+      config.front_url + "file/qn_upload";
+    this.editor1.customConfig.uploadImgHooks = {
+      customInsert: function(insertImg, result, editor1) {
+        if (result.code == 1) {
+          insertImg(result.data.filePath);
+        }
+      }
+    };
+    this.editor1.customConfig.onchange = function(html) {
+      vm.formItem.data.goods_des = html;
+    };
+    this.editor1.create();
     this.UploadAction = config.front_url + "file/qn_upload";
     this.uploadList = this.$refs.upload.fileList;
-    this.editor.create();
+    
   }
 };
 </script>
