@@ -110,57 +110,15 @@
       </span>
     </el-dialog>
 
-    <!-- 结算 -->
-    <div :class="{payment: true, show: showPaymentFlag}">
-      <div class="payment-inner">
-        <div>费用：</div>
-        <div>
-          <div class="bgw">￥{{price}}</div>
-          <p class="tip">金额</p>
-        </div>
-        <div class="symbol">×</div>
-        <div>
-          <div class="bgw">{{percent}}%</div>
-          <p class="tip">
-            会员折扣
-            <span class="ques">？</span>
-          </p>
-        </div>
-        <div class="symbol">×</div>
-        <el-input-number
-          v-model="num"
-          controls-position="right"
-          @change="numChange"
-          :min="1"
-          :max="10"
-        ></el-input-number>
-        <div class="symbol">=</div>
-        <div>
-          <div class="bgw">￥{{total}}</div>
-        </div>
-        <el-button type="danger" @click="pay">立即支付</el-button>
-      </div>
-    </div>
-
-    <!-- 选择支付方式 -->
-    <el-dialog title="选择支付方式" :visible.sync="showPayWayFlag" width="500px" center>
-      <el-form ref="payway" :model="payway" :rules="wayRule" label-width="80px">
-        <el-form-item label="支付方式" prop="way">
-          <el-radio-group v-model="payway.way" @change="selectway">
-            <el-radio :label="1">微信</el-radio>
-            <el-radio :label="2">支付宝</el-radio>
-          </el-radio-group>
-        </el-form-item>
-      </el-form>
-      <div class="code-box">
-        <img :src="payqrcode" alt />
-      </div>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="showPayWayFlag = false">取 消</el-button>
-        <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
-      </span>
-    </el-dialog>
+    <payment-bar
+      ref="paymentbar"
+      :showPaymentFlag="showPaymentFlag"
+      :showPayWayFlag="showPayWayFlag"
+      :price="price"
+      :percent="percent"
+      :pay="pay"
+      @hide-dialog="showPayWayFlag = false"
+    />
   </div>
 </template>
 
@@ -169,6 +127,7 @@ import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
 import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
+import PaymentBar from "@/components/join/paymentBar";
 import {
   GetProvince,
   GetCityList,
@@ -182,7 +141,8 @@ export default {
     Myheader,
     JoinEnter,
     Myswiper,
-    Myfooter
+    Myfooter,
+    PaymentBar
   },
   data() {
     return {
@@ -246,7 +206,6 @@ export default {
           }
         ]
       },
-      orderId: "",
       payqrcode: ""
     };
   },
@@ -321,7 +280,6 @@ export default {
     pay() {
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
-          this.showPayWayFlag = true;
           CityOrderAdd({
             grade: this.ruleForm.cityVal,
             con: this.ruleForm.textarea,
@@ -331,23 +289,11 @@ export default {
           }).then(res => {
             let { code, data, msg } = res;
             if (code === 1) {
-              this.orderId = data;
-              this.selectway();
-            }
-          });
-        }
-      });
-    },
-    selectway() {
-      this.$refs["payway"].validate(valid => {
-        if (valid) {
-          Payment({
-            type: this.payway.way,
-            order_id: this.orderId
-          }).then(res => {
-            let { code, imgData, msg } = res;
-            if (code === 1) {
-              this.payqrcode = imgData;
+              this.showPayWayFlag = true; //显示扫码弹窗
+              this.$refs.paymentbar.getOrderId(data);
+              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+            } else {
+              this.$message.error(msg);
             }
           });
         }
@@ -552,9 +498,9 @@ export default {
       }
     }
   }
-  .code-box{
+  .code-box {
     text-align: center;
-    img{
+    img {
       width: 300px;
       height: 300px;
     }

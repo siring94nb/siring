@@ -39,11 +39,11 @@
               <div class="model_mall_info_box">
                 <div class="name_box">
                   <div class="top">
-                    <div>
+                    <div class="single-dot">
                       <!-- <i class="iconfont icon-hotchunse"></i> -->
-                      <span class="goods_name single-dot">{{item.goods_name}}</span>
+                      <span class="goods_name">{{item.goods_name}}</span>
                     </div>
-                    <a href="javascript:void(0);" class="star-off"></a>
+                    <i class="el-icon-star-off el-icon-star-on"></i>
                   </div>
                   <div class="bottom">
                     <span class="desc_span">APP|小程序|公众号|H5</span>
@@ -67,6 +67,9 @@
                 </div>
               </div>
             </div>
+            <div class="goods-item-holder"></div>
+            <div class="goods-item-holder"></div>
+            <div class="goods-item-holder"></div>
           </div>
           <router-link to="/goods" class="more">更多</router-link>
         </div>
@@ -91,7 +94,7 @@
               <div class="disadvantage">
                 <div class="icon_box">
                   <i class="iconfont icon-dianzan1" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <span>优势</span>
+                  <span>劣势</span>
                 </div>
                 <div class="text_box">
                   <p>虽然费用低廉，功能上不如定制灵活；如需个性定制服务，请在模板商城或定制开发板块上寻求服务</p>
@@ -473,6 +476,18 @@ export default {
               align-items: center;
             }
             .top {
+              margin-bottom: 5px;
+              .el-icon-star-off {
+                font-size: 20px;
+                color: #999999;
+              }
+              .el-icon-star-on {
+                font-size: 20px;
+                color: rgb(244, 234, 42);
+              }
+              .single-dot {
+                max-width: 210px;
+              }
               i {
                 color: #ff0000;
                 font-size: 10px;
@@ -513,9 +528,11 @@ export default {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 vertical-align: middle;
+                color: #6B6B6B;
+                font-size: 16px;
               }
               i {
-                font-size: 24px;
+                font-size: 16px;
                 vertical-align: middle;
                 margin-right: 5px;
               }
@@ -526,8 +543,17 @@ export default {
               span {
                 color: #666;
               }
+              .el-icon-time{
+                margin-right: 5px;
+              }
             }
           }
+        }
+        .goods-item-holder {
+          width: 260px;
+          height: 0;
+          margin: 0;
+          padding: 0;
         }
       }
       .more {

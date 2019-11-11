@@ -80,8 +80,18 @@ export default new Router({
     },
     {
       path: '/programSaaS',
-      name: 'aboutUs',
+      name: 'programSaaS',
       component: () => import('@/views/programSaaS/index')
-    }
+    },
+    {
+      path: '/selectCombo',
+      name: 'selectCombo',
+      component: () => import('@/views/programSaaS/selectCombo')
+    },
+    {
+      path: '/comboPay',
+      name: 'comboPay',
+      component: () => import('@/views/programSaaS/comboPay')
+    },
   ]
 })
