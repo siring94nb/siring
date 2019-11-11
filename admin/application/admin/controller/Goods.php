@@ -39,13 +39,14 @@ class Goods extends Base{
             $where['goods_name'] = ['like', "%{$goods_name}%"];
         }
         $list=Good::getGoodsList($where);
-        foreach($list as $k =>$v){
+        foreach($list['data'] as $k =>$v){
             //获取当前id对应的规格
-            $list[$k]['special']=Special::getSpecialInfo($v['id']);
+            $list['data'][$k]['special']=Special::getSpecialInfo($v['id']);
         }
-        $listInfo = $list;
+        $listInfo = $list['data'];
         return $this->buildSuccess([
             'list'  => $listInfo,
+            'listCount'  => $list['total'],
         ]);
     }
     /** 
