@@ -74,6 +74,11 @@ Route::group('api', function () {
     Route::group('ModelMeal',function(){
         Route::any('model_meal_list','api/ModelMeal/model_meal_list'); //获取模板套餐
     });
+    //行业模板订单
+    Route::group('MealOrder',function(){
+        Route::any('meal_order_add','api/MealOrder/meal_order_add'); //下单
+        Route::any('meal_order_pay','api/MealOrder/meal_order_pay'); //下单
+    });
 
     //角色加盟订单
     Route::group('Software',function (){
