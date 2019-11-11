@@ -11,8 +11,31 @@ namespace app\api\controller;
 use app\util\ApiLog;
 use app\util\ReturnCode;
 use think\Controller;
+use think\Session;
 
 class Base extends Controller {
+
+    /**
+     * lilu
+     * 前置操作
+     */
+    protected $beforeActionList = [
+        'is_login'  =>  ['only'=>'meal_order_add'],
+    ];
+
+
+    /**
+     * lilu
+     * 判断用户是否登录
+     */
+    protected function is_login()
+    {
+        if(Session::get('uid')){
+            return   true;
+        }else{
+            return json(['code' => 0,'msg' =>'用户暂未登录']);
+        }
+    }
 
     public function __construct(){
         parent::__construct();

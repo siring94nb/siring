@@ -171,3 +171,9 @@ export const GetTemplate = params => {
 export const GetTempList = data => {
   return axios.post(`${base_url}api/ModelMeal/model_meal_list`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 小程序SaaS 模板套餐下单
+ */
+export const templatePay = data => {
+  return axios.post(`${base_url}api/MealOrder/meal_order_add`, qs.stringify(data)).then(res => res.data);
+}

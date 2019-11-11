@@ -53,7 +53,7 @@ class User extends Model
     {
         return $this->save([
             'password' => $password,
-        ],['phone_number' => $tel,]);
+        ],['phone' => $tel,]);
     }
 
     //修改手机号

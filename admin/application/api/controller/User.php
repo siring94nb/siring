@@ -47,7 +47,7 @@ class User extends Base
             Session::set('mobileCode',$mobileCode);
             Session::set('mobile',$mobile);
         }
-        $content = "【Siring思锐】尊敬的用户，您本次验证码为{$mobileCode}，(一站式移动互联网开发-运营-推广-API赋能-平台验证码，十分钟内有效)";
+        $content = "【Siring思锐】验证码:{$mobileCode}，(一站式移动互联网开发-运营-推广-赋能平台)十分钟内有效";
         $output = sendMessage($content,$mobile);
 
         return $output  ? returnJson(1,'发送成功') : returnJson(0,'发送失败');
@@ -160,7 +160,11 @@ class User extends Base
                 Session::set('uid',$user['id']);
                 Session::set('user_salt',$user['salt']);
 
-            $res['user_id'] = $user['id'];
+            $res = [
+                'user_id'=>$user['id'],
+                'phone' =>$user['phone'],
+                'user_img' =>$user['img'],
+            ];
             return json(['code'=>1,'msg'=>'登录成功','data'=>$res]);
         }else {
             return json(['code'=>0,'msg'=>'密码错误']);
