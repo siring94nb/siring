@@ -71,7 +71,7 @@
         <div class="symbol">×</div>
         <div>
         <el-input-number
-          v-model="num"
+          v-model="years"
           controls-position="right"
           @change="numChange"
           :min="1"
@@ -95,7 +95,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import { GetTempList } from "@/api/api";
+import {GetTempList, templatePay } from "@/api/api";
 
 export default {
   name: "selectCombo",
@@ -114,11 +114,14 @@ export default {
       selectFlag:0, //mouseenter 给div[index]添加颜色
       showPaymentFlag: false,
       price:0,
-      percent:0.98,
-      num:1,
+      percent: 100,
       total:0,
       radio:'',
-      model_meal_category: 2
+      model_meal_category: 2,
+      model_grade: 1,
+      years: 1,
+      model_meal_type: '',
+      model_type:''
     };
   },
   mounted() {
@@ -129,6 +132,8 @@ export default {
     init() {
       this.getTempList();
       this.model_meal_category = this.$route.params.model_meal_category;
+      if(this.model_meal_category == 1) this.model_type = 'diy';
+      else this.model_type = '固定样式';
     },
     //获取模板信息
     getTempList() {
@@ -139,7 +144,9 @@ export default {
     selectEvent(index){
       this.selectFlag = index;
       this.price=this.versionData[index].model_meal_price;
-      this.total = Number(this.price)*Number(this.num)*Number(this.percent);
+      this.model_grade=this.versionData[index].model_grade;
+      this.model_meal_type = this.comboName[index];
+      this.total = Number(this.price)*Number(this.years)*Number(this.percent) / 100;
     },
     //选择套餐
     selCombo(){
@@ -147,10 +154,34 @@ export default {
     },
     //改变年数
     numChange(val){
-      this.total = Number(this.price)*Number(this.percent)*Number(val);
+      this.years = val;
+      this.total = Number(this.price)*Number(this.percent)*Number(val) / 100;
     },
     //结算
-    pay(){}
+    pay(){
+      console.log(this.radio)
+      if(this.radio) {
+        var params = {
+          member_account: '13502882637',
+          model_type: this.model_type,
+          model_meal_type: this.model_meal_type,
+          order_amount: this.total,
+          meal_end_time: this.years,
+          model_id: this.$route.params.arr,
+          applet_name: this.$route.params.prog_name,
+          applet_logo: this.$route.params.imageUrl
+        }
+        templatePay(params).then(res => {
+          console.log(res)
+           let { code, data, msg } = res;
+          // if (code === 1) {
+          //   this.city = data;
+          // }
+        });
+      } else {
+         this.$message.error("请确认");
+      }
+    }
   }
 };
 </script>
