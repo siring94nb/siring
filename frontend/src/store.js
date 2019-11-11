@@ -10,14 +10,18 @@ export default new Vuex.Store({
     phone: ''
   },
   mutations: {
-    setUserId(state, id) {
-      state.user_id = id;
-      sessionStorage.user_id = id;
+    login(state, data) {
+      state.user_id = data.id;
+      state.phone = data.phone;
+      sessionStorage.setItem('user_id', data.id);
+      sessionStorage.setItem('phone', data.phone);
     },
-    setPhone(state, phone){
-      state.phone = phone;
-      sessionStorage.phone = phone;
+    logout(state, data) {
+      state.user_id = '';
+      state.phone = '';
+      sessionStorage.clear();
     }
+
   },
   actions: {
 

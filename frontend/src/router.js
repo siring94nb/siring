@@ -10,8 +10,10 @@ Vue.use(Router)
 const userid = sessionStorage.getItem('user_id');
 const phone = sessionStorage.getItem('phone');
 if (userid) {
-  store.commit('setUserId', userid);
-  store.commit('setPhone', phone);
+  store.commit('login', {
+    id: userid,
+    phone: phone
+  });
 }
 
 export default new Router({

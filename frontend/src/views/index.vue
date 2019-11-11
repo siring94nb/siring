@@ -26,47 +26,50 @@
         </div>
         <div class="rjdz-goods">
           <div class="goods-list">
-            <div class="goods-item" v-for="(item, index) in goodsList.data" :key="index">
-              <div class="goods-img">
-                <router-link
-                  :to="{name: 'goods-detail', params: {id: item.id}}"
-                  tag="div"
-                  class="goods-img"
-                >
-                  <img :src="item.img" width="260" height="165" alt />
-                </router-link>
-              </div>
-              <div class="model_mall_info_box">
-                <div class="name_box">
-                  <div class="top">
-                    <div class="single-dot">
-                      <!-- <i class="iconfont icon-hotchunse"></i> -->
-                      <span class="goods_name">{{item.goods_name}}</span>
+            <template v-for="(item, index) in goodsList.data">
+              <div class="goods-item" v-if="index < 8" :key="item.id">
+                <div class="goods-img">
+                  <router-link
+                    :to="{name: 'goods-detail', params: {id: item.id}}"
+                    tag="div"
+                    class="goods-img"
+                  >
+                    <img :src="item.img" width="260" height="165" alt />
+                  </router-link>
+                </div>
+                <div class="model_mall_info_box">
+                  <div class="name_box">
+                    <div class="top">
+                      <div class="single-dot">
+                        <!-- <i class="iconfont icon-hotchunse"></i> -->
+                        <span class="goods_name">{{item.goods_name}}</span>
+                      </div>
+                      <i class="el-icon-star-off el-icon-star-on"></i>
                     </div>
-                    <i class="el-icon-star-off el-icon-star-on"></i>
+                    <div class="bottom">
+                      <span class="desc_span">APP|小程序|公众号|H5</span>
+                      <span class="ljgm">
+                        <router-link
+                          :to="{name: 'goods-detail', params: {id: item.id}}"
+                          href="javascript:;"
+                        >&gt;&gt;立即购买</router-link>
+                      </span>
+                    </div>
                   </div>
-                  <div class="bottom">
-                    <span class="desc_span">APP|小程序|公众号|H5</span>
-                    <span class="ljgm">
-                      <router-link
-                        :to="{name: 'goods-detail', params: {id: item.id}}"
-                        href="javascript:;"
-                      >&gt;&gt;立即购买</router-link>
-                    </span>
+                  <div class="time_box">
+                    <div class="brand">
+                      <i class="iconfont icon-fenleishouye"></i>
+                      <span>{{item.category_title}}</span>
+                    </div>
+                    <p>
+                      <i class="el-icon-time"></i>
+                      <span>{{item.period}}天</span>
+                    </p>
                   </div>
-                </div>
-                <div class="time_box">
-                  <div class="brand">
-                    <i class="iconfont icon-fenleishouye"></i>
-                    <span>{{item.category_title}}</span>
-                  </div>
-                  <p>
-                    <i class="el-icon-time"></i>
-                    <span>{{item.period}}天</span>
-                  </p>
                 </div>
               </div>
-            </div>
+            </template>
+
             <div class="goods-item-holder"></div>
             <div class="goods-item-holder"></div>
             <div class="goods-item-holder"></div>
@@ -387,7 +390,7 @@ export default {
       };
       GetGoods(params).then(res => {
         let { code, data, msg } = res;
-        console.log(data);
+        // console.log(data);
         if (code !== 1) {
           this.$message.error(msg);
         } else {
@@ -528,7 +531,7 @@ export default {
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 vertical-align: middle;
-                color: #6B6B6B;
+                color: #6b6b6b;
                 font-size: 16px;
               }
               i {
@@ -543,7 +546,7 @@ export default {
               span {
                 color: #666;
               }
-              .el-icon-time{
+              .el-icon-time {
                 margin-right: 5px;
               }
             }

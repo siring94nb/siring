@@ -33,7 +33,8 @@
             <el-input placeholder="请填写邀请人的会员绑定手机号或邀请码" style="font-size:12px;"></el-input>
           </div>
           <div class="coupons">
-            <span class="hui">（一次性可使用5张优惠券）</span> <span class="blue">使用优惠券>></span>
+            <span class="hui">（一次性可使用5张优惠券）</span>
+            <span class="blue">使用优惠券>></span>
           </div>
         </div>
       </div>
@@ -41,6 +42,73 @@
         选择一下方式支付：
         <span class="money red">￥30.00</span>
         <span class="red">（总价￥90.00 -余额￥10.00 -优惠券￥50.00 ）</span>
+      </div>
+      <div class="main-bottom">
+        <el-row :gutter="20">
+          <el-col :span="4">
+            <div style="text-align:center;">支付类型：</div>
+          </el-col>
+          <el-col :span="8" :offset="5">
+            <div style="text-align:center;">
+              <el-radio v-model="radio" label="1">备选项</el-radio>
+              <el-radio v-model="radio" label="2">备选项</el-radio>
+            </div>
+          </el-col>
+        </el-row>
+        <div class="line"></div>
+        <div class="bankPay">
+          <div class="pay-l">
+            <div class="pay-bank">
+              <div class="pay-title">
+                <span class="red">*</span>支付银行：
+              </div>
+              <div style="font-size:14px">
+                <el-select v-model="value" placeholder="如没有添加银行卡，请添加→">
+                  <el-option
+                    v-for="item in options"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+                  ></el-option>
+                </el-select>
+              </div>
+              <div class="addCard">
+                <el-button type="danger" plain>+银行卡</el-button>
+              </div>
+            </div>
+            <div class="pay-bank">
+              <div class="pay-title">
+                <span class="red">*</span>支付时间：
+              </div>
+              <div style="font-size:14px">
+                <el-date-picker
+                  v-model="value11"
+                  type="date"
+                  placeholder="选择日期"
+                  format="yyyy 年 MM 月 dd 日"
+                  value-format="yyyy-MM-dd"
+                ></el-date-picker>
+              </div>
+              <div></div>
+            </div>
+            <div class="pay-bank">
+              <div class="pay-title">
+                留言：
+              </div>
+              <div style="font-size:14px">
+                <el-input type="textarea" style="width:220px;" :rows="4"></el-input>
+              </div>
+              <div></div>
+            </div>
+            <div style="text-align:center;">
+              <el-button type="danger" style="width:220px;margin-left:20px;">确定</el-button>
+            </div>
+          </div>
+          <div style="height:300px;width:1px;background-color:rgb(201,201,201);margin:auto 0;margin-left:5px;"></div>
+          <div class="pay-r">
+            
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -57,7 +125,20 @@ export default {
   },
   data() {
     return {
-      checked: []
+      checked: [],
+      radio: "1",
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
+        },
+        {
+          value: "选项2",
+          label: "双皮奶"
+        }
+      ],
+      value: "",
+      value11:''
     };
   },
   mounted() {
@@ -74,9 +155,14 @@ export default {
 .hui {
   color: rgb(174, 174, 174);
 }
-.red{color: red;}
+.red {
+  color: red;
+}
+.el-radio {
+  margin-right: 60px;
+}
 .blue {
-  color: rgb(102,204,255);
+  color: rgb(102, 204, 255);
   font-weight: 700;
 }
 .index {
@@ -86,6 +172,7 @@ export default {
   h1 {
     font-size: 33px;
     text-align: center;
+    margin: 20px 0;
   }
   .main {
     border: 1px solid rgb(188, 188, 188);
@@ -99,33 +186,65 @@ export default {
       .top-title {
         font-size: 24px;
         margin: 30px 0 30px 15px;
-        .hui{font-size: 16px;}
+        .hui {
+          font-size: 16px;
+        }
       }
-      .payable{
-        .price{
+      .payable {
+        .price {
           font-size: 23px;
-          }
+        }
       }
-      .balance{
+      .balance {
         display: flex;
       }
-      .invite{
-        .invite-code{
-          width:300px;
+      .invite {
+        .invite-code {
+          width: 300px;
           margin: auto;
         }
-        .coupons{
+        .coupons {
           text-align: right;
-          .hui{font-size: 12px;margin-right: 10px;}
+          .hui {
+            font-size: 12px;
+            margin-right: 10px;
+          }
         }
       }
     }
-    .payment{
-      background-color: rgb(242,242,242);
+    .payment {
+      background-color: rgb(242, 242, 242);
       padding: 15px 40px;
       font-size: 18px;
       margin: 15px 0;
-      .money{font-size: 28px;}
+      .money {
+        font-size: 28px;
+      }
+    }
+    .main-bottom {
+      .line {
+        height: 1px;
+        background-color: rgb(241, 241, 241);
+        margin: 20px 10%;
+      }
+      .bankPay {
+        display: flex;
+        .pay-l{
+          .pay-title {
+            text-align: right;
+            line-height: 35px;
+            margin: 0 15px;
+            width: 90px;
+          }
+          .pay-bank {
+            display: flex;
+            margin: 10px 0;
+            .addCard {
+              margin-left: 10px;
+            }
+          }
+        }
+      }
     }
   }
 }

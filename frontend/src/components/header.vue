@@ -22,7 +22,7 @@
               src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
             ></el-avatar>
             <span class="phone">136****3045</span>
-            <span>退出</span>
+            <span @click="onLogout">退出</span>
           </div>
         </div>
       </div>
@@ -142,7 +142,11 @@
         >
           <el-form-item label="手机号" prop="phone">
             <el-input v-model="dataObj.phone" placeholder="请输入手机号"></el-input>
-            <el-button class="getcode" @click="getPhoneCode">获取验证码</el-button>
+            <el-button
+              class="getcode"
+              :disabled="showTime"
+              @click="getPhoneCode"
+            >{{showTime?`${validateTime}秒后失效`:'获取验证码'}}</el-button>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
@@ -235,10 +239,17 @@
         >
           <el-form-item label="手机号" prop="phone">
             <el-input v-model="dataObj.phone" placeholder="请输入手机号"></el-input>
-            <el-button class="getcode" @click="getPhoneCode">获取验证码</el-button>
+            <el-button
+              class="getcode"
+              :disabled="showTime"
+              @click="getPhoneCode"
+            >{{showTime?`${validateTime}秒后失效`:'获取验证码'}}</el-button>
           </el-form-item>
-          <el-form-item label="验证码" prop="password">
+          <el-form-item label="验证码" prop="code">
             <el-input v-model="dataObj.code" placeholder="请输入验证码"></el-input>
+          </el-form-item>
+          <el-form-item label="新密码" prop="password">
+            <el-input v-model="dataObj.password" placeholder="请输入新密码"></el-input>
           </el-form-item>
         </el-form>
       </template>
@@ -256,11 +267,12 @@
 
 <script>
 import validCode from "@/components/vaildcode";
-import { Login, Register, GetCode, ForgetPwd } from "@/api/api";
+import { Login, Register, GetCode, ForgetPwd, Logout } from "@/api/api";
 export default {
   components: {
     validCode
   },
+  inject: ['reload'],
   data() {
     return {
       ifLogin: false,
@@ -274,7 +286,9 @@ export default {
       },
       isRegister: 1,
       showPwd: false,
-      protocol: false
+      protocol: false,
+      showTime: false,
+      validateTime: 60
     };
   },
   mounted() {
@@ -308,8 +322,12 @@ export default {
       const phone = this.dataObj.phone;
       if (phone) {
         GetCode({ phone: this.dataObj.phone }).then(res => {
-          let { data, msg, code } = data;
+          let { data, msg, code } = res;
           this.showMsg(msg, code);
+          if (code === 1) {
+            this.showTime = true;
+            this.countDown();
+          }
         });
       } else {
         this.$message({
@@ -317,6 +335,19 @@ export default {
           type: "error"
         });
       }
+    },
+    countDown() {
+      let time = 60;
+      let timer = setInterval(() => {
+        if (time <= 0) {
+          time = 0;
+          this.showTime = false;
+          clearInterval(timer);
+        } else {
+          time -= 1;
+          this.validateTime = time;
+        }
+      }, 1000);
     },
     submit(formName) {
       this.$refs[formName].validate(valid => {
@@ -354,7 +385,7 @@ export default {
         code: this.dataObj.code
       };
       Register(params).then(res => {
-        let { data, msg, code } = data;
+        let { data, msg, code } = res;
         this.showMsg(msg, code);
         this.handleClose();
       });
@@ -370,16 +401,45 @@ export default {
         this.showMsg(msg, code);
         console.log(res);
         if (code === 1) {
-          // 存储user_id
-          this.$store.commit("setUserId", data.user_id);
-          this.$store.commit("setPhone", data.phone);
+          // 存储用户信息
+          this.$store.commit("login", {
+            id: data.user_id,
+            phone: data.phone
+          });
           this.ifLogin = true;
-          this.handleClose();
+          this.reload();
+          // this.handleClose();
         }
       });
     },
     // 忘记密码
-    onForget() {}
+    onForget() {
+      const params = {
+        phone: this.dataObj.phone,
+        password: this.dataObj.password,
+        password_confirm: this.dataObj.password,
+        code: this.dataObj.code
+      };
+      ForgetPwd(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        console.log(res);
+        if(code === 1){
+          this.handleClose();
+        }
+      });
+    },
+    onLogout(){
+      Logout().then(res => {
+        let { data, msg, code } = res.data;
+        this.showMsg(msg, code);
+        if(code === 1){
+          this.$store.commit('logout');
+          this.ifLogin = false;
+          this.reload();
+        }
+      })
+    }
   }
 };
 </script>
