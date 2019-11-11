@@ -56,7 +56,9 @@ export default {
     Myheader
   },
   data() {
-    return {};
+    return {
+      checked: []
+    };
   },
   mounted() {
     this.init();

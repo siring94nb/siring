@@ -120,6 +120,8 @@ export default {
       model_meal_category: 2,
       model_grade: 1,
       years: 1,
+      model_meal_type: '',
+      model_type:''
     };
   },
   mounted() {
@@ -130,6 +132,8 @@ export default {
     init() {
       this.getTempList();
       this.model_meal_category = this.$route.params.model_meal_category;
+      if(this.model_meal_category == 1) this.model_type = 'diy';
+      else this.model_type = '固定样式';
     },
     //获取模板信息
     getTempList() {
@@ -141,6 +145,7 @@ export default {
       this.selectFlag = index;
       this.price=this.versionData[index].model_meal_price;
       this.model_grade=this.versionData[index].model_grade;
+      this.model_meal_type = this.comboName[index];
       this.total = Number(this.price)*Number(this.years)*Number(this.percent) / 100;
     },
     //选择套餐
@@ -158,8 +163,8 @@ export default {
       if(this.radio) {
         var params = {
           member_account: '13502882637',
-          model_type: this.model_meal_category,
-          model_meal_type: this.model_grade,
+          model_type: this.model_type,
+          model_meal_type: this.model_meal_type,
           order_amount: this.total,
           meal_end_time: this.years,
           model_id: this.$route.params.arr,
