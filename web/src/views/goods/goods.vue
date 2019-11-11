@@ -1,8 +1,21 @@
 <style lang="less" scoped>
 @import "./goods.less";
 </style>
+<style scoped>
+.goods >>> .subCol > ul > li {
+  margin: 0 -18px;
+  list-style: none;
+  text-align: center;
+  padding: 9px;
+  border-bottom: 1px solid rgb(232,234,236);
+  overflow-x: hidden;
+}
+.goods >>> .subCol > ul > li:last-child {
+  border-bottom: none;
+}
+</style>
 <template>
-  <div>
+  <div class="goods">
     <Row>
       <Col span="24">
         <Card style="margin-bottom: 10px">
@@ -347,17 +360,84 @@ export default {
         {
           title: "终端版本",
           align: "center",
-          key: "attr_title"
+          key: "attr_title",
+          width: 250,
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.attr_title);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "开发周期",
           align: "center",
-          key: "cycle_time"
+          key: "cycle_time",
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.cycle_time);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "价格",
           align: "center",
-          key: "price"
+          key: "price",
+          render: (h, param) => {
+            if (param.row.special.data != undefined) {
+              return h(
+                "div",
+                {
+                  attrs: {
+                    class: "subCol"
+                  }
+                },
+                [
+                  h(
+                    "ul",
+                    param.row.special.data.map(item => {
+                      return h("li", {}, item.bottom_price);
+                    })
+                  )
+                ]
+              );
+            } else {
+              return h("div", [h("span", "----")]);
+            }
+          }
         },
         {
           title: "排序",
@@ -486,6 +566,7 @@ export default {
         }
       });
     },
+
     cancel() {
       // 移除图片
       this.visible = false;
