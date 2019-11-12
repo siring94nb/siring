@@ -32,7 +32,7 @@ class MealOrder extends Base
             if($res){
                 //下单成功
                 $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
-                return  json(['1','下单成功','data'=>$res['id']]);
+                return  json(['1','下单成功','data'=>$re]);
             }else{
                 return   json(['0','下单失败']);
             }
@@ -67,8 +67,7 @@ class MealOrder extends Base
                 $title = '测试行业模板支付';
                 $wechatpay = new WechatPay();
                 $res = $wechatpay->pay($title,$order['order_number'], $pay, $url);
-                return $res;exit();
-              
+                return $res;
                 break;
             case 3 :    //银行转账 
                 
