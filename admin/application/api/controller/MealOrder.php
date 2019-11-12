@@ -67,7 +67,7 @@ class MealOrder extends Base
                 $title = '测试行业模板支付';
                 $wechatpay = new WechatPay();
                 $res = $wechatpay->pay($title,$order['order_number'], $pay, $url);
-                halt($res);
+                return $res;exit();
               
                 break;
             case 3 :    //银行转账 
