@@ -208,7 +208,7 @@ class Good extends Model
             $user_all = $user->user_detail($v['user_id']);
             $res[$k]['phone'] = $user_all['phone'];
             $res[$k]['img'] = $user_all['img'];
-            pp($res);die;
+            //pp($res);die;
             //会员等级信息
             $join_role = JoinRole::member_details($user_all['grade']);
             $res[$k]['ico'] = $join_role['img'];
