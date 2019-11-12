@@ -50,7 +50,7 @@
             <i class="iconfont icon-remen fire"></i>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/comboPay">
+          <router-link to="/programSaaS">
             <i class="icon iconfont icon-xiaochengxu"></i>
             <span>小程序SaaS</span>
             <p class="en-name">SaaS</p>
@@ -141,7 +141,7 @@
           style="width: 70%; margin:0 auto;"
         >
           <el-form-item label="手机号" prop="phone">
-            <el-input v-model="dataObj.phone" placeholder="请输入手机号"></el-input>
+            <el-input v-model="dataObj.phone" style="width: 64%;" placeholder="请输入手机号"></el-input>
             <el-button
               class="getcode"
               :disabled="showTime"
@@ -238,7 +238,7 @@
           style="width: 70%; margin:0 auto;"
         >
           <el-form-item label="手机号" prop="phone">
-            <el-input v-model="dataObj.phone" placeholder="请输入手机号"></el-input>
+            <el-input v-model="dataObj.phone" style="width: 64%;" placeholder="请输入手机号"></el-input>
             <el-button
               class="getcode"
               :disabled="showTime"

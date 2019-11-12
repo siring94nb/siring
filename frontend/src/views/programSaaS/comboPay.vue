@@ -9,21 +9,25 @@
           <span class="hui">（币种：人民币）</span>
         </div>
         <div class="payable">
-          应付金额：
-          <span class="price">
-            ￥
-            <span class="red">90.00</span>
-          </span>
+          <div class>
+            应付金额：
+            <span class="price">
+              ￥
+              <span class="red">{{money}}</span>
+            </span>
+          </div>
+          <div style="margin-left:100px;">
+            <el-select v-model="value" placeholder="请选择优惠券">
+              <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value"
+              ></el-option>
+            </el-select>
+          </div>
         </div>
-        <div>使用账户余额支付：</div>
-        <div>
-          <el-input placeholder="请输入内容"></el-input>
-        </div>
-        <div class="balance">
-          <div>（账户余额：￥10.00）</div>
-          <div style="flex:1;"></div>
-          <div class="blue">余额支付</div>
-        </div>
+
         <div class="invite">
           <el-checkbox v-model="checked">
             使用邀请码
@@ -32,37 +36,60 @@
           <div class="invite-code">
             <el-input placeholder="请填写邀请人的会员绑定手机号或邀请码" style="font-size:12px;"></el-input>
           </div>
-          <div class="coupons">
-            <span class="hui">（一次性可使用5张优惠券）</span>
-            <span class="blue">使用优惠券>></span>
-          </div>
         </div>
       </div>
       <div class="payment">
         选择一下方式支付：
-        <span class="money red">￥30.00</span>
-        <span class="red">（总价￥90.00 -余额￥10.00 -优惠券￥50.00 ）</span>
+        <span class="money red">￥{{real_money}}</span>
+        <span class="red">（总价￥{{money}} -优惠券￥0.00 ）</span>
       </div>
       <div class="main-bottom">
         <el-row :gutter="20">
           <el-col :span="4">
             <div style="text-align:center;">支付类型：</div>
           </el-col>
-          <el-col :span="8" :offset="5">
+          <el-col :span="14" :offset="2">
             <div style="text-align:center;">
-              <el-radio v-model="radio" label="1">备选项</el-radio>
-              <el-radio v-model="radio" label="2">备选项</el-radio>
+              <el-radio v-model="radio" label="1">在线支付</el-radio>
+              <el-radio v-model="radio" label="3">银行转账</el-radio>
+              <el-radio v-model="radio" label="4">余额支付</el-radio>
             </div>
           </el-col>
         </el-row>
         <div class="line"></div>
-        <div class="bankPay">
+
+        <!-- 在线支付 -->
+        <div class="online-pay" v-if="radio == '1'">
+          <div class="online-title">支付码</div>
+          <div class="qrcode">
+            <img :src="imgData" alt />
+          </div>
+          <div class="hui">请使用微信或者支付宝扫描二维码进行支付</div>
+          <div class="code-type">
+            <el-radio v-model="codeType" label="1" :disabled="isDisabl">
+              <img src="../../assets/images/u2078.png" alt width="114px;" height="36px;" />
+            </el-radio>
+            <el-radio v-model="codeType" label="2" :disabled="isDisabl">
+              <img src="../../assets/images/u2079.png" alt width="114px;" height="36px;" />
+            </el-radio>
+          </div>
+          <div class="pay-money">
+            <span>总计：</span>{{real_money}}元
+          </div>
+          <div style="margin:20px;" v-if="isShow">
+            <el-button type="success" style="background-color:rgb(0,201,0);" @click="codePay">生成支付二维码</el-button>
+          </div>
+        </div>
+        <!-- 在线支付 -->
+
+        <!-- 银行转账 -->
+        <div class="bank-pay"  v-if="radio == '3'">
           <div class="pay-l">
             <div class="pay-bank">
               <div class="pay-title">
                 <span class="red">*</span>支付银行：
               </div>
-              <div style="font-size:14px">
+              <div>
                 <el-select v-model="value" placeholder="如没有添加银行卡，请添加→">
                   <el-option
                     v-for="item in options"
@@ -92,9 +119,7 @@
               <div></div>
             </div>
             <div class="pay-bank">
-              <div class="pay-title">
-                留言：
-              </div>
+              <div class="pay-title">留言：</div>
               <div style="font-size:14px">
                 <el-input type="textarea" style="width:220px;" :rows="4"></el-input>
               </div>
@@ -104,11 +129,58 @@
               <el-button type="danger" style="width:220px;margin-left:20px;">确定</el-button>
             </div>
           </div>
-          <div style="height:300px;width:1px;background-color:rgb(201,201,201);margin:auto 0;margin-left:5px;"></div>
+          <div class="s-line"></div>
           <div class="pay-r">
-            
+            <div class="pay-tip">
+              <img src="../../assets/images/u2011.png" alt />
+              <span class="red">转账到以下任意平台收款账号：</span>
+            </div>
+            <div class="pay-accout">
+              <div class="bank-name">
+                <img src="../../assets/images/u1956.png" alt />
+              </div>
+              <div class="bank-main">
+                <p>账户名：吴雪</p>
+                <p>开户银行：中国工商银行深圳深圳湾支行</p>
+                <p>账号：6212264000061706160</p>
+              </div>
+            </div>
+            <div class="pay-accout">
+              <div class="bank-name">
+                <img src="../../assets/images/u1956.png" alt />
+              </div>
+              <div class="bank-main">
+                <p>户 名：深圳市思锐信息技术有限公司</p>
+                <p>账 号:4000040209200016204</p>
+                <p>开户银行:工行深圳深东支行</p>
+                <p>纳税人识别号:914403001924280274</p>
+              </div>
+            </div>
+            <div class="tips">以上是平台汇款账户，支付后可通知客服查账，及时为您充值！</div>
           </div>
         </div>
+        <!-- 银行转账 -->
+
+        <!-- 余额支付 -->
+        <div class="balance-pay"  v-if="radio == '4'">
+          <div class="account">
+            使用账户余额支付：
+            <span class="money">
+              ￥
+              <span class="red">0.00</span>
+            </span>
+            <span class="blue">充值</span>
+          </div>
+          <div class="password" style="display:flex;">
+            <div class="pass-title">支付密码：</div>
+            <el-input placeholder="请输入密码" style="font-size:12px;width:330px;"></el-input>
+          </div>
+          <div class="blue forgot-pass">忘记支付密码</div>
+          <div class="pay-btn">
+            <el-button type="danger" style="width:250px;">确定</el-button>
+          </div>
+        </div>
+        <!-- 余额支付 -->
       </div>
     </div>
   </div>
@@ -116,7 +188,7 @@
 
 <script>
 import Myheader from "@/components/header";
-// import { GetTempList } from "@/api/api";
+import { templatePay } from "@/api/api";
 
 export default {
   name: "comboPay",
@@ -129,16 +201,22 @@ export default {
       radio: "1",
       options: [
         {
-          value: "选项1",
+          value: "1",
           label: "黄金糕"
         },
         {
-          value: "选项2",
+          value: "2",
           label: "双皮奶"
         }
       ],
+      codeType: "1", //支付宝或微信
       value: "",
-      value11:''
+      value11: "",
+      money: 0,//套餐金额
+      real_money: 0,//最终实付金额
+      imgData: '',
+      isShow: true,
+      isDisabl: false,
     };
   },
   mounted() {
@@ -146,7 +224,28 @@ export default {
     // console.log(this.$route.params)
   },
   methods: {
-    init() {}
+    init() {
+      this.money = this.$route.params.order_amount;
+      this.real_money = this.$route.params.order_amount;
+    },
+    //下单生成二维码
+    codePay(){
+      let params = this.$route.params;
+      //支付类型
+      if(this.radio != "1") params.pay_type = this.radio;
+      else params.pay_type = this.codeType;
+      params.order_amount = this.real_money;//实付金额
+      templatePay(params).then(res => {
+          console.log(res)
+           let { code, imgData, msg } = res;
+           this.$message(msg);
+          if (code === 1) {
+            this.imgData = imgData;
+            this.isShow = !this.isShow;
+            this.isDisabl = !this.isDisabl;
+          }
+        });
+    }
   }
 };
 </script>
@@ -180,7 +279,7 @@ export default {
     margin: auto;
     .mian-top {
       // text-align: center;
-      width: 400px;
+      width: 500px;
       line-height: 30px;
       margin: auto;
       .top-title {
@@ -191,17 +290,18 @@ export default {
         }
       }
       .payable {
+        display: flex;
         .price {
           font-size: 23px;
         }
       }
-      .balance {
-        display: flex;
-      }
+      // .balance {
+      //   display: flex;
+      // }
       .invite {
         .invite-code {
           width: 300px;
-          margin: auto;
+          // margin: auto;
         }
         .coupons {
           text-align: right;
@@ -227,9 +327,10 @@ export default {
         background-color: rgb(241, 241, 241);
         margin: 20px 10%;
       }
-      .bankPay {
+      //银行转账
+      .bank-pay {
         display: flex;
-        .pay-l{
+        .pay-l {
           .pay-title {
             text-align: right;
             line-height: 35px;
@@ -242,6 +343,111 @@ export default {
             .addCard {
               margin-left: 10px;
             }
+          }
+        }
+        .s-line {
+          height: 400px;
+          width: 1px;
+          background-color: rgb(201, 201, 201);
+          margin: auto 0;
+          margin-left: 5px;
+        }
+        .pay-r {
+          height: 420px;
+          .pay-tip {
+            img {
+              width: 36px;
+              height: 36px;
+              display: inline-block;
+              vertical-align: middle;
+            }
+            span {
+              font-size: 14px;
+              margin-left: 30px;
+              display: inline-block;
+            }
+          }
+          .pay-accout {
+            border: 1px solid rgb(188, 188, 188);
+            margin: 10px 0 0 65px;
+            .bank-name {
+              padding: 2px 5px;
+              border-bottom: 1px solid rgb(188, 188, 188);
+              img {
+                width: 100px;
+                height: 20px;
+              }
+            }
+            .bank-main {
+              padding: 5px 40px 5px 20px;
+              background-color: rgb(242, 242, 242);
+              line-height: 24px;
+              font-size: 15px;
+              color: rgb(51, 51, 51);
+            }
+          }
+          .tips {
+            font-size: 13px;
+            color: #333333;
+            margin: 10px 0 0 65px;
+          }
+        }
+      }
+      //余额支付
+      .balance-pay {
+        width: 420px;
+        height: 420px;
+        margin: auto;
+        line-height: 50px;
+        .account {
+          .money {
+            font-size: 23px;
+            font-weight: 400;
+            margin-right: 50px;
+          }
+        }
+        .password {
+          .pass-title {
+            line-height: 50px;
+          }
+        }
+        .forgot-pass {
+          text-align: right;
+          line-height: 20px;
+          font-size: 16px;
+        }
+        .pay-btn {
+          text-align: center;
+          margin-top: 60px;
+        }
+      }
+      //线上支付
+      .online-pay {
+        width: 420px;
+        margin: auto;
+        text-align: center;
+        .online-title {
+          font-weight: 700;
+          font-size: 28px;
+          color: rgb(0, 0, 0);
+          text-align: center;
+          margin: 15px 0 10px 0;
+        }
+        .qrcode {
+          img {
+            width: 200px;
+            height: 197px;
+          }
+        }
+        .code-type {
+          margin: 20px 0;
+        }
+        .pay-money {
+            font-weight: 700;
+            font-size: 18px;
+            color: rgb(0, 0, 0);
+          span {
+            font-size: 28px;
           }
         }
       }
