@@ -6,6 +6,7 @@ use app\data\model\MealOrder as Meal;
 use app\data\model\WechatPay;
 use think\Request;
 use think\Session;
+use think\Db;
 /**
  * lilu
  * 行业模板控制器
@@ -29,6 +30,8 @@ class MealOrder extends Base
             $postData['order_status']=1;    //  1   未付款
             $res=Meal::create($postData)->toArray();
             if($res){
+                //下单成功
+                $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
                 return  json(['1','下单成功','data'=>$res['id']]);
             }else{
                 return   json(['0','下单失败']);
@@ -41,35 +44,34 @@ class MealOrder extends Base
     /**
      * lilu
      * 行业模板支付
-     * param   order_id    订单id
+     * param   id    订单id
      * param   type    支付方式
+     * param   pay     支付金额
      */
-    public function meal_order_pay()
+    public function meal_order_pay($id,$type,$pay)
     {
-        $request = Request::instance();
-        $param = $request->param();
-        $type = $param['type'];    //  1微信支付  2支付宝支付   3银行转账
-        $id = $param['order_id'];
+         //  1 支付宝支付  2  微信     3 银行转账  4  余额
         switch($type) {
-            case 1:    //微信支付
-            // 查询订单信息
-            $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
-            $order = db('join_order')->getById($id);
+            case 1:    //支付宝
+                returnJson(0, '暂未支付宝开通');
+            return $res;exit();
+                break;  
+            case 2:     //微信支付
+                 // 查询订单信息
+            $url = 'https://manage.siring.com.cn/api/MealOrder/hy_model_notice';
+            $order = Db::table('model_order')->getById($id);
 
             $pay = 1;//先测试1分钱
             if (!$order)returnJson(0, '当前订单不存在');
     //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
-            $title = '代理加盟';
-            $wechatpay = new WechatPay();
-            $res = $wechatpay->pay($title,$order['no'], $pay, $url);
-
-            return $res;exit();
-                break;  
-            case 2:     //支付宝
-                returnJson(0, '暂未支付宝开通');
+                $title = '测试行业模板支付';
+                $wechatpay = new WechatPay();
+                $res = $wechatpay->pay($title,$order['order_number'], $pay, $url);
+                return $res;exit();
+              
                 break;
             case 3 :    //银行转账 
-
+                
 
 
                 break;
