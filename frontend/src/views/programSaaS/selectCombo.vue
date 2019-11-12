@@ -159,7 +159,6 @@ export default {
     },
     //结算
     pay(){
-      console.log(this.radio)
       if(this.radio) {
         var params = {
           member_account: '13502882637',
@@ -171,13 +170,11 @@ export default {
           applet_name: this.$route.params.prog_name,
           applet_logo: this.$route.params.imageUrl
         }
-        templatePay(params).then(res => {
-          console.log(res)
-           let { code, data, msg } = res;
-          // if (code === 1) {
-          //   this.city = data;
-          // }
+        this.$router.push({
+          name: "comboPay",
+          params: params
         });
+        
       } else {
          this.$message.error("请确认");
       }
