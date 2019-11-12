@@ -53,15 +53,15 @@ class MealOrder extends Base
         switch($type) {
             case 1:    //微信支付
             // 查询订单信息
-            $url = 'https://manage.siring.com.cn/api/JoinOrder/app_notice';
-            $order = db('join_order')->getById($id);
+            $url = 'https://manage.siring.com.cn/api/MealOrder/hy_model_notice';
+            $order = db('meal_order')->getById($id);
 
             $pay = 1;//先测试1分钱
             if (!$order)returnJson(0, '当前订单不存在');
     //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
-            $title = '代理加盟';
+            $title = '测试行业模板支付';
             $wechatpay = new WechatPay();
-            $res = $wechatpay->pay($title,$order['no'], $pay, $url);
+            $res = $wechatpay->pay($title,$order['order_number'], $pay, $url);
 
             return $res;exit();
                 break;  
@@ -69,7 +69,7 @@ class MealOrder extends Base
                 returnJson(0, '暂未支付宝开通');
                 break;
             case 3 :    //银行转账 
-
+                
 
 
                 break;
