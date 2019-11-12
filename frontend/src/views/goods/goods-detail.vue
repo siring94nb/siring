@@ -81,24 +81,29 @@
               </el-tab-pane>
               <el-tab-pane label="会员评价">
                 <div class="comment-list">
-                  <div class="comment-item" v-for="item in 10" :key="item">
-                    <div class="user-box">
-                      <el-avatar
-                        :size="50"
-                        src="http://qiniu.siring.com.cn/c9670201910261044385902.jpg"
-                      ></el-avatar>
-                      <p class="phone">136***3045</p>
-                      <div class="user-level">
-                        <img :src="require('@/assets/images/u1930.png')" alt />
-                        <span class="member-a">普通会员</span>
-                        <!-- <span class="member-b">金牌代理</span>
-                        <span class="member-c">钻石代理</span>
-                        <span class="member-d">皇冠代理</span>-->
+                  <div class="comment-item" v-for="item in commentList" :key="item.id">
+                    <div class="user-comment">
+                      <div class="user-box">
+                        <el-avatar :size="50" :src="item.img"></el-avatar>
+                        <p class="phone">{{translateStar(item.phone)}}</p>
+                        <div class="user-level">
+                          <img :src="require('@/assets/images/u1930.png')" alt />
+                          <span v-if="item.grade===0" class="member-a">普通会员</span>
+                          <span v-else-if="item.grade===1" class="member-b">金牌代理</span>
+                          <span v-else-if="item.grade===2" class="member-c">钻石代理</span>
+                          <span v-else-if="item.grade===3" class="member-d">皇冠代理</span>
+                        </div>
+                      </div>
+                      <div class="comment-div">
+                        <div class="comment-cont">{{item.con}}</div>
+                        <div class="comment-time">{{item.create_at}}</div>
                       </div>
                     </div>
-                    <div class="comment-div">
-                      <div class="comment-cont">设计简约大方，价格实惠，看了，好几家，决定在他家下单，看来没错，会推荐给朋友的</div>
-                      <div class="comment-time">2019年01月20日 19:27</div>
+                    <div class="seller-comment" v-for="i in item.reply" :key="i.id">
+                      <div class="reply-cont">
+                        <span class="seller-title">【官方回复】</span>{{i.con}}
+                      </div>
+                      <div class="reply-time">{{i.create_at}}</div>
                     </div>
                   </div>
                 </div>
@@ -130,17 +135,23 @@
         </div>
       </div>
     </div>
+    <jdyh />
+    <myfooter />
   </div>
 </template>
 
 <script>
 import Myheader from "@/components/header";
 import Myswiper from "@/components/mySwiper";
+import Myfooter from "@/components/footer";
+import Jdyh from "@/components/jdyh";
 import { GetGoodsDetail, GetRecommend, GetComment } from "@/api/api";
 export default {
   components: {
     Myheader,
-    Myswiper
+    Myswiper,
+    Myfooter,
+    Jdyh
   },
   data() {
     return {
@@ -154,7 +165,8 @@ export default {
       ifLogin: false,
       recommendList: [],
       selectType: {},
-      intro: []
+      intro: [],
+      commentList: []
     };
   },
   mounted() {
@@ -196,8 +208,14 @@ export default {
       GetComment({
         goods_id: this.goodsId
       }).then(res => {
-        console.log(res);
+        let { code, data, msg } = res;
+        if (code === 1) {
+          this.commentList = data;
+        }
       });
+    },
+    translateStar(num) {
+      return num.replace(/(\d{3})\d{4}(\d{3})/, "$1****$2");
     }
   }
 };
@@ -299,7 +317,7 @@ export default {
               .terminal {
                 font-size: 13px;
                 color: #333333;
-                .el-select{
+                .el-select {
                   width: 250px;
                 }
               }
@@ -349,7 +367,6 @@ export default {
           }
           .comment-list {
             .comment-item {
-              display: flex;
               border-bottom: 1px solid #e1e1e1;
               margin-bottom: 28px;
               padding-bottom: 16px;
@@ -357,48 +374,68 @@ export default {
                 border-bottom: 0;
                 margin-bottom: 0;
               }
-              .user-box {
-                text-align: center;
-                margin-right: 20px;
-                width: 100px;
-                .phone {
-                  font-size: 13px;
-                  color: #434343;
-                  margin: 5px 0;
+              .user-comment {
+                display: flex;
+                .user-box {
+                  text-align: center;
+                  margin-right: 20px;
+                  width: 100px;
+                  .phone {
+                    font-size: 13px;
+                    color: #434343;
+                    margin: 5px 0;
+                  }
+                  .user-level {
+                    font-size: 12px;
+                    img {
+                      width: 20px;
+                      height: 20px;
+                      vertical-align: middle;
+                    }
+                    .member-a {
+                      color: #bfbfbf;
+                    }
+                    .member-b {
+                      color: #e1b80d;
+                    }
+                    .member-c {
+                      color: #49bbfb;
+                    }
+                    .member-d {
+                      color: #ffb103;
+                    }
+                  }
                 }
-                .user-level {
-                  font-size: 12px;
-                  img {
-                    width: 20px;
-                    height: 20px;
-                    vertical-align: middle;
+                .comment-div {
+                  position: relative;
+                  flex: 1;
+                  .comment-cont {
+                    font-size: 18px;
+                    color: #5e5e5e;
+                    line-height: 28px;
+                    margin-bottom: 20px;
                   }
-                  .member-a {
-                    color: #bfbfbf;
-                  }
-                  .member-b {
-                    color: #e1b80d;
-                  }
-                  .member-c {
-                    color: #49bbfb;
-                  }
-                  .member-d {
-                    color: #ffb103;
+                  .comment-time {
+                    position: absolute;
+                    bottom: 0;
+                    font-size: 16px;
+                    color: #aeaeae;
                   }
                 }
               }
-              .comment-div {
-                position: relative;
-                .comment-cont {
-                  font-size: 18px;
+              .seller-comment {
+                margin: 12px 0 0 120px;
+                border-top: 1px solid #e1e1e1;
+                .reply-cont {
+                  margin-top: 12px;
+                  margin-bottom: 20px;
                   color: #5e5e5e;
                   line-height: 28px;
-                  margin-bottom: 20px;
+                  .seller-title{
+                    color: #FF99CC;
+                  }
                 }
-                .comment-time {
-                  position: absolute;
-                  bottom: 0;
-                  font-size: 16px;
+                .reply-time{
                   color: #aeaeae;
                 }
               }
