@@ -49,8 +49,7 @@ class MealOrder extends Base
      */
     public function meal_order_pay($id,$type,$pay)
     {
-        $type = $param['type'];    //  1 支付宝支付  2  微信     3 银行转账  4  余额
-        $id = $param['order_id'];
+         //  1 支付宝支付  2  微信     3 银行转账  4  余额
         switch($type) {
             case 1:    //支付宝
                 returnJson(0, '暂未支付宝开通');
