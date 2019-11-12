@@ -47,7 +47,7 @@ class User extends Base
             Session::set('mobileCode',$mobileCode);
             Session::set('mobile',$mobile);
         }
-        $content = "【Siring思锐】验证码:{$mobileCode}，(一站式移动互联网开发-运营-推广-赋能平台)十分钟内有效";
+        $content = "【Siring思锐】验证码:{$mobileCode}，(一站式移动互联网开发·运营·推广·赋能平台)十分钟内有效";
         $output = sendMessage($content,$mobile);
 
         return $output  ? returnJson(1,'发送成功') : returnJson(0,'发送失败');

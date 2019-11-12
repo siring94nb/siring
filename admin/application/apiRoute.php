@@ -10,14 +10,14 @@ Route::group('api', function () {
 //    Route::rule('new/:id','News/update','POST');
     //开始定义api路由接口
 
-    //文件上传
+    //文件上传fyk
     Route::group('file', function () {
         Route::post('upload','api/File/img');
         Route::post('video','api/File/video');
         Route::post('qn_upload','api/File/qn_upload');//上传到七牛云
     });
 
-    //用户接口接口
+    //用户接口接口fyk
     Route::group('User', function () {//'User' => 控制器
         Route::any('phone_code','api/User/code'); //('index =>方法','api/User/index' =>文件夹/控制器/方法)
         Route::any('register','api/User/register');//注册
@@ -27,21 +27,21 @@ Route::group('api', function () {
         Route::any('logout','api/User/logout');//用户退出
     });
 
-    //轮播接口接口
+    //轮播接口接口fyk
     Route::group('Banner', function () {
         Route::any('banner_list','api/Banner/index'); //轮播列表
         Route::any('banner_save','api/Banner/save'); //测试
 
     });
 
-    //网站基本接口
+    //网站基本接口fyk
     Route::group('Website', function () {
         Route::any('website_list','api/Website/website_list'); //关于我们
         Route::any('contact','api/Website/contact'); //联系我们
         Route::any('seo','api/Website/seo'); //SEO
     });
 
-    //角色加盟
+    //角色加盟fyk
     Route::group('JoinRole',function (){
         Route::any('province_list','api/JoinRole/province_list'); //省份列表
         Route::any('city_list','api/JoinRole/city_list'); //城市列表
@@ -52,7 +52,7 @@ Route::group('api', function () {
         Route::any('discount','api/JoinRole/discount'); //会员折扣
     });
 
-    //角色加盟订单
+    //角色加盟订单fyk
     Route::group('JoinOrder',function (){
         Route::any('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
         Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
@@ -81,7 +81,7 @@ Route::group('api', function () {
         Route::any('meal_order_pay','api/MealOrder/meal_order_pay'); //下单
     });
 
-    //角色加盟订单
+    //角色加盟订单fyk
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
         Route::any('soft_list','api/Software/soft_list'); //商品列表
@@ -94,10 +94,16 @@ Route::group('api', function () {
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
 
-    //用户优惠券
+    //用户优惠券fyk
     Route::group('UserDiscount',function(){
         Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
         Route::any('user_fund','api/UserDiscount/user_fund'); //用户余额
+    });
+
+    //用户优惠券fyk
+    Route::group('Console',function(){
+        Route::any('personal_information','api/Console/personal_information'); //用户信息
+        Route::any('user_fund','api/Console/user_fund'); //用户余额personal_information
     });
 
 
