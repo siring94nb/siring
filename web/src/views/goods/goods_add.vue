@@ -135,20 +135,7 @@
       <FormItem label="功能描述">
         <div id="wangeditor1" v-model="formItem.data.goods_des" style="width:1000px;"></div>
       </FormItem>
-      <!-- <FormItem label="功能描述">
-        <Input
-          v-model="formItem.data.goods_des"
-          type="textarea"
-<<<<<<< HEAD
-          :autosize="{minRows: 4,maxRows: 8}" 
-          style="width:1000px;"/>
-      </FormItem> -->
-=======
-          :autosize="{minRows: 4,maxRows: 8}"
-          style="width:1000px;"
-        />
-      </FormItem>
->>>>>>> b619efd174dc4ad6855fab5e0ba2b0d65e5783ce
+ 
       <FormItem label="推荐商品">
         <RadioGroup v-model="formItem.data.goods_recommend_status">
           <Radio label="1">推荐</Radio>
