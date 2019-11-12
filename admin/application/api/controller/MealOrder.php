@@ -6,6 +6,7 @@ use app\data\model\MealOrder as Meal;
 use app\data\model\WechatPay;
 use think\Request;
 use think\Session;
+use think\Db;
 /**
  * lilu
  * 行业模板控制器
