@@ -231,7 +231,7 @@ export default {
       //支付类型
       if(this.radio != "1") params.pay_type = this.radio;
       else params.pay_type = this.codeType;
-      params.order_amount = his.real_money;//实付金额
+      params.order_amount = this.real_money;//实付金额
       templatePay(params).then(res => {
           console.log(res)
            let { code, data, msg } = res;
