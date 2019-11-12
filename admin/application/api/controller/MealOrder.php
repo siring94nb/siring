@@ -59,7 +59,7 @@ class MealOrder extends Base
             case 2:     //微信支付
                  // 查询订单信息
             $url = 'https://manage.siring.com.cn/api/MealOrder/hy_model_notice';
-            $order = Db::table('meal_order')->getById($id);
+            $order = Db::table('model_order')->getById($id);
 
             $pay = 1;//先测试1分钱
             if (!$order)returnJson(0, '当前订单不存在');
