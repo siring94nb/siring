@@ -101,7 +101,7 @@ class MealOrder extends Base
                 // 如果订单不存在
                 returnJson(0,'订单不存在');
             }
-            if ($orderArr['payment'] == 2) {
+            if ($orderArr['order_status'] == 2) {
                 returnJson(0,'订单已支付'); // 已经支付成功了就不再更新了
             }
             // 用户是否支付成功
@@ -109,9 +109,9 @@ class MealOrder extends Base
                 // 不是已经支付状态则修改为已经支付状态
                 $result = Db::transaction(function()use ( $orderArr,$where ){
                     //模板订单表
-                    $order_data = Db::table('meal_order')->where($where)->update(array('payment' => 2,'status' => 2, "pay_time" => time()));
+                    $order_data = Db::table('model_order')->where($where)->update(array('order_status' => 2, "pay_time" => time()));
 
-                    return $user && $order_data ? true : false;
+                    return $order_data ? true : false;
 
                 });
 
