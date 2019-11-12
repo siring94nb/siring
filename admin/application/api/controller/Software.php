@@ -9,6 +9,7 @@ namespace app\api\controller;
 use app\data\model\Category;
 use app\data\model\Good;
 use app\data\model\SoftOrder;
+use app\data\model\Special;
 use app\data\model\WechatPay;
 use think\Request;
 use think\Db;
@@ -47,9 +48,22 @@ class Software extends Base
             $uid = Session::get("uid");
             $data = $good->user_good_list($param,$uid);
 
+            foreach ($data['data'] as $k=>$v){
+                $res = Special::spec_pro($v['id']);//规格
+                $res1 = $res[0]['attr_title'];
+                $data['data'][$k]['sub_title'] = $res1;
+            }
+
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
         }
             $data = $good->good_list($param);
+
+            foreach ($data['data'] as $k=>$v){
+                $res = Special::spec_pro($v['id']);//规格
+                $res1 = $res[0]['attr_title'];
+                $data['data'][$k]['sub_title'] = $res1;
+            }
+
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
 
@@ -95,6 +109,10 @@ class Software extends Base
             ->limit(6)->select();
 
         foreach ($data as $k=>$v){
+            $res = Special::spec_pro($v['id']);//规格
+            $res1 = $res[0]['attr_title'];
+            $data[$k]['sub_title'] = $res1;
+            //图片
             $att=explode(',',$v["goods_images"]);
             $data[$k]['img'] = $att[0];
             unset($data[$k]['goods_images']);

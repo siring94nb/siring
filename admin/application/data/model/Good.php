@@ -28,7 +28,7 @@ class Good extends Model
             switch($type) {
                 case 1://全部排序
 
-                    $order = 'id desc';
+                    $order = 'goods_sort asc';
 
                     break;
                 case 2://按价格最高
@@ -65,9 +65,9 @@ class Good extends Model
             $param['page'] = 1;
         }
         if(empty($param['size'])){
-            $param['size'] = 16;
+            $param['size'] = 12;
         }
-        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
+        $field = 'id,goods_sort,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
 
         $list = Good::with('category') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -100,7 +100,7 @@ class Good extends Model
             switch($type) {
                 case 1://全部排序
 
-                    $order = 'id desc';
+                    $order = 'goods_sort asc';
 
                     break;
                 case 2://按价格最高
@@ -137,9 +137,9 @@ class Good extends Model
             $param['page'] = 1;
         }
         if(empty($param['size'])){
-            $param['size'] = 16;
+            $param['size'] = 12;
         }
-        $field = 'id,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
+        $field = 'id,goods_sort,goods_name,original_price,category_id,goods_images,sales_volume,period,sign';
 
         $list = Good::with('category') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -215,7 +215,7 @@ class Good extends Model
             $res[$k]['grade_name'] = $join_role['title'];
             //二级评论
             $res[$k]['grade'] = $user_all['grade'];
-            $res[$k]['relpay'] = Reviews::two_level($v['id']);
+            $res[$k]['reply'] = Reviews::two_level($v['id']);
         }
         return $res;
 
