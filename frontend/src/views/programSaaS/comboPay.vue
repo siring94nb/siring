@@ -62,21 +62,21 @@
         <div class="online-pay" v-if="radio == '1'">
           <div class="online-title">支付码</div>
           <div class="qrcode">
-            <img src="http://teahouse.siring.cn/02a73201911121307413552.png" alt />
+            <img :src="imgData" alt />
           </div>
           <div class="hui">请使用微信或者支付宝扫描二维码进行支付</div>
           <div class="code-type">
-            <el-radio v-model="codeType" label="1">
+            <el-radio v-model="codeType" label="1" :disabled="isDisabl">
               <img src="../../assets/images/u2078.png" alt width="114px;" height="36px;" />
             </el-radio>
-            <el-radio v-model="codeType" label="2">
+            <el-radio v-model="codeType" label="2" :disabled="isDisabl">
               <img src="../../assets/images/u2079.png" alt width="114px;" height="36px;" />
             </el-radio>
           </div>
           <div class="pay-money">
             <span>总计：</span>{{real_money}}元
           </div>
-          <div style="margin:20px;">
+          <div style="margin:20px;" v-if="isShow">
             <el-button type="success" style="background-color:rgb(0,201,0);" @click="codePay">生成支付二维码</el-button>
           </div>
         </div>
@@ -214,6 +214,9 @@ export default {
       value11: "",
       money: 0,//套餐金额
       real_money: 0,//最终实付金额
+      imgData: '',
+      isShow: true,
+      isDisabl: false,
     };
   },
   mounted() {
@@ -234,10 +237,13 @@ export default {
       params.order_amount = this.real_money;//实付金额
       templatePay(params).then(res => {
           console.log(res)
-           let { code, data, msg } = res;
-          // if (code === 1) {
-          //   this.city = data;
-          // }
+           let { code, imgData, msg } = res;
+           this.$message(msg);
+          if (code === 1) {
+            this.imgData = imgData;
+            this.isShow = !this.isShow;
+            this.isDisabl = !this.isDisabl;
+          }
         });
     }
   }
