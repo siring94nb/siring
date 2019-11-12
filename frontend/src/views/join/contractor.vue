@@ -28,25 +28,25 @@
         <h3 class="support-title">分包商工作规范</h3>
         <div class="support-list">
           <div class="support-item">
-            <img :src="require('@/assets/images/u5187.png')" alt="" />
+            <img :src="require('@/assets/images/u5187.png')" alt />
             <p>严格而又标准化的</p>
             <p>开发设计要求</p>
           </div>
           <div class="symbol">+</div>
           <div class="support-item">
-            <img :src="require('@/assets/images/u5188.png')" alt="" />
+            <img :src="require('@/assets/images/u5188.png')" alt />
             <p>分包前的详细咨询分析</p>
             <p>和任务分派</p>
           </div>
           <div class="symbol">+</div>
           <div class="support-item">
-            <img :src="require('@/assets/images/u5189.png')" alt="" />
+            <img :src="require('@/assets/images/u5189.png')" alt />
             <p>平台严格的代码检测和</p>
             <p>质量评估</p>
           </div>
           <div class="symbol">=</div>
           <div class="support-item">
-            <img :src="require('@/assets/images/u5190.png')" alt="" />
+            <img :src="require('@/assets/images/u5190.png')" alt />
             <p>验收合格平台给予分包</p>
             <p>
               酬金奖励
@@ -55,7 +55,50 @@
           </div>
         </div>
       </div>
+
+      <div class="sel-city">
+        <h3 class="sel-title">缴纳押金申请分包</h3>
+        <div class="sel-cont">
+          <el-form ref="ruleForm" :model="ruleForm" label-width="120px">
+            <el-form-item
+              v-for="(skill, index) in ruleForm.skills"
+              :label="'我的专业技能' + index"
+              :key="skill.key"
+              :prop="'skills.' + index + '.value'"
+              :rules="{required: true, message: '域名不能为空', trigger: 'blur'}"
+            >
+              <el-select v-model="skill.value" placeholder="请选择">
+                <el-option
+                  v-for="item in skill.list"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-button @click="addDomain">新增域名</el-button>
+            </el-form-item>
+            <el-form-item
+              label="我的优势："
+              :rules="{ required: true, message: '请说明自己的优势', trigger: 'blur'}"
+              prop="textarea"
+            >
+              <el-input
+                type="textarea"
+                :rows="3"
+                style="width: 692px;"
+                maxlength="100"
+                show-word-limit
+                placeholder="说明下自己的优势"
+                v-model="ruleForm.textarea"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+        </div>
+      </div>
     </div>
+
     <myfooter />
 
     <!-- 收益预测弹窗 -->
@@ -119,16 +162,39 @@ export default {
         {
           name: "前端开发",
           cost: "100",
-          policy:
-            "<p>java,c++,php</p>",
+          policy: "<p>java,c++,php</p>",
           income: "约50万"
         }
-      ]
+      ],
+      ruleForm: {
+        textarea: "",
+        skills: [
+          {
+            value: '',
+            list: [1,2,3]
+          }
+        ]
+      },
+      rule: {
+        textarea: [
+          {
+            required: true,
+            message: "请说明自己的优势",
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     stepMouseEnter(index) {
       this.stepFlag = index;
+    },
+    addDomain() {
+      this.ruleForm.skills.push({
+        value: "",
+        key: Date.now()
+      });
     }
   }
 };
@@ -239,6 +305,27 @@ export default {
           font-size: 30px;
           font-weight: bold;
           color: #333333;
+        }
+      }
+    }
+    .sel-city {
+      .sel-title {
+        text-align: center;
+        font-size: 24px;
+        color: #333333;
+        margin-bottom: 30px;
+      }
+      .sel-cont {
+        width: 70%;
+        margin: 0 auto;
+        .el-select {
+          margin-right: 20px;
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
+        .el-textarea {
+          width: 692px;
         }
       }
     }
