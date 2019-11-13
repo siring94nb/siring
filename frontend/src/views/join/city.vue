@@ -59,10 +59,20 @@
         <div class="sel-cont">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rule" label-width="120px">
             <el-form-item label="选择加盟城市：">
-              <el-select v-model="ruleForm.provVal" style="width: 217px;" placeholder="请选择" @change="provChange">
+              <el-select
+                v-model="ruleForm.provVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="provChange"
+              >
                 <el-option v-for="item in prov" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
-              <el-select v-model="ruleForm.levelVal" style="width: 217px;" placeholder="请选择" @change="levelChange">
+              <el-select
+                v-model="ruleForm.levelVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="levelChange"
+              >
                 <el-option
                   v-for="item in level"
                   :key="item.sort"
@@ -70,7 +80,12 @@
                   :value="item.sort"
                 ></el-option>
               </el-select>
-              <el-select v-model="ruleForm.cityVal" style="width: 217px;" placeholder="请选择" @change="cityChange">
+              <el-select
+                v-model="ruleForm.cityVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="cityChange"
+              >
                 <el-option v-for="item in city" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
@@ -255,6 +270,9 @@ export default {
       }
     },
     provChange() {
+      // 清空县市 隐藏结算框
+      this.ruleForm.cityVal = "";
+      this.showPaymentFlag = false;
       if (this.ruleForm.levelVal) {
         this.getCityList();
       }
@@ -297,7 +315,7 @@ export default {
       });
     },
     getdiscount() {
-      GetDiscount({id: 31 }).then(res => {
+      GetDiscount({ id: 31 }).then(res => {
         let { code, data, msg } = res;
         if (code === 1) {
           this.percent = data.user_discount;
@@ -441,7 +459,7 @@ export default {
         margin: 0 auto;
         .el-select {
           margin-right: 20px;
-          &:last-of-type{
+          &:last-of-type {
             margin-right: 0;
           }
         }
