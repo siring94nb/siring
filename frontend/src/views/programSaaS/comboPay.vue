@@ -212,10 +212,10 @@
             <el-form-item label="开户名：" prop="card_name">
               <el-input v-model="form.card_name" auto-complete="off" style="width:400px;"></el-input>
             </el-form-item>
-            <el-form-item label="银行账户：" prop="card_number">
-              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;"></el-input>
+            <el-form-item label="银行账户：">
+              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;" @change="getBank"></el-input>
             </el-form-item>
-            <el-form-item label="银行：" prop="bank_name">
+            <el-form-item label="银行：">
               <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:400px;"></el-select>
             </el-form-item>
             <el-form-item>
@@ -249,8 +249,8 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay } from "@/api/api";
-import { bankCardAttribution, addBank } from "@/api/bank";
+import { templatePay , addBank} from "@/api/api";
+import { bankCardAttribution } from "@/api/bank";
 
 export default {
   name: "comboPay",
@@ -320,7 +320,7 @@ export default {
         bank_branch: [
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
-        card_number: [{ validator: validatePass, trigger: "blur" }]
+        // card_number: [{ validator: validatePass, trigger: "blur" }]
       }
     };
   },
@@ -353,16 +353,18 @@ export default {
     },
     //添加银行卡
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          addBank(this.form).then(res => {
+      // this.$refs[formName].validate(valid => {
+      //   if (valid) {
+        console.log(this.form)
+        let params = this.form
+          addBank(params).then(res => {
             console.log(res)
           })
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
-      });
+      //   } else {
+      //     console.log("error submit!!");
+      //     return false;
+      //   }
+      // });
     },
     resetForm() {
       (this.form = {
@@ -385,13 +387,13 @@ export default {
     regionChange(data) {
       if(data.province) this.form.province= data.province.value;
       if(data.city) this.form.city= data.province.value;
+    },
+    getBank(val) {
+      let bank = bankCardAttribution(val);
+      console.log(bank);
+      if (bank) this.form.bank_name = bank.bankName;
+      else this.$message.error("银行卡号格式有误！");
     }
-    // getBank(val) {
-    //   let bank = bankCardAttribution(val);
-    //   console.log(bank);
-    //   if (bank) this.form.bank_name = bank.bankName;
-    //   else this.$message.error("银行卡号格式有误！");
-    // }
   }
 };
 </script>
