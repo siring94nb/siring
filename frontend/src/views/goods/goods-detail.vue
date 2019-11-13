@@ -76,7 +76,7 @@
           <div class="comment-box">
             <el-tabs type="border-card">
               <el-tab-pane label="功能描述">
-                <p class="cm-p" v-for="(item, index) in intro" :key="index">{{item}}</p>
+                <div v-html="goodsDetail.goods_des"></div>
               </el-tab-pane>
               <el-tab-pane label="会员评价">
                 <div class="comment-list">
@@ -162,7 +162,6 @@ export default {
       ifLogin: false,
       recommendList: [],
       selectType: {},
-      intro: [],
       commentList: []
     };
   },
@@ -185,7 +184,6 @@ export default {
         if (code === 1) {
           this.goodsDetail = data;
           this.selectType = data.special[0];
-          this.intro = data.goods_des.split("\n");
         }
       });
     },

@@ -145,6 +145,13 @@ export const JoinOrderAdd = params => {
 }
 
 /**
+ * 收益预测
+ */
+export const GetProfit = params => {
+  return axios.post(`${base_url}api/JoinRole/profit`, params).then(res => res.data);
+}
+
+/**
  * 快捷估价 表格数据
  */
 export const GetTableData = params => {

@@ -59,10 +59,20 @@
         <div class="sel-cont">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rule" label-width="120px">
             <el-form-item label="选择加盟城市：">
-              <el-select v-model="ruleForm.provVal" style="width: 217px;" placeholder="请选择" @change="provChange">
+              <el-select
+                v-model="ruleForm.provVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="provChange"
+              >
                 <el-option v-for="item in prov" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
-              <el-select v-model="ruleForm.levelVal" style="width: 217px;" placeholder="请选择" @change="levelChange">
+              <el-select
+                v-model="ruleForm.levelVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="levelChange"
+              >
                 <el-option
                   v-for="item in level"
                   :key="item.sort"
@@ -70,7 +80,12 @@
                   :value="item.sort"
                 ></el-option>
               </el-select>
-              <el-select v-model="ruleForm.cityVal" style="width: 217px;" placeholder="请选择" @change="cityChange">
+              <el-select
+                v-model="ruleForm.cityVal"
+                style="width: 217px;"
+                placeholder="请选择"
+                @change="cityChange"
+              >
                 <el-option v-for="item in city" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
@@ -95,14 +110,18 @@
     <el-dialog title="温馨提示" :visible.sync="centerDialogVisible" width="60%" center>
       <div class="table-box">
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="name" label="等级名称" align="center"></el-table-column>
-          <el-table-column prop="cost" label="费用标准" align="center"></el-table-column>
-          <el-table-column prop="policy" label="登记政策" align="center">
+          <el-table-column prop="title" label="等级名称" align="center"></el-table-column>
+          <el-table-column label="费用标准" align="center">
+            <template slot-scope="scope">
+              {{scope.row.money}}元/年
+            </template>
+          </el-table-column>
+          <el-table-column label="登记政策" align="center">
             <template slot-scope="scope">
               <span v-html="scope.row.policy"></span>
             </template>
           </el-table-column>
-          <el-table-column prop="income" label="收益预测" align="center"></el-table-column>
+          <el-table-column prop="forecast" label="收益预测" align="center"></el-table-column>
         </el-table>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -133,7 +152,8 @@ import {
   GetLevelList,
   CityOrderAdd,
   Payment,
-  GetDiscount
+  GetDiscount,
+  GetProfit
 } from "@/api/api";
 export default {
   components: {
@@ -160,15 +180,7 @@ export default {
       ],
       stepFlag: 0,
       centerDialogVisible: false,
-      tableData: [
-        {
-          name: "特级城市",
-          cost: "5000元/年",
-          policy:
-            "<p>1.保底佣金：该城市内所有会员消费提成15%</p><p>2.达标佣金：个人发展的会员（除普通会员外），达到一定用户数，还另外奖励5%</p>",
-          income: "约50万"
-        }
-      ],
+      tableData: [],
       prov: [],
       level: [],
       city: [],
@@ -219,6 +231,7 @@ export default {
       this.getProvince();
       this.getLevelList();
       this.getdiscount();
+      this.getProfit();
     },
     stepMouseEnter(index) {
       this.stepFlag = index;
@@ -255,6 +268,9 @@ export default {
       }
     },
     provChange() {
+      // 清空县市 隐藏结算框
+      this.ruleForm.cityVal = "";
+      this.showPaymentFlag = false;
       if (this.ruleForm.levelVal) {
         this.getCityList();
       }
@@ -297,7 +313,7 @@ export default {
       });
     },
     getdiscount() {
-      GetDiscount({id: 31 }).then(res => {
+      GetDiscount({ id: 31 }).then(res => {
         let { code, data, msg } = res;
         if (code === 1) {
           this.percent = data.user_discount;
@@ -306,6 +322,15 @@ export default {
     },
     getNum(value) {
       this.num = value;
+    },
+    getProfit(){
+      GetProfit({type: 2}).then(res => {
+        let {msg, code, data} = res;
+        if(code === 1){
+          console.log(data)
+          this.tableData = data;
+        }
+      })
     }
   }
 };
@@ -441,7 +466,7 @@ export default {
         margin: 0 auto;
         .el-select {
           margin-right: 20px;
-          &:last-of-type{
+          &:last-of-type {
             margin-right: 0;
           }
         }
