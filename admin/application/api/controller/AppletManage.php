@@ -7,6 +7,7 @@ use think\Controller;
 use think\Session;
 use think\Db;
 use app\model\Templete;
+use app\data\model\MealOrder;
 
 /**
  * lilu
@@ -23,7 +24,7 @@ class AppletManage extends Base {
     {
         $request=Request::instance();
         $postAData=$request->param();
-        $model_list=Templete::all()->toArray();
+        $model_list=Templete::all(['model_type'=>$postAData['model_type'],'del_time'=>null])->toArray();
         if($model_list){
             return json(['code'=>1,'msg'=>'获取列表成功','data'=>$model_list]);
         }else{
@@ -40,7 +41,7 @@ class AppletManage extends Base {
     {
         $request=Request::instance();
         $postAData=$request->param();
-        $model_list=Templete::all()->toArray();
+        $model_list=MealOrder::all(['model_meal_category'=>$postAData['model_meal_category'],'del_time'=>null])->toArray();
         if($model_list){
             return json(['code'=>1,'msg'=>'获取模板套餐成功','data'=>$model_list]);
         }else{
