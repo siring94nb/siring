@@ -55,6 +55,7 @@ class Console extends Base
             $user_id = $param["user_id"];
         }
 
+
         $data['total_customized'] =  SoftOrder::where('user_id',$user_id)->count();//软件定制总数
         $data['total_xcx'] =  MealOrder::where('member_account',$user_id)->count();//小程序订单总数
         $data['total_promotion'] =  SoftOrder::where('user_id',$user_id)->count();//AI订单总数

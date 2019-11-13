@@ -80,6 +80,7 @@ const editButton = (vm, h, currentRow, index) => {
           vm.formItem.title = currentRow.title;
           vm.formItem.money = currentRow.money;
           vm.formItem.policy = currentRow.policy;
+            vm.formItem.forecast = currentRow.forecast;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
 
@@ -210,13 +211,7 @@ export default {
         index: 0
       },
       ruleValidate: {
-        realname: [
-          { required: true, message: "姓名不能为空", trigger: "blur" }
-        ],
-        phone: [
-          { required: true, message: "手机号码不能为空", trigger: "blur" },
-          { validator: validatePhone, trigger: "blur" }
-        ]
+       
       },
       // 图片
       UploadAction: "",
