@@ -148,9 +148,9 @@ class JoinRole extends Model
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function join_index($policy)
+    public function join_index($id)
     {
-        return JoinRole::where('policy',$policy)->select() ? JoinRole::where('policy',$policy)->field('id,title,money,policy')->select() : returnJson(0,'数据不存在');
+        return JoinRole::where('id',$id)->field('id,title,policy,money')->find()->toArray();
     }
 
     /**

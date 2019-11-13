@@ -75,6 +75,21 @@ class JoinRole extends Base
     }
 
     /**
+     * 分包商费用列表
+     * @author fyk
+     * @param  \think\Request  $request
+     * @return \think\Response
+     */
+    public function join_class()
+    {
+        $grade = new \app\data\model\JoinRole();
+
+        $data = $grade->where('type',3)->field('id,title')->select();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
      * 分包商费用
      * @author fyk
      * @param  \think\Request  $request
@@ -86,9 +101,11 @@ class JoinRole extends Base
         $param = $request->param();
         $grade = new \app\data\model\JoinRole();
 
-        $data = $grade->join_index($param['policy']);
-
-        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        $data = $grade->join_index($param['cid']);
+        $res = explode(',',$data['policy']);
+        $data['res'] = $res;
+       // pp($res);die;
+        return $res ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**

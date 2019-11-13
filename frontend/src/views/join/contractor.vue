@@ -2,7 +2,6 @@
   <div class="join">
     <myheader />
     <join-enter />
-    <myswiper />
 
     <div class="join-cont">
       <h2 class="title">分包商</h2>
@@ -61,24 +60,28 @@
         <div class="sel-cont">
           <el-form ref="ruleForm" :model="ruleForm" label-width="120px">
             <el-form-item
-              v-for="(skill, index) in ruleForm.skills"
+              v-for="(skill, index) in ruleForm.selectSkills"
               :label="'我的专业技能' + index"
-              :key="skill.key"
-              :prop="'skills.' + index + '.value'"
-              :rules="{required: true, message: '域名不能为空', trigger: 'blur'}"
+              :key="index"
+              :prop="'selectSkills.' + index + '.skillValue'"
+              :rules="{required: true, message: '技能不能为空', trigger: 'blur'}"
             >
-              <el-select v-model="skill.value" placeholder="请选择">
-                <el-option
-                  v-for="item in skill.list"
-                  :key="item"
-                  :label="item"
-                  :value="item"
-                ></el-option>
+              <el-select
+                v-model="skill.skillValue"
+                @change="skillChange(skill.skillValue, index)"
+                placeholder="请选择"
+              >
+                <el-option v-for="i in ruleForm.skills" :key="i.id" :label="i.title" :value="i.id"></el-option>
               </el-select>
+              <el-select v-model="skill.lang" placeholder="请选择" @change="langChange">
+                <el-option v-for="i in ruleForm.langs" :key="i" :label="i" :value="i"></el-option>
+              </el-select>
+              <el-button @click.prevent="removeNewSkill(index)" v-if="index!==0">删除</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button @click="addDomain">新增域名</el-button>
+              <el-button @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">新增域名</el-button>
             </el-form-item>
+
             <el-form-item
               label="我的优势："
               :rules="{ required: true, message: '请说明自己的优势', trigger: 'blur'}"
@@ -101,6 +104,15 @@
 
     <myfooter />
 
+    <payment-bar
+      ref="paymentbar"
+      :showPaymentFlag="showPaymentFlag"
+      :price="price"
+      :percent="percent"
+      :pay="pay"
+      @sendNum="getNum"
+      :needCodeDialog="needCodeDialog"
+    />
     <!-- 收益预测弹窗 -->
     <el-dialog title="温馨提示" :visible.sync="centerDialogVisible" width="60%" center>
       <el-alert
@@ -131,14 +143,15 @@
 <script>
 import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
-import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
+import { GetJoinClass, GetJoinList, JoinOrderAdd } from "@/api/api";
+import PaymentBar from "@/components/join/paymentBar";
 export default {
   components: {
     Myheader,
     JoinEnter,
-    Myswiper,
-    Myfooter
+    Myfooter,
+    PaymentBar
   },
   data() {
     return {
@@ -168,39 +181,104 @@ export default {
       ],
       ruleForm: {
         textarea: "",
-        skills: [
+        skills: [],
+        langs: [],
+        selectSkills: [
           {
-            value: '',
-            list: [1,2,3]
+            skillValue: "",
+            lang: ""
           }
         ]
       },
-      rule: {
-        textarea: [
-          {
-            required: true,
-            message: "请说明自己的优势",
-            trigger: "blur"
-          }
-        ]
-      }
+      price: 0,
+      showPaymentFlag: false,
+      num: 1,
+      percent: 100,
+      needCodeDialog: true //需要显示扫码弹窗
     };
+  },
+  mounted() {
+    this.getJoinClass();
+  },
+  computed: {
+    total() {
+      return this.price * (this.percent / 100) * this.num;
+    }
   },
   methods: {
     stepMouseEnter(index) {
       this.stepFlag = index;
     },
-    addDomain() {
-      this.ruleForm.skills.push({
-        value: "",
-        key: Date.now()
+    addNewSkill() {
+      this.ruleForm.selectSkills.push({
+        skillValue: "",
+        lang: ""
       });
+    },
+    removeNewSkill(index) {
+      this.ruleForm.selectSkills.splice(index, 1);
+    },
+    getJoinClass() {
+      GetJoinClass().then(res => {
+        let { code, msg, data } = res.data;
+        if (code === 1) {
+          this.ruleForm.skills = data;
+        }
+      });
+    },
+    getLangList(lang) {
+      GetJoinList({ cid: lang }).then(res => {
+        console.log(res);
+        let { code, msg, data } = res;
+        if (code === 1) {
+          this.ruleForm.langs = data.res;
+          this.price = data.money;
+        }
+      });
+    },
+    skillChange(value, index) {
+      this.ruleForm.skills.forEach(v => {
+        if (value === v.id) {
+          this.ruleForm.selectSkills[index].skillValue = v.title;
+        }
+      });
+      this.getLangList(value);
+    },
+    langChange() {
+      this.showPaymentFlag = true;
+    },
+    pay() {
+      this.$refs["ruleForm"].validate(valid => {
+        if (valid) {
+          JoinOrderAdd({
+            user_id: 1,
+            skill: this.ruleForm.selectSkills,
+            price: this.total,
+            con: this.ruleForm.textarea,
+            num: this.num,
+            price: this.total
+          }).then(res => {
+            let { code, data, msg } = res;
+            console.log(data);
+            if (code === 1) {
+              this.$refs.paymentbar.getOrderId(data);
+              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+            } else {
+              this.$message.error(msg);
+            }
+          });
+        }
+      });
+    },
+    getNum(value) {
+      this.num = value;
     }
   }
 };
 </script>
 <style scoped lang='scss'>
 .join {
+  margin-top: 150px;
   .join-cont {
     width: 1200px;
     margin: 0 auto 80px;
@@ -323,6 +401,9 @@ export default {
           &:last-of-type {
             margin-right: 0;
           }
+        }
+        .el-button {
+          margin-left: 10px;
         }
         .el-textarea {
           width: 692px;

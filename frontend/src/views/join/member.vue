@@ -2,7 +2,6 @@
   <div class="join">
     <myheader />
     <join-enter />
-    <myswiper />
 
     <div class="join-cont">
       <h2 class="title">等级会员</h2>
@@ -47,8 +46,8 @@
           <div
             class="package-item"
             :class="classList[index === activeClass && index]"
-            v-for="(item, index) in 3"
-            :key="item"
+            v-for="(item, index) in memberList"
+            :key="item.id"
             @mouseenter="onMouseenter(index)"
           >
             <div class="bg-top">
@@ -56,10 +55,10 @@
                 <div class="package-img">
                   <img :src="require('@/assets/images/u1920.png')" width="48" height="48" alt />
                 </div>
-                <div class="package-name">皇冠会员</div>
+                <div class="package-name">{{item.title}}</div>
               </div>
               <div class="button-price">
-                <button @click="onClick">￥35888/年</button>
+                <button @click="getMemberOrderAdd(item.id, item.money)">￥{{item.money}}/年</button>
               </div>
             </div>
             <div class="privilege-service">
@@ -74,6 +73,66 @@
           </div>
         </div>
       </div>
+      <div class="protocol">
+        <el-checkbox v-model="checked">我已阅读并同意</el-checkbox>
+        <span @click="dialogVisible = true">《会员权益》</span>
+      </div>
+
+      <el-dialog title="会员权益" center :visible.sync="dialogVisible" width="1000px">
+        <div class="protocol-cont">
+          <p>本协议下文中的甲方为深圳市思锐信息技术有限公司，乙方为平台授权用户。</p>
+          <p>一、合作基础</p>
+          <p>（一）甲方为乙方提供产品，全部保证为正品，请您及用户放心使用！您推介的用户，产生利润，系统将自动为您结算酬金；</p>
+          <p>（二）甲方免费提供系统所需要的硬件环境、网络带宽、技术支持及后续升级服务，甲方向乙方授权使用系统牌照，牌照等级分为：皇冠、钻石、金牌三个等级；</p>
+          <p>（三）乙方必须是具有完全民事行为能力的自然人或法人；</p>
+          <p>（四）乙方有权使用本站内各项功能；</p>
+          <p>二、酬金支付标准及结算方式</p>
+          <p>（一）甲方产品利润指的平台内各项产品的销售毛利，甲方根据乙方实际系统统计业绩情况支付产品利润酬金，明细可查阅【代理中心】--【业绩管理】</p>
+          <p>（二）酬金由甲方直接支付到乙方注册时所用的手机账户中，以手机零钱的形式转到乙方在平台登记的银行卡上，乙方如需调整手机银行账户，须及时在平台上添加。</p>
+          <p>三、甲方的权利义务</p>
+          <p>（一）甲方根据乙方的考核业绩，可帮助推广邀请码方面的支持。</p>
+          <p>（二）甲方有权根据乙方造成甲方的声誉损失程度，向乙方追究责任，或解除本协议。</p>
+          <p>四、乙方的权利与义务</p>
+          <p>（一）、乙方积极服从甲方业务管理和指导，严格执行甲方有关业务规定和资费政策。</p>
+          <p>（二）、乙方在经营活动中应恪守信誉，讲究职业道德，树立良好形象。</p>
+          <p>（三）、乙方在宣传推广过程中应遵守国家相关法律法规，不得以任何理由进行虚假宣传或故意夸大宣传，如有违反相关规定，后果由乙方自行承担，甲方不承担任何后果。</p>
+          <p>（四）未经授权、不得将甲方的商标、企业名称、企业标志、产品包装设计以相同或近似的方式使用于任何包装、广告、网站、宣传资料。</p>
+          <p>（五）必须妥善保管个人密码，并同意甲方只须凭“密码相符”即可认定实施行为的主体是其本人，因个人密码保管不当等原因引起的法律责任完全自行承担</p>
+          <p>（六）不得擅自把自己的账号出借、转让给他人经营甲方业务。</p>
+          <p>五、保密条款和知识产权</p>
+          <p>（一）乙方严格保守国家通信秘密，遵守有关的法律、法规。</p>
+          <p>（二）甲方完全拥有手机充值营业厅系统的全部知识产权，乙方签署本协议后并未拥有产品的著作权。</p>
+          <p>六、平台使用费</p>
+          <p>甲方向乙方提供有偿使用服务，并向乙方收取一定的平台年使用费。</p>
+          <p>七、责任免除</p>
+          <p>甲方对下列事项不作任何陈述与保证：</p>
+          <p>1）使用“服务”的，及“服务”与任何其它硬件、软件、系统或数据结合时的，安全性、及时性、不受干扰或不发生错误；</p>
+          <p>2）“服务”符合乙方的要求或经验；</p>
+          <p>3）缺陷将会被更正；</p>
+          <p>4）对“服务”的功能按乙方的要求进行修改。</p>
+          <p>八、Internet延迟</p>
+          <p>甲方提供的“服务”可能因Internet和电子通信固有的缺陷而产生限制、延迟和其它问题。甲方对因这些问题造成的任何延误、发送失败或其它损失不承担责任。</p>
+          <p>九、其他</p>
+          <p>（一）如您已支付使用相当费用并已下达订单，表明您认可并同意手机充值营业厅服务协议的任何条款，并具有法律效力，且也受到本协议条款的约束。</p>
+          <p>（二）本协议在运作过程中出现的问题，双方应协商解决，并可签订补充协议；如协商不成，甲乙双方均有权向甲方所在的人民法院提出诉讼。</p>
+          <p>（三）本协议各方承诺：已完全知晓和理解本协议及所有相关法律文件的所有条款的含义及法律后果，各方自愿签署并完全接受上述条款。</p>
+          <p>（四）本协议的任何修改、补充均须以甲方电子文本形式作出，与本协议具同等法律效力。</p>
+          <p>（五）乙方委托甲方以电子文本形式保管所有与本协议有关的法律文件，并承诺在发生与本协议相关的所有争议时，对甲方当时保管的电子文本的协议作为证据的真实性无任何异议。</p>
+        </div>
+        <span slot="footer" class="dialog-footer">
+          <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
+
+      <payment-bar
+        ref="paymentbar"
+        :showPaymentFlag="showPaymentFlag"
+        :price="price"
+        :percent="percent"
+        :pay="pay"
+        @sendNum="getNum"
+        :needCodeDialog="needCodeDialog"
+      />
     </div>
     <myfooter />
   </div>
@@ -82,14 +141,15 @@
 <script>
 import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
-import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
+import { GetMemberList, MemberOrderAdd, GetDiscount } from "@/api/api";
+import PaymentBar from "@/components/join/paymentBar";
 export default {
   components: {
     Myheader,
     JoinEnter,
-    Myswiper,
-    Myfooter
+    Myfooter,
+    PaymentBar
   },
   data() {
     return {
@@ -109,8 +169,25 @@ export default {
       ],
       stepFlag: 0,
       classList: ["crown", "diamond", "gold"],
-      activeClass: 0
+      activeClass: 0,
+      checked: true,
+      memberList: [],
+      dialogVisible: false,
+      showPaymentFlag: false,
+      num: 1,
+      price: 0,
+      percent: 100,
+      needCodeDialog: true,
+      gradeId: 0
     };
+  },
+  mounted() {
+    this.getMemberList();
+  },
+  computed: {
+    total() {
+      return this.price * (this.percent / 100) * this.num;
+    }
   },
   methods: {
     stepMouseEnter(index) {
@@ -119,14 +196,59 @@ export default {
     onMouseenter(index) {
       this.activeClass = index;
     },
-    onClick() {
-      
+    getMemberList() {
+      GetMemberList().then(res => {
+        // console.log(res.data);
+        let { msg, data, code } = res.data;
+        if (code === 1) {
+          this.memberList = data;
+        }
+      });
+    },
+    getdiscount() {
+      GetDiscount({ id: 31 }).then(res => {
+        let { code, data, msg } = res;
+        if (code === 1) {
+          this.percent = data.user_discount;
+        }
+      });
+    },
+    getMemberOrderAdd(id, money) {
+      if (!this.checked) {
+        this.$message.error("请勾选会员权益");
+      } else {
+        this.showPaymentFlag = true;
+        this.price = money;
+        this.gradeId = id;
+      }
+    },
+    pay() {
+      MemberOrderAdd({
+        user_id: 1,
+        grade: this.gradeId,
+        num: this.num,
+        price: this.total
+      }).then(res => {
+        let { code, data, msg } = res;
+        console.log(data);
+        if (code === 1) {
+          this.showPayWayFlag = true; //显示扫码弹窗
+          this.$refs.paymentbar.getOrderId(data);
+          this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+        } else {
+          this.$message.error(msg);
+        }
+      });
+    },
+    getNum(value) {
+      this.num = value;
     }
   }
 };
 </script>
 <style scoped lang='scss'>
 .join {
+  margin-top: 150px;
   .join-cont {
     width: 1200px;
     margin: 0 auto 80px;
@@ -344,6 +466,17 @@ export default {
               }
             }
           }
+        }
+      }
+    }
+    .protocol {
+      color: #0099ff;
+      margin-top: 50px;
+      text-align: center;
+      span {
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
         }
       }
     }
