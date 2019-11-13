@@ -74,16 +74,21 @@
             </el-radio>
           </div>
           <div class="pay-money">
-            <span>总计：</span>{{real_money}}元
+            <span>总计：</span>
+            {{real_money}}元
           </div>
           <div style="margin:20px;" v-if="isShow">
-            <el-button type="success" style="background-color:rgb(0,201,0);" @click="codePay">生成支付二维码</el-button>
+            <el-button
+              type="success"
+              style="background-color:rgb(0,201,0);"
+              @click="codePay"
+            >生成支付二维码</el-button>
           </div>
         </div>
         <!-- 在线支付 -->
 
         <!-- 银行转账 -->
-        <div class="bank-pay"  v-if="radio == '3'">
+        <div class="bank-pay" v-if="radio == '3'">
           <div class="pay-l">
             <div class="pay-bank">
               <div class="pay-title">
@@ -100,7 +105,7 @@
                 </el-select>
               </div>
               <div class="addCard">
-                <el-button type="danger" plain>+银行卡</el-button>
+                <el-button type="danger" @click="dialogFormVisible = true" plain>+银行卡</el-button>
               </div>
             </div>
             <div class="pay-bank">
@@ -162,7 +167,7 @@
         <!-- 银行转账 -->
 
         <!-- 余额支付 -->
-        <div class="balance-pay"  v-if="radio == '4'">
+        <div class="balance-pay" v-if="radio == '4'">
           <div class="account">
             使用账户余额支付：
             <span class="money">
@@ -181,6 +186,43 @@
           </div>
         </div>
         <!-- 余额支付 -->
+
+        <!-- 添加银行卡弹窗 -->
+        <el-dialog title="添加银行卡" :visible.sync="dialogFormVisible">
+          <el-form :model="form" :rules="rules" :label-position="labelPosition" label-width="100px">
+            <el-form-item label="开户名：" prop="card_name">
+              <el-input v-model="form.card_name" auto-complete="off" style="width:400px;"></el-input>
+            </el-form-item>
+            <el-form-item label="银行账户：" prop="card_number">
+              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;"></el-input>
+            </el-form-item>
+            <el-form-item label="银行：" prop="bank_name">
+              <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:400px;"></el-select>
+            </el-form-item>
+            <el-form-item>
+              <el-row>
+                <el-col :span="6">
+                  <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
+                </el-col>
+                <el-col :span="6">
+                  <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
+                </el-col>
+              </el-row>
+            </el-form-item>
+            <el-form-item label="开户支行：" prop="bank_branch">
+              <el-input
+                v-model="form.bank_branch"
+                auto-complete="off"
+                placeholder="请填写支行名"
+                style="width:400px;"
+              ></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="resetForm()">取 消</el-button>
+            <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
     </div>
   </div>
@@ -189,6 +231,7 @@
 <script>
 import Myheader from "@/components/header";
 import { templatePay } from "@/api/api";
+import { bankCardAttribution } from "@/api/bank";
 
 export default {
   name: "comboPay",
@@ -196,9 +239,18 @@ export default {
     Myheader
   },
   data() {
+    let validatePass = (rule, value, callback) => {
+      let bank = bankCardAttribution(value);
+      if (bank) {
+        this.form.bank_name = bank.bankName;
+        callback();
+      } else {
+        callback(new Error("银行卡号格式有误！"));
+      }
+    };
     return {
       checked: [],
-      radio: "1",
+      radio: "3",
       options: [
         {
           value: "1",
@@ -212,11 +264,33 @@ export default {
       codeType: "1", //支付宝或微信
       value: "",
       value11: "",
-      money: 0,//套餐金额
-      real_money: 0,//最终实付金额
-      imgData: '',
+      money: 0, //套餐金额
+      real_money: 0, //最终实付金额
+      imgData: "",
       isShow: true,
       isDisabl: false,
+      form: {
+        card_name: "",
+        bank_name: "",
+        bank_branch: "",
+        card_number: ""
+      },
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      formLabelWidth: "100px",
+      labelPosition: "right",
+      rules: {
+        card_name: [
+          { required: true, message: "请输入开户名", trigger: "blur" }
+        ],
+        // bank_name: [
+        //   { required: true, message: '请选择银行名称', trigger: 'change' }
+        // ],
+        bank_branch: [
+          { required: true, message: "请输入支行名", trigger: "blur" }
+        ],
+        card_number: [{ validator: validatePass, trigger: "blur" }]
+      }
     };
   },
   mounted() {
@@ -229,23 +303,50 @@ export default {
       this.real_money = this.$route.params.order_amount;
     },
     //下单生成二维码
-    codePay(){
+    codePay() {
       let params = this.$route.params;
       //支付类型
-      if(this.radio != "1") params.pay_type = this.radio;
+      if (this.radio != "1") params.pay_type = this.radio;
       else params.pay_type = this.codeType;
-      params.order_amount = this.real_money;//实付金额
+      params.order_amount = this.real_money; //实付金额
       templatePay(params).then(res => {
-          console.log(res)
-           let { code, imgData, msg } = res;
-           this.$message(msg);
-          if (code === 1) {
-            this.imgData = imgData;
-            this.isShow = !this.isShow;
-            this.isDisabl = !this.isDisabl;
-          }
-        });
-    }
+        console.log(res);
+        let { code, imgData, msg } = res;
+        this.$message(msg);
+        if (code === 1) {
+          this.imgData = imgData;
+          this.isShow = !this.isShow;
+          this.isDisabl = !this.isDisabl;
+        }
+      });
+    },
+    submitForm(formName) {
+      bankCardAttribution();
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          alert("submit!");
+        } else {
+          console.log("error submit!!");
+          return false;
+        }
+      });
+    },
+    resetForm() {
+      (this.form = {
+        card_name: "",
+        bank_name: "",
+        bank_branch: "",
+        card_number: ""
+      }),
+        (this.dialogFormVisible = false);
+      // this.$refs[formName].resetFields();
+    },
+    // getBank(val) {
+    //   let bank = bankCardAttribution(val);
+    //   console.log(bank);
+    //   if (bank) this.form.bank_name = bank.bankName;
+    //   else this.$message.error("银行卡号格式有误！");
+    // }
   }
 };
 </script>
@@ -443,9 +544,9 @@ export default {
           margin: 20px 0;
         }
         .pay-money {
-            font-weight: 700;
-            font-size: 18px;
-            color: rgb(0, 0, 0);
+          font-weight: 700;
+          font-size: 18px;
+          color: rgb(0, 0, 0);
           span {
             font-size: 28px;
           }
