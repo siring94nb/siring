@@ -298,7 +298,7 @@ export default {
         card_number: "",
         province: "",
         city: "",
-        user_id: ""
+        user_id: 0
       },
 
       paymentAccount: "1",//选择收款账号
@@ -359,11 +359,16 @@ export default {
     submitForm(formName) {
       // this.$refs[formName].validate(valid => {
       //   if (valid) {
-        console.log(this.form)
-        this.isSubmit = !this.isSubmit;
-        let params = this.form
+        let vm = this;
+        vm.isSubmit = !vm.isSubmit;
+        let params = vm.form
           addBank(params).then(res => {
             console.log(res)
+            let { code, data, msg } = res;
+            vm.$message(msg);
+            if(code == "1") {
+              this.resetForm();
+            }
           })
       //   } else {
       //     console.log("error submit!!");
@@ -380,7 +385,7 @@ export default {
         card_number: "",
         province: "",
         city: "",
-        user_id: ""
+        user_id: 0
       }),
         (this.dialogFormVisible = false);
         this.isSubmit = !this.isSubmit;
