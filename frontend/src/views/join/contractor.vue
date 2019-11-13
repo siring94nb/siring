@@ -123,14 +123,18 @@
       ></el-alert>
       <div class="table-box">
         <el-table :data="tableData" border style="width: 100%">
-          <el-table-column prop="name" label="专业技能" align="center"></el-table-column>
-          <el-table-column prop="cost" label="押金标准" align="center"></el-table-column>
+          <el-table-column prop="title" label="专业技能" align="center"></el-table-column>
+          <el-table-column label="押金标准" align="center">
+            <template slot-scope="scope">
+              {{scope.row.money}}元/年
+            </template>
+          </el-table-column>
           <el-table-column prop="policy" label="开发语言半角“,”隔开" align="center">
             <template slot-scope="scope">
               <span v-html="scope.row.policy"></span>
             </template>
           </el-table-column>
-          <el-table-column prop="income" label="收益预测" align="center"></el-table-column>
+          <el-table-column prop="forecast" label="收益预测" align="center"></el-table-column>
         </el-table>
       </div>
       <span slot="footer" class="dialog-footer">
@@ -144,7 +148,7 @@
 import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
 import Myfooter from "@/components/footer";
-import { GetJoinClass, GetJoinList, JoinOrderAdd } from "@/api/api";
+import { GetJoinClass, GetJoinList, JoinOrderAdd, GetProfit } from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
 export default {
   components: {
@@ -171,14 +175,7 @@ export default {
       ],
       stepFlag: 0,
       centerDialogVisible: false,
-      tableData: [
-        {
-          name: "前端开发",
-          cost: "100",
-          policy: "<p>java,c++,php</p>",
-          income: "约50万"
-        }
-      ],
+      tableData: [],
       ruleForm: {
         textarea: "",
         skills: [],
@@ -199,6 +196,7 @@ export default {
   },
   mounted() {
     this.getJoinClass();
+    this.getProfit();
   },
   computed: {
     total() {
@@ -272,6 +270,15 @@ export default {
     },
     getNum(value) {
       this.num = value;
+    },
+    getProfit() {
+      GetProfit({ type: 3 }).then(res => {
+        let { msg, code, data } = res;
+        if (code === 1) {
+          console.log(data);
+          this.tableData = data;
+        }
+      });
     }
   }
 };
