@@ -103,7 +103,7 @@ Route::group('api', function () {
     //用户优惠券fyk
     Route::group('Console',function(){
         Route::any('personal_information','api/Console/personal_information'); //用户信息
-        Route::any('user_fund','api/Console/user_fund'); //用户余额personal_information
+        Route::any('my_order','api/Console/my_order'); //用户订单
     });
 
 
