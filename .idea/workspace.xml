@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Console.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Console.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/vipsetting/fbs.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/vipsetting/fbs.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -55,14 +52,14 @@
         <counts>
           <entry key="dummy" value="1" />
           <entry key="js" value="36" />
-          <entry key="php" value="7884" />
+          <entry key="php" value="7886" />
           <entry key="vue" value="371" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="36" />
-          <entry key="PHP" value="7884" />
+          <entry key="PHP" value="7886" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="Vue.js" value="371" />
         </counts>
@@ -79,8 +76,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="784">
-              <caret line="148" column="101" selection-start-line="148" selection-start-column="101" selection-end-line="148" selection-end-column="101" />
+            <state relative-caret-position="568">
+              <caret line="148" column="90" selection-start-line="148" selection-start-column="90" selection-end-line="148" selection-end-column="90" />
             </state>
           </provider>
         </entry>
@@ -88,8 +85,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+            <state relative-caret-position="362">
+              <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -238,7 +235,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-29" />
     <option name="y" value="-21" />
     <option name="width" value="1936" />
@@ -423,12 +420,12 @@
       <workItem from="1573435947623" duration="9996000" />
       <workItem from="1573521109600" duration="16525000" />
       <workItem from="1573609704224" duration="6797000" />
-      <workItem from="1573625838761" duration="2962000" />
+      <workItem from="1573625838761" duration="3776000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="240932000" />
+    <option name="totallyTimeSpent" value="241746000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -836,15 +833,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/JoinOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="32" column="20" selection-start-line="32" selection-start-column="20" selection-end-line="32" selection-end-column="20" />
+        <state relative-caret-position="362">
+          <caret line="35" column="21" lean-forward="true" selection-start-line="35" selection-start-column="21" selection-end-line="35" selection-end-column="21" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="784">
-          <caret line="148" column="101" selection-start-line="148" selection-start-column="101" selection-end-line="148" selection-end-column="101" />
+        <state relative-caret-position="568">
+          <caret line="148" column="90" selection-start-line="148" selection-start-column="90" selection-end-line="148" selection-end-column="90" />
         </state>
       </provider>
     </entry>

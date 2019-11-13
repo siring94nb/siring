@@ -131,7 +131,7 @@ class JoinOrder extends Base
 //            "skill"=>$param['skill'],
 //            "language"=>$param['language'],
 //        ];
-//        $dev = json_encode($info);
+        $dev = json_encode($param['skill']);
 
         $user_id = Session::get("uid");
         if($user_id){
@@ -146,7 +146,7 @@ class JoinOrder extends Base
         try{
         $city = new JoinOrderAll();
 
-        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$param['skill'],'',$param['con']);
+        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$dev,'',$param['con']);
 
         $order_id = $data->id;
 
