@@ -26,8 +26,10 @@ class  UserCard extends  Base{
             // }
             if($postData['id']==0){
                 unset($postData['id']);
+                $postData['create_time']=time();
                 $res=Card::create($postData)->toArray();
             }else{
+                $postData['update_time']=time();
                 $res=Card::update($postData)->toArray();
             }
             return   json(['1','操作成功','data'=>$res]);
