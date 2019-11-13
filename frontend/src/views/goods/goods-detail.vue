@@ -1,7 +1,6 @@
 <template>
   <div class="goods-detail">
     <myheader />
-    <myswiper />
     <div class="container">
       <h3>软件/定制</h3>
       <div class="cont clearfix">
@@ -142,14 +141,12 @@
 
 <script>
 import Myheader from "@/components/header";
-import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
 import Jdyh from "@/components/jdyh";
 import { GetGoodsDetail, GetRecommend, GetComment } from "@/api/api";
 export default {
   components: {
     Myheader,
-    Myswiper,
     Myfooter,
     Jdyh
   },
@@ -224,6 +221,7 @@ export default {
 <style scoped lang='scss'>
 .goods-detail {
   margin-bottom: 50px;
+  margin-top: 150px;
   .container {
     width: 1200px;
     margin: 0 auto;

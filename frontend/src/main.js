@@ -11,10 +11,12 @@ import qs from 'qs';
 Vue.prototype.$qs = qs;
 
 Vue.use(ElementUI);
+// 城市联动
+import vRegion from 'v-region';
+Vue.use(vRegion);
 
 router.beforeEach((to, from, next) => {
   Seo().then(res => {
-    console.log(res.data)
     const data = res.data;
     if (data.code === 1) {
       document.title = data.data.name;
