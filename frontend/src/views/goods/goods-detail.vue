@@ -1,7 +1,6 @@
 <template>
   <div class="goods-detail">
     <myheader />
-    <myswiper />
     <div class="container">
       <h3>软件/定制</h3>
       <div class="cont clearfix">
@@ -77,7 +76,7 @@
           <div class="comment-box">
             <el-tabs type="border-card">
               <el-tab-pane label="功能描述">
-                <p class="cm-p" v-for="(item, index) in intro" :key="index">{{item}}</p>
+                <div v-html="goodsDetail.goods_des"></div>
               </el-tab-pane>
               <el-tab-pane label="会员评价">
                 <div class="comment-list">
@@ -142,14 +141,12 @@
 
 <script>
 import Myheader from "@/components/header";
-import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
 import Jdyh from "@/components/jdyh";
 import { GetGoodsDetail, GetRecommend, GetComment } from "@/api/api";
 export default {
   components: {
     Myheader,
-    Myswiper,
     Myfooter,
     Jdyh
   },
@@ -165,7 +162,6 @@ export default {
       ifLogin: false,
       recommendList: [],
       selectType: {},
-      intro: [],
       commentList: []
     };
   },
@@ -188,7 +184,6 @@ export default {
         if (code === 1) {
           this.goodsDetail = data;
           this.selectType = data.special[0];
-          this.intro = data.goods_des.split("\n");
         }
       });
     },
@@ -224,6 +219,7 @@ export default {
 <style scoped lang='scss'>
 .goods-detail {
   margin-bottom: 50px;
+  margin-top: 150px;
   .container {
     width: 1200px;
     margin: 0 auto;

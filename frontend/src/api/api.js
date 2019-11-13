@@ -65,8 +65,8 @@ export const GetBannerList = params => {
   return axios.post(`${base_url}api/banner/banner_list`, qs.stringify(params)).then(res => res.data);
 }
 
-// 角色加盟
 
+// 角色加盟
 /**
  * 获取加盟省份
  */
@@ -99,7 +99,7 @@ export const CityOrderAdd = params => {
  * 用户折扣
  */
 export const GetDiscount = params => {
-  return axios.post(`${base_url}api/JoinRole/discount`, params).then(res => res.data);
+  return axios.post(`${base_url}api/JoinRole/discount`, qs.stringify(params)).then(res => res.data);
 }
 
 /**
@@ -107,6 +107,48 @@ export const GetDiscount = params => {
  */
 export const Payment = params => {
   return axios.post(`${base_url}api/JoinOrder/get_pay`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * 会员等级费用列表
+ */
+export const GetMemberList = params => {
+  return axios.get(`${base_url}api/JoinRole/member_list`, { params: params });
+}
+
+/**
+ * 等级会员下单
+ */
+export const MemberOrderAdd = params => {
+  return axios.post(`${base_url}api/JoinOrder/member_order_add`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * 分包商等级分类
+ */
+export const GetJoinClass = params => {
+  return axios.get(`${base_url}api/JoinRole/join_class`, { params: params });
+}
+
+/**
+ * 分包商费用列表
+ */
+export const GetJoinList = params => {
+  return axios.post(`${base_url}api/JoinRole/join_list`, qs.stringify(params)).then(res => res.data);
+}
+
+/**
+ * 分包商下单
+ */
+export const JoinOrderAdd = params => {
+  return axios.post(`${base_url}api/JoinOrder/join_order_add`, params).then(res => res.data);
+}
+
+/**
+ * 收益预测
+ */
+export const GetProfit = params => {
+  return axios.post(`${base_url}api/JoinRole/profit`, params).then(res => res.data);
 }
 
 /**
@@ -176,4 +218,10 @@ export const GetTempList = data => {
  */
 export const templatePay = data => {
   return axios.post(`${base_url}api/MealOrder/meal_order_add`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS 银行卡添加
+ */
+export const addBank = data => {
+  return axios.post(`${base_url}api/UserCard/user_card_add`, qs.stringify(data)).then(res => res.data);
 }

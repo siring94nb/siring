@@ -2,7 +2,9 @@
 
 namespace app\api\controller;
 
+
 use app\data\model\MealOrder as Meal;
+use app\data\model\Offline;
 use app\data\model\WechatPay;
 use think\Request;
 use think\Session;
@@ -60,7 +62,6 @@ class MealOrder extends Base
                  // 查询订单信息
             $url = 'https://manage.siring.com.cn/api/MealOrder/hy_model_notice';
             $order = Db::table('model_order')->getById($id);
-
             $pay = 1;//先测试1分钱
             if (!$order)returnJson(0, '当前订单不存在');
     //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
@@ -70,10 +71,37 @@ class MealOrder extends Base
                 return $res;
                 break;
             case 3 :    //银行转账 
-                
-
-
+                //添加审核记录
+                $order = Db::table('model_order')->getById($id);
+                $data['create_time']=time();
+                $data['order_number']=$order['order_number'];
+                $data['member_account']=$order['member_account'];
+                $data['pay_type']='Saas套餐费用';
+                $data['bank_name']=;      //银行名称
+                $data['bank_number']=$order['bank_number'];    //银行卡号
+                $data['order_number']=$order['order_number'];
+                $data['pay_money']=$order['order_amount'];
+                $data['comment']=;
+                $data['order_status']=1;
+                $data['account_number']=;
+                $data['chart_name']='model_order';    //所在的数据表的名称
+                $offline=Offline::create($data)->toArray();
+                if($offline){
+                    return '支付成功';
+                }else{
+                    return '支付失败';
+                }
                 break;
+            case  4 :    //余额
+                //扣除用户余额
+                $order = Db::table('model_order')->getById($id);
+                $re=Db::table('user')->where('user_id',$order['member_account'])->setDec('money',$pay);
+                if($re){
+                    return '支付成功';
+                }else{
+                    return '支付失败';
+                }
+            break;
         }
         
     }

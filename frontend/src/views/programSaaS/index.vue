@@ -11,9 +11,37 @@
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
+        <el-button
+          class="wh-sty"
+          v-popover:popover2
+        >？</el-button>
         <div style="flex:1"></div>
-        <div class="appreciation">增值服务</div>
+        <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
       </div>
+      <el-popover ref="popover1" placement="bottom" width="450" trigger="click">
+        <div style="display:flex;justify-content : space-around;">
+          <div class="popover-box">
+            <p>小程序办理开通</p>
+            <p class="popover-price">￥1000元</p>
+          </div>
+          <div class="popover-box">
+            <p>装修布局界面设计</p>
+            <p class="popover-price">￥2000元/20页</p>
+          </div>
+          <div class="popover-box">
+            <p>图片图标美工UI</p>
+            <p class="popover-price">￥3000元/50张</p>
+          </div>
+        </div>
+        <p class="popover-p">注：以上视工作复杂程度另行加价，如工作量较大，可多次购买服务</p>
+      </el-popover>
+      <el-popover
+        ref="popover2"
+        placement="bottom"
+        width="350"
+        trigger="click"
+        content="DIY样式可对结构板块样式做适当修改，固定样式不能对样式做修改，但可对内容及各元素图文做替换"
+      ></el-popover>
       <div class="abstract">
         <div class="abstract-l">
           <h1>行业模板：{{showTemp.model_name}}</h1>
@@ -186,7 +214,32 @@ export default {
   }
 };
 </script>
+<style>
+/* .el-popper {
+  background-color: rgb(219, 255, 255);
+} */
+</style>
 <style lang="scss" scoped>
+.popover-box {
+  background-color: rgb(29, 211, 175);
+  text-align: center;
+  line-height: 24px;
+  color: #fff;
+  border-radius: 5px;
+  padding: 8px;
+  font-size: 16px;
+  width: 130px;
+}
+.popover-price {
+  font-size: 18px;
+  font-weight: 700;
+}
+.popover-p {
+  font-size: 12px;
+  color: #ff9191;
+  margin-top: 5px;
+}
+
 .index {
   margin: auto;
   margin-top: 100px;
@@ -218,13 +271,25 @@ export default {
       background-color: rgb(26, 188, 156);
       cursor: pointer;
     }
+    .wh-sty {
+      background-color: red;
+      border-radius: 50%;
+      color: #fff;
+      border: 0;
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      text-align: center;
+      margin: 5px 0 0 10px;
+    }
     .appreciation {
-      margin-right: 20px;
       background-color: rgb(255, 153, 0);
-      width: 130px;
-      line-height: 36px;
-      height: 36px;
       font-weight: 700;
+      font-size: 18px;
+      height: 36px;
+      line-height: 12px;
+      margin-right: 20px;
+      width: 150px;
     }
   }
   .abstract {
