@@ -268,6 +268,7 @@ export default {
       }
     };
     return {
+      isSubmit: false,
       checked: [],
       radio: "3",
       options: [
@@ -359,6 +360,7 @@ export default {
       // this.$refs[formName].validate(valid => {
       //   if (valid) {
         console.log(this.form)
+        this.isSubmit = !this.isSubmit;
         let params = this.form
           addBank(params).then(res => {
             console.log(res)
@@ -381,6 +383,7 @@ export default {
         user_id: ""
       }),
         (this.dialogFormVisible = false);
+        this.isSubmit = !this.isSubmit;
       // this.$refs[formName].resetFields();
     },
     //银行支付
