@@ -211,7 +211,7 @@ export default {
         index: 0
       },
       ruleValidate: {
-       
+
       },
       // 图片
       UploadAction: "",

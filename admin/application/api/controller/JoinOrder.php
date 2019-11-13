@@ -119,7 +119,7 @@ class JoinOrder extends Base
         $param = $request->param();
         $validate = new Validate([
             ['skill', 'require', '技能不能为空'],
-            ['language', 'require', '开发语言不能为空'],
+            //['language', 'require', '开发语言不能为空'],
             ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
             ['num','require','数量必须'],
             ['price','require','金额必须'],
@@ -127,11 +127,11 @@ class JoinOrder extends Base
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
-        $info = [
-            "skill"=>$param['skill'],
-            "language"=>$param['language'],
-        ];
-        $dev = json_encode($info);
+//        $info = [
+//            "skill"=>$param['skill'],
+//            "language"=>$param['language'],
+//        ];
+//        $dev = json_encode($info);
 
         $user_id = Session::get("uid");
         if($user_id){
@@ -146,7 +146,7 @@ class JoinOrder extends Base
         try{
         $city = new JoinOrderAll();
 
-        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$dev,'',$param['con']);
+        $data = $city->order_add($role_type,$user_id,'',$param['num'],$param['price'],$param['skill'],'',$param['con']);
 
         $order_id = $data->id;
 
