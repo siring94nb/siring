@@ -215,9 +215,9 @@ export default {
 };
 </script>
 <style>
-.el-popper {
+/* .el-popper {
   background-color: rgb(219, 255, 255);
-}
+} */
 </style>
 <style lang="scss" scoped>
 .popover-box {

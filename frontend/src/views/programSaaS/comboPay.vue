@@ -212,7 +212,7 @@
             <el-form-item label="开户名：" prop="card_name">
               <el-input v-model="form.card_name" auto-complete="off" style="width:400px;"></el-input>
             </el-form-item>
-            <el-form-item label="银行账户：">
+            <el-form-item label="银行账号：">
               <el-input v-model="form.card_number" auto-complete="off" style="width:400px;" @change="getBank"></el-input>
             </el-form-item>
             <el-form-item label="银行：">
@@ -290,6 +290,7 @@ export default {
       isDisabl: false,
       //添加银行卡
       form: {
+        id: 0,
         card_name: "",
         bank_name: "",
         bank_branch: "",
@@ -368,6 +369,7 @@ export default {
     },
     resetForm() {
       (this.form = {
+        id: 0,
         card_name: "",
         bank_name: "",
         bank_branch: "",
