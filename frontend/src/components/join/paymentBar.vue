@@ -17,7 +17,13 @@
           </p>
         </div>
         <div class="symbol">×</div>
-        <el-input-number v-model="num" controls-position="right" :min="1" :max="10"></el-input-number>
+        <el-input-number
+          v-model="num"
+          controls-position="right"
+          @change="handleChange"
+          :min="1"
+          :max="10"
+        ></el-input-number>
         <div class="symbol">=</div>
         <div>
           <div class="bgw">￥{{total}}</div>
@@ -40,8 +46,8 @@
         <img :src="payqrcode" alt />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="$emit('hide-dialog')">取 消</el-button>
-        <el-button type="primary" @click="$emit('hide-dialog')">确 定</el-button>
+        <el-button @click="showPayWayFlag = false">取 消</el-button>
+        <el-button type="primary" @click="showPayWayFlag = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -50,7 +56,13 @@
 <script>
 import { Payment } from "@/api/api";
 export default {
-  props: ["showPaymentFlag", "showPayWayFlag", "price", "percent", "pay"],
+  props: [
+    "showPaymentFlag",
+    "needCodeDialog",
+    "price",
+    "percent",
+    "pay"
+  ],
   data() {
     return {
       num: 1,
@@ -67,7 +79,8 @@ export default {
         ]
       },
       payqrcode: "",
-      orderid: 0
+      orderid: 0,
+      showPayWayFlag: false
     };
   },
   computed: {
@@ -88,7 +101,13 @@ export default {
       });
     },
     getOrderId(orderid) {
+      if(this.needCodeDialog){
+        this.showPayWayFlag = true;
+      }
       this.orderid = orderid;
+    },
+    handleChange(value){
+      this.$emit('sendNum', value);
     }
   }
 };
@@ -103,6 +122,7 @@ export default {
   right: 0;
   height: 80px;
   background-color: rgb(204, 235, 248);
+  z-index: 99;
   &.show {
     display: flex;
     align-items: center;

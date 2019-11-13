@@ -2,7 +2,6 @@
   <div class="join">
     <myheader />
     <join-enter />
-    <myswiper />
 
     <div class="join-cont">
       <h2 class="title">城市合伙人</h2>
@@ -114,11 +113,11 @@
     <payment-bar
       ref="paymentbar"
       :showPaymentFlag="showPaymentFlag"
-      :showPayWayFlag="showPayWayFlag"
       :price="price"
       :percent="percent"
       :pay="pay"
-      @hide-dialog="showPayWayFlag = false"
+      @sendNum="getNum"
+      :needCodeDialog="needCodeDialog"
     />
   </div>
 </template>
@@ -126,7 +125,6 @@
 <script>
 import Myheader from "@/components/header";
 import JoinEnter from "@/components/join/cmp";
-import Myswiper from "@/components/mySwiper";
 import Myfooter from "@/components/footer";
 import PaymentBar from "@/components/join/paymentBar";
 import {
@@ -141,7 +139,6 @@ export default {
   components: {
     Myheader,
     JoinEnter,
-    Myswiper,
     Myfooter,
     PaymentBar
   },
@@ -191,10 +188,9 @@ export default {
         cityVal: ""
       },
       showPaymentFlag: false,
-      num: 1,
+      needCodeDialog: true, //需要显示扫码弹窗
       price: 0,
       percent: 100,
-      showPayWayFlag: false,
       payway: {
         way: 1
       },
@@ -290,9 +286,9 @@ export default {
           }).then(res => {
             let { code, data, msg } = res;
             if (code === 1) {
-              this.showPayWayFlag = true; //显示扫码弹窗
+              // this.showPayWayFlag = true; //显示扫码弹窗
               this.$refs.paymentbar.getOrderId(data);
-              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法
             } else {
               this.$message.error(msg);
             }
@@ -301,14 +297,15 @@ export default {
       });
     },
     getdiscount() {
-      let data = new FormData();
-      data.append("id", 31);
-      GetDiscount(data).then(res => {
+      GetDiscount({id: 31 }).then(res => {
         let { code, data, msg } = res;
         if (code === 1) {
           this.percent = data.user_discount;
         }
       });
+    },
+    getNum(value) {
+      this.num = value;
     }
   }
 };
@@ -323,6 +320,7 @@ export default {
 </style>
 <style scoped lang='scss'>
 .join {
+  margin-top: 150px;
   .join-cont {
     width: 1200px;
     margin: 0 auto 80px;
