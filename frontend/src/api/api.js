@@ -212,3 +212,9 @@ export const GetTempList = data => {
 export const templatePay = data => {
   return axios.post(`${base_url}api/MealOrder/meal_order_add`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 小程序SaaS 银行卡添加
+ */
+export const addBank = data => {
+  return axios.post(`${base_url}api/UserCard/user_card_add`, qs.stringify(data)).then(res => res.data);
+}

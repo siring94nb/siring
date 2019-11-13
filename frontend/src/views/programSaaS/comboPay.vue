@@ -131,7 +131,7 @@
               <div></div>
             </div>
             <div style="text-align:center;">
-              <el-button type="danger" style="width:220px;margin-left:20px;">确定</el-button>
+              <el-button type="danger" style="width:220px;margin-left:20px;" @click="bankPay">确定</el-button>
             </div>
           </div>
           <div class="s-line"></div>
@@ -140,27 +140,46 @@
               <img src="../../assets/images/u2011.png" alt />
               <span class="red">转账到以下任意平台收款账号：</span>
             </div>
-            <div class="pay-accout">
-              <div class="bank-name">
-                <img src="../../assets/images/u1956.png" alt />
-              </div>
-              <div class="bank-main">
-                <p>账户名：吴雪</p>
-                <p>开户银行：中国工商银行深圳深圳湾支行</p>
-                <p>账号：6212264000061706160</p>
-              </div>
-            </div>
-            <div class="pay-accout">
-              <div class="bank-name">
-                <img src="../../assets/images/u1956.png" alt />
-              </div>
-              <div class="bank-main">
-                <p>户 名：深圳市思锐信息技术有限公司</p>
-                <p>账 号:4000040209200016204</p>
-                <p>开户银行:工行深圳深东支行</p>
-                <p>纳税人识别号:914403001924280274</p>
-              </div>
-            </div>
+            <el-row>
+              <el-col :span="3">
+                <div style="margin: 60px 0 0 10px;">
+                  <el-radio v-model="paymentAccount" label="0"><div></div></el-radio>
+                </div>
+              </el-col>
+              <el-col :span="20">
+                <div class="pay-accout">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '1'}">
+                    <img src="../../assets/images/u1956.png" alt />
+                  </div>
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '1'}">
+                    <p>账户名：吴雪</p>
+                    <p>开户银行：中国工商银行深圳深圳湾支行</p>
+                    <p>账号：6212264000061706160</p>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
+
+            <el-row>
+              <el-col :span="3">
+                <div style="margin: 60px 0 0 10px;">
+                  <el-radio v-model="paymentAccount" label="1"><div></div></el-radio>
+                </div>
+              </el-col>
+              <el-col :span="20">
+                <div class="pay-accout">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '0'}">
+                    <img src="../../assets/images/u1956.png" alt />
+                  </div>
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '0'}">
+                    <p>户 名：深圳市思锐信息技术有限公司</p>
+                    <p>账 号:4000040209200016204</p>
+                    <p>开户银行:工行深圳深东支行</p>
+                    <p>纳税人识别号:914403001924280274</p>
+                  </div>
+                </div>
+              </el-col>
+            </el-row>
             <div class="tips">以上是平台汇款账户，支付后可通知客服查账，及时为您充值！</div>
           </div>
         </div>
@@ -200,14 +219,14 @@
               <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:400px;"></el-select>
             </el-form-item>
             <el-form-item>
-              <el-row>
-                <el-col :span="6">
-                  <v-region @values="regionChange"></v-region>
-                </el-col>
+              <!-- <el-row>
+              <el-col :span="6">-->
+              <v-region @values="regionChange" :area="false"></v-region>
+              <!-- </el-col>
                 <el-col :span="6">
                   <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
                 </el-col>
-              </el-row>
+              </el-row>-->
             </el-form-item>
             <el-form-item label="开户支行：" prop="bank_branch">
               <el-input
@@ -231,7 +250,7 @@
 <script>
 import Myheader from "@/components/header";
 import { templatePay } from "@/api/api";
-import { bankCardAttribution } from "@/api/bank";
+import { bankCardAttribution, addBank } from "@/api/bank";
 
 export default {
   name: "comboPay",
@@ -269,15 +288,27 @@ export default {
       imgData: "",
       isShow: true,
       isDisabl: false,
+      //添加银行卡
       form: {
         card_name: "",
         bank_name: "",
         bank_branch: "",
-        card_number: ""
+        card_number: "",
+        province: "",
+        city: ""
       },
+
+      paymentAccount: "1",//选择收款账号
+      payAccount:[
+        '6212264000061706160',
+        '4000040209200016204'
+      ],
+      //银行支付--
+      account_number: '',//收款账号
+
+
       dialogTableVisible: false,
       dialogFormVisible: false,
-      formLabelWidth: "100px",
       labelPosition: "right",
       rules: {
         card_name: [
@@ -320,11 +351,13 @@ export default {
         }
       });
     },
+    //添加银行卡
     submitForm(formName) {
-      bankCardAttribution();
       this.$refs[formName].validate(valid => {
         if (valid) {
-          alert("submit!");
+          addBank(this.form).then(res => {
+            console.log(res)
+          })
         } else {
           console.log("error submit!!");
           return false;
@@ -336,13 +369,22 @@ export default {
         card_name: "",
         bank_name: "",
         bank_branch: "",
-        card_number: ""
+        card_number: "",
+        province: "",
+        city: ""
       }),
         (this.dialogFormVisible = false);
       // this.$refs[formName].resetFields();
     },
-    regionChange(data){
-      console.log(data)
+    //银行支付
+    bankPay(){
+      let vm = this;
+      vm.account_number = vm.payAccount[vm.paymentAccount];
+      console.log(vm.account_number)
+    },
+    regionChange(data) {
+      if(data.province) this.form.province= data.province.value;
+      if(data.city) this.form.city= data.province.value;
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
@@ -473,7 +515,8 @@ export default {
           }
           .pay-accout {
             border: 1px solid rgb(188, 188, 188);
-            margin: 10px 0 0 65px;
+            margin-top: 10px;
+            .bank-nosel{background: rgb(129,129,129) !important;border-color: rgb(129,129,129) !important;}
             .bank-name {
               padding: 2px 5px;
               border-bottom: 1px solid rgb(188, 188, 188);
