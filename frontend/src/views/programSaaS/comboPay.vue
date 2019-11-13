@@ -202,7 +202,7 @@
             <el-form-item>
               <el-row>
                 <el-col :span="6">
-                  <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
+                  <v-region @values="regionChange"></v-region>
                 </el-col>
                 <el-col :span="6">
                   <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
@@ -341,6 +341,9 @@ export default {
         (this.dialogFormVisible = false);
       // this.$refs[formName].resetFields();
     },
+    regionChange(data){
+      console.log(data)
+    }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
     //   console.log(bank);
