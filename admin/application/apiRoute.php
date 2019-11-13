@@ -82,6 +82,13 @@ Route::group('api', function () {
         Route::any('meal_order_pay','api/MealOrder/meal_order_pay'); //下单
     });
 
+    //添加用户银行卡
+    Route::group('UserCard',function(){
+        Route::any('user_card_add','api/UserCard/user_card_add');  //添加/编辑银行卡
+        Route::any('user_card_list','api/UserCard/user_card_list');  //银行卡列表
+    });
+
+
     //角色加盟订单fyk
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
