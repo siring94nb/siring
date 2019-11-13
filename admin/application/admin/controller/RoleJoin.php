@@ -368,18 +368,12 @@ class RoleJoin extends Base
             'money'=>'require',
             'policy'=>'require',
             'forecast'=>'require',
-            'bottom_commission'=>'require',
-            'standard_commission'=>'require',
-            'standard_num'=>'require',
         ];
         $message = [
             'title.require'=>'名称不能为空',
             'money.require'=>'费用不能为空',
-            'policy.require'=>'等级政策不能为空',
+            'policy.require'=>'开发语言不能为空',
             'forecast.require'=>'收益预测不能为空',
-            'bottom_commission.require'=>'保底佣金比例为空',
-            'standard_commission.require'=>'达标佣金比例为空',
-            'standard_num.require'=>'达标数量为空',
         ];
         $validate = new Validate($rules,$message);
         if(!$validate->check($param)){

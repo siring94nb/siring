@@ -60,10 +60,10 @@
         <div class="sel-cont">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rule" label-width="120px">
             <el-form-item label="选择加盟城市：">
-              <el-select v-model="ruleForm.provVal" placeholder="请选择" @change="provChange">
+              <el-select v-model="ruleForm.provVal" style="width: 217px;" placeholder="请选择" @change="provChange">
                 <el-option v-for="item in prov" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
-              <el-select v-model="ruleForm.levelVal" placeholder="请选择" @change="levelChange">
+              <el-select v-model="ruleForm.levelVal" style="width: 217px;" placeholder="请选择" @change="levelChange">
                 <el-option
                   v-for="item in level"
                   :key="item.sort"
@@ -71,7 +71,7 @@
                   :value="item.sort"
                 ></el-option>
               </el-select>
-              <el-select v-model="ruleForm.cityVal" placeholder="请选择" @change="cityChange">
+              <el-select v-model="ruleForm.cityVal" style="width: 217px;" placeholder="请选择" @change="cityChange">
                 <el-option v-for="item in city" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
             </el-form-item>
@@ -79,6 +79,7 @@
               <el-input
                 type="textarea"
                 :rows="3"
+                style="width: 692px;"
                 maxlength="100"
                 show-word-limit
                 placeholder="说明下自己的优势"

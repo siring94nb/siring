@@ -115,6 +115,7 @@
             :hide-on-single-page="true"
             :page-size="goodsData.per_page"
             :total="goodsData.total"
+            @current-change	="handleCurrentChange"
           ></el-pagination>
         </div>
       </div>
@@ -152,7 +153,8 @@ export default {
       sortId: 1, // 商品按照价格、销量升降序ID 1：全部，2：价格降序，3：价格升序，4：销量降序，5：销量升序
       typeId: 0, // 商品、软件定制类型ID
       up: false, //控制箭头上下亮
-      goodsData: {}
+      goodsData: {},
+      page: 1,
     };
   },
   mounted() {
@@ -176,7 +178,7 @@ export default {
         type: this.sortId,
         category_id: this.typeId,
         title: this.searchCont,
-        page: 1
+        page: this.page
       };
       GetGoods(params).then(res => {
         let { code, data, msg } = res;
@@ -214,6 +216,10 @@ export default {
           this.sortId = this.up ? 4 : 5;
           break;
       }
+      this.getGoods();
+    },
+    handleCurrentChange(val){
+      this.page = val;
       this.getGoods();
     }
   }
@@ -390,6 +396,7 @@ export default {
       width: 100%;
       background-color: rgb(244, 245, 249);
       padding: 20px 0;
+      height: 910px;
       .goods-list {
         width: 1200px;
         margin: 0 auto;

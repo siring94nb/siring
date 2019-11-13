@@ -3,8 +3,7 @@
     <myheader />
     <div class="index">
         <div class="title-top">
-            <h1>20年沉淀，一站式定制开发推广运营领航者</h1>
-            <p>多重平台，多重服务</p>
+            <img src="../assets/images/u65658.jpg" alt="">
         </div>
     </div>
     <myfooter />
@@ -37,12 +36,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .index {
+  margin-top: 100px; 
     .title-top {
-        text-align: center;
+      img{width: 100%;}
     }
-    .title-top h1 {
-        font-size: 40px;
-    }
+    
 }
 .footer .footer_info .footer_info_inner{display: none;}
 </style>

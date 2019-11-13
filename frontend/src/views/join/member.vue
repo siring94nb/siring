@@ -40,6 +40,40 @@
           </div>
         </div>
       </div>
+
+      <div class="package">
+        <h3 class="title">请缴费申请等级会员</h3>
+        <div class="package-list">
+          <div
+            class="package-item"
+            :class="classList[index === activeClass && index]"
+            v-for="(item, index) in 3"
+            :key="item"
+            @mouseenter="onMouseenter(index)"
+          >
+            <div class="bg-top">
+              <div class="package-head">
+                <div class="package-img">
+                  <img :src="require('@/assets/images/u1920.png')" width="48" height="48" alt />
+                </div>
+                <div class="package-name">皇冠会员</div>
+              </div>
+              <div class="button-price">
+                <button @click="onClick">￥35888/年</button>
+              </div>
+            </div>
+            <div class="privilege-service">
+              <div class="privilege-title">尊享服务</div>
+              <ul class="privilege-list">
+                <li class="privilege-on">定制开发，9.5折优惠</li>
+                <li class="privilege-on">商业模版，9.5折优惠</li>
+                <li class="privilege-on">分享他人，他人获取100元新人优惠券，个人获得200元新人优惠券</li>
+                <li class="privilege-on">用户消费专享10%利润提成</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <myfooter />
   </div>
@@ -73,12 +107,20 @@ export default {
           desc: "一旦升级为会员后，您的账号将会有等级图标显示"
         }
       ],
-      stepFlag: 0
+      stepFlag: 0,
+      classList: ["crown", "diamond", "gold"],
+      activeClass: 0
     };
   },
   methods: {
     stepMouseEnter(index) {
       this.stepFlag = index;
+    },
+    onMouseenter(index) {
+      this.activeClass = index;
+    },
+    onClick() {
+      
     }
   }
 };
@@ -182,6 +224,123 @@ export default {
               line-height: 28px;
               .code-color {
                 color: #199ed8;
+              }
+            }
+          }
+        }
+      }
+    }
+    .package {
+      .title {
+        font-size: 28px;
+        color: #333333;
+        margin-top: 20px;
+      }
+      .package-list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .package-item {
+          height: 585px;
+          width: 365px;
+          border: 1px solid #c9c9c9;
+          border-radius: 20px;
+          overflow: hidden;
+          .bg-top {
+            background-color: rgb(242, 251, 255);
+            .package-head {
+              text-align: center;
+              margin-bottom: 15px;
+              .package-img {
+                img {
+                  margin-top: 30px;
+                }
+              }
+              .package-name {
+                font-size: 20px;
+                color: #ffb103;
+              }
+            }
+            .button-price {
+              text-align: center;
+              border-top: 1px solid #c9c9c9;
+              margin: 0 22px;
+              button {
+                width: 230px;
+                height: 40px;
+                background-color: #c9c9c9;
+                border-radius: 5px;
+                font-size: 24px;
+                border: 1px solid rgb(228, 228, 228);
+                color: #ffffff;
+                font-weight: 700;
+                margin: 20px 0;
+                cursor: pointer;
+              }
+            }
+          }
+          .privilege-service {
+            background-color: #ffffff;
+            margin: 0 20px;
+            .privilege-title {
+              font-size: 16px;
+              color: #aeaeae;
+              margin: 20px 0 10px;
+            }
+            .privilege-list {
+              font-size: 14px;
+              line-height: 28px;
+              .privilege-on::before {
+                content: "✔ ";
+                color: #669900;
+              }
+            }
+          }
+          &.crown {
+            border-color: #ffb103;
+            box-shadow: 0 0 5px 3px rgba(255, 177, 3, 0.5);
+            .bg-top {
+              background-color: rgb(255, 248, 230);
+              .package-name {
+                color: #ffb103;
+              }
+              .button-price {
+                border-top-color: #ffb103;
+                button {
+                  background-color: rgb(255, 177, 3);
+                }
+              }
+            }
+          }
+          &.diamond {
+            border-color: #4abbfc;
+            box-shadow: 0 0 5px 3px rgba(66, 155, 207, 0.5);
+            .bg-top {
+              background-color: rgb(242, 251, 255);
+              .package-name {
+                color: #4abbfc;
+              }
+              .button-price {
+                border-top-color: rgb(66, 155, 207);
+                button {
+                  background-color: rgb(66, 155, 207);
+                }
+              }
+            }
+          }
+          &.gold {
+            border-color: #ff0000;
+            box-shadow: 0 0 5px 3px rgba(255, 0, 0, 0.5);
+            .bg-top {
+              background-color: rgb(255, 238, 238);
+              .package-name {
+                color: #ff0000;
+              }
+              .button-price {
+                border-top-color: #ff0000;
+                button {
+                  background-color: #ff0000;
+                }
               }
             }
           }
