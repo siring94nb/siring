@@ -239,7 +239,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="resetForm()">取 消</el-button>
-            <el-button type="primary" @click="submitForm('form')">确 定</el-button>
+            <el-button type="primary" @click="submitForm('form')" :disabled="isSubmit">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -268,6 +268,7 @@ export default {
       }
     };
     return {
+      isSubmit: false,
       checked: [],
       radio: "3",
       options: [
@@ -296,7 +297,8 @@ export default {
         bank_branch: "",
         card_number: "",
         province: "",
-        city: ""
+        city: "",
+        user_id: ""
       },
 
       paymentAccount: "1",//选择收款账号
@@ -333,6 +335,7 @@ export default {
     init() {
       this.money = this.$route.params.order_amount;
       this.real_money = this.$route.params.order_amount;
+      this.form.user_id = this.$route.params.user_id;
     },
     //下单生成二维码
     codePay() {
@@ -357,6 +360,7 @@ export default {
       // this.$refs[formName].validate(valid => {
       //   if (valid) {
         console.log(this.form)
+        this.isSubmit = !this.isSubmit;
         let params = this.form
           addBank(params).then(res => {
             console.log(res)
@@ -375,9 +379,11 @@ export default {
         bank_branch: "",
         card_number: "",
         province: "",
-        city: ""
+        city: "",
+        user_id: ""
       }),
         (this.dialogFormVisible = false);
+        this.isSubmit = !this.isSubmit;
       // this.$refs[formName].resetFields();
     },
     //银行支付
@@ -388,7 +394,7 @@ export default {
     },
     regionChange(data) {
       if(data.province) this.form.province= data.province.value;
-      if(data.city) this.form.city= data.province.value;
+      if(data.city) this.form.city= data.city.value;
     },
     getBank(val) {
       let bank = bankCardAttribution(val);
