@@ -1,5 +1,5 @@
 <?php
-namespace  app\controller;
+namespace  app\api\controller;
 
 use app\data\model\UserCard as Card;
 use think\Request;
@@ -21,10 +21,11 @@ class  UserCard extends  Base{
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
-            if($postData['default_status']==1){    //银行是默认使用
-                $re=UserCard::update(['user_id'=>$postData['user_id'],'default_status'=>0]);
-            }
+            // if($postData['default_status']==1){    //银行是默认使用
+            //     $re=UserCard::update(['user_id'=>$postData['user_id'],'default_status'=>0]);
+            // }
             if($postData['id']==0){
+                unset($postData['id']);
                 $res=UserCard::create($postData)->toArray();
             }else{
                 $res=UserCard::update($postData)->toArray();
@@ -45,7 +46,7 @@ class  UserCard extends  Base{
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
-                $res=UserCard::all(['user_id'=>$postData,'del_time'=>null])->toArray();
+                $res=UserCard::all(['user_id'=>$postData['user_id'],'del_time'=>null])->toArray();
             return   json(['1','操作成功','data'=>$res]);
         }else{
             return   json(['0','获取参数失败']);
