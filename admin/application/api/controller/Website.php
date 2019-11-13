@@ -60,14 +60,23 @@ class Website extends Base
     }
 
     /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
+     * 定制案例
+     * @param $id
      */
-    public function read($id)
+    public function custom_case()
     {
-        //
+        $data = db('good')->orderRaw('rand()')
+            ->where(['del_time'=>null])
+            ->field('id,goods_name,goods_images')
+            ->limit(6)->select();
+
+        foreach ($data as $k=>$v){
+            //图片
+            $att=explode(',',$v["goods_images"]);
+            $data[$k]['img'] = $att[0];
+            unset($data[$k]['goods_images']);
+        }
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**
