@@ -144,8 +144,12 @@ export default {
         }
       });
       if (this.hasChooseType) {
-        this.$router.push('/selectFunction')
-        sessionStorage.setItem('typeidList', JSON.stringify(this.selectTypeList));
+        // this.$router.push('/selectFunction')
+        let selectTypeList = [];
+        this.selectTypeList.forEach((v, i) => {
+          selectTypeList.push(v)
+        })
+        sessionStorage.setItem('typeidList', JSON.stringify(selectTypeList));
       } else {
         this.$message.error("请选择开发类型");
       }
