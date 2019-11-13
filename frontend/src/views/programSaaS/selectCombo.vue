@@ -161,7 +161,7 @@ export default {
     pay(){
       if(this.radio) {
         var params = {
-          member_account: '13502882637',
+          user_id: 66,
           model_type: this.model_type,
           model_meal_type: this.model_meal_type,
           order_amount: this.total,
