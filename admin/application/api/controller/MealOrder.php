@@ -31,7 +31,6 @@ class MealOrder extends Base
             $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
             $postData['order_status']=1;    //  1   未付款
             $res=Meal::create($postData)->toArray();
-            halt($res);
             if($res){
                 //下单成功
                 $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
@@ -79,6 +78,7 @@ class MealOrder extends Base
                 $data['member_account']=$order['member_account'];
                 $data['pay_type']='Saas套餐费用';
                 $data['bank_name']=;      //银行名称
+                halt($order);
                 $data['bank_number']=$order['bank_number'];    //银行卡号
                 $data['order_number']=$order['order_number'];
                 $data['pay_money']=$order['order_amount'];
