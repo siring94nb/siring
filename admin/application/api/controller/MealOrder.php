@@ -33,7 +33,11 @@ class MealOrder extends Base
             $postData['member_account']=$postData['user_id'];
             unset($postData['user_id']);
             $postData['pay_time']=strtotime($postData['pay_time']);
-            $res=Meal::create($postData)->toArray();
+            $detail['bank_name']=$postData['bank_name'];
+            $detail['bank_number']=$postData['bank_number'];
+            $detail['comment']=$postData['comment'];
+            $detail['account_number']=$postData['coaccount_numbermment'];
+            $res=Meal::allowField(true)->create($postData)->toArray();
             if($res){
                 //下单成功
                 $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
