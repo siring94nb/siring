@@ -99,14 +99,23 @@ class JoinOrder extends Base {
         $partner = new JoinOrderAll();
 
         $data = $partner->join_list($param);
-        foreach ($data['data'] as $k => $v){
-            $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
-            //查询技能
-            $dev = json_decode($v['dev'],true);
+            foreach ($data['data'] as $k => $v){
+                $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
+                //查询技能
+                $stocks= json_decode( $v['dev'] , true );
 
-            $data['data'][$k]['dev_name'] = '技能:'.$dev['skill'].'/'.'语言:'.$dev['language'];
-        }
-        //pp($data);die;
+                if(!empty($stocks)){
+                    $name = [];//外层循环为空
+                    foreach ($stocks as $key => $val){
+                        $name[] = implode(",", $val);
+                    }
+                    $res = join('/',$name);
+                    $data['data'][$k]['dev_name'] = $res;
+                }else{
+                    $data['data'][$k]['dev_name'] = "无";
+                }
+
+            }
         return $this -> buildSuccess( array(
             'list' => $data['data'],
             'count' => $data['total'],

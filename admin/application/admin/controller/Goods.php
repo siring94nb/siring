@@ -531,6 +531,25 @@ class Goods extends Base{
         }
     }
 
+    /**
+     * lilu
+     * 软件开发商品排序
+     * param     id     商品的id
+     * param     goods_sort     商品排序   越小越靠前
+     */
+    public function change_goods_rank()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Good::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
+
+    }
+
 
 
 
