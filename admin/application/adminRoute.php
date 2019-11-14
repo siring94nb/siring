@@ -667,6 +667,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Goods/goods_special_del',  //软件开发商品规格删除
             ['method' => 'post']
         ],
+        'change_goods_rank' => [
+            'admin/Goods/change_goods_rank',  //软件开发商品排序
+            ['method' => 'post']
+        ],
 
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--SaaS小程序管理
