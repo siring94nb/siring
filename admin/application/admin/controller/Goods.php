@@ -146,7 +146,7 @@ class Goods extends Base{
         $id=$request->param();
         if($id){
             //获取商品的信息
-            $data['data']=Goods::find($id['id']);
+            $data['data']=Good::get($id['id']);
             $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
             unset($data['data']['id']);
             $data['data']['create_time']=time();
