@@ -32,16 +32,27 @@ class MealOrder extends Base
             $postData['order_status']=1;    //  1   未付款
             $postData['member_account']=$postData['user_id'];
             unset($postData['user_id']);
-            $postData['pay_time']=strtotime($postData['pay_time']);
-            $detail['bank_name']=$postData['bank_name'];
-            $detail['bank_number']=$postData['bank_number'];
-            $detail['comment']=$postData['comment'];
-            $detail['account_number']=$postData['account_number'];
+            $detail='';
+            if(array_key_exists('pay_time',$postData)){
+                $postData['pay_time']=strtotime($postData['pay_time']);
+            }
+            if(array_key_exists('bank_name',$postData)){
+                $detail['bank_name']=$postData['bank_name'];
+                unset($postData['bank_name']);
+            }
+            if(array_key_exists('bank_number',$postData)){
+                $detail['bank_number']=$postData['bank_number'];
+                unset($postData['bank_number']);
+            }
+            if(array_key_exists('comment',$postData)){
+                $detail['comment']=$postData['comment'];
+                unset($postData['comment']);
+            }
+            if(array_key_exists('account_number',$postData)){
+                $detail['account_number']=$postData['account_number'];
+                unset($postData['account_number']);
+            }
             $postData['pay_detail']=json_encode($detail);
-            unset($postData['bank_name']);
-            unset($postData['bank_number']);
-            unset($postData['comment']);
-            unset($postData['account_number']);
             $meal=new Meal();
             $res=$meal->allowField(true)->create($postData)->toArray();
             if($res){
