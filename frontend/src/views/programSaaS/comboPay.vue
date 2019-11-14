@@ -97,10 +97,10 @@
               <div>
                 <el-select v-model="value" placeholder="如没有添加银行卡，请添加→">
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="(item, index) in bankCard"
+                    :key="index"
+                    :label="item"
+                    :value="index"
                   ></el-option>
                 </el-select>
               </div>
@@ -114,7 +114,7 @@
               </div>
               <div style="font-size:14px">
                 <el-date-picker
-                  v-model="value11"
+                  v-model="pay_time"
                   type="date"
                   placeholder="选择日期"
                   format="yyyy 年 MM 月 dd 日"
@@ -126,7 +126,7 @@
             <div class="pay-bank">
               <div class="pay-title">留言：</div>
               <div style="font-size:14px">
-                <el-input type="textarea" style="width:220px;" :rows="4"></el-input>
+                <el-input v-model="comment" type="textarea" style="width:220px;" :rows="4"></el-input>
               </div>
               <div></div>
             </div>
@@ -143,7 +143,9 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="0"><div></div></el-radio>
+                  <el-radio v-model="paymentAccount" label="0">
+                    <div></div>
+                  </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
@@ -163,7 +165,9 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="1"><div></div></el-radio>
+                  <el-radio v-model="paymentAccount" label="1">
+                    <div></div>
+                  </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
@@ -212,21 +216,14 @@
             <el-form-item label="开户名：" prop="card_name">
               <el-input v-model="form.card_name" auto-complete="off" style="width:400px;"></el-input>
             </el-form-item>
-            <el-form-item label="银行账号：">
-              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;" @change="getBank"></el-input>
+            <el-form-item label="银行账号：" prop="card_number">
+              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;"></el-input>
             </el-form-item>
             <el-form-item label="银行：">
               <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:400px;"></el-select>
             </el-form-item>
             <el-form-item>
-              <!-- <el-row>
-              <el-col :span="6">-->
               <v-region @values="regionChange" :area="false"></v-region>
-              <!-- </el-col>
-                <el-col :span="6">
-                  <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:200px;"></el-select>
-                </el-col>
-              </el-row>-->
             </el-form-item>
             <el-form-item label="开户支行：" prop="bank_branch">
               <el-input
@@ -249,7 +246,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay , addBank} from "@/api/api";
+import { templatePay, addBank, subBankPay } from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -283,12 +280,16 @@ export default {
       ],
       codeType: "1", //支付宝或微信
       value: "",
-      value11: "",
+      pay_time: "",
       money: 0, //套餐金额
       real_money: 0, //最终实付金额
       imgData: "",
       isShow: true,
       isDisabl: false,
+      bankCard: [],
+      bankCards: [],//银行卡号
+      params:{},//总信息
+      comment:'',//留言
       //添加银行卡
       form: {
         id: 0,
@@ -301,14 +302,13 @@ export default {
         user_id: 0
       },
 
-      paymentAccount: "1",//选择收款账号
-      payAccount:[
-        '6212264000061706160',
-        '4000040209200016204'
+      paymentAccount: "0", //选择收款账号
+      payAccount: [
+        "工商银行-6212264000061706160",
+        "工商银行-4000040209200016204"
       ],
       //银行支付--
-      account_number: '',//收款账号
-
+      account_number: "", //收款账号
 
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -323,7 +323,7 @@ export default {
         bank_branch: [
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
-        // card_number: [{ validator: validatePass, trigger: "blur" }]
+        card_number: [{ validator: validatePass, trigger: "blur" }]
       }
     };
   },
@@ -333,48 +333,52 @@ export default {
   },
   methods: {
     init() {
-      this.money = this.$route.params.order_amount;
-      this.real_money = this.$route.params.order_amount;
-      this.form.user_id = this.$route.params.user_id;
-    },
-    //下单生成二维码
-    codePay() {
-      let params = this.$route.params;
-      //支付类型
-      if (this.radio != "1") params.pay_type = this.radio;
-      else params.pay_type = this.codeType;
-      params.order_amount = this.real_money; //实付金额
-      templatePay(params).then(res => {
-        console.log(res);
-        let { code, imgData, msg } = res;
-        this.$message(msg);
-        if (code === 1) {
-          this.imgData = imgData;
-          this.isShow = !this.isShow;
-          this.isDisabl = !this.isDisabl;
+      let vm = this;
+      vm.money = vm.$route.params.order_amount;
+      vm.real_money = vm.$route.params.order_amount;
+      vm.form.user_id = vm.$route.params.user_id;
+      vm.params = this.$route.params;
+      //获取银行卡号
+      subBankPay({ user_id: vm.$route.params.user_id }).then(res => {
+        let { code, data, msg } = res;
+        if (code == "1") {
+          vm.bankCards = data;
+          data.map(item => {
+            vm.bankCard.push(item.bank_name + "-" + item.card_number);
+          });
         }
       });
     },
+    //下单生成二维码
+    codePay() {
+      
+      //支付类型
+      if (this.radio != "1") vm.params.pay_type = this.radio;
+      else vm.params.pay_type = this.codeType;
+      vm.params.order_amount = this.real_money; //实付金额
+      let res = vm.payOrder(vm.params);
+      let { code, imgData, msg } = res;
+      this.$message(msg);
+      if (code === 1) {
+        this.imgData = imgData;
+        this.isShow = !this.isShow;
+        this.isDisabl = !this.isDisabl;
+      }
+    },
     //添加银行卡
     submitForm(formName) {
-      // this.$refs[formName].validate(valid => {
-      //   if (valid) {
-        let vm = this;
-        vm.isSubmit = !vm.isSubmit;
-        let params = vm.form
-          addBank(params).then(res => {
-            console.log(res)
-            let { code, data, msg } = res;
-            vm.$message(msg);
-            if(code == "1") {
-              this.resetForm();
-            }
-          })
-      //   } else {
-      //     console.log("error submit!!");
-      //     return false;
-      //   }
-      // });
+      let vm = this;
+      vm.isSubmit = !vm.isSubmit;
+      let params = vm.form;
+      addBank(params).then(res => {
+        console.log(res);
+        let { code, data, msg } = res;
+        vm.$message(msg);
+        if (code == "1") {
+          this.init();
+          this.resetForm();
+        }
+      });
     },
     resetForm() {
       (this.form = {
@@ -388,25 +392,47 @@ export default {
         user_id: 0
       }),
         (this.dialogFormVisible = false);
-        this.isSubmit = !this.isSubmit;
+      this.isSubmit = !this.isSubmit;
       // this.$refs[formName].resetFields();
     },
     //银行支付
-    bankPay(){
-      let vm = this;
-      vm.account_number = vm.payAccount[vm.paymentAccount];
-      console.log(vm.account_number)
+    bankPay() {
+      let vm = this, pay_detail = this.params;
+      pay_detail.account_number = vm.payAccount[vm.paymentAccount];
+      pay_detail.bank_name = vm.bankCards[vm.value].bank_name;
+      pay_detail.bank_number = vm.bankCards[vm.value].card_number;
+      pay_detail.pay_time = vm.pay_time;
+      pay_detail.comment = vm.comment;
+      // pay_detail = JSON.stringify(pay_detail);
+      // pay_detail = JSON.parse(pay_detail);
+      // console.log(pay_detail)
+      let res = vm.payOrder(pay_detail);
+      console.log(res)
+      let { code, imgData, msg } = res;
+      vm.$message(msg);
+      if (code === 1) {
+        // this.imgData = imgData;
+        // this.isShow = !this.isShow;
+        // this.isDisabl = !this.isDisabl;
+      }
     },
     regionChange(data) {
-      if(data.province) this.form.province= data.province.value;
-      if(data.city) this.form.city= data.city.value;
+      if (data.province) this.form.province = data.province.value;
+      if (data.city) this.form.city = data.city.value;
     },
-    getBank(val) {
-      let bank = bankCardAttribution(val);
-      console.log(bank);
-      if (bank) this.form.bank_name = bank.bankName;
-      else this.$message.error("银行卡号格式有误！");
+    //下单
+    payOrder(params) {
+      templatePay(params).then(res => {
+        console.log(res)
+        return res;
+      });
     }
+    // getBank(val) {
+    //   let bank = bankCardAttribution(val);
+    //   console.log(bank);
+    //   if (bank) this.form.bank_name = bank.bankName;
+    //   else this.$message.error("银行卡号格式有误！");
+    // }
   }
 };
 </script>
@@ -531,7 +557,10 @@ export default {
           .pay-accout {
             border: 1px solid rgb(188, 188, 188);
             margin-top: 10px;
-            .bank-nosel{background: rgb(129,129,129) !important;border-color: rgb(129,129,129) !important;}
+            .bank-nosel {
+              background: rgb(129, 129, 129) !important;
+              border-color: rgb(129, 129, 129) !important;
+            }
             .bank-name {
               padding: 2px 5px;
               border-bottom: 1px solid rgb(188, 188, 188);
