@@ -111,9 +111,9 @@ class MealOrder extends Base
                 $order = Db::table('model_order')->getById($id);
                 $re=Db::table('user')->where('user_id',$order['member_account'])->setDec('money',$pay);
                 if($re){
-                    return '支付成功';
+                    return json(['code'=>1,'msg'=>'支付成功']);
                 }else{
-                    return '支付失败';
+                    return json(['code'=>0,'msg'=>'支付失败']);
                 }
             break;
         }
