@@ -138,6 +138,7 @@ class Goods extends Base{
     /**
      * lilu
      * 商品管理-商品/软件开发定制--商品复制
+     * param id    商品id
      */
     public function copy(){
         //复制当前的商品信息新生成一天记录
@@ -145,7 +146,7 @@ class Goods extends Base{
         $id=$request->param();
         if($id){
             //获取商品的信息
-            $data['data']=Goods::get($id['id']);
+            $data['data']=Goods::find($id['id']);
             $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
             unset($data['data']['id']);
             $data['data']['create_time']=time();
