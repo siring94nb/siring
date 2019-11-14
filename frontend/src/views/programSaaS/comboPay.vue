@@ -403,6 +403,7 @@ export default {
       pay_detail.bank_number = vm.bankCards[vm.value].card_number;
       pay_detail.pay_time = vm.pay_time;
       pay_detail.comment = vm.comment;
+      pay_detail.pay_type = vm.radio;
       // pay_detail = JSON.stringify(pay_detail);
       // pay_detail = JSON.parse(pay_detail);
       // console.log(pay_detail)
