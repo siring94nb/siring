@@ -82,9 +82,9 @@ class MealOrder extends Base
                 $data['bank_number']=$order['bank_number'];    //银行卡号
                 $data['order_number']=$order['order_number'];
                 $data['pay_money']=$order['order_amount'];
-                $data['comment']=;
+                $data['comment']=11;
                 $data['order_status']=1;
-                $data['account_number']=;
+                $data['account_number']=1111;
                 $data['chart_name']='model_order';    //所在的数据表的名称
                 $offline=Offline::create($data)->toArray();
                 if($offline){
