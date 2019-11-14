@@ -213,7 +213,7 @@
               <el-input v-model="form.card_name" auto-complete="off" style="width:400px;"></el-input>
             </el-form-item>
             <el-form-item label="银行账号：">
-              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;" @change="getBank"></el-input>
+              <el-input v-model="form.card_number" auto-complete="off" style="width:400px;" ></el-input>
             </el-form-item>
             <el-form-item label="银行：">
               <el-select v-model="form.bank_name" placeholder="请选择银行" style="width:400px;"></el-select>
@@ -323,7 +323,7 @@ export default {
         bank_branch: [
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
-        // card_number: [{ validator: validatePass, trigger: "blur" }]
+        card_number: [{ validator: validatePass, trigger: "blur" }]
       }
     };
   },
@@ -401,12 +401,12 @@ export default {
       if(data.province) this.form.province= data.province.value;
       if(data.city) this.form.city= data.city.value;
     },
-    getBank(val) {
-      let bank = bankCardAttribution(val);
-      console.log(bank);
-      if (bank) this.form.bank_name = bank.bankName;
-      else this.$message.error("银行卡号格式有误！");
-    }
+    // getBank(val) {
+    //   let bank = bankCardAttribution(val);
+    //   console.log(bank);
+    //   if (bank) this.form.bank_name = bank.bankName;
+    //   else this.$message.error("银行卡号格式有误！");
+    // }
   }
 };
 </script>

@@ -259,7 +259,6 @@ const deleteButton = (vm, h, currentRow, index) => {
               id: currentRow.id
             })
             .then(function(response) {
-              console.log(response);
               currentRow.loading = false;
               if (response.data.code === 1) {
                 vm.tableData.splice(index, 1);
@@ -442,7 +441,38 @@ export default {
         {
           title: "排序",
           align: "center",
-          key: "goods_sort"
+          key: "goods_sort",
+          width: 100,
+          render: (h, params) => {
+            let vm = this;
+            return h("div", [
+              h("Input", {
+                style: {
+                  width: "60px"
+                },
+                props: {
+                  type: "text",
+                  value: params.row.goods_sort //使用key的键值
+                },
+                on: {
+                  input: event => {
+                    axios.post("admin/Goods/change_goods_rank", {
+                        id: params.row.id,
+                        goods_sort: event
+                      })
+                      .then(function(response) {
+                        let res = response.data;
+                        if (res.code === 1) {
+                          vm.$Message.success(res.msg);
+                        } else {
+                          vm.$Message.error(res.msg);
+                        }
+                      });
+                  }
+                }
+              })
+            ]);
+          }
         },
         {
           title: "状态",
