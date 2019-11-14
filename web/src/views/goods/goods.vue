@@ -213,7 +213,19 @@ const copyButton = (vm, h, currentRow, index) => {
         margin: "0 5px"
       },
       on: {
-        click: () => {}
+        click: () => {
+          axios
+            .post("Goods/copy", {
+              id: currentRow.id
+            })
+            .then(function(response) {
+              if (response.data.code === 1) {
+                vm.$Message.success(response.data.msg);
+              } else {
+                vm.$Message.error(response.data.msg);
+              }
+            });
+        }
       }
     },
     "复制"
@@ -456,7 +468,7 @@ export default {
                 },
                 on: {
                   input: event => {
-                    axios.post("admin/Goods/change_goods_rank", {
+                    axios.post("Goods/change_goods_rank", {
                         id: params.row.id,
                         goods_sort: event
                       })
