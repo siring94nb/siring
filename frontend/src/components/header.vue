@@ -507,7 +507,7 @@ export default {
   }
   .nav {
     height: 60px;
-    background-color: #ffffff;
+    background-color: rgb(242,247,250);
     .nav-cont {
       height: 100%;
       width: 1200px;

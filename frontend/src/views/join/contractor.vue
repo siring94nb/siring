@@ -61,7 +61,7 @@
           <el-form ref="ruleForm" :model="ruleForm" label-width="120px">
             <el-form-item
               v-for="(skill, index) in ruleForm.selectSkills"
-              :label="'我的专业技能' + index"
+              :label="'我的专业技能' + (index+1)"
               :key="index"
               :prop="'selectSkills.' + index + '.skillValue'"
               :rules="{required: true, message: '技能不能为空', trigger: 'blur'}"
@@ -79,7 +79,7 @@
               <el-button @click.prevent="removeNewSkill(index)" v-if="index!==0">删除</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">新增域名</el-button>
+              <el-button @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">新增技能</el-button>
             </el-form-item>
 
             <el-form-item

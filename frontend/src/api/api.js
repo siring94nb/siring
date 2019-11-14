@@ -201,6 +201,13 @@ export const GetDemonstration = params => {
 }
 
 /**
+ * 定制案例欣赏
+ */
+export const GetCustomCase = params => {
+  return axios.get(`${base_url}api/Website/custom_case`, { params: params });
+}
+
+/**
  * 小程序SaaS 模板列表
  */
 export const GetTemplate = params => {
