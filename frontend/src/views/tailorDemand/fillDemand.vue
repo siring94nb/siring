@@ -225,7 +225,8 @@ export default {
       margin-bottom: 20px;
       .types-right {
         float: left;
-        width: 945px;
+        width: 975px;
+        height: 804px;
         background-color: #ffffff;
         .title {
           font-size: 14px;

@@ -153,7 +153,7 @@ export default {
       sortId: 1, // 商品按照价格、销量升降序ID 1：全部，2：价格降序，3：价格升序，4：销量降序，5：销量升序
       typeId: 0, // 商品、软件定制类型ID
       up: false, //控制箭头上下亮
-      goodsData: {},
+      goodsData: {}, //获取的所有商品数据
       page: 1,
     };
   },
