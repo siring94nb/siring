@@ -91,7 +91,8 @@ class MealOrder extends Base
                 $data['member_account']=$order['member_account'];
                 $data['pay_type']='Saas套餐费用';
                 $data['bank_name']=1111;      //银行名称
-                halt($order);
+                $detail=json_decode($order['pay_detail'],true);
+                halt($detail);
                 $data['bank_number']=$order['bank_number'];    //银行卡号
                 $data['order_number']=$order['order_number'];
                 $data['pay_money']=$order['order_amount'];
