@@ -69,7 +69,7 @@
 <script>
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
-import Quickaside from '@/components/quickAside';
+import Quickaside from "@/components/quickAside";
 export default {
   components: {
     Myheader,
@@ -140,16 +140,18 @@ export default {
       this.hasChooseType = 0;
       this.typeList.forEach(ele => {
         if (ele.ifchoose) {
-          this.hasChooseType++
+          this.hasChooseType++;
         }
       });
       if (this.hasChooseType) {
-        // this.$router.push('/selectFunction')
+        this.$router.push("/selectFunction");
         let selectTypeList = [];
         this.selectTypeList.forEach((v, i) => {
-          selectTypeList.push(v)
-        })
-        sessionStorage.setItem('typeidList', JSON.stringify(selectTypeList));
+          if (v != null) {
+            selectTypeList.push(v);
+          }
+        });
+        sessionStorage.setItem("typeidList", JSON.stringify(selectTypeList));
       } else {
         this.$message.error("请选择开发类型");
       }
@@ -174,7 +176,7 @@ export default {
     }
     .quick-cont {
       margin-bottom: 20px;
-      
+
       .types-right {
         margin-left: 225px;
         .types-list {
