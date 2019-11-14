@@ -26,13 +26,15 @@ class  UserCard extends  Base{
             // }
             if($postData['id']==0){
                 unset($postData['id']);
-                $res=UserCard::create($postData)->toArray();
+                $postData['create_time']=time();
+                $res=Card::create($postData)->toArray();
             }else{
-                $res=UserCard::update($postData)->toArray();
+                $postData['update_time']=time();
+                $res=Card::update($postData)->toArray();
             }
-            return   json(['1','操作成功','data'=>$res]);
+            return   json(['code'=>'1','msg'=>'操作成功','data'=>$res]);
         }else{
-            return   json(['0','获取数据失败']);
+            return   json(['code'=>'0','msg'=>'获取数据失败']);
         }
     }
 
@@ -46,10 +48,10 @@ class  UserCard extends  Base{
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
-                $res=UserCard::all(['user_id'=>$postData['user_id'],'del_time'=>null])->toArray();
-            return   json(['1','操作成功','data'=>$res]);
+                $res=Card::all(['user_id'=>$postData['user_id'],'del_time'=>null])->toArray();
+            return   json(['code'=>'1','msg'=>'操作成功','data'=>$res]);
         }else{
-            return   json(['0','获取参数失败']);
+            return   json(['code'=>'0','msg'=>'获取参数失败']);
         }
 
     }
