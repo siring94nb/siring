@@ -149,6 +149,7 @@ class Goods extends Base{
             $data['data']=Good::get($id['id'])->toArray();
             $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
             unset($data['data']['id']);
+            $data['data']['goods_sort']=0;
             $data['data']['create_time']=time();
             $data['data']['update_time']=null;
             $res=Good::create($data['data'])->toArray();
