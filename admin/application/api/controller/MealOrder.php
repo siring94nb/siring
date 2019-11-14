@@ -36,7 +36,7 @@ class MealOrder extends Base
             $detail['bank_name']=$postData['bank_name'];
             $detail['bank_number']=$postData['bank_number'];
             $detail['comment']=$postData['comment'];
-            $detail['account_number']=$postData['coaccount_numbermment'];
+            $detail['account_number']=$postData['account_number'];
             $res=Meal::allowField(true)->create($postData)->toArray();
             if($res){
                 //下单成功
