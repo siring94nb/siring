@@ -30,6 +30,7 @@ class MealOrder extends Base
             $postData['create_time']=time();
             $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
             $postData['order_status']=1;    //  1   未付款
+            halt($postData);
             $res=Meal::create($postData)->toArray();
             if($res){
                 //下单成功
