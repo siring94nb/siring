@@ -287,9 +287,9 @@ export default {
       isShow: true,
       isDisabl: false,
       bankCard: [],
-      bankCards: [],//银行卡号
-      params:{},//总信息
-      comment:'',//留言
+      bankCards: [], //银行卡号
+      params: {}, //总信息
+      comment: "", //留言
       //添加银行卡
       form: {
         id: 0,
@@ -351,8 +351,8 @@ export default {
     },
     //下单生成二维码
     codePay() {
-      
       //支付类型
+      const vm = this;
       if (this.radio != "1") vm.params.pay_type = this.radio;
       else vm.params.pay_type = this.codeType;
       vm.params.order_amount = this.real_money; //实付金额
@@ -397,7 +397,8 @@ export default {
     },
     //银行支付
     bankPay() {
-      let vm = this, pay_detail = this.params;
+      let vm = this,
+        pay_detail = this.params;
       pay_detail.account_number = vm.payAccount[vm.paymentAccount];
       pay_detail.bank_name = vm.bankCards[vm.value].bank_name;
       pay_detail.bank_number = vm.bankCards[vm.value].card_number;
@@ -408,7 +409,7 @@ export default {
       // pay_detail = JSON.parse(pay_detail);
       // console.log(pay_detail)
       let res = vm.payOrder(pay_detail);
-      console.log(res)
+      console.log(res);
       let { code, imgData, msg } = res;
       vm.$message(msg);
       if (code === 1) {
@@ -424,7 +425,7 @@ export default {
     //下单
     payOrder(params) {
       templatePay(params).then(res => {
-        console.log(res)
+        console.log(res);
         return res;
       });
     }
