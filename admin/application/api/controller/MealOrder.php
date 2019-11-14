@@ -33,7 +33,6 @@ class MealOrder extends Base
             $postData['member_account']=$postData['user_id'];
             unset($postData['user_id']);
             $postData['pay_time']=strtotime($postData['pay_time']);
-            halt($postData);
             $res=Meal::create($postData)->toArray();
             if($res){
                 //下单成功
