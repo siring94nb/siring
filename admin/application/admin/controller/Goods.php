@@ -146,19 +146,17 @@ class Goods extends Base{
         $id=$request->param();
         if($id){
             //获取商品的信息
-            $data['data']=Good::get($id['id']);
+            $data['data']=Good::get($id['id'])->toArray();
             $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
             unset($data['data']['id']);
             $data['data']['create_time']=time();
             $data['data']['update_time']=null;
             $res=Good::create($data['data'])->toArray();
-            foreach($special as $k =>$v){
+            foreach($data['special'] as $k2 =>$v){
                 //获取新增的goods_id($res->id)
-                foreach($data['special'] as $k2 =>$v2){
                     unset($data['special'][$k2]['id']);
                     $data['special'][$k2]['goods_id']=$res['id'];
                     Special::create($data['special'][$k2]);
-                }
             }
             return $this->buildSuccess([]);
         }else{
