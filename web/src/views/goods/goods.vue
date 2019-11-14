@@ -221,6 +221,7 @@ const copyButton = (vm, h, currentRow, index) => {
             .then(function(response) {
               if (response.data.code === 1) {
                 vm.$Message.success(response.data.msg);
+                vm.getList();
               } else {
                 vm.$Message.error(response.data.msg);
               }
