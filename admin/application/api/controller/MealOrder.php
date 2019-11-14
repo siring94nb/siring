@@ -37,6 +37,8 @@ class MealOrder extends Base
             $detail['bank_number']=$postData['bank_number'];
             $detail['comment']=$postData['comment'];
             $detail['account_number']=$postData['account_number'];
+            $postData['pay_detail']=json_encode($detail);
+            halt($postData);
             unset($postData['bank_name']);
             unset($postData['bank_number']);
             unset($postData['comment']);
