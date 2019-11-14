@@ -30,7 +30,20 @@ class MealOrder extends Base
             $postData['create_time']=time();
             $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
             $postData['order_status']=1;    //  1   未付款
-            $res=Meal::create($postData)->toArray();
+            $postData['member_account']=$postData['user_id'];
+            unset($postData['user_id']);
+            $postData['pay_time']=strtotime($postData['pay_time']);
+            $detail['bank_name']=$postData['bank_name'];
+            $detail['bank_number']=$postData['bank_number'];
+            $detail['comment']=$postData['comment'];
+            $detail['account_number']=$postData['account_number'];
+            $postData['pay_detail']=json_encode($detail);
+            unset($postData['bank_name']);
+            unset($postData['bank_number']);
+            unset($postData['comment']);
+            unset($postData['account_number']);
+            $meal=new Meal();
+            $res=$meal->allowField(true)->create($postData)->toArray();
             if($res){
                 //下单成功
                 $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
@@ -77,19 +90,20 @@ class MealOrder extends Base
                 $data['order_number']=$order['order_number'];
                 $data['member_account']=$order['member_account'];
                 $data['pay_type']='Saas套餐费用';
-                $data['bank_name']=;      //银行名称
-                $data['bank_number']=$order['bank_number'];    //银行卡号
+                $detail=json_decode($order['pay_detail'],true);
+                $data['bank_name']=$detail['bank_name'];      //银行名称
+                $data['comment']=$detail['comment'];
+                $data['account_number']=$detail['account_number'];
+                $data['bank_number']=$detail['bank_number'];    //银行卡号
                 $data['order_number']=$order['order_number'];
                 $data['pay_money']=$order['order_amount'];
-                $data['comment']=;
                 $data['order_status']=1;
-                $data['account_number']=;
                 $data['chart_name']='model_order';    //所在的数据表的名称
                 $offline=Offline::create($data)->toArray();
                 if($offline){
-                    return '支付成功';
+                    return json(['code'=>1,'msg'=>'支付成功']);
                 }else{
-                    return '支付失败';
+                    return json(['code'=>0,'msg'=>'支付失败']);
                 }
                 break;
             case  4 :    //余额
@@ -97,9 +111,9 @@ class MealOrder extends Base
                 $order = Db::table('model_order')->getById($id);
                 $re=Db::table('user')->where('user_id',$order['member_account'])->setDec('money',$pay);
                 if($re){
-                    return '支付成功';
+                    return json(['code'=>1,'msg'=>'支付成功']);
                 }else{
-                    return '支付失败';
+                    return json(['code'=>0,'msg'=>'支付失败']);
                 }
             break;
         }

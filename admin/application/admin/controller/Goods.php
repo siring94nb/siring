@@ -133,11 +133,12 @@ class Goods extends Base{
         }else{
            return $this->buildFailed(['0','删除失败，请重新删除']);
         }
-
     }
+
     /**
      * lilu
      * 商品管理-商品/软件开发定制--商品复制
+     * param id    商品id
      */
     public function copy(){
         //复制当前的商品信息新生成一天记录
@@ -145,26 +146,25 @@ class Goods extends Base{
         $id=$request->param();
         if($id){
             //获取商品的信息
-            $data['data']=Goods::get($id['id']);
+            $data['data']=Good::get($id['id'])->toArray();
             $data['special']=Special::all(['goods_id'=>$id['id']])->toArray();
             unset($data['data']['id']);
+            $data['data']['goods_sort']=0;
             $data['data']['create_time']=time();
             $data['data']['update_time']=null;
             $res=Good::create($data['data'])->toArray();
-            foreach($special as $k =>$v){
+            foreach($data['special'] as $k2 =>$v){
                 //获取新增的goods_id($res->id)
-                foreach($data['special'] as $k2 =>$v2){
                     unset($data['special'][$k2]['id']);
                     $data['special'][$k2]['goods_id']=$res['id'];
                     Special::create($data['special'][$k2]);
-                }
             }
             return $this->buildSuccess([]);
         }else{
             return $this->buildFailed('0','缺少必要参数');
         }
-
     }
+
     /**
      * lilu
      * 商品管理-商品/软件开发定制--添加评论
@@ -186,9 +186,8 @@ class Goods extends Base{
         }else{
             return $this->buildFailed('0','获取失败');
         }
-
-
     }
+    
     /**
      * lilu
      * 商品管理-商品/软件开发定制--检索
@@ -529,6 +528,25 @@ class Goods extends Base{
         }else{
             return $this->buildFailed('0','缺少必须参数');
         }
+    }
+
+    /**
+     * lilu
+     * 软件开发商品排序
+     * param     id     商品的id
+     * param     goods_sort     商品排序   越小越靠前
+     */
+    public function change_goods_rank()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=Good::update($postData);
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed('0','缺少必要的参数');
+        }
+
     }
 
 
