@@ -90,15 +90,14 @@ class MealOrder extends Base
                 $data['order_number']=$order['order_number'];
                 $data['member_account']=$order['member_account'];
                 $data['pay_type']='Saas套餐费用';
-                $data['bank_name']=1111;      //银行名称
                 $detail=json_decode($order['pay_detail'],true);
-                halt($detail);
-                $data['bank_number']=$order['bank_number'];    //银行卡号
+                $data['bank_name']=$detail['bank_name'];      //银行名称
+                $data['comment']=$detail['comment'];
+                $data['account_number']=$detail['account_number'];
+                $data['bank_number']=$detail['bank_number'];    //银行卡号
                 $data['order_number']=$order['order_number'];
                 $data['pay_money']=$order['order_amount'];
-                $data['comment']=11;
                 $data['order_status']=1;
-                $data['account_number']=1111;
                 $data['chart_name']='model_order';    //所在的数据表的名称
                 $offline=Offline::create($data)->toArray();
                 if($offline){
