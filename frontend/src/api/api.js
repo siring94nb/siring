@@ -225,3 +225,9 @@ export const templatePay = data => {
 export const addBank = data => {
   return axios.post(`${base_url}api/UserCard/user_card_add`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 小程序SaaS 银行支付
+ */
+export const subBankPay = data => {
+  return axios.post(`${base_url}api/UserCard/user_card_list`, qs.stringify(data)).then(res => res.data);
+}
