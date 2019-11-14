@@ -39,6 +39,7 @@ Route::group('api', function () {
         Route::any('website_list','api/Website/website_list'); //关于我们
         Route::any('contact','api/Website/contact'); //联系我们
         Route::any('seo','api/Website/seo'); //SEO
+        Route::any('custom_case','api/Website/custom_case'); //软件定制案例
     });
 
     //角色加盟fyk
