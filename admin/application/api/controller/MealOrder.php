@@ -101,9 +101,9 @@ class MealOrder extends Base
                 $data['chart_name']='model_order';    //所在的数据表的名称
                 $offline=Offline::create($data)->toArray();
                 if($offline){
-                    return '支付成功';
+                    return json(['code'=>1,'msg'=>'支付成功']);
                 }else{
-                    return '支付失败';
+                    return json(['code'=>0,'msg'=>'支付失败']);
                 }
                 break;
             case  4 :    //余额
