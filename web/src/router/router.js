@@ -234,7 +234,7 @@ export const appRouter = [
         children: [
             {
                 path: 'goods',
-                icon: 'ios-pint',
+                icon: 'ios-phone-portrait',
                 name: 'goods',
                 title: '软件/定制',
                 component: () => import('@/views/goods/goodsMain.vue'),
@@ -267,7 +267,7 @@ export const appRouter = [
             },
             {
                 path: 'applet',
-                icon: 'ios-pint',
+                icon: 'md-ribbon',
                 title: '小程序管理',
                 name: 'applet',
                 component: () => import('@/views/applet/appletMain.vue'),
@@ -290,42 +290,18 @@ export const appRouter = [
                     }
                 ]
             },
+
             {
-                path: 'spread',
-                icon: 'md-basket',
+                path: 'extension',
+                icon: 'ios-hand',
                 title: '推广运营',
-                name: 'spread',
-                component: () => import('@/views/goods/made.vue'),
-                // children: [
-                // {
-                //     path: 'templete',
-                //     icon: 'ios-pint',
-                //     name: 'templete',
-                //     access: 'admin/Goods/templete',
-                //     title: '软件/定制',
-                //     component: () => import('@/views/goods/goods.vue'),
-                // },
-                // {
-                //     path: 'made',
-                //     icon: 'ios-pint',
-                //     name: 'made',
-                //     access: 'admin/Goods/made',
-                //     title: '定制案例',
-                //     component: () => import('@/views/goods/made.vue'),
-                // },
-                // {
-                //     path: 'evaluate',
-                //     icon: 'ios-pint',
-                //     name: 'evaluate',
-                //     access: 'admin/Goods/evaluate',
-                //     title: '快捷估价',
-                //     component: () => import('@/views/goods/evaluate.vue'),
-                // },
-                // ]
+                name: 'extension',
+                access: 'admin/AppletManage/model_meal',
+                component: () => import('@/views/goods/extension.vue'),
             },
             {
                 path: 'app',
-                icon: 'md-basket',
+                icon: 'logo-usd',
                 title: '投融介',
                 name: 'app',
                 component: () => import('@/views/goods/made.vue'),
