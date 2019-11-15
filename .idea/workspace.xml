@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="" />
+    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/web/src/views/applet/applet.less" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/applet/applet.less" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/applet/industryModule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/applet/industryModule.vue" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,19 +33,21 @@
         <counts>
           <entry key="gitignore" value="4" />
           <entry key="htaccess" value="1" />
-          <entry key="js" value="29" />
+          <entry key="js" value="30" />
           <entry key="json" value="1" />
-          <entry key="php" value="612" />
-          <entry key="vue" value="33" />
+          <entry key="less" value="1" />
+          <entry key="php" value="617" />
+          <entry key="vue" value="37" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="JSON" value="1" />
-          <entry key="JavaScript" value="29" />
-          <entry key="PHP" value="612" />
+          <entry key="JavaScript" value="30" />
+          <entry key="Less" value="1" />
+          <entry key="PHP" value="617" />
           <entry key="PLAIN_TEXT" value="4" />
-          <entry key="Vue.js" value="33" />
+          <entry key="Vue.js" value="37" />
           <entry key="htaccess" value="1" />
         </counts>
       </usages-collector>
@@ -51,16 +56,18 @@
           <entry key="dummy" value="1" />
           <entry key="gitignore" value="11" />
           <entry key="js" value="39" />
+          <entry key="less" value="5" />
           <entry key="php" value="8573" />
-          <entry key="vue" value="450" />
+          <entry key="vue" value="454" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JavaScript" value="39" />
+          <entry key="Less" value="5" />
           <entry key="PHP" value="8573" />
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Vue.js" value="450" />
+          <entry key="Vue.js" value="454" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -73,90 +80,86 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Manuscript.php">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="96">
-              <caret line="21" column="16" selection-start-line="21" selection-start-column="6" selection-end-line="21" selection-end-column="16" />
+            <state relative-caret-position="94">
+              <caret line="9" selection-start-line="9" selection-end-line="11" selection-end-column="19" />
               <folding>
-                <element signature="e#117#146#0#PHP" expanded="true" />
+                <element signature="e#119#137#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/src/router/index.js">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-432" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceGroup.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4096">
+              <caret line="425" column="28" selection-start-line="425" selection-start-column="24" selection-end-line="425" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/views/applet/industryModule.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="332">
+              <caret line="89" column="19" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="19" />
+              <folding>
+                <element signature="n#style#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/views/banner/list.vue">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <folding>
-                <element signature="e#0#22#0" expanded="true" />
-              </folding>
+              <caret selection-end-line="2" selection-end-column="8" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="9" column="5" lean-forward="true" selection-start-line="9" selection-start-column="5" selection-end-line="9" selection-end-column="5" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/web/src/views/applet/appletMain.vue">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/views/applet/templatePackage.vue">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/build/config.js">
+        <entry file="file://$PROJECT_DIR$/web/src/views/applet/applet.less">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/build/webpack.base.config.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/build/webpack.dev.config.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/build/webpack.prod.config.js">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/data/model/Extension.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
-              <folding>
-                <element signature="e#34#50#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Extension.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="157" column="25" selection-start-line="157" selection-start-column="25" selection-end-line="157" selection-end-column="25" />
-              <folding>
-                <element signature="e#118#136#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
             </state>
           </provider>
         </entry>
@@ -190,6 +193,7 @@
       <find>tableData</find>
       <find>rule</find>
       <find>网站协议</find>
+      <find>demo-upload-list</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -201,8 +205,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/admin/application/model/Goods.php" />
-        <option value="$PROJECT_DIR$/admin/application/extra/wechat.php" />
         <option value="$PROJECT_DIR$/admin/application/model/User.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/UserPartner.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/UserSubcontractor.php" />
@@ -252,6 +254,8 @@
         <option value="$PROJECT_DIR$/admin/application/api/controller/Manuscript.php" />
         <option value="$PROJECT_DIR$/admin/.gitignore" />
         <option value="$PROJECT_DIR$/web/build/config.js" />
+        <option value="$PROJECT_DIR$/web/src/views/applet/industryModule.vue" />
+        <option value="$PROJECT_DIR$/web/src/views/applet/applet.less" />
       </list>
     </option>
   </component>
@@ -299,7 +303,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-29" />
     <option name="y" value="-21" />
     <option name="width" value="1936" />
@@ -321,6 +325,32 @@
             <path>
               <item name="siring" type="b2602c69:ProjectViewProjectNode" />
               <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="application" type="462c0819:PsiDirectoryNode" />
+              <item name="admin" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -328,6 +358,50 @@
               <item name="siring" type="462c0819:PsiDirectoryNode" />
               <item name="web" type="462c0819:PsiDirectoryNode" />
               <item name="build" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="router" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="applet" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="banner" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="siring" type="b2602c69:ProjectViewProjectNode" />
+              <item name="siring" type="462c0819:PsiDirectoryNode" />
+              <item name="web" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="views" type="462c0819:PsiDirectoryNode" />
+              <item name="goods" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -402,12 +476,12 @@
       <workItem from="1573609704224" duration="6797000" />
       <workItem from="1573625838761" duration="11334000" />
       <workItem from="1573694792499" duration="9642000" />
-      <workItem from="1573779928612" duration="10680000" />
+      <workItem from="1573779928612" duration="12378000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="269626000" />
+    <option name="totallyTimeSpent" value="271324000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -493,48 +567,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Index.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceGroup.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
-          <caret line="39" column="32" selection-start-line="39" selection-start-column="32" selection-end-line="39" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Miss.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Notice.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Seo.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Live.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Software.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="224" column="39" selection-start-line="224" selection-start-column="39" selection-end-line="224" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2016">
-          <caret line="91" column="9" selection-start-line="88" selection-start-column="8" selection-end-line="91" selection-end-column="9" />
-          <folding>
-            <element signature="e#38#67#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/SoftOrder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1128">
@@ -605,16 +637,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="9" selection-start-line="9" selection-end-line="11" selection-end-column="19" />
-          <folding>
-            <element signature="e#119#137#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/goods_add.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="424">
@@ -629,13 +651,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="48">
           <caret line="2" selection-start-line="2" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="425" column="28" selection-start-line="425" selection-start-column="24" selection-end-line="425" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -799,7 +814,77 @@
     <entry file="file://$PROJECT_DIR$/web/build/config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="14" lean-forward="true" selection-start-column="14" selection-end-column="14" />
+          <caret column="10" selection-start-column="4" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Base.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-521" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="94">
+          <caret line="9" selection-start-line="9" selection-end-line="11" selection-end-column="19" />
+          <folding>
+            <element signature="e#119#137#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-432" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceGroup.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="82" column="16" selection-start-line="82" selection-start-column="16" selection-end-line="82" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4096">
+          <caret line="425" column="28" selection-start-line="425" selection-start-column="24" selection-end-line="425" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/applet/appletMain.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/applet/templatePackage.vue">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/banner/list.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="2" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/applet/industryModule.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="332">
+          <caret line="89" column="19" selection-start-line="89" selection-start-column="19" selection-end-line="89" selection-end-column="19" />
+          <folding>
+            <element signature="n#style#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/applet/applet.less">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
         </state>
       </provider>
     </entry>
