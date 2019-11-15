@@ -19,4 +19,15 @@ class UserFund extends Model
         return self::get(['user_id'=>$uid]) ? self::get(['user_id'=>$uid])->toArray() : returnJson(0,'数据有误');
     }
 
+    /**
+     * lilu
+     * 配置/修改用户的支付密码
+     * param  user_id   用户id
+     */
+    public function set_user_pay_password($user_id,$password)
+    {
+        $re=self::update(['user_id'=>$user_id,'pay_password'=>$password]);
+        return   $re  ?  $re    :  returnJson(0,'数据有误');
+    }
+
 }
