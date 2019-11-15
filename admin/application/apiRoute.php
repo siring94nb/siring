@@ -115,6 +115,14 @@ Route::group('api', function () {
         Route::any('my_order','api/Console/my_order'); //用户订单
     });
 
+    //AI推广引擎fyk
+    Route::group('Manuscript',function(){
+        Route::any('demand_add','api/Manuscript/demand_add'); //用户信息
+        Route::any('get_pay','api/Manuscript/get_pay'); //支付
+        Route::any('app_notice','api/Manuscript/app_notice'); //支付回调
+        Route::any('set_meal','api/Manuscript/set_meal'); //套餐列表
+    });
+
 
 });
 $afterBehavior = [

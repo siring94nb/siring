@@ -32,7 +32,7 @@ class MealOrder extends Base
             $postData['order_status']=1;    //  1   未付款
             $postData['member_account']=$postData['user_id'];
             unset($postData['user_id']);
-            $detail='';
+            $detail=[];
             if(array_key_exists('pay_time',$postData)){
                 $postData['pay_time']=strtotime($postData['pay_time']);
             }
