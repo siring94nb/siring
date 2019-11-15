@@ -168,6 +168,7 @@ export default {
 }
 .code-box {
   text-align: center;
+  height: 300px;
   img {
     width: 300px;
     height: 300px;
