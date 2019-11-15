@@ -133,8 +133,8 @@ class Goods extends Base{
         }else{
            return $this->buildFailed(['0','删除失败，请重新删除']);
         }
-
     }
+
     /**
      * lilu
      * 商品管理-商品/软件开发定制--商品复制
@@ -163,8 +163,8 @@ class Goods extends Base{
         }else{
             return $this->buildFailed('0','缺少必要参数');
         }
-
     }
+
     /**
      * lilu
      * 商品管理-商品/软件开发定制--添加评论
@@ -186,9 +186,8 @@ class Goods extends Base{
         }else{
             return $this->buildFailed('0','获取失败');
         }
-
-
     }
+    
     /**
      * lilu
      * 商品管理-商品/软件开发定制--检索

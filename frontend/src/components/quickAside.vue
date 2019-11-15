@@ -13,8 +13,9 @@
         <span>定制案例欣赏</span>
       </div>
       <div class="recomment-list">
-        <div class="recomment-item" v-for="item in 6" :key="item">
-          <el-image style="width: 160px; height: 160px" :src="require('@/assets/images/u2337.png')"></el-image>
+        <div class="recomment-item" v-for="(item, index) in recommentList" :key="item.id">
+          <el-image class="cover-img" :src="item.img"></el-image>
+          <el-image :src="require('@/assets/images/u2337.png')"></el-image>
         </div>
       </div>
     </div>
@@ -22,7 +23,28 @@
 </template>
 
 <script>
-export default {};
+import { GetCustomCase } from "@/api/api";
+export default {
+  data() {
+    return {
+      recommentList: []
+    };
+  },
+  mounted() {
+    this.getCustomCase();
+  },
+  methods: {
+    getCustomCase() {
+      GetCustomCase().then(res => {
+        console.log(res);
+        let { code, msg, data } = res.data;
+        if (code === 1) {
+          this.recommentList = data;
+        }
+      });
+    }
+  }
+};
 </script>
 
 <style scoped lang='scss'>
@@ -85,8 +107,28 @@ export default {};
         width: 0;
       }
       .recomment-item {
+        position: relative;
         width: 160px;
         margin: 0 auto 15px;
+        .el-image {
+          width: 160px;
+          height: 160px;
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .cover-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 2;
+          &:hover{
+            transform: rotate3d(0, 1, 0, 90deg);
+            transition: transform 0.4s;
+          }
+        }
       }
     }
   }
