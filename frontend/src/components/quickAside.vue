@@ -13,7 +13,7 @@
         <span>定制案例欣赏</span>
       </div>
       <div class="recomment-list">
-        <div class="recomment-item" v-for="(item, index) in recommentList" :key="item.id">
+        <div class="recomment-item" v-for="item in recommentList" :key="item.id">
           <el-image class="cover-img" :src="item.img"></el-image>
           <el-image :src="require('@/assets/images/u2337.png')"></el-image>
         </div>
@@ -50,7 +50,10 @@ export default {
 <style scoped lang='scss'>
 .recomment-left {
   float: left;
+  display: flex;
+  flex-direction: column;
   width: 225px;
+  height: 100%;
   .quick-desc {
     height: 220px;
     background: url("~@/assets/images/u2173.png") no-repeat;
@@ -78,6 +81,7 @@ export default {
     }
   }
   .recomment-cont {
+    flex: 1;
     background-color: #ffffff;
     padding-top: 15px;
     width: 205px;
@@ -110,6 +114,9 @@ export default {
         position: relative;
         width: 160px;
         margin: 0 auto 15px;
+        &:hover .cover-img {
+          transform: rotateY(-90deg);
+        }
         .el-image {
           width: 160px;
           height: 160px;
@@ -124,10 +131,7 @@ export default {
           left: 0;
           right: 0;
           z-index: 2;
-          &:hover{
-            transform: rotate3d(0, 1, 0, 90deg);
-            transition: transform 0.4s;
-          }
+          transition: transform 0.7s;
         }
       }
     }

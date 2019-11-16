@@ -76,6 +76,11 @@ export default new Router({
       component: () => import('@/views/goods/demonstration')
     },
     {
+      path: '/ai-promotion',
+      name: 'ai-promotion',
+      component: () => import('@/views/ai/ai-promotion')
+    },
+    {
       path: '/aboutUs',
       name: 'aboutUs',
       component: () => import('@/views/aboutUs')

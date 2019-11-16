@@ -717,21 +717,21 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
     //商品管理--推广运营
-    Route::group('BusinessSpread', [
+    Route::group('Extension', [
         'index' => [
-            'admin/BusinessSpread/index',
+            'admin/Extension/index',
             ['method' => 'get']
         ],
         'add'   => [
-            'admin/BusinessSpread/add',
+            'admin/Extension/add',
             ['method' => 'post']
         ],
         'upd'   => [
-            'admin/BusinessSpread/upd',
+            'admin/Extension/upd',
             ['method' => 'post']
         ],
         'del'   => [
-            'admin/BusinessSpread/del',
+            'admin/Extension/del',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
