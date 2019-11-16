@@ -81,7 +81,6 @@ class Software extends Base
         $good = new Good();
         $data = $good->good_detail($goods_id);
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
-
     }
 
     /**
