@@ -30,7 +30,7 @@ class  NeedOrder  extends  Base{
                 ['need_budget_up','require','高价预算不能不好空'],
                 ['need_phone','require','手机必须'],
                 ['need_desc','require','需求描述必须'],
-                ['need_file','require','附件必须'],
+                // ['need_file','require','附件必须'],
         ]);
                 if(!$validate->check($param)){
                     returnJson (0,$validate->getError());exit();
