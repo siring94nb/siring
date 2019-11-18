@@ -19,4 +19,13 @@ class UserFund extends Model
         return self::get(['user_id'=>$uid]) ? self::get(['user_id'=>$uid])->toArray() : returnJson(0,'数据有误');
     }
 
+    //新增
+    public function add($uid)
+    {
+        $user = new UserFund;
+        $data =  $user->save([
+            'user_id' => $uid,
+        ]);
+        return $data ? $data : returnJson(0,'新增用户等级失败');
+    }
 }
