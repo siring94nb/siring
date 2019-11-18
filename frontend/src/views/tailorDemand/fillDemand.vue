@@ -126,10 +126,10 @@ export default {
     return {
       form: {
         need_name: "",
-        need_categort: "",
-        need_budget_dowm: "",
+        need_category: "",
+        need_budget_down: "",
         need_budget_up: "",
-        need_terminal: [1, 2],
+        need_terminal: '',
         need_phone: "",
         need_qq: "",
         need_wx: "",
