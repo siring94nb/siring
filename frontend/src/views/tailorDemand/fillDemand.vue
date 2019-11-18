@@ -214,7 +214,11 @@ export default {
        let vm=this;
       needOrderAdd(vm.form).then(res => {
         let {code, data, msg} = res.data;
-        if(code === 1){
+        if(code === 1){ 
+          this.$router.push({
+          name: "home",
+        });
+
           // this.packageList = data;
         }
       })
