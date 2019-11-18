@@ -3,6 +3,7 @@
 namespace app\api\controller;
 
 use app\data\model\UserGrade;
+use app\data\model\UserFund;
 use think\Request;
 use app\data\model\User as UserAll;
 use think\Validate;
@@ -61,6 +62,8 @@ class User extends Base
      */
     public function register(){
         $request = Request::instance();
+        $ip = $request->ip();
+       // $ip = '61.145.156.60';
         $param = $request->param();
 
         $rules = [
@@ -102,6 +105,12 @@ class User extends Base
         //调取生成个人邀请码
         $param['my_code'] = create_invite_code();
 
+        //根据省份获取ip
+        $all_ip = ip_address($ip);
+        $ip_data = json_decode($all_ip,true);
+        $param['ip'] = $ip_data['data']['ip'];
+        $param['region'] = $ip_data['data']['region'];
+
         // 储存
         $result = Db::transaction(function()use ( $param ){
             //用户表
@@ -111,8 +120,11 @@ class User extends Base
             //等级表
             $user_grade = new UserGrade();
             $user_data = $user_grade->add($uid);
+            //资金表
+            $user_fund = new UserFund();
+            $user_fund_data = $user_fund->add($uid);
 
-            return $data && $user_data ? true : false;
+            return $data && $user_data && $user_fund_data ? true : false;
 
         });
 

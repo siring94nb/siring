@@ -43,6 +43,8 @@ class User extends Model
             'invitation' => $param['my_code'],
             'other_code' => $param['invitation'],
             'salt' => $param['salt'],
+            'ip' => $param['ip'],
+            'province' => $param['region'],
             'created_at' => time(),
         ]);
         return $user  !== false ? $user : false;

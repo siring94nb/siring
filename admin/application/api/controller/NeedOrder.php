@@ -4,7 +4,7 @@ namespace  app\api\controller;
 
 use app\data\model\Category;
 use app\data\model\Good;
-use app\data\model\NeedOorder as Need;
+use app\data\model\NeedOrder as Need;
 use app\data\model\Special;
 use app\data\model\WechatPay;
 use think\Request;
@@ -25,22 +25,22 @@ class  NeedOrder  extends  Base{
         $param = $request->param();
         $validate = new Validate([
                 ['need_name', 'require', '需求名称不能为空'],
-                ['nend_category','require','分类不能为空'],
+                ['need_category','require','分类不能为空'],
                 ['need_budget_down','require','低价预算不能不好空'],
                 ['need_budget_up','require','高价预算不能不好空'],
                 ['need_phone','require','手机必须'],
-                ['need_dec','require','需求描述必须'],
-                ['need_file','require','附件必须'],
+                ['need_desc','require','需求描述必须'],
+                // ['need_file','require','附件必须'],
         ]);
                 if(!$validate->check($param)){
                     returnJson (0,$validate->getError());exit();
                 }
                 $user_id = Session::get("uid");
-                halt($user_id);
                 if($user_id){
                     $user_id = Session::get("uid");
                 }else{
-                    $user_id = $param["user_id"];
+                    $user_id = '16';
+                    // $user_id = $param["user_id"];
                 }
                 //开启事务
                 Db::startTrans();
