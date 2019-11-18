@@ -24,6 +24,9 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/src" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/docs" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/tests" />
     </include_path>
   </component>
 </project>
