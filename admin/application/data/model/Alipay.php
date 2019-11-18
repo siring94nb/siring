@@ -26,7 +26,7 @@ class Alipay extends Model
         ];
 
         $pay = new Pay($this->config);
-        return $pay->driver('alipay')->gateway('web')->pay($config_biz);
+        return $pay->driver('alipay')->gateway('scan')->pay($config_biz);
 //        return $pay->driver('alipay')->gateway()->pay($config_biz);
     }
 
