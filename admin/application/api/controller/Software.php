@@ -109,6 +109,7 @@ class Software extends Base
             ->limit(7)->select();
 
         foreach ($data as $k=>$v){
+            
             $res = Special::spec_pro($v['id']);//规格
             $res1 = $res[0]['attr_title'];
             $data[$k]['sub_title'] = $res1;

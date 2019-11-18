@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Software.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Software.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,7 +58,7 @@
           <entry key="gitignore" value="11" />
           <entry key="js" value="39" />
           <entry key="less" value="5" />
-          <entry key="php" value="8576" />
+          <entry key="php" value="8577" />
           <entry key="vue" value="454" />
         </counts>
       </usages-collector>
@@ -65,7 +66,7 @@
         <counts>
           <entry key="JavaScript" value="39" />
           <entry key="Less" value="5" />
-          <entry key="PHP" value="8576" />
+          <entry key="PHP" value="8577" />
           <entry key="PLAIN_TEXT" value="12" />
           <entry key="Vue.js" value="454" />
         </counts>
@@ -94,8 +95,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Software.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="110" column="34" lean-forward="true" selection-start-line="110" selection-start-column="34" selection-end-line="110" selection-end-column="34" />
+            <state relative-caret-position="545">
+              <caret line="111" column="12" selection-start-line="111" selection-start-column="12" selection-end-line="111" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -503,12 +504,12 @@
       <workItem from="1573625838761" duration="11334000" />
       <workItem from="1573694792499" duration="9642000" />
       <workItem from="1573779928612" duration="13388000" />
-      <workItem from="1574039282773" duration="785000" />
+      <workItem from="1574039282773" duration="1385000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="273119000" />
+    <option name="totallyTimeSpent" value="273719000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -878,8 +879,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Software.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="110" column="34" lean-forward="true" selection-start-line="110" selection-start-column="34" selection-end-line="110" selection-end-column="34" />
+        <state relative-caret-position="545">
+          <caret line="111" column="12" selection-start-line="111" selection-start-column="12" selection-end-line="111" selection-end-column="12" />
         </state>
       </provider>
     </entry>
