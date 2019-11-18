@@ -122,6 +122,10 @@ Route::group('api', function () {
         Route::any('app_notice','api/Manuscript/app_notice'); //支付回调
         Route::any('set_meal','api/Manuscript/set_meal'); //套餐列表
     });
+    //定制需求
+    Route::group('NeedOrder',function(){
+        Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
+    });
 
 
 });

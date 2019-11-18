@@ -189,6 +189,23 @@ class MealOrder extends Base
 
     }
 
+    /**
+     * lilu
+     * 判断用户是否已经使用过邀请码优惠金额
+     * param    user_id    用户id
+     */
+    public function is_use_code()
+    {   
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            
+        }else{
+            return json(['code'=>0,'msg'=>'获取参数失败']);
+        }
+
+    }
+
 
 
 }
