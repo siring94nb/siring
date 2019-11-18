@@ -4,7 +4,7 @@ namespace  app\api\controller;
 
 use app\data\model\Category;
 use app\data\model\Good;
-use app\data\model\NeedOorder as Need;
+use app\data\model\NeedOrder as Need;
 use app\data\model\Special;
 use app\data\model\WechatPay;
 use think\Request;
