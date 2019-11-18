@@ -137,11 +137,11 @@ export default {
         need_desc: ""
       },
       rules: {
-        min: [
+        need_budget_down: [
           { required: true, message: "请输入预算", trigger: "change" },
           { type: "number", message: "只能输入数字", trigger: "blur" }
         ],
-        max: [
+        need_budget_up: [
           { required: true, message: "请输入预算", trigger: "change" },
           { type: "number", message: "只能输入数字", trigger: "blur" }
         ]
