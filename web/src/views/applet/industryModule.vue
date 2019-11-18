@@ -82,6 +82,38 @@
             </div>
           </Upload>
         </FormItem>
+        <FormItem label="商品缩略图" >
+          <div class="demo-upload-list" v-for="(item, index) in uploadListSlt" :key="index">
+            <template v-if="item.status === 'finished'">
+              <img :src="item.url" />
+              <div class="demo-upload-list-cover">
+                <Icon type="ios-trash-outline" @click.native="handleRemoveSlt(item)"></Icon>
+              </div>
+            </template>
+            <template v-else>
+              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+            </template>
+          </div>
+          <Upload
+            ref="uploads"
+            :show-upload-list="false"
+            :default-file-list="iconListSlt"
+            :on-success="handleSuccessSlt"
+            :format="['jpg','jpeg','png']"
+            :max-size="10240"
+            :on-format-error="handleFormatErrorSlt"
+            :on-exceeded-size="handleMaxSizeSlt"
+            :before-upload="handleBeforeUploadSlt"
+            type="drag"
+            name="image"
+            :action="UploadAction"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+        </FormItem>
         <FormItem label="模板简介" prop="model_des">
           <Input
             v-model="formValidate.model_des"
@@ -131,6 +163,13 @@ const editButton = (vm, h, currentRow, index) => {
           }
           vm.$nextTick(() => {
             vm.uploadList = vm.$refs.upload.fileList;
+          });
+          //缩略图片
+          if (currentRow.model_image_small != "" || currentRow.model_image_small != null) {
+            vm.iconListSlt = [{ name: "", url: currentRow.model_image_small }];
+          }
+          vm.$nextTick(() => {
+            vm.uploadListSlt = vm.$refs.uploads.fileList;
           });
         }
       }
@@ -188,9 +227,12 @@ export default {
     return {
       tableData: [],
       uploadList: [],
+      uploadListSlt: [],
       iconList: [],
+      iconListSlt: [],
       typeList: [],
       UploadAction: "",
+      visible: false,
       tableShow: {
         currentPage: 1,
         size: 10,
@@ -233,7 +275,7 @@ export default {
           key: "model_images",
           width: 150,
           render: (h, param) => {
-            let model_image = param.row.model_image.split(",")[0];
+            let model_image = param.row.model_image_small;
             return h("img", {
               attrs: {
                 src: model_image
@@ -305,6 +347,7 @@ export default {
         id: 0,
         model_name: "",
         model_image: "",
+        model_image_small: "",
         model_type: "1",
         model_des: "",
         model_status: "1",
@@ -403,16 +446,20 @@ export default {
         id: 0,
         model_name: "",
         model_image: "",
+        model_image_small: "",
         model_type: "1",
         model_des: "",
         model_status: "1",
         model_rank: 1
       };
-      this.visible = false;
       for (var i = 0; i < this.uploadList.length; i++) {
         this.handleRemove(this.uploadList[i]);
       }
+      for (var i = 0; i < this.uploadListSlt.length; i++) {
+        this.handleRemoveSlt(this.uploadListSlt[i]);
+      }
       this.iconList = [];
+      this.iconListSlt = [];
       this.modalSetting.show = false;
     },
     submit() {
@@ -469,9 +516,9 @@ export default {
       this.modalSetting.show = true;
     },
     // 图片上传
-    handleView(file) {
-      this.visible = true;
-    },
+    // handleView(file) {
+    //   this.visible = true;
+    // },
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
       // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
@@ -496,12 +543,37 @@ export default {
         this.$Message.error("只能上传一张品牌图");
       }
       return check;
+    },
+
+    //缩略图
+    handleRemoveSlt(file) {
+      const fileList = this.$refs.uploads.fileList;
+      this.$refs.uploads.fileList.splice(fileList.indexOf(file), 1);
+      this.formValidate.model_image_small = "";
+    },
+    handleSuccessSlt(res, file) {
+      file.url = res.data.filePath; //获取图片路径
+      this.formValidate.model_image_small = res.data.filePath;
+    },
+    handleFormatErrorSlt(file) {
+      this.$Message.error("文件格式不正确, 请选择jpg或者png.");
+    },
+    handleMaxSizeSlt(file) {
+      this.$Message.error("文件大小不能超过10M");
+    },
+    handleBeforeUploadSlt() {
+      const check = this.uploadListSlt.length < 1;
+      if (!check) {
+        this.$Message.error("只能上传一张品牌图");
+      }
+      return check;
     }
   },
   mounted() {
     let vm = this;
     this.UploadAction = config.front_url + "file/qn_upload";
     this.uploadList = this.$refs.upload.fileList;
+    this.uploadListSlt = this.$refs.uploads.fileList;
   }
 };
 </script>
