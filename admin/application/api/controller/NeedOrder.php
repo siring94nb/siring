@@ -36,11 +36,11 @@ class  NeedOrder  extends  Base{
                     returnJson (0,$validate->getError());exit();
                 }
                 $user_id = Session::get("uid");
-                halt($user_id);
                 if($user_id){
                     $user_id = Session::get("uid");
                 }else{
-                    $user_id = $param["user_id"];
+                    $user_id = '16';
+                    // $user_id = $param["user_id"];
                 }
                 //开启事务
                 Db::startTrans();
