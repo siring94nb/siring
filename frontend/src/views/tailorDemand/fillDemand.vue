@@ -213,7 +213,7 @@ export default {
      need_submit(){
        let vm=this;
       needOrderAdd(vm.form).then(res => {
-        console.log(res)
+        console.log(11111)
         let {code, data, msg} = res.data;
         if(code === 1){
           // this.packageList = data;
