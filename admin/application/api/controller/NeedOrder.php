@@ -23,7 +23,6 @@ class  NeedOrder  extends  Base{
     {
         $request = Request::instance();
         $param = $request->param();
-        halt($param);
         $validate = new Validate([
                 ['need_name', 'require', '需求名称不能为空'],
                 ['nend_category','require','分类不能为空'],
@@ -37,6 +36,7 @@ class  NeedOrder  extends  Base{
                     returnJson (0,$validate->getError());exit();
                 }
                 $user_id = Session::get("uid");
+                halt($user_id);
                 if($user_id){
                     $user_id = Session::get("uid");
                 }else{

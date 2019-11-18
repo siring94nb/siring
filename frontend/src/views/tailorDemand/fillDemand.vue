@@ -18,7 +18,7 @@
                 ></el-input>
               </el-form-item>
               <el-form-item label="需求类型" required>
-                <el-select v-model="form.need_categary" placeholder="请选择">
+                <el-select v-model="form.need_category" placeholder="请选择">
                   <el-option label="智能硬件" value="1"></el-option>
                   <el-option label="电子商务" value="2"></el-option>
                 </el-select>
@@ -129,7 +129,7 @@ export default {
         need_category: "",
         need_budget_down: "",
         need_budget_up: "",
-        need_terminal: '',
+        need_terminal: [],
         need_phone: "",
         need_qq: "",
         need_wx: "",
@@ -213,7 +213,6 @@ export default {
      need_submit(){
        let vm=this;
       needOrderAdd(vm.form).then(res => {
-        console.log(11111)
         let {code, data, msg} = res.data;
         if(code === 1){
           // this.packageList = data;
