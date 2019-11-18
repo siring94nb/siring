@@ -2,14 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/siring.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/siring.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/Software.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/Software.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/data/model/UserFund.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/UserFund.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/admin/composer.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +39,7 @@
           <entry key="less" value="1" />
           <entry key="lock" value="2" />
           <entry key="md" value="15" />
-          <entry key="php" value="675" />
+          <entry key="php" value="676" />
           <entry key="vue" value="37" />
           <entry key="xml" value="1" />
         </counts>
@@ -57,7 +50,7 @@
           <entry key="JavaScript" value="30" />
           <entry key="Less" value="1" />
           <entry key="Markdown" value="15" />
-          <entry key="PHP" value="675" />
+          <entry key="PHP" value="676" />
           <entry key="PLAIN_TEXT" value="5" />
           <entry key="Vue.js" value="37" />
           <entry key="XML" value="1" />
@@ -97,10 +90,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
+            <state relative-caret-position="286">
               <caret line="111" column="54" lean-forward="true" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
               <folding>
                 <element signature="e#38#67#0#PHP" expanded="true" />
@@ -136,11 +129,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserFund.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
+            <state relative-caret-position="648">
+              <caret line="38" column="5" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/thinkphp/library/think/Model.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="298">
+              <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -245,9 +247,9 @@
         <option value="$PROJECT_DIR$/admin/composer.json" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/Software.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/Alipay.php" />
-        <option value="$PROJECT_DIR$/admin/application/data/model/UserFund.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/User.php" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/User.php" />
+        <option value="$PROJECT_DIR$/admin/application/data/model/UserFund.php" />
       </list>
     </option>
   </component>
@@ -433,12 +435,12 @@
       <workItem from="1573625838761" duration="11334000" />
       <workItem from="1573694792499" duration="9642000" />
       <workItem from="1573779928612" duration="13388000" />
-      <workItem from="1574039282773" duration="17504000" />
+      <workItem from="1574039282773" duration="17719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="289838000" />
+    <option name="totallyTimeSpent" value="290053000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -533,14 +535,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/vendor/easyalipay/docs/Mini/TemplateMessage.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/vendor/easyalipay/docs/OpenLife/Template.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -773,13 +767,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserFund.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="23" column="5" lean-forward="true" selection-start-line="23" selection-start-column="5" selection-end-line="23" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserGrade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
@@ -803,11 +790,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
+        <state relative-caret-position="286">
           <caret line="111" column="54" lean-forward="true" selection-start-line="111" selection-start-column="54" selection-end-line="111" selection-end-column="54" />
           <folding>
             <element signature="e#38#67#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/thinkphp/library/think/Model.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="298">
+          <caret line="46" column="14" selection-start-line="46" selection-start-column="14" selection-end-line="46" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserFund.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="38" column="5" lean-forward="true" selection-start-line="38" selection-start-column="5" selection-end-line="38" selection-end-column="5" />
         </state>
       </provider>
     </entry>

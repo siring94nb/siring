@@ -19,7 +19,7 @@ class UserFund extends Model
         return self::get(['user_id'=>$uid]) ? self::get(['user_id'=>$uid])->toArray() : returnJson(0,'数据有误');
     }
 
-<<<<<<< HEAD
+
     //新增
     public function add($uid)
     {
@@ -29,7 +29,7 @@ class UserFund extends Model
         ]);
         return $data ? $data : returnJson(0,'新增用户等级失败');
     }
-=======
+
     /**
      * lilu
      * 配置/修改用户的支付密码
@@ -41,5 +41,4 @@ class UserFund extends Model
         return   $re  ?  $re    :  returnJson(0,'数据有误');
     }
 
->>>>>>> e5b9fdf6266c71b415a6c0d5a8924e88c3651bfc
 }
