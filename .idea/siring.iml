@@ -6,6 +6,9 @@
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/PHPExcel/Classes" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/src" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/tests" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/psr7" />
