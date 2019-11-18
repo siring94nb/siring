@@ -25,7 +25,7 @@ class  NeedOrder  extends  Base{
         $param = $request->param();
         $validate = new Validate([
                 ['need_name', 'require', '需求名称不能为空'],
-                ['nend_category','require','分类不能为空'],
+                ['need_category','require','分类不能为空'],
                 ['need_budget_down','require','低价预算不能不好空'],
                 ['need_budget_up','require','高价预算不能不好空'],
                 ['need_phone','require','手机必须'],
