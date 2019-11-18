@@ -164,6 +164,13 @@ const editButton = (vm, h, currentRow, index) => {
           vm.$nextTick(() => {
             vm.uploadList = vm.$refs.upload.fileList;
           });
+          //缩略图片
+          if (currentRow.model_image_small != "" || currentRow.model_image_small != null) {
+            vm.iconListSlt = [{ name: "", url: currentRow.model_image_small }];
+          }
+          vm.$nextTick(() => {
+            vm.uploadListSlt = vm.$refs.uploads.fileList;
+          });
         }
       }
     },
@@ -268,7 +275,7 @@ export default {
           key: "model_images",
           width: 150,
           render: (h, param) => {
-            let model_image = param.row.model_image.split(",")[0];
+            let model_image = param.row.model_image_small;
             return h("img", {
               attrs: {
                 src: model_image
@@ -449,7 +456,7 @@ export default {
         this.handleRemove(this.uploadList[i]);
       }
       for (var i = 0; i < this.uploadListSlt.length; i++) {
-        this.handleRemove(this.uploadListSlt[i]);
+        this.handleRemoveSlt(this.uploadListSlt[i]);
       }
       this.iconList = [];
       this.iconListSlt = [];
@@ -541,13 +548,10 @@ export default {
     //缩略图
     handleRemoveSlt(file) {
       const fileList = this.$refs.uploads.fileList;
-      // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.uploads.fileList.splice(fileList.indexOf(file), 1);
       this.formValidate.model_image_small = "";
     },
     handleSuccessSlt(res, file) {
-      // file.url = res.data;
-      // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
       this.formValidate.model_image_small = res.data.filePath;
     },
