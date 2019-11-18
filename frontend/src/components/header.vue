@@ -56,7 +56,7 @@
             <p class="en-name">SaaS</p>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/ai-promotion">
             <i class="icon iconfont icon-aislogo"></i>
             <span>AI推广引擎</span>
             <p class="en-name">AI advertising</p>

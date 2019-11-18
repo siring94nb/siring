@@ -201,6 +201,13 @@ export const GetDemonstration = params => {
 }
 
 /**
+ * AI推广套餐
+ */
+export const GetSetMeal = params => {
+  return axios.get(`${base_url}api/Manuscript/set_meal`, { params: params });
+}
+
+/**
  * 定制案例欣赏
  */
 export const GetCustomCase = params => {

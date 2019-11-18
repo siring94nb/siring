@@ -153,32 +153,16 @@
           <div class="ai-inner">
             <div class="ai-tabs">
               <el-tabs type="border-card">
-                <el-tab-pane label="体验套餐">
-                  <ul>
-                    <li>1.围绕企业品牌和产品，（专业宣传稿代写：2篇）</li>
-                    <li>2.每天覆盖1000个论坛.专业提升企业形象以及知名度.为期30天。</li>
-                    <li>3.发布到新闻门户网站，（一共16个站点）。</li>
-                    <li>4.优质地方新闻站投放全国地方性新闻站点投放10篇</li>
-                    <li>5.问答营销宣传。百度问答，360问答，SOSO问。共50组</li>
-                    <li>6.新浪、天涯、西祠、搜狐、雅虎、猫扑等知名论坛200篇。</li>
-                    <li>7.在1个论坛版块中（加精或置顶） ，适应于打造热贴</li>
-                    <li>8.大型博客推广，新浪，网易，和讯等大型博客发布共100条</li>
-                    <li>9.分类信息投放集网、58网、易登等各大分类信息网站，共100条</li>
-                    <li>10.微信推广：推荐一个微信大号做直发推广（不小于3万粉丝）</li>
-                    <li>11.个人微信朋友圈转发真实转发共100转发</li>
-                    <li>12.微博红人推广：推荐以下1个微博大号直发推广（不小于30万粉丝）</li>
-                  </ul>
+                <el-tab-pane v-for="item in packageList" :label="item.name" :key="item.id">
+                  <div class="packages" v-html="item.con"></div>
                   <div class="set-meal">
                     <div class="set-meal-price">
-                      <span class="through-price">￥199.0</span>
-                      <span class="sale-price">￥99.0</span>
+                      <span class="through-price">￥{{item.money}}</span>
+                      <span class="sale-price">￥{{item.price}}</span>
                     </div>
                     <a href="javascript:void(0);">&gt;&gt;立即订购</a>
                   </div>
                 </el-tab-pane>
-                <el-tab-pane label="套餐一">套餐一</el-tab-pane>
-                <el-tab-pane label="套餐二">套餐二</el-tab-pane>
-                <el-tab-pane label="套餐三">套餐三</el-tab-pane>
               </el-tabs>
             </div>
             <div class="ai-img">
@@ -202,7 +186,7 @@ import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
-import { GetGoods } from "@/api/api";
+import { GetGoods, GetSetMeal } from "@/api/api";
 export default {
   name: "index",
   components: {
@@ -372,11 +356,13 @@ export default {
         }
       ],
       mgtop: 0,
-      goodsList: []
+      goodsList: [],
+      packageList: []
     };
   },
   mounted() {
     this.getGoods();
+    this.getSetMeal();
   },
   methods: {
     xcxnavClick(index) {
@@ -397,7 +383,16 @@ export default {
           this.goodsList = data;
         }
       });
-    }
+    },
+    getSetMeal(){
+      GetSetMeal().then(res => {
+        console.log(res)
+        let {code, data, msg} = res.data;
+        if(code === 1){
+          this.packageList = data;
+        }
+      })
+    },
   }
 };
 </script>
@@ -734,9 +729,9 @@ export default {
       padding-top: 20px;
       .ai-tabs {
         flex: 1;
-        li {
-          line-height: 2em;
-          color: #333;
+        .packages{
+          color: #333333;
+          line-height: 33px;
         }
         .set-meal {
           display: flex;
