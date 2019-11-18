@@ -19,7 +19,7 @@ class Offline extends Model
     protected $resultSetType = 'collection';
 
     /**
-     * 添加
+     * 获取线下支付审核列表
      */
 
 
