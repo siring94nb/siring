@@ -211,6 +211,7 @@ export default {
       return size;
     },
      need_submit(){
+       let vm=this;
       needOrderAdd(vm.form).then(res => {
         console.log(res)
         let {code, data, msg} = res.data;
