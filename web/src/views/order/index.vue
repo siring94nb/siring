@@ -1,49 +1,73 @@
 <template>
   <div>
-      <Row>
-            <Col span="24">
-            <Card style="margin-bottom: 10px">
-                <Form inline>
-                    <FormItem>
-                        <span>请搜索</span>
-                       <Input v-model="searchConf.keywords" placeholder="订单编号/用户名/用户账号/模板" style="width:250px;"/>
-                    </FormItem>
-                      <FormItem style="margin-bottom: 0">
-                          <span>到账情况</span>
-                        <Select v-model="searchConf.status" clearable placeholder='全部' style="width:100px">
-                            <Option :value="-1">汇款待审核</Option>
-                            <Option :value="0">汇款未到账</Option>
-                            <Option :value="1">汇款已到账</Option>
-                            <Option :value="2">线上已到账</Option>
-                        </Select>
-                    </FormItem>  
-                    <FormItem style="margin-bottom: 0">
-                        <span>审核</span>
-                        <Select v-model="searchConf.status" clearable placeholder='全部' style="width:100px">
-                            <Option :value="-1">等待开通</Option>
-                            <Option :value="0">确认开通</Option>
-                        </Select>
-                    </FormItem>
-                    <FormItem style="margin-bottom: 0">
-                        <span>开始时间</span>
-                            <DatePicker type="datetime" v-model="searchConf.start_time" placeholder="请输入开始时间" style="width: 200px"></DatePicker>
-                        </FormItem>
-                        <FormItem style="margin-bottom: 0">
-                            <DatePicker type="datetime" v-model="searchConf.end_time" placeholder="请输入结束时间" style="width: 200px"></DatePicker>
-                        </FormItem>
-                    <FormItem style="margin-bottom: 0">
-                        <Button type="primary" @click="search">查询</Button>
-                    </FormItem>
-                </Form>
-            </Card>
-            </Col>
-        </Row>
+    <Row>
+      <Col span="24">
+        <Card style="margin-bottom: 10px">
+          <Form inline>
+            <FormItem>
+              <span>请搜索</span>
+              <Input
+                v-model="searchConf.title"
+                placeholder="订单编号/用户名/用户账号/模板"
+                style="width:250px;"
+              />
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <span>到账情况</span>
+              <Select
+                v-model="searchConf.order_status"
+                clearable
+                placeholder="全部"
+                style="width:100px"
+              >
+                <Option :value="-1">汇款待审核</Option>
+                <Option :value="0">汇款未到账</Option>
+                <Option :value="1">汇款已到账</Option>
+                <Option :value="2">线上已到账</Option>
+              </Select>
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <span>审核</span>
+              <Select
+                v-model="searchConf.order_status"
+                clearable
+                placeholder="全部"
+                style="width:100px"
+              >
+                <Option :value="-1">等待开通</Option>
+                <Option :value="0">确认开通</Option>
+              </Select>
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <span>开始时间</span>
+              <DatePicker
+                type="datetime"
+                v-model="searchConf.start_time"
+                placeholder="请输入开始时间"
+                style="width: 200px"
+              ></DatePicker>
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <DatePicker
+                type="datetime"
+                v-model="searchConf.end_time"
+                placeholder="请输入结束时间"
+                style="width: 200px"
+              ></DatePicker>
+            </FormItem>
+            <FormItem style="margin-bottom: 0">
+              <Button type="primary" @click="search">查询</Button>
+            </FormItem>
+          </Form>
+        </Card>
+      </Col>
+    </Row>
     <Row>
       <Col span="24">
         <Card>
           <!-- <p slot="title" style="height: 32px">
             <Button type="primary" @click="alertAdd" icon="md-add">添加案例</Button>
-          </p> -->
+          </p>-->
           <div>
             <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
           </div>
@@ -101,11 +125,11 @@ export default {
         size: 10,
         listCount: 0
       },
-      searchConf:{
-          keywords:'',
-          status:'',
-          start_time:'',
-          end_time:''
+      searchConf: {
+        title: "",
+        order_status: "",
+        start_time: "",
+        end_time: ""
       },
       columnsList: [
         {
@@ -172,28 +196,36 @@ export default {
   methods: {
     init() {
       let vm = this;
-     this.columnsList.forEach(item => {
+      this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
-            return h("div", [
-              behalfButton(vm, h, currentRowData, param.index)
-            ]);
+            return h("div", [behalfButton(vm, h, currentRowData, param.index)]);
           };
         }
-        
       });
     },
     getMade() {
       let vm = this;
-      axios.post("Goods/evaluate", vm.tableShow).then(function(response) {
-        let res = response.data;
-            console.log(res)
-        if (res.code === 1) {
-          vm.tableData = res.data.data.data;
-          vm.tableShow.listCount = res.data.listCount;
-        }
-      });
+      axios
+        .get("ModelOrder/index", {
+          params: {
+            page: vm.tableShow.currentPage,
+            size: vm.tableShow.size,
+            title: vm.searchConf.title,
+            order_status: vm.searchConf.order_status,
+            start_time: vm.searchConf.start_time,
+            end_time: vm.searchConf.end_time
+          }
+        })
+        .then(function(response) {
+          let res = response.data;
+          console.log(res);
+          if (res.code === 1) {
+            vm.tableData = res.data.data.data;
+            vm.tableShow.listCount = res.data.listCount;
+          }
+        });
     },
     changePage(page) {
       this.tableShow.page = page;
@@ -206,8 +238,7 @@ export default {
     search() {
       this.tableShow.page = 1;
       this.getMade();
-    },
-    
+    }
   },
   mounted() {}
 };
