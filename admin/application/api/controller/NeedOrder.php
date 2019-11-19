@@ -45,6 +45,9 @@ class  NeedOrder  extends  Base{
                 //开启事务
                 Db::startTrans();
                 try{
+                    $param['create_time']=time();
+                    $param['need_order']='DZ'.date('Ymdhis').mt_rand('111111','999999');
+                    $param['need_terminal']=json_encode($param['need_terminal']);
                     $data=Need::create($param)->toArray();
                     $order_id = $data['id'];
                     Db::commit();
