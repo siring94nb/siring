@@ -20,8 +20,8 @@
                 placeholder="全部"
                 style="width:100px"
               >
-                <Option :value="-1">等待开通</Option>
-                <Option :value="0">确认开通</Option>
+                <Option :value="2">等待开通</Option>
+                <Option :value="3">确认开通</Option>
               </Select>
             </FormItem>
             <FormItem style="margin-bottom: 0">
@@ -93,30 +93,7 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
-const behalfButton = (vm, h, currentRow, index) => {
-  return h(
-    "Button",
-    {
-      props: {
-        type: "primary"
-      },
-      style: {
-        margin: "0 5px"
-      },
-      on: {
-        click: () => {
-          vm.$router.push({
-            name: "goods_add",
-            params: {
-              goods_id: currentRow.id
-            }
-          });
-        }
-      }
-    },
-    "待开通"
-  );
-};
+
 export default {
   data() {
     return {
@@ -214,7 +191,9 @@ export default {
                     type: "primary"
                   },
                   style: {
-                    margin: "0 5px"
+                    margin: "0 5px",
+                    'background-color': "rgb(204,0,204)",
+                    border: "0"
                   },
                   on: {
                     click: () => {
@@ -247,7 +226,7 @@ export default {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
-            return h("div", [behalfButton(vm, h, currentRowData, param.index)]);
+            // return h("div", [behalfButton(vm, h, currentRowData, param.index)]);
           };
         }
       });
@@ -286,7 +265,10 @@ export default {
       this.getMade();
     },
 
-    doCancel(data) {},
+    doCancel() {},
+    cancel(){
+        this.modalSetting.show = false;
+    },
     submit() {
       let vm = this;
       axios
@@ -295,8 +277,9 @@ export default {
           order_status: 3
         })
         .then(function(response) {
-          console.log(response);
           if (response.data.code === 1) {
+              vm.cancel();
+              vm.getMade();
           }
         });
     }
