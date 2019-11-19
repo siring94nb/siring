@@ -456,6 +456,10 @@ Route::group('admin', function () use ($afterBehavior) {
         'index'=>[                      //套餐订单列表
             'admin/ModelOrder/index',
             ['method'=>'get']
+        ],
+        'change_order_status'=>[                      //套餐订单修改状态
+            'admin/ModelOrder/change_order_status',
+            ['method'=>'post']
         ]
 
     ],['after_behavior' => $afterBehavior]);
