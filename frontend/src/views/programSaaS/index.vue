@@ -69,6 +69,7 @@
         </div>
         <div class="abstract-img">
           <img :src="showTemp.model_image_small" alt />
+          <div style="width: 230px;height: 420px;background-color: rgb(0,0,0,.4);margin:auto;"></div>
         </div>
         <div class="abstract-r">
           <div class="input-box">
