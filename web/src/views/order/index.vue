@@ -8,8 +8,8 @@
               <span>请搜索</span>
               <Input
                 v-model="searchConf.title"
-                placeholder="订单编号/用户名/用户账号/模板"
-                style="width:250px;"
+                placeholder="订单编号/模板"
+                style="width:200px;"
               />
             </FormItem>
             <FormItem style="margin-bottom: 0">
@@ -20,8 +20,8 @@
                 placeholder="全部"
                 style="width:100px"
               >
-                <Option :value="-1">等待开通</Option>
-                <Option :value="0">确认开通</Option>
+                <Option :value="2">等待开通</Option>
+                <Option :value="3">确认开通</Option>
               </Select>
             </FormItem>
             <FormItem style="margin-bottom: 0">
@@ -48,6 +48,21 @@
         </Card>
       </Col>
     </Row>
+
+    <Modal
+      v-model="modalSetting.show"
+      title="温馨提示"
+      width="668"
+      :styles="{top: '100px'}"
+      @on-visible-change="doCancel"
+    >
+      <div
+        style="font-size: 20px;color: #666666;text-align: center;line-height: 48px;margin:50px 0;"
+      >我已在SaaS平台上给用户开了账户</div>
+      <div slot="footer" style="text-align:center;">
+        <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+      </div>
+    </Modal>
     <Row>
       <Col span="24">
         <Card>
@@ -78,30 +93,7 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
-const behalfButton = (vm, h, currentRow, index) => {
-  return h(
-    "Button",
-    {
-      props: {
-        type: "primary"
-      },
-      style: {
-        margin: "0 5px"
-      },
-      on: {
-        click: () => {
-          vm.$router.push({
-            name: "goods_add",
-            params: {
-              goods_id: currentRow.id
-            }
-          });
-        }
-      }
-    },
-    "待开通"
-  );
-};
+
 export default {
   data() {
     return {
@@ -117,6 +109,12 @@ export default {
         start_time: "",
         end_time: ""
       },
+      selID: 0,
+      modalSetting: {
+        show: false,
+        loading: false,
+        index: 0
+      },
       columnsList: [
         {
           title: "序号",
@@ -128,7 +126,8 @@ export default {
         {
           title: "订单编号",
           align: "center",
-          key: "order_number"
+          key: "order_number",
+          width: 200
         },
         {
           title: "行业模板",
@@ -153,7 +152,19 @@ export default {
         {
           title: "付款账号",
           align: "center",
-          key: "pay_detail"
+          key: "pay_detail",
+          width: 300,
+          render: (h, param) => {
+            let bankNumber, pay_detail;
+            if (param.row.pay_type == 1) bankNumber = "支付宝支付";
+            else if (param.row.pay_type == 2) bankNumber = "微信支付";
+            else if (param.row.pay_type == 4) bankNumber = "余额支付";
+            if (param.row.pay_type == 3) {
+              pay_detail = JSON.parse(param.row.pay_detail);
+              bankNumber = pay_detail.bank_name + ":" + pay_detail.bank_number;
+            }
+            return h("div", bankNumber);
+          }
         },
         {
           title: "下单时间",
@@ -165,12 +176,41 @@ export default {
           align: "center",
           key: "meal_end_time"
         },
+        // 1：未支付，2：待开通，3：已完成，4：已关闭
         {
           title: "操作",
           align: "center",
           key: "handle",
-          width: 400,
-          handle: ["comments"]
+          render: (h, param) => {
+            let status;
+            if (param.row.order_status == 2) {
+              return h(
+                "Button",
+                {
+                  props: {
+                    type: "primary"
+                  },
+                  style: {
+                    margin: "0 5px",
+                    'background-color': "rgb(204,0,204)",
+                    border: "0"
+                  },
+                  on: {
+                    click: () => {
+                      this.selID = param.row.id;
+                      this.modalSetting.show = true;
+                    }
+                  }
+                },
+                "待开通"
+              );
+            } else {
+              if (param.row.order_status == 1) status = "未支付";
+              else if (param.row.order_status == 3) status = "已完成";
+              else if (param.row.order_status == 4) status = "已关闭";
+              return h("div", status);
+            }
+          }
         }
       ]
     };
@@ -186,7 +226,7 @@ export default {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
-            return h("div", [behalfButton(vm, h, currentRowData, param.index)]);
+            // return h("div", [behalfButton(vm, h, currentRowData, param.index)]);
           };
         }
       });
@@ -196,7 +236,7 @@ export default {
       axios
         .get("ModelOrder/index", {
           params: {
-            page: vm.tableShow.currentPage,
+            page: vm.tableShow.page,
             size: vm.tableShow.size,
             title: vm.searchConf.title,
             order_status: vm.searchConf.order_status,
@@ -206,9 +246,7 @@ export default {
         })
         .then(function(response) {
           let res = response.data;
-          console.log(res);
           if (res.code === 1) {
-            // res.data.data[0].pay_detail = JSON.parse(res.data.data[0].pay_detail);
             vm.tableData = res.data.data;
             vm.tableShow.listCount = res.data.listCount;
           }
@@ -225,6 +263,25 @@ export default {
     search() {
       this.tableShow.page = 1;
       this.getMade();
+    },
+
+    doCancel() {},
+    cancel(){
+        this.modalSetting.show = false;
+    },
+    submit() {
+      let vm = this;
+      axios
+        .post("ModelOrder/change_order_status", {
+          id: vm.selID,
+          order_status: 3
+        })
+        .then(function(response) {
+          if (response.data.code === 1) {
+              vm.cancel();
+              vm.getMade();
+          }
+        });
     }
   },
   mounted() {}
