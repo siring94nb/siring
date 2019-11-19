@@ -55,7 +55,7 @@ class Goods extends Base
         }
         $field = '*';
         $order = 'goods_sort asc';
-        $goods = new Good();
+        $goods = new Goods();
         $list = $goods->field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
         return $list;
