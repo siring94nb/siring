@@ -48,6 +48,21 @@
         </Card>
       </Col>
     </Row>
+
+    <Modal
+      v-model="modalSetting.show"
+      title="温馨提示"
+      width="668"
+      :styles="{top: '100px'}"
+      @on-visible-change="doCancel"
+    >
+      <div
+        style="font-size: 20px;color: #666666;text-align: center;line-height: 48px;margin:50px 0;"
+      >我已在SaaS平台上给用户开了账户</div>
+      <div slot="footer" style="text-align:center;">
+        <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
+      </div>
+    </Modal>
     <Row>
       <Col span="24">
         <Card>
@@ -117,6 +132,12 @@ export default {
         start_time: "",
         end_time: ""
       },
+      selID: 0,
+      modalSetting: {
+        show: false,
+        loading: false,
+        index: 0
+      },
       columnsList: [
         {
           title: "序号",
@@ -128,7 +149,8 @@ export default {
         {
           title: "订单编号",
           align: "center",
-          key: "order_number"
+          key: "order_number",
+          width: 200
         },
         {
           title: "行业模板",
@@ -153,7 +175,19 @@ export default {
         {
           title: "付款账号",
           align: "center",
-          key: "pay_detail"
+          key: "pay_detail",
+          width: 300,
+          render: (h, param) => {
+            let bankNumber, pay_detail;
+            if (param.row.pay_type == 1) bankNumber = "支付宝支付";
+            else if (param.row.pay_type == 2) bankNumber = "微信支付";
+            else if (param.row.pay_type == 4) bankNumber = "余额支付";
+            if (param.row.pay_type == 3) {
+              pay_detail = JSON.parse(param.row.pay_detail);
+              bankNumber = pay_detail.bank_name + ":" + pay_detail.bank_number;
+            }
+            return h("div", bankNumber);
+          }
         },
         {
           title: "下单时间",
@@ -165,12 +199,39 @@ export default {
           align: "center",
           key: "meal_end_time"
         },
+        // 1：未支付，2：待开通，3：已完成，4：已关闭
         {
           title: "操作",
           align: "center",
           key: "handle",
-          width: 400,
-          handle: ["comments"]
+          render: (h, param) => {
+            let status;
+            if (param.row.order_status == 2) {
+              return h(
+                "Button",
+                {
+                  props: {
+                    type: "primary"
+                  },
+                  style: {
+                    margin: "0 5px"
+                  },
+                  on: {
+                    click: () => {
+                      this.selID = param.row.id;
+                      this.modalSetting.show = true;
+                    }
+                  }
+                },
+                "待开通"
+              );
+            } else {
+              if (param.row.order_status == 1) status = "未支付";
+              else if (param.row.order_status == 3) status = "已完成";
+              else if (param.row.order_status == 4) status = "已关闭";
+              return h("div", status);
+            }
+          }
         }
       ]
     };
@@ -196,7 +257,7 @@ export default {
       axios
         .get("ModelOrder/index", {
           params: {
-            page: vm.tableShow.currentPage,
+            page: vm.tableShow.page,
             size: vm.tableShow.size,
             title: vm.searchConf.title,
             order_status: vm.searchConf.order_status,
@@ -206,9 +267,7 @@ export default {
         })
         .then(function(response) {
           let res = response.data;
-          console.log(res);
           if (res.code === 1) {
-            // res.data.data[0].pay_detail = JSON.parse(res.data.data[0].pay_detail);
             vm.tableData = res.data.data;
             vm.tableShow.listCount = res.data.listCount;
           }
@@ -225,6 +284,21 @@ export default {
     search() {
       this.tableShow.page = 1;
       this.getMade();
+    },
+
+    doCancel(data) {},
+    submit() {
+      let vm = this;
+      axios
+        .post("ModelOrder/change_order_status", {
+          id: vm.selID,
+          order_status: 3
+        })
+        .then(function(response) {
+            console.log(response)
+          if (response.data.code === 1) {
+          }
+        });
     }
   },
   mounted() {}
