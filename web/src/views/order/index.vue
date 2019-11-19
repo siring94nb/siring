@@ -13,20 +13,6 @@
               />
             </FormItem>
             <FormItem style="margin-bottom: 0">
-              <span>到账情况</span>
-              <Select
-                v-model="searchConf.order_status"
-                clearable
-                placeholder="全部"
-                style="width:100px"
-              >
-                <Option :value="-1">汇款待审核</Option>
-                <Option :value="0">汇款未到账</Option>
-                <Option :value="1">汇款已到账</Option>
-                <Option :value="2">线上已到账</Option>
-              </Select>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
               <span>审核</span>
               <Select
                 v-model="searchConf.order_status"
