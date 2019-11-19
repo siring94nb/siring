@@ -422,6 +422,44 @@ Route::group('admin', function () use ($afterBehavior) {
 
     ], ['after_behavior' => $afterBehavior]);
 
+     /**
+      * lilu
+      *软件定制订单--定制需求订单
+      */
+     Route::group('NeedOrder', [
+        'index' => [                        //定制需求订单列表      
+            'admin/NeedOrder/index',
+            ['method' => 'get']
+        ],
+         'need_detail'   => [                //定制需求
+             'admin/NeedOrder/need_detail',
+             ['method' => 'post']
+         ],
+         'proposal_upload'   => [                //上传报价单
+             'admin/NeedOrder/proposal_upload',
+             ['method' => 'post']
+         ],
+         'proposal_upload'   => [                //上传报价单
+             'admin/NeedOrder/proposal_upload',
+             ['method' => 'post']
+         ],
+         'proposal_verify'   => [                //上传报价单审核
+             'admin/NeedOrder/proposal_verify',
+             ['method' => 'post']
+         ],
+    ], ['after_behavior' => $afterBehavior]);
+    /**
+     * lilu
+     * 套餐订单
+     */
+    Route::group('ModelOrder',[
+        'index'=>[                      //套餐订单列表
+            'admin/ModelOrder/index',
+            ['method'=>'get']
+        ]
+
+    ],['after_behavior' => $afterBehavior]);
+
     //消息管理
     Route::group('Msg', [
         'index' => [
