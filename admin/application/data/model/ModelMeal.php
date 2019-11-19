@@ -1,6 +1,7 @@
 <?php
 namespace app\data\model;
 use think\Model;
+use think\Db;
 
 /**
  * lilu

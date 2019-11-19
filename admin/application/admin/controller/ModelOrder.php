@@ -37,6 +37,47 @@ class ModelOrder extends   Base{
             return   $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
 
         }
-
     }
+
+    /**
+     * lilu
+     * 更改订单状态（待开通-已完成）
+     * id     订单id
+     * order_status
+     */
+    public function   change_order_status()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $re=Model::update($postData)->toArray();
+            if($re){
+                return  $this->buildSuccess([]);
+            }else{
+                return  $this->buildFailed(ReturnCode::DB_SAVE_ERROR,'操作失败');
+            }
+        }else{
+            return  $this->buildFailed(ReturnCode::DB_SAVE_ERROR,'缺少必须参数');
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

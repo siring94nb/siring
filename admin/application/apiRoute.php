@@ -25,6 +25,11 @@ Route::group('api', function () {
         Route::any('forget','api/User/forget');//忘记密码
         Route::any('upd_phone','api/User/edit_phone');//修改手机号
         Route::any('logout','api/User/logout');//用户退出
+        Route::any('user_updating','api/User/user_updating');//用户资料更新
+        Route::any('enterprise_add','api/User/enterprise_add');//添加企业身份
+        Route::any('enterprise_list','api/User/enterprise_list');//企业身份列表
+        Route::any('enterprise_edit','api/User/enterprise_edit');//企业身份编辑
+        Route::any('enterprise_del','api/User/enterprise_del');//企业身份删除
     });
 
     //轮播接口接口fyk
