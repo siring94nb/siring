@@ -295,7 +295,7 @@ export default {
           order_status: 3
         })
         .then(function(response) {
-            console.log(response)
+          console.log(response);
           if (response.data.code === 1) {
           }
         });
