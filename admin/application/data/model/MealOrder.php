@@ -3,6 +3,7 @@
 namespace app\data\model;
 
 use think\Model;
+use think\Db;
 use traits\model\SoftDelete;
 
 /**
@@ -46,10 +47,10 @@ class MealOrder extends Model
         if(empty($parsm['page'])){
             $parsm['page'] = 1;
         }
-        $field = '*';
+        $field = 'a.*,u.phone';
         $order = 'create_time desc';
         $mealorder = new MealOrder();
-        $list = $mealorder->field( $field ) -> where( $where ) -> order( $order )
+        $list = Db::table('model_order')->alias('a')->join('user u', 'u.id=a.member_account','left' )->field($field) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
         return $list;
 
