@@ -375,6 +375,48 @@ export const appRouter = [
                     },
                 ]
             },
+            {
+                path: 'made_order',
+                icon: 'ios-pint',
+                name: 'made_order',
+                title: '软件/定制订单',
+                component: () => import('@/views/order/order.vue'),
+                children: [
+                    {
+                        path: 'need_order',
+                        icon: 'ios-clipboard',
+                        name: 'need_order',
+                        access: 'admin/JoinOrder/index',
+                        title: '定制需求订单',
+                        component: () => import('@/views/order/index.vue')
+                    },
+                ]
+            },
+            {
+                path: 'saas_order',
+                icon: 'ios-pint',
+                name: 'saas_order',
+                title: 'saas套餐订单',
+                component: () => import('@/views/order/order.vue'),
+                children: [
+                    {
+                        path: 'model_order',
+                        icon: 'ios-clipboard',
+                        name: 'model_order',
+                        access: 'admin/ModelOrder/index',
+                        title: '套餐订单',
+                        component: () => import('@/views/order/index.vue')
+                    },
+                    {
+                        path: 'adder_order',
+                        icon: 'ios-clipboard',
+                        name: 'adder_order',
+                        access: 'admin/ModelOrder/index',
+                        title: '增值服务订单',
+                        component: () => import('@/views/order/index.vue')
+                    },
+                ]
+            },
 
         ]
     },

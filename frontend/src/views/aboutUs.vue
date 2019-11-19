@@ -3,7 +3,7 @@
     <myheader />
     <div class="index">
         <div class="title-top">
-            <img src="../assets/images/u65658.jpg" alt="">
+            <img src="../assets/images/u6566.jpg" alt="">
         </div>
     </div>
     <myfooter />

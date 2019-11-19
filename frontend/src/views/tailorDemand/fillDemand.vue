@@ -213,7 +213,7 @@ export default {
      need_submit(){
        let vm=this;
       needOrderAdd(vm.form).then(res => {
-        let {code, data, msg} = res.data;
+        let {code, data, msg} = res;
         if(code === 1){ 
           this.$router.push({
           name: "home",
