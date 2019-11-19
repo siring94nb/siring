@@ -13,20 +13,6 @@
               />
             </FormItem>
             <FormItem style="margin-bottom: 0">
-              <span>到账情况</span>
-              <Select
-                v-model="searchConf.order_status"
-                clearable
-                placeholder="全部"
-                style="width:100px"
-              >
-                <Option :value="-1">汇款待审核</Option>
-                <Option :value="0">汇款未到账</Option>
-                <Option :value="1">汇款已到账</Option>
-                <Option :value="2">线上已到账</Option>
-              </Select>
-            </FormItem>
-            <FormItem style="margin-bottom: 0">
               <span>审核</span>
               <Select
                 v-model="searchConf.order_status"
@@ -142,42 +128,42 @@ export default {
         {
           title: "订单编号",
           align: "center",
-          key: "plate_form"
+          key: "order_number"
         },
         {
           title: "行业模板",
           align: "center",
-          key: "evaluate_type"
+          key: "model_type"
         },
         {
           title: "模板套餐",
           align: "center",
-          key: "model"
+          key: "model_meal_type"
         },
         {
           title: "用户账号",
           align: "center",
-          key: "function_point"
+          key: "member_account"
         },
         {
           title: "订单金额",
           align: "center",
-          key: "work_hours"
+          key: "order_amount"
         },
         {
           title: "付款账号",
           align: "center",
-          key: "price_down"
+          key: "pay_detail"
         },
         {
           title: "下单时间",
           align: "center",
-          key: "price_up"
+          key: "create_time"
         },
         {
           title: "套餐到期时间",
           align: "center",
-          key: "price_up"
+          key: "meal_end_time"
         },
         {
           title: "操作",
@@ -222,7 +208,8 @@ export default {
           let res = response.data;
           console.log(res);
           if (res.code === 1) {
-            vm.tableData = res.data.data.data;
+            // res.data.data[0].pay_detail = JSON.parse(res.data.data[0].pay_detail);
+            vm.tableData = res.data.data;
             vm.tableShow.listCount = res.data.listCount;
           }
         });

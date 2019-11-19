@@ -6,7 +6,7 @@ use think\Db;
 use think\Session;
 use app\util\ReturnCode;
 use think\Validate;
-use app\data\model\ModelOrder;
+use app\data\model\MealOrder as Model;
 
 /**
  * lilu
@@ -26,11 +26,12 @@ class ModelOrder extends   Base{
         $param['order_status'] = $this->request->get('order_status', '');
         $param['start_time'] = $this->request->get('start_time', '');
         $param['end_time'] = $this->request->get('end_time', '');
-        $model_order=new ModelOrder();
+        $model_order=new Model();
         $data=$model_order->get_saas_order($param);
         if(!empty($data['data'])){
             return   $this->buildSuccess([
-                'data'=>$data
+                'data'=>$data['data'],
+                'listCount'=>$data['total']
             ]);
         }else{
             return   $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
