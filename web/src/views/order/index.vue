@@ -8,8 +8,8 @@
               <span>请搜索</span>
               <Input
                 v-model="searchConf.title"
-                placeholder="订单编号/用户名/用户账号/模板"
-                style="width:250px;"
+                placeholder="订单编号/模板"
+                style="width:200px;"
               />
             </FormItem>
             <FormItem style="margin-bottom: 0">
