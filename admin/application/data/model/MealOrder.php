@@ -29,7 +29,7 @@ class MealOrder extends Model
         $where=[];
         $where['del_time'] = null;
         if(array_key_exists('title',$parsm) && !empty($parsm['title'])){
-                $where['order_number']=$parsm['title'];
+                $where['order_number|model_type']=$parsm['title'];
         }
         if(array_key_exists('order_status',$parsm)){
             if(!empty($parsm['order_status'])){

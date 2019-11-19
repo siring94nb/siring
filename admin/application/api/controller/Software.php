@@ -87,6 +87,9 @@ class Software extends Base
     /**
      * 商品评论
      * @param $goods_id
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function soft_reviews($goods_id)
     {
@@ -97,8 +100,7 @@ class Software extends Base
 
     /**
      * 推荐商品
-     * @author fyk
-     * @return \think\Response
+     * @throws \think\exception\DbException
      */
     public function soft_push()
     {
