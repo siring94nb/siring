@@ -28,7 +28,7 @@ class ModelOrder extends   Base{
         $param['end_time'] = $this->request->get('end_time', '');
         $model_order=new Model();
         $data=$model_order->get_saas_order($param);
-        if(!empty($data['data'])){
+        if(!empty($data)){
             return   $this->buildSuccess([
                 'data'=>$data['data'],
                 'listCount'=>$data['total']
