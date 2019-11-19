@@ -2,11 +2,21 @@
   <div class="index">
     <myheader />
     <div class="index">
-      <div class="steps">
-        <el-steps :active="1" align-center>
-          <el-step title="选择行业模板"></el-step>
-          <el-step title="选择套餐"></el-step>
-        </el-steps>
+      <div class="steps" >
+        <div class="lines"></div>
+        <div class="dashed"></div>
+        <div class="label">
+          <div class="label-r label-l" >
+            <img src="../../assets/images/u3086.png" alt="">
+            <div class="label-text">选择行业模板</div>
+            <span class="label-number">1</span>
+          </div>
+          <div class="label-r">
+            <img src="../../assets/images/u3087.png" alt="">
+            <div class="no-sel">选择套餐</div>
+            <span class="label-number">2</span>
+          </div>
+        </div>
       </div>
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
@@ -58,7 +68,7 @@
           </div>-->
         </div>
         <div class="abstract-img">
-          <img :src="showTemp.model_image" alt />
+          <img :src="showTemp.model_image_small" alt />
         </div>
         <div class="abstract-r">
           <div class="input-box">
@@ -101,7 +111,7 @@
             :key="item.id"
             @change="radioChange(index, item.id)"
           >
-            <img :src="item.model_image" alt />
+            <img :src="item.model_image_small" alt />
             <div>
               <el-radio :label="item.id">{{item.model_name}}</el-radio>
             </div>
@@ -229,6 +239,7 @@ export default {
   padding: 8px;
   font-size: 16px;
   width: 130px;
+  
 }
 .popover-price {
   font-size: 18px;
@@ -242,11 +253,25 @@ export default {
 
 .index {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 150px;
   width: 1200px;
   .steps {
-    width: 500px;
-    margin: auto;
+    display:flex;position: relative;margin:70px auto;width:250px;
+    .lines{width:170px;border-bottom:2px solid rgb(26,188,156);}
+    .dashed{width:150px;border-bottom:2px dashed rgb(161,161,161);}
+    .label{
+       display:flex;position:absolute;top:-30px;left:-30px;
+       .label-r{position: relative;
+       text-align: center;
+       div{width: 100px;font-weight: 700;font-size: 14px;}
+       .label-text{color: rgb(26,188,156);}
+       .no-sel{color: rgb(161,161,161);}
+       .label-number{color:#fff;font-size:30px;position:absolute;top:15px;left:41px;}
+       }
+       .label-l{margin-right:150px;
+        
+       }
+    }
   }
   .title {
     display: flex;
