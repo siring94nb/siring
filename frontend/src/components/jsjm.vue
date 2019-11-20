@@ -7,12 +7,12 @@
       <div class="upgrade-apply">
         <div class="upgrade-inner-box">
           <div>
-            <img :src="require('@/assets/images/u189.png')" width="48px" height="44px" />
+            <img :src="require('@/assets/images/u189.png')" width="44px" height="56px" />
             <span>等级会员——不同等级会员享有的购买折扣不相同，同时还能通过分享获得收益</span>
             <router-link to="/member">&gt;&gt;立即申请</router-link>
           </div>
           <div>
-            <img :src="require('@/assets/images/u188.png')" width="48px" height="44px" />
+            <img :src="require('@/assets/images/u188.png')" width="44px" height="56px" />
             <span>分包商——愿意挑战的您，获得平台分配的部分任务获得佣金，可以是个人也可以是企业哟</span>
             <router-link to="/contractor">&gt;&gt;立即申请</router-link>
           </div>

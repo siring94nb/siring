@@ -100,7 +100,8 @@
                     </div>
                     <div class="seller-comment" v-for="i in item.reply" :key="i.id">
                       <div class="reply-cont">
-                        <span class="seller-title">【官方回复】</span>{{i.con}}
+                        <span class="seller-title">【官方回复】</span>
+                        {{i.con}}
                       </div>
                       <div class="reply-time">{{i.create_at}}</div>
                     </div>
@@ -130,7 +131,9 @@
               </div>
             </div>
           </div>
-          <div class="more">更多&gt;</div>
+          <div class="more">
+            <router-link to="/goods">更多&gt;</router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -219,7 +222,7 @@ export default {
 <style scoped lang='scss'>
 .goods-detail {
   margin-bottom: 50px;
-  margin-top: 150px;
+  margin-top: 100px;
   .container {
     width: 1200px;
     margin: 0 auto;
@@ -227,7 +230,7 @@ export default {
       font-size: 32px;
       text-align: center;
       margin-top: 40px;
-      padding-bottom: 38px;
+      padding-bottom: 40px;
       border-bottom: 18px solid rgb(246, 246, 246);
     }
     .cont {
@@ -358,6 +361,8 @@ export default {
           }
         }
         .comment-box {
+          height: 700px;
+          overflow: auto;
           .cm-p {
             line-height: 28px;
           }
@@ -427,11 +432,11 @@ export default {
                   margin-bottom: 20px;
                   color: #5e5e5e;
                   line-height: 28px;
-                  .seller-title{
-                    color: #FF99CC;
+                  .seller-title {
+                    color: #ff99cc;
                   }
                 }
-                .reply-time{
+                .reply-time {
                   color: #aeaeae;
                 }
               }
@@ -498,7 +503,9 @@ export default {
           right: 10px;
           bottom: -28px;
           font-size: 14px;
-          color: #333333;
+          a {
+            color: #333333;
+          }
         }
       }
     }
