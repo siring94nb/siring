@@ -8,7 +8,7 @@
               <span>请搜索</span>
               <Input v-model="searchConf.title" placeholder="订单编号/用户名/用户账号" style="width:200px;" />
             </FormItem>
-            <FormItem style="margin-bottom: 0">
+            <!-- <FormItem style="margin-bottom: 0">
               <span>订单类型</span>
               <Select
                 v-model="searchConf.order_status"
@@ -20,7 +20,7 @@
                 <Option :value="3">定制类型</Option>
                 <Option :value="4">项目新增</Option>
               </Select>
-            </FormItem>
+            </FormItem> -->
             <FormItem style="margin-bottom: 0">
               <span>开始时间</span>
               <DatePicker
@@ -133,7 +133,7 @@ export default {
       },
       searchConf: {
         title: "",
-        order_status: "",
+        // order_status: "",
         start_time: "",
         end_time: ""
       },
@@ -280,12 +280,12 @@ export default {
     getMade() {
       let vm = this;
       axios
-        .get("ModelOrder/index", {
+        .get("NeedOrder/need_index", {
           params: {
             page: vm.tableShow.page,
             size: vm.tableShow.size,
             title: vm.searchConf.title,
-            order_status: vm.searchConf.order_status,
+            // order_status: vm.searchConf.order_status,
             start_time: vm.searchConf.start_time,
             end_time: vm.searchConf.end_time
           }
