@@ -386,9 +386,9 @@ export const appRouter = [
                         path: 'need_order',
                         icon: 'ios-clipboard',
                         name: 'need_order',
-                        access: 'admin/JoinOrder/index',
+                        access: 'admin/NeedOrder/need_index',
                         title: '定制需求订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () => import('@/views/order/demand_order.vue')
                     },
                 ]
             },
@@ -405,7 +405,7 @@ export const appRouter = [
                         name: 'model_order',
                         access: 'admin/ModelOrder/index',
                         title: '套餐订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () => import('@/views/order/model_order.vue')
                     },
                     {
                         path: 'adder_order',

@@ -263,7 +263,7 @@ export default {
         .form-box {
           padding: 15px 20px 0 0;
           .el-form {
-            width: 800px;
+            width: 900px;
             .line,
             .unit {
               text-align: center;

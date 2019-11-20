@@ -427,7 +427,7 @@ Route::group('admin', function () use ($afterBehavior) {
       *软件定制订单--定制需求订单
       */
      Route::group('NeedOrder', [
-        'index' => [                        //定制需求订单列表      
+        'need_index' => [                        //定制需求订单列表      
             'admin/NeedOrder/need_index',
             ['method' => 'get']
         ],

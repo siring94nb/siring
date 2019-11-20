@@ -21,7 +21,7 @@
               class="avatar"
               src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
             ></el-avatar>
-            <span class="phone">136****3045</span>
+            <span class="phone">{{phone}}</span>
             <span @click="onLogout">退出</span>
           </div>
         </div>
@@ -82,7 +82,7 @@
             </el-dropdown>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/investment">
             <i class="icon iconfont icon-farenduiwaitouzi"></i>
             <span>投融介</span>
             <p class="en-name">Investment</p>
@@ -291,6 +291,11 @@ export default {
       validateTime: 60
     };
   },
+  computed:{
+    phone(){
+      return this.$store.state.phone.replace(/(\d{3})\d{4}(\d{3})/, '$1****$2');
+    }
+  },
   mounted() {
     this.isLogin();
   },
@@ -399,12 +404,13 @@ export default {
       Login(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        console.log(res);
+        console.log(111, res);
         if (code === 1) {
           // 存储用户信息
           this.$store.commit("login", {
             id: data.user_id,
-            phone: data.phone
+            phone: data.phone,
+            avatar: data.user_img
           });
           this.ifLogin = true;
           this.reload();
@@ -423,7 +429,7 @@ export default {
       ForgetPwd(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        console.log(res);
+        // console.log(res);
         if(code === 1){
           this.handleClose();
         }
