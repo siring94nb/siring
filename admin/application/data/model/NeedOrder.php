@@ -58,9 +58,9 @@ class NeedOrder extends Model
             if(empty($parsm['page'])){
                 $parsm['page'] = 1;
             }
-            $field = 'a.*,u.phone';
+            $field = '*';
             $order = 'create_time desc';
-            $list = Db::table('need_order')->alias('a')->join('user u', 'u.id=a.member_account','left' )->field($field) -> where( $where ) -> order( $order )
+            $list = Db::table('need_order')->field($field) -> where( $where ) -> order( $order )
                 -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
             return $list;
 

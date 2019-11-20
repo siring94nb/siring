@@ -386,7 +386,7 @@ export const appRouter = [
                         path: 'need_order',
                         icon: 'ios-clipboard',
                         name: 'need_order',
-                        access: 'admin/JoinOrder/index',
+                        access: 'admin/NeedOrder/need_index',
                         title: '定制需求订单',
                         component: () => import('@/views/order/demand_order.vue')
                     },
