@@ -11,35 +11,35 @@
             <el-form ref="form" :model="form" :rules="rules" label-width="110px">
               <el-form-item label="需求名称" required>
                 <el-input
-                  v-model="form.name"
+                  v-model="form.need_name"
                   maxlength="10"
                   show-word-limit
                   placeholder="请输入你的项目名，不超过10个字"
                 ></el-input>
               </el-form-item>
               <el-form-item label="需求类型" required>
-                <el-select v-model="form.type" placeholder="请选择">
-                  <el-option label="智能硬件" value="shanghai"></el-option>
-                  <el-option label="电子商务" value="beijing"></el-option>
+                <el-select v-model="form.need_category" placeholder="请选择">
+                  <el-option label="智能硬件" value="1"></el-option>
+                  <el-option label="电子商务" value="2"></el-option>
                 </el-select>
               </el-form-item>
               <el-form-item label="需求预算" required>
                 <el-col :span="10">
                   <el-form-item prop="min">
-                    <el-input type="text" v-model.number="form.min"></el-input>
+                    <el-input type="text" v-model.number="form.need_budget_down"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col class="unit" :span="1">元</el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="10">
                   <el-form-item prop="max">
-                    <el-input type="text" v-model.number="form.max"></el-input>
+                    <el-input type="text" v-model.number="form.need_budget_up"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col class="unit" :span="1">元</el-col>
               </el-form-item>
               <el-form-item label="开发终端">
-                <el-checkbox-group v-model="form.terminal">
+                <el-checkbox-group v-model="form.need_terminal">
                   <el-checkbox
                     v-for="item in typeList"
                     :key="item.id"
@@ -57,30 +57,30 @@
                 <el-row style="margin-bottom: 10px;">
                   <el-col :span="12">
                     <el-form-item label="手机号" required>
-                      <el-input type="text" v-model.number="form.phone"></el-input>
+                      <el-input type="text" v-model.number="form.need_phone"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
                     <el-form-item label="QQ号">
-                      <el-input type="text" v-model.number="form.qq"></el-input>
+                      <el-input type="text" v-model.number="form.need_qq"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
                 <el-row>
                   <el-col :span="12">
                     <el-form-item label="微信号">
-                      <el-input type="text" v-model.number="form.wechat"></el-input>
+                      <el-input type="text" v-model.number="form.need_wx"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
                     <el-form-item label="其他联系方式">
-                      <el-input type="text" v-model.number="form.other"></el-input>
+                      <el-input type="text" v-model.number="form.need_other"></el-input>
                     </el-form-item>
                   </el-col>
                 </el-row>
               </el-form-item>
               <el-form-item label="需求描述" required>
-                <el-input type="textarea" :rows="4" v-model="form.desc"></el-input>
+                <el-input type="textarea" :rows="4" v-model="form.need_desc"></el-input>
               </el-form-item>
               <el-form-item label="添加附件" required>
                 <el-upload
@@ -100,7 +100,7 @@
                 </el-upload>
               </el-form-item>
               <el-form-item>
-                <el-button type="danger">确认无误，提交需求</el-button>
+                <el-button type="danger" @click="need_submit">确认无误，提交需求</el-button>
               </el-form-item>
             </el-form>
           </div>
@@ -115,6 +115,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
+import { needOrderAdd } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -124,23 +125,23 @@ export default {
   data() {
     return {
       form: {
-        name: "",
-        type: "",
-        min: "",
-        max: "",
-        terminal: [1, 2],
-        phone: "",
-        qq: "",
-        wechat: "",
-        other: "",
-        desc: ""
+        need_name: "",
+        need_category: "",
+        need_budget_down: "",
+        need_budget_up: "",
+        need_terminal: [],
+        need_phone: "",
+        need_qq: "",
+        need_wx: "",
+        need_other: "",
+        need_desc: ""
       },
       rules: {
-        min: [
+        need_budget_down: [
           { required: true, message: "请输入预算", trigger: "change" },
           { type: "number", message: "只能输入数字", trigger: "blur" }
         ],
-        max: [
+        need_budget_up: [
           { required: true, message: "请输入预算", trigger: "change" },
           { type: "number", message: "只能输入数字", trigger: "blur" }
         ]
@@ -185,7 +186,13 @@ export default {
       ]
     };
   },
+  mounted() {
+      this.init();
+    },
   methods: {
+    init(){
+      let vm=this;
+    },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -202,8 +209,24 @@ export default {
         this.$message.error("上传文件大小不能超过50M！");
       }
       return size;
-    }
-  }
+    },
+     need_submit(){
+       let vm=this;
+      needOrderAdd(vm.form).then(res => {
+        let {code, data, msg} = res;
+        if(code === 1){ 
+          this.$router.push({
+          name: "home",
+        });
+
+          // this.packageList = data;
+        }
+      })
+    },
+    
+
+    
+  },
 };
 </script>
 

@@ -3,9 +3,12 @@
 namespace app\data\model;
 
 use think\Model;
+use traits\model\SoftDelete;
 
 class Special extends Model
 {
+    use SoftDelete;
+    protected $deleteTime = 'del_time';
     protected $table = "special";
     protected $resultSetType = 'collection';
 

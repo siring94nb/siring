@@ -1,20 +1,35 @@
 <template>
   <div class="index">
     <myheader />
+    <div @click="shelterHidden" v-if="imgShow" class="shelter-img">
+      <div class="images-box" @click.stop>
+        <img src="../../assets/images/u2.png" style="width:100%;height:100%;" alt />
+        <div class="images-show">
+          <img :src="imagesUrl" style="width:100%;" alt />
+        </div>
+      </div>
+    </div>
     <div class="index">
       <div class="steps">
-        <el-steps :active="1" align-center>
-          <el-step title="选择行业模板"></el-step>
-          <el-step title="选择套餐"></el-step>
-        </el-steps>
+        <div class="lines"></div>
+        <div class="dashed"></div>
+        <div class="label">
+          <div class="label-r label-l">
+            <img src="../../assets/images/u3086.png" alt />
+            <div class="label-text">选择行业模板</div>
+            <span class="label-number">1</span>
+          </div>
+          <div class="label-r">
+            <img src="../../assets/images/u3087.png" alt />
+            <div class="no-sel">选择套餐</div>
+            <span class="label-number">2</span>
+          </div>
+        </div>
       </div>
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
-        <el-button
-          class="wh-sty"
-          v-popover:popover2
-        >？</el-button>
+        <el-button class="wh-sty" v-popover:popover2>？</el-button>
         <div style="flex:1"></div>
         <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
       </div>
@@ -57,8 +72,16 @@
                     </div>
           </div>-->
         </div>
-        <div class="abstract-img">
-          <img :src="showTemp.model_image" alt />
+        <div class="abstract-img" @mouseover="shelter" @mouseleave="shelterLeave">
+          <img :src="showTemp.model_image_small" alt />
+          <div class="shelter" v-if="isShelter">
+            <el-button
+              @click="shelterShow(showTemp.model_image)"
+              icon="el-icon-search"
+              style="margin:200px 0;"
+              plain
+            >预览</el-button>
+          </div>
         </div>
         <div class="abstract-r">
           <div class="input-box">
@@ -101,7 +124,7 @@
             :key="item.id"
             @change="radioChange(index, item.id)"
           >
-            <img :src="item.model_image" alt />
+            <img :src="item.model_image_small" alt />
             <div>
               <el-radio :label="item.id">{{item.model_name}}</el-radio>
             </div>
@@ -138,7 +161,10 @@ export default {
       },
       UploadAction: "",
       fileList: [],
-      uploadList: []
+      uploadList: [],
+      isShelter: false,
+      imgShow: false,
+      imagesUrl: ""
     };
   },
   mounted() {
@@ -166,6 +192,14 @@ export default {
     },
     radioChange(index, id) {
       this.showTemp = this.tempList[index];
+      let top = document.documentElement.scrollTop || document.body.scrollTop;
+      // 实现滚动效果
+      const timeTop = setInterval(() => {
+        document.body.scrollTop = document.documentElement.scrollTop = top -= 50;
+        if (top <= 0) {
+          clearInterval(timeTop);
+        }
+      }, 10);
     },
     handleRemove(file, fileList) {
       this.uploadList.splice(this.uploadList.indexOf(file), 1);
@@ -210,6 +244,20 @@ export default {
           params: this.valData
         });
       }
+    },
+    shelter() {
+      this.isShelter = true;
+    },
+    shelterLeave() {
+      this.isShelter = false;
+    },
+    shelterShow(url) {
+      this.imgShow = true;
+      this.imagesUrl = url;
+    },
+    shelterHidden() {
+      this.imgShow = false;
+      this.imagesUrl = "";
     }
   }
 };
@@ -239,14 +287,77 @@ export default {
   color: #ff9191;
   margin-top: 5px;
 }
-
+.shelter-img {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  .images-box {
+    width: 450px;
+    height: 840px;
+    margin: 100px auto;
+    position: relative;
+    .images-show {
+      width: 370px;
+      height: 600px;
+      overflow-y: scroll;
+      position: absolute;
+      top: 14%;
+      left: 7.5%;
+    }
+  }
+}
 .index {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 150px;
   width: 1200px;
   .steps {
-    width: 500px;
-    margin: auto;
+    display: flex;
+    position: relative;
+    margin: 70px auto;
+    width: 250px;
+    .lines {
+      width: 170px;
+      border-bottom: 2px solid rgb(26, 188, 156);
+    }
+    .dashed {
+      width: 150px;
+      border-bottom: 2px dashed rgb(161, 161, 161);
+    }
+    .label {
+      display: flex;
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      .label-r {
+        position: relative;
+        text-align: center;
+        div {
+          width: 100px;
+          font-weight: 700;
+          font-size: 14px;
+        }
+        .label-text {
+          color: rgb(26, 188, 156);
+        }
+        .no-sel {
+          color: rgb(161, 161, 161);
+        }
+        .label-number {
+          color: #fff;
+          font-size: 30px;
+          position: absolute;
+          top: 15px;
+          left: 41px;
+        }
+      }
+      .label-l {
+        margin-right: 150px;
+      }
+    }
   }
   .title {
     display: flex;
@@ -326,6 +437,16 @@ export default {
     .abstract-img {
       text-align: center;
       margin: 20px 0;
+      position: relative;
+      .shelter {
+        width: 230px;
+        height: 420px;
+        background-color: rgba(0, 0, 0, 0.4);
+        margin: auto;
+        position: absolute;
+        top: 0;
+        left: 21%;
+      }
       img {
         width: 230px;
         height: 420px;

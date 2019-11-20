@@ -1,8 +1,9 @@
 <?php
 
 namespace app\api\controller;
-
+use app\data\model\UserEnterprise;
 use app\data\model\UserGrade;
+use app\data\model\UserFund;
 use think\Request;
 use app\data\model\User as UserAll;
 use think\Validate;
@@ -61,6 +62,8 @@ class User extends Base
      */
     public function register(){
         $request = Request::instance();
+        $ip = $request->ip();
+       // $ip = '61.145.156.60';
         $param = $request->param();
 
         $rules = [
@@ -102,6 +105,12 @@ class User extends Base
         //调取生成个人邀请码
         $param['my_code'] = create_invite_code();
 
+        //根据省份获取ip
+        $all_ip = ip_address($ip);
+        $ip_data = json_decode($all_ip,true);
+        $param['ip'] = $ip_data['data']['ip'];
+        $param['region'] = $ip_data['data']['region'];
+
         // 储存
         $result = Db::transaction(function()use ( $param ){
             //用户表
@@ -111,8 +120,11 @@ class User extends Base
             //等级表
             $user_grade = new UserGrade();
             $user_data = $user_grade->add($uid);
+            //资金表
+            $user_fund = new UserFund();
+            $user_fund_data = $user_fund->add($uid);
 
-            return $data && $user_data ? true : false;
+            return $data && $user_data && $user_fund_data ? true : false;
 
         });
 
@@ -288,5 +300,184 @@ class User extends Base
 
     }
 
+    /**
+     * 用户更新
+     */
+    public function user_updating()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['name','require','姓名必须'],
+            ['id_card', 'require|length:18', '身份证不能为空|身份证有误'],
+            ['id_card_just','require','身份证正面必须'],
+            ['id_card_back','require','身份证反面必须'],
+            ['province','require','省份必须'],
+            ['city','require','城市必须'],
+            ['area','require','县市区必须'],
+            ['address','require|max:50','详细地址必须|名称最多不能超过50个字符'],
+            ['enterprise_id','require','企业必须'],
+            ['sex','require','性别必须'],
+            ['img','require','头像必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+        //判断邀请码
+        if(empty($param['invitation'])){
+            $param['invitation'] = '';
+        }else{
+            $user = new UserAll();
+            $user->invitation($param['invitation']);
+        }
+
+        $result = Db::transaction(function()use ( $param ){
+            //用户表
+            $user_data = [
+                'realname'=>$param['name'],
+                'id_card'=>$param['id_card'],
+                'id_card_just'=>$param['id_card_just'],
+                'id_card_back'=>$param['id_card_back'],
+                'add_province'=>$param['province'],
+                'add_city'=>$param['city'],
+                'add_area'=>$param['area'],
+                'address'=>$param['address'],
+                'enterprise_id'=>$param['enterprise_id'],
+                'sex'=>$param['sex'],
+                'img'=>$param['img'],
+                'other_code'=>$param['invitation'],
+                'updated_at'=>time()
+            ];
+            $user = new UserAll();
+            $data = $user::where('id', $param["uid"])->update($user_data);
+
+            return $data  ? true : false;
+
+        });
+
+
+        return $result !== false ? returnJson(1,'更新成功') : returnJson(0,'更新失败');
+    }
+
+    /**
+     * 企业新增
+     */
+    public function enterprise_add()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['title','require','企业名称必须'],
+            ['duty', 'require|length:15,20|unique:UserEnterprise', '税号不能为空|税号有误|税号已存在'],
+            ['business_license','require','营业执照必须'],
+            ['id_card_just','require','身份证正面必须'],
+            ['id_card_back','require','身份证反面必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+        //保存
+        $user_all = new UserEnterprise();
+
+        $result = $user_all -> add($param);
+
+
+
+        return $result  ? returnJson(1,'新增成功') : returnJson(0,'新增失败');
+    }
+
+
+    /**
+     * 企业列表
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function enterprise_list()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+
+        $data = (new UserEnterprise()) ->where('user_id',$param['uid']) ->select()->toArray();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
+    }
+
+    /**
+     * 企业修改
+     */
+    public function enterprise_edit()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id','require','修改主键id必须'],
+            ['title','require','企业名称必须'],
+            ['duty', 'require|length:15,20', '税号不能为空|税号有误'],
+            ['business_license','require','营业执照必须'],
+            ['id_card_just','require','身份证正面必须'],
+            ['id_card_back','require','身份证反面必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+        //保存
+        $user_all = new UserEnterprise();
+
+        $result = $user_all -> edit($param);
+
+
+
+        return $result  !==false ? returnJson(1,'修改成功') : returnJson(0,'修改失败');
+    }
+
+    /**
+     * 删除企业身份
+     */
+    public function enterprise_del()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id','require','主键id必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+
+        $result = UserEnterprise::destroy($param['id']);
+
+
+        return $result  !==false ? returnJson(1,'删除成功') : returnJson(0,'删除失败');
+    }
 
 }

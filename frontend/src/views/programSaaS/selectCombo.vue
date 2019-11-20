@@ -1,11 +1,20 @@
 <template>
   <div class="index">
     <myheader />
-    <div class="steps">
-      <el-steps :active="2" align-center>
-        <el-step title="选择行业模板"></el-step>
-        <el-step title="选择套餐"></el-step>
-      </el-steps>
+    <div class="steps" >
+      <div class="lines"></div>
+      <div class="label">
+        <div class="label-r label-l" >
+          <img src="../../assets/images/u3086.png" alt="">
+          <div>选择行业模板</div>
+          <span class="label-number">1</span>
+        </div>
+        <div class="label-r">
+          <img src="../../assets/images/u3086.png" alt="">
+          <div>选择套餐</div>
+          <span class="label-number">2</span>
+        </div>
+      </div>
     </div>
     <div class="line"></div>
     <div class="notice">
@@ -186,11 +195,22 @@ export default {
 <style lang="scss" scoped>
 .index {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 150px;
   width: 1200px;
   .steps {
-    width: 500px;
-    margin: auto;
+    display:flex;position: relative;margin:70px auto;width:250px;
+    .lines{width:250px;border-bottom:2px solid rgb(26,188,156);}
+    .label{
+       display:flex;position:absolute;top:-30px;left:-30px;
+       .label-r{position: relative;
+       text-align: center;
+       div{width: 100px;font-weight: 700;font-size: 14px;color: rgb(26,188,156);}
+       .label-number{color:#fff;font-size:30px;position:absolute;top:15px;left:41px;}
+       }
+       .label-l{margin-right:150px;
+        
+       }
+    }
   }
   .line {
     width: 1100px;

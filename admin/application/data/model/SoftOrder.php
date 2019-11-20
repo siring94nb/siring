@@ -53,7 +53,7 @@ class SoftOrder extends Model
     }
 
     /**
-     * 生成单号
+     * 生成单号--软件定制订单
      * @return string
      */
     function get_sn() {

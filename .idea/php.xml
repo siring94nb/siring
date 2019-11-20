@@ -24,6 +24,15 @@
       <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/admin/vendor/symfony/polyfill-php70" />
       <path value="$PROJECT_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/src" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/docs" />
+      <path value="$PROJECT_DIR$/admin/vendor/easyalipay/tests" />
+      <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
+  </component>
+  <component name="PhpUnit">
+    <phpunit_settings>
+      <PhpUnitSettings load_method="CUSTOM_LOADER" custom_loader_path="$PROJECT_DIR$/admin/vendor/autoload.php" />
+    </phpunit_settings>
   </component>
 </project>

@@ -6,6 +6,7 @@
  * Time: 10:33
  */
 namespace app\api\controller;
+use app\data\model\Alipay;
 use app\data\model\Category;
 use app\data\model\Good;
 use app\data\model\SoftOrder;
@@ -81,12 +82,14 @@ class Software extends Base
         $good = new Good();
         $data = $good->good_detail($goods_id);
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
-
     }
 
     /**
      * 商品评论
      * @param $goods_id
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function soft_reviews($goods_id)
     {
@@ -97,8 +100,7 @@ class Software extends Base
 
     /**
      * 推荐商品
-     * @author fyk
-     * @return \think\Response
+     * @throws \think\exception\DbException
      */
     public function soft_push()
     {
@@ -106,9 +108,10 @@ class Software extends Base
             ->alias('a')->join('category b','a.category_id=b.id','left')
             ->where(['a.del_time'=>null])
             ->field('a.id,a.goods_name,a.goods_images,a.period,a.category_id,b.category_name')
-            ->limit(6)->select();
+            ->limit(7)->select();
 
         foreach ($data as $k=>$v){
+
             $res = Special::spec_pro($v['id']);//规格
             $res1 = $res[0]['attr_title'];
             $data[$k]['sub_title'] = $res1;
@@ -268,8 +271,12 @@ class Software extends Base
                 return $res;exit();
                 break;   // 跳出循环
             case 2:
+                $alipay = new Alipay();
+                $res = $alipay->index();
 
-                returnJson(0, '暂未支付宝开通');
+                return $res;
+//                pp($res);die;
+//                returnJson(0, '暂未支付宝开通');
 
                 break; // 跳出循环
         }

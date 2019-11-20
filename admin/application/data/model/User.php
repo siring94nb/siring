@@ -43,6 +43,8 @@ class User extends Model
             'invitation' => $param['my_code'],
             'other_code' => $param['invitation'],
             'salt' => $param['salt'],
+            'ip' => $param['ip'],
+            'province' => $param['region'],
             'created_at' => time(),
         ]);
         return $user  !== false ? $user : false;
@@ -86,5 +88,27 @@ class User extends Model
     public function user_detail($uid)
     {
         return self::get(['id'=>$uid]) ? self::get(['id'=>$uid])->toArray() : returnJson(0,'数据有误');
+    }
+
+    //更新
+    public function edit($param)
+    {
+        $user = new User;
+        $user->save([
+            'realname'=>$param['name'],
+            'id_card'=>$param['id_card'],
+            'id_card_just'=>$param['id_card_just'],
+            'id_card_back'=>$param['id_card_back'],
+            'add_province'=>$param['province'],
+            'add_city'=>$param['city'],
+            'add_area'=>$param['area'],
+            'address'=>$param['address'],
+            'enterprise_id'=>$param['enterprise_id'],
+            'sex'=>$param['sex'],
+            'img'=>$param['img'],
+            'other_code'=>$param['invitation'],
+            'updated_at'=>time()
+        ],['id' =>$param["uid"]]);
+        return $user  !== false ? $user : false;
     }
 }

@@ -6,6 +6,9 @@
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/PHPExcel/Classes" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/composer" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/docs" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/src" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/easyalipay/tests" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/guzzle" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/promises" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/guzzlehttp/psr7" />
@@ -25,6 +28,7 @@
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/symfony/polyfill-php70" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/symfony/psr-http-message-bridge" />
       <excludeFolder url="file://$MODULE_DIR$/admin/vendor/tp5er/tp5-databackup" />
+      <excludeFolder url="file://$MODULE_DIR$/admin/vendor/yansongda/pay" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

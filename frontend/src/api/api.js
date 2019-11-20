@@ -245,3 +245,10 @@ export const addBank = data => {
 export const subBankPay = data => {
   return axios.post(`${base_url}api/UserCard/user_card_list`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * lilu
+ * 定制需求下单
+ */
+export const needOrderAdd =data =>{
+  return axios.post(`${base_url}api/NeedOrder/need_order_add`, qs.stringify(data)).then(res => res.data);
+}

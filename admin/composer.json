@@ -25,7 +25,8 @@
         "php-curl-class/php-curl-class": "^8.0",
         "overtrue/wechat": "~3.1",
         "qiniu/php-sdk": "^7.2",
-        "tp5er/tp5-databackup": "dev-master"
+        "tp5er/tp5-databackup": "dev-master",
+        "yansongda/pay": "^1.0"
     },
     "extra": {
         "think-path": "thinkphp"
