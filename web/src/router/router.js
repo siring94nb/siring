@@ -388,7 +388,7 @@ export const appRouter = [
                         name: 'need_order',
                         access: 'admin/JoinOrder/index',
                         title: '定制需求订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () => import('@/views/order/demand_order.vue')
                     },
                 ]
             },
