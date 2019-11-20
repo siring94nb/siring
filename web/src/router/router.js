@@ -405,7 +405,7 @@ export const appRouter = [
                         name: 'model_order',
                         access: 'admin/ModelOrder/index',
                         title: '套餐订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () => import('@/views/order/model_order.vue')
                     },
                     {
                         path: 'adder_order',
