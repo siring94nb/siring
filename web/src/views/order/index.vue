@@ -27,7 +27,7 @@
                 <Card><!-- tableData视图加载页面 -->	     
                     <div>	         
                         <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>	          
-                    </div>	          </p> -->
+                    </div>	         
                     <div class="margin-top-15" style="text-align: center">	       
                         <Page :total="tableShow.listCount" :current="tableShow.currentPage"	          
                               :page-size="tableShow.pageSize" @on-change="changePage"	         
