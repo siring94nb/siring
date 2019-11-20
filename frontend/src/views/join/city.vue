@@ -345,14 +345,14 @@ export default {
 </style>
 <style scoped lang='scss'>
 .join {
-  margin-top: 150px;
+  margin-top: 100px;
   .join-cont {
     width: 1200px;
     margin: 0 auto 80px;
     .title {
       height: 100px;
       line-height: 100px;
-      // border-bottom: 10px solid #E2E2E2;
+      border-bottom: 20px solid rgb(242,242,242);
       text-align: center;
       font-size: 34px;
       margin-bottom: 30px;

@@ -240,6 +240,14 @@ export default {
   border-bottom-left-radius: 0;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
+  height: 30px;
+  line-height: 6px;
+}
+.search-box >>> .el-input__inner{
+  height: 30px;
+}
+.search-box >>> .el-icon-search{
+  line-height: 30px;
 }
 .pagi-box >>> .el-pager .number {
   background-color: rgb(238, 238, 238);
@@ -322,7 +330,7 @@ export default {
     .sort-section {
       display: flex;
       align-items: center;
-      margin-left: 132px;
+      margin-left: 105px;
       .sort-type {
         display: flex;
         .sort-type-item {

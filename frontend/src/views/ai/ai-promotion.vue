@@ -23,7 +23,7 @@
               <el-form-item label="推广材料" required>
                 <el-radio-group v-model="form.material" @change="changeMaterial">
                   <el-radio label="1">委托代写</el-radio>
-                  <el-radio label="2">自由稿件</el-radio>
+                  <el-radio label="2">自有稿件</el-radio>
                 </el-radio-group>
                 <div class="tip">您可以找平台代写稿，也可使用自己的稿件</div>
               </el-form-item>
@@ -46,7 +46,7 @@
                 <el-form-item label="选择等级" required>
                   <el-table :data="form.tableData" border style="width: 100%">
                     <el-table-column label="选择" width="120">
-                      <template scope="scope">
+                      <template slot-scope="scope">
                         <el-radio
                           class="radio"
                           v-model="isSelected"
@@ -54,7 +54,11 @@
                         >{{scope.row.classify}}</el-radio>
                       </template>
                     </el-table-column>
-                    <el-table-column prop="price" label="价格" width="130"></el-table-column>
+                    <el-table-column label="价格" width="130">
+                      <template slot-scope="scope">
+                        {{scope.row.price}}元/{{scope.row.count}}字
+                      </template>
+                    </el-table-column>
                     <el-table-column prop="remarks" label="备注"></el-table-column>
                   </el-table>
                 </el-form-item>
@@ -106,6 +110,57 @@
       </div>
     </div>
     <myfooter />
+    <!-- payment -->
+    <div class="payment">
+      <div class="payment-top">
+        <i class="brackets">(</i>
+        <div class="package-btn" @click="dialogVisible = true">
+          <p>体验套餐费:</p>
+          <i class="el-icon-caret-bottom"></i>
+        </div>
+        <div>
+          <p class="bgw">￥{{packagePrice}}</p>
+          <p class="require-star tip">套餐费</p>
+        </div>
+        <div class="symbol">+</div>
+        <div>撰稿费用：</div>
+        <div>
+          <p class="bgw">￥{{writingCost}}</p>
+          <p class="require-star tip">稿费</p>
+        </div>
+        <i class="brackets">)</i>
+        <div class="symbol">×</div>
+        <div>
+          <p class="bgw">{{percent}}%</p>
+          <p class="require-star tip">
+            会员折扣
+            <span class="ques">？</span>
+          </p>
+          <p></p>
+        </div>
+        <div class="symbol">=</div>
+        <div class="bgw">￥{{total}}</div>
+        <el-button type="danger" @click="pay">立即支付</el-button>
+      </div>
+      <div class="payment-bot">
+        <el-checkbox v-model="checked">本人已确认，支付后执行下一流程</el-checkbox>
+      </div>
+    </div>
+    <!-- pop -->
+    <el-dialog title :visible.sync="dialogVisible" width="600px">
+      <el-tabs>
+        <el-tab-pane v-for="item in packageList" :label="item.name" :key="item.id">
+          <div class="packages" v-html="item.con"></div>
+          <div class="set-meal">
+            <div class="set-meal-price">
+              <span class="through-price">￥{{item.money}}</span>
+              <span class="sale-price">￥{{item.price}}</span>
+            </div>
+            <div class="choose" @click="choosePackage(item.price)">&gt;&gt;选择套餐</div>
+          </div>
+        </el-tab-pane>
+      </el-tabs>
+    </el-dialog>
   </div>
 </template>
 
@@ -114,6 +169,7 @@ import TinymceEditor from "@/components/tinymce";
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
+import { GetSetMeal } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -123,7 +179,7 @@ export default {
   },
   data() {
     return {
-      isSelected: "普通",
+      isSelected: "1",
       mater: true, //推广材料切换
       tinymceHtml: "",
       disabled: false,
@@ -137,21 +193,24 @@ export default {
         tableData: [
           {
             classify: "普通",
-            price: "300元/500字",
+            price: 300,
+            count: 500,
             id: 1,
             remarks:
               "出稿时间1-2工作日，稿件不满意最多只能修改一次，下单前请看好备注！"
           },
           {
             classify: "高手",
-            price: "600元/500字",
+            price: 600,
+            count: 500,
             id: 2,
             remarks:
               "出稿时间1-4工作日，稿件不满意最多只能修改一次，下单前请看好备注！"
           },
           {
             classify: "资深写手",
-            price: "1000元/500字",
+            price: 1000,
+            count: 500,
             id: 3,
             remarks:
               "出稿时间1-6工作日，稿件不满意最多只能修改一次，下单前请看好备注！"
@@ -206,8 +265,22 @@ export default {
           name: "小程序",
           id: 7
         }
-      ]
+      ],
+      checked: false,
+      packagePrice: 0,
+      writingCost: 0,
+      percent: 100,
+      dialogVisible: false,
+      packageList: []
     };
+  },
+  mounted() {
+    this.getSetMeal();
+  },
+  computed: {
+    total() {
+      return (this.packagePrice + this.writingCost) * this.percent;
+    }
   },
   methods: {
     changeMaterial(value) {
@@ -219,7 +292,7 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
+        `当前限制选择 1 个文件，本次选择了 ${
           files.length
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
@@ -230,6 +303,22 @@ export default {
         this.$message.error("上传文件大小不能超过50M！");
       }
       return size;
+    },
+    pay() {
+      console.log(this.form)
+    },
+    getSetMeal() {
+      GetSetMeal().then(res => {
+        console.log(res);
+        let { code, data, msg } = res.data;
+        if (code === 1) {
+          this.packageList = data;
+        }
+      });
+    },
+    choosePackage(price) {
+      this.dialogVisible = false;
+      this.packagePrice = price;
     }
   }
 };
@@ -258,7 +347,7 @@ export default {
     }
     .quick-cont {
       margin-bottom: 20px;
-      height: 938px;
+      height: 973px;
       .types-right {
         float: left;
         width: 975px;
@@ -301,6 +390,103 @@ export default {
           }
         }
       }
+    }
+  }
+  .payment {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(204, 235, 248);
+    height: 80px;
+    z-index: 99;
+    .payment-top {
+      display: flex;
+      align-items: baseline;
+      font-size: 18px;
+      & > div {
+        text-align: center;
+      }
+      .package-btn {
+        cursor: pointer;
+      }
+      .brackets {
+        font-size: 32px;
+        color: #333333;
+      }
+      .el-icon-caret-bottom {
+        color: rgb(17, 196, 255);
+        font-size: 28px;
+        margin-top: -5px;
+      }
+      .bgw {
+        color: #ff0000;
+        padding: 4px 10px;
+        border: 1px solid rgb(201, 201, 201);
+        background-color: #ffffff;
+        margin: 0 5px;
+      }
+      .symbol {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0 10px;
+      }
+      .tip {
+        color: #949494;
+        font-size: 13px;
+        margin-top: 2px;
+      }
+      .require-star::before {
+        content: "*";
+        color: #ff0000;
+      }
+      .ques {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        line-height: 20px;
+        text-align: center;
+        border-radius: 50%;
+        background-color: #ff0000;
+        color: #ffffff;
+        cursor: pointer;
+      }
+    }
+    .payment-bot {
+      width: 700px;
+      text-align: right;
+    }
+  }
+  .packages {
+    color: #333333;
+    line-height: 33px;
+  }
+  .set-meal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    .through-price {
+      color: #ccc;
+      font-size: 18px;
+      text-decoration: line-through;
+    }
+    .sale-price {
+      color: #ff0e35;
+      font-size: 24px;
+      font-weight: 700;
+    }
+    .choose {
+      font-size: 18px;
+      color: #f00;
+      border: 1px solid #f00;
+      border-radius: 4px;
+      padding: 5px 20px;
+      cursor: pointer;
     }
   }
 }

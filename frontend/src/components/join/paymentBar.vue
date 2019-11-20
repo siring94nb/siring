@@ -132,8 +132,6 @@ export default {
     float: right;
     display: flex;
     align-items: baseline;
-    // margin-top: 10px;
-    // margin-right: 40px;
     .bgw {
       background-color: #ffffff;
       padding: 10px 30px;
