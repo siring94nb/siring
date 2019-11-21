@@ -133,12 +133,14 @@ class User extends Base
 
     }
 
+
     /**
      * 登录
-     * @return array
      * @author fyk
+     * @return \think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
      */
-
     public function login()
     {
         $request = Request::instance();
@@ -243,8 +245,11 @@ class User extends Base
 
     /**
      * 修改手机号
-     * @return array
      * @author fyk
+     * @return \think\response\Json
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
     public function edit_phone(){
         $request = Request::instance();
@@ -478,6 +483,105 @@ class User extends Base
 
 
         return $result  !==false ? returnJson(1,'删除成功') : returnJson(0,'删除失败');
+    }
+
+
+    /**
+     * 余额密码
+     * @return array
+     * @author fyk
+     */
+    public function balance_password(){
+        $request = Request::instance();
+        $param = $request->param();
+
+        $rules = [
+            'password'=>'require|alphaNum|confirm|length:6,16',
+            'code'=>'require',
+        ];
+        $message = [
+            'password.require'=>'密码不能为空',
+            'password.confirm' => '两次密码输入不一致',
+            'password.length' => '密码长度必须在6~16位之间',
+            'code.require'=>'验证码不能为空',
+        ];
+        //验证
+        $validate = new Validate($rules,$message);
+        if(!$validate->check($param)){
+            return json(['code' => 0,'msg' => $validate->getError()]);
+        }
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+        if (Session::get('mobileCode') != $param['code']) {
+            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
+        }
+
+        $password = password_hash($param['password'],PASSWORD_DEFAULT);
+
+        // 储存
+        $user = new UserFund();
+        $result = $user->editPassword($param["uid"],$password);
+
+        return $result  ? returnJson(1,'设置密码成功') : returnJson(0,'设置密码失败');
+
+    }
+
+    /**
+     * 分享邀请码
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function share_code(){
+        $request = Request::instance();
+        $param = $request->param();
+
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+
+        // 储存
+        $data = (new UserAll()) ->where('id',$param['uid'])->field('invitation')->find();
+
+        return $data  ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+
+    }
+
+    /**
+     * 分享邀请记录
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function lnvitation_record()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        //判断个人id
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["uid"] = Session::get("uid");
+        }else{
+            $param["uid"] = $param["user_id"];
+        }
+
+        // 储存
+        $user = (new UserAll()) ->where('id',$param['uid'])->field('invitation')->find()->toArray();
+
+        $data = (new UserAll()) ->where('other_code',$user['invitation'])->field('id,invitation,phone,img')->select();
+
+        return $data  ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
     }
 
 }
