@@ -24,6 +24,9 @@ Route::group('api', function () {
         Route::any('login','api/User/login');//登录
         Route::any('forget','api/User/forget');//忘记密码
         Route::any('upd_phone','api/User/edit_phone');//修改手机号
+        Route::any('balance_password','api/User/balance_password');//用户修改余额密码
+        Route::any('share_code','api/User/share_code');//用户分享邀请码
+        Route::any('lnvitation_record','api/User/lnvitation_record');//用户分享邀请记录
         Route::any('logout','api/User/logout');//用户退出
         Route::any('user_updating','api/User/user_updating');//用户资料更新
         Route::any('enterprise_add','api/User/enterprise_add');//添加企业身份

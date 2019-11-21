@@ -149,7 +149,9 @@ class UserManage extends Base{
 
             $res2 = (new UserGrade()) -> insert(['user_id'=>$res1,'grade' =>$param['grade'],]);
 
-            return $res1 && $res2 ? true : false;
+            $res3 = (new UserFund()) -> insert(['user_id'=>$res1]);
+
+            return $res1 && $res2  && $res3 ? true : false;
         });
 
         if( $res ){
