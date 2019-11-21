@@ -87,6 +87,12 @@ export const otherRouter = {
             title: '开发商品添加',
             component: () => import('@/views/goods/goods_add.vue')
         },
+        {
+            path: 'NeedOrder/need_index/:id&:status',
+            name: 'demand_order_detail',
+            title: '定制需求订单详情',
+            component: () => import('@/views/order/demand_order_detail.vue')
+        },
         // {
         //     path: 'OrderGoods/detail/:detail_id',
         //     name: 'order_detail',
