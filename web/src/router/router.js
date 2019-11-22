@@ -306,37 +306,37 @@ export const appRouter = [
                 component: () => import('@/views/goods/extension.vue'),
             },
             {
-                path: 'app',
+                path: 'investment',
                 icon: 'logo-usd',
                 title: '投融介',
-                name: 'app',
-                component: () => import('@/views/goods/made.vue'),
-                // children: [
-                // {
-                //     path: 'templete',
-                //     icon: 'ios-pint',
-                //     name: 'templete',
-                //     access: 'admin/Goods/templete',
-                //     title: '软件/定制',
-                //     component: () => import('@/views/goods/goods.vue'),
-                // },
-                // {
-                //     path: 'made',
-                //     icon: 'ios-pint',
-                //     name: 'made',
-                //     access: 'admin/Goods/made',
-                //     title: '定制案例',
-                //     component: () => import('@/views/goods/made.vue'),
-                // },
-                // {
-                //     path: 'evaluate',
-                //     icon: 'ios-pint',
-                //     name: 'evaluate',
-                //     access: 'admin/Goods/evaluate',
-                //     title: '快捷估价',
-                //     component: () => import('@/views/goods/evaluate.vue'),
-                // },
-                // ]
+                name: 'investment',
+                component: () => import('@/views/goods/goodsMain.vue'),
+                children: [
+                {
+                    path: 'schedule',
+                    icon: 'ios-pint',
+                    name: 'schedule',
+                    access: 'admin/Schedule/index',
+                    title: '日程安排',
+                    component: () => import('@/views/goods/schedule.vue'),
+                },
+                {
+                    path: 'setup',
+                    icon: 'ios-pint',
+                    name: 'setup',
+                    access: 'admin/Setup/index',
+                    title: '投融设置',
+                    component: () => import('@/views/goods/setup.vue'),
+                },
+                {
+                    path: 'testing',
+                    icon: 'ios-pint',
+                    name: 'testing',
+                    access: 'admin/Testing/index',
+                    title: '检测报告',
+                    component: () => import('@/views/goods/testing.vue'),
+                },
+                ]
             },
 
         ]
