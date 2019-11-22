@@ -43,6 +43,9 @@
                 <FormItem label="活动主体" prop="name" >
                     <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入活动主体"/>
                 </FormItem>
+                <!--<FormItem label="省市区：" prop="chinaArea">-->
+                    <!--<Cascader v-model="formItem.chinaArea" :data="chinaArea" @on-change="getArea" style="width: 250px"></Cascader>-->
+                <!--</FormItem> https://www.cnblogs.com/wangdashi/p/9896255.html -->
 
                 <FormItem label="详细地址" prop="address" >
                     <Input  style="width: 500px" v-model="formItem.address" placeholder="请输入详细地址"/>

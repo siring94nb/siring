@@ -20,9 +20,9 @@
         <Row>
             <Col span="24">
                 <Card>
-                    <p slot="title" style="height: 32px">
-                        <Button type="primary" @click="alertAdd" icon="md-add">新增</Button>
-                    </p>
+                    <!--<p slot="title" style="height: 32px">-->
+                        <!--<Button type="primary" @click="alertAdd" icon="md-add">新增</Button>-->
+                    <!--</p>-->
                     <div>
                         <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
                     </div>
@@ -40,29 +40,14 @@
                 <span>{{formItem.id ? '编辑' : '新增'}}</span>
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-                <FormItem label="活动主体" prop="name" >
-                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入活动主体"/>
+                <FormItem label="报告主题" prop="name" >
+                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入报告主题"/>
                 </FormItem>
-                <FormItem label="详细地址" prop="address" >
-                    <Input  style="width: 500px" v-model="formItem.address" placeholder="请输入详细地址"/>
-                </FormItem>
-                <FormItem label="活动上限人数" prop="sort" >
-                    <InputNumber  :min="1" v-model="formItem.sort"></InputNumber>
-                </FormItem>
-                <FormItem label="会务费用" prop="price">
-                    <Input style="width: 150px"  v-model="formItem.price" placeholder="元"/>
-                </FormItem>
-                <FormItem label="活动排序" prop="sort" >
-                    <InputNumber  :min="1" v-model="formItem.sort"></InputNumber>
+                <FormItem label="最低报价" prop="address" >
+                    <Input  style="width: 500px" v-model="formItem.address" placeholder="请输入最低报价"/>
                 </FormItem>
                 <FormItem label="活动回顾" prop="con">
                     <div id="wangeditor" v-model="formItem.con" ></div>
-                </FormItem>
-                <FormItem label="状态"  prop="status">
-                    <RadioGroup v-model="formItem.status">
-                        <Radio :label="0" >暂不上架</Radio>
-                        <Radio :label="1" >立即上架</Radio>
-                    </RadioGroup>
                 </FormItem>
             </Form>
             <div slot="footer">
@@ -150,36 +135,25 @@
                         key: 'id'
                     },
                     {
-                        title: '套餐名称',
+                        title: '项目名称',
                         align: 'center',
                         key: 'name',
                     },
-                    // {
-                    //     title: '套餐描述',
-                    //     align: 'center',
-                    //     key: 'con',
-                    // },
                     {
-                        title: '价格',
+                        title: '行业领域',
                         align: 'center',
                         key: 'price',
                     },
                     {
+                        title: '期望打赏金',
+                        align: 'center',
+                        key: 'price',
+                    },
+
+                    {
                         title: '状态',
                         align: 'center',
-                        key: 'status',
-                        render: ( h , param ) => {
-                            if(param.row.status == 1){
-                                return h('div',['正常']);
-                            }else{
-                                return h('div',['失效']);
-                            }
-                        }
-                    },
-                    {
-                        title: '排序',
-                        align: 'center',
-                        key: 'sort',
+                        key: 'name',
                     },
                     {
                         title: '操作',
@@ -214,7 +188,7 @@
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '请输入名称', trigger: 'blur' }
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
                     // add_time: [
                     //     { required: true, message: '请选择开始时间', trigger: 'blur' }

@@ -333,7 +333,7 @@ export const appRouter = [
                     icon: 'ios-pint',
                     name: 'testing',
                     access: 'admin/Testing/index',
-                    title: '检测报告',
+                    title: '投融项目',
                     component: () => import('@/views/goods/testing.vue'),
                 },
                 ]

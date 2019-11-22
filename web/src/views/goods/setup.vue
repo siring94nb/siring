@@ -40,26 +40,17 @@
                 <span>{{formItem.id ? '编辑' : '新增'}}</span>
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-                <FormItem label="套餐名称" prop="name" >
-                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入套餐名称"/>
+                <FormItem label="发布费用" prop="name" >
+                    <Input  style="width: 300px" v-model="formItem.name" placeholder="元"/>
                 </FormItem>
-                <FormItem label="排序" prop="sort" >
-                    <InputNumber  :min="1" v-model="formItem.sort"></InputNumber>
-                </FormItem>
-                <FormItem label="套餐原价" prop="price">
+                <FormItem label="赏金设置" prop="price">
                     <Input style="width: 150px"  v-model="formItem.price" placeholder="元"/>
                 </FormItem>
-                <FormItem label="套餐划线价" prop="money">
-                    <Input  style="width: 150px" v-model="formItem.money" placeholder="元"/>
-                </FormItem>
-                <FormItem label="套餐详情" prop="con">
-                    <div id="wangeditor" v-model="formItem.con" ></div>
-                </FormItem>
-                <FormItem label="状态"  prop="status">
-                    <RadioGroup v-model="formItem.status">
-                        <Radio :label="0" >暂不上架</Radio>
-                        <Radio :label="1" >立即上架</Radio>
-                    </RadioGroup>
+                <FormItem label="行业分类">
+                    <Select v-model="formItem.category_id" style="width: 200px;">
+
+                    </Select>
+
                 </FormItem>
             </Form>
             <div slot="footer">
@@ -147,34 +138,17 @@
                         key: 'id'
                     },
                     {
-                        title: '套餐名称',
+                        title: '发布费用',
                         align: 'center',
                         key: 'name',
                     },
-                    // {
-                    //     title: '套餐描述',
-                    //     align: 'center',
-                    //     key: 'con',
-                    // },
                     {
-                        title: '价格',
+                        title: '赏金',
                         align: 'center',
                         key: 'price',
                     },
                     {
-                        title: '状态',
-                        align: 'center',
-                        key: 'status',
-                        render: ( h , param ) => {
-                            if(param.row.status == 1){
-                                return h('div',['正常']);
-                            }else{
-                                return h('div',['失效']);
-                            }
-                        }
-                    },
-                    {
-                        title: '排序',
+                        title: '行业分类',
                         align: 'center',
                         key: 'sort',
                     },
