@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/application/admin/controller/Setup.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/admin/application/admin/controller/Testing.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/views/goods/setup.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/src/views/goods/testing.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/adminRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/adminRoute.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/router/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/router/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/goods/setup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/setup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/views/goods/testing.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/testing.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,8 +44,8 @@
           <entry key="less" value="1" />
           <entry key="lock" value="2" />
           <entry key="md" value="15" />
-          <entry key="php" value="761" />
-          <entry key="vue" value="52" />
+          <entry key="php" value="762" />
+          <entry key="vue" value="55" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
@@ -57,9 +55,9 @@
           <entry key="JavaScript" value="32" />
           <entry key="Less" value="1" />
           <entry key="Markdown" value="15" />
-          <entry key="PHP" value="761" />
+          <entry key="PHP" value="762" />
           <entry key="PLAIN_TEXT" value="5" />
-          <entry key="Vue.js" value="52" />
+          <entry key="Vue.js" value="55" />
           <entry key="XML" value="1" />
           <entry key="htaccess" value="1" />
         </counts>
@@ -68,19 +66,19 @@
         <counts>
           <entry key="dummy" value="3" />
           <entry key="gitignore" value="11" />
-          <entry key="js" value="63" />
+          <entry key="js" value="67" />
           <entry key="less" value="5" />
-          <entry key="php" value="9837" />
-          <entry key="vue" value="585" />
+          <entry key="php" value="9860" />
+          <entry key="vue" value="671" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JavaScript" value="63" />
+          <entry key="JavaScript" value="67" />
           <entry key="Less" value="5" />
-          <entry key="PHP" value="9837" />
+          <entry key="PHP" value="9860" />
           <entry key="PLAIN_TEXT" value="14" />
-          <entry key="Vue.js" value="585" />
+          <entry key="Vue.js" value="671" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -100,20 +98,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="664">
-              <caret line="334" column="42" selection-start-line="334" selection-start-column="35" selection-end-line="334" selection-end-column="42" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Testing.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="11" column="27" lean-forward="true" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-              <folding>
-                <element signature="e#119#137#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="568">
+              <caret line="333" column="36" lean-forward="true" selection-start-line="333" selection-start-column="36" selection-end-line="333" selection-end-column="36" />
             </state>
           </provider>
         </entry>
@@ -136,14 +122,56 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="265" column="36" lean-forward="true" selection-start-line="265" selection-start-column="36" selection-end-line="265" selection-end-column="36" />
+            <state relative-caret-position="600">
+              <caret line="52" column="52" lean-forward="true" selection-start-line="45" selection-start-column="15" selection-end-line="52" selection-end-column="52" />
               <folding>
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Input#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/src/views/goods/testing.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-144">
+              <caret line="24" column="31" lean-forward="true" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/adminRoute.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1711">
+              <caret line="902" column="32" lean-forward="true" selection-start-line="902" selection-start-column="32" selection-end-line="902" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/views/goods/setup.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="475">
+              <caret line="156" column="40" lean-forward="true" selection-start-line="156" selection-start-column="40" selection-end-line="156" selection-end-column="40" />
+              <folding>
+                <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Input#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Select#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/src/views/goods/goods_add.vue">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="52" column="17" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="52" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -233,7 +261,6 @@
         <option value="$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/Website.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/PromotionOrder.php" />
-        <option value="$PROJECT_DIR$/admin/application/adminRoute.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/Extension.php" />
         <option value="$PROJECT_DIR$/web/src/views/goods/extension.vue" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/Extension.php" />
@@ -257,13 +284,14 @@
         <option value="$PROJECT_DIR$/web/src/views/user/subcontractor.vue" />
         <option value="$PROJECT_DIR$/admin/application/apiRoute.php" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/User.php" />
-        <option value="$PROJECT_DIR$/web/src/router/router.js" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/Setup.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/Testing.php" />
-        <option value="$PROJECT_DIR$/web/src/views/goods/setup.vue" />
-        <option value="$PROJECT_DIR$/web/src/views/goods/testing.vue" />
         <option value="$PROJECT_DIR$/web/src/views/goods/schedule.vue" />
+        <option value="$PROJECT_DIR$/admin/application/adminRoute.php" />
+        <option value="$PROJECT_DIR$/web/src/views/goods/setup.vue" />
+        <option value="$PROJECT_DIR$/web/src/router/router.js" />
+        <option value="$PROJECT_DIR$/web/src/views/goods/testing.vue" />
       </list>
     </option>
   </component>
@@ -528,12 +556,12 @@
       <workItem from="1574230052401" duration="8919000" />
       <workItem from="1574305333208" duration="19000" />
       <workItem from="1574322564165" duration="1230000" />
-      <workItem from="1574389374628" duration="2634000" />
+      <workItem from="1574389374628" duration="8133000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="322465000" />
+    <option name="totallyTimeSpent" value="327964000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -545,7 +573,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1652452" />
@@ -623,9 +651,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Banner.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/JoinRole.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-3329" />
@@ -832,9 +857,6 @@
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/goods.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/views/goods/goods_add.vue">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/goodsMain.vue">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -845,13 +867,6 @@
           <folding>
             <element signature="e#119#137#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="664">
-          <caret line="334" column="42" selection-start-line="334" selection-start-column="35" selection-end-line="334" selection-end-column="42" />
         </state>
       </provider>
     </entry>
@@ -869,20 +884,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-432">
           <caret line="15" column="41" lean-forward="true" selection-end-line="128" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/views/goods/setup.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="823">
-          <caret line="352" lean-forward="true" selection-start-line="352" selection-end-line="352" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/src/views/goods/testing.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="44" column="27" lean-forward="true" selection-end-line="355" />
         </state>
       </provider>
     </entry>
@@ -930,13 +931,54 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/adminRoute.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1711">
+          <caret line="902" column="32" lean-forward="true" selection-start-line="902" selection-start-column="32" selection-end-line="902" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/goods/goods_add.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="52" column="17" lean-forward="true" selection-start-line="42" selection-start-column="4" selection-end-line="52" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="265" column="36" lean-forward="true" selection-start-line="265" selection-start-column="36" selection-end-line="265" selection-end-column="36" />
+        <state relative-caret-position="600">
+          <caret line="52" column="52" lean-forward="true" selection-start-line="45" selection-start-column="15" selection-end-line="52" selection-end-column="52" />
           <folding>
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Input#0;n#FormItem#1;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/goods/setup.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="156" column="40" lean-forward="true" selection-start-line="156" selection-start-column="40" selection-end-line="156" selection-end-column="40" />
+          <folding>
+            <element signature="n#style#0;n#Input#0;n#FormItem#0;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Input#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Select#0;n#FormItem#2;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/router/router.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="568">
+          <caret line="333" column="36" lean-forward="true" selection-start-line="333" selection-start-column="36" selection-end-line="333" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/src/views/goods/testing.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-144">
+          <caret line="24" column="31" lean-forward="true" selection-start-line="24" selection-start-column="31" selection-end-line="24" selection-end-column="31" />
         </state>
       </provider>
     </entry>
