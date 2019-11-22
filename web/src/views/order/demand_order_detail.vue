@@ -75,7 +75,7 @@
     </div>
 
     <div class="line line-vice">内容/合同/协议/确认文书</div>
-    <div style="width:1100px;margin: 20px auto;">
+    <div style=" padding:30px 30px 30px 300px;border:1px solid rgb(240,248,250);">
       <Form :label-width="80">
         <FormItem label="需求名称：" prop="project_name">
           <Input placeholder="请输入" style="width: 450px;" />
@@ -139,6 +139,31 @@
         </FormItem>
       </Form>
     </div>
+    <div class="line line-vice">平台顾问信息互动</div>
+    <div class="speak_window">
+      <div class="speak_box">
+        <div class="answer">
+          <div class="heard_img left">
+            <img src="../../images/u3830.png" />
+            <div>平台顾问</div>
+          </div>
+          <div class="answer_text">
+            <p>fdgfdgfdg</p>
+            <i></i>
+          </div>
+        </div>
+        <div class="question">
+          <div class="heard_img right">
+            <img src="../../images/u3830.png" />
+          </div>
+          <div class="question_text clear">
+            <p>dgfdgdfgdfg</p>
+            <i></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -243,6 +268,114 @@ export default {
     .line-w {
       width: 36px;
     }
+  }
+  
+  //聊天框
+
+  .speak_window {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    background-color: rgb(242,242,242);
+  }
+  .speak_box {
+    margin-bottom: 70px;
+    padding: 10px;
+  }
+  .question,
+  .answer {
+    margin-bottom: 1rem;
+  }
+  .question {
+    text-align: right;
+  }
+  .question > div {
+    display: inline-block;
+  }
+  .left {
+    float: left;
+  }
+  .right {
+    float: right;
+  }
+  .clear {
+    clear: both;
+  }
+  .heard_img {
+    height: 60px;
+    width: 60px;
+    border-radius: 5px;
+    // overflow: hidden;
+    background: #ddd;
+    div{text-align: center;}
+  }
+  .heard_img img {
+    width: 100%;
+    height: 100%;
+  }
+  .question_text,
+  .answer_text {
+    box-sizing: border-box;
+    position: relative;
+    display: table-cell;
+    min-height: 60px;
+  }
+  .question_text {
+    padding-right: 20px;
+  }
+  .answer_text {
+    padding-left: 20px;
+  }
+  .question_text p,
+  .answer_text p {
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin: 0;
+    font-size: 14px;
+    line-height: 28px;
+    box-sizing: border-box;
+    vertical-align: middle;
+    display: table-cell;
+    height: 30px;
+    word-wrap: break-word;
+  }
+  .answer_text p {
+    background: #fff;
+  }
+  .question_text p {
+    background: #42929d;
+    color: #fff;
+    text-align: left;
+  }
+  .question_text i,
+  .answer_text i {
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    position: absolute;
+    top: 25px;
+  }
+  .answer_text i {
+    border-right: 10px solid #fff;
+    left: 10px;
+  }
+  .question_text i {
+    border-left: 10px solid #42929d;
+    right: 10px;
+  }
+  .answer_text p a {
+    color: #42929d;
+    display: inline-block;
+  }
+  .write_list {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-top: solid 1px #ddd;
+    padding: 5px;
+    line-height: 30px;
   }
 }
 </style>
