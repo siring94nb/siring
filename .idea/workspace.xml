@@ -3,13 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/UserManage.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/UserManage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/UserFund.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/UserFund.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/user/partner.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/user/partner.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/user/subcontractor.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/user/subcontractor.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,16 +18,16 @@
     <session id="-2066920816">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="28" />
-          <entry key="project.open.time.0" value="3" />
+          <entry key="project.closed" value="30" />
+          <entry key="project.open.time.0" value="4" />
           <entry key="project.open.time.1" value="3" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.open.time.5" value="1" />
           <entry key="project.open.time.7" value="4" />
-          <entry key="project.open.time.8" value="13" />
+          <entry key="project.open.time.8" value="14" />
           <entry key="project.open.time.9" value="8" />
-          <entry key="project.opened" value="34" />
+          <entry key="project.opened" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -100,8 +93,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="566" column="5" lean-forward="true" selection-start-line="566" selection-start-column="5" selection-end-line="566" selection-end-column="5" />
+            <state relative-caret-position="248">
+              <caret line="567" column="39" lean-forward="true" selection-start-line="567" selection-start-column="39" selection-end-line="567" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -109,7 +102,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
+            <state relative-caret-position="3144">
               <caret line="144" selection-start-line="144" selection-end-line="144" />
             </state>
           </provider>
@@ -118,7 +111,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="552">
+            <state relative-caret-position="624">
               <caret line="28" column="37" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="37" />
             </state>
           </provider>
@@ -127,7 +120,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/User.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="463">
+            <state relative-caret-position="1152">
               <caret line="53" column="32" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="32" />
             </state>
           </provider>
@@ -136,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/UserDiscount.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+            <state relative-caret-position="864">
+              <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -150,7 +143,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserEnterprise.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="415">
+            <state relative-caret-position="960">
               <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
             </state>
           </provider>
@@ -159,8 +152,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserFund.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+            <state relative-caret-position="456">
+              <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -168,8 +161,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/views/user/partner.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+            <state relative-caret-position="720">
+              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -177,8 +170,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/src/views/user/subcontractor.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="30" column="31" lean-forward="true" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
+            <state relative-caret-position="720">
+              <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
             </state>
           </provider>
         </entry>
@@ -329,7 +322,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-29" />
     <option name="y" value="-21" />
     <option name="width" value="1936" />
@@ -439,7 +432,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../crmeb" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="D:\WWW\siring\web\node_modules\eslint" />
@@ -508,11 +501,13 @@
       <workItem from="1574127667270" duration="15729000" />
       <workItem from="1574213419525" duration="1744000" />
       <workItem from="1574230052401" duration="8919000" />
+      <workItem from="1574305333208" duration="19000" />
+      <workItem from="1574322564165" duration="1230000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="318582000" />
+    <option name="totallyTimeSpent" value="319831000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -525,9 +520,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16044776" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16364606" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -800,9 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="648">
           <caret line="311" column="77" selection-start-line="311" selection-start-column="76" selection-end-line="311" selection-end-column="77" />
-          <folding>
-            <element signature="e#116#142#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -814,10 +805,43 @@
         <state relative-caret-position="-1944" />
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1872" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="567" column="39" lean-forward="true" selection-start-line="567" selection-start-column="39" selection-end-line="567" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3144">
+          <caret line="144" selection-start-line="144" selection-end-line="144" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="28" column="37" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1152">
+          <caret line="53" column="32" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/UserDiscount.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="40" column="5" lean-forward="true" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
+        <state relative-caret-position="864">
+          <caret line="40" column="5" selection-start-line="40" selection-start-column="5" selection-end-line="40" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -826,62 +850,29 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserEnterprise.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="415">
+        <state relative-caret-position="960">
           <caret line="41" column="22" selection-start-line="41" selection-start-column="22" selection-end-line="41" selection-end-column="22" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/UserManage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="144" selection-start-line="144" selection-end-line="144" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1872" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/UserFund.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="24" column="5" lean-forward="true" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
+        <state relative-caret-position="456">
+          <caret line="24" column="5" selection-start-line="24" selection-start-column="5" selection-end-line="24" selection-end-column="5" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/user/partner.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="30" column="27" lean-forward="true" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
+        <state relative-caret-position="720">
+          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/user/subcontractor.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="30" column="31" lean-forward="true" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/apiRoute.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="28" column="37" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="463">
-          <caret line="53" column="32" selection-start-line="53" selection-start-column="20" selection-end-line="53" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="566" column="5" lean-forward="true" selection-start-line="566" selection-start-column="5" selection-end-line="566" selection-end-column="5" />
+        <state relative-caret-position="720">
+          <caret line="30" column="31" selection-start-line="30" selection-start-column="31" selection-end-line="30" selection-end-column="31" />
         </state>
       </provider>
     </entry>
