@@ -229,8 +229,8 @@ export default {
     > h3 {
       font-size: 32px;
       text-align: center;
-      margin-top: 40px;
-      padding-bottom: 40px;
+      // margin-top: 40px;
+      padding: 40px 0;
       border-bottom: 18px solid rgb(246, 246, 246);
     }
     .cont {

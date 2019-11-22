@@ -4,7 +4,7 @@
     <join-enter />
 
     <div class="join-cont">
-      <h2 class="title">分包商</h2>
+      <h2 class="title title-bot">分包商</h2>
       <div class="join-step">
         <h3 class="step-title">加盟流程</h3>
         <div class="step-list">
@@ -295,6 +295,9 @@ export default {
       text-align: center;
       font-size: 34px;
       margin-bottom: 30px;
+      &.title-bot {
+        border-bottom: 20px solid rgb(242, 242, 242);
+      }
     }
     .join-step {
       margin-bottom: 50px;
