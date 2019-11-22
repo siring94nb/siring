@@ -62,9 +62,9 @@
           <h1>行业模板：{{showTemp.model_name}}</h1>
           <p>模板简介：</p>
           <span>{{showTemp.model_des}}</span>
-          <p>模板分类：</p>
+          <!-- <p>模板分类：</p>
           <span>微信小程序</span>
-          <!-- <div class="appreciate">
+        <div class="appreciate">
                     <div>样式欣赏:</div>
                     <div style="flex:1;"></div>
                     <div>
@@ -72,7 +72,7 @@
                     </div>
           </div>-->
         </div>
-        <div class="abstract-img" @mouseover="shelter" @mouseleave="shelterLeave">
+        <div class="abstract-img" @mouseover="shelter(-1)" @mouseleave="shelterLeave">
           <img :src="showTemp.model_image_small" alt />
           <div class="shelter" v-if="isShelter">
             <el-button
@@ -118,7 +118,17 @@
       <div class="title-bar">选择适合自己的行业模板</div>
       <div class="stencil">
         <div class="stencil_chil">
-          <el-radio-group
+          <div class="stencil-img" v-for="(item, index) in tempList" :key="item.id" @mouseover="shelter(index)" @mouseleave="shelterLeave">
+            <img :src="item.model_image_small" alt />
+            <div class="shelter" v-if="isStencil == index">
+              <el-button
+                @click="selImage(index, item.id)"
+                style="margin:200px auto;background-color:rgb(102,204,0);color:#fff;border:0;"
+              >使用</el-button>
+            </div>
+            <div class="stencil-text">{{item.model_name}}</div>
+          </div>
+          <!-- <el-radio-group
             v-model="valData.arr"
             v-for="(item, index) in tempList"
             :key="item.id"
@@ -128,7 +138,7 @@
             <div>
               <el-radio :label="item.id">{{item.model_name}}</el-radio>
             </div>
-          </el-radio-group>
+          </el-radio-group>-->
         </div>
       </div>
     </div>
@@ -163,6 +173,7 @@ export default {
       fileList: [],
       uploadList: [],
       isShelter: false,
+      isStencil:-1,
       imgShow: false,
       imagesUrl: ""
     };
@@ -190,7 +201,8 @@ export default {
         }
       });
     },
-    radioChange(index, id) {
+    //选择模板
+    selImage(index, id) {
       this.showTemp = this.tempList[index];
       let top = document.documentElement.scrollTop || document.body.scrollTop;
       // 实现滚动效果
@@ -245,16 +257,19 @@ export default {
         });
       }
     },
-    shelter() {
-      this.isShelter = true;
+    shelter(index) {
+      if(index < 0) this.isShelter = true;
+      else this.isStencil = index;
     },
     shelterLeave() {
       this.isShelter = false;
+      this.isStencil = -1;
     },
     shelterShow(url) {
       this.imgShow = true;
       this.imagesUrl = url;
     },
+
     shelterHidden() {
       this.imgShow = false;
       this.imagesUrl = "";
@@ -296,13 +311,13 @@ export default {
   top: 0;
   left: 0;
   .images-box {
-    width: 450px;
-    height: 840px;
-    margin: 100px auto;
+    width: 400px;
+    height: 700px;
+    margin: 50px auto;
     position: relative;
     .images-show {
-      width: 370px;
-      height: 600px;
+      width: 330px;
+      height: 500px;
       overflow-y: scroll;
       position: absolute;
       top: 14%;
@@ -413,7 +428,7 @@ export default {
       h1 {
         font-size: 24px;
         font-weight: 700;
-        margin: 50px 0;
+        margin: 80px 0;
       }
       p {
         margin: 30px 0;
@@ -421,6 +436,7 @@ export default {
       }
       span {
         font-size: 14px;
+        line-height: 30px;
       }
       .appreciate {
         margin-top: 30px;
@@ -441,7 +457,7 @@ export default {
       .shelter {
         width: 230px;
         height: 420px;
-        background-color: rgba(0, 0, 0, 0.4);
+        background-color: rgba(0, 0, 0, 0.6);
         margin: auto;
         position: absolute;
         top: 0;
@@ -497,12 +513,30 @@ export default {
     display: flex;
     flex-wrap: wrap;
     .stencil_chil {
-      img {
-        width: 230px;
-        height: 420px;
-      }
-      div {
-        margin: 20px 10px 0 0;
+      display: flex;
+      flex-wrap: wrap;
+      // justify-content : space-between;
+      .stencil-img {
+        margin: 15px 10px;
+        position: relative;
+        .shelter {
+          width: 220px;
+          height: 420px;
+          background-color: rgba(0, 0, 0, 0.6);
+          margin: auto;
+          position: absolute;
+          top: 0;
+          left: 0;
+          text-align: center;
+        }
+        img {
+          width: 220px;
+          height: 420px;
+        }
+        .stencil-text {
+          text-align: center;
+          line-height: 30px;
+        }
       }
     }
   }
