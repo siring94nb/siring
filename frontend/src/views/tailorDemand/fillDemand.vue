@@ -85,12 +85,14 @@
               <el-form-item label="添加附件" required>
                 <el-upload
                   class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :action="UploadAction"
                   :on-remove="handleRemove"
                   :before-upload="beforeUpload"
+                  :on-success="handleSuccess"
                   :limit="1"
                   :on-exceed="handleExceed"
                   :file-list="fileList"
+                  name="image"
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div
@@ -183,7 +185,8 @@ export default {
           name: "小程序",
           id: 7
         }
-      ]
+      ],
+      UploadAction:""
     };
   },
   mounted() {
@@ -192,6 +195,7 @@ export default {
   methods: {
     init(){
       let vm=this;
+      this.UploadAction = "https://manage.siring.com.cn/api/file/qn_upload";
     },
     handleRemove(file, fileList) {
       console.log(file, fileList);
@@ -203,6 +207,11 @@ export default {
         } 个文件，共选择了 ${files.length + fileList.length} 个文件`
       );
     },
+    handleSuccess(response, file, fileList){
+      console.log(response)
+      console.log(file)
+      console.log(fileList)
+    },
     beforeUpload(file) {
       const size = file.size / 1024 / 1024 < 50;
       if (!size) {
@@ -210,6 +219,7 @@ export default {
       }
       return size;
     },
+
      need_submit(){
        let vm=this;
       needOrderAdd(vm.form).then(res => {
