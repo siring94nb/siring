@@ -73,12 +73,17 @@
           </div>-->
         </div>
         <div class="abstract-img" @mouseover="shelter(-1)" @mouseleave="shelterLeave">
-          <img :src="showTemp.model_image_small" alt />
+          <div class="abstract-show">
+            <img src="../../assets/images/u2.png" style="width:100%;height:100%;" alt />
+            <div class="show-img">
+              <img :src="showTemp.model_image_small" style="width:100%;height:100%;" alt />
+            </div>
+          </div>
           <div class="shelter" v-if="isShelter">
             <el-button
               @click="shelterShow(showTemp.model_image)"
               icon="el-icon-search"
-              style="margin:200px 0;"
+              style="margin:210px 0;"
               plain
             >预览</el-button>
           </div>
@@ -118,7 +123,13 @@
       <div class="title-bar">选择适合自己的行业模板</div>
       <div class="stencil">
         <div class="stencil_chil">
-          <div class="stencil-img" v-for="(item, index) in tempList" :key="item.id" @mouseover="shelter(index)" @mouseleave="shelterLeave">
+          <div
+            class="stencil-img"
+            v-for="(item, index) in tempList"
+            :key="item.id"
+            @mouseover="shelter(index)"
+            @mouseleave="shelterLeave"
+          >
             <img :src="item.model_image_small" alt />
             <div class="shelter" v-if="isStencil == index">
               <el-button
@@ -173,7 +184,7 @@ export default {
       fileList: [],
       uploadList: [],
       isShelter: false,
-      isStencil:-1,
+      isStencil: -1,
       imgShow: false,
       imagesUrl: ""
     };
@@ -258,7 +269,7 @@ export default {
       }
     },
     shelter(index) {
-      if(index < 0) this.isShelter = true;
+      if (index < 0) this.isShelter = true;
       else this.isStencil = index;
     },
     shelterLeave() {
@@ -277,10 +288,19 @@ export default {
   }
 };
 </script>
-<style>
+<style scoped>
 /* .el-popper {
   background-color: rgb(219, 255, 255);
 } */
+.upload-img >>> .el-upload--picture-card {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+}
+.upload-img >>> .el-upload-list--picture-card .el-upload-list__item {
+  width: 100px;
+  height: 100px;
+}
 </style>
 <style lang="scss" scoped>
 .popover-box {
@@ -312,12 +332,12 @@ export default {
   left: 0;
   .images-box {
     width: 400px;
-    height: 700px;
-    margin: 50px auto;
+    height: 750px;
+    margin: 20px auto;
     position: relative;
     .images-show {
       width: 330px;
-      height: 500px;
+      height: 540px;
       overflow-y: scroll;
       position: absolute;
       top: 14%;
@@ -454,14 +474,28 @@ export default {
       text-align: center;
       margin: 20px 0;
       position: relative;
+      .abstract-show {
+        position: relative;
+        width: 260px;
+        height: 480px;
+        margin: auto;
+        .show-img {
+          position: absolute;
+          top: 60px;
+          left: 20px;
+          height: 350px;
+          width: 210px;
+        }
+      }
       .shelter {
         width: 230px;
-        height: 420px;
+        height: 450px;
         background-color: rgba(0, 0, 0, 0.6);
         margin: auto;
         position: absolute;
-        top: 0;
-        left: 21%;
+        top: 3%;
+        left: 20%;
+        border-radius: 35px;
       }
       img {
         width: 230px;
@@ -469,7 +503,7 @@ export default {
       }
     }
     .abstract-r {
-      margin-top: 20px;
+      margin-top: 180px;
       div {
         width: 100%;
       }
@@ -484,8 +518,9 @@ export default {
       }
       .sub-btn {
         color: #fff;
-        width: 200px;
+        width: 280px;
         background-color: red;
+        border-radius: 5px;
         text-align: center;
         line-height: 38px;
         margin: 20px 0;
@@ -493,6 +528,7 @@ export default {
         cursor: pointer;
       }
       .input-box {
+        margin-bottom: 40px;
         input {
           width: 230px;
           padding: 5px;
@@ -540,30 +576,5 @@ export default {
       }
     }
   }
-  /*图片上传 */
-  .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409eff;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 144px;
-    height: 144px;
-    line-height: 144px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  /*图片上传 */
 }
 </style>
