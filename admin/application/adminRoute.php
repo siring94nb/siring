@@ -837,6 +837,7 @@ Route::group('admin', function () use ($afterBehavior) {
     Route::group('Category', [
 
     ], ['after_behavior' => $afterBehavior]);
+
     //投融界-日程安排
     Route::group('Schedule', [
         'index' => [
@@ -856,6 +857,7 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
+
     //投融设置
     Route::group('Setup', [
         'index' => [
@@ -874,7 +876,20 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Setup/del',
             ['method' => 'post']
         ],
+        'category_index' => [
+            'admin/Setup/category_index',
+            ['method' => 'post']
+        ],
+        'category_add'   => [
+            'admin/Setup/category_add',
+            ['method' => 'post']
+        ],
+        'category_upd'   => [
+            'admin/Setup/category_upd',
+            ['method' => 'post']
+        ],
     ], ['after_behavior' => $afterBehavior]);
+
     //投融界-检测报告
     Route::group('Testing', [
         'index' => [

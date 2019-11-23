@@ -8,6 +8,7 @@
 namespace app\admin\controller;
 
 use think\Request;
+use think\Validate;
 use think\Db;
 class Testing extends Base{
 
