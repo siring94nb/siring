@@ -82,7 +82,7 @@
             </el-dropdown>
           </router-link>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/">
+          <router-link to="/investment">
             <i class="icon iconfont icon-farenduiwaitouzi"></i>
             <span>投融介</span>
             <p class="en-name">Investment</p>

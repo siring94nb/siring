@@ -41,4 +41,18 @@ class UserFund extends Model
         return   $re  ?  $re    :  returnJson(0,'数据有误');
     }
 
+    /**
+     * 修改余额密码
+     * @ author fyk
+     * @param $tel
+     * @param $password
+     * @return false|int
+     */
+    public function editPassword($uid, $password)
+    {
+        return $this->save([
+            'pay_password' => $password,
+        ],['user_id' => $uid,]);
+    }
+
 }

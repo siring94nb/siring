@@ -81,6 +81,11 @@ export default new Router({
       component: () => import('@/views/ai/ai-promotion')
     },
     {
+      path: '/investment',
+      name: 'investment',
+      component: () => import('@/views/investment/index')
+    },
+    {
       path: '/aboutUs',
       name: 'aboutUs',
       component: () => import('@/views/aboutUs')
@@ -102,3 +107,4 @@ export default new Router({
     },
   ]
 })
+

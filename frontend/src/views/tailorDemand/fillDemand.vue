@@ -85,12 +85,14 @@
               <el-form-item label="添加附件" required>
                 <el-upload
                   class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  :action="UploadAction"
                   :on-remove="handleRemove"
                   :before-upload="beforeUpload"
+                  :on-success="handleSuccess"
                   :limit="1"
                   :on-exceed="handleExceed"
                   :file-list="fileList"
+                  name="image"
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div
@@ -134,7 +136,8 @@ export default {
         need_qq: "",
         need_wx: "",
         need_other: "",
-        need_desc: ""
+        need_desc: "",
+        need_file: ""
       },
       rules: {
         need_budget_down: [
@@ -183,18 +186,23 @@ export default {
           name: "小程序",
           id: 7
         }
-      ]
+      ],
+      UploadAction: ""
     };
   },
   mounted() {
-      this.init();
-    },
+    this.init();
+  },
   methods: {
-    init(){
-      let vm=this;
+    init() {
+      let vm = this;
+      vm.UploadAction = "https://manage.siring.com.cn/api/file/qn_upload";
+    },
+    handleSuccess(response, file, fileList) {
+      this.form.need_file = response.data.filePath;
     },
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      this.form.need_file = "";
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -210,23 +218,22 @@ export default {
       }
       return size;
     },
-     need_submit(){
-       let vm=this;
+
+    need_submit() {
+      let vm = this;
       needOrderAdd(vm.form).then(res => {
-        let {code, data, msg} = res;
-        if(code === 1){ 
+        let { code, data, msg } = res;
+        if (code === 1) {
+          this.$message.success(msg);
           this.$router.push({
-          name: "home",
-        });
+            name: "home"
+          });
 
           // this.packageList = data;
         }
-      })
-    },
-    
-
-    
-  },
+      });
+    }
+  }
 };
 </script>
 

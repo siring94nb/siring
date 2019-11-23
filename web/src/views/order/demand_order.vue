@@ -20,7 +20,7 @@
                 <Option :value="3">定制类型</Option>
                 <Option :value="4">项目新增</Option>
               </Select>
-            </FormItem> -->
+            </FormItem>-->
             <FormItem style="margin-bottom: 0">
               <span>开始时间</span>
               <DatePicker
@@ -49,7 +49,7 @@
     <Card style="margin-bottom: 10px">
       <Row>
         <Col span="2">
-          <Button type="primary" class="btns btn-qb">全部</Button>
+          <Button type="primary" class="btns btn-qb" @click="toOrder">全部</Button>
         </Col>
         <Col span="2">
           <Button type="primary" class="btns btn-dzxq">定制需求</Button>
@@ -154,43 +154,50 @@ export default {
         {
           title: "合同编号",
           align: "center",
-          key: "order_number"
+          key: "need_order",
+          width: 200
         },
         {
           title: "项目名称",
           align: "center",
-          key: "model_type"
+          key: "need_name"
         },
         {
           title: "订单类型",
           align: "center",
-          key: "model_meal_type"
+          key: "need_category"
         },
         {
           title: "终端类型",
           align: "center",
-          key: "member_account"
+          key: "need_terminal",
+          render: (h, param) => {
+            //   param.row.need_terminal = JSON.parse(param.row.need_terminal);
+            //   param.row.need_terminal = JSON.stringify(param.row.need_terminal);
+            return h("div", param.row.need_terminal);
+          }
         },
         {
           title: "用户账号",
           align: "center",
-          key: "order_amount"
+          key: "need_phone",
+          width: 120
         },
         {
           title: "合同金额",
           align: "center",
-          key: "order_amount"
+          key: "need_money"
         },
         {
           title: "付款金额",
           align: "center",
-          key: "order_amount"
+          key: "need_order_money"
         },
         {
           title: "付款账号",
           align: "center",
-          key: "pay_detail",
-          width: 300,
+          key: "need_pay_account",
+          width: 250,
           render: (h, param) => {
             let bankNumber, pay_detail;
             if (param.row.pay_type == 1) bankNumber = "支付宝支付";
@@ -206,12 +213,13 @@ export default {
         {
           title: "下单时间",
           align: "center",
-          key: "create_time"
+          key: "create_time",
+          width: 120
         },
         {
           title: "剩余款",
           align: "center",
-          key: "meal_end_time"
+          key: "need_surplus"
         },
         {
           title: "剩余天数",
@@ -221,7 +229,7 @@ export default {
         {
           title: "用户最新消息",
           align: "center",
-          key: "meal_end_time"
+          key: "need_new_info"
         },
         {
           title: "操作",
@@ -310,24 +318,14 @@ export default {
       this.tableShow.page = 1;
       this.getMade();
     },
-
-    doCancel() {},
-    cancel() {
-      this.modalSetting.show = false;
-    },
-    submit() {
-      let vm = this;
-      axios
-        .post("ModelOrder/change_order_status", {
-          id: vm.selID,
-          order_status: 3
-        })
-        .then(function(response) {
-          if (response.data.code === 1) {
-            vm.cancel();
-            vm.getMade();
-          }
-        });
+    toOrder() {
+      this.$router.push({
+        name: "demand_order_detail",
+        params: {
+          id: 22,
+          status:2
+        }
+      });
     }
   },
   mounted() {}

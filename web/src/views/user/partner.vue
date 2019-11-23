@@ -26,9 +26,9 @@
         <Row>
             <Col span="24">
             <Card>
-                <p slot="title" style="height: 32px">
-                    <Button type="primary" @click="alertAdd" icon="md-add">新增</Button>
-                </p>
+                <!--<p slot="title" style="height: 32px">-->
+                    <!--<Button type="primary" @click="alertAdd" icon="md-add">新增</Button>-->
+                <!--</p>-->
                 <div>
                     <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
                 </div>
@@ -211,7 +211,7 @@
                         title: '用户昵称',
                         align: 'center',
                         key: 'realname',
-                        
+
                     },
                     {
                         title: '代理城市',
@@ -229,7 +229,7 @@
                         title: '优势说明',
                         align: 'center',
                         key: 'phone',
-                        
+
                     },
 
                     {
@@ -290,7 +290,7 @@
                     ],
                     account:[
                         { required: true, message: '账号不能为空', trigger: 'blur'},
-                        
+
                     ],
 
                 },

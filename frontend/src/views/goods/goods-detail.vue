@@ -76,7 +76,7 @@
           <div class="comment-box">
             <el-tabs type="border-card">
               <el-tab-pane label="功能描述">
-                <div v-html="goodsDetail.goods_des"></div>
+                <div class="desc-box" v-html="goodsDetail.goods_des"></div>
               </el-tab-pane>
               <el-tab-pane label="会员评价">
                 <div class="comment-list">
@@ -229,8 +229,8 @@ export default {
     > h3 {
       font-size: 32px;
       text-align: center;
-      margin-top: 40px;
-      padding-bottom: 40px;
+      // margin-top: 40px;
+      padding: 40px 0;
       border-bottom: 18px solid rgb(246, 246, 246);
     }
     .cont {
@@ -361,12 +361,16 @@ export default {
           }
         }
         .comment-box {
-          height: 700px;
-          overflow: auto;
+          .desc-box{
+            height: 700px;
+            overflow: auto;
+          }
           .cm-p {
             line-height: 28px;
           }
           .comment-list {
+            height: 700px;
+            overflow: auto;
             .comment-item {
               border-bottom: 1px solid #e1e1e1;
               margin-bottom: 28px;
