@@ -162,15 +162,23 @@
           </div>
         </div>
       </div>
+      <div class="input-box">
+        <Input v-model="value" placeholder="请输入信息(100字以内)..." style="width: 90%;" />
+        <button class="lt-btn">发送</button>
+      </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      value: "",
+      path: "ws://127.0.0.1:3000",
+      socket: "",
+      rand: 0
+    };
   },
   created() {
     this.init();
@@ -178,7 +186,49 @@ export default {
   methods: {
     init() {
       console.log(this.$route.params.status);
+      if (typeof WebSocket === "undefined") {
+        alert("您的浏览器不支持socket");
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path);
+        // 监听socket连接
+        this.socket.onopen = this.open;
+        // 监听socket错误信息
+        this.socket.onerror = this.error;
+        // 监听socket消息
+        this.socket.onmessage = this.getMessage;
+      }
+
+      var x = 3;
+      var y = 1;
+      this.rand = parseInt(Math.random() * (x - y + 1) + y);
+    },
+    open() {
+      console.log("socket连接成功");
+      var login_data = this.rand + ":我的蝴蝶花";
+      ws.send(JSON.stringify(login_data));
+    },
+    error() {
+      console.log("连接错误");
+    },
+    getMessage(msg) {
+      console.log(msg.data);
+      var d=JSON.parse(msg.data);
+         if(d.type=='msg'){  
+
+         }
+    },
+    send() {
+      var login_data = this.rand+':我的蝴蝶花2';
+      this.socket.send(login_data);
+    },
+    close() {
+      console.log("socket已经关闭");
     }
+  },
+  destroyed() {
+    // 销毁监听
+    this.socket.onclose = this.close;
   }
 };
 </script>
@@ -269,14 +319,14 @@ export default {
       width: 36px;
     }
   }
-  
+
   //聊天框
 
   .speak_window {
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-    background-color: rgb(242,242,242);
+    background-color: rgb(242, 242, 242);
   }
   .speak_box {
     margin-bottom: 70px;
@@ -307,7 +357,9 @@ export default {
     border-radius: 5px;
     // overflow: hidden;
     background: #ddd;
-    div{text-align: center;}
+    div {
+      text-align: center;
+    }
   }
   .heard_img img {
     width: 100%;
@@ -345,7 +397,7 @@ export default {
   }
   .question_text p {
     // background: #42929d;
-    background: rgb(102,255,0);
+    background: rgb(102, 255, 0);
     color: #000;
     text-align: left;
   }
@@ -363,7 +415,7 @@ export default {
     left: 10px;
   }
   .question_text i {
-    border-left: 10px solid rgb(102,255,0);
+    border-left: 10px solid rgb(102, 255, 0);
     right: 10px;
   }
   .answer_text p a {
@@ -378,6 +430,26 @@ export default {
     border-top: solid 1px #ddd;
     padding: 5px;
     line-height: 30px;
+  }
+  .input-box {
+    background-color: rgb(247, 247, 247);
+    height: 80px;
+    line-height: 80px;
+    padding: 0 1%;
+  }
+  .lt-btn {
+    line-height: 28px;
+    border: 1px solid rgb(102, 204, 0);
+    color: rgb(102, 204, 0);
+    background-color: #fff;
+    width: 8%;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .lt-btn:hover {
+    background-color: rgb(102, 204, 0);
+    color: #fff;
   }
 }
 </style>

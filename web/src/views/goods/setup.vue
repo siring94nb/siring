@@ -321,6 +321,7 @@ export default {
               console.log(response);
               if (response.data.code === 1) {
                 self.$Message.success(response.data.msg);
+                self.getSort();
                 setTimeout(function() {
                   self.sortCancel();
                 }, 1000);

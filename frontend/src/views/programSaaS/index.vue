@@ -331,17 +331,17 @@ export default {
   top: 0;
   left: 0;
   .images-box {
-    width: 400px;
-    height: 750px;
+    width: 24%;
+    height: 96%;
     margin: 20px auto;
     position: relative;
     .images-show {
-      width: 330px;
-      height: 540px;
+      width: 83%;
+      height: 73%;
       overflow-y: scroll;
       position: absolute;
-      top: 14%;
-      left: 7.5%;
+      top: 13%;
+      left: 7%;
     }
   }
 }
@@ -448,7 +448,7 @@ export default {
       h1 {
         font-size: 24px;
         font-weight: 700;
-        margin: 80px 0;
+        margin: 45px 0 80px 0;
       }
       p {
         margin: 30px 0;
@@ -503,7 +503,7 @@ export default {
       }
     }
     .abstract-r {
-      margin-top: 180px;
+      margin-top: 236px;
       div {
         width: 100%;
       }
