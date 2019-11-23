@@ -221,6 +221,7 @@ export default {
     send() {
       var login_data = this.rand+':我的蝴蝶花2';
       this.socket.send(login_data);
+      
     },
     close() {
       console.log("socket已经关闭");
