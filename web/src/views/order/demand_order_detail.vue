@@ -162,6 +162,10 @@
           </div>
         </div>
       </div>
+      <div class="input-box">
+        <Input v-model="value" placeholder="请输入" style="width: 90%;" />
+        <button class="lt-btn">发送</button>
+      </div>
     </div>
     
   </div>
@@ -379,5 +383,10 @@ export default {
     padding: 5px;
     line-height: 30px;
   }
+  .input-box{background-color:rgb(247,247,247);height:80px;line-height:80px;padding:0 1%;}
+  .lt-btn{line-height:28px;border:1px solid rgb(102,204,0);color:rgb(102,204,0);background-color:#fff;width:8%;margin-left:10px;border-radius:5px;cursor: pointer;}
+  .lt-btn:hover{background-color: rgb(102,204,0);color:#fff;}
+
+
 }
 </style>
