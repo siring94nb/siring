@@ -14,13 +14,13 @@
         :key="index"
         style="margin: 0 0 10px 80px;"
       >
-        <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" />
+        <Input v-model="item.title" style="width: 300px;margin-right:20px;" />
         <Button type="primary" @click="editSort(index, item.id)">编辑</Button>
       </div>
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
       <Form ref="sortForm" :rules="ruleValidate" :model="sortMain" :label-width="80">
-        <FormItem label="分类名称" prop="category_name">
-          <Input v-model="sortMain.category_name" placeholder="请输入" style="width: 400px;" />
+        <FormItem label="分类名称" prop="title">
+          <Input v-model="sortMain.title" placeholder="请输入" style="width: 400px;" />
         </FormItem>
       </Form>
       <div slot="footer">
@@ -77,20 +77,20 @@
         <span>{{formItem.id ? '编辑' : '新增'}}</span>
       </p>
       <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-        <FormItem label="发布费用" prop="name">
-          <Input style="width: 300px" v-model="formItem.name" placeholder="元" />
+        <FormItem label="发布费用" prop="cost">
+          <Input style="width: 300px" v-model="formItem.cost" placeholder="元" />
         </FormItem>
-        <FormItem label="赏金设置" prop="price">
-          <Input style="width: 150px" v-model="formItem.price" placeholder="元" />
+        <FormItem label="赏金设置" prop="reward">
+          <Input style="width: 150px" v-model="formItem.reward" placeholder="元" />
         </FormItem>
-      
+
         <FormItem label="行业分类">
-          <Select v-model="formItem.category_id" style="width: 400px;">
+          <Select v-model="formItem.cid" style="width: 400px;">
             <Option
               v-for="(item, index) in sortData"
               :value="item.id"
               :key="index"
-            >{{ item.category_name }}</Option>
+            >{{ item.title }}</Option>
           </Select>
           <Button
             type="text"
@@ -111,8 +111,7 @@
 </template>
 <script>
 import axios from "axios";
-import config from "../../../build/config";
-import wangEditor from "wangeditor";
+
 const editButton = (vm, h, currentRow, index) => {
   return h(
     "Button",
@@ -126,14 +125,9 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
-          vm.formItem.name = currentRow.name;
-          vm.formItem.sort = currentRow.sort;
-          vm.formItem.price = currentRow.price;
-          vm.formItem.money = currentRow.money;
-          vm.formItem.con = currentRow.con;
-          vm.editor.txt.html(vm.formItem.con);
-          vm.formItem.status = currentRow.status;
-
+          vm.formItem.cost = currentRow.cost;
+          vm.formItem.reward = currentRow.reward;
+          vm.formItem.cid = currentRow.cid;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
         }
@@ -203,17 +197,17 @@ export default {
         {
           title: "发布费用",
           align: "center",
-          key: "name"
+          key: "cost"
         },
         {
           title: "赏金",
           align: "center",
-          key: "price"
+          key: "reward"
         },
         {
           title: "行业分类",
           align: "center",
-          key: "sort"
+          key: "title"
         },
         {
           title: "操作",
@@ -242,14 +236,12 @@ export default {
       },
       formItem: {
         id: 0,
-        name: "",
-        sort: 1,
-        price: 1,
-        money: 1,
-        status: 1
+          cost: "",
+          reward: "",
+          cid: "",
       },
       sortMain: {
-        category_name: ""
+        title: ""
       },
       ruleValidate: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }]
@@ -290,7 +282,7 @@ export default {
     },
     getSort() {
       let vm = this;
-      axios.post("Goods/category_index", {}).then(function(response) {
+      axios.post("Setup/category_index", {}).then(function(response) {
         let res = response.data;
         if (res.code === 1) {
           vm.sortData = res.data.list;
@@ -303,9 +295,9 @@ export default {
     editSort(index, id) {
       let self = this;
       axios
-        .post("Goods/category_edit", {
+        .post("Setup/category_upd", {
           id: id,
-          category_name: self.sortData[index].category_name
+          title: self.sortData[index].title
         })
         .then(function(response) {
           console.log(response);
@@ -323,7 +315,7 @@ export default {
         if (valid) {
           self.modalSetting.loading = true;
           axios
-            .post("Goods/category_add", this.sortMain)
+            .post("Setup/category_add", this.sortMain)
             .then(function(response) {
               self.modalSetting.loading = false;
               console.log(response);
@@ -340,7 +332,7 @@ export default {
       });
     },
     sortCancel() {
-      this.sortMain.category_name = "";
+      this.sortMain.title = "";
       this.modalSetting.sortShow = false;
     },
     submit() {
@@ -350,9 +342,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id === 0) {
-            target = "Extension/add";
+            target = "Setup/add";
           } else {
-            target = "Extension/upd";
+            target = "Setup/upd";
           }
           axios.post(target, this.formItem).then(function(response) {
             if (response.data.code === 1) {
@@ -370,13 +362,10 @@ export default {
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.name = "";
-      this.formItem.sort = 1;
-      this.formItem.price = "";
-      this.formItem.money = "";
-      this.formItem.con = "";
-      this.editor.txt.html("");
-      this.formItem.status = 1;
+      this.formItem.cost = "";
+      this.formItem.reward = "";
+      this.formItem.cid = "";
+
     },
     doCancel(data) {
       if (!data) {
@@ -402,7 +391,7 @@ export default {
     getList() {
       let vm = this;
       axios
-        .get("Extension/index", {
+        .get("Setup/index", {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,
@@ -428,23 +417,7 @@ export default {
     }
   },
   mounted() {
-    let vm = this;
-    this.editor = new wangEditor("#wangeditor");
-    this.editor.customConfig.uploadFileName = "image";
-    this.editor.customConfig.uploadImgMaxLength = 1;
-    this.editor.customConfig.uploadImgServer =
-      config.front_url + "file/qn_upload";
-    this.editor.customConfig.uploadImgHooks = {
-      customInsert: function(insertImg, result, editor) {
-        if (result.code == 1) {
-          insertImg(result.data.filePath);
-        }
-      }
-    };
-    this.editor.customConfig.onchange = function(html) {
-      vm.formItem.con = html;
-    };
-    this.editor.create();
+
   }
 };
 </script>

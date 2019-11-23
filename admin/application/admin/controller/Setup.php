@@ -7,9 +7,11 @@
  */
 namespace app\admin\controller;
 
+use app\data\model\InvestmentClass;
 use app\data\model\InvestmentSet;
 use think\Request;
 use think\Db;
+use think\Validate;
 
 /**
  * @author fyk
@@ -18,13 +20,18 @@ use think\Db;
  */
 class Setup extends Base{
 
+    /**
+     * 投融设置列表
+     * @return array
+     * @throws \think\exception\DbException
+     */
     public function index()
     {
         $request = Request::instance();
         $param = $request->param();
         $where =[];
-        if(!empty($param['title'])){
-            $where['b.title'] = ['like','%'.$param['title'].'%'];
+        if(!empty($param['name'])){
+            $where['b.title'] = ['like','%'.$param['name'].'%'];
         }
 
         if(empty($param['page'])){
@@ -47,6 +54,118 @@ class Setup extends Base{
         ]);
 
 
+    }
+
+    /**
+     * 投融设置新增
+     * @return array
+     */
+    public function add(){
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['cost','require','发布费用不能为空'],
+            ['reward','require','赏金不能为空'],
+            ['cid','require','分类不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());exit();
+        }
+        $param['created_at'] = time();
+        $result = InvestmentSet::create($param);
+        if($result){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+
+    /**
+     * 投融设置修改
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function upd(){
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id', 'require', '缺少必要参数ID'],
+            ['cost','require','发布费用不能为空'],
+            ['reward','require','赏金不能为空'],
+            ['cid','require','分类不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());exit();
+        }
+        $param['updated_at'] = time();
+        $result = InvestmentSet::update($param);
+        if($result !== false){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+
+    /**
+     * 行业分类
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function category_index(){
+
+        $list = (new InvestmentClass())->select();
+        return $this->buildSuccess([
+            'list'=>$list,
+        ]);
+    }
+
+
+    /**
+     * 行业分类新增
+     * @return array
+     */
+    public function category_add(){
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['title','require','分类名称不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());exit();
+        }
+        $param['created_at'] = time();
+        $result = InvestmentClass::create($param);
+        if($result){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+
+    /**
+     * 行业分类修改
+     * @return array
+     */
+    public function category_upd(){
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id', 'require', '缺少必要参数ID'],
+            ['title','require','分类名称不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());exit();
+        }
+        $param['updated_at'] = time();
+        $result = InvestmentClass::update($param);
+        if($result !== false){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
     }
 
 }
