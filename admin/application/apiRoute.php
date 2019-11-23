@@ -130,6 +130,15 @@ Route::group('api', function () {
         Route::any('app_notice','api/Manuscript/app_notice'); //支付回调
         Route::any('set_meal','api/Manuscript/set_meal'); //套餐列表
     });
+
+    //投融界fyk
+    Route::group('Investment',function(){
+        Route::any('finance_add','api/Investment/finance_add'); //我要融资
+        Route::any('industry_field','api/Investment/industry_field'); //
+        Route::any('app_notice','api/Investment/app_notice'); //支付回调
+        Route::any('set_meal','api/Investment/set_meal'); //套餐列表Investment
+    });
+
     //定制需求
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
