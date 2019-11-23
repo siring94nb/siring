@@ -341,10 +341,12 @@ export default {
   }
   .answer_text p {
     background: #fff;
+    color: #000;
   }
   .question_text p {
-    background: #42929d;
-    color: #fff;
+    // background: #42929d;
+    background: rgb(102,255,0);
+    color: #000;
     text-align: left;
   }
   .question_text i,
@@ -361,7 +363,7 @@ export default {
     left: 10px;
   }
   .question_text i {
-    border-left: 10px solid #42929d;
+    border-left: 10px solid rgb(102,255,0);
     right: 10px;
   }
   .answer_text p a {
