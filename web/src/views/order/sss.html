@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>XST-app</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=0.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta name="keywords" content="test" />
+    <meta name="description" content="test" />
+    <meta name="author" content="XST-APP" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style" />
+    <meta content="telephone=no" name="format-detection" />
+    　　<style type="text/css">
+        body {
+            background: url(/static/images/yuyin_bg.jpg);
+            background-size: 100%;
+        }
+
+        @media all and (min-width: 640px) {
+
+            body,
+            html,
+            .wenwen-footer,
+            .speak_window {
+                width: 640px !important;
+                margin: 0 auto
+            }
+
+            .speak_window,
+            .wenwen-footer {
+                left: 50% !important;
+                margin-left: -320px
+            }
+        }
+
+        input,
+        button {
+            outline: none;
+        }
+
+        .wenwen-footer {
+            width: 100%;
+            position: fixed;
+            bottom: -5px;
+            left: 0;
+            background: #fff;
+            padding: 3%;
+            border-top: solid 1px #ddd;
+            box-sizing: border-box;
+        }
+
+        .wenwen_btn,
+        .wenwen_help {
+            width: 15%;
+            text-align: center;
+        }
+
+        .wenwen_btn img,
+        .wenwen_help img {
+            height: 40px;
+        }
+
+        .wenwen_text {
+            height: 40px;
+            border-radius: 5px;
+            border: solid 1px #636162;
+            box-sizing: border-box;
+            width: 66%;
+            text-align: center;
+            overflow: hidden;
+            margin-left: 2%;
+        }
+
+        .circle-button {
+            padding: 0 5px;
+        }
+
+        .wenwen_text .circle-button {
+            font-size: 14px;
+            color: #666;
+            line-height: 38px;
+        }
+
+        .write_box {
+            background: #fff;
+            width: 100%;
+            height: 40px;
+            line-height: 40px;
+        }
+
+        .write_box input {
+            height: 40px;
+            padding: 0 5px;
+            line-height: 40px;
+            width: 100%;
+            box-sizing: border-box;
+            border: 0;
+        }
+
+        .wenwen_help button {
+            width: 95%;
+            background: #42929d;
+            color: #fff;
+            border-radius: 5px;
+            border: 0;
+            height: 40px;
+        }
+
+        #wenwen {
+            height: 100%;
+        }
+
+        .speak_window {
+            overflow-y: scroll;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 50px;
+            left: 0;
+        }
+
+        .speak_box {
+            margin-bottom: 70px;
+            padding: 10px;
+        }
+
+        .question,
+        .answer {
+            margin-bottom: 1rem;
+        }
+
+        .question {
+            text-align: right;
+        }
+
+        .question>div {
+            display: inline-block;
+        }
+
+        .left {
+            float: left;
+        }
+
+        .right {
+            float: right;
+        }
+
+        .clear {
+            clear: both;
+        }
+
+        .heard_img {
+            height: 60px;
+            width: 60px;
+            border-radius: 5px;
+            overflow: hidden;
+            background: #ddd;
+        }
+
+        .heard_img img {
+            width: 100%;
+            height: 100%
+        }
+
+        .question_text,
+        .answer_text {
+            box-sizing: border-box;
+            position: relative;
+            display: table-cell;
+            min-height: 60px;
+        }
+
+        .question_text {
+            padding-right: 20px;
+        }
+
+        .answer_text {
+            padding-left: 20px;
+        }
+
+        .question_text p,
+        .answer_text p {
+            border-radius: 10px;
+            padding: .5rem;
+            margin: 0;
+            font-size: 14px;
+            line-height: 28px;
+            box-sizing: border-box;
+            vertical-align: middle;
+            display: table-cell;
+            height: 30px;
+            word-wrap: break-word;
+        }
+
+        .answer_text p {
+            background: #fff;
+        }
+
+        .question_text p {
+            background: #42929d;
+            color: #fff;
+            text-align: left;
+        }
+
+        .question_text i,
+        .answer_text i {
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            position: absolute;
+            top: 25px;
+        }
+
+        .answer_text i {
+            border-right: 10px solid #fff;
+            left: 10px;
+        }
+
+        .question_text i {
+            border-left: 10px solid #42929d;
+            right: 10px;
+        }
+
+        .answer_text p a {
+            color: #42929d;
+            display: inline-block;
+        }
+
+        .write_list {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            border-top: solid 1px #ddd;
+            padding: 5px;
+            line-height: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="header" class="head">
+        <div class="wrap">
+            <i class="menu_back"><a href="javascript:history.go(-1);"></a></i>
+            <div class="title">
+                <span class="title_d">
+                    <p>与 {$tonickname} 的聊天</p>
+                </span>
+                <div class="clear"></div>
+            </div>
+            <!--i class="menu_share"></i-->
+        </div>
+    </div>
+    <input type="hidden" name="myemail" id="myemail" value="{$myemail}" />
+    <input type="hidden" name="mynickname" id="mynickname" value="{$mynickname}" />
+    <input type="hidden" name="myavatar" id="myavatar" value="{$myavatar}" />
+    <input type="hidden" name="toemail" id="toemail" value="{$toemail}" />
+    <input type="hidden" name="tonickname" id="tonickname" value="{$tonickname}" />
+    <input type="hidden" name="toavatar" id="toavatar" value="{$toavatar}" />
+
+    <!-- 对话内容 -->
+    <div class="speak_window">
+        <div class="speak_box">
+
+        </div>
+    </div>
+
+    <!-- 内容输入-->
+    <div class="wenwen-footer">
+        <div class="wenwen_btn left"><img src="/static/images/jp_btn.png"></div>
+        <div class="wenwen_text left">
+            <div class="write_box"><input type="text" class="left" onKeyUp="keyup()" maxlength="100"
+                    placeholder="请输入信息(100字以内)..." /></div>
+        </div>
+        <div class="wenwen_help right">
+            <button onClick="send()" class="right">发送</button>
+        </div>
+        <div style="opacity:0;" class="clear"></div>
+    </div>
+
+    <script type="text/javascript">
+        if ("WebSocket" in window) {
+            var ws = new WebSocket("ws://192.168.0.1:9052");
+            ws.onopen = function () {
+                console.log("握手成功");
+                var myemail = $("#myemail").val();
+                var toemail = $("#toemail").val();
+                var arr = { "flag": "init", "from": myemail, "to": toemail };
+                var str = JSON.stringify(arr);
+                ws.send(str);
+            };
+            ws.onmessage = function (e) {
+                var toemail = $("#toemail").val();
+                var toavatar = $("#toavatar").val();
+                var obj = JSON.parse(e.data);
+                console.log(e.data);
+                //但同时与两个人聊天时，可能两个人的消息都会出现在当前窗口，所以此处加个判断，此窗口只接收当前聊天对象的消息，其他则忽略
+                if (obj.from === toemail) {
+                    var ans = '<div class="answer"><div class="heard_img left"><img src="' + toavatar + '"></div>';
+                    ans += '<div class="answer_text"><p>' + obj.content + '</p><i></i>';
+                    ans += '</div></div>';
+                    $('.speak_box').append(ans);
+                    for_bottom();
+                }
+            };
+            ws.onerror = function () {
+                console.log("error")
+            
+                var str = '<div class="question">';
+                str += '<div class="heard_img right"><img src="/static/images/xitong.jpg"></div>';
+                str += '<div class="question_text clear"><p>聊天服务器出现异常，暂时无法提供服务。</p><i></i>';
+                str += '</div></div>';
+                $('.speak_box').append(str);
+                $('.write_box input').val('');
+                $('.write_box input').focus();
+                autoWidth();
+                for_bottom();
+            };
+
+            function send() {
+                var content = $('.write_box input').val();
+                if (content === '') {
+                    alert('请输入消息！');
+                    $('.write_box input').focus();
+                } else {
+                    var toemail = $("#toemail").val();
+                    var myemail = $("#myemail").val();
+                    var myavatar = $("#myavatar").val();
+                    var arr = { "flag": "msg", "to": toemail, "from": myemail, "content": content };
+                    var msg = JSON.stringify(arr);
+                    console.log(msg);
+                    ws.send(msg);
+                    var str = '<div class="question">';
+                    str += '<div class="heard_img right"><img src="' + myavatar + '"></div>';
+                    str += '<div class="question_text clear"><p>' + content + '</p><i></i>';
+                    str += '</div></div>';
+                    $('.speak_box').append(str);
+                    $('.write_box input').val('');
+                    $('.write_box input').focus();
+                    autoWidth();
+                    for_bottom();
+                }
+
+            }
+        } else {
+            alert("您的浏览器不支持 WebSocket!");
+        }
+
+        function for_bottom() {
+            var speak_height = $('.speak_box').height();
+            $('.speak_box,.speak_window').animate({ scrollTop: speak_height }, 500);
+        }
+
+        function autoWidth() {
+            $('.question_text').css('max-width', $('.question').width() - 60);
+        }
+
+        autoWidth();
+
+    </script>
+
+</body>
+
+</html>
