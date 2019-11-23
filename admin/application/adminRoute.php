@@ -890,7 +890,7 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
-    //投融界-检测报告
+    //投融界-投融项目
     Route::group('Testing', [
         'index' => [
             'admin/Testing/index',

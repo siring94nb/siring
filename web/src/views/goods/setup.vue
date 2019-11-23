@@ -148,7 +148,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Extension/del", {
+            .post("Setup/del", {
               id: currentRow.id
             })
             .then(function(response) {

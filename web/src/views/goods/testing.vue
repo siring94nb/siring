@@ -135,25 +135,55 @@
                         key: 'id'
                     },
                     {
+                        title: '用户账号',
+                        align: 'center',
+                        key: 'phone',
+                    },
+                    {
+                        title: '订单编号',
+                        align: 'center',
+                        key: 'no',
+                    },
+                    {
                         title: '项目名称',
                         align: 'center',
-                        key: 'name',
+                        key: 'title',
                     },
                     {
                         title: '行业领域',
                         align: 'center',
-                        key: 'price',
+                        key: 'title_class',
                     },
                     {
-                        title: '期望打赏金',
+                        title: '项目亮点',
                         align: 'center',
-                        key: 'price',
+                        key: 'bright',
                     },
-
                     {
-                        title: '状态',
+                        title: '支付状态',
                         align: 'center',
-                        key: 'name',
+                        key: 'pay_status',
+                        render: ( h , param ) => {
+                            if(param.row.pay_status == 1){
+                                return h('div',['已支付']);
+                            }else{
+                                return h('div',['未支付']);
+                            }
+                        }
+                    },
+                    {
+                        title: '审核状态',
+                        align: 'center',
+                        key: 'status',
+                        render: ( h , param ) => {
+                            if(param.row.status == 1){
+                                return h('div',['待审核']);
+                            }else if(param.row.status == 2){
+                                return h('div',['审核成功']);
+                            }else if(param.row.status == 3){
+                                return h('div',['审核失败']);
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -231,9 +261,9 @@
                         self.modalSetting.loading = true;
                         let target = '';
                         if (this.formItem.id === 0) {
-                            target = 'Extension/add';
+                            target = 'Testing/add';
                         } else {
-                            target = 'Extension/upd';
+                            target = 'Testing/upd';
                         }
                         axios.post(target, this.formItem).then(function (response) {
                             if (response.data.code === 1) {
@@ -282,7 +312,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('Extension/index', {
+                axios.get('Testing/index', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,

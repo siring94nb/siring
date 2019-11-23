@@ -10,7 +10,6 @@ namespace app\admin\controller;
 use app\data\model\InvestmentClass;
 use app\data\model\InvestmentSet;
 use think\Request;
-use think\Db;
 use think\Validate;
 
 /**
@@ -64,8 +63,8 @@ class Setup extends Base{
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['cost','require','发布费用不能为空'],
-            ['reward','require','赏金不能为空'],
+            ['cost','require|number','发布费用不能为空|费用必须为数字'],
+            ['reward','require|number','赏金不能为空|赏金必须为数字'],
             ['cid','require','分类不能为空'],
         ]);
         if(!$validate->check($param)){
@@ -91,8 +90,8 @@ class Setup extends Base{
         $param = $request->param();
         $validate = new Validate([
             ['id', 'require', '缺少必要参数ID'],
-            ['cost','require','发布费用不能为空'],
-            ['reward','require','赏金不能为空'],
+            ['cost','require|number','发布费用不能为空|费用必须为数字'],
+            ['reward','require|number','赏金不能为空|赏金必须为数字'],
             ['cid','require','分类不能为空'],
         ]);
         if(!$validate->check($param)){
@@ -100,6 +99,28 @@ class Setup extends Base{
         }
         $param['updated_at'] = time();
         $result = InvestmentSet::update($param);
+        if($result !== false){
+            return $this->buildSuccess([]);
+        }else{
+            return $this->buildFailed(0,'操作失败');
+        }
+    }
+
+    /**
+     * 投融设置删除
+     * @return array
+     */
+    public function del(){
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id', 'require', '缺少必要参数ID'],
+        ]);
+        if(!$validate->check($param)){
+            return $this->buildFailed(0,$validate->getError());exit();
+        }
+
+        $result = InvestmentSet::destroy($param);
         if($result !== false){
             return $this->buildSuccess([]);
         }else{
