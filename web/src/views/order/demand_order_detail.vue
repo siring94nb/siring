@@ -39,7 +39,7 @@
     <div class="content-reply">
       <div class="content-main">
         <div class="content-title" :class="{'content-sel-color': status > 0}">定制需求</div>
-        <div v-if="status == 2">
+        <div v-if="status == 1">
           <div class="content-tips">
             <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
             <div class="content-text">等待需求确认</div>
@@ -48,7 +48,7 @@
             <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
           </div>
         </div>
-        <div class="content-zip">
+        <div class="content-zip"  v-if="status == 2">
           <div>
             <div></div>
             <div></div>
