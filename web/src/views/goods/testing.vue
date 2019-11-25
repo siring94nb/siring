@@ -20,9 +20,9 @@
         <Row>
             <Col span="24">
                 <Card>
-                    <p slot="title" style="height: 32px">
-                        <Button type="primary" @click="alertAdd" icon="md-add">新增</Button>
-                    </p>
+                    <!--<p slot="title" style="height: 32px">-->
+                        <!--<Button type="primary" @click="alertAdd" icon="md-add">新增</Button>-->
+                    <!--</p>-->
                     <div>
                         <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
                     </div>
@@ -40,29 +40,14 @@
                 <span>{{formItem.id ? '编辑' : '新增'}}</span>
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-                <FormItem label="活动主体" prop="name" >
-                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入活动主体"/>
+                <FormItem label="报告主题" prop="name" >
+                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入报告主题"/>
                 </FormItem>
-                <FormItem label="详细地址" prop="address" >
-                    <Input  style="width: 500px" v-model="formItem.address" placeholder="请输入详细地址"/>
-                </FormItem>
-                <FormItem label="活动上限人数" prop="sort" >
-                    <InputNumber  :min="1" v-model="formItem.sort"></InputNumber>
-                </FormItem>
-                <FormItem label="会务费用" prop="price">
-                    <Input style="width: 150px"  v-model="formItem.price" placeholder="元"/>
-                </FormItem>
-                <FormItem label="活动排序" prop="sort" >
-                    <InputNumber  :min="1" v-model="formItem.sort"></InputNumber>
+                <FormItem label="最低报价" prop="address" >
+                    <Input  style="width: 500px" v-model="formItem.address" placeholder="请输入最低报价"/>
                 </FormItem>
                 <FormItem label="活动回顾" prop="con">
                     <div id="wangeditor" v-model="formItem.con" ></div>
-                </FormItem>
-                <FormItem label="状态"  prop="status">
-                    <RadioGroup v-model="formItem.status">
-                        <Radio :label="0" >暂不上架</Radio>
-                        <Radio :label="1" >立即上架</Radio>
-                    </RadioGroup>
                 </FormItem>
             </Form>
             <div slot="footer">
@@ -150,36 +135,55 @@
                         key: 'id'
                     },
                     {
-                        title: '套餐名称',
+                        title: '用户账号',
                         align: 'center',
-                        key: 'name',
-                    },
-                    // {
-                    //     title: '套餐描述',
-                    //     align: 'center',
-                    //     key: 'con',
-                    // },
-                    {
-                        title: '价格',
-                        align: 'center',
-                        key: 'price',
+                        key: 'phone',
                     },
                     {
-                        title: '状态',
+                        title: '订单编号',
                         align: 'center',
-                        key: 'status',
+                        key: 'no',
+                    },
+                    {
+                        title: '项目名称',
+                        align: 'center',
+                        key: 'title',
+                    },
+                    {
+                        title: '行业领域',
+                        align: 'center',
+                        key: 'title_class',
+                    },
+                    {
+                        title: '项目亮点',
+                        align: 'center',
+                        key: 'bright',
+                    },
+                    {
+                        title: '支付状态',
+                        align: 'center',
+                        key: 'pay_status',
                         render: ( h , param ) => {
-                            if(param.row.status == 1){
-                                return h('div',['正常']);
+                            if(param.row.pay_status == 1){
+                                return h('div',['已支付']);
                             }else{
-                                return h('div',['失效']);
+                                return h('div',['未支付']);
                             }
                         }
                     },
                     {
-                        title: '排序',
+                        title: '审核状态',
                         align: 'center',
-                        key: 'sort',
+                        key: 'status',
+                        render: ( h , param ) => {
+                            if(param.row.status == 1){
+                                return h('div',['待审核']);
+                            }else if(param.row.status == 2){
+                                return h('div',['审核成功']);
+                            }else if(param.row.status == 3){
+                                return h('div',['审核失败']);
+                            }
+                        }
                     },
                     {
                         title: '操作',
@@ -214,7 +218,7 @@
                 },
                 ruleValidate: {
                     name: [
-                        { required: true, message: '请输入名称', trigger: 'blur' }
+                        { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
                     // add_time: [
                     //     { required: true, message: '请选择开始时间', trigger: 'blur' }
@@ -257,9 +261,9 @@
                         self.modalSetting.loading = true;
                         let target = '';
                         if (this.formItem.id === 0) {
-                            target = 'Extension/add';
+                            target = 'Testing/add';
                         } else {
-                            target = 'Extension/upd';
+                            target = 'Testing/upd';
                         }
                         axios.post(target, this.formItem).then(function (response) {
                             if (response.data.code === 1) {
@@ -308,7 +312,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('Extension/index', {
+                axios.get('Testing/index', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,

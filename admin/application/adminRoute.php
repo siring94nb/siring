@@ -427,7 +427,7 @@ Route::group('admin', function () use ($afterBehavior) {
       *软件定制订单--定制需求订单
       */
      Route::group('NeedOrder', [
-        'need_index' => [                        //定制需求订单列表      
+        'need_index' => [                        //定制需求订单列表
             'admin/NeedOrder/need_index',
             ['method' => 'get']
         ],
@@ -836,6 +836,78 @@ Route::group('admin', function () use ($afterBehavior) {
     //商品分类列表
     Route::group('Category', [
 
+    ], ['after_behavior' => $afterBehavior]);
+
+    //投融界-日程安排
+    Route::group('Schedule', [
+        'index' => [
+            'admin/Schedule/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Schedule/add',
+            ['method' => 'post']
+        ],
+        'upd'   => [
+            'admin/Schedule/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Schedule/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //投融设置
+    Route::group('Setup', [
+        'index' => [
+            'admin/Setup/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Setup/add',
+            ['method' => 'post']
+        ],
+        'upd'   => [
+            'admin/Setup/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Setup/del',
+            ['method' => 'post']
+        ],
+        'category_index' => [
+            'admin/Setup/category_index',
+            ['method' => 'post']
+        ],
+        'category_add'   => [
+            'admin/Setup/category_add',
+            ['method' => 'post']
+        ],
+        'category_upd'   => [
+            'admin/Setup/category_upd',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //投融界-投融项目
+    Route::group('Testing', [
+        'index' => [
+            'admin/Testing/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Testing/add',
+            ['method' => 'post']
+        ],
+        'upd'   => [
+            'admin/Testing/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Testing/del',
+            ['method' => 'post']
+        ],
     ], ['after_behavior' => $afterBehavior]);
 
 });
