@@ -1,13 +1,14 @@
 import Vue from 'vue';
 import iView from 'iview';
-import {router} from './router/index';
-import {appRouter} from './router/router';
+import { router } from './router/index';
+import { appRouter } from './router/router';
 import store from './store';
 import App from './app.vue';
 import '@/locale';
 import 'iview/dist/styles/iview.css';
 import VueI18n from 'vue-i18n';
-
+import iviewArea from 'iview-area';
+Vue.use(iviewArea);
 Vue.use(VueI18n);
 Vue.use(iView);
 
@@ -19,7 +20,7 @@ new Vue({
     data: {
         currentPageName: ''
     },
-    mounted () {
+    mounted() {
         this.currentPageName = this.$route.name;
         // 显示打开的页面的列表
         this.$store.commit('setOpenedList');
@@ -27,7 +28,7 @@ new Vue({
         // 权限菜单过滤相关
         this.$store.commit('updateMenuList');
     },
-    created () {
+    created() {
         let tagsList = [];
         appRouter.map((item) => {
             if (item.children.length <= 1) {
