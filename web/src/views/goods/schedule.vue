@@ -69,7 +69,7 @@
             class="region"
             level="2"
             data-type="name"
-            v-model="formItem.res_s"
+            v-model="res_s"
           />
         </FormItem>
         <FormItem label="详细地址" prop="address">
@@ -287,6 +287,7 @@ export default {
       typeList: [],
       UploadAction: "",
       visible: false,
+      res_s: [],
       columnsList: [
         {
           title: "序号",
@@ -372,7 +373,7 @@ export default {
         price: 1,
         money: 1,
         status: 1,
-        res_s: []
+        region: '',
       },
       ruleValidate: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }]
@@ -409,6 +410,7 @@ export default {
     },
     regionChange(data) {
       // console.log(data);
+      this.formItem.region = data.join(",")
     },
     alertAdd() {
       //图片
@@ -467,6 +469,7 @@ export default {
       return check;
     },
     submit() {
+      console.log(this.formItem)
       let self = this;
       this.$refs["myForm"].validate(valid => {
         if (valid) {
