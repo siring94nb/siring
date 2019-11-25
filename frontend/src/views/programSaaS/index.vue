@@ -94,7 +94,7 @@
               小程序名称
               <span style="color:red;">*</span>
             </div>
-            <input type="text" placeholder="给即将开通的小程序起个名字吧~！" v-model="valData.prog_name" />
+            <input type="text" placeholder="给即将开通的小程序起个名字吧~！" style="width:265px;" v-model="valData.prog_name" />
           </div>
           <div class="upload-img">
             <div style="width:170px;font-size:18px;">
