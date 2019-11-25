@@ -63,7 +63,7 @@
         <FormItem label="活动主体" prop="name">
           <Input style="width: 500px" v-model="formItem.name" placeholder="请输入活动主体" />
         </FormItem>
-        <FormItem label="活动地址">
+        <FormItem label="活动地址" prop="region">
           <al-selector
             @on-change="regionChange"
             class="region"
@@ -242,7 +242,7 @@ const deleteButton = (vm, h, currentRow, index) => {
       on: {
         "on-ok": () => {
           axios
-            .post("Extension/del", {
+            .post("Schedule/del", {
               id: currentRow.id
             })
             .then(function(response) {
@@ -476,9 +476,9 @@ export default {
           self.modalSetting.loading = true;
           let target = "";
           if (this.formItem.id === 0) {
-            target = "Extension/add";
+            target = "Schedule/add";
           } else {
-            target = "Extension/upd";
+            target = "Schedule/upd";
           }
           axios.post(target, this.formItem).then(function(response) {
             if (response.data.code === 1) {
