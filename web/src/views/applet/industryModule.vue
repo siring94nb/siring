@@ -512,6 +512,7 @@ export default {
       //图片
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;
+        this.uploadListSlt = this.$refs.uploads.fileList;
       });
       this.modalSetting.show = true;
     },
