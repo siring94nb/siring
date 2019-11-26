@@ -15,20 +15,23 @@
           </div>
         </div>
         <div class="personal-profile">
-          <div>
+          <div class="personal-top">
             <img :src="personal.images" alt />
-            <div>{{personal.position}}：{{personal.name}}</div>
-            <div>{{personal.egName}}</div>
+            <div class="name">{{personal.position}}：{{personal.name}}</div>
+            <div class="egname">{{personal.egName}}</div>
           </div>
-          <div>
+          <div class="personal-bottom">
             <div>
-              <span>个人介绍：{{personal.introduce}}</span>
+              <span>个人介绍：</span>
+              {{personal.introduce}}
             </div>
             <div>
-              <span>涉及领域：{{personal.field}}</span>
+              <span>涉及领域：</span>
+              {{personal.field}}
             </div>
             <div>
-              <span>服务过的品牌：{{personal.brand}}</span>
+              <span>服务过的品牌：</span>
+              {{personal.brand}}
             </div>
           </div>
         </div>
@@ -149,10 +152,19 @@ export default {
     margin: 40px auto;
   }
   .core-team {
-    background-color: rgb(232, 232, 232);
+    background-color: rgb(228, 228, 228);
+    padding: 30px;
+    display: flex;
+    justify-content: center;
     .team-list {
       display: flex;
+      flex-wrap: wrap;
+      background-color: rgb(232, 232, 232);
+      width: 60%;
+      margin-right: 10px;
+      box-shadow: 0 0 10px -5px;
       .team-member {
+        margin: 0 1px 1px 0;
         width: 220px;
         height: 300px;
         text-align: center;
@@ -166,6 +178,32 @@ export default {
           height: 200px;
           margin-top: 20px;
         }
+      }
+    }
+
+    .personal-profile {
+      width: 25%;
+      background-color: rgb(99, 99, 99);
+      color: #fff;
+      line-height: 26px;
+      .personal-top {
+        text-align: center;
+        margin-top: 20px;
+        div {
+          font-weight: 700;
+          font-size: 20px;
+        }
+        .egname {
+          color: rgb(246, 147, 73);
+        }
+        img {
+          width: 230px;
+          height: 230px;
+        }
+      }
+      .personal-bottom {
+        margin-top: 10px;
+        padding: 0 30px;
       }
     }
   }
