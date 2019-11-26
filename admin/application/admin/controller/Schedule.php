@@ -7,12 +7,16 @@
  */
 namespace app\admin\controller;
 
+
+use app\data\model\Meeting;
 use think\Request;
 use think\Db;
+use think\Validate;
+
 class Schedule extends Base{
 
     /**
-     * 投融设置列表
+     * 日程安排列表
      * @return array
      * @throws \think\exception\DbException
      */
@@ -21,8 +25,8 @@ class Schedule extends Base{
         $request = Request::instance();
         $param = $request->param();
         $where =[];
-        if(!empty($param['name'])){
-            $where['b.title'] = ['like','%'.$param['name'].'%'];
+        if(!empty($param['title'])){
+            $where['title'] = ['like','%'.$param['name'].'%'];
         }
 
         if(empty($param['page'])){
@@ -32,11 +36,10 @@ class Schedule extends Base{
             $param['size'] = 10;
         }
 
-        $field = 'a.id,a.cost,a.reward,a.cid,b.title';
-        $order = 'a.id desc';
+        $field = 'id,title,field_img,img,region,address,upper_num,add_time,end_time,is_rec,sort';
+        $order = 'id desc';
 
-        $list = (new InvestmentSet())->alias('a')->join('investment_class b','a.cid=b.id')
-            ->field($field) -> where( $where ) -> order( $order )
+        $list = (new Meeting())->field($field) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
         return $this->buildSuccess([
@@ -48,23 +51,32 @@ class Schedule extends Base{
     }
 
     /**
-     * 投融设置新增
+     * 日程安排新增
      * @return array
      */
     public function add(){
         $request = Request::instance();
         $param = $request->param();
-        pp($param);die;
+        $param['add_time'] = strtotime($param['add_time']);
+        $param['end_time'] = strtotime($param['end_time']);
         $validate = new Validate([
-            ['cost','require|number','发布费用不能为空|费用必须为数字'],
-            ['reward','require|number','赏金不能为空|赏金必须为数字'],
-            ['cid','require','分类不能为空'],
+            ['title','require','活动主题不能为空'],
+            ['cost','require','费用不能为空'],
+            ['region','require','省市区不能为空'],
+            ['address','require','详细地址不能为空'],
+            ['upper_num','require|number','人数不能为空|人数必须为数字'],
+            ['sort','require|number','排序不能为空|排序必须为数字'],
+            ['status','require|number','状态不能为空|状态必须为数字'],
+            ['add_time','require','开始时间不能为空'],
+            ['end_time','require','结束时间不能为空'],
+            ['con','require','活动回顾不能为空'],
         ]);
         if(!$validate->check($param)){
             return $this->buildFailed(0,$validate->getError());exit();
         }
         $param['created_at'] = time();
-        $result = InvestmentSet::create($param);
+
+        $result = Meeting::create($param);
         if($result){
             return $this->buildSuccess([]);
         }else{
@@ -73,7 +85,7 @@ class Schedule extends Base{
     }
 
     /**
-     * 投融设置修改
+     * 日程安排修改
      * @return array
      * @throws \think\Exception
      * @throws \think\exception\PDOException
@@ -83,15 +95,22 @@ class Schedule extends Base{
         $param = $request->param();
         $validate = new Validate([
             ['id', 'require', '缺少必要参数ID'],
-            ['cost','require|number','发布费用不能为空|费用必须为数字'],
-            ['reward','require|number','赏金不能为空|赏金必须为数字'],
-            ['cid','require','分类不能为空'],
+            ['title','require','活动主题不能为空'],
+            ['cost','require','费用不能为空'],
+            ['region','require','省市区不能为空'],
+            ['address','require','详细地址不能为空'],
+            ['upper_num','require|number','人数不能为空|人数必须为数字'],
+            ['sort','require|number','排序不能为空|排序必须为数字'],
+            ['status','require|number','状态不能为空|状态必须为数字'],
+            ['add_time','require','开始时间不能为空'],
+            ['end_time','require','结束时间不能为空'],
+            ['con','require','活动回顾不能为空'],
         ]);
         if(!$validate->check($param)){
             return $this->buildFailed(0,$validate->getError());exit();
         }
         $param['updated_at'] = time();
-        $result = InvestmentSet::update($param);
+        $result = Meeting::update($param);
         if($result !== false){
             return $this->buildSuccess([]);
         }else{
@@ -100,7 +119,7 @@ class Schedule extends Base{
     }
 
     /**
-     * 投融设置删除
+     * 日程安排删除
      * @return array
      */
     public function del(){
@@ -113,7 +132,7 @@ class Schedule extends Base{
             return $this->buildFailed(0,$validate->getError());exit();
         }
 
-        $result = InvestmentSet::destroy($param);
+        $result = Meeting::destroy($param);
         if($result !== false){
             return $this->buildSuccess([]);
         }else{

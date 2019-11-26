@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\data\model\InvestmentClass;
 use app\data\model\InvestmentProject;
+use app\data\model\InvestmentSet;
 use think\Controller;
 use think\Request;
 use think\Validate;
@@ -77,58 +78,73 @@ class Investment extends Controller
     }
 
     /**
-     * 保存新建的资源
-     *
-     * @param  \think\Request  $request
-     * @return \think\Response
+     * 分类费用
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function save(Request $request)
+    public function industry_cost()
     {
-        //
+
+        $data = InvestmentSet::industry_index();
+
+        return $data ? returnJson(1,'获取成功',$data) :  returnJson(0,'获取失败',$data);
+    }
+
+
+    /**
+     * 软件定制商品列表
+     * @throws \think\exception\DbException
+     */
+    public function industry_list()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $good = new InvestmentProject();
+
+        $uid = Session::get("uid");
+
+        if($uid){
+
+            $uid = Session::get("uid");
+            $data = $good->user_investment_list($param,$uid);
+
+
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        }
+        $data = $good->investment_list($param);
+
+
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
     }
 
     /**
-     * 显示指定的资源
-     *
-     * @param  int  $id
-     * @return \think\Response
+     * 项目详情
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
      */
-    public function read($id)
+    public function project_details()
     {
-        //
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['id', 'require', '项目主键id不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+
+        $project = new InvestmentProject();
+
+        $data = $project->details($param);
+
+        return $data ? returnJson(1,'获取成功',$data) :  returnJson(0,'获取失败',$data);
     }
 
-    /**
-     * 显示编辑资源表单页.
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * 保存更新的资源
-     *
-     * @param  \think\Request  $request
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * 删除指定资源
-     *
-     * @param  int  $id
-     * @return \think\Response
-     */
-    public function delete($id)
-    {
-        //
-    }
 }
