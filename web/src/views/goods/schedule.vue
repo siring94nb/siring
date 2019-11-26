@@ -16,7 +16,7 @@
         <Card style="margin-bottom: 10px">
           <Form inline>
             <FormItem style="margin-bottom: 0">
-              <Input v-model="searchConf.name" placeholder="请输入名称"></Input>
+              <Input v-model="searchConf.title" placeholder="请输入名称"></Input>
             </FormItem>
             <FormItem style="margin-bottom: 0">
               <Button type="primary" @click="search">查询</Button>
@@ -60,8 +60,8 @@
         <span>{{formItem.id ? '编辑' : '新增'}}</span>
       </p>
       <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="100">
-        <FormItem label="活动主体" prop="name">
-          <Input style="width: 500px" v-model="formItem.name" placeholder="请输入活动主体" />
+        <FormItem label="活动主体" prop="title">
+          <Input style="width: 500px" v-model="formItem.title" placeholder="请输入活动主体" />
         </FormItem>
         <FormItem label="活动地址" prop="region">
           <al-selector
@@ -91,11 +91,11 @@
             style="width: 200px"
           ></DatePicker>
         </FormItem>
-        <FormItem label="活动上限人数" prop="sort">
-          <InputNumber :min="1" v-model="formItem.sort"></InputNumber>
+        <FormItem label="活动上限人数" prop="upper_num">
+          <InputNumber :min="1" v-model="formItem.upper_num"></InputNumber>
         </FormItem>
-        <FormItem label="会务费用" prop="price">
-          <Input style="width: 150px" v-model="formItem.price" placeholder="元" />
+        <FormItem label="会务费用" prop="cost">
+          <Input style="width: 150px" v-model="formItem.cost" placeholder="元" />
         </FormItem>
         <FormItem label="会务场地图" prop="img">
           <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
@@ -199,10 +199,9 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
-          vm.formItem.name = currentRow.name;
+          vm.formItem.title = currentRow.title;
           vm.formItem.sort = currentRow.sort;
-          vm.formItem.price = currentRow.price;
-          vm.formItem.money = currentRow.money;
+          vm.formItem.cost = currentRow.cost;
           vm.formItem.con = currentRow.con;
           vm.editor.txt.html(vm.formItem.con);
           vm.formItem.status = currentRow.status;
@@ -300,42 +299,42 @@ export default {
         {
           title: "活动主题",
           align: "center",
-          key: "name"
+          key: "title"
         },
         {
           title: "会务场地图片",
           align: "center",
-          key: "name"
+          key: "field_img"
         },
         {
           title: "活动回顾单图",
           align: "center",
-          key: "name"
+          key: "img"
         },
         {
           title: "活动地址",
           align: "center",
-          key: "name"
+          key: "address"
         },
         {
           title: "上限人数",
           align: "center",
-          key: "name"
+          key: "upper_num"
         },
         {
           title: "活动时间",
           align: "center",
-          key: "price"
+          key: "add_time"
         },
         {
           title: "回顾页面推荐",
           align: "center",
-          key: "status",
+          key: "is_rec",
           render: (h, param) => {
-            if (param.row.status == 1) {
-              return h("div", ["正常"]);
+            if (param.row.is_rec == 1) {
+              return h("div", ["推荐"]);
             } else {
-              return h("div", ["失效"]);
+              return h("div", ["不推荐"]);
             }
           }
         },
@@ -360,7 +359,7 @@ export default {
         listCount: 0
       },
       searchConf: {
-        name: ""
+        title: ""
       },
       modalSetting: {
         show: false,
@@ -368,13 +367,13 @@ export default {
         index: 0
       },
       formItem: {
-        id: 0,
-        name: "",
-        sort: 1,
-        price: 1,
-        money: 1,
-        status: 1,
-        region: '',
+          id: 0,
+          title: "",
+          upper_num:1,
+          sort: 1,
+          cost: 1,
+          status: 1,
+          region: '',
       },
       ruleValidate: {
         name: [{ required: true, message: "请输入名称", trigger: "blur" }]
@@ -501,10 +500,11 @@ export default {
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.name = "";
+      this.formItem.title = "";
+      this.formItem.region = "";
+      this.formItem.upper_num = "";
       this.formItem.sort = 1;
-      this.formItem.price = "";
-      this.formItem.money = "";
+      this.formItem.cost = "";
       this.formItem.con = "";
       this.editor.txt.html("");
       this.formItem.status = 1;
@@ -541,26 +541,26 @@ export default {
     getList() {
       let vm = this;
       axios
-        .get("Extension/index", {
+        .get("Schedule/index", {
           params: {
             page: vm.tableShow.currentPage,
             size: vm.tableShow.pageSize,
-            name: vm.searchConf.name
+            title: vm.searchConf.title
           }
         })
         .then(function(response) {
           let res = response.data;
           if (res.code === 1) {
             //图片
-              // if (res.data.data.goods_images != "") {
-              //   var str = res.data.data.goods_images.split(",");
-              //   for (let i = 0; i < str.length; i++) {
-              //     if (str[i] != "") {
-              //       vm.iconList.push({ name: "", url: str[i] });
-              //     }
-              //   }
-              //   // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
-              // }
+            //   if (res.data.data.goods_images != "") {
+            //     var str = res.data.data.goods_images.split(",");
+            //     for (let i = 0; i < str.length; i++) {
+            //       if (str[i] != "") {
+            //         vm.iconList.push({ name: "", url: str[i] });
+            //       }
+            //     }
+            //     // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+            //   }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
           } else {
