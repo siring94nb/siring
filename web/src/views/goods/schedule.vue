@@ -559,7 +559,7 @@ export default {
               //       vm.iconList.push({ name: "", url: str[i] });
               //     }
               //   }
-              //   // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+              //   // vm.iconListSlt = [{ name: "", url: res.data.data.goods_images }];
               // }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
