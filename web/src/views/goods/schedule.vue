@@ -122,6 +122,7 @@
             type="drag"
             name="image"
             :action="UploadAction"
+            :multiple ="true"
             style="display: inline-block;width:58px;"
           >
             <div style="width: 58px;height:58px;line-height: 58px;">
@@ -416,6 +417,7 @@ export default {
       //图片
       this.$nextTick(() => {
         this.uploadList = this.$refs.upload.fileList;
+        this.uploadListSlt = this.$refs.uploads.fileList;
       });
       this.modalSetting.show = true;
     },
@@ -429,7 +431,10 @@ export default {
       // file.url = res.data;
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
-      this.formValidate.model_image = res.data.filePath;
+      // this.formValidate.model_image = res.data.filePath;
+      his.formValidate.goods_images == ""
+        ? (this.formValidate.goods_images += res.data.filePath + ",")
+        : (this.formValidate.goods_images += "," + res.data.filePath);
     },
     handleFormatError(file) {
       this.$Message.error("文件格式不正确, 请选择jpg或者png.");
@@ -438,14 +443,14 @@ export default {
       this.$Message.error("文件大小不能超过10M");
     },
     handleBeforeUpload() {
-      const check = this.uploadList.length < 1;
+      const check = this.uploadList.length < 5;
       if (!check) {
-        this.$Message.error("只能上传一张品牌图");
+        this.$Message.error("只能上传四张品牌图");
       }
       return check;
     },
 
-    //缩略图
+    //单图
     handleRemoveSlt(file) {
       const fileList = this.$refs.uploads.fileList;
       this.$refs.uploads.fileList.splice(fileList.indexOf(file), 1);
@@ -503,6 +508,14 @@ export default {
       this.formItem.con = "";
       this.editor.txt.html("");
       this.formItem.status = 1;
+      for (var i = 0; i < this.uploadList.length; i++) {
+        this.handleRemove(this.uploadList[i]);
+      }
+      for (var i = 0; i < this.uploadListSlt.length; i++) {
+        this.handleRemoveSlt(this.uploadListSlt[i]);
+      }
+      this.iconList = [];
+      this.iconListSlt = [];
     },
     doCancel(data) {
       if (!data) {
@@ -538,6 +551,16 @@ export default {
         .then(function(response) {
           let res = response.data;
           if (res.code === 1) {
+            //图片
+              // if (res.data.data.goods_images != "") {
+              //   var str = res.data.data.goods_images.split(",");
+              //   for (let i = 0; i < str.length; i++) {
+              //     if (str[i] != "") {
+              //       vm.iconList.push({ name: "", url: str[i] });
+              //     }
+              //   }
+              //   // vm.iconList = [{ name: "", url: res.data.data.goods_images }];
+              // }
             vm.tableData = res.data.list;
             vm.tableShow.listCount = res.data.count;
           } else {

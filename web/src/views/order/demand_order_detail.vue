@@ -39,6 +39,29 @@
     <div class="content-reply">
       <div class="content-main">
         <div class="content-title" :class="{'content-sel-color': status > 0}">定制需求</div>
+        <div v-if="status == 2">
+          <div class="content-tips">
+            <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
+            <div class="content-text">等待需求确认</div>
+          </div>
+          <div class="content-arrow">
+            <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
+          </div>
+        </div>
+        <div class="content-zip" v-if="status < 2">
+          <div class="zip-main">
+            <span class="zip-text">预览</span>
+            <img style="vertical-align: middle;" src="../../images/u587.gif" alt />
+            <span class="zip-text">下载</span>
+            <div>**需求表.zip</div>
+          </div>
+          <i></i>
+        </div>
+      </div>
+      <div class="all-line g-line"></div>
+      <div class="all-line" :class="{'h-line': status < 2, 'g-line' : status > 1}"></div>
+      <div class="content-main">
+        <div class="content-title" :class="{'content-sel-color': status > 1}">平台报价</div>
         <div v-if="status == 1">
           <div class="content-tips">
             <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
@@ -48,18 +71,6 @@
             <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
           </div>
         </div>
-        <div class="content-zip"  v-if="status == 2">
-          <div>
-            <div></div>
-            <div></div>
-          </div>
-          <i></i>
-        </div>
-      </div>
-      <div class="all-line g-line"></div>
-      <div class="all-line" :class="{'h-line': status < 2, 'g-line' : status > 1}"></div>
-      <div class="content-main">
-        <div class="content-title" :class="{'content-sel-color': status > 1}">平台报价</div>
       </div>
       <div class="all-line" :class="{'h-line': status < 3, 'g-line' :  status > 1}"></div>
       <div class="all-line" :class="{'h-line': status < 3, 'g-line' : status > 2}"></div>
@@ -318,10 +329,17 @@ export default {
         display: table-cell;
         padding-top: 10px;
         min-height: 60px;
-        div {
-          background-color: rgb(242,242,242);
+        .zip-main {
+          background-color: rgb(242, 242, 242);
           width: 122px;
+          height: 75px;
           border-radius: 5px;
+          background-color: rgb(242, 242, 242);
+          padding-top: 15px;
+          .zip-text {
+            color: rgb(0, 51, 102);
+            line-height: 16px;
+          }
         }
       }
       .content-zip i {
@@ -331,7 +349,7 @@ export default {
         border-right: 12px solid transparent;
         position: absolute;
         top: 0;
-        border-bottom: 10px solid rgb(242,242,242);
+        border-bottom: 10px solid rgb(242, 242, 242);
         left: 45%;
       }
       .content-tips {
