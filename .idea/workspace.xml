@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/application/data/model/Meeting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" afterDir="false" />
-    </list>
+    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +16,7 @@
     <session id="-2066920816">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="35" />
+          <entry key="project.closed" value="36" />
           <entry key="project.open.time.0" value="5" />
           <entry key="project.open.time.1" value="4" />
           <entry key="project.open.time.10" value="1" />
@@ -165,12 +160,16 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="504" column="35" lean-forward="true" selection-start-line="504" selection-start-column="35" selection-end-line="504" selection-end-column="35" />
+            <state relative-caret-position="990">
+              <caret line="534" column="32" lean-forward="true" selection-start-line="534" selection-start-column="32" selection-end-line="534" selection-end-column="32" />
               <folding>
                 <element signature="n#style#0;n#FormItem#0;n#Form#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Upload#0;n#FormItem#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#Upload#0;n#FormItem#9;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#9;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#Button#0;n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+                <element signature="e#6555#6581#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -324,7 +323,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -496,12 +495,12 @@
       <workItem from="1574644754414" duration="1619000" />
       <workItem from="1574651355790" duration="9000" />
       <workItem from="1574666588001" duration="5512000" />
-      <workItem from="1574728918581" duration="15648000" />
+      <workItem from="1574728918581" duration="16251000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="367186000" />
+    <option name="totallyTimeSpent" value="367789000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -514,7 +513,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17324094" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -864,12 +862,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="504" column="35" lean-forward="true" selection-start-line="504" selection-start-column="35" selection-end-line="504" selection-end-column="35" />
+        <state relative-caret-position="990">
+          <caret line="534" column="32" lean-forward="true" selection-start-line="534" selection-start-column="32" selection-end-line="534" selection-end-column="32" />
           <folding>
             <element signature="n#style#0;n#FormItem#0;n#Form#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Upload#0;n#FormItem#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#7;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#Upload#0;n#FormItem#9;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#Upload#0;n#FormItem#9;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#Button#0;n#div#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="e#6555#6581#0" expanded="true" />
           </folding>
         </state>
       </provider>
