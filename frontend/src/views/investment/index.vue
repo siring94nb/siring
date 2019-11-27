@@ -21,7 +21,7 @@
                   :class="{'search-item': true, 'curr': index==typeCurrIndex}"
                   @click="searchType(index, item.id)"
                 >
-                  <span>{{ item.category_name }}</span>
+                  <span>{{ item.title }}</span>
                 </div>
               </div>
               <div class="search-more" @click="showMore">
@@ -75,7 +75,7 @@
                 <template slot-scope="scope">
                   <el-button
                     type="primary"
-                    @click="handleClick(scope.$index, scope.row)"
+                    @click="handleClick(scope.index, scope.row)"
                   >我要投资</el-button>
                   <i :class="scope.row.like?'el-icon-star-on':'el-icon-star-off'"></i>
                 </template>
@@ -97,7 +97,7 @@ import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
 import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
-import { GetDevlopType } from "@/api/api";
+import { GetIndustryField } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -147,10 +147,10 @@ export default {
   },
   methods: {
     init() {
-      this.getDevlopType();
+      this.getIndustryField();
     },
-    getDevlopType() {
-      GetDevlopType().then(res => {
+    getIndustryField() {
+      GetIndustryField().then(res => {
         let { code, data, msg } = res.data;
         if (code === 1) {
           this.typeList = data;
@@ -181,6 +181,9 @@ export default {
           this.sortId = this.up ? 4 : 5;
           break;
       }
+    },
+    handleClick(){
+      
     }
   }
 };

@@ -215,6 +215,13 @@ export const GetCustomCase = params => {
 }
 
 /**
+ * 定制案例欣赏
+ */
+export const GetIndustryField = params => {
+  return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
+}
+
+/**
  * 小程序SaaS 模板列表
  */
 export const GetTemplate = params => {
