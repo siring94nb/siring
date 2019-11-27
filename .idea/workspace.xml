@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/Meeting.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/Meeting.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/goods/schedule.vue" afterDir="false" />
-    </list>
+    <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,8 +160,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
-              <caret line="360" column="26" lean-forward="true" selection-start-line="360" selection-start-column="26" selection-end-line="360" selection-end-column="26" />
+            <state relative-caret-position="367">
+              <caret line="199" column="22" lean-forward="true" selection-start-line="199" selection-start-column="22" selection-end-line="199" selection-end-column="22" />
               <folding>
                 <element signature="n#style#0;n#FormItem#0;n#Form#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#DatePicker#0;n#FormItem#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -350,7 +346,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -531,12 +527,12 @@
       <workItem from="1574651355790" duration="9000" />
       <workItem from="1574666588001" duration="5512000" />
       <workItem from="1574728918581" duration="16251000" />
-      <workItem from="1574818580121" duration="1783000" />
+      <workItem from="1574818580121" duration="2790000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="369572000" />
+    <option name="totallyTimeSpent" value="370579000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -548,7 +544,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1748401" />
@@ -905,8 +901,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/web/src/views/goods/schedule.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="360" column="26" lean-forward="true" selection-start-line="360" selection-start-column="26" selection-end-line="360" selection-end-column="26" />
+        <state relative-caret-position="367">
+          <caret line="199" column="22" lean-forward="true" selection-start-line="199" selection-start-column="22" selection-end-line="199" selection-end-column="22" />
           <folding>
             <element signature="n#style#0;n#FormItem#0;n#Form#0;n#Card#0;n#Col#0;n#Row#0;n#div#0;n#template#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#DatePicker#0;n#FormItem#3;n#Form#0;n#Modal#0;n#div#0;n#template#0;n#!!top" expanded="true" />
