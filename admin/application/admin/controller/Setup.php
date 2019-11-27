@@ -65,7 +65,7 @@ class Setup extends Base{
         $validate = new Validate([
             ['cost','require|number','发布费用不能为空|费用必须为数字'],
             ['reward','require|number','赏金不能为空|赏金必须为数字'],
-            ['cid','require','分类不能为空'],
+            ['cid','require|unique:InvestmentSet','分类不能为空|当前分类已存在'],
         ]);
         if(!$validate->check($param)){
             return $this->buildFailed(0,$validate->getError());exit();
@@ -92,7 +92,7 @@ class Setup extends Base{
             ['id', 'require', '缺少必要参数ID'],
             ['cost','require|number','发布费用不能为空|费用必须为数字'],
             ['reward','require|number','赏金不能为空|赏金必须为数字'],
-            ['cid','require','分类不能为空'],
+            ['cid','require|unique:InvestmentSet','分类不能为空|当前分类已存在'],
         ]);
         if(!$validate->check($param)){
             return $this->buildFailed(0,$validate->getError());exit();
