@@ -36,11 +36,16 @@ class Schedule extends Base{
             $param['size'] = 10;
         }
 
-        $field = 'id,title,field_img,img,region,address,upper_num,add_time,end_time,is_rec,sort';
+        $field = 'id,title,field_img,img,region,address,cost,upper_num,add_time,end_time,is_rec,sort,status,con';
         $order = 'id desc';
 
         $list = (new Meeting())->field($field) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+
+        foreach ($list['data'] as $k =>$v){
+            $list['data'][$k]['region_address'] = $v['region'].$v['address'];
+            $list['data'][$k]['activity_time'] = $v['add_time'].$v['end_time'];
+        }
 
         return $this->buildSuccess([
             'list' => $list['data'],

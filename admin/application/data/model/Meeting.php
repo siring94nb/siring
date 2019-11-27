@@ -12,15 +12,15 @@ use think\Db;
 use traits\model\SoftDelete;
 
 /**
- * lilu
- * 行业模板订单
+ * @author fyk
+ * 日程安排
  */
 class Meeting extends Model
 {
     use SoftDelete;
     protected $deleteTime = 'delect_at';
-    protected $createTime = 'create_time';
-    protected $updateTime = 'update_time';
+    protected $createTime = 'add_time';
+    protected $updateTime = 'end_time';
     protected $table = "meeting";
     protected $resultSetType = 'collection';
 

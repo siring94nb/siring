@@ -198,14 +198,19 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          vm.formItem.id = currentRow.id;
-          vm.formItem.title = currentRow.title;
-          vm.formItem.sort = currentRow.sort;
-          vm.formItem.cost = currentRow.cost;
-          vm.formItem.con = currentRow.con;
-          vm.editor.txt.html(vm.formItem.con);
-          vm.html = vm.formItem.con;
-          vm.formItem.status = currentRow.status;
+            vm.formItem.id = currentRow.id;
+            vm.formItem.title = currentRow.title;
+            vm.formItem.region = currentRow.region;
+            vm.formItem.address = currentRow.address;
+            vm.formItem.add_time = currentRow.add_time;
+            vm.formItem.end_time = currentRow.end_time;
+            vm.formItem.upper_num = currentRow.upper_num;
+            vm.formItem.sort = currentRow.sort;
+            vm.formItem.status = currentRow.status;
+            vm.formItem.cost = currentRow.cost;
+            vm.formItem.con = currentRow.con;
+            vm.editor.txt.html(vm.formItem.con);
+            vm.html = vm.formItem.con;
           //图片
           if (currentRow.field_img != "" && currentRow.field_img != null) {
             var str = currentRow.field_img.split(",");
@@ -306,7 +311,6 @@ export default {
           title: "会务场地图片",
           align: "center",
           key: "field_img",
-          width: 150,
           render: (h, param) => {
             let model_image;
             //图片
@@ -320,8 +324,7 @@ export default {
               },
               style: {
                 width: "100px",
-                height: "150px",
-                padding: "5px 0 0 0"
+                height: "80px",
               }
             });
           }
@@ -330,7 +333,6 @@ export default {
           title: "活动回顾单图",
           align: "center",
           key: "img",
-          width: 150,
           render: (h, param) => {
             let model_image = param.row.img;
             return h("img", {
@@ -338,9 +340,8 @@ export default {
                 src: model_image
               },
               style: {
-                width: "100px",
-                height: "150px",
-                padding: "5px 0 0 0"
+                  width: "100px",
+                  height: "80px",
               }
             });
           }
@@ -348,7 +349,7 @@ export default {
         {
           title: "活动地址",
           align: "center",
-          key: "address"
+          key: "region_address"
         },
         {
           title: "上限人数",
@@ -358,7 +359,8 @@ export default {
         {
           title: "活动时间",
           align: "center",
-          key: "add_time"
+          key: "activity_time",
+          width: 150,
         },
         {
           title: "回顾页面推荐",
@@ -461,8 +463,8 @@ export default {
       this.formItem.field_img = "";
     },
     handleSuccess(res, file) {
-      file.url = res.data.filePath; //获取图片路径
-      this.formItem.field_img == ""
+        file.url = res.data.filePath; //获取图片路径
+        this.formItem.field_img == ""
         ? (this.formItem.field_img += res.data.filePath)
         : (this.formItem.field_img += "," + res.data.filePath);
     },
@@ -533,6 +535,8 @@ export default {
       this.formItem.id = 0;
       this.formItem.title = "";
       this.formItem.region = "";
+      this.formItem.add_time = "";
+      this.formItem.end_time = "";
       this.formItem.upper_num = 0;
       this.formItem.sort = 1;
       this.formItem.cost = "";
@@ -617,9 +621,9 @@ export default {
         }
       }
     };
-    this.editor.customConfig.onchange = function(html) {
-      vm.formItem.con = html;
-    };
+      this.editor.customConfig.onchange = function(html) {
+          vm.formItem.con = html;
+      };
     this.editor.create();
   }
 };
