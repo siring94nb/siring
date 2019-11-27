@@ -38,44 +38,73 @@
     <div class="line line-marst">内容回复</div>
     <div class="content-reply">
       <div class="content-main">
-        <div class="content-title">定制需求</div>
-        <div class="content-tips">
-          <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
-          <div class="content-text">等待需求确认</div>
+        <div class="content-title" :class="{'content-sel-color': status > 0}">定制需求</div>
+        <div v-if="status == 2">
+          <div class="content-tips">
+            <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
+            <div class="content-text">等待需求确认</div>
+          </div>
+          <div class="content-arrow">
+            <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
+          </div>
         </div>
-        <div style="width:40px;height:40px;margin:auto;">
-          <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
+        <div class="content-zip" v-if="status < 2">
+          <div class="zip-main">
+            <span class="zip-text">预览</span>
+            <img style="vertical-align: middle;" src="../../images/u587.gif" alt />
+            <span class="zip-text">下载</span>
+            <div>**需求表.zip</div>
+          </div>
+          <i></i>
         </div>
       </div>
       <div class="all-line g-line"></div>
-      <div class="all-line h-line"></div>
+      <div class="all-line" :class="{'h-line': status < 2, 'g-line' : status > 1}"></div>
       <div class="content-main">
-        <div class="content-title">平台报价</div>
+        <div class="content-title" :class="{'content-sel-color': status > 1}">平台报价</div>
+        <div v-if="status == 1">
+          <div class="content-tips">
+            <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
+            <div class="content-text">等待需求确认</div>
+          </div>
+          <div class="content-arrow">
+            <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
+          </div>
+        </div>
       </div>
-      <div class="all-line h-line line-w"></div>
+      <div class="all-line" :class="{'h-line': status < 3, 'g-line' :  status > 1}"></div>
+      <div class="all-line" :class="{'h-line': status < 3, 'g-line' : status > 2}"></div>
       <div class="content-main">
-        <div class="content-title">签订合同</div>
+        <div class="content-title" :class="{'content-sel-color': status > 2}">签订合同</div>
       </div>
-      <div class="all-line h-line line-w"></div>
+      <div class="all-line" :class="{'h-line': status < 4, 'g-line' : status > 2}"></div>
+      <div class="all-line" :class="{'h-line': status < 4, 'g-line' : status > 3}"></div>
       <div class="content-main">
-        <div class="content-title">原型/UI确认</div>
+        <div class="content-title" :class="{'content-sel-color': status >3}">原型/UI确认</div>
       </div>
-      <div class="all-line h-line line-w"></div>
+      <div class="all-line" :class="{'h-line': status < 5, 'g-line' : status >3}"></div>
+      <div class="all-line" :class="{'h-line': status < 5, 'g-line' : status > 4}"></div>
       <div class="content-main">
-        <div class="content-title">项目上线</div>
+        <div class="content-title" :class="{'content-sel-color': status > 4}">项目上线</div>
       </div>
-      <div class="all-line h-line line-w"></div>
+      <div class="all-line" :class="{'h-line': status < 6, 'g-line' : status > 4}"></div>
+      <div class="all-line" :class="{'h-line': status < 6, 'g-line' : status > 5}"></div>
       <div class="content-main">
-        <div class="content-title">项目验收</div>
+        <div class="content-title" :class="{'content-sel-color': status > 5}">项目验收</div>
       </div>
-      <div class="all-line h-line line-w"></div>
+      <div class="all-line" :class="{'h-line': status < 7, 'g-line' : status > 5}"></div>
+      <div class="all-line" :class="{'h-line': status < 7, 'g-line' : status > 6}"></div>
       <div class="content-main">
-        <div class="content-title">项目年服务</div>
+        <div class="content-title" :class="{'content-sel-color': status > 6}">项目年服务</div>
       </div>
     </div>
 
     <div class="line line-vice">内容/合同/协议/确认文书</div>
-    <div style=" padding:30px 30px 30px 300px;border:1px solid rgb(240,248,250);">
+    <!-- 定制需求 -->
+    <div
+      style=" padding:30px 30px 30px 300px;border:1px solid rgb(240,248,250);"
+      v-if="status == 1"
+    >
       <Form :label-width="80">
         <FormItem label="需求名称：" prop="project_name">
           <Input placeholder="请输入" style="width: 450px;" />
@@ -162,15 +191,24 @@
           </div>
         </div>
       </div>
+      <div class="input-box">
+        <Input v-model="value" placeholder="请输入信息(100字以内)..." style="width: 90%;" />
+        <button class="lt-btn">发送</button>
+      </div>
     </div>
-    
   </div>
 </template>
 
 <script>
 export default {
   data() {
-    return {};
+    return {
+      status: 1,
+      value: "",
+      path: "ws://127.0.0.1:3000",
+      socket: "",
+      rand: 0
+    };
   },
   created() {
     this.init();
@@ -178,7 +216,48 @@ export default {
   methods: {
     init() {
       console.log(this.$route.params.status);
+      if (typeof WebSocket === "undefined") {
+        alert("您的浏览器不支持socket");
+      } else {
+        // 实例化socket
+        this.socket = new WebSocket(this.path);
+        // 监听socket连接
+        this.socket.onopen = this.open;
+        // 监听socket错误信息
+        this.socket.onerror = this.error;
+        // 监听socket消息
+        this.socket.onmessage = this.getMessage;
+      }
+
+      var x = 3;
+      var y = 1;
+      this.rand = parseInt(Math.random() * (x - y + 1) + y);
+    },
+    open() {
+      console.log("socket连接成功");
+      var login_data = this.rand + ":我的蝴蝶花";
+      ws.send(JSON.stringify(login_data));
+    },
+    error() {
+      console.log("连接错误");
+    },
+    getMessage(msg) {
+      console.log(msg.data);
+      var d = JSON.parse(msg.data);
+      if (d.type == "msg") {
+      }
+    },
+    send() {
+      var login_data = this.rand + ":我的蝴蝶花2";
+      this.socket.send(login_data);
+    },
+    close() {
+      console.log("socket已经关闭");
     }
+  },
+  destroyed() {
+    // 销毁监听
+    this.socket.onclose = this.close;
   }
 };
 </script>
@@ -241,6 +320,38 @@ export default {
         color: #ffffff;
         text-align: center;
       }
+      .content-sel-color {
+        background-color: rgb(102, 153, 0);
+      }
+      .content-zip {
+        box-sizing: border-box;
+        position: relative;
+        display: table-cell;
+        padding-top: 10px;
+        min-height: 60px;
+        .zip-main {
+          background-color: rgb(242, 242, 242);
+          width: 122px;
+          height: 75px;
+          border-radius: 5px;
+          background-color: rgb(242, 242, 242);
+          padding-top: 15px;
+          .zip-text {
+            color: rgb(0, 51, 102);
+            line-height: 16px;
+          }
+        }
+      }
+      .content-zip i {
+        width: 0;
+        height: 0;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        position: absolute;
+        top: 0;
+        border-bottom: 10px solid rgb(242, 242, 242);
+        left: 45%;
+      }
       .content-tips {
         width: 125px;
         height: 85px;
@@ -253,6 +364,11 @@ export default {
           font-size: 16px;
         }
       }
+      .content-arrow {
+        width: 40px;
+        height: 40px;
+        margin: auto;
+      }
     }
     .all-line {
       height: 3px;
@@ -260,7 +376,7 @@ export default {
       margin-top: 15px;
     }
     .g-line {
-      background-color: rgb(102, 153, 0);
+      background-color: rgb(102, 153, 0) !important;
     }
     .h-line {
       background-color: rgb(161, 161, 161);
@@ -269,14 +385,14 @@ export default {
       width: 36px;
     }
   }
-  
+
   //聊天框
 
   .speak_window {
     overflow-y: scroll;
     height: 100%;
     width: 100%;
-    background-color: rgb(242,242,242);
+    background-color: rgb(242, 242, 242);
   }
   .speak_box {
     margin-bottom: 70px;
@@ -307,7 +423,9 @@ export default {
     border-radius: 5px;
     // overflow: hidden;
     background: #ddd;
-    div{text-align: center;}
+    div {
+      text-align: center;
+    }
   }
   .heard_img img {
     width: 100%;
@@ -341,10 +459,12 @@ export default {
   }
   .answer_text p {
     background: #fff;
+    color: #000;
   }
   .question_text p {
-    background: #42929d;
-    color: #fff;
+    // background: #42929d;
+    background: rgb(102, 255, 0);
+    color: #000;
     text-align: left;
   }
   .question_text i,
@@ -361,7 +481,7 @@ export default {
     left: 10px;
   }
   .question_text i {
-    border-left: 10px solid #42929d;
+    border-left: 10px solid rgb(102, 255, 0);
     right: 10px;
   }
   .answer_text p a {
@@ -376,6 +496,26 @@ export default {
     border-top: solid 1px #ddd;
     padding: 5px;
     line-height: 30px;
+  }
+  .input-box {
+    background-color: rgb(247, 247, 247);
+    height: 80px;
+    line-height: 80px;
+    padding: 0 1%;
+  }
+  .lt-btn {
+    line-height: 28px;
+    border: 1px solid rgb(102, 204, 0);
+    color: rgb(102, 204, 0);
+    background-color: #fff;
+    width: 8%;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .lt-btn:hover {
+    background-color: rgb(102, 204, 0);
+    color: #fff;
   }
 }
 </style>

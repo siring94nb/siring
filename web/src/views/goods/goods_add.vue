@@ -431,7 +431,7 @@ export default {
       // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
       file.url = res.data.filePath; //获取图片路径
       this.formItem.data.goods_images == ""
-        ? (this.formItem.data.goods_images += res.data.filePath + ",")
+        ? (this.formItem.data.goods_images += res.data.filePath)
         : (this.formItem.data.goods_images += "," + res.data.filePath);
     },
     handleFormatError(file) {

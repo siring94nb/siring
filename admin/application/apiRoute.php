@@ -10,14 +10,14 @@ Route::group('api', function () {
 //    Route::rule('new/:id','News/update','POST');
     //开始定义api路由接口
 
-    //文件上传fyk
+    //文件上传 fyk
     Route::group('file', function () {
         Route::post('upload','api/File/img');
         Route::post('video','api/File/video');
         Route::post('qn_upload','api/File/qn_upload');//上传到七牛云
     });
 
-    //用户接口接口fyk
+    //用户接口接口 fyk
     Route::group('User', function () {//'User' => 控制器
         Route::any('phone_code','api/User/code'); //('index =>方法','api/User/index' =>文件夹/控制器/方法)
         Route::any('register','api/User/register');//注册
@@ -35,14 +35,14 @@ Route::group('api', function () {
         Route::any('enterprise_del','api/User/enterprise_del');//企业身份删除
     });
 
-    //轮播接口接口fyk
+    //轮播接口接口 fyk
     Route::group('Banner', function () {
         Route::any('banner_list','api/Banner/index'); //轮播列表
         Route::any('banner_save','api/Banner/save'); //测试
 
     });
 
-    //网站基本接口fyk
+    //网站基本接口 fyk
     Route::group('Website', function () {
         Route::any('website_list','api/Website/website_list'); //关于我们
         Route::any('contact','api/Website/contact'); //联系我们
@@ -50,7 +50,7 @@ Route::group('api', function () {
         Route::any('custom_case','api/Website/custom_case'); //软件定制案例
     });
 
-    //角色加盟fyk
+    //角色加盟 fyk
     Route::group('JoinRole',function (){
         Route::any('province_list','api/JoinRole/province_list'); //省份列表
         Route::any('city_list','api/JoinRole/city_list'); //城市列表
@@ -62,7 +62,7 @@ Route::group('api', function () {
         Route::any('join_class','api/JoinRole/join_class'); //分包商分类
     });
 
-    //角色加盟订单fyk
+    //角色加盟订单 fyk
     Route::group('JoinOrder',function (){
         Route::any('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
         Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
@@ -98,7 +98,7 @@ Route::group('api', function () {
     });
 
 
-    //角色加盟订单fyk
+    //角色加盟订单 fyk
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
         Route::any('soft_list','api/Software/soft_list'); //商品列表
@@ -111,25 +111,35 @@ Route::group('api', function () {
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
 
-    //用户优惠券fyk
+    //用户优惠券 fyk
     Route::group('UserDiscount',function(){
         Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
         Route::any('user_fund','api/UserDiscount/user_fund'); //用户余额
     });
 
-    //用户优惠券fyk
+    //控制台 fyk
     Route::group('Console',function(){
         Route::any('personal_information','api/Console/personal_information'); //用户信息
         Route::any('my_order','api/Console/my_order'); //用户订单
     });
 
-    //AI推广引擎fyk
+    //AI推广引擎 fyk
     Route::group('Manuscript',function(){
         Route::any('demand_add','api/Manuscript/demand_add'); //用户信息
         Route::any('get_pay','api/Manuscript/get_pay'); //支付
         Route::any('app_notice','api/Manuscript/app_notice'); //支付回调
         Route::any('set_meal','api/Manuscript/set_meal'); //套餐列表
     });
+
+    //投融界 fyk
+    Route::group('Investment',function(){
+        Route::any('finance_add','api/Investment/finance_add'); //我要融资
+        Route::any('industry_field','api/Investment/industry_field'); //行业领域
+        Route::any('industry_cost','api/Investment/industry_cost'); //行业领域分类费用
+        Route::any('industry_list','api/Investment/industry_list'); //列表
+        Route::any('project_details','api/Investment/project_details'); //项目详情
+    });
+
     //定制需求
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
