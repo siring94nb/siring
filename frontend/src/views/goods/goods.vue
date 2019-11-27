@@ -79,7 +79,7 @@
                       <i class="iconfont icon-cu" v-if="item.sign == 2"></i>
                       <span class="goods_name">{{ item.goods_name }}</span>
                     </div>
-                    <i class="el-icon-star-off el-icon-star-on" @click="favoriteGood"></i>
+                    <i :class="item.follow?'el-icon-star-on':'el-icon-star-off'" @click="favoriteGood"></i>
                   </div>
                   <div class="bottom">
                     <span class="desc_span">APP|小程序|公众号|H5</span>

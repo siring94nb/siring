@@ -282,7 +282,11 @@ export default {
       return (this.packagePrice + this.writingCost) * (this.percent / 100);
     },
     writingCost() {
-      return this.form.tableData[this.isSelected-1].price * this.form.wordcount;
+      if(this.form.material != 1){
+        return 0;
+      }else{
+        return this.form.tableData[this.isSelected-1].price * this.form.wordcount;
+      }
     }
   },
   methods: {

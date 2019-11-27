@@ -215,10 +215,17 @@ export const GetCustomCase = params => {
 }
 
 /**
- * 定制案例欣赏
+ * 投融界-行业领域
  */
 export const GetIndustryField = params => {
   return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
+}
+
+/**
+ * 投融界-列表
+ */
+export const GetIndustryList = params => {
+  return axios.post(`${base_url}api/Investment/industry_list`, qs.stringify(params)).then(res => res.data);
 }
 
 /**

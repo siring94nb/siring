@@ -47,7 +47,7 @@
             <i class="icon iconfont icon-ruanjiandingzhi"></i>
             <span>软件/定制</span>
             <p class="en-name">Software develop</p>
-            <i class="iconfont icon-remen fire"></i>
+            <i class="iconfont fire"></i>
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/programSaaS">
@@ -559,6 +559,9 @@ export default {
           right: -10px;
           color: rgb(250, 41, 1);
           font-size: 18px;
+          background: url("~@/assets/images/huo.gif") no-repeat;
+          width: 27px;
+          height: 20px;
         }
         .en-name {
           position: absolute;
