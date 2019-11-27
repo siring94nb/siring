@@ -4,7 +4,7 @@
     <div class="quick-main">
       <h3 class="title">发稿推广</h3>
       <div class="quick-cont clearfix">
-        <quickaside />
+        <quickaside :type="1" />
         <div class="types-right">
           <h4 class="title">填写需求（*为必填）</h4>
           <div class="form-box">
@@ -156,7 +156,7 @@
               <span class="through-price">￥{{item.money}}</span>
               <span class="sale-price">￥{{item.price}}</span>
             </div>
-            <div class="choose" @click="choosePackage(item.price)">&gt;&gt;选择套餐</div>
+            <div class="choose" @click="choosePackage(item.price, item.id)">&gt;&gt;选择套餐</div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -179,7 +179,7 @@ export default {
   },
   data() {
     return {
-      isSelected: "1",
+      isSelected: 1,
       mater: true, //推广材料切换
       tinymceHtml: "",
       disabled: false,
@@ -188,7 +188,7 @@ export default {
         title: "",
         name: "",
         material: "1",
-        claim: "",
+        claim: "1",
         link: "",
         tableData: [
           {
@@ -268,10 +268,10 @@ export default {
       ],
       checked: false,
       packagePrice: 0,
-      writingCost: 0,
       percent: 100,
       dialogVisible: false,
-      packageList: []
+      packageList: [],
+      tid: '',
     };
   },
   mounted() {
@@ -279,7 +279,14 @@ export default {
   },
   computed: {
     total() {
-      return (this.packagePrice + this.writingCost) * this.percent;
+      return (this.packagePrice + this.writingCost) * (this.percent / 100);
+    },
+    writingCost() {
+      if(this.form.material != 1){
+        return 0;
+      }else{
+        return this.form.tableData[this.isSelected-1].price * this.form.wordcount;
+      }
     }
   },
   methods: {
@@ -288,7 +295,7 @@ export default {
     },
     onClick(e, editor) {},
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -305,20 +312,21 @@ export default {
       return size;
     },
     pay() {
-      console.log(this.form)
+      // console.log(this.form)
     },
     getSetMeal() {
       GetSetMeal().then(res => {
-        console.log(res);
+        // console.log(res);
         let { code, data, msg } = res.data;
         if (code === 1) {
           this.packageList = data;
         }
       });
     },
-    choosePackage(price) {
+    choosePackage(price, id) {
       this.dialogVisible = false;
-      this.packagePrice = price;
+      this.tid = id;
+      this.packagePrice = Number(price);
     }
   }
 };

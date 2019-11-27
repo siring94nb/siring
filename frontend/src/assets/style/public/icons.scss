@@ -1,11 +1,11 @@
 @font-face {
-  font-family: 'iconfont';  /* project id 1450990 */
-  src: url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.eot');
-  src: url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1450990_hk8yz6a2ei.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1529616 */
+  src: url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.eot');
+  src: url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1529616_rdf9ze712ro.svg#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,10 +14,6 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-cu:before {
-  content: "\e6fa";
 }
 
 .icon-taobao:before {
@@ -36,10 +32,6 @@
   content: "\e6b2";
 }
 
-.icon-quanxianfuzhi:before {
-  content: "\e62b";
-}
-
 .icon-weixin:before {
   content: "\e7e5";
 }
@@ -52,8 +44,8 @@
   content: "\e60d";
 }
 
-.icon-sanjiaodown:before {
-  content: "\e6b5";
+.icon-jilu:before {
+  content: "\e61f";
 }
 
 .icon-dailizizhizizhiqiyezizhi:before {
@@ -96,6 +88,10 @@
   content: "\e61b";
 }
 
+.icon-cu:before {
+  content: "\e6fa";
+}
+
 .icon-star:before {
   content: "\e666";
 }
@@ -106,10 +102,6 @@
 
 .icon-shouye:before {
   content: "\e615";
-}
-
-.icon-magnifier:before {
-  content: "\e64d";
 }
 
 .icon-wujiaoxingkong:before {
@@ -184,14 +176,6 @@
   content: "\e60f";
 }
 
-.icon-changyongtubiao-xianxingdaochu-zhuanqu-:before {
-  content: "\e74c";
-}
-
-.icon-changyongtubiao-xianxingdaochu-zhuanqu-1:before {
-  content: "\e74d";
-}
-
 .icon-xuanzhongjiaobiao:before {
   content: "\e612";
 }
@@ -199,6 +183,3 @@
 .icon-6:before {
   content: "\e61e";
 }
-
-
-
