@@ -424,7 +424,16 @@ export default {
       const fileList = this.$refs.upload.fileList;
       // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      var str = this.formItem.data.goods_images.split(","),arr=[];
       this.formItem.data.goods_images = "";
+      for (let i = 0; i < str.length; i++) {
+        if(str[i] != file) {
+          i < 1 ? this.formItem.data.goods_images = "" : (this.formItem.data.goods_images == ""
+        ? (this.formItem.data.goods_images += str[i])
+        : (this.formItem.data.goods_images += "," + str[i]))
+        }
+      }
+      // this.formItem.data.goods_images = "";
     },
     handleSuccess(res, file) {
       // file.url = res.data;
