@@ -145,7 +145,7 @@ export default {
           egName: "MR.YANG",
           position: "技术副总监",
           images:
-            "http://img0.imgtn.bdimg.com/it/u=1169160340,3834197503&fm=214&gp=0.jpg",
+            "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1575616299&di=9a6246af83e9e6b385093beb30bb0a5c&imgtype=jpg&er=1&src=http%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Fc4b2e54181cc42574b90a72e.jpg",
           introduce:
             "思锐网络创始人、思锐网络总经理、思锐首席产品构架师、思锐首席产品体验官",
           field: "企业转型、品牌打造、企业运营",

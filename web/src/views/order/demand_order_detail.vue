@@ -12,7 +12,7 @@
         <tr>
           <td class="td-one">商品名称：</td>
           <td>139228300809</td>
-          <td class="td-one">订单类型</td>
+          <td class="td-one">订单类型：</td>
           <td>2018062803890</td>
         </tr>
         <tr>
