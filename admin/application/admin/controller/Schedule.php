@@ -98,6 +98,8 @@ class Schedule extends Base{
     public function upd(){
         $request = Request::instance();
         $param = $request->param();
+        $param['add_time'] = strtotime($param['add_time']);
+        $param['end_time'] = strtotime($param['end_time']);
         $validate = new Validate([
             ['id', 'require', '缺少必要参数ID'],
             ['title','require','活动主题不能为空'],
