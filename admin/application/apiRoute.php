@@ -33,6 +33,7 @@ Route::group('api', function () {
         Route::any('enterprise_list','api/User/enterprise_list');//企业身份列表
         Route::any('enterprise_edit','api/User/enterprise_edit');//企业身份编辑
         Route::any('enterprise_del','api/User/enterprise_del');//企业身份删除
+        Route::any('collect','api/User/collect');//用户关注、收藏
     });
 
     //轮播接口接口 fyk
