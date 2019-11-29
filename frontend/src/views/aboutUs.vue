@@ -45,7 +45,7 @@
       <div class="h-title">各项荣誉及证书</div>
       <div class="sweep-box">
         <el-carousel :interval="4000" type="card" height="500px" arrow="always">
-          <el-carousel-item v-for="item in 6" :key="item">
+          <el-carousel-item v-for="item in 3" :key="item">
             <div class="sweep-main">
               <img src="../assets/images/un123.jpg" alt />
               <div style="text-align:center;line-height:90px;background-color: #fff;">2016年最佳服务商</div>
