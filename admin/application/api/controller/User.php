@@ -584,4 +584,41 @@ class User extends Base
         return $data  ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
     }
 
+    /**
+     * 软件收藏、项目关注
+     * @author fyk
+     * @time   2019/11/28
+     */
+    public function collect()
+    {
+        $request = Request::instance();
+        $param  = $request->param();//获取所有参数，最全
+        $validate = new Validate([
+            ['pid','require','产品id必须'],
+            ['type','require','1为软件定制商品收藏；2投融界关注'],
+            ['user_id','require','用户id必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        $db2 = db('collection');
+        //查询是否有这条记录
+        $user = $db2 ->where(['pro_id' => $param['pid'], 'user_id' => $param['user_id'],'type'=>$param['type']])->find();
+
+        if ($user) {
+            $result = $db2 ->delete (['id' => $user['id']]);
+
+            return $result  ? returnJson(1,'取消关注成功') : returnJson(0,'取消关注失败');
+        } else {
+            $insert  = [
+                'pro_id'  => $param['pid'],
+                'type'    => $param['type'],
+                'user_id'    => $param['user_id'],
+                'time' =>time()
+            ];
+            $result = $db2 ->insert($insert);
+
+            return $result  ? returnJson(1,'关注成功') : returnJson(0,'关注失败');
+        }
+    }
 }
