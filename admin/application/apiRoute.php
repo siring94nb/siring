@@ -139,11 +139,18 @@ Route::group('api', function () {
         Route::any('industry_cost','api/Investment/industry_cost'); //行业领域分类费用
         Route::any('industry_list','api/Investment/industry_list'); //列表
         Route::any('project_details','api/Investment/project_details'); //项目详情
+
+        Route::any('console_list','api/Investment/console_list'); //控制台-我的投融列表
     });
 
     //定制需求
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
+    });
+
+    //控制台-AI推广套餐
+    Route::group('Promotion',function(){
+        Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
     });
 
 
