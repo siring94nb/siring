@@ -94,7 +94,7 @@ class Investment extends Controller
 
 
     /**
-     * 软件定制商品列表
+     * 投融列表
      * @throws \think\exception\DbException
      */
     public function industry_list()
@@ -144,6 +144,30 @@ class Investment extends Controller
         $data = $project->details($param);
 
         return $data ? returnJson(1,'获取成功',$data) :  returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     * 控制台-我的投融列表
+     * @throws \think\exception\DbException
+     */
+    public function console_list()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $good = new InvestmentProject();
+
+        $uid = Session::get("uid");
+
+        if($uid){
+
+            $uid = Session::get("uid");
+            $data = $good->investment_project_list($param,$uid);
+
+
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        }
+
+        return  returnJson(0,'请登录');
     }
 
 
