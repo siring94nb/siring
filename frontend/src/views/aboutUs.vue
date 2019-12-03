@@ -39,7 +39,7 @@
             <!-- <div>
               <span>服务过的品牌：</span>
               {{personal.brand}}
-            </div> -->
+            </div>-->
           </div>
         </div>
       </div>
@@ -55,14 +55,27 @@
         </el-carousel>
       </div>
     </div>
-    <div class="h-title">联系地址及留言</div>
+    <div class="h-title">发展历程&留言反馈</div>
     <div class="contact">
-      <div class="contact-address">
+      <!-- <div class="contact-address">
         <p>联系我们</p>
         <p>zhq@siring.com.cn</p>
         <p>0755-36609873</p>
         <p>深圳市福田区新闻路1号中电信息大厦西座701室</p>
         <img src="../assets/images/u5629.png" alt />
+      </div>-->
+      <div class="development-course">
+        <div class="course-main">
+          <img src="../assets/images/u5723.png" alt />
+          <div class="course-line"></div>
+        </div>
+        <div class="course-title">
+          <div class="title-box" v-for="(item, index) in courseTitle" :key="index">
+            <img src="../assets/images/u5726.png" alt />
+            <div class="line"></div>
+            <div class="title-text">{{item}}</div>
+          </div>
+        </div>
       </div>
       <div class="contact-message">
         <div class="message-title">留言反馈</div>
@@ -149,7 +162,8 @@ export default {
           images: require("../assets/images/e.jpg"),
           introduce:
             "2007年本科毕业于吉林大学软件工程专业，毕业后加入深圳市思锐信息技术有限公司，担任研发工程师。",
-          field: "10年以上互联网和移动互联网、WIFI、金融、地产、电玩行业开发管理经验。精通项目管理、敏捷开发Scrum、瀑布开发、企业IT管理、分布式架构，精通WIFI互联网技术，深刻理解互联网&移动互联网平台产品，熟悉金融产品、地产系统、电玩系统、数据平台的开发和区块链技术。",
+          field:
+            "10年以上互联网和移动互联网、WIFI、金融、地产、电玩行业开发管理经验。精通项目管理、敏捷开发Scrum、瀑布开发、企业IT管理、分布式架构，精通WIFI互联网技术，深刻理解互联网&移动互联网平台产品，熟悉金融产品、地产系统、电玩系统、数据平台的开发和区块链技术。"
           // brand: "有着10年经验的自身网络营销策划专家，累计服务企业1200多家"
         },
         {
@@ -159,7 +173,8 @@ export default {
           images: require("../assets/images/f.jpg"),
           introduce:
             "2010年本科毕业于湖南农业大学东方科技学院计算机科学于技术专业，毕业后加入京东集团，担任研发工程师，不久转入深圳市思锐信息技术有限公司，主要从事软件开发工作。",
-          field: "8年以上软件开发经验；互联网行业10年以上从业经验，5年物联网、智能家居软硬件研发管理经验；熟练使用java熟练dubbo,spring cloud等,C#；精通ORACLE、SQL SERVER、mysql等数据库设计；精通数据库设计、系统架构设计，设计模式PowerDesigner、Visio等；熟悉物联网、智能家居行业、互联网行业。",
+          field:
+            "8年以上软件开发经验；互联网行业10年以上从业经验，5年物联网、智能家居软硬件研发管理经验；熟练使用java熟练dubbo,spring cloud等,C#；精通ORACLE、SQL SERVER、mysql等数据库设计；精通数据库设计、系统架构设计，设计模式PowerDesigner、Visio等；熟悉物联网、智能家居行业、互联网行业。"
           // brand: "有着10年经验的自身网络营销策划专家，累计服务企业1200多家"
         },
         {
@@ -169,7 +184,8 @@ export default {
           images: require("../assets/images/d.jpg"),
           introduce:
             "毕业于深圳大学软件工程专业，曾就职甲骨文研究开发中心（深圳）有限公司，2018年转入深圳市思锐信息技术有限公司，主要从事软件开发工作。",
-          field: "对互联网与云计算行业有清晰的认知和激情，理解客户的业务需求和痛点，熟悉泛互联网行业，如跨境电商，游戏，互联网教育等领域技术架构。具有丰富的企业架构设计或上云实施服务经验；熟悉云计算，大数据，人工智能等领域，熟悉计算，存储，网络，数据库等领域，熟悉分布式计算，分布式存储，虚拟化技术。",
+          field:
+            "对互联网与云计算行业有清晰的认知和激情，理解客户的业务需求和痛点，熟悉泛互联网行业，如跨境电商，游戏，互联网教育等领域技术架构。具有丰富的企业架构设计或上云实施服务经验；熟悉云计算，大数据，人工智能等领域，熟悉计算，存储，网络，数据库等领域，熟悉分布式计算，分布式存储，虚拟化技术。"
           // brand: "有着10年经验的自身网络营销策划专家，累计服务企业1200多家"
         },
         {
@@ -179,7 +195,8 @@ export default {
           images: require("../assets/images/g.jpg"),
           introduce:
             "毕业于华南理工大学艺术设计专业，曾就腾讯公司，2018年转入深圳市思锐信息技术有限公司，主要从事软件开发工作。",
-          field: "熟练运动ps，Ai，sketch设计软件进行海报，banner，图标，的制作。 熟练使用RP，墨刀，进行交互设计。 利用Ae进行动效图制作。 利用C4D进行简单的建模和基础的渲染。",
+          field:
+            "熟练运动ps，Ai，sketch设计软件进行海报，banner，图标，的制作。 熟练使用RP，墨刀，进行交互设计。 利用Ae进行动效图制作。 利用C4D进行简单的建模和基础的渲染。"
           // brand: "有着10年经验的自身网络营销策划专家，累计服务企业1200多家"
         },
         {
@@ -189,9 +206,10 @@ export default {
           images: require("../assets/images/h.jpg"),
           introduce:
             "毕业于广州外语学院市场营销专业，曾就腾讯公司，2017年转入深圳市思锐信息技术有限公司，主要从事软件开发工作。",
-          field: "具有5年及以上营销策划类经验或4A广告公司文案策划经验，熟悉各类营销理念，对腾讯、抖音信息流市场、商业化产品有深刻理解，熟悉并擅长撰写各种创意形式文案；拥有出色逻辑思维能力、敏锐的行业洞察能力、以及PPT撰写能力，懂得分配时间，灵活多变，追求结果，对数据敏感。",
+          field:
+            "具有5年及以上营销策划类经验或4A广告公司文案策划经验，熟悉各类营销理念，对腾讯、抖音信息流市场、商业化产品有深刻理解，熟悉并擅长撰写各种创意形式文案；拥有出色逻辑思维能力、敏锐的行业洞察能力、以及PPT撰写能力，懂得分配时间，灵活多变，追求结果，对数据敏感。"
           // brand: "有着10年经验的自身网络营销策划专家，累计服务企业1200多家"
-        },
+        }
       ],
       personal: {
         name: "",
@@ -207,13 +225,42 @@ export default {
         desc: "",
         desc1: ""
       },
-      honorImage:[
-        {url:require("../assets/images/image536143.jpeg"),name:"众创服务平台创新创业基地"},
-        {url:require("../assets/images/image536144.jpeg"),name:"中华人民共和国增值电信业务经营许可证"},
-        {url:require("../assets/images/image536145.jpeg"),name:"质量·服务·诚信AAA企业"},
-        {url:require("../assets/images/image536146.jpeg"),name:"安全联盟信誉企业"},
-        {url:require("../assets/images/image536147.jpeg"),name:"深圳市福田区人民政府英才证"},
-        {url:require("../assets/images/image536148.jpeg"),name:"中国科技创新优秀企业"}
+      honorImage: [
+        {
+          url: require("../assets/images/image536143.jpeg"),
+          name: "众创服务平台创新创业基地"
+        },
+        {
+          url: require("../assets/images/image536144.jpeg"),
+          name: "中华人民共和国增值电信业务经营许可证"
+        },
+        {
+          url: require("../assets/images/image536145.jpeg"),
+          name: "质量·服务·诚信AAA企业"
+        },
+        {
+          url: require("../assets/images/image536146.jpeg"),
+          name: "安全联盟信誉企业"
+        },
+        {
+          url: require("../assets/images/image536147.jpeg"),
+          name: "深圳市福田区人民政府英才证"
+        },
+        {
+          url: require("../assets/images/image536148.jpeg"),
+          name: "中国科技创新优秀企业"
+        }
+      ],
+      courseTitle: [
+        "2019年公司核心领导获得中共福田区委、福田区人民政府颁发的人才福卡福田英才证书",
+        "2018年成为深圳大数据协会、物联网协会会员单位",
+        "2017年荣获产业创新领域优质服务商奖",
+        "2017年通过中国移动ITC严格评审，成为优质合作伙伴，承接各类定制开发业务",
+        "2015年为企业级用户提供包括APP等手机移动端开发业务",
+        "2010年开发短信群发系统，为国内4万多家企业用户免费使用",
+        "2006年开发移动增值服务“百事通”推向市场，最高300万用户",
+        "2000年开发Siring思锐办公OA办公系统开发成熟推广市场",
+        "1996年深圳市思锐信息技术有限公司成立"
       ]
     };
   },
@@ -229,6 +276,10 @@ export default {
 };
 </script>
 <style>
+.sweep-box{
+  width: 80%;
+  margin: auto;
+}
 .sweep-main {
   width: 75%;
   box-shadow: 0 0 10px -0 rgb(204, 204, 204);
@@ -241,6 +292,7 @@ export default {
 .texts textarea {
   height: 250px;
 }
+
 /* .el-carousel__item:nth-child(2n) {
     background-color: #99a9bf;
   }
@@ -327,17 +379,62 @@ export default {
     display: flex;
     justify-content: center;
     margin-bottom: 30px;
-    .contact-address {
+    // .contact-address {
+    //   background-color: rgb(242, 242, 242);
+    //   padding: 30px;
+    //   p {
+    //     font-size: 13px;
+    //     color: #333333;
+    //     line-height: 23px;
+    //   }
+    //   img {
+    //     width: 774px;
+    //     height: 500px;
+    //   }
+    // }
+    .development-course {
+      width: 800px;
       background-color: rgb(242, 242, 242);
-      padding: 30px;
-      p {
-        font-size: 13px;
-        color: #333333;
-        line-height: 23px;
+      position: relative;
+      .course-main {
+        height: 100%;
+        width: 80px;
+        margin-left: 5%;
+        img {
+          width: 80px;
+          height: 80px;
+        }
+        .course-line {
+          width: 10px;
+          background-color: rgb(228, 228, 228);
+          height: 87%;
+          margin: auto;
+          margin-top: -10px;
+        }
       }
-      img {
-        width: 774px;
-        height: 500px;
+      .course-title {
+        position: absolute;
+        left: 2.5%;
+        top: 15%;
+        .title-box {
+          display: flex;
+          margin-left: 50px;
+          margin-bottom: 40px;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+          .line {
+            height: 2px;
+            width: 25px;
+            background-color: #bcbcbc;
+            margin: 8px 20px 0 20px;
+          }
+          .title-text {
+            font-size: 18px;
+            color: rgb(188, 199, 216);
+          }
+        }
       }
     }
     .contact-message {
