@@ -6,6 +6,7 @@
  * Time: 14:41
  */
 namespace app\api\controller;
+use app\data\model\InvestmentProject;
 use app\data\model\SoftOrder;
 use app\data\model\MealOrder;
 use app\data\model\PromotionOrder;
@@ -25,9 +26,9 @@ class Console extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        $user_id = Session::get("user");
+        $user_id = Session::get("uid");
         if($user_id){
-            $user_id = Session::get("user");
+            $user_id = Session::get("uid");
         }else{
             $user_id = $param["user_id"];
         }
@@ -49,9 +50,9 @@ class Console extends Base
         $request = Request::instance();
         $param = $request->param();
 
-        $user_id = Session::get("user");
+        $user_id = Session::get("uid");
         if($user_id){
-            $user_id = Session::get("user");
+            $user_id = Session::get("uid");
         }else{
             $user_id = $param["user_id"];
         }
@@ -73,9 +74,9 @@ class Console extends Base
         $request = Request::instance();
         $param = $request->param();
 
-        $user_id = Session::get("user");
+        $user_id = Session::get("uid");
         if($user_id){
-            $user_id = Session::get("user");
+            $user_id = Session::get("uid");
         }else{
             $user_id = $param["user_id"];
         }
@@ -83,8 +84,58 @@ class Console extends Base
 
         $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>1])->count();//软件定制总数
         $data['total_xcx'] =  MealOrder::where(['member_account'=>$user_id,'order_status'=>1])->count();//小程序订单总数
-        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'status'=>1])->count();//AI订单总数
-        $data['total_investment'] =  SoftOrder::where(['user_id'=>$user_id,])->count();//投融订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>1])->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['uid'=>$user_id,'pay_status'=>1])->count();//投融订单总数
+        $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     *待处理订单
+     */
+    public function pending_disposal()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $user_id = Session::get("uid");
+        if($user_id){
+            $user_id = Session::get("uid");
+        }else{
+            $user_id = $param["user_id"];
+        }
+
+
+        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2])->count();//软件定制总数
+        $data['total_xcx'] =  MealOrder::where(['member_account'=>$user_id,'order_status'=>2])->count();//小程序订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2])->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['uid'=>$user_id,'pay_status'=>2])->count();//投融订单总数
+        $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     *待处理后续服务订单
+     */
+    public function after_service()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+        $user_id = Session::get("uid");
+        if($user_id){
+            $user_id = Session::get("uid");
+        }else{
+            $user_id = $param["user_id"];
+        }
+
+
+        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',1)->count();//软件定制总数
+        $data['total_xcx'] =  MealOrder::where(['member_account'=>$user_id,'order_status'=>2])->where('status','<>',1)->count();//小程序订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',2)->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['uid'=>$user_id,'pay_status'=>2])->where('status','<>',2)->count();//投融订单总数
         $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);

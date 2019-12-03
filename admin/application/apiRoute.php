@@ -122,6 +122,9 @@ Route::group('api', function () {
     Route::group('Console',function(){
         Route::any('personal_information','api/Console/personal_information'); //用户信息
         Route::any('my_order','api/Console/my_order'); //用户订单
+        Route::any('pending_payment','api/Console/pending_payment'); //待付款订单
+        Route::any('pending_disposal','api/Console/pending_disposal'); //待处理订单
+        Route::any('after_service','api/Console/after_service'); //待处理后续服务订单
     });
 
     //AI推广引擎 fyk
