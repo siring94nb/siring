@@ -1,27 +1,11 @@
 <template>
   <div class="recomment-left">
     <div class="quick-desc">
-      <template v-if="type==0">
-        <div class="desc-title">
-          <i class="iconfont icon-jisuanqi"></i>
-          <span>快捷估价</span>
-        </div>
-        <div class="desc-dit">很多朋友对开发费用多少没有大致概念，往往被不良开发商所蒙蔽，在这里我们为您提供便捷的快捷估价服务，让您放心开发！</div>
-      </template>
-      <template v-else-if="type==1">
-        <div class="desc-title">
-          <i class="iconfont icon-jilu"></i>
-          <span>提交稿件</span>
-        </div>
-        <div class="desc-dit">本平台针对您提交的需求，从数万家媒介中AI智能筛选推广，做到搜索引擎收录高，媒介覆盖精准，从而达到“少花钱宣传广的效果”！如需帮助，我们还有专业写手为您撰写稿件，扫除您的撰写烧脑之忧！</div>
-      </template>
-      <template v-else-if="type==2">
-        <div class="desc-title">
-          <i class="iconfont icon-jilu"></i>
-          <span>投融说明</span>
-        </div>
-        <div class="desc-dit">平台提供线上服务与线下服务功能，让资本与项目精准对话和线下对接，提高资本找项目、项目找资本的效率和成功率。您可查阅项目，也可发布项目，当您打赏查阅项目后，还能直接与创业者沟通</div>
-      </template>
+      <div class="desc-title">
+        <i class="iconfont icon-jisuanqi"></i>
+        <span>快捷估价</span>
+      </div>
+      <div class="desc-dit">很多朋友对开发费用多少没有大致概念，往往被不良开发商所蒙蔽，在这里我们为您提供便捷的快捷估价服务，让您放心开发！</div>
     </div>
     <div class="recomment-cont">
       <div class="recomment-title">
@@ -41,7 +25,6 @@
 <script>
 import { GetCustomCase } from "@/api/api";
 export default {
-  props: ["type"],
   data() {
     return {
       recommentList: []
@@ -72,13 +55,13 @@ export default {
   width: 225px;
   height: 100%;
   .quick-desc {
-    // height: 220px;
+    height: 220px;
     background: url("~@/assets/images/u2173.png") no-repeat;
     background-size: 100% 100%;
-    padding: 15px 0 18px 15px;
+    padding: 15px 0 0 15px;
     box-sizing: border-box;
     .desc-title {
-      .iconfont {
+      .icon-jisuanqi {
         font-size: 36px;
         color: #666666;
         vertical-align: middle;

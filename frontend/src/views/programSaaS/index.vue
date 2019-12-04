@@ -29,8 +29,7 @@
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
-        <!-- <el-button class="wh-sty" v-popover:popover2>？</el-button> -->
-        <button  class="wh-sty" v-popover:popover2>？</button>
+        <el-button class="wh-sty" v-popover:popover2>？</el-button>
         <div style="flex:1"></div>
         <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
       </div>
@@ -95,7 +94,7 @@
               小程序名称
               <span style="color:red;">*</span>
             </div>
-            <input type="text" placeholder="给即将开通的小程序起个名字吧~！" style="width:265px;" v-model="valData.prog_name" />
+            <input type="text" placeholder="给即将开通的小程序起个名字吧~！" v-model="valData.prog_name" />
           </div>
           <div class="upload-img">
             <div style="width:170px;font-size:18px;">
@@ -428,7 +427,6 @@ export default {
       padding: 0;
       text-align: center;
       margin: 5px 0 0 10px;
-      cursor: pointer;
     }
     .appreciation {
       background-color: rgb(255, 153, 0);
