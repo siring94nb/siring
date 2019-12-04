@@ -109,11 +109,20 @@
             </el-dropdown>
           </a>
           <el-divider direction="vertical"></el-divider>
-          <router-link to="/aboutUs">
-            <i class="icon iconfont icon-guanyuwomen"></i>
-            <span>Siring思锐</span>
-            <p class="en-name">About us</p>
-          </router-link>
+          <a class="router-link-active" href="javascript:void(0);">
+            <el-dropdown @command="handleCommand" placement="bottom">
+              <span class="el-dropdown-link">
+                <i class="icon iconfont icon-guanyuwomen"></i>
+                <span>Siring思锐</span>
+                <p class="en-name">About us</p>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item command="f">
+                  <router-link to="/aboutUs" style="color: #333;">关于我们</router-link>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+          </a>
         </div>
         <div class="sp-bt">
           <router-link to="/fillDemand">定制需求</router-link>
