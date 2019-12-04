@@ -113,7 +113,7 @@ class InvestmentProject extends Model
     }
 
     /**
-     * 无用户id列表数据
+     * 用户id列表数据
      * @param $param
      * @return array
      * @throws \think\exception\DbException
@@ -205,4 +205,62 @@ class InvestmentProject extends Model
     {
         return $this->belongsTo('InvestmentClass', 'cid', 'id');
     }
+
+    /**
+     * 用户id列表数据
+     * @param $param
+     * @return array
+     * @throws \think\exception\DbException
+     */
+    public function investment_project_list($param,$uid)
+    {
+
+        $where = array();
+        $where['uid'] = $uid;
+        if(!empty($param['process'])){
+            $where['process'] = $param['process'];
+
+        }
+        if(!empty($param['title'])){
+            $where['title|no'] = ['like','%'.$param['title'].'%'];
+        }
+
+        if(!empty($param['type'])){
+            $where['type'] = $param['type'];
+        }
+
+        if(!empty($param['start_time'])){
+            $where['created_at'] = ['gt',$param['start_time']];
+        }
+
+        if(!empty($param['end_time'])){
+            $where['created_at'] = ['lt',$param['end_time']];
+        }
+
+        if(!empty($param['start_time']) && !empty($param['end_time'])){
+            $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
+        }
+
+        if(empty($param['page'])){
+            $param['page'] = 1;
+        }
+        if(empty($param['size'])){
+            $param['size'] = 6;
+        }
+
+        $field = 'id,no,title,cid,bright,reward,created_at';
+        $order = 'id desc';
+
+        $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
+            -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+
+        foreach ($list['data'] as $key => $val){
+            $list['data'][$key]['industry_field'] = $val['investment_class']['title'];
+
+            unset($list['data'][$key]['investment_class']);
+        }
+
+        return $list;
+    }
+
 }
