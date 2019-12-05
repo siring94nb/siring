@@ -39,8 +39,8 @@
     <div class="content-reply">
       <template v-for="(item,index) in statusData">
         <div class="content-main" :key="index">
-          <div class="content-title" :class="{'content-sel-color': status > index}">{{item.name}}</div>
-          <div v-if="status == index">
+          <div class="content-title" :class="{'content-sel-color': status - 1 > index}">{{item.name}}</div>
+          <div v-if="status - 1 == index">
             <div class="content-tips">
               <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
               <div class="content-text">{{item.tips}}</div>
@@ -49,7 +49,7 @@
               <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
             </div>
           </div>
-          <div class="content-zip" v-if="status > index">
+          <div class="content-zip" v-if="status - 1 > index">
             <div class="zip-main">
               <span class="zip-text">预览</span>
               <img style="vertical-align: middle;" src="../../images/u587.gif" alt />
@@ -61,12 +61,12 @@
         </div>
         <div
           class="all-line"
-          :class="{'h-line': status < index + 2, 'g-line' :  status > index}"
+          :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
           v-if="index < 6"
         ></div>
         <div
           class="all-line"
-          :class="{'h-line': status < index + 2, 'g-line' : status > index + 1}"
+          :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
           v-if="index < 6"
         ></div>
       </template>
@@ -75,7 +75,7 @@
     <div class="line line-vice">内容/合同/协议/确认文书</div>
     <!-- 定制需求 -->
     <div class="determine-box">
-      <div class="dzxq-main" v-if="status == 0">
+      <div class="dzxq-main" v-if="status == 1">
         <Form :label-width="80">
           <FormItem label="需求名称：" prop="project_name">
             <Input placeholder="请输入" style="width: 450px;" />
@@ -139,7 +139,7 @@
           </FormItem>
         </Form>
       </div>
-      <div class="ptbj-box" v-if="status == 1">
+      <div class="ptbj-box" v-if="status == 2">
         <img src="../../images/u4198.png" width="100%" alt />
       </div>
     </div>
@@ -172,7 +172,7 @@
       </div>
     </div>
 
-    <div class="foot-box" v-if="status == 1">
+    <div class="foot-box" v-if="status == 2">
       <div class="pt-bj">
         <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
         <div class="audit">
@@ -218,10 +218,17 @@
 </template>
 
 <script>
+import axios from "axios";
+import config from "../../../build/config";
+const apiPost = (url, params) => {
+    return axios.post(url, qs.stringify(params)).then(res => res.data);
+}
+
 export default {
   data() {
     return {
       status: 0,
+      id: 0,
       value: "",
       path: "ws://127.0.0.1:3000",
       socket: "",
@@ -271,7 +278,8 @@ export default {
   },
   methods: {
     init() {
-      // console.log(this.$route.params.status);
+      this.status = this.$route.params.status;
+      this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -288,6 +296,7 @@ export default {
       var x = 3;
       var y = 1;
       this.rand = parseInt(Math.random() * (x - y + 1) + y);
+      this.BasicInformation();
     },
     open() {
       console.log("socket连接成功");
@@ -309,12 +318,24 @@ export default {
     },
     close() {
       console.log("socket已经关闭");
+    },
+    //获取基础信息
+    BasicInformation() {
+      let params ={
+        id : this.id,
+        status: this.status
+      }
+      apiPost('NeedOrder/get_need_order_detail',params).then(res => {
+        console.log(res)
+      })
     }
+
   },
   destroyed() {
     // 销毁监听
     this.socket.onclose = this.close;
-  }
+  },
+  
 };
 </script>
 
