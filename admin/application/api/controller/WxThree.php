@@ -33,6 +33,8 @@ class WxThree extends Base
         // if(!$encryptMsg){
         //         $encryptMsg = input('post.');	
         // }
+        $pp3['msg']=$encryptMsg;
+        Db::table('test')->insert($pp3);
         $pc = new \WXBizMsgCrypt($this->token, $this->encodingAesKey, $this->appid);
         $xml_tree = new \DOMDocument();
         $xml_tree->loadXML($encryptMsg);

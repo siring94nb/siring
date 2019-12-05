@@ -7,6 +7,8 @@ use think\Request;
 use think\Db;
 use think\Session;
 use think\Validate;
+use app\util\Tools;
+use app\util\ReturnCode;
 
 /**
  * lilu
@@ -37,4 +39,29 @@ class NeedOrder extends Base{
             return   $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
         }
     }
+
+    /**
+     * lilu
+     * 获取定制需求内容
+     * id   
+     * status
+     */
+    public function get_need_order_detail()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            //获取详情
+            $need_detail=Need::get($postData['id']);
+            halt($need_detail);
+        }else{
+            return $this->buildFailed(ReturnCode::DB_READ_ERROR,'操作失败');
+
+
+        }
+    }
+
+
+
+     
 }
