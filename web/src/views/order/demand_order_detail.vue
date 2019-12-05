@@ -5,33 +5,34 @@
       <table>
         <tr>
           <td class="td-one">用户账号：</td>
-          <td>139228300809</td>
+          <td>{{information.need_phone}}</td>
           <td class="td-one">订单号：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_order}}</td>
         </tr>
         <tr>
           <td class="td-one">商品名称：</td>
-          <td>139228300809</td>
+          <td>{{information.need_name}}</td>
           <td class="td-one">订单类型：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_category}}</td>
         </tr>
         <tr>
           <td class="td-one">下单时间：</td>
-          <td>139228300809</td>
+          <td>{{information.create_time}}</td>
           <td class="td-one">订单金额：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_order_money}}</td>
         </tr>
         <tr>
           <td class="td-one">终端版本：</td>
-          <td>139228300809</td>
+          <td>{{JSON.parse(information.need_terminal)}}</td>
           <td class="td-one">合同金额：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_money}}</td>
         </tr>
+
         <tr>
           <td class="td-one">项目剩余金额</td>
-          <td>139228300809</td>
+          <td>{{information.need_name}}</td>
           <td class="td-one">项目剩余时间</td>
-          <td>2018062803890</td>
+          <td>{{information.need_name}}</td>
         </tr>
       </table>
     </div>
@@ -39,7 +40,10 @@
     <div class="content-reply">
       <template v-for="(item,index) in statusData">
         <div class="content-main" :key="index">
-          <div class="content-title" :class="{'content-sel-color': status - 1 > index}">{{item.name}}</div>
+          <div
+            class="content-title"
+            :class="{'content-sel-color': status - 1 > index}"
+          >{{item.name}}</div>
           <div v-if="status - 1 == index">
             <div class="content-tips">
               <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
@@ -78,10 +82,10 @@
       <div class="dzxq-main" v-if="status == 1">
         <Form :label-width="80">
           <FormItem label="需求名称：" prop="project_name">
-            <Input placeholder="请输入" style="width: 450px;" />
+            <Input placeholder="请输入" v-model="information.need_name" style="width: 450px;" />
           </FormItem>
           <FormItem label="需求类型：" prop="category_id">
-            <Select style="width: 450px;">
+            <Select style="width: 450px;" v-model="information.need_category">
               <Option value="1">智能硬件</Option>
               <Option value="2">电子商务</Option>
               <Option value="3">生活娱乐</Option>
@@ -92,11 +96,17 @@
             </Select>
           </FormItem>
           <FormItem label="需求预算：" prop="project_price_up">
-            <Input placeholder="请输入" style="width: 200px;" />元 ~
-            <Input placeholder="请输入" style="width: 200px;" />元
+            <Input placeholder="请输入" v-model="information.need_budget_down" style="width: 200px;" />元 ~
+            <Input placeholder="请输入" v-model="information.need_budget_up" style="width: 200px;" />元
           </FormItem>
           <FormItem label="开发终端：" prop="develop">
-            <CheckboxGroup>
+            <CheckboxGroup v-model="information.need_terminal">
+              <Checkbox label="原型UI">
+                <Icon type="ios-snow-outline" size="23" />原型UI
+              </Checkbox>
+              <Checkbox label="后台">
+                <Icon type="ios-cog-outline" size="23" />后台
+              </Checkbox>
               <Checkbox label="PC">
                 <Icon type="ios-desktop-outline" size="23" />PC
               </Checkbox>
@@ -121,16 +131,16 @@
           </FormItem>
           <FormItem label prop="project_detail">
             <span>手机号</span>
-            <Input placeholder="手机号" style="width: 250px;" />
+            <Input placeholder="手机号" v-model="information.need_phone" style="width: 250px;" />
             <span style="margin-left:120px;">其他联系方式</span>
             <Input placeholder="XXX-XXXXXXX" style="width: 250px;" />
           </FormItem>
           <FormItem label prop="project_detail">
             <span>微信号</span>
-            <Input placeholder style="width: 250px;" />
+            <Input placeholder  v-model="information.need_wx"  style="width: 250px;" />
           </FormItem>
           <FormItem label="需求描述：" prop="project_detail">
-            <Input type="textarea" :autosize="{minRows: 4,maxRows: 8}" style="width:500px;" />
+            <Input type="textarea" :autosize="{minRows: 4,maxRows: 8}"  v-model="information.need_desc"  style="width:500px;" />
           </FormItem>
           <FormItem label="添加附件：">
             <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -207,7 +217,7 @@
       </div>
       <div class="audit-opinion">
         <span>审核意见：</span>
-        斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧 
+        斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
       <div class="pt-bj-btn" style="text-align:center;">
         <Button style="margin-right:30px;">返回</Button>
@@ -220,10 +230,10 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
-import qs from 'qs';
+import qs from "qs";
 const apiPost = (url, params) => {
-    return axios.post(url, qs.stringify(params)).then(res => res.data);
-}
+  return axios.post(url, qs.stringify(params)).then(res => res.data);
+};
 
 export default {
   data() {
@@ -271,7 +281,16 @@ export default {
           tips: "等待确认服务"
         }
       ],
-      uploadBtn: false
+      uploadBtn: false,
+      information: {
+        //基础信息
+        need_phone: "",
+        need_order: "",
+        need_name: "",
+        need_category: "",
+        create_time: "",
+        need_order_money: ""
+      }
     };
   },
   created() {
@@ -322,21 +341,25 @@ export default {
     },
     //获取基础信息
     BasicInformation() {
-      let params ={
-        id : this.id,
-        status: this.status
-      }
-      apiPost('NeedOrder/get_need_order_detail',params).then(res => {
-        console.log(res)
-      })
+      let vm = this,
+        params = {
+          id: vm.id,
+          status: vm.status
+        };
+      apiPost("NeedOrder/get_need_order_detail", params).then(res => {
+        let { code, data, msg } = res;
+        // console.log(data.data.need_terminal))
+        if (code == 1) {
+          data.data.need_category = (data.data.need_category).toString();
+          vm.information = data.data;
+        }
+      });
     }
-
   },
   destroyed() {
     // 销毁监听
     this.socket.onclose = this.close;
-  },
-  
+  }
 };
 </script>
 
@@ -626,8 +649,8 @@ export default {
         color: #fff;
         border-radius: 30px;
       }
-      .upload-btn-dis{
-        background-color: rgb(161, 161, 161) !important; 
+      .upload-btn-dis {
+        background-color: rgb(161, 161, 161) !important;
       }
       .audit {
         display: flex;
@@ -643,7 +666,7 @@ export default {
         .right-arrow {
           border-color: transparent transparent transparent rgb(161, 161, 161);
         }
-        .left-arrow-dis{
+        .left-arrow-dis {
           border-color: transparent red transparent transparent;
         }
         .right-arrow-dis {
@@ -665,7 +688,7 @@ export default {
           height: 33px;
           line-height: 33px;
         }
-        .audit-true{
+        .audit-true {
           background-color: red !important;
         }
       }
@@ -673,12 +696,12 @@ export default {
         margin: 0 30px;
       }
     }
-    .audit-opinion{
+    .audit-opinion {
       height: 100px;
       border-bottom: 1px solid rgb(121, 121, 121);
       font-size: 16px;
       margin-bottom: 10px;
-      span{
+      span {
         color: red;
         font-weight: 700;
       }
@@ -690,7 +713,5 @@ export default {
       }
     }
   }
-
-
 }
 </style>
