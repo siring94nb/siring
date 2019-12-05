@@ -4,6 +4,8 @@ namespace app\api\controller;
 
 use think\Controller;
 use think\Request;
+use app\data\model\User;
+use think\Session;
 
 class RoleCenter extends Controller
 {
@@ -14,6 +16,16 @@ class RoleCenter extends Controller
      */
     public function city_partner()
     {
+
+        $uid = Session::get("uid");
+
+        $user_data = User::whrer('id',$uid)->find()->toarray();
+
+        if($user_data['type'] = 2){
+
+        }else{
+            returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
+        }
 
 
     }
