@@ -368,7 +368,7 @@ export default {
     xcxnavClick(index) {
       this.xcxnavon = index;
       this.mgtop = -(index * 325);
-      console.log(this.mgtop);
+      // console.log(this.mgtop);
     },
     getGoods() {
       let params = {

@@ -21,7 +21,7 @@
                   :class="{'search-item': true, 'curr': index==typeCurrIndex}"
                   @click="searchType(index, item.id)"
                 >
-                  <span>{{ item.title }}</span>
+                  <span>{{ item.category_name }}</span>
                 </div>
               </div>
               <div class="search-more" @click="showMore">
@@ -73,22 +73,15 @@
               ></el-table-column>
               <el-table-column v-else :label="item.label" :key="item.id" align="center">
                 <template slot-scope="scope">
-                  <el-button type="primary" @click="handleClick(scope.index, scope.row)">我要投资</el-button>
-                  <i :class="scope.row.follow?'el-icon-star-on':'el-icon-star-off'"></i>
+                  <el-button
+                    type="primary"
+                    @click="handleClick(scope.$index, scope.row)"
+                  >我要投资</el-button>
+                  <i :class="scope.row.like?'el-icon-star-on':'el-icon-star-off'"></i>
                 </template>
               </el-table-column>
             </template>
           </el-table>
-        </div>
-        <div class="pagi-box">
-          <el-pagination
-            background
-            layout="prev, pager, next"
-            :hide-on-single-page="true"
-            :page-size="goodsData.per_page"
-            :total="goodsData.total"
-            @current-change="handleCurrentChange"
-          ></el-pagination>
         </div>
       </div>
     </div>
@@ -104,7 +97,7 @@ import Myfooter from "@/components/footer";
 import Myaside from "@/components/aside";
 import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
-import { GetIndustryField, GetIndustryList } from "@/api/api";
+import { GetDevlopType } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -124,13 +117,27 @@ export default {
       sortId: 1, // 商品按照按打赏数量升降序ID 1：全部，2：按打赏数量序，3：按打赏数量升序
       typeId: 0, // 商品、软件定制类型ID
       up: false, //控制箭头上下亮
-      goodsData: {}, //获取的所有商品数据
-      page: 1,
-      tableData: [],
+      tableData: [
+        {
+          code: "MU3838",
+          name: "物联网摇摇车",
+          field: "医疗健康",
+          highlight: "非常好的项目",
+          like: true,
+        },
+        {
+          code: "MU3838",
+          name: "物联网摇摇车",
+          field: "医疗健康",
+          highlight: "非常好的项目",
+          like: false,
+        }
+      ],
       cols: [
-        { label: "项目名称", id: 2, prop: "title" },
-        { label: "行业领域", id: 3, prop: "industry_field" },
-        { label: "项目亮点", id: 4, prop: "bright" },
+        { label: "会员邀请码", id: 1, prop: "code" },
+        { label: "项目名称", id: 2, prop: "name" },
+        { label: "行业领域", id: 3, prop: "field" },
+        { label: "项目亮点", id: 4, prop: "highlight" },
         { label: "操作", id: 5, prop: "option" }
       ]
     };
@@ -140,31 +147,13 @@ export default {
   },
   methods: {
     init() {
-      this.getIndustryField();
-      this.getIndustryList();
+      this.getDevlopType();
     },
-    getIndustryField() {
-      GetIndustryField().then(res => {
+    getDevlopType() {
+      GetDevlopType().then(res => {
         let { code, data, msg } = res.data;
         if (code === 1) {
           this.typeList = data;
-        }
-      });
-    },
-    getIndustryList() {
-      let params = {
-        type: this.sortId,
-        cid: this.typeId,
-        title: this.searchCont,
-        page: this.page
-      };
-      GetIndustryList(params).then(res => {
-        let { code, data, msg } = res;
-        if (code !== 1) {
-          this.$message.error(msg);
-        } else {
-          this.goodsData = data;
-          this.tableData = data.data;
         }
       });
     },
@@ -188,13 +177,10 @@ export default {
         case 1:
           this.sortId = this.up ? 2 : 3;
           break;
+        case 2:
+          this.sortId = this.up ? 4 : 5;
+          break;
       }
-      this.getIndustryList();
-    },
-    handleClick() {},
-    handleCurrentChange(val) {
-      this.page = val;
-      this.getGoods();
     }
   }
 };
@@ -230,7 +216,7 @@ export default {
 <style scoped lang='scss'>
 .middle {
   margin-top: 100px;
-  // min-height: 1000px;
+  min-height: 1000px;
   background-color: rgb(246, 246, 246);
   .mall-box {
     width: 1200px;
@@ -376,26 +362,18 @@ export default {
     }
     .project-list {
       background-color: #ffffff;
-      margin: 20px 0;
-      min-height: 700px;
-      .el-icon-star-off {
-        color: rgb(212, 212, 212);
+      margin-top: 20px;
+      .el-icon-star-off{
+        color: rgb(212,212,212);
       }
-      .el-icon-star-on {
-        color: rgb(244, 234, 42);
+      .el-icon-star-on{
+        color: rgb(244,234,42);
       }
       .el-icon-star-off,
-      .el-icon-star-on {
+      .el-icon-star-on{
         font-size: 24px;
         cursor: pointer;
         margin-left: 10px;
-      }
-    }
-    .pagi-box {
-      display: flex;
-      justify-content: center;
-      .el-pagination {
-        margin-bottom: 20px;
       }
     }
   }

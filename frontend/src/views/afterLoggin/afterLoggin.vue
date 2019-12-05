@@ -1,0 +1,83 @@
+<template>
+  <div ref="box">
+    <Myheader />
+    <div class="afLogginBox">
+      <div class="left" ref="leftBox">
+        <faterLoggin />
+      </div>
+     <div class="right" ref="rightBox">
+         <router-view class="view"></router-view>
+         <afterLogginR v-if="rName=='afterLoggin'"/>
+     </div>
+    </div>
+  </div>
+</template>
+<script>
+import Myheader from "@/components/header";
+import faterLoggin from "@/views/afterLoggin/faterLoggin";
+import afterLogginR from "@/views/afterLoggin/afterLogginR";
+export default {
+  data() {
+    return {
+        rName:""
+    };
+  },
+  components: {
+    Myheader,
+    faterLoggin,
+    afterLogginR
+  },
+  mounted(){
+            const that = this;
+            that.changeSize();
+            window.onresize = () => {
+                that.changeSize();
+				}
+    },
+    watch: {
+    $route: {
+      handler: function(route) {
+          this.rName =route.name;
+        // console.log(111);
+        // console.log(this.rName)
+      },
+      immediate: true
+    }
+  },
+   methods:{
+	changeSize(){
+                return (() => {
+                    let screenWidth = document.body.clientWidth;
+                    let leftBox = this.$refs.leftBox;
+                    let rightBox = this.$refs.rightBox;
+                    if (screenWidth >1260){
+                        leftBox.style.marginLeft = (screenWidth-(leftBox.clientWidth+rightBox.clientWidth))/2-20+"px";
+                        rightBox.style.marginLeft = (screenWidth-(leftBox.clientWidth+rightBox.clientWidth))/2+leftBox.clientWidth+"px";
+                    }else {
+                        leftBox.style.marginLeft = "0px";
+                        rightBox.style.marginLeft = leftBox.clientWidth+"px";
+                    }
+                })()
+            }
+   }
+};
+</script>
+<style lang="scss" scoped>
+.afLogginBox {
+  background: rgb(242, 247, 250);
+  padding: 5px 10px;
+  border-top: 2px solid #ffffff;
+  // max-width: 1260px;
+  min-width: 1260px;
+  .left {
+    width: 123px;
+    float: left;
+  }
+  .right {
+    margin-left: 150px;
+    // padding-left: 10px;
+    margin-top: 100px;
+    max-width: 1100px;
+  }
+}
+</style>

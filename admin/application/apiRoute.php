@@ -150,6 +150,12 @@ Route::group('api', function () {
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
     });
+    
+    //微信第三方路由
+    Route::group('WxThree',function(){
+        Route::any('receive_ticket','api/WxThree/receive_ticket'); //定制需求下单
+        Route::any('receive_ticket','api/WxThree/callback'); //定制需求下单
+    });
 
     //控制台-AI推广套餐
     Route::group('Promotion',function(){
