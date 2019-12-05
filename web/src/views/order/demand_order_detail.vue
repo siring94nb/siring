@@ -220,6 +220,7 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
+import qs from 'qs';
 const apiPost = (url, params) => {
     return axios.post(url, qs.stringify(params)).then(res => res.data);
 }
