@@ -30,10 +30,10 @@ class WxThree extends Base
         $nonce      = empty($_GET['nonce'])     ? ""    : trim($_GET['nonce']) ;
         $msg_sign   = empty($_GET['msg_signature']) ? ""    : trim($_GET['msg_signature']) ;
         $encryptMsg = file_get_contents('php://input');
-        // if(!$encryptMsg){
-        //         $encryptMsg = input('post.');	
-        // }
-        $pp3['msg']=$encryptMsg;
+        if(!$encryptMsg){
+                $encryptMsg = input('post.');	
+        }
+        $pp3['msg']='1111';
         Db::table('test')->insert($pp3);
         $pc = new \WXBizMsgCrypt($this->token, $this->encodingAesKey, $this->appid);
         $xml_tree = new \DOMDocument();
