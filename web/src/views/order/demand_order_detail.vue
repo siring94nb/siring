@@ -62,13 +62,11 @@
         <div
           class="all-line"
           :class="{'h-line': status < index + 2, 'g-line' :  status > index}"
-          :key="index"
           v-if="index < 6"
         ></div>
         <div
           class="all-line"
           :class="{'h-line': status < index + 2, 'g-line' : status > index + 1}"
-          :key="index"
           v-if="index < 6"
         ></div>
       </template>
@@ -142,7 +140,7 @@
         </Form>
       </div>
       <div class="ptbj-box" v-if="status == 1">
-        <img src="../../images/u4198.png" width="100%" alt="">
+        <img src="../../images/u4198.png" width="100%" alt />
       </div>
     </div>
     <div class="line line-vice">平台顾问信息互动</div>
@@ -174,8 +172,47 @@
       </div>
     </div>
 
-    <div>
-      
+    <div class="foot-box">
+      <div class="pt-bj">
+        <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
+        <div class="audit">
+          <div class="arrow left-arrow"></div>
+          <div class="arrow-pole"></div>
+          <div class="audit-status">等待审核</div>
+          <div class="arrow-pole"></div>
+          <div class="arrow right-arrow"></div>
+        </div>
+        <div class="project">
+          工期：
+          <input
+            type="number"
+            name="day"
+            id
+            placeholder="请填写"
+            style="width:60px;line-height:30px;color:red;"
+          />
+          工作日
+        </div>
+        <div>
+          合同额：
+          <input
+            type="number"
+            name="money"
+            id
+            placeholder="请填写"
+            style="width:60px;line-height:30px;color:red;"
+          />
+          元
+        </div>
+      </div>
+      <div class="audit-opinion">
+        <span>审核意见：</span>
+        斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧 
+      </div>
+      <div class="pt-bj-btn" style="text-align:center;">
+        <Button style="margin-right:30px;">返回</Button>
+        <Button type="primary">确认</Button>
+      </div>
     </div>
   </div>
 </template>
@@ -225,7 +262,8 @@ export default {
           name: "项目年服务",
           tips: "等待确认服务"
         }
-      ]
+      ],
+      uploadBtn: false
     };
   },
   created() {
@@ -233,7 +271,7 @@ export default {
   },
   methods: {
     init() {
-      console.log(this.$route.params.status);
+      // console.log(this.$route.params.status);
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -302,7 +340,7 @@ export default {
   .determine-box {
     height: 600px;
     border: 1px solid rgb(240, 248, 250);
-    overflow-y:scroll;
+    overflow-y: scroll;
     .dzxq-main {
       padding: 30px 30px 30px 300px;
     }
@@ -545,5 +583,92 @@ export default {
     background-color: rgb(102, 204, 0);
     color: #fff;
   }
+  //平台报价底部
+  .foot-box {
+    .pt-bj {
+      display: flex;
+      font-size: 14px;
+      color: #000000;
+      font-weight: 400;
+      margin: 20px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgb(121, 121, 121);
+      justify-content: center;
+      align-items: center;
+      .upload-btn {
+        font-size: 13px;
+        text-align: center;
+        width: 155px;
+        height: 40px;
+        background-color: rgb(255, 102, 0);
+        color: #fff;
+        border-radius: 30px;
+      }
+      .upload-btn-dis{
+        background-color: rgb(161, 161, 161) !important; 
+      }
+      .audit {
+        display: flex;
+        align-items: center;
+        .arrow {
+          border-width: 10px;
+          border-style: solid;
+          height: 20px;
+        }
+        .left-arrow {
+          border-color: transparent rgb(161, 161, 161) transparent transparent;
+        }
+        .right-arrow {
+          border-color: transparent transparent transparent rgb(161, 161, 161);
+        }
+        .left-arrow-dis{
+          border-color: transparent red transparent transparent;
+        }
+        .right-arrow-dis {
+          border-color: transparent transparent transparent red;
+        }
+        .arrow-pole {
+          height: 2px;
+          width: 50px;
+          background-color: rgb(161, 161, 161);
+        }
+        .audit-status {
+          font-weight: 700;
+          font-style: normal;
+          font-size: 16px;
+          color: #ffffff;
+          text-align: center;
+          background-color: rgb(161, 161, 161);
+          width: 95px;
+          height: 33px;
+          line-height: 33px;
+        }
+        .audit-true{
+          background-color: red !important;
+        }
+      }
+      .project {
+        margin: 0 30px;
+      }
+    }
+    .audit-opinion{
+      height: 100px;
+      border-bottom: 1px solid rgb(121, 121, 121);
+      font-size: 16px;
+      margin-bottom: 10px;
+      span{
+        color: red;
+        font-weight: 700;
+      }
+    }
+    .pt-bj-btn {
+      text-align: center;
+      button {
+        width: 150px;
+      }
+    }
+  }
+
+
 }
 </style>
