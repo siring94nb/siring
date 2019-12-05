@@ -448,6 +448,7 @@ Route::group('admin', function () use ($afterBehavior) {
              ['method' => 'post']
          ],
     ], ['after_behavior' => $afterBehavior]);
+    
     /**
      * lilu
      * 套餐订单

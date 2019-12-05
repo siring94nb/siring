@@ -52,12 +52,12 @@ class NeedOrder extends Base{
         $postData=$request->param();
         if($postData){
             //获取详情
-            $need_detail=Need::get($postData['id']);
-            halt($need_detail);
+            $need_detail=Need::get($postData['id'])->toArray();
+            return  $this->buildSuccess([
+                'data'=>$need_detail,
+            ]);
         }else{
             return $this->buildFailed(ReturnCode::DB_READ_ERROR,'操作失败');
-
-
         }
     }
 
