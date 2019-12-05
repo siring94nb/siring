@@ -172,7 +172,7 @@
       </div>
     </div>
 
-    <div class="foot-box">
+    <div class="foot-box" v-if="status == 1">
       <div class="pt-bj">
         <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
         <div class="audit">
@@ -221,7 +221,7 @@
 export default {
   data() {
     return {
-      status: 1,
+      status: 0,
       value: "",
       path: "ws://127.0.0.1:3000",
       socket: "",

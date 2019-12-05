@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
             head[0].appendChild(meta2)
             if (userId == null && phone == null) {
                 // 通过缓存，判断当前登录状态
-                next("/");
+                // next("/");
             }
         }
     })
