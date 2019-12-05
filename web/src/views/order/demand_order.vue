@@ -49,7 +49,7 @@
     <Card style="margin-bottom: 10px">
       <Row>
         <Col span="2">
-          <Button type="primary" class="btns btn-qb" @click="toOrder">全部</Button>
+          <Button type="primary" class="btns btn-qb" >全部</Button>
         </Col>
         <Col span="2">
           <Button type="primary" class="btns btn-dzxq">定制需求</Button>
@@ -235,9 +235,19 @@ export default {
           title: "操作",
           align: "center",
           key: "handle",
+          width: 130,
           render: (h, param) => {
-            let status;
-            if (param.row.order_status == 2) {
+            let status, color;
+            switch(param.row.need_status) {
+                case 1:
+                    status = "定制需求";
+                    color = "rgb(204, 51, 102)";
+                    break;
+                case 2:
+                    status = "平台报价";
+                    color = "rgb(204, 0, 204)";
+                    break;
+            } 
               return h(
                 "Button",
                 {
@@ -245,25 +255,23 @@ export default {
                     type: "primary"
                   },
                   style: {
-                    margin: "0 5px",
-                    "background-color": "rgb(204,0,204)",
+                    "background-color": color,
                     border: "0"
                   },
                   on: {
                     click: () => {
-                      this.selID = param.row.id;
-                      this.modalSetting.show = true;
+                      this.$router.push({
+                        name: "demand_order_detail",
+                        params: {
+                          id: param.row.id,
+                          status:param.row.need_status
+                        }
+                      });
                     }
                   }
                 },
-                "待开通"
+                status
               );
-            } else {
-              if (param.row.order_status == 1) status = "未支付";
-              else if (param.row.order_status == 3) status = "已完成";
-              else if (param.row.order_status == 4) status = "已关闭";
-              return h("div", status);
-            }
           }
         }
       ]
@@ -318,15 +326,7 @@ export default {
       this.tableShow.page = 1;
       this.getMade();
     },
-    toOrder() {
-      this.$router.push({
-        name: "demand_order_detail",
-        params: {
-          id: 22,
-          status:2
-        }
-      });
-    }
+
   },
   mounted() {}
 };

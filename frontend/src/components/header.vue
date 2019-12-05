@@ -47,7 +47,7 @@
             <i class="icon iconfont icon-ruanjiandingzhi"></i>
             <span>软件/定制</span>
             <p class="en-name">Software develop</p>
-            <i class="iconfont fire"></i>
+            <i class="iconfont icon-remen fire"></i>
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/programSaaS">
@@ -281,7 +281,7 @@ export default {
   components: {
     validCode
   },
-  inject: ['reload'],
+  inject: ["reload"],
   data() {
     return {
       ifLogin: false,
@@ -300,9 +300,9 @@ export default {
       validateTime: 60
     };
   },
-  computed:{
-    phone(){
-      return this.$store.state.phone.replace(/(\d{3})\d{4}(\d{3})/, '$1****$2');
+  computed: {
+    phone() {
+      return this.$store.state.phone.replace(/(\d{3})\d{4}(\d{3})/, "$1****$2");
     }
   },
   mounted() {
@@ -413,16 +413,19 @@ export default {
       Login(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        console.log(111, res);
+        // console.log(111, res);
+        // 登录成功后跳转的页面
         if (code === 1) {
           // 存储用户信息
+          // console.log(data);
           this.$store.commit("login", {
             id: data.user_id,
             phone: data.phone,
             avatar: data.user_img
           });
           this.ifLogin = true;
-          this.reload();
+          this.$router.push({ name: "afterLoggin" });
+          // this.reload();
           // this.handleClose();
         }
       });
@@ -439,21 +442,22 @@ export default {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         // console.log(res);
-        if(code === 1){
+        if (code === 1) {
           this.handleClose();
         }
       });
     },
-    onLogout(){
+    onLogout() {
       Logout().then(res => {
         let { data, msg, code } = res.data;
         this.showMsg(msg, code);
-        if(code === 1){
-          this.$store.commit('logout');
+        if (code === 1) {
+          this.$store.commit("logout");
           this.ifLogin = false;
-          this.reload();
+          // this.reload();
+          this.$router.push('/');
         }
-      })
+      });
     }
   }
 };
@@ -522,7 +526,7 @@ export default {
   }
   .nav {
     height: 60px;
-    background-color: rgb(242,247,250);
+    background-color: rgb(242, 247, 250);
     .nav-cont {
       height: 100%;
       width: 1200px;
@@ -568,9 +572,6 @@ export default {
           right: -10px;
           color: rgb(250, 41, 1);
           font-size: 18px;
-          background: url("~@/assets/images/huo.gif") no-repeat;
-          width: 27px;
-          height: 20px;
         }
         .en-name {
           position: absolute;

@@ -126,7 +126,7 @@ export default {
           name: "Product Manager",
           egName: "Ronnie Zhang",
           position: "总经理",
-          images: require("../assets/images/a.jpg"),
+          images: require("../assets/images/a1.jpg"),
           introduce:
             "1997年本科毕业武汉科技大学机械自动化专业，曾就职深圳茁壮网络、梦网科技等多家大型互联网公司及上市公司高管 ，历任产品部经理、移动增值业务部总经理等职务，在广泛接触着终端设备厂家、软件方案公司，通讯运营商，拥有富的带团队开发、运营推广实战经验。",
           field:
