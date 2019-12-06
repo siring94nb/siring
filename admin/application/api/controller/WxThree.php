@@ -33,8 +33,6 @@ class WxThree extends Base
         // if(!$encryptMsg){
         //         $encryptMsg = input('post.');	
         // }
-        $pp3['msg']='1111';
-        Db::table('test')->insert($pp3);
         $pc = new \WXBizMsgCrypt($this->token, $this->encodingAesKey, $this->appid);
         $xml_tree = new \DOMDocument();
         $xml_tree->loadXML($encryptMsg);
@@ -56,9 +54,6 @@ class WxThree extends Base
              $pp['msg']=$component_verify_ticket.'获取ticket';
              Db::table('test')->insert($pp);
             }else{
-                //错误代码日志
-                $pp['msg']=$errCode.'接收ticket出错';
-                Db::table('test')->insert($pp);
                 echo "false";
             }
             // Response.Write('success');
@@ -140,18 +135,18 @@ class WxThree extends Base
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
-                    //第三方平台全网发布检测普通文本消息测试 
-                    // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                    //     $toUsername = trim($msgObj->ToUserName);
-                    //     $pp7['msg']=$toUsername.'22222';
-                    //     db('test')->insert($pp7);
-                    //     if ($toUsername == 'gh_3c884a361561') { 
-                    //         $content = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                    //         $pp8['msg']=$content;
-                    //         db('test')->insert($pp);
-                    //         echo $this->responseText($msgObj, $content);
-                    //     }
-                    // }
+                   // 第三方平台全网发布检测普通文本消息测试 
+                    if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
+                        $toUsername = trim($msgObj->ToUserName);
+                        $pp7['msg']=$toUsername.'22222';
+                        db('test')->insert($pp7);
+                        if ($toUsername == 'gh_3c884a361561') { 
+                            $content = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                            $pp8['msg']=$content;
+                            db('test')->insert($pp8);
+                            echo $this->responseText($msgObj, $content);
+                        }
+                    }
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
