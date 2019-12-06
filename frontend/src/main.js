@@ -30,13 +30,10 @@ router.beforeEach((to, from, next) => {
             meta2.content = data.data.tag;
             head[0].appendChild(meta)
             head[0].appendChild(meta2)
-<<<<<<< HEAD
-=======
             // if (userId == null && phone == null) {
             //     // 通过缓存，判断当前登录状态
             //     // next("/");
             // }
->>>>>>> 7010c33e7a3e8740dc6e217ce1c2703294f35351
         }
     })
     next()
