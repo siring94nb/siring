@@ -1,5 +1,5 @@
 <template>
-  <div style="width:1400px;">
+  <div style="width:1500px;">
     <logginHeader>
       <i class="el-icon-edit"></i>
       <span>软件/定制</span>
@@ -65,7 +65,7 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55" align="center"></el-table-column>
-          <el-table-column prop="need_order" label="订单编号" align="center"></el-table-column>
+          <el-table-column prop="need_order" label="订单编号" align="center" width="200"></el-table-column>
           <el-table-column prop="need_name" label="订单名称" align="center"></el-table-column>
           <el-table-column prop="need_category" label="订单类型" align="center"></el-table-column>
           <el-table-column prop="need_terminal" label="终端类型" align="center"></el-table-column>
@@ -81,10 +81,10 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.need_status)"
+                @click="handleEdit(scope.row.need_status)"
                 class="btns"
-                :class="btnClassName[scope.need_status]"
-              >{{btnName[scope.need_status]}}</el-button>
+                :class="btnClassName[scope.row.need_status]"
+              >{{btnName[scope.row.need_status]}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -95,7 +95,7 @@
           @current-change="handleCurrentChange"
           :current-page="tableShow.currentPage"
           :page-sizes="[10, 20, 30]"
-          :page-size="10"
+          :page-size="tableShow.size"
           layout="total, sizes, prev, pager, next, jumper"
           :total="0"
         ></el-pagination>
@@ -106,7 +106,6 @@
 <script>
 import logginHeader from "@/components/logginHeader";
 import { needOrderList } from "@/api/api";
-const vm = this;
 export default {
   data() {
     return {
@@ -151,40 +150,47 @@ export default {
     };
   },
   mounted() {
-    vm.init();
+    this.init();
   },
   methods: {
     init() {
-      vm.userId = JSON.parse(sessionStorage.getItem("user_id"));
-      vm.orderList();
+      this.userId = JSON.parse(sessionStorage.getItem("user_id"));
+      this.orderList();
     },
     //获取订单列表
     orderList() {
-      let params = {
-        title: vm.formInline.title,
-        start_time: vm.formInline.start_time,
-        end_time: vm.formInline.end_time,
-        size: vm.tableShow.size,
-        page: vm.tableShow.currentPage,
-        user_id: vm.userId
-      };
+      let vm = this,
+        params = {
+          title: vm.formInline.title,
+          start_time: vm.formInline.start_time,
+          end_time: vm.formInline.end_time,
+          size: vm.tableShow.size,
+          page: vm.tableShow.currentPage,
+          user_id: vm.userId
+        };
       needOrderList(params).then(res => {
         console.log(res);
+        let {code, data, msg} = res.data;
+        if(code == 1){
+            vm.tableShow.currentPage = data.data.current_page;
+            vm.tableShow.size = data.data.per_page;
+            vm.tableData = data.data;
+        }
       });
     },
     //条件搜索
     onSubmit() {
-      vm.orderList();
+      this.orderList();
     },
     //页面显示条数
     handleSizeChange(val) {
-      vm.tableShow.size = val;
-      vm.orderList();
+      this.tableShow.size = val;
+      this.orderList();
     },
     //页数
     handleCurrentChange(val) {
-      vm.tableShow.currentPage = val;
-      vm.orderList();
+      this.tableShow.currentPage = val;
+      this.orderList();
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
