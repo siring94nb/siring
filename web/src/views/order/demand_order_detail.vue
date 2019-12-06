@@ -5,33 +5,34 @@
       <table>
         <tr>
           <td class="td-one">用户账号：</td>
-          <td>139228300809</td>
+          <td>{{information.need_phone}}</td>
           <td class="td-one">订单号：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_order}}</td>
         </tr>
         <tr>
           <td class="td-one">商品名称：</td>
-          <td>139228300809</td>
+          <td>{{information.need_name}}</td>
           <td class="td-one">订单类型：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_category}}</td>
         </tr>
         <tr>
           <td class="td-one">下单时间：</td>
-          <td>139228300809</td>
+          <td>{{information.create_time}}</td>
           <td class="td-one">订单金额：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_order_money}}</td>
         </tr>
         <tr>
           <td class="td-one">终端版本：</td>
-          <td>139228300809</td>
+          <td>{{JSON.parse(information.need_terminal)}}</td>
           <td class="td-one">合同金额：</td>
-          <td>2018062803890</td>
+          <td>{{information.need_money}}</td>
         </tr>
+
         <tr>
           <td class="td-one">项目剩余金额</td>
-          <td>139228300809</td>
+          <td>{{information.need_name}}</td>
           <td class="td-one">项目剩余时间</td>
-          <td>2018062803890</td>
+          <td>{{information.need_name}}</td>
         </tr>
       </table>
     </div>
@@ -39,8 +40,11 @@
     <div class="content-reply">
       <template v-for="(item,index) in statusData">
         <div class="content-main" :key="index">
-          <div class="content-title" :class="{'content-sel-color': status > index}">{{item.name}}</div>
-          <div v-if="status == index">
+          <div
+            class="content-title"
+            :class="{'content-sel-color': status - 1 > index}"
+          >{{item.name}}</div>
+          <div v-if="status - 1 == index">
             <div class="content-tips">
               <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
               <div class="content-text">{{item.tips}}</div>
@@ -49,7 +53,7 @@
               <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
             </div>
           </div>
-          <div class="content-zip" v-if="status > index">
+          <div class="content-zip" v-if="status - 1 > index">
             <div class="zip-main">
               <span class="zip-text">预览</span>
               <img style="vertical-align: middle;" src="../../images/u587.gif" alt />
@@ -61,14 +65,12 @@
         </div>
         <div
           class="all-line"
-          :class="{'h-line': status < index + 2, 'g-line' :  status > index}"
-          :key="index"
+          :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
           v-if="index < 6"
         ></div>
         <div
           class="all-line"
-          :class="{'h-line': status < index + 2, 'g-line' : status > index + 1}"
-          :key="index"
+          :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
           v-if="index < 6"
         ></div>
       </template>
@@ -77,13 +79,13 @@
     <div class="line line-vice">内容/合同/协议/确认文书</div>
     <!-- 定制需求 -->
     <div class="determine-box">
-      <div class="dzxq-main" v-if="status == 0">
+      <div class="dzxq-main" v-if="status == 1">
         <Form :label-width="80">
           <FormItem label="需求名称：" prop="project_name">
-            <Input placeholder="请输入" style="width: 450px;" />
+            <Input placeholder="请输入" v-model="information.need_name" style="width: 450px;" />
           </FormItem>
           <FormItem label="需求类型：" prop="category_id">
-            <Select style="width: 450px;">
+            <Select style="width: 450px;" v-model="information.need_category">
               <Option value="1">智能硬件</Option>
               <Option value="2">电子商务</Option>
               <Option value="3">生活娱乐</Option>
@@ -94,11 +96,17 @@
             </Select>
           </FormItem>
           <FormItem label="需求预算：" prop="project_price_up">
-            <Input placeholder="请输入" style="width: 200px;" />元 ~
-            <Input placeholder="请输入" style="width: 200px;" />元
+            <Input placeholder="请输入" v-model="information.need_budget_down" style="width: 200px;" />元 ~
+            <Input placeholder="请输入" v-model="information.need_budget_up" style="width: 200px;" />元
           </FormItem>
           <FormItem label="开发终端：" prop="develop">
-            <CheckboxGroup>
+            <CheckboxGroup v-model="information.need_terminal">
+              <Checkbox label="原型UI">
+                <Icon type="ios-snow-outline" size="23" />原型UI
+              </Checkbox>
+              <Checkbox label="后台">
+                <Icon type="ios-cog-outline" size="23" />后台
+              </Checkbox>
               <Checkbox label="PC">
                 <Icon type="ios-desktop-outline" size="23" />PC
               </Checkbox>
@@ -123,16 +131,16 @@
           </FormItem>
           <FormItem label prop="project_detail">
             <span>手机号</span>
-            <Input placeholder="手机号" style="width: 250px;" />
+            <Input placeholder="手机号" v-model="information.need_phone" style="width: 250px;" />
             <span style="margin-left:120px;">其他联系方式</span>
             <Input placeholder="XXX-XXXXXXX" style="width: 250px;" />
           </FormItem>
           <FormItem label prop="project_detail">
             <span>微信号</span>
-            <Input placeholder style="width: 250px;" />
+            <Input placeholder  v-model="information.need_wx"  style="width: 250px;" />
           </FormItem>
           <FormItem label="需求描述：" prop="project_detail">
-            <Input type="textarea" :autosize="{minRows: 4,maxRows: 8}" style="width:500px;" />
+            <Input type="textarea" :autosize="{minRows: 4,maxRows: 8}"  v-model="information.need_desc"  style="width:500px;" />
           </FormItem>
           <FormItem label="添加附件：">
             <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -141,8 +149,8 @@
           </FormItem>
         </Form>
       </div>
-      <div class="ptbj-box" v-if="status == 1">
-        <img src="../../images/u4198.png" width="100%" alt="">
+      <div class="ptbj-box" v-if="status == 2">
+        <img src="../../images/u4198.png" width="100%" alt />
       </div>
     </div>
     <div class="line line-vice">平台顾问信息互动</div>
@@ -174,17 +182,64 @@
       </div>
     </div>
 
-    <div>
-      
+    <div class="foot-box" v-if="status == 2">
+      <div class="pt-bj">
+        <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
+        <div class="audit">
+          <div class="arrow left-arrow"></div>
+          <div class="arrow-pole"></div>
+          <div class="audit-status">等待审核</div>
+          <div class="arrow-pole"></div>
+          <div class="arrow right-arrow"></div>
+        </div>
+        <div class="project">
+          工期：
+          <input
+            type="number"
+            name="day"
+            id
+            placeholder="请填写"
+            style="width:60px;line-height:30px;color:red;"
+          />
+          工作日
+        </div>
+        <div>
+          合同额：
+          <input
+            type="number"
+            name="money"
+            id
+            placeholder="请填写"
+            style="width:60px;line-height:30px;color:red;"
+          />
+          元
+        </div>
+      </div>
+      <div class="audit-opinion">
+        <span>审核意见：</span>
+        斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
+      </div>
+      <div class="pt-bj-btn" style="text-align:center;">
+        <Button style="margin-right:30px;">返回</Button>
+        <Button type="primary">确认</Button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import config from "../../../build/config";
+import qs from "qs";
+const apiPost = (url, params) => {
+  return axios.post(url, qs.stringify(params)).then(res => res.data);
+};
+
 export default {
   data() {
     return {
-      status: 1,
+      status: 0,
+      id: 0,
       value: "",
       path: "ws://127.0.0.1:3000",
       socket: "",
@@ -225,7 +280,17 @@ export default {
           name: "项目年服务",
           tips: "等待确认服务"
         }
-      ]
+      ],
+      uploadBtn: false,
+      information: {
+        //基础信息
+        need_phone: "",
+        need_order: "",
+        need_name: "",
+        need_category: "",
+        create_time: "",
+        need_order_money: ""
+      }
     };
   },
   created() {
@@ -233,7 +298,8 @@ export default {
   },
   methods: {
     init() {
-      console.log(this.$route.params.status);
+      this.status = this.$route.params.status;
+      this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -250,6 +316,7 @@ export default {
       var x = 3;
       var y = 1;
       this.rand = parseInt(Math.random() * (x - y + 1) + y);
+      this.BasicInformation();
     },
     open() {
       console.log("socket连接成功");
@@ -271,6 +338,22 @@ export default {
     },
     close() {
       console.log("socket已经关闭");
+    },
+    //获取基础信息
+    BasicInformation() {
+      let vm = this,
+        params = {
+          id: vm.id,
+          status: vm.status
+        };
+      apiPost("NeedOrder/get_need_order_detail", params).then(res => {
+        let { code, data, msg } = res;
+        // console.log(data.data.need_terminal))
+        if (code == 1) {
+          data.data.need_category = (data.data.need_category).toString();
+          vm.information = data.data;
+        }
+      });
     }
   },
   destroyed() {
@@ -302,7 +385,7 @@ export default {
   .determine-box {
     height: 600px;
     border: 1px solid rgb(240, 248, 250);
-    overflow-y:scroll;
+    overflow-y: scroll;
     .dzxq-main {
       padding: 30px 30px 30px 300px;
     }
@@ -544,6 +627,91 @@ export default {
   .lt-btn:hover {
     background-color: rgb(102, 204, 0);
     color: #fff;
+  }
+  //平台报价底部
+  .foot-box {
+    .pt-bj {
+      display: flex;
+      font-size: 14px;
+      color: #000000;
+      font-weight: 400;
+      margin: 20px 0;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgb(121, 121, 121);
+      justify-content: center;
+      align-items: center;
+      .upload-btn {
+        font-size: 13px;
+        text-align: center;
+        width: 155px;
+        height: 40px;
+        background-color: rgb(255, 102, 0);
+        color: #fff;
+        border-radius: 30px;
+      }
+      .upload-btn-dis {
+        background-color: rgb(161, 161, 161) !important;
+      }
+      .audit {
+        display: flex;
+        align-items: center;
+        .arrow {
+          border-width: 10px;
+          border-style: solid;
+          height: 20px;
+        }
+        .left-arrow {
+          border-color: transparent rgb(161, 161, 161) transparent transparent;
+        }
+        .right-arrow {
+          border-color: transparent transparent transparent rgb(161, 161, 161);
+        }
+        .left-arrow-dis {
+          border-color: transparent red transparent transparent;
+        }
+        .right-arrow-dis {
+          border-color: transparent transparent transparent red;
+        }
+        .arrow-pole {
+          height: 2px;
+          width: 50px;
+          background-color: rgb(161, 161, 161);
+        }
+        .audit-status {
+          font-weight: 700;
+          font-style: normal;
+          font-size: 16px;
+          color: #ffffff;
+          text-align: center;
+          background-color: rgb(161, 161, 161);
+          width: 95px;
+          height: 33px;
+          line-height: 33px;
+        }
+        .audit-true {
+          background-color: red !important;
+        }
+      }
+      .project {
+        margin: 0 30px;
+      }
+    }
+    .audit-opinion {
+      height: 100px;
+      border-bottom: 1px solid rgb(121, 121, 121);
+      font-size: 16px;
+      margin-bottom: 10px;
+      span {
+        color: red;
+        font-weight: 700;
+      }
+    }
+    .pt-bj-btn {
+      text-align: center;
+      button {
+        width: 150px;
+      }
+    }
   }
 }
 </style>

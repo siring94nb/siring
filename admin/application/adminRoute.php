@@ -431,8 +431,8 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/NeedOrder/need_index',
             ['method' => 'get']
         ],
-         'need_detail'   => [                //定制需求
-             'admin/NeedOrder/need_detail',
+         'get_need_order_detail'   => [                //定制需求
+             'admin/NeedOrder/get_need_order_detail',
              ['method' => 'post']
          ],
          'proposal_upload'   => [                //上传报价单
@@ -448,6 +448,7 @@ Route::group('admin', function () use ($afterBehavior) {
              ['method' => 'post']
          ],
     ], ['after_behavior' => $afterBehavior]);
+    
     /**
      * lilu
      * 套餐订单
