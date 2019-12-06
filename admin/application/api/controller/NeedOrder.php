@@ -48,7 +48,7 @@ class  NeedOrder  extends  Base{
                     $param['create_time']=time();
                     $param['need_order']='DZ'.date('Ymdhis').mt_rand('111111','999999');
                     $param['need_terminal']=json_encode($param['need_terminal']);
-                    $data=Need::create($param);
+                    $data=Need::create($param)->toArray();
                     $order_id = $data['id'];
                     Db::commit();
                     return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
@@ -78,7 +78,7 @@ class  NeedOrder  extends  Base{
         if($postData){
             $need= new Need();
             $param['user_id']=$postData['user_id'];
-            $data=$need->get_need_order($param)->toArray();
+            $data=$need->get_need_order($param);
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败');
         }else{
             returnJson (0,'获取失败');exit();
