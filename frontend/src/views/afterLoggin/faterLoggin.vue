@@ -74,7 +74,7 @@ export default {
           title: "软件/定制",
           con: [
             // "定制需求订单", "定制类似订单"
-            { name: "定制需求订单", rou: "/ceshi" },
+            { name: "定制需求订单", rou: "/demand_order" },
             { name: "定制类似订单", rou: "/ceshi" }
           ]
         },

@@ -287,3 +287,9 @@ export const subBankPay = data => {
 export const needOrderAdd = data => {
     return axios.post(`${base_url}api/NeedOrder/need_order_add`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 定制需求订单
+ */
+export const needOrderList = data => {
+    return axios.get(`${base_url}api/NeedOrder/need_order_list'`, { params: params });
+}

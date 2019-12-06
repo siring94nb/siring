@@ -191,6 +191,12 @@ export default new Router({
                     name: "CityPartner",
                     component: () =>
                         import ('@/views/afterLoggin/partnerCity/CityPartner'),
+                },
+                {
+                    path: "/demand_order",
+                    name: "demand_order",
+                    component: () =>
+                        import ('@/views/afterLoggin/demand_order/demand_order'),
                 }
                 
 
