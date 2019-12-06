@@ -482,6 +482,7 @@ export default {
   left: 0;
   width: 100%;
   z-index: 999;
+  border-bottom: 2px solid #ffffff;
   .bg-black {
     height: 40px;
     background-color: #000000;

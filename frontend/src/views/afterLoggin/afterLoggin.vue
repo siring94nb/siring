@@ -69,7 +69,7 @@ export default {
   padding: 5px 10px;
   border-top: 2px solid #ffffff;
   // max-width: 1260px;
-  min-width: 1260px;
+  min-width: 1500px;
   .left {
     width: 123px;
     float: left;

@@ -147,6 +147,7 @@ export default {
         res => {
           let { data, msg, code } = res;
           // this.showMsg(msg,code);
+          //  console.log(sessionStorage.getItem("user_id"))
           if (code === 1) {
             this.invitationCode = data.invitation;
           }
