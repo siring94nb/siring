@@ -203,6 +203,12 @@ export default new Router({
                     name: "ClassMembersA",
                     component: () =>
                         import ('@/views/afterLoggin/ClassMembers/ClassMembersA'),
+                },
+                {
+                    path: "/demand_order",
+                    name: "demand_order",
+                    component: () =>
+                        import ('@/views/afterLoggin/demand_order/demand_order'),
                 }
             ]
         },

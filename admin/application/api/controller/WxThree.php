@@ -30,11 +30,9 @@ class WxThree extends Base
         $nonce      = empty($_GET['nonce'])     ? ""    : trim($_GET['nonce']) ;
         $msg_sign   = empty($_GET['msg_signature']) ? ""    : trim($_GET['msg_signature']) ;
         $encryptMsg = file_get_contents('php://input');
-        if(!$encryptMsg){
-                $encryptMsg = input('post.');	
-        }
-        $pp3['msg']='1111';
-        Db::table('test')->insert($pp3);
+        // if(!$encryptMsg){
+        //         $encryptMsg = input('post.');	
+        // }
         $pc = new \WXBizMsgCrypt($this->token, $this->encodingAesKey, $this->appid);
         $xml_tree = new \DOMDocument();
         $xml_tree->loadXML($encryptMsg);
@@ -56,9 +54,6 @@ class WxThree extends Base
              $pp['msg']=$component_verify_ticket.'获取ticket';
              Db::table('test')->insert($pp);
             }else{
-                //错误代码日志
-                $pp['msg']=$errCode.'接收ticket出错';
-                Db::table('test')->insert($pp);
                 echo "false";
             }
             // Response.Write('success');
@@ -135,34 +130,34 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-                $pp2['msg']=$errCode.'11';
-                Db::table('test')->insert($pp2);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
-                    //第三方平台全网发布检测普通文本消息测试 
+                   // 第三方平台全网发布检测普通文本消息测试 
                     // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
                     //     $toUsername = trim($msgObj->ToUserName);
-                    //     $pp7['msg']=$toUsername.'22222';
-                    //     db('test')->insert($pp7);
                     //     if ($toUsername == 'gh_3c884a361561') { 
-                    //         $content = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                    //         $pp8['msg']=$content;
-                    //         db('test')->insert($pp);
-                    //         echo $this->responseText($msgObj, $content);
+                    //         $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                    //         $pp8['msg']=$content2;
+                    //         Db::table('test')->insert($pp8);
+                    //         echo $this->responseText($msgObj, $content2);
                     //     }
                     // }
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
+                        $p2['msg']=$toUsername.'222';
+                        Db::table('test')->insert($p2);
+                        // if ($toUsername == 'gh_3c884a361561') { 
                         if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
-                            $pp5['msg']=$query_auth_code;
+                            $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
-                            $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
-                            $pp6['msg']=$authorizer_access_token;
+
+                            $pp6['msg']=$params.'1111';
                             Db::table('test')->insert($pp6);
+                            $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
                         }

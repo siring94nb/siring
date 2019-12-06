@@ -39,6 +39,7 @@ class NeedOrder extends Model
         {
             $where=[];
             $where['del_time'] = null;
+            $where['user_id'] = $parsm['user_id'];
             if(array_key_exists('title',$parsm) && !empty($parsm['title'])){
                     $where['order_number']=$parsm['title'];
             }
