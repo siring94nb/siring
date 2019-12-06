@@ -97,7 +97,7 @@
           :page-sizes="[10, 20, 30]"
           :page-size="tableShow.size"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="0"
+          :total="tableShow.total"
         ></el-pagination>
       </div>
     </div>
@@ -118,7 +118,8 @@ export default {
       tableShow: {
         currentPage: 1,
         size: 10,
-        listCount: 0
+        listCount: 0,
+        total: 0
       },
       tableData: [],
       multipleSelection: [],
@@ -169,12 +170,12 @@ export default {
           user_id: vm.userId
         };
       needOrderList(params).then(res => {
-        console.log(res);
-        let {code, data, msg} = res.data;
-        if(code == 1){
-            vm.tableShow.currentPage = data.data.current_page;
-            vm.tableShow.size = data.data.per_page;
-            vm.tableData = data.data;
+        let { code, data, msg } = res.data;
+        if (code == 1) {
+          vm.tableShow.currentPage = data.current_page;
+          vm.tableShow.size = Number(data.per_page);
+          vm.tableShow.total = data.total;
+          vm.tableData = data.data;
         }
       });
     },
@@ -195,7 +196,7 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
-    handleEdit() {}
+    handleEdit(status) {}
   },
   components: {
     logginHeader
