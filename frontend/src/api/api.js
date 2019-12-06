@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs';
 
 // https://manage.siring.com.cn/
-let base_url = '/api/';
+let base_url = ' https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
 const env = process.env.NODE_ENV;
@@ -286,4 +286,10 @@ export const subBankPay = data => {
  */
 export const needOrderAdd = data => {
     return axios.post(`${base_url}api/NeedOrder/need_order_add`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 定制需求订单
+ */
+export const needOrderList = params => {
+    return axios.get(`${base_url}api/NeedOrder/need_order_list`, { params: params });
 }

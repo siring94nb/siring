@@ -149,6 +149,7 @@ Route::group('api', function () {
     //定制需求
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
+        Route::any('need_order_list','api/NeedOrder/need_order_list'); //定制需求列表
     });
     
     //微信第三方路由
