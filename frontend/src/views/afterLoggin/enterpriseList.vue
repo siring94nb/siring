@@ -19,7 +19,8 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { GetEnterprise } from "@/api/api";
+// import { GetEnterprise } from "@/api/api";
+import {GetEnterprise} from "@/api/api";
 export default {
   data() {
     return {
@@ -47,8 +48,10 @@ export default {
     // 获取企业列表
     getEnterpriseList() {
       const userId = sessionStorage.getItem("user_id");
-      // const params = {user_id: userId };
-      GetEnterprise( {user_id: userId }).then(res=>{
+        const params = {
+          user_id : userId
+        }
+      GetEnterprise(params).then(res=>{
         let { data, msg, code } = res;
         console.log(res);
         this.showMsg(msg, code);
@@ -57,6 +60,7 @@ export default {
           console.log(data);
         }
       });
+      console.log(userId)
     },
   },
   components: {

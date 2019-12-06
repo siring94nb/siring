@@ -129,8 +129,8 @@ export default {
     logginHeader
   },
   mounted() {
+    // this.title = this.activeName==="first"?"修改手机密码":this.activeName==="second"?"修改登录密码":"设置资金密码"
     this.gainCan();
-    // this.getPhoneCode()
   },
   methods: {
     // 测试

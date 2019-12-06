@@ -11,7 +11,7 @@
         <el-row>
           <el-col :span="6" v-for="(item,index) in SumIndent" :key="index">
             <img
-              src="http://share.axure.org/gsc/U8YN9Q/60/98/12/609812d8d36b454da0246d5b87ec0482/images/控制台/u5998.png?token=3ce2ea40233ac6f479bb68a07006c8b0"
+              :src="require('../assets/images/'+item+'.png')"
             />
             <div>
               <div>
@@ -32,7 +32,6 @@ export default {
   data() {
     return {
       yearValue: "",
-      ceShiArr: [1, 2, 3, 4]
     };
   },
   props: ['pd',"tuiguang","SumIndent"],

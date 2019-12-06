@@ -23,16 +23,17 @@
                       <!-- 最左侧个人头像 -->
                       <el-col :span="4">
                         <img
-                          :src="userMessage1.img!==null?userMessage1.img:'http://share.axure.org/gsc/U8YN9Q/60/98/12/609812d8d36b454da0246d5b87ec0482/images/控制台/u5906.png?token=817e8691b12e2626f742d23c8ec618f1'"
+                          :src="userMessage1.img!==null?userMessage1.img:require('../../assets/images/u158.png')"
                         />
+                        <!-- <img src="../../assets/images/1.png"/> -->
                       </el-col>
                       <!-- 小图标 -->
                       <el-col :span="3">
                         <ul>
                           <li v-for="(item,index) in arr" :key="index">
                             <img
-                              src="http://share.axure.org/gsc/U8YN9Q/60/98/12/609812d8d36b454da0246d5b87ec0482/images/控制台/u6035.png?token=c40feff96f64d2209b9b31eea6d0812e"
-                              class="hhr"
+                              :src="require('../../assets/images/'+(index+5)+'.png')"
+                              :class="[index===0?'hhr':'hhr1']"
                             />
                           </li>
                         </ul>
@@ -64,7 +65,7 @@
                             <el-card :body-style="{ padding: '0px' }" shadow="never">
                               <img
                                 style="width:116px;height:116px"
-                                src="http://share.axure.org/gsc/U8YN9Q/60/98/12/609812d8d36b454da0246d5b87ec0482/images/控制台/u5924.png?token=a42c73ed8e4c8a85ed322ad02cacb3b3"
+                                :src="require('../../assets/images/u194.png')"
                               />
                               <div>
                                 <span>安全等级：</span>
@@ -100,11 +101,11 @@
           </template>
         </div>
 
-        <gnmk :pd="false" :SumIndent = "SumIndent">我的订单</gnmk>
+        <gnmk :pd="false" :SumIndent = "SumIndent1" >我的订单</gnmk>
         <div class="dinDanCL" style="display: flex; flex:1">
              <ding-dan v-for="(item,index) in arr" :key="index" />
         </div>
-        <gnmk :pd="true" :tuiguang="true" :SumIndent = "SumIndent">角色收益</gnmk>
+        <gnmk :pd="true" :tuiguang="true" :SumIndent = "SumIndent2">角色收益</gnmk>
       </div>
     </div>
   </div>
@@ -120,7 +121,8 @@ export default {
   data() {
     return {
       userMessage1:{},
-      SumIndent:{},
+      SumIndent1:[1,2,3,4],
+      SumIndent2:[9,6,7,8],
       arr: [1, 2, 3]
     };
   },
@@ -269,6 +271,10 @@ export default {
               width: 80px;
               height: 23px;
               margin: 0;
+            }
+            .hhr1{
+              width: 30px;
+              height: 30px;
             }
           }
         }

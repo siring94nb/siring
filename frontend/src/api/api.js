@@ -31,17 +31,17 @@ export const Register = params => {
  * 退出登录
  */
 export const Logout = params => {
-        return axios.get(`${base_url}api/user/logout`, { params: params });
-    }
-    /*
-     *控制台获取用户信息
-     */
+    return axios.get(`${base_url}api/user/logout`, { params: params });
+}
+/*
+ *控制台获取用户信息
+ */
 export const GetUserMassage = params => {
-        return axios.post(`${base_url}api/Console/personal_information`, qs.stringify(params)).then(res => res.data);
-    }
-    /*
-     *获取我的订单总数
-     */
+    return axios.post(`${base_url}api/Console/personal_information`, qs.stringify(params)).then(res => res.data);
+}
+/*
+ *获取我的订单总数
+ */
 export const GetSumIndent = params => {
     return axios.post(`${base_url}api/Console/my_order`, qs.stringify(params)).then(res => res.data);
 }
@@ -51,29 +51,40 @@ export const GetSumIndent = params => {
  * @param {phone}
  */
 export const GetCode = params => {
-        return axios.post(`${base_url}api/user/phone_code`, qs.stringify(params)).then(res => res.data);
-    }
-    /*
-     *获取企业列表
-     */
-    export const GetEnterprise = params => {
-        return axios.post(`${base_url}api/user/enterprise_list`, qs.stringify(params)).then(res => res.data);
-    }
-    /**
-     * 忘记密码或修改密码
-     * @param {phone, password, password_confirm, code}
-     */
+    return axios.post(`${base_url}api/user/phone_code`, qs.stringify(params)).then(res => res.data);
+}
+/*
+ *获取企业列表
+ */
+export const GetEnterprise = params => {
+    return axios.post(`${base_url}api/user/enterprise_list`, qs.stringify(params)).then(res => res.data);
+}
+/**
+ * 忘记密码或修改密码
+ * @param {phone, password, password_confirm, code}
+ */
 export const ForgetPwd = params => {
     return axios.post(`${base_url}api/user/forget`, qs.stringify(params)).then(res => res.data);
 }
-   /**
-     * 修改支付密码
-     * @param {phone, password, password_confirm, code}
-     */
-    export const paymentCode = params => {
-        return axios.post(`${base_url}api/user/balance_password`, qs.stringify(params)).then(res => res.data);
-    }
-
+/**
+  * 修改支付密码
+  * @param {phone, password, password_confirm, code}
+  */
+export const paymentCode = params => {
+    return axios.post(`${base_url}api/user/balance_password`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*个人信息更新
+*/
+export const UserUpdating = params => {
+    return axios.post(`${base_url}api/user/user_updating`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*用户分享邀请码
+*/
+export const GetInvitationCode = params => {
+    return axios.post(`${base_url}api/user/share_code`, qs.stringify(params)).then(res => res.data);
+}
 /**
  * seo优化
  */
@@ -249,30 +260,30 @@ export const GetTemplate = params => {
  * 小程序SaaS 模板列表
  */
 export const GetTempList = data => {
-        return axios.post(`${base_url}api/ModelMeal/model_meal_list`, qs.stringify(data)).then(res => res.data);
-    }
-    /**
-     * 小程序SaaS 模板套餐下单
-     */
+    return axios.post(`${base_url}api/ModelMeal/model_meal_list`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS 模板套餐下单
+ */
 export const templatePay = data => {
-        return axios.post(`${base_url}api/MealOrder/meal_order_add`, qs.stringify(data)).then(res => res.data);
-    }
-    /**
-     * 小程序SaaS 银行卡添加
-     */
+    return axios.post(`${base_url}api/MealOrder/meal_order_add`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS 银行卡添加
+ */
 export const addBank = data => {
-        return axios.post(`${base_url}api/UserCard/user_card_add`, qs.stringify(data)).then(res => res.data);
-    }
-    /**
-     * 小程序SaaS 银行支付
-     */
+    return axios.post(`${base_url}api/UserCard/user_card_add`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS 银行支付
+ */
 export const subBankPay = data => {
-        return axios.post(`${base_url}api/UserCard/user_card_list`, qs.stringify(data)).then(res => res.data);
-    }
-    /**
-     * lilu
-     * 定制需求下单
-     */
+    return axios.post(`${base_url}api/UserCard/user_card_list`, qs.stringify(data)).then(res => res.data);
+}
+/**
+ * lilu
+ * 定制需求下单
+ */
 export const needOrderAdd = data => {
     return axios.post(`${base_url}api/NeedOrder/need_order_add`, qs.stringify(data)).then(res => res.data);
 }

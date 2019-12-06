@@ -46,7 +46,7 @@
               <i class="iconfont icon-zhengque"></i>
               <span>已设置</span>
               <span>|</span>
-              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'绑定手机'}}">修改绑定</router-link></span>
+              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}">修改绑定</router-link></span>
             </div>
           </el-col>
         </el-row>
@@ -70,7 +70,7 @@
               <i class="iconfont icon-zhengque"></i>
               <span>已设置</span>
               <span>|</span>
-              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'second',title:'登录密码'}}">修改密码</router-link></span>
+              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'second',title:'信息修改'}}">修改密码</router-link></span>
             </div>
           </el-col>
         </el-row>
@@ -94,7 +94,7 @@
               <i class="iconfont icon-zhengque"></i>
               <span class="zanfangs">未设置</span>
               <span>|</span>
-              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'third',title:'资金密码'}}">设置</router-link></span>
+              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'third',title:'信息修改'}}">设置</router-link></span>
             </div>
           </el-col>
         </el-row>

@@ -74,33 +74,7 @@
         <span>*</span>
         <span class="xg">所在地区：</span>
         <div>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>用循环</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>用循环</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-          <el-dropdown>
-            <span class="el-dropdown-link">
-              下拉菜单
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>用循环</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+          <v-region @values="regionChange" class="form-control"></v-region>
         </div>
       </div>
       <!-- 详细地址 -->
@@ -175,6 +149,10 @@ export default {
     this.userMessage();
   },
   methods: {
+    // 三级联动插件
+    regionChange(data){
+            console.log(data);
+        },
     handleRemove(file, fileList) {
       console.log(file, fileList);
     },
@@ -209,13 +187,13 @@ export default {
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isLt50KB = (file.size%1024) < 50;
 
       if (!isJPG) {
         this.$message.error("上传头像图片只能是 JPG 格式!");
       }
-      if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+      if (!isLt50KB) {
+        this.$message.error("上传头像图片大小不能超过 50kb!");
       }
       return isJPG && isLt2M;
     }

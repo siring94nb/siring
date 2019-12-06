@@ -55,7 +55,7 @@ export default {
           con: [
             // "城市合伙人", "等级会员", "分包商"
             { name: "城市合伙人", rou: "/partnerCityX" },
-            { name: "等级会员", rou: "/ceshi" },
+            { name: "等级会员", rou: "/CityPartner" },
             { name: "分包商", rou: "/ceshi" }
           ]
         },

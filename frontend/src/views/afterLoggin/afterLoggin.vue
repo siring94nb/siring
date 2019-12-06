@@ -1,7 +1,7 @@
 <template>
   <div ref="box">
     <Myheader />
-    <div class="afLogginBox">
+    <div class="afLogginBox clearfix">
       <div class="left" ref="leftBox">
         <faterLoggin />
       </div>
@@ -64,6 +64,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .afLogginBox {
+  min-height: 98.5vh;
   background: rgb(242, 247, 250);
   padding: 5px 10px;
   border-top: 2px solid #ffffff;
@@ -79,5 +80,16 @@ export default {
     margin-top: 100px;
     max-width: 1100px;
   }
+  // 伪元素清除浮动
+    .clearfix:after{/*伪元素是行内元素 正常浏览器清除浮动方法*/
+        content: "";
+        display: block;
+        height: 0;
+        clear:both;
+        visibility: hidden;
+    }
+    .clearfix{
+        *zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
+    }
 }
 </style>

@@ -145,6 +145,12 @@ export default new Router({
                         import ('@/views/afterLoggin/memberInformation'),
                 },
                 {
+                    path: "/ceshi",
+                    name: "ceshi",
+                    component: () =>
+                        import ('@/views/afterLoggin/ceshi'),
+                },
+                {
                     path: "/addEnterprise",
                     name: "addEnterprise",
                     component: () =>
@@ -179,7 +185,14 @@ export default new Router({
                     name: "partnerCityX",
                     component: () =>
                         import ('@/views/afterLoggin/partnerCity/partnerCityX'),
+                },
+                {
+                    path: "/CityPartner",
+                    name: "CityPartner",
+                    component: () =>
+                        import ('@/views/afterLoggin/partnerCity/CityPartner'),
                 }
+                
 
             ]
         },

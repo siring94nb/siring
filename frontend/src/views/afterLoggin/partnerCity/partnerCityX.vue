@@ -11,7 +11,7 @@
         <img src="../../../assets/images/zaox.png"/>
         <div>
           <div>亲，您暂时还不是城市合伙人，赶紧去申请吧！</div>
-          <div><button>申请成为合伙人</button></div>
+          <div><router-link to="city" class="button"> 申请成为合伙人</router-link></div>
         </div>
       </div>
     </div>
@@ -40,13 +40,17 @@ export default {
           font-size: 14px;
           color: #333333;
         }
-        button{
+        .button{
+          display: block;
           border: 1px solid rgba(201, 0, 0, 1);
           background: #ffffff;
           color: rgba(201, 0, 0, 1);
           width: 197px;
           height: 35px;
           border-radius: 3px;
+          text-align: center;
+          padding: 10px 0;
+          box-sizing: border-box;
         }
       }
   }
