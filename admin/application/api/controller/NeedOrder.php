@@ -60,5 +60,30 @@ class  NeedOrder  extends  Base{
                 }
     }
 
+    /**
+     * lilu
+     * 定制需求列表
+     * user_id
+     */
+    public function need_order_list()
+    {
+        $param['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT')); 
+        $param['page'] = $this->request->get('page', 1);
+        $param['title'] = $this->request->get('title', '');
+        $param['order_status'] = $this->request->get('order_status', '');
+        $param['start_time'] = $this->request->get('start_time', '');
+        $param['end_time'] = $this->request->get('end_time', '');
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $need= new Need();
+            $param['user_id']=$postData['user_id'];
+            $data=$need->get_need_order($param)->toArray();
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败');
+        }else{
+            returnJson (0,'获取失败');exit();
+        }
+    }
+
 
 }
