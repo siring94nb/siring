@@ -10,9 +10,7 @@ use think\Session;
 class RoleCenter extends Controller
 {
     /**
-     * 显示资源列表
      *
-     * @return \think\Response
      */
     public function city_partner()
     {
@@ -31,13 +29,20 @@ class RoleCenter extends Controller
     }
 
     /**
-     * 显示创建资源表单页.
-     *
-     * @return \think\Response
+     *城市合伙人会员总计
      */
-    public function create()
+    public function city_total()
     {
-        //
+
+        $uid = Session::get("uid");
+
+        $user_data = User::whrer('id',$uid)->find()->toarray();
+
+        $data['user_total'] = User::where('other_code',$user_data['invitation']) ->count();//城市累计会员总数
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
+
     }
 
     /**
