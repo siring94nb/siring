@@ -108,7 +108,7 @@ class WxThree extends Base
             // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
-            $p1['msg']=$postStr;
+            $p1['msg']='11111';
             Db::table('test')->insert($p1);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
