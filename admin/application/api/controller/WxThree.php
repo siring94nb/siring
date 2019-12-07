@@ -108,6 +108,8 @@ class WxThree extends Base
             // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
+            $p1['msg']=$postStr;
+            Db::table('test')->insert($p1);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -125,8 +127,7 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-                $p1['msg']=$errCode.'1';
-                Db::table('test')->insert($p1);
+              
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
