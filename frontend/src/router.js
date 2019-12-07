@@ -191,9 +191,25 @@ export default new Router({
                     name: "CityPartner",
                     component: () =>
                         import ('@/views/afterLoggin/partnerCity/CityPartner'),
+                },
+                {
+                    path: "/ClassMembersX",
+                    name: "ClassMembersX",
+                    component: () =>
+                        import ('@/views/afterLoggin/ClassMembers/ClassMembersX'),
+                },
+                {
+                    path: "/ClassMembersA",
+                    name: "ClassMembersA",
+                    component: () =>
+                        import ('@/views/afterLoggin/ClassMembers/ClassMembersA'),
+                },
+                {
+                    path: "/demand_order",
+                    name: "demand_order",
+                    component: () =>
+                        import ('@/views/afterLoggin/demand_order/demand_order'),
                 }
-                
-
             ]
         },
     ]

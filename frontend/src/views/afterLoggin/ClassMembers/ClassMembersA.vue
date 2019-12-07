@@ -4,15 +4,16 @@
       <i class="el-icon-edit"></i>
       <span>角色中心</span>
       <span>&gt;</span>
-      <span>城市合伙人</span>
+      <span>等级会员</span>
       <span>&gt;</span>
       <span>{{title}}</span>
     </logginHeader>
     <div class="bottomBox">
       <div class="smBox1">
         <div>
-          <span>代理城市：</span>
-          <span>深圳</span>
+          <span>当前会员等级：</span>
+          <span>金牌会员</span>
+          <i class="el-icon-edit"></i>
         </div>
         <div>
           <span>有效期至：</span>
@@ -37,7 +38,7 @@
       </div>
       <div>
         <el-tabs v-model="activeName">
-          <el-tab-pane label="城市累计会员明细" name="first" :key="'first'">
+          <el-tab-pane label="我邀请的会员明细" name="first" :key="'first'">
             <div>
               <div class="suoyinlan">
                 <div class="block">
@@ -76,8 +77,8 @@
                   @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="邀请人账号" width="120" align="center">
+                  <el-table-column prop="date" label="日期" width="160" align="center"></el-table-column>
+                  <el-table-column prop="InviterAccount" label="邀请人账号" width="160" align="center">
                     <template slot-scope="scope">
                       <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
                     </template>
@@ -85,21 +86,15 @@
                   <el-table-column
                     prop="InviterInvitationCode"
                     label="邀请人邀请码"
-                    width="120"
+                    width="150"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
+                  <el-table-column prop="InviterLevel" label="邀请人订单项目" width="180" align="center"></el-table-column>
                   <el-table-column prop="amount" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
                   <el-table-column
-                    prop="MinimumCommissions"
-                    label="保底佣金金额（元）"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
                     prop="StandardCommission"
-                    label="达标佣金金额（元）"
-                    width="160"
+                    label="佣金金额（元）"
+                    width="180"
                     align="center"
                   ></el-table-column>
                 </el-table>
@@ -127,28 +122,8 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="我邀请的会员明细" name="second" :key="'second'">
+          <el-tab-pane label="等级会员订单" name="second" :key="'second'">
             <div>
-              <div class="suoyinlan">
-                <div class="block">
-                  <span>时间：</span>
-                  <el-date-picker
-                    v-model="value"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :picker-options="pickerOptions"
-                  ></el-date-picker>
-                </div>
-                <div>
-                  <span>输入搜索：</span>
-                  <input type="text" />
-                  <button>搜索</button>
-                </div>
-              </div>
               <div class="lijifenxiang">
                 <div>立即分享邀请</div>
                 <div>
@@ -165,30 +140,21 @@
                   style="width: 98.3%"
                   @select="ceshi"
                 >
-                  <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="邀请人账号" width="120" align="center">
-                    <template slot-scope="scope">
-                      <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
-                    </template>
-                  </el-table-column>
+                  <el-table-column prop="date" label="会员等级" width="120" align="center"></el-table-column>
+                  <el-table-column prop="InviterAccount" label="等级图标" width="120" align="center"></el-table-column>
+                  <el-table-column prop="InviterInvitationCode" label="申请时间" width="120" align="center"></el-table-column>
+                  <el-table-column prop="InviterLevel" label="到期时间" width="150" align="center"></el-table-column>
+                  <el-table-column prop="amount" label="年度费用标准" width="170" align="center"></el-table-column>
                   <el-table-column
-                    prop="InviterInvitationCode"
-                    label="邀请人邀请码"
-                    width="120"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="邀请人订单项目" width="150" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="MinimumCommissions"
-                    label="保底佣金金额（元）"
+                    prop="StandardCommission"
+                    label="等级政策"
                     width="160"
                     align="center"
                   ></el-table-column>
+                  <el-table-column prop="amount" label="支付方式" width="170" align="center"></el-table-column>
                   <el-table-column
                     prop="StandardCommission"
-                    label="达标佣金金额（元）"
+                    label="操作"
                     width="160"
                     align="center"
                   ></el-table-column>
@@ -214,45 +180,6 @@
                     ></el-pagination>
                   </div>
                 </div>
-              </div>
-            </div>
-          </el-tab-pane>
-          <el-tab-pane label="我邀请的会员明细" name="third" :key="'third'">
-            <div>
-              <div class="lijifenxiang" style="padding:0">
-                <div>立即分享邀请</div>
-                <div>
-                  注：为确保达标佣金的获得，您还需要邀请
-                  <span>3000人</span>
-                </div>
-              </div>
-              <div>
-                <el-table
-                  ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
-                  tooltip-effect="dark"
-                  border
-                  style="width: 98.3%"
-                  @select="ceshi"
-                >
-                  <el-table-column prop="date" label="城市选择" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="金额" width="120" align="center"></el-table-column>
-                  <el-table-column
-                    prop="InviterInvitationCode"
-                    label="生效时间"
-                    width="120"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="到期时间" width="180" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="合伙人政策" width="180" align="center"></el-table-column>
-                  <el-table-column
-                    prop="MinimumCommissions"
-                    label="支付方式"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="StandardCommission" label="操作" width="160" align="center"></el-table-column>
-                </el-table>
               </div>
             </div>
           </el-tab-pane>
@@ -269,16 +196,6 @@ export default {
       checked: false,
       title: "城市累积会员明细",
       topList: [
-        {
-          imgUrl: require("../../../assets/images/leijiSum.png"),
-          title: "城市累计会员总数",
-          num: "5000"
-        },
-        {
-          imgUrl: require("../../../assets/images/u7232.png"),
-          title: "城市保底佣金总额",
-          num: "55500.00"
-        },
         {
           imgUrl: require("../../../assets/images/u7230.png"),
           title: "我邀请的会员总数",
@@ -341,7 +258,6 @@ export default {
           InviterInvitationCode: "RJT045",
           InviterLevel: "黄金",
           amount: "300",
-          MinimumCommissions: "",
           StandardCommission: "230"
         },
         {
@@ -350,7 +266,6 @@ export default {
           InviterInvitationCode: "RJT045",
           InviterLevel: "黄金",
           amount: "300",
-          MinimumCommissions: "",
           StandardCommission: "230"
         },
         {
@@ -359,7 +274,6 @@ export default {
           InviterInvitationCode: "RJT045",
           InviterLevel: "黄金",
           amount: "300",
-          MinimumCommissions: "",
           StandardCommission: "230"
         }
       ],
@@ -394,11 +308,9 @@ export default {
     activeName: function(val) {
       //监听切换状态-计划单
       if (val === "first") {
-        this.title = "城市累积会员明细";
-      } else if (val === "second") {
         this.title = "我邀请的会员明细";
-      } else {
-        this.title = "合伙人入驻订单";
+      }else {
+        this.title = "等级会员订单";
       }
     }
   }

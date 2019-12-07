@@ -9,7 +9,7 @@
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
-          background-color="red"
+          background-color="rgba(201,0,0)"
           text-color="#fff"
           :default-openeds="['0','1','2','3','4','5','6','7']"
           router
@@ -39,6 +39,8 @@ export default {
   name: "fater-loggin",
   data() {
     return {
+      cityHehuoren:1,
+      classHuiyuan:1,
       arr: [
         { title: "控制中心", con: [{ name: "控制台", rou: "/afterLogginR" }] },
         {
@@ -54,8 +56,8 @@ export default {
           title: "角色中心",
           con: [
             // "城市合伙人", "等级会员", "分包商"
-            { name: "城市合伙人", rou: "/partnerCityX" },
-            { name: "等级会员", rou: "/CityPartner" },
+            { name: "城市合伙人", rou:"/partnerCityX" },
+            { name: "等级会员", rou: "/ClassMembersX" },
             { name: "分包商", rou: "/ceshi" }
           ]
         },
@@ -74,7 +76,7 @@ export default {
           title: "软件/定制",
           con: [
             // "定制需求订单", "定制类似订单"
-            { name: "定制需求订单", rou: "/ceshi" },
+            { name: "定制需求订单", rou: "/demand_order" },
             { name: "定制类似订单", rou: "/ceshi" }
           ]
         },
@@ -105,9 +107,31 @@ export default {
     };
   },
   components: {
-    // Myheader
+    
+  },
+  mounted(){
+    this.cityHehuorenX(),
+    this.classHuiyuanX()
   },
   methods: {
+    // 城市合伙人
+    cityHehuorenX(){
+      if(this.cityHehuoren===0){
+          this.arr[2].con[0].rou="/partnerCityX";
+      }else{
+          this.arr[2].con[0].rou = "/CityPartner"
+      }
+    },
+    // 等级会员
+    classHuiyuanX(){
+      if(this.classHuiyuan===0){
+          this.arr[2].con[1].rou="/ClassMembersX";
+          console.log(1111)
+      }else{
+          this.arr[2].con[1].rou = "/ClassMembersA";
+          console.log(2222)
+      }
+    },
     handleOpen(key, keyPath) {
       //   console.log(key, keyPath);
     },
