@@ -30,9 +30,6 @@ class WxThree extends Base
         $nonce      = empty($_GET['nonce'])     ? ""    : trim($_GET['nonce']) ;
         $msg_sign   = empty($_GET['msg_signature']) ? ""    : trim($_GET['msg_signature']) ;
         $encryptMsg = file_get_contents('php://input');
-        // if(!$encryptMsg){
-        //         $encryptMsg = input('post.');	
-        // }
         $pc = new \WXBizMsgCrypt($this->token, $this->encodingAesKey, $this->appid);
         $xml_tree = new \DOMDocument();
         $xml_tree->loadXML($encryptMsg);
@@ -51,8 +48,6 @@ class WxThree extends Base
             $da['component_verify_ticket']=$component_verify_ticket;
             $da['token_time']=time()+7000;
              Db::table('wx_threeopen')->where('id',1)->update($da);
-             $pp['msg']=$component_verify_ticket.'获取ticket';
-             Db::table('test')->insert($pp);
             }else{
                 echo "false";
             }
