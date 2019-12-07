@@ -125,6 +125,8 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
+                $p1['msg']=$errCode.'1';
+                Db::table('test')->insert($p1);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
@@ -138,6 +140,8 @@ class WxThree extends Base
                     //         echo $this->responseText($msgObj, $content2);
                     //     }
                     // }
+                    $p11['msg']=$content.'11';
+                    Db::table('test')->insert($p11);
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
