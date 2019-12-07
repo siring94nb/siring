@@ -143,8 +143,8 @@ class WxThree extends Base
                         $toUsername = trim($msgObj->ToUserName);
                         $p2['msg']=$toUsername.'222';
                         Db::table('test')->insert($p2);
-                        // if ($toUsername == 'gh_3c884a361561') { 
-                        if ($toUsername == 'gh_8dad206e9538') { 
+                        if ($toUsername == 'gh_3c884a361561') { 
+                        // if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
                             $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
