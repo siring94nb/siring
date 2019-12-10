@@ -134,15 +134,15 @@ class WxThree extends Base
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
                    // 第三方平台全网发布检测普通文本消息测试 
-                    if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                        $toUsername = trim($msgObj->ToUserName);
-                        if ($toUsername == 'gh_3c884a361561') { 
-                            $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                            $pp8['msg']=$content2;
-                            Db::table('test')->insert($pp8);
-                            echo $this->responseText($msgObj, $content2);
-                        }
-                    }
+                    // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
+                    //     $toUsername = trim($msgObj->ToUserName);
+                    //     if ($toUsername == 'gh_3c884a361561') { 
+                    //         $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                    //         $pp8['msg']=$content2;
+                    //         Db::table('test')->insert($pp8);
+                    //         echo $this->responseText($msgObj, $content2);
+                    //     }
+                    // }
                     $p11['msg']=$content.'11';
                     Db::table('test')->insert($p11);
                     //第三方平台全网发布检测返回api文本消息测试 
