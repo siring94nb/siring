@@ -15,10 +15,10 @@ class WxThree extends Base
     private $encodingAesKey = 'a5a22f38cb60228cb32ab61d9e4c414bueu73jddj87';      //第三方平台应用Key（消息加解密Key）
     // private $component_ticket= 'ticket@@@mMQLlMnPx_y9E5HWGdfJKeKJadwSFBhcrzA8eJrMSmfIZInb_8ck42Y9eitnPWnkZXlNkgR33-P3otpQ1c00-A';   //微信后台推送的ticket,用于获取第三方平台接口调用凭据
     
-    // public function __construct(){
-    //     ///获取component_ticket
-    //     $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
-    // }
+    public function __construct(){
+        ///获取component_ticket
+        $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
+    }
 
     /**
      * lilu
@@ -48,6 +48,8 @@ class WxThree extends Base
             $da['component_verify_ticket']=$component_verify_ticket;
             $da['token_time']=time()+7000;
              Db::table('wx_threeopen')->where('id',1)->update($da);
+             $p['msg']=$component_verify_ticket.'获取ticket';
+             Db::table('test')->insert($p);
             }else{
                 echo "false";
             }
@@ -108,8 +110,6 @@ class WxThree extends Base
             // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
-            $p1['msg']='11111';
-            Db::table('test')->insert($p1);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -127,20 +127,21 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-              
+                $p12['msg']=$errCode;
+                Db::table('test')->insert($p12);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
                    // 第三方平台全网发布检测普通文本消息测试 
-                    if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                        $toUsername = trim($msgObj->ToUserName);
-                        if ($toUsername == 'gh_3c884a361561') { 
-                            $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                            $pp8['msg']=$content2;
-                            Db::table('test')->insert($pp8);
-                            echo $this->responseText($msgObj, $content2);
-                        }
-                    }
+                    // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
+                    //     $toUsername = trim($msgObj->ToUserName);
+                    //     if ($toUsername == 'gh_3c884a361561') { 
+                    //         $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                    //         $pp8['msg']=$content2;
+                    //         Db::table('test')->insert($pp8);
+                    //         echo $this->responseText($msgObj, $content2);
+                    //     }
+                    // }
                     $p11['msg']=$content.'11';
                     Db::table('test')->insert($p11);
                     //第三方平台全网发布检测返回api文本消息测试 
@@ -148,7 +149,7 @@ class WxThree extends Base
                         $toUsername = trim($msgObj->ToUserName);
                         $p2['msg']=$toUsername.'222';
                         Db::table('test')->insert($p2);
-                        // if ($toUsername == 'gh_3c884a361561') { 
+                        if ($toUsername == 'gh_3c884a361561') { 
                         // if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
                             $pp5['msg']=$query_auth_code.'112233';
@@ -159,7 +160,7 @@ class WxThree extends Base
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
-                        // }
+                        }
                     }
                 }
             }
