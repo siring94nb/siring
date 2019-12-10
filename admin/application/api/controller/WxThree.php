@@ -40,8 +40,6 @@ class WxThree extends Base
          // 第三方收到公众号平台发送的消息
          $msg = '';
         $errCode = $pc->decryptMsg ($msg_sign, $timeStamp, $nonce, $encryptMsg, $msg );
-        $pp['msg']=$errCode;
-        Db::table('test')->insert($pp);
         if ($errCode == 0) {
             $xml = new \DOMDocument();
             $xml->loadXML($msg);
@@ -51,7 +49,7 @@ class WxThree extends Base
             $da['token_time']=time()+7000;
              Db::table('wx_threeopen')->where('id',1)->update($da);
              $p['msg']=$component_verify_ticket.'获取ticket';
-             Db::table('test')->inser($p);
+             Db::table('test')->insert($p);
             }else{
                 echo "false";
             }
