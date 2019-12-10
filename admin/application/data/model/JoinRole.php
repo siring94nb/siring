@@ -200,4 +200,17 @@ class JoinRole extends Model
         return self::where('id',$grade)->find();
     }
 
+    /**
+     * 等级政策
+     * @param $grade
+     * @return array|false|\PDOStatement|string|Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function grade_city($grade)
+    {
+        return self::where('sort',$grade)->find();
+    }
+
 }

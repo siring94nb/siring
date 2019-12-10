@@ -151,7 +151,7 @@ Route::group('api', function () {
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
         Route::any('need_order_list','api/NeedOrder/need_order_list'); //定制需求列表
     });
-    
+
     //微信第三方路由
     Route::group('WxThree',function(){
         Route::any('receive_ticket','api/WxThree/receive_ticket'); //获取ticket
@@ -161,6 +161,15 @@ Route::group('api', function () {
     //控制台-AI推广套餐
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
+    });
+
+    //控制台-角色中心
+    Route::group('RoleCenter',function(){
+        Route::any('city_partner','api/RoleCenter/city_partner'); //合伙人列表
+        Route::any('city_total','api/RoleCenter/city_total'); //合伙人统计总数
+        Route::any('member_partner','api/RoleCenter/member_partner'); //合伙人列表
+        Route::any('member_total','api/RoleCenter/member_total'); //会员统计总数
+        Route::any('tips','api/RoleCenter/tips'); //会员提示信息
     });
 
 

@@ -115,4 +115,5 @@ class Provinces extends Model
     {
         return self::get(['id'=>$cid]);
     }
+
 }
