@@ -110,8 +110,6 @@ class WxThree extends Base
             // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
-            $p1['msg']='11111';
-            Db::table('test')->insert($p1);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -129,7 +127,8 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-              
+                $p12['msg']=$errCode;
+                Db::table('test')->insert($p12);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
@@ -150,7 +149,7 @@ class WxThree extends Base
                         $toUsername = trim($msgObj->ToUserName);
                         $p2['msg']=$toUsername.'222';
                         Db::table('test')->insert($p2);
-                        // if ($toUsername == 'gh_3c884a361561') { 
+                        if ($toUsername == 'gh_3c884a361561') { 
                         // if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
                             $pp5['msg']=$query_auth_code.'112233';
@@ -161,7 +160,7 @@ class WxThree extends Base
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
-                        // }
+                        }
                     }
                 }
             }
