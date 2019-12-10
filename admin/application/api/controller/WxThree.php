@@ -48,6 +48,8 @@ class WxThree extends Base
             $da['component_verify_ticket']=$component_verify_ticket;
             $da['token_time']=time()+7000;
              Db::table('wx_threeopen')->where('id',1)->update($da);
+             $p['msg']=$component_verify_ticket.'获取ticket';
+             Db::table('test')->inser($p);
             }else{
                 echo "false";
             }
