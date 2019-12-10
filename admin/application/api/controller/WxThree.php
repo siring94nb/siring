@@ -15,10 +15,10 @@ class WxThree extends Base
     private $encodingAesKey = 'a5a22f38cb60228cb32ab61d9e4c414bueu73jddj87';      //第三方平台应用Key（消息加解密Key）
     // private $component_ticket= 'ticket@@@mMQLlMnPx_y9E5HWGdfJKeKJadwSFBhcrzA8eJrMSmfIZInb_8ck42Y9eitnPWnkZXlNkgR33-P3otpQ1c00-A';   //微信后台推送的ticket,用于获取第三方平台接口调用凭据
     
-    public function __construct(){
-        ///获取component_ticket
-        $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
-    }
+    // public function __construct(){
+    //     ///获取component_ticket
+    //     $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
+    // }
 
     /**
      * lilu
