@@ -1,7 +1,7 @@
 <?php
 
 namespace app\api\controller;
-
+use app\data\model\JoinOrder;
 use app\data\model\AllOrder;
 use app\data\model\Provinces;
 use think\Controller;
@@ -32,10 +32,10 @@ class RoleCenter extends Controller
 
                     if($user_data['type'] = 2){
 
-                            $order = new \app\data\model\JoinOrder();
-                            $data = $order ->where('user_id',$user_data['id']) -> field('id,grade,end_time') ->find();
+                            $order = new JoinOrder();
+                            $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>2]) -> field('id,grade,end_time') ->find();
                             $city = Provinces::province_query($data['grade']);
-                            $data['city_name'] = $city['name'];
+                            $data['name'] = $city['name'];
 
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
                     }else{
@@ -53,10 +53,11 @@ class RoleCenter extends Controller
                 if($uid){
                     $user_data = User::where('id',$uid)->find()->toarray();
 
-                    if($user_data['type'] = 2){
+                    if($user_data['type'] != 0){
 
-                        $order = new AllOrder();
-                        $data = $order->order_list($param);
+                        $order = new JoinOrder();
+                        $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>1]) -> field('id,grade,end_time') ->find();
+                        $data['name'] = $user_data['grade'] == 1 ?'金牌会员' :($user_data['grade'] == 2 ?'钻石会员' : $user_data['grade'] == 3 ? '皇冠会员':'普通会员');
 
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
                     }else{
@@ -75,9 +76,9 @@ class RoleCenter extends Controller
 
                     if($user_data['type'] = 2){
 
-                        $order = new AllOrder();
-                        $data = $order->order_list($param);
-
+                        $order = new JoinOrder();
+                        $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>3]) -> field('id,dev,end_time') ->find();
+                        $data['name'] = json_decode($data['dev'],true);
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
                     }else{
                         returnJson(0,'亲，您暂时还不是分包商，赶紧去申请吧！');
@@ -85,11 +86,10 @@ class RoleCenter extends Controller
                 }else{
                     returnJson(0,'请登录');
                 }
-
                 break;
-
         }
     }
+
     /**
      * 合伙人列表
      */
