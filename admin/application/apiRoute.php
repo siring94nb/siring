@@ -160,7 +160,7 @@ Route::group('api', function () {
     //控制台-AI推广套餐
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
-        Route::any('sendMassage','api/SendMassage/sendMassage')->name('sendMassage'); //短信中转
+        Route::any('sendMassage','api/SendMassage/sendMassage'); //短信中转
     });
 
     //控制台-角色中心
