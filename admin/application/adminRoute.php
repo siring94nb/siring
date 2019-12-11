@@ -435,12 +435,12 @@ Route::group('admin', function () use ($afterBehavior) {
              'admin/NeedOrder/get_need_order_detail',
              ['method' => 'post']
          ],
-         'proposal_upload'   => [                //上传报价单
-             'admin/NeedOrder/proposal_upload',
+         'upload_proposal'   => [                //上传报价单
+             'admin/NeedOrder/upload_proposal',
              ['method' => 'post']
          ],
-         'proposal_upload'   => [                //上传报价单
-             'admin/NeedOrder/proposal_upload',
+         'offer_sure'   => [                    //平台报价确认
+             'admin/NeedOrder/offer_sure',
              ['method' => 'post']
          ],
          'proposal_verify'   => [                //上传报价单审核
