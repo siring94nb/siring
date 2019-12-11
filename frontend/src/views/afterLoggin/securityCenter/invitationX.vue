@@ -49,7 +49,7 @@
 
         <el-tab-pane label="邀请记录" name="second" :key="'second'">
           <div class="bottomBoxTab">
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}">
               <el-table-column prop="HerID" label="你邀请的用户ID（会员/邀请码）" width="126">
                 <template slot-scope="scope">
                   <div>{{scope.row.HerID}}</div>

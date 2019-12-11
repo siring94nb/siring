@@ -73,6 +73,7 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
+                  :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                   @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
@@ -163,6 +164,7 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
+                  :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                   @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
@@ -233,6 +235,7 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
+                  :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                   @select="ceshi"
                 >
                   <el-table-column prop="date" label="城市选择" width="120" align="center"></el-table-column>

@@ -209,6 +209,43 @@ export default new Router({
                     name: "demand_order",
                     component: () =>
                         import ('@/views/afterLoggin/demand_order/demand_order'),
+                },
+                {
+                    path: "/subContractorIndex",
+                    name: "subContractorIndex",
+                    component: () =>
+                        import ('@/views/afterLoggin/subContractor/subContractorIndex'),
+                },
+                {
+                    path: "/subContractorSm1",
+                    name: "subContractorSm1",
+                    component: () =>
+                        import ('@/views/afterLoggin/subContractor/subContractorSm1'),
+                },
+                {
+                    path: "/financialDetailsI",
+                    name: "financialDetailsI",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/financialDetailsI'),
+                },
+                {
+                    path: "/recharge",
+                    name: "recharge",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/recharge'),
+                },
+                {
+                    path: "/withdraw",
+                    name: "withdraw",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/withdraw'),
+                }
+                ,
+                {
+                    path: "/withdrawX",
+                    name: "withdrawX",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/withdrawX'),
                 }
             ]
         },

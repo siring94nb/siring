@@ -18,6 +18,15 @@ class NeedOrder extends Base{
 
     /**
      * lilu
+     * 构造方法
+     */
+    public function __construct()
+    {
+        $this->need = new NeedOrder();
+    }
+
+    /**
+     * lilu
      * 获取定制需求订单
      */
     public function need_index()
@@ -60,6 +69,62 @@ class NeedOrder extends Base{
             return $this->buildFailed(ReturnCode::DB_READ_ERROR,'操作失败');
         }
     }
+
+    /**
+     * lilu
+     * 上传报价单
+     * param   id   需求订单id
+     * param   proposal 报价单
+     */
+    public function upload_proposal()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            $res=$this->need->update(['id'=>$postData['id'],'proposal'=>$postData['proposal']]);
+            return $res ?  $this->buildSuccess([]) : $this->buildFailed(ReturnCode::DB_READ_ERROR,'上传失败');
+        }else{
+           return $this->buildFailed(ReturnCode::DB_READ_ERROR,'缺少必须参数');
+        }
+    }
+
+    /**
+     * lilu
+     * 平台确认提交
+     * param  work_time    工作日
+     * param  need_money   合同金额
+     * param  id           需求订单id
+     */
+    public function offer_sure()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        $validate = new Validate([
+            ['work_time', 'require', '工作日不能为空'],
+            ['need_money', 'require', '合同金额不能为空'],
+        ]);
+        if (!$validate->check($postData)) {
+            returnJson(0, $validate->getError());
+            exit();
+        }
+        if(!$postData)
+        {
+            return $this->buildFailed(ReturnCode::DB_READ_ERROR,'缺少必须参数');
+        }
+        $res=$this->need->where('id',$postData['id'])->update(['work_time'=>$postData['work_time'],'need_money'=>$postData['need_money']]);
+        if($res !==false){
+            //修改需求订单的状态
+            $re=$this->need->where('id',$postData['id'])->update(['status'=>3]);
+        }else{
+            return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
+        }
+        return $re ? $this->buildSuccess(1,'提交成功') : $this->buildFailed(0,'提交失败');
+    }
+
+    /**
+     * lilu
+     * 
+     */
 
 
 
