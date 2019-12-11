@@ -17,11 +17,13 @@
             <el-badge :value="200" :max="99" class="bell">
               <i class="el-icon-bell"></i>
             </el-badge>
-            <el-avatar
-              class="avatar"
-              src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-            ></el-avatar>
-            <span class="phone">{{phone}}</span>
+            <router-link to="afterLoggin" class="dh">
+              <el-avatar
+                class="avatar"
+                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+              ></el-avatar>
+              <span class="phone">{{phone}}</span>
+            </router-link>
             <span @click="onLogout">退出</span>
           </div>
         </div>
@@ -512,8 +514,11 @@ export default {
           .bell {
             font-size: 24px;
           }
-          .phone {
-            margin: 0 10px;
+          .dh{
+            .phone {
+              margin: 0 10px;
+              color: #ffffff;
+            }
           }
         }
         .avatar {
