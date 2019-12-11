@@ -37,7 +37,7 @@ class SendMassage extends Controller
                     'Msg' => $this->error,
                     'GatewayId' => " ",
                 ];
-                return json_encode($return_data,true);
+                return $return_data;
             }
             //手机格式
             if(!$this->isMobile($data['MobileNo'])) {
@@ -47,11 +47,11 @@ class SendMassage extends Controller
                     'Msg' => '手机格式错误',
                     'GatewayId' => " ",
                 ];
-                return json_encode($return_data,true);
+                return $return_data;
             }
 
             $restul = $this->send($data['Content'],$data['MobileNo']);
-            return json_encode($restul);
+            return json_decode($restul,true);
         }
 
 
