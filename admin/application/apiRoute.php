@@ -175,7 +175,7 @@ Route::group('api', function () {
     });
 
 
-    Route::group("send",[
+    Route::group("api",[
     //登录注册
         "sendMassage" => "api/SendMassage/sendMassage", //短信中转
 
