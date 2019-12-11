@@ -111,7 +111,6 @@ Route::group('api', function () {
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
-    Route::any('sendMassage','api/SendMassage/sendMassage'); //短信中转程序
     //用户优惠券 fyk
     Route::group('UserDiscount',function(){
         Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
@@ -170,7 +169,11 @@ Route::group('api', function () {
         Route::any('member_partner','api/RoleCenter/member_partner'); //合伙人列表
         Route::any('member_total','api/RoleCenter/member_total'); //会员统计总数
         Route::any('tips','api/RoleCenter/tips'); //会员提示信息
+        Route::any('sendMassage','api/SendMassage/sendMassage')->name('sendMassage'); //新增短信中转
+
+        
     });
+
 
 
 });
