@@ -175,6 +175,11 @@ Route::group('api', function () {
     });
 
 
+    Route::group("send",[
+    //登录注册
+        "sendMassage" => "api/SendMassage/sendMassage", //短信中转
+
+    ]);
 
 });
 $afterBehavior = [
