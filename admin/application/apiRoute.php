@@ -111,7 +111,7 @@ Route::group('api', function () {
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
-
+    Route::any('sendMassage','api/SendMassage/sendMassage'); //短信中转程序
     //用户优惠券 fyk
     Route::group('UserDiscount',function(){
         Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
