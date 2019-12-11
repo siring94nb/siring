@@ -167,9 +167,11 @@ Route::group('api', function () {
     Route::group('RoleCenter',function(){
         Route::any('city_partner','api/RoleCenter/city_partner'); //合伙人列表
         Route::any('city_total','api/RoleCenter/city_total'); //合伙人统计总数
-        Route::any('member_partner','api/RoleCenter/member_partner'); //合伙人列表
+        Route::any('member_partner','api/RoleCenter/member_partner'); //会员列表
         Route::any('member_total','api/RoleCenter/member_total'); //会员统计总数
         Route::any('tips','api/RoleCenter/tips'); //会员提示信息
+        Route::any('subcontract_partner','api/RoleCenter/subcontract_partner'); //分包商列表
+        Route::any('subcontract_total','api/RoleCenter/subcontract_total'); //分包商统计
     });
 
 
