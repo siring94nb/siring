@@ -9,6 +9,7 @@ Route::group('api', function () {
     Route::miss('api/Miss/index');
 //    Route::rule('new/:id','News/update','POST');
     //开始定义api路由接口
+    Route::post('sendMassage','api/SendMassage/sendMassage'); //短信中转
 
     //文件上传 fyk
     Route::group('file', function () {
@@ -173,6 +174,7 @@ Route::group('api', function () {
         Route::any('subcontract_partner','api/RoleCenter/subcontract_partner'); //分包商列表
         Route::any('subcontract_total','api/RoleCenter/subcontract_total'); //分包商统计
     });
+
 
 
 
