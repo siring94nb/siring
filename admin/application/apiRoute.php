@@ -177,6 +177,7 @@ Route::group('api', function () {
 
 
 });
+
 $afterBehavior = [
     '\app\api\behavior\ApiAuth',
     '\app\api\behavior\ApiPermission',
