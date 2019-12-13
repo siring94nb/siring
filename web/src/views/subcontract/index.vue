@@ -311,7 +311,7 @@ export default {
   created() {
     this.init();
     this.getList();
-    this.getSkills();
+    // this.getSkills();
   },
   methods: {
     init() {
@@ -433,7 +433,9 @@ export default {
       });
     },
     //删除分包技能和酬金
-    delSkills() {}
+    delSkills(index) {
+        this.formItem.skills.splice(this.formItem.skills.indexOf(index), 1);
+    }
   },
   mounted() {
     this.editor = new wangEditor("#wangeditor");
