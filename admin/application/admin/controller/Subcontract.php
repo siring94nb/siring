@@ -187,8 +187,14 @@ class Subcontract extends Base
         }
     }
 
-
-    public function join_list()
+    /**
+     * 分类
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function classify()
     {
 
         $grade = new \app\data\model\JoinRole();
@@ -201,6 +207,9 @@ class Subcontract extends Base
         }
 
         // pp($res);die;
-        return $res ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        return $this->buildSuccess([
+            'list'=>$data,
+        ]);
+
     }
 }

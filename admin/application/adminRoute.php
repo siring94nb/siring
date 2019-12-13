@@ -917,6 +917,10 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Subcontract/index',
             ['method' => 'get']
         ],
+        'classify' => [
+            'admin/Subcontract/classify',
+            ['method' => 'get']
+        ],
         'add'   => [
             'admin/Subcontract/add',
             ['method' => 'post']
@@ -929,10 +933,7 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/Subcontract/del',
             ['method' => 'post']
         ],
-        'join_list' => [
-            'admin/Subcontract/join_list',
-            ['method' => 'get']
-        ],
+
     ], ['after_behavior' => $afterBehavior]);
 
     //接单列表
