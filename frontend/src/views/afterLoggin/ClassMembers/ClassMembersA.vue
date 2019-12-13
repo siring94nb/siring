@@ -75,7 +75,6 @@
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
                   <el-table-column prop="date" label="日期" width="160" align="center"></el-table-column>
@@ -101,7 +100,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi">全选</el-checkbox>
+                    <el-checkbox v-model="checked">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -140,7 +139,6 @@
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
                   <el-table-column prop="date" label="会员等级" width="120" align="center"></el-table-column>
                   <el-table-column prop="InviterAccount" label="等级图标" width="120" align="center"></el-table-column>
@@ -163,7 +161,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi">全选</el-checkbox>
+                    <el-checkbox v-model="checked">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -192,6 +190,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {GetRoleCenter} from "@/api/api";
 export default {
   data() {
     return {
@@ -301,9 +300,19 @@ export default {
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    ceshi(val) {
-      // console.log(1213123);
-      console.log(val);
+    // 获取等级会员数据
+    RoleCenter() {
+      const params = {
+        type:2
+      };
+      GetRoleCenter(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        console.log(123);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
     }
   },
   watch: {
