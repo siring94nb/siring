@@ -209,6 +209,12 @@ export default new Router({
                     name: "demand_order",
                     component: () =>
                         import ('@/views/afterLoggin/demand_order/demand_order'),
+                },
+                {
+                    path: "/order_derail",
+                    name: "order_derail",
+                    component: () =>
+                        import ('@/views/afterLoggin/demand_order/order_derail'),
                 }
             ]
         },

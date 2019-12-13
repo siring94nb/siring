@@ -197,7 +197,12 @@ export default {
       this.multipleSelection = val;
     },
     handleEdit(status) {
-
+      this.$router.push({
+        name: "order_derail",
+        params: {
+          status: status
+        }
+      });
     }
   },
   components: {
