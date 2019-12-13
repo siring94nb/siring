@@ -186,4 +186,21 @@ class Subcontract extends Base
             return $this->buildFailed(0, '操作失败');
         }
     }
+
+
+    public function join_list()
+    {
+
+        $grade = new \app\data\model\JoinRole();
+
+        $data = $grade->where('type',3)->field('id,title,policy')->select();
+        foreach ($data as $k=>$v){
+
+            $res = explode(',',$v['policy']);
+            $data[$k]['res'] = $res;
+        }
+
+        // pp($res);die;
+        return $res ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
 }
