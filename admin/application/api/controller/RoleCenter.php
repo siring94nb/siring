@@ -196,5 +196,55 @@ class RoleCenter extends Controller
 
     }
 
+    /**
+     * 分包商列表
+     */
+    public function subcontract_partner()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $uid = Session::get("uid");
+        if($uid){
+            $user_data = User::where('id',$uid)->find()->toarray();
+            $param['user_id'] = $user_data['id'];
+            if($user_data['type'] = 2){
+
+                $order = new AllOrder();
+                $data = $order->subcontract($param);
+
+                return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+            }else{
+                returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
+            }
+        }else{
+            returnJson(0,'请登录');
+        }
+
+
+    }
+
+    /**
+     *分包商总计
+     */
+    public function subcontract_total()
+    {
+
+        $uid = Session::get("uid");
+        if($uid){
+            $user_data = User::where('id',$uid)->find()->toarray();
+            if($user_data['is_city'] === 2){
+                returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
+            }
+            $data['invite_user_total'] = User::where('other_code',$user_data['invitation']) ->count();//佣金总数
+            $data['reach_user_total'] = (new JoinOrder())::where('user_id',$user_data['id']) ->sum('money');//押金总数
+
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
+        }else{
+            returnJson(0,'请登录');
+        }
+
+    }
+
 
 }

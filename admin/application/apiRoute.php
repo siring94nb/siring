@@ -9,6 +9,7 @@ Route::group('api', function () {
     Route::miss('api/Miss/index');
 //    Route::rule('new/:id','News/update','POST');
     //开始定义api路由接口
+    Route::post('sendMassage','api/SendMassage/sendMassage'); //短信中转
 
     //文件上传 fyk
     Route::group('file', function () {
@@ -111,7 +112,6 @@ Route::group('api', function () {
         Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
-
     //用户优惠券 fyk
     Route::group('UserDiscount',function(){
         Route::any('discount_list','api/UserDiscount/discount_list'); //用户优惠券
@@ -161,19 +161,25 @@ Route::group('api', function () {
     //控制台-AI推广套餐
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
+        Route::any('sendMassage','api/SendMassage/sendMassage'); //短信中转
     });
 
     //控制台-角色中心
     Route::group('RoleCenter',function(){
         Route::any('city_partner','api/RoleCenter/city_partner'); //合伙人列表
         Route::any('city_total','api/RoleCenter/city_total'); //合伙人统计总数
-        Route::any('member_partner','api/RoleCenter/member_partner'); //合伙人列表
+        Route::any('member_partner','api/RoleCenter/member_partner'); //会员列表
         Route::any('member_total','api/RoleCenter/member_total'); //会员统计总数
         Route::any('tips','api/RoleCenter/tips'); //会员提示信息
+        Route::any('subcontract_partner','api/RoleCenter/subcontract_partner'); //分包商列表
+        Route::any('subcontract_total','api/RoleCenter/subcontract_total'); //分包商统计
     });
 
 
+
+
 });
+
 $afterBehavior = [
     '\app\api\behavior\ApiAuth',
     '\app\api\behavior\ApiPermission',

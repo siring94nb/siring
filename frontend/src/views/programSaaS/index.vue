@@ -231,6 +231,7 @@ export default {
     handleAvatarSuccess(res, file) {
       this.valData.imageUrl = res.data.filePath;
       this.uploadList.push(res.data.filePath);
+      console.log(res)
     },
     beforeAvatarUpload(file) {
       const check = this.uploadList.length < 1;

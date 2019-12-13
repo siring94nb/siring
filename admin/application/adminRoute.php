@@ -435,12 +435,12 @@ Route::group('admin', function () use ($afterBehavior) {
              'admin/NeedOrder/get_need_order_detail',
              ['method' => 'post']
          ],
-         'proposal_upload'   => [                //上传报价单
-             'admin/NeedOrder/proposal_upload',
+         'upload_proposal'   => [                //上传报价单
+             'admin/NeedOrder/upload_proposal',
              ['method' => 'post']
          ],
-         'proposal_upload'   => [                //上传报价单
-             'admin/NeedOrder/proposal_upload',
+         'offer_sure'   => [                    //平台报价确认
+             'admin/NeedOrder/offer_sure',
              ['method' => 'post']
          ],
          'proposal_verify'   => [                //上传报价单审核
@@ -448,7 +448,7 @@ Route::group('admin', function () use ($afterBehavior) {
              ['method' => 'post']
          ],
     ], ['after_behavior' => $afterBehavior]);
-    
+
     /**
      * lilu
      * 套餐订单
@@ -907,6 +907,46 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
         'del'   => [
             'admin/Testing/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //分包列表
+    Route::group('Subcontract', [
+        'index' => [
+            'admin/Subcontract/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Subcontract/add',
+            ['method' => 'post']
+        ],
+        'upd'   => [
+            'admin/Subcontract/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Subcontract/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //接单列表
+    Route::group('Receipt', [
+        'index' => [
+            'admin/Receipt/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Receipt/add',
+            ['method' => 'post']
+        ],
+        'upd'   => [
+            'admin/Receipt/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Receipt/del',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);

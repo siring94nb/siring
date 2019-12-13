@@ -427,6 +427,32 @@ export const appRouter = [
         ]
     },
     {
+        path: '/Sub',
+        icon: 'ios-calendar',
+        title: '分包管理',
+        name: 'Sub',
+        component: Main,
+        children: [
+            //
+            {
+                path: 'Subcontract',
+                icon: 'ios-bookmarks',
+                name: 'Subcontract',
+                access: 'admin/Subcontract/index',
+                title: '分包列表',
+                component: () => import('@/views/subcontract/index.vue')
+            },
+            {
+                path: 'Receipt',
+                icon: 'ios-bookmarks',
+                name: 'Receipt',
+                access: 'admin/Receipt/index',
+                title: '接单列表',
+                component: () => import('@/views/subcontract/receipt.vue')
+            },
+        ]
+    },
+    {
         path: '/Marketing',
         icon: 'md-pricetag',
         title: '营销管理',

@@ -10,8 +10,10 @@
           @open="handleOpen"
           @close="handleClose"
           background-color="rgba(201,0,0)"
+          active-background-color="#000000"
           text-color="#fff"
-          :default-openeds="['0','1','2','3','4','5','6','7']"
+          :default-openeds="['0']"
+           active-text-color="#ffd04b"
           router
         >
           <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
@@ -41,6 +43,8 @@ export default {
     return {
       cityHehuoren:1,
       classHuiyuan:1,
+      fenbaoshang:1,
+      tixian:1,
       arr: [
         { title: "控制中心", con: [{ name: "控制台", rou: "/afterLogginR" }] },
         {
@@ -58,18 +62,18 @@ export default {
             // "城市合伙人", "等级会员", "分包商"
             { name: "城市合伙人", rou:"/partnerCityX" },
             { name: "等级会员", rou: "/ClassMembersX" },
-            { name: "分包商", rou: "/ceshi" }
+            { name: "分包商", rou: "/subContractorIndex" }
           ]
         },
         {
           title: "资金管理",
           con: [
             // "资金明细", "充值", "提现", "银行卡管理", "优惠券"
-            { name: "资金明细", rou: "/ceshi" },
-            { name: "充值", rou: "/ceshi" },
-            { name: "提现", rou: "/ceshi" },
-            { name: "银行卡管理", rou: "/ceshi" },
-            { name: "优惠券", rou: "/ceshi" }
+            { name: "资金明细", rou: "/financialDetailsI" },
+            { name: "充值", rou: "/recharge" },
+            { name: "提现", rou: "/withdraw" },
+            { name: "银行卡管理", rou: "/CardManagement" },
+            { name: "优惠券", rou: "/discountCoupon" }
           ]
         },
         {
@@ -111,7 +115,9 @@ export default {
   },
   mounted(){
     this.cityHehuorenX(),
-    this.classHuiyuanX()
+    this.classHuiyuanX(),
+    this.fenbaoshangX(),
+    this.withdrawX()
   },
   methods: {
     // 城市合伙人
@@ -126,10 +132,26 @@ export default {
     classHuiyuanX(){
       if(this.classHuiyuan===0){
           this.arr[2].con[1].rou="/ClassMembersX";
-          console.log(1111)
       }else{
           this.arr[2].con[1].rou = "/ClassMembersA";
-          console.log(2222)
+      }
+    },
+    // 分包商
+    fenbaoshangX(){
+      if(this.fenbaoshang===0){
+          this.arr[2].con[2].rou="/subContractorIndex";
+      }else{
+          this.arr[2].con[2].rou = "/subContractorSm1";
+      }
+    },
+    //提现
+    withdrawX(){
+      if(this.tixian===0){
+          this.arr[3].con[2].rou="/withdraw";
+          // console.log(1111)
+      }else{
+          this.arr[3].con[2].rou = "/withdrawX";
+          // console.log(2222)
       }
     },
     handleOpen(key, keyPath) {
