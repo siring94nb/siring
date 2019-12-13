@@ -209,6 +209,61 @@ export default new Router({
                     name: "demand_order",
                     component: () =>
                         import ('@/views/afterLoggin/demand_order/demand_order'),
+                },
+                {
+<<<<<<< HEAD
+                    path: "/order_derail",
+                    name: "order_derail",
+                    component: () =>
+                        import ('@/views/afterLoggin/demand_order/order_derail'),
+=======
+                    path: "/subContractorIndex",
+                    name: "subContractorIndex",
+                    component: () =>
+                        import ('@/views/afterLoggin/subContractor/subContractorIndex'),
+                },
+                {
+                    path: "/subContractorSm1",
+                    name: "subContractorSm1",
+                    component: () =>
+                        import ('@/views/afterLoggin/subContractor/subContractorSm1'),
+                },
+                {
+                    path: "/financialDetailsI",
+                    name: "financialDetailsI",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/financialDetailsI'),
+                },
+                {
+                    path: "/recharge",
+                    name: "recharge",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/recharge'),
+                },
+                {
+                    path: "/withdraw",
+                    name: "withdraw",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/withdraw'),
+                },
+                {
+                    path: "/withdrawX",
+                    name: "withdrawX",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/withdrawX'),
+                },
+                {
+                    path: "/CardManagement",
+                    name: "CardManagement",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/CardManagement'),
+                },
+                {
+                    path: "/discountCoupon",
+                    name: "discountCoupon",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/discountCoupon'),
+>>>>>>> 4c43974c1f4efa6e5e854ebbdec0b0d56376265a
                 }
             ]
         },

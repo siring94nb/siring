@@ -38,7 +38,7 @@ export default {
     $route: {
       handler: function(route) {
           this.rName =route.name;
-        // console.log(111);
+        // console.log(this.$refs.rightBox.clientWidth);
         // console.log(this.rName)
       },
       immediate: true
@@ -50,6 +50,15 @@ export default {
                     let screenWidth = document.body.clientWidth;
                     let leftBox = this.$refs.leftBox;
                     let rightBox = this.$refs.rightBox;
+                    // console.log(this.$route.path)
+                    // if(this.$route.path === "/demand_order"){
+                    //     rightBox.style.maxWidth = "1340px"
+                    //     console.log(this.$route.path)
+                    //     console.log( rightBox.style.maxWidth)
+                    // }else{ 
+                    //   console.log(this.$route.path)
+                    //     rightBox.style.maxWidth = "1100px"
+                    // }
                     if (screenWidth >1260){
                         leftBox.style.marginLeft = (screenWidth-(leftBox.clientWidth+rightBox.clientWidth))/2-20+"px";
                         rightBox.style.marginLeft = (screenWidth-(leftBox.clientWidth+rightBox.clientWidth))/2+leftBox.clientWidth+"px";

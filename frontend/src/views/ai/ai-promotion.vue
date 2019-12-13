@@ -85,7 +85,7 @@
               <el-form-item label="提供尽可能多的相关素材" class="lh20" required>
                 <el-upload
                   class="upload-demo"
-                  action="https://jsonplaceholder.typicode.com/posts/"
+                  action="https://manage.siring.com.cn/api/file/qn_upload"
                   :on-remove="handleRemove"
                   :before-upload="beforeUpload"
                   :limit="1"
