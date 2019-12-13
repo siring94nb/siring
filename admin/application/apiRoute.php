@@ -9,6 +9,7 @@ Route::group('api', function () {
     Route::miss('api/Miss/index');
 //    Route::rule('new/:id','News/update','POST');
     //开始定义api路由接口
+    Route::post('sendMassage','api/SendMassage/sendMassage'); //短信中转
 
     //文件上传 fyk
     Route::group('file', function () {
@@ -176,7 +177,9 @@ Route::group('api', function () {
 
 
 
+
 });
+
 $afterBehavior = [
     '\app\api\behavior\ApiAuth',
     '\app\api\behavior\ApiPermission',
