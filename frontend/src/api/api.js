@@ -94,6 +94,12 @@ export const GetRoleCenter = params => {
     return axios.post(`${base_url}api/RoleCenter/tips`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*控制台-角色中心-城市合伙人统计
+*/
+export const CityTotal = params => {
+    return axios.get(`${base_url}api/RoleCenter/city_total`, { params: params });
+}
+/*
 *用户分享邀请码
 */
 export const GetInvitationCode = params => {

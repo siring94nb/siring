@@ -160,7 +160,7 @@ export default {
         message: msg,
         type: code === 1 ? "success" : "error"
       });
-    },card
+    },
   }
 };
 </script>

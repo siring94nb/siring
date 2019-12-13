@@ -13,17 +13,8 @@
         <el-tab-pane label="绑定手机" name="first" :key="'first'">
           <div class="TabCon">
             <div>
-              <span class="bj">当前手机号：</span>
-              <span>{{phone.replace(phone.substring(3,7),"****")}}</span>
-            </div>
-            <div>
-              <span class="bj">发送验证码：</span>
-              <input type="text" maxlength="6" placeholder="请输入手机验证码" value="" v-model="yanzhengma" @input="ceshi"/>
-              <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click="getPhoneCode"/>
-            </div>
-            <div>
               <span class="bj">新手机号：</span>
-              <input type="text" placeholder="请输入新手机号" />
+              <input type="text" placeholder="请输入新手机号" maxlength="11" value="" v-model="newPhone"/>
               <select>
                 <option>China+86</option>
               </select>
@@ -31,20 +22,11 @@
             <div>
               <span class="bj">新手机验证码：</span>
               <input type="text" placeholder="请输入新手机验证码" />
-              <input type="button" value="获取验证码" class="btn" />
+              <input type="button" :value="showTime1?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime1" @click.stop="getPhoneCode('new')"/>
             </div>
             <div>
-              <span class="bj">新手机密码：</span>
-              <input type="text" placeholder="请输入新手机密码" />
-            </div>
-            <div>
-              <span class="bj">确认新手机密码：</span>
-              <input type="text" placeholder="请再次输入新手机密码" />
-            </div>
-            <div>
-              <span class="bj">验证码：</span>
-              <input type="text" placeholder="请再次输入新手机密码" />
-              <input type="text" value="11123" disabled class="jy" />
+              <span class="bj">原手机密码：</span>
+              <input type="text" placeholder="请原手机密码" />
             </div>
              <button class="affirmPhone">确定</button>
           </div>
@@ -60,12 +42,12 @@
             <div></div>
             <div></div>
             <div>
-              <span class="bj">新手机密码：</span>
-              <input type="text" placeholder="请输入新手机密码" value="" v-model="mewPass"/>
+              <span class="bj">新密码：</span>
+              <input type="text" placeholder="请输入新密码" value="" v-model="mewPass"/>
             </div>
             <div>
-              <span class="bj">确认新手机密码：</span>
-              <input type="text" placeholder="请再次输入新手机密码" value="" v-model="mewPass1" />
+              <span class="bj">确认新密码：</span>
+              <input type="text" placeholder="请再次输入新密码" value="" v-model="mewPass1" />
             </div>
             <div>
               <span class="bj">发送验证码：</span>
@@ -96,7 +78,7 @@
               <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click.stop="getPhoneCode"/>
             </div>
             <div class="btnList">
-              <button>返回</button>
+              <button><router-link to="securityCenterIndex">返回</router-link></button>
               <button @click.stop="onPaymentCode">确定</button>
             </div>
           </div>
@@ -116,9 +98,11 @@ export default {
   data() {
     return {
       phone:sessionStorage.getItem("phone"),
+      newPhone:"",//新手机号
       activeName: "",
       title: "",
       showTime:false,//控制获取验证码时，按钮禁用
+      showTime1:false,
       validateTime: 60,//倒计时初始时间
       yanzhengma:"",//获取验证码
       mewPass:"",//修改密码新密码
@@ -133,10 +117,6 @@ export default {
     this.gainCan();
   },
   methods: {
-    // 测试
-    ceshi(){
-      console.log(this.yanzhengma)
-    },
     handleCommand(command) {
       // this.$message("click on item " + command);
     },
@@ -158,6 +138,7 @@ export default {
         // console.log(res);
         if (code === 1) {
           this.handleClose();
+          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },
@@ -171,9 +152,10 @@ export default {
       paymentCode(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        // console.log(res);
         if (code === 1) {
           this.handleClose();
+          // 修改成功，返回上一层
+          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },
@@ -181,16 +163,17 @@ export default {
     onUpdPhone() {
       const params = {
         user_id:sessionStorage.getItem("user_id"),
-        phone: this.phone,
+        new_phone: this.phone,
         password: this.mewPass,
         code: this.yanzhengma
       };
       UpdPhone(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        // console.log(res);
         if (code === 1) {
           this.handleClose();
+          // 修改成功，返回上一层
+          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },
@@ -198,7 +181,7 @@ export default {
     showMsg(msg, code) {
       this.$message({
         message: msg,
-        type: code === 1 ? "success" : "error"
+        type: code === 1 ? "success" : "error",
       });
     },
     gainCan() {
@@ -206,8 +189,21 @@ export default {
       this.title = this.$route.query.title;
     },
     // 获取验证码
-    getPhoneCode() {
-      GetCode({ phone: this.phone }).then(res => {
+    getPhoneCode(str) {
+      if(str === "new"){
+        // console.log(this.newPhone);
+        GetCode({ phone: this.newPhone }).then(res => {
+          let { data, msg, code } = res;
+          this.showMsg(msg, code);
+          console.log(code);
+          if (code === 1) {
+            this.showTime1 = true;
+            this.countDown1();
+            this.$route
+          }
+        });
+      }else{
+         GetCode({ phone: this.phone }).then(res => {
           let { data, msg, code } = res;
           this.showMsg(msg, code);
           if (code === 1) {
@@ -215,7 +211,7 @@ export default {
             this.countDown();
           }
         });
-      // console.log(this.phone);
+      }
     },
     // 验证码倒计时
     countDown() {
@@ -224,6 +220,19 @@ export default {
         if (time <= 0) {
           time = 0;
           this.showTime = false;
+          clearInterval(timer);
+        } else {
+          time -= 1;
+          this.validateTime = time;
+        }
+      }, 1000);
+    },
+    countDown1() {
+      let time = 60;
+      let timer = setInterval(() => {
+        if (time <= 0) {
+          time = 0;
+          this.showTime1 = false;
           clearInterval(timer);
         } else {
           time -= 1;
@@ -261,6 +270,11 @@ export default {
         &:nth-of-type(1){
           margin-right: 30px;
           border: 1px solid rgba(188, 188, 188, 1);
+          a{
+            display: inline-block;
+            width: 100%;
+            // height: 47px;
+          }
         }
         &:nth-of-type(2){
           border: 1px solid rgba(230, 45, 49, 1);
@@ -324,15 +338,7 @@ export default {
         color: #c90000;
       }
       margin-bottom: 10px;
-      &:nth-last-child(1) {
-        margin: 0;
-      }
-      &:nth-of-type(2) {
-        input {
-          background: #ffffff;
-        }
-      }
-      &:nth-of-type(3) {
+      &:nth-of-type(1) {
         select {
           height: 47px;
           padding: 0 5px;
