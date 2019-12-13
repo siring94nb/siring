@@ -37,6 +37,6 @@ module.exports = merge(webpackBaseConfig, {
     devServer:{
         host:'localhost',
         inline:true,
-        // port:8080,
+         port:8080,
     },
 });
