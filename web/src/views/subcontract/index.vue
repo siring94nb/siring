@@ -34,17 +34,20 @@
                 </Card>
             </Col>
         </Row>
-        <Modal v-model="modalSetting.show" width="700" :styles="{top: '30px'}" @on-visible-change="doCancel">
+        <Modal v-model="modalSetting.show" width="900" :styles="{top: '30px'}" @on-visible-change="doCancel">
             <p slot="header" style="color:#2d8cf0;">
                 <Icon type="md-information-circle"></Icon>
                 <span>{{formItem.id ? '编辑' : '新增'}}</span>
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-                <FormItem label="名称" prop="name" >
-                    <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入优惠卷名称"/>
+                <FormItem label="项目名称" prop="name" >
+                    <Input  style="width: 500px" v-model="formItem.name" placeholder="项目名称"/>
                 </FormItem>
-                <FormItem label="发行数量" prop="num" >
-                    <InputNumber  :min="1" v-model="formItem.num"></InputNumber>
+                <!--<FormItem label="发行数量" prop="num" >-->
+                    <!--<InputNumber  :min="1" v-model="formItem.num"></InputNumber>-->
+                <!--</FormItem>-->
+                <FormItem label="项目需求" prop="con">
+                    <div id="wangeditor" v-model="formItem.con"></div>
                 </FormItem>
                 <FormItem label="分包发布"  prop="type">
                     <RadioGroup v-model="formItem.type">
@@ -62,8 +65,9 @@
     </div>
 </template>
 <script>
-    import axios from 'axios';
-    import config from '../../../build/config';
+    import axios from "axios";
+    import config from "../../../build/config";
+    import wangEditor from "wangeditor";
     const editButton = (vm, h, currentRow, index) => {
         return h('Button', {
             props: {
@@ -76,19 +80,11 @@
                 'click': () => {
                     vm.formItem.id = currentRow.id;
                     vm.formItem.name = currentRow.name;
-                    vm.formItem.num = currentRow.num;
-                    vm.formItem.range = currentRow.range;
-                    if(currentRow.rule.full !== undefined){
-                        vm.formItem.full = currentRow.rule.full;
-                    }
-                    if(currentRow.rule.reduce !== undefined){
-                        vm.formItem.reduce = currentRow.rule.reduce;
-                    }
-                    vm.formItem.add_time = currentRow.add_time;
-                    vm.formItem.end_time = currentRow.end_time;
-                    vm.formItem.status = currentRow.status;
+                    //vm.formItem.num = currentRow.num;
                     vm.formItem.type = currentRow.type;
-
+                    vm.formItem.con = currentRow.con;
+                    vm.editor.txt.html(vm.formItem.con);
+                    vm.html = vm.formItem.con;
                     vm.modalSetting.show = true;
                     vm.modalSetting.index = index;
                 }
@@ -104,7 +100,7 @@
             },
             on: {
                 'on-ok': () => {
-                    axios.post('Discount/del', {
+                    axios.post('Subcontract/del', {
                         id: currentRow.id
                     }).then(function (response) {
                         currentRow.loading = false;
@@ -135,6 +131,9 @@
         name: 'system_user',
         data () {
             return {
+                uploadList: [],
+                uploadListSlt: [],
+                UploadAction: "",
                 columnsList: [
                     {
                         title: '序号',
@@ -144,19 +143,9 @@
                         key: 'id'
                     },
                     {
-                        title: '合同编号',
-                        align: 'center',
-                        key: 'name',
-                    },
-                    {
                         title: '项目名称',
                         align: 'center',
                         key: 'num',
-                    },
-                    {
-                        title: '终端类型',
-                        align: 'center',
-                        key: '',
                     },
                     {
                         title: '分包技能',
@@ -184,12 +173,6 @@
                     },
                     {
                         title: '项目功能描述',
-                        align: 'center',
-                        key: 'available',
-
-                    },
-                    {
-                        title: '项目阶段',
                         align: 'center',
                         key: 'available',
 
@@ -232,11 +215,7 @@
                 formItem: {
                     id: 0,
                     name: '',
-                    num:1,
-                    range: 0,
-                    full: 1,
-                    reduce: 1,
-                    status: 1,
+                    con: '',
                     type: 0,
                 },
                 ruleValidate: {
@@ -284,13 +263,10 @@
                         self.modalSetting.loading = true;
                         let target = '';
                         if (this.formItem.id === 0) {
-                            target = 'Discount/add';
+                            target = 'Subcontract/add';
                         } else {
-                            target = 'Discount/upd';
+                            target = 'Subcontract/upd';
                         }
-                        this.formItem.rule = new Object();
-                        this.formItem.rule.full = this.formItem.full;
-                        this.formItem.rule.reduce = this.formItem.reduce;
                         axios.post(target, this.formItem).then(function (response) {
                             if (response.data.code === 1) {
                                 self.$Message.success(response.data.msg);
@@ -308,13 +284,7 @@
                 this.modalSetting.show = false;
                 this.formItem.id = 0;
                 this.formItem.name = '';
-                this.formItem.num = 1;
-                this.formItem.add_time = '';
-                this.formItem.end_time = '';
-                this.formItem.range = 0;
-                this.formItem.full = 1;
-                this.formItem.reduce = 1;
-                this.formItem.status = 1;
+                this.formItem.con = '';
                 this.formItem.type = '';
             },
             doCancel (data) {
@@ -340,7 +310,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('Discount/index', {
+                axios.get('Subcontract/index', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,
@@ -365,7 +335,22 @@
             }
         },
         mounted(){
-
+            this.editor = new wangEditor("#wangeditor");
+            this.editor.customConfig.uploadFileName = "image";
+            this.editor.customConfig.uploadImgMaxLength = 1;
+            this.editor.customConfig.uploadImgServer =
+                config.front_url + "file/qn_upload";
+            this.editor.customConfig.uploadImgHooks = {
+                customInsert: function(insertImg, result, editor) {
+                    if (result.code == 1) {
+                        insertImg(result.data.filePath);
+                    }
+                }
+            };
+            this.editor.customConfig.onchange = function(html) {
+                vm.formItem.con = html;
+            };
+            this.editor.create();
         }
     };
 </script>
