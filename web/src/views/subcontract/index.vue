@@ -417,11 +417,11 @@ export default {
         });
     },
     getSkills() {
-      axios.post("Subcontract/join_list", '').then(function(response) {
+      axios.get("Subcontract/join_list").then(function(response) {
           console.log(response)
-        if (response.data.code === 1) {
+        // if (response.data.code === 1) {
           
-        }
+        // }
       });
     },
     //添加分包技能和酬金
