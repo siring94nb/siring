@@ -46,36 +46,11 @@
                 <FormItem label="发行数量" prop="num" >
                     <InputNumber  :min="1" v-model="formItem.num"></InputNumber>
                 </FormItem>
-                <FormItem label="面向范围" prop="range">
-                    <Select v-model="formItem.range" style="width:200px">
-                        <Option :value="0" :key="0">{{'全部'}}</Option>
-                        <Option :value="1" :key="1">{{'黄金会员'}}</Option>
-                        <Option :value="2" :key="2">{{'白金会员'}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="满" prop="full">
-                    <InputNumber :min="1" v-model="formItem.full"></InputNumber>
-                </FormItem>
-                <FormItem label="减" prop="reduce">
-                    <InputNumber :min="1" v-model="formItem.reduce"></InputNumber>
-                </FormItem>
-                <FormItem label="开始时间"  prop="add_time">
-                    <DatePicker type="datetime" v-model="formItem.add_time" placeholder="请输入开始时间" style="width: 200px"></DatePicker>
-                </FormItem>
-                <FormItem label="结束时间"  prop="end_time">
-                    <DatePicker type="datetime" v-model="formItem.end_time" placeholder="请输入结束时间" style="width: 200px"></DatePicker>
-                </FormItem>
-                <FormItem label="状态" prop="status">
-                    <Select v-model="formItem.status" style="width:200px">
-                        <Option :value="1" :key="1">{{'正常'}}</Option>
-                        <Option :value="0" :key="0">{{'失效'}}</Option>
-                    </Select>
-                </FormItem>
-                <FormItem label="适用范围"  prop="type">
+                <FormItem label="分包发布"  prop="type">
                     <RadioGroup v-model="formItem.type">
-                        <Radio :label="0" >所有商品/活动</Radio>
-                        <Radio :label="1" >软件/定制类商品</Radio>
-                        <Radio :label="2" >选择商品</Radio>
+                        <Radio :label="0" >立即发布</Radio>
+                        <Radio :label="1" >暂不发布</Radio>
+                        <Radio :label="2" >自开发</Radio>
                     </RadioGroup>
                 </FormItem>
             </Form>
