@@ -67,6 +67,13 @@ export const ForgetPwd = params => {
     return axios.post(`${base_url}api/user/forget`, qs.stringify(params)).then(res => res.data);
 }
 /**
+ * 修改手机
+ * @param {user_id, new_phone, new_code, password}
+ */
+export const UpdPhone = params => {
+    return axios.post(`${base_url}api/user/upd_phone`, qs.stringify(params)).then(res => res.data);
+}
+/**
   * 修改支付密码
   * @param {phone, password, password_confirm, code}
   */
@@ -78,6 +85,13 @@ export const paymentCode = params => {
 */
 export const UserUpdating = params => {
     return axios.post(`${base_url}api/user/user_updating`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*控制台-角色中心 -城市、等级、技能
+*参数 -type -是1.城市合伙人、2.等级会员、3.分包商
+*/
+export const GetRoleCenter = params => {
+    return axios.post(`${base_url}api/RoleCenter/tips`, qs.stringify(params)).then(res => res.data);
 }
 /*
 *用户分享邀请码

@@ -239,13 +239,24 @@ export default new Router({
                     name: "withdraw",
                     component: () =>
                         import ('@/views/afterLoggin/financialDetails/withdraw'),
-                }
-                ,
+                },
                 {
                     path: "/withdrawX",
                     name: "withdrawX",
                     component: () =>
                         import ('@/views/afterLoggin/financialDetails/withdrawX'),
+                },
+                {
+                    path: "/CardManagement",
+                    name: "CardManagement",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/CardManagement'),
+                },
+                {
+                    path: "/discountCoupon",
+                    name: "discountCoupon",
+                    component: () =>
+                        import ('@/views/afterLoggin/financialDetails/discountCoupon'),
                 }
             ]
         },

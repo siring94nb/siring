@@ -10,8 +10,10 @@
           @open="handleOpen"
           @close="handleClose"
           background-color="rgba(201,0,0)"
+          active-background-color="#000000"
           text-color="#fff"
-          :default-openeds="['0','1','2','3','4','5','6','7']"
+          :default-openeds="['0']"
+           active-text-color="#ffd04b"
           router
         >
           <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
@@ -70,8 +72,8 @@ export default {
             { name: "资金明细", rou: "/financialDetailsI" },
             { name: "充值", rou: "/recharge" },
             { name: "提现", rou: "/withdraw" },
-            { name: "银行卡管理", rou: "/ceshi" },
-            { name: "优惠券", rou: "/ceshi" }
+            { name: "银行卡管理", rou: "/CardManagement" },
+            { name: "优惠券", rou: "/discountCoupon" }
           ]
         },
         {

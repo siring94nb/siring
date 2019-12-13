@@ -74,7 +74,6 @@
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
                   <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
@@ -106,7 +105,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi">全选</el-checkbox>
+                    <el-checkbox v-model="checked">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -165,7 +164,6 @@
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
                   <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
@@ -197,7 +195,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi">全选</el-checkbox>
+                    <el-checkbox v-model="checked">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -236,7 +234,6 @@
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
                   <el-table-column prop="date" label="城市选择" width="120" align="center"></el-table-column>
                   <el-table-column prop="InviterAccount" label="金额" width="120" align="center"></el-table-column>
@@ -266,6 +263,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {GetRoleCenter} from "@/api/api";
 export default {
   data() {
     return {
@@ -375,6 +373,9 @@ export default {
   components: {
     logginHeader
   },
+  mounted(){
+    this.RoleCenter();
+  },
   methods: {
     handleEdit(index, row) {
       console.log(index, row);
@@ -388,9 +389,26 @@ export default {
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    ceshi(val) {
-      // console.log(1213123);
-      console.log(val);
+    // 获取城市数据
+    RoleCenter() {
+      const params = {
+        type:1
+      };
+      GetRoleCenter(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        console.log(123);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
+    },
+    // 返回
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
     }
   },
   watch: {

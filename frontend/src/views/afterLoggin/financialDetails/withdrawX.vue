@@ -63,7 +63,7 @@
             <span>短信验证码：</span>
           </span>
           <input type="text" placeholder="请输入手机验证码" />
-          <input type="button" value="获取验证码" />
+          <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click.stop="getPhoneCode" />
         </div>
         <div>
           <button>确认</button>
@@ -98,11 +98,15 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {GetCode} from "@/api/api";
 export default {
   data() {
     return {
       phone: sessionStorage.getItem("phone"),
       selectItem: "",
+      showTime:false,//控制获取验证码时，按钮禁用
+      validateTime: 60,//倒计时初始时间
+      yanzhengma:"",//获取验证码
       items: [
         { id: 1, name: "卡一：1234567897897897" },
         { id: 2, name: "卡二：1231231231231231" },
@@ -120,7 +124,43 @@ export default {
       console.log(e);
       console.log(e.target.selectedIndex); // 选择项的index索引
       console.log(e.target.value); // 选择项的value
-    }
+    },
+    // 获取验证码
+    getPhoneCode() {
+       let params = {
+        phone: this.phone
+      };
+      GetCode(params).then(res => {
+          let { data, msg, code } = res;
+          this.showMsg(msg, code);
+          if (code === 1) {
+            this.showTime = true;
+            this.countDown();
+          }
+        });
+      // console.log(this.phone);
+    },
+    // 验证码倒计时
+    countDown() {
+      let time = 60;
+      let timer = setInterval(() => {
+        if (time <= 0) {
+          time = 0;
+          this.showTime = false;
+          clearInterval(timer);
+        } else {
+          time -= 1;
+          this.validateTime = time;
+        }
+      }, 1000);
+    },
+     // 返回值
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },card
   }
 };
 </script>
@@ -205,6 +245,7 @@ export default {
           padding: 10px 5px;
           width: 270px;
           margin-bottom: 10px;
+          outline: none;
         }
       }
     }

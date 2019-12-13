@@ -97,7 +97,7 @@
             </div>
             <div class="btnList">
               <button>返回</button>
-              <button>确定</button>
+              <button @click.stop="onPaymentCode">确定</button>
             </div>
           </div>
         </el-tab-pane>
@@ -111,7 +111,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetCode,ForgetPwd,paymentCode} from "@/api/api";
+import {GetCode,ForgetPwd,paymentCode,UpdPhone} from "@/api/api";
 export default {
   data() {
     return {
@@ -149,7 +149,7 @@ export default {
       const params = {
         phone: this.phone,
         password: this.mewPass,
-        password_confirm: this.mewPass,
+        password_confirm: this.mewPass1,
         code: this.yanzhengma
       };
       ForgetPwd(params).then(res => {
@@ -166,10 +166,26 @@ export default {
       const params = {
         phone: this.phone,
         password: this.mewPass,
-        password_confirm: this.mewPass,
         code: this.yanzhengma
       };
       paymentCode(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        // console.log(res);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
+    },
+    // 更改绑定手机号
+    onUpdPhone() {
+      const params = {
+        user_id:sessionStorage.getItem("user_id"),
+        phone: this.phone,
+        password: this.mewPass,
+        code: this.yanzhengma
+      };
+      UpdPhone(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         // console.log(res);
