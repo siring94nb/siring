@@ -174,6 +174,7 @@ Route::group('api', function () {
         Route::any('subcontract_partner','api/RoleCenter/subcontract_partner'); //分包商列表
         Route::any('subcontract_total','api/RoleCenter/subcontract_total'); //分包商统计
         Route::any('sub_view','api/RoleCenter/sub_view'); //分包项目视窗
+        Route::any('receipt','api/RoleCenter/receipt'); //接单
     });
 
 
