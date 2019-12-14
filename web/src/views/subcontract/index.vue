@@ -65,6 +65,7 @@
         <Icon type="md-information-circle"></Icon>
         <span>{{formItem.id ? '编辑' : '新增'}}</span>
       </p>
+
       <Form
         ref="myForm"
         :rules="ruleValidate"
@@ -72,6 +73,9 @@
         :label-width="120"
         style="z-index:9999;"
       >
+        <FormItem label="项目名称" prop="name" >
+          <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入项目名称"/>
+        </FormItem>
         <FormItem
           :label="index > 0 ?'': '分包技能和酬金'"
           v-for=" (item, index) in formItem.skills"
@@ -154,6 +158,7 @@ const editButton = (vm, h, currentRow, index) => {
       on: {
         click: () => {
           vm.formItem.id = currentRow.id;
+          vm.formItem.name = currentRow.name;
           vm.formItem.skills = currentRow.skills;
           //vm.formItem.num = currentRow.num;
           vm.formItem.type = currentRow.type;
@@ -232,33 +237,18 @@ export default {
         {
           title: "项目名称",
           align: "center",
-          key: "num"
+          key: "name"
         },
         {
-          title: "分包技能",
+          title: "分包语言/酬金",
           align: "center",
-          key: "available"
+          key: "dev_name"
         },
-        {
-          title: "分包开发语言",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "酬金",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "指定人账号",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "项目功能描述",
-          align: "center",
-          key: "available"
-        },
+        // {
+        //   title: "项目功能描述",
+        //   align: "center",
+        //   key: "con"
+        // },
         {
           title: "发布状态",
           align: "center",
@@ -271,6 +261,11 @@ export default {
             }
           }
         },
+          {
+              title: "发布时间",
+              align: "center",
+              key: "created_at"
+          },
         {
           title: "操作",
           align: "center",
@@ -307,7 +302,7 @@ export default {
         type: 0
       },
       ruleValidate: {
-        // name: [{ required: true, message: "请输入名称", trigger: "blur" }]
+        name: [{ required: true, message: "请输入名称", trigger: "blur" }]
         // add_time: [
         //     { required: true, message: '请选择开始时间', trigger: 'blur' }
         // ],
@@ -373,6 +368,7 @@ export default {
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
+      this.formItem.name = '';
       this.formItem.skills = [
         {
           major: this.formItem.skills[0].major,

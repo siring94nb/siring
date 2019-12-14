@@ -10,6 +10,12 @@ use think\Request;
 use think\Db;
 use think\Validate;
 
+/**
+ * 分包项目
+ * @author fyk
+ * Class Subcontract
+ * @package app\admin\controller
+ */
 class Subcontract extends Base
 {
 
@@ -37,16 +43,34 @@ class Subcontract extends Base
             $param['size'] = 10;
         }
 
-        $field = '*';
+        $field = 'id,name,dev,con,type,created_at';
         $order = 'id asc';
 
-        $count = Db::table('subcontract')->where($where)->count();
-        $list = Db::table('subcontract')->where($where)->field($field)->order($order)->page($param['page'], $param['size'])->select();
+        $list = (new \app\data\model\Subcontract()) -> field( $field ) -> where( $where ) -> order( $order )
+            -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
-        return $this->buildSuccess([
-            'count' => $count,
-            'list' => $list,
-        ]);
+        foreach ($list['data'] as $k=>$v){
+            //查询技能
+            $stocks= json_decode( $v['dev'] , true );
+
+            if(!empty($stocks)){
+                $name = [];//外层循环为空
+                foreach ($stocks as $key => $val){
+                    $name[] = implode("-", $val);
+                }
+                $res = join('/',$name);
+                $list['data'][$k]['dev_name'] = $res;
+            }else{
+                $list['data'][$k]['dev_name'] = "无";
+            }
+        }
+       // pp($list);die;
+
+        return $this -> buildSuccess( array(
+            'list' => $list['data'],
+            'count' => $list['total'],
+        ) );
+
     }
 
     /**
@@ -56,24 +80,23 @@ class Subcontract extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        pp($param);die;
+        //pp($param);die;
         $validate = new Validate([
-            ['pid', 'require', '省份id不能为空'],
-            ['name', 'require', '城市名称不能为空'],
-            ['type', 'require', '城市级别不能为空'],
+            ['skills', 'require', '技能和酬金不能为空'],
+            ['con', 'require', '项目需求不能为空'],
+            ['type', 'require', '类型不能为空'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
 
-
         Db::startTrans();
         try {
             $param['created_at'] = time();
-            $param['rule'] = json_encode($param['rule']);
-            unset($param['full']);
-            unset($param['reduce']);
-            Db::table('subcontract')->insert($param);
+            $param['dev'] = json_encode($param['skills']);
+
+            (new \app\data\model\Subcontract())->allowField(true)->save($param);
+
             Db::commit();
             return $this->buildSuccess([]);
         } catch (\Exception $e) {
@@ -95,9 +118,10 @@ class Subcontract extends Base
         $param = $request->param();
         pp($param);die;
         $validate = new Validate([
-            ['pid', 'require', '省份id不能为空'],
-            ['name', 'require', '城市名称不能为空'],
-            ['type', 'require', '城市级别不能为空'],
+            ['id', 'require', 'id不能为空'],
+            ['skills', 'require', '技能和酬金不能为空'],
+            ['con', 'require', '项目需求不能为空'],
+            ['type', 'require', '类型不能为空'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
@@ -108,9 +132,8 @@ class Subcontract extends Base
         try {
             $param['updated_at'] = time();
             $param['rule'] = json_encode($param['rule']);
-            unset($param['full']);
-            unset($param['reduce']);
-            Db::table('subcontract')->update($param);
+
+            (new \app\data\model\Subcontract())->allowField(true)->save($param,['id' => $param['id']]);
             Db::commit();
             return $this->buildSuccess([]);
         } catch (\Exception $e) {
