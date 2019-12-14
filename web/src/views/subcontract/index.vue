@@ -157,9 +157,15 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
+          console.log(currentRow)
           vm.formItem.id = currentRow.id;
           vm.formItem.name = currentRow.name;
-          vm.formItem.skills = currentRow.skills;
+          vm.formItem.skills = currentRow.dev;
+          vm.formItem.skills = JSON.parse(vm.formItem.skills);
+          for(let i = 0; i<vm.formItem.skills.length;i ++) {
+            vm.formItem.skills[i].major = Number(vm.formItem.skills[i].major)
+          }
+          console.log(vm.formItem.skills)
           //vm.formItem.num = currentRow.num;
           vm.formItem.type = currentRow.type;
           vm.formItem.con = currentRow.con;
