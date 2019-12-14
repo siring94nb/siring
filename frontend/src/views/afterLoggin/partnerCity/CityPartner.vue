@@ -263,7 +263,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter} from "@/api/api";
+import {GetRoleCenter,CityTotal} from "@/api/api";
 export default {
   data() {
     return {
@@ -375,6 +375,7 @@ export default {
   },
   mounted(){
     this.RoleCenter();
+    this.GetCityTotal();
   },
   methods: {
     handleEdit(index, row) {
@@ -391,13 +392,24 @@ export default {
     },
     // 获取城市数据
     RoleCenter() {
-      const params = {
-        type:1
-      };
-      GetRoleCenter(params).then(res => {
+      // const params = {
+      //   type:1
+      // };
+      GetRoleCenter({type:1}).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         console.log(123);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
+    },
+    //获取城市合伙人数据
+    GetCityTotal() {
+      CityTotal().then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        console.log(res);
         if (code === 1) {
           this.handleClose();
         }

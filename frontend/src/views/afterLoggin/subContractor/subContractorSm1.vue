@@ -139,10 +139,10 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
+                   @selection-change="ceshi1"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                  @select="ceshi"
                 >
-                  <el-table-column type="selection" width="40" align="center"></el-table-column>
+                  <el-table-column type="selection" width="40" align="center"  @selection-change="ceshi1"></el-table-column>
                   <el-table-column prop="date" label="项目订单编号" width="130" align="center"></el-table-column>
                   <el-table-column prop="InviterAccount" label="订单名称" width="130" align="center"></el-table-column>
                   <el-table-column prop="InviterInvitationCode" label="承接时间" width="170" align="center"></el-table-column>
@@ -163,7 +163,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi">全选</el-checkbox>
+                    <el-checkbox v-model="checked" @change="ceshi()">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -192,8 +192,7 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
-                  @select="ceshi"
-                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
+                  :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column prop="date" label="申请专业技能" width="200" align="center"></el-table-column>
                   <el-table-column prop="InviterAccount" label="技能语言" width="220" align="center"></el-table-column>
@@ -212,10 +211,12 @@
         </el-tabs>
       </div>
     </div>
+    <div class="aba"></div>
   </div>
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {GetRoleCenter} from "@/api/api";
 export default {
   data() {
     return {
@@ -332,9 +333,41 @@ export default {
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    ceshi(val) {
-      // console.log(1213123);
-      console.log(val);
+    // 测试
+    ceshi1(){
+      // console.log(4121)
+      let arr = document.getElementsByClassName("el-checkbox");
+      let arr1 = document.getElementsByClassName("el-checkbox__input");
+      if(arr[0].classList.length !== 1){
+        arr[4].classList.add("is-checked")
+        arr1[4].classList.add("is-checked")
+      }else{
+        arr[4].classList.remove("is-checked")
+        arr1[4].classList.remove("is-checked")
+      }
+    },
+    ceshi(){
+      let arr = document.getElementsByClassName("el-checkbox");
+      let arr1 = document.getElementsByClassName("el-checkbox__input");
+      if(arr[4].classList .length ===1){
+        
+      }else{
+        arr[0].classList.remove("is-checked")
+        arr1[0].classList.remove("is-checked")
+      }
+    },
+    // 获取分包商数据
+    RoleCenter() {
+      const params = {
+        type:1
+      };
+      GetRoleCenter(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
     },
     // 控制我要联系显示隐藏
     ShowHidden(){
@@ -394,8 +427,6 @@ export default {
           spanArr[1].classList.remove("active");
           spanArr[0].classList.remove("active");
       }
-      // console.log(document.getElementsByClassName("ac")[0]);
-      // document.getElementsByClassName("ac")[0].classList.add("active")
     }
 
   },

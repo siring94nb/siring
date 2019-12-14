@@ -11,7 +11,7 @@
         <span>*</span>
         <span>用户绑定手机号：</span>
         <span>{{userMessage1.phone}}</span>
-        <button class="btnChaneg">修改绑定手机号</button>
+        <button class="btnChaneg"><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}" style="color:#ffffff">修改绑定手机号</router-link></button>
       </div>
       <div>
         <span class="xg" style="margin-right:25px">我的邀请码：</span>
