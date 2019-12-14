@@ -73,8 +73,8 @@
         :label-width="120"
         style="z-index:9999;"
       >
-        <FormItem label="项目名称" prop="name" >
-          <Input  style="width: 500px" v-model="formItem.name" placeholder="请输入项目名称"/>
+        <FormItem label="项目名称" prop="name">
+          <Input style="width: 500px" v-model="formItem.name" placeholder="请输入项目名称" />
         </FormItem>
         <FormItem
           :label="index > 0 ?'': '分包技能和酬金'"
@@ -157,15 +157,8 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          console.log(currentRow)
           vm.formItem.id = currentRow.id;
           vm.formItem.name = currentRow.name;
-          vm.formItem.skills = currentRow.dev;
-          vm.formItem.skills = JSON.parse(vm.formItem.skills);
-          for(let i = 0; i<vm.formItem.skills.length;i ++) {
-            vm.formItem.skills[i].major = Number(vm.formItem.skills[i].major)
-          }
-          console.log(vm.formItem.skills)
           //vm.formItem.num = currentRow.num;
           vm.formItem.type = currentRow.type;
           vm.formItem.con = currentRow.con;
@@ -173,6 +166,18 @@ const editButton = (vm, h, currentRow, index) => {
           vm.html = vm.formItem.con;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
+          // let a = JSON.parse(JSON.stringify(currentRow.skills));
+          delete vm.formItem.skills;
+          vm.formItem.skills = JSON.parse(JSON.stringify(currentRow.skills));
+          vm.formItem.skills = vm.formItem.skills.map((item, index, input) => {
+            item.major = Number(item.major);
+            vm.skillsList.map((items, indexs, inputs) => {
+              if (item.major == items.id) {
+                vm.selIndex = indexs;
+              }
+            });
+            return item;
+          });
         }
       }
     },
@@ -267,11 +272,11 @@ export default {
             }
           }
         },
-          {
-              title: "发布时间",
-              align: "center",
-              key: "created_at"
-          },
+        {
+          title: "发布时间",
+          align: "center",
+          key: "created_at"
+        },
         {
           title: "操作",
           align: "center",
@@ -374,7 +379,7 @@ export default {
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.name = '';
+      this.formItem.name = "";
       this.formItem.skills = [
         {
           major: this.formItem.skills[0].major,
@@ -383,7 +388,8 @@ export default {
         }
       ];
       this.formItem.con = "";
-      this.formItem.type = "";
+      this.formItem.type = 0;
+      this.editor.txt.html(this.formItem.con);
     },
     doCancel(data) {
       if (!data) {
@@ -453,10 +459,13 @@ export default {
         language: this.formItem.skills[0].language,
         money: ""
       });
+      this.$forceUpdate();
     },
     //删除分包技能和酬金
     delSkills(index) {
-      this.formItem.skills.splice(this.formItem.skills.indexOf(index), 1);
+      let vm = this;
+      vm.formItem.skills.splice(vm.formItem.skills.indexOf(index), 1);
+      this.$forceUpdate();
     },
     selChange(event, index) {
       for (let i = 0; i < this.skillsList.length; i++) {
