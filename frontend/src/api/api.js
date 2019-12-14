@@ -100,6 +100,18 @@ export const CityTotal = params => {
     return axios.get(`${base_url}api/RoleCenter/city_total`, { params: params });
 }
 /*
+*控制台-角色中心-城市合伙人列表
+*/
+export const CityPartner = params => {
+    return axios.post(`${base_url}api/RoleCenter/city_partner`, { params: params });
+}
+/*
+*控制台-角色中心-等级会员（会员总数，佣金总数）
+*/
+export const MemberTotal = params => {
+    return axios.get(`${base_url}api/RoleCenter/member_total`, { params: params });
+}
+/*
 *用户分享邀请码
 */
 export const GetInvitationCode = params => {

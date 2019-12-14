@@ -63,7 +63,13 @@
           <el-input v-model="input2" placeholder="请输入支行名" style="width:300px"></el-input>
         </div>
         <div>
-          <el-button type="danger" style="width:320px;">确定</el-button>
+          <el-input @keydown.enter.stop="ceshi"></el-input>
+          <el-button
+            type="danger"
+            style="width:320px;"
+            @click.stop="addBank"
+            @keyup.enter="ceshi"
+          >确定</el-button>
         </div>
       </div>
     </div>
@@ -158,25 +164,59 @@ export default {
       }
     },
     // 删除，后继加接口，目前暂时将样式删除
-    deleteList(num){ 
+    deleteList(num) {
       // this.cardImage.splice(num,1);
       // console.log(this.cardImage);
-      this.$confirm('此操作将永久删除该银行卡, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.cardImage.splice(num,1);
+      this.$confirm("此操作将永久删除该银行卡, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(() => {
+          this.cardImage.splice(num, 1);
           this.$message({
-            type: 'success',
-            message: '删除成功!'
+            type: "success",
+            message: "删除成功!"
           });
-        }).catch(() => {
+        })
+        .catch(() => {
           this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
+            type: "info",
+            message: "已取消删除"
+          });
         });
+    },
+    // 添加银行卡
+    addBank() {
+      // 这样子获取，目前写死固定，刷新就消失，之后连接口在修改
+      let obj = {
+        name: this.input,
+        bank: this.input2,
+        cardId: this.input1
+      };
+      this.cardImage.push(obj);
+      this.$message({
+        message: "添加银行卡成功",
+        type: "success"
+      });
+      this.dk();
+      // 点击事件和回车事件使用同一个方法，判断
+    },
+    // 回车键测试
+    ceshi() {
+      console.log(12123153131);
+    }
+  },
+  created(){
+    // 键盘事件直接绑定到document中，否则，需要光标选中控件才能触发键盘事件
+    document.onkeydown = function(e){
+      // 处理键盘事件兼容性
+      var key = window.event.keyCode ? window.event.keyCode:window.event.which
+      console.log(key)
+      // e.altKey判断alt是否处于按下状态
+      console.log(e.altKey)
+      // 阻止默认事件 ，此处不能随意使用，若使用，则键盘全部默认事件都无法使用
+      // e.preventDefault()
     }
   }
 };

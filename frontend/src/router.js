@@ -211,12 +211,10 @@ export default new Router({
                         import ('@/views/afterLoggin/demand_order/demand_order'),
                 },
                 {
-<<<<<<< HEAD
                     path: "/order_derail",
                     name: "order_derail",
                     component: () =>
                         import ('@/views/afterLoggin/demand_order/order_derail'),
-=======
                     path: "/subContractorIndex",
                     name: "subContractorIndex",
                     component: () =>
@@ -263,7 +261,6 @@ export default new Router({
                     name: "discountCoupon",
                     component: () =>
                         import ('@/views/afterLoggin/financialDetails/discountCoupon'),
->>>>>>> 4c43974c1f4efa6e5e854ebbdec0b0d56376265a
                 }
             ]
         },
