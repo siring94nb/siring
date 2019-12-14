@@ -117,7 +117,7 @@ class Subcontract extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        pp($param);die;
+        //pp($param);die;
         $validate = new Validate([
             ['id', 'require', 'id不能为空'],
             ['skills', 'require', '技能和酬金不能为空'],
@@ -131,8 +131,7 @@ class Subcontract extends Base
 
         Db::startTrans();
         try {
-            $param['updated_at'] = time();
-            $param['rule'] = json_encode($param['rule']);
+            $param['dev'] = json_encode($param['skills']);
 
             (new \app\data\model\Subcontract())->allowField(true)->save($param,['id' => $param['id']]);
             Db::commit();

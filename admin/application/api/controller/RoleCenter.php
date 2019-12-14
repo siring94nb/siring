@@ -9,7 +9,8 @@ use think\Controller;
 use think\Request;
 use app\data\model\User;
 use think\Session;
-
+use think\Validate;
+use think\Db;
 class RoleCenter extends Controller
 {
 
@@ -252,17 +253,30 @@ class RoleCenter extends Controller
      */
     public function sub_view()
     {
-
+        $request = Request::instance();
+        $param = $request->param();
         $uid = Session::get("uid");
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
             if($user_data['is_city'] === 2){
                 returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
             }
-            $join_order = (new Subcontract()) ->where('type',0) ->select()->toArray();
-            foreach ($join_order as $k =>$v){
+            if (empty($param['page'])) {
+                $param['page'] = 1;
+            }
+            if (empty($param['size'])) {
+                $param['size'] = 1;
+            }
+
+            $field = 'id,name,dev,con,type,created_at';
+            $order = 'id desc';
+
+            $join_order = (new \app\data\model\Subcontract()) -> field( $field ) -> where( ['type'=>0,'status'=>0 ]) -> order( $order )
+                -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+
+            foreach ($join_order['data'] as $k =>$v){
                 $jurl = htmlspecialchars_decode($v['con']);
-                $join_order[$k]['con'] = $jurl;
+                $join_order['data'][$k]['con'] = $jurl;
             }
 
             return $join_order ? returnJson(1,'获取成功',$join_order) : returnJson(0,'获取失败',$join_order);
@@ -271,6 +285,51 @@ class RoleCenter extends Controller
             returnJson(0,'请登录');
         }
 
+    }
+
+    /**
+     * 接单
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function receipt()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        //pp($param);die;
+        $uid = Session::get("uid");
+        if($uid){
+            $validate = new Validate([
+                ['xid', 'require', '项目id不能为空'],
+                ['phone', 'require', '类型不能为空'],
+            ]);
+            if(!$validate->check($param)){
+                returnJson (0,$validate->getError());exit();
+            }
+            $sub = Subcontract::where('id',$param['xid'])->find();
+            if($sub['status'] == 1){
+                returnJson(0,'该项目已被接，请看看其他单');exit();
+            }
+            $count = Subcontract::where('phone',$param['phone'])->count();
+            if($count > 1){
+                returnJson(0,'每人只能项目中只能接两单哦！');exit();
+            }
+            Db::startTrans();
+            try {
+                $param['status'] = 1;
+
+                (new Subcontract())->allowField(true)->save($param,['id'=>$param['xid']]);
+
+                Db::commit();
+                return returnJson(1,'接单成功');exit();
+            } catch (\Exception $e) {
+                Db::rollback();
+                return returnJson(0,'接单失败');exit();
+            }
+        }else{
+            returnJson(0,'请登录');
+        }
     }
 
 
