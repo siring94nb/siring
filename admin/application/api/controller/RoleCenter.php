@@ -252,17 +252,30 @@ class RoleCenter extends Controller
      */
     public function sub_view()
     {
-
+        $request = Request::instance();
+        $param = $request->param();
         $uid = Session::get("uid");
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
             if($user_data['is_city'] === 2){
                 returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
             }
-            $join_order = (new Subcontract()) ->where('type',0) ->select()->toArray();
-            foreach ($join_order as $k =>$v){
+            if (empty($param['page'])) {
+                $param['page'] = 1;
+            }
+            if (empty($param['size'])) {
+                $param['size'] = 1;
+            }
+
+            $field = 'id,name,dev,con,type,created_at';
+            $order = 'id desc';
+
+            $join_order = (new \app\data\model\Subcontract()) -> field( $field ) -> where( 'type',0 ) -> order( $order )
+                -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+
+            foreach ($join_order['data'] as $k =>$v){
                 $jurl = htmlspecialchars_decode($v['con']);
-                $join_order[$k]['con'] = $jurl;
+                $join_order['data'][$k]['con'] = $jurl;
             }
 
             return $join_order ? returnJson(1,'获取成功',$join_order) : returnJson(0,'获取失败',$join_order);
