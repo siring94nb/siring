@@ -22,250 +22,249 @@ if (userid) {
 
 export default new Router({
     routes: [{
-            path: '/',
-            name: 'home',
-            component: () =>
-                import ('@/views/Home'),
-            redirect: 'index'
-        },
-        {
-            path: '/index',
-            name: 'index',
-            component: () =>
-                import ('@/views/index')
-        },
-        {
-            path: '/city',
-            name: 'city',
-            component: () =>
-                import ('@/views/join/city')
-        },
-        {
-            path: '/member',
-            name: 'member',
-            component: () =>
-                import ('@/views/join/member')
-        },
-        {
-            path: '/contractor',
-            name: 'contractor',
-            component: () =>
-                import ('@/views/join/contractor')
-        },
-        {
-            path: '/quickValuation',
-            name: 'quickValuation',
-            component: () =>
-                import ('@/views/tailorMade/quickValuation')
-        },
-        {
-            path: '/selectFunction',
-            name: 'selectFunction',
-            component: () =>
-                import ('@/views/tailorMade/selectFunction')
-        },
-        {
-            path: '/fillDemand',
-            name: 'fillDemand',
-            component: () =>
-                import ('@/views/tailorDemand/fillDemand')
+        path: '/',
+        name: 'home',
+        component: () =>
+            import('@/views/Home'),
+        redirect: 'index'
+    },
+    {
+        path: '/index',
+        name: 'index',
+        component: () =>
+            import('@/views/index')
+    },
+    {
+        path: '/city',
+        name: 'city',
+        component: () =>
+            import('@/views/join/city')
+    },
+    {
+        path: '/member',
+        name: 'member',
+        component: () =>
+            import('@/views/join/member')
+    },
+    {
+        path: '/contractor',
+        name: 'contractor',
+        component: () =>
+            import('@/views/join/contractor')
+    },
+    {
+        path: '/quickValuation',
+        name: 'quickValuation',
+        component: () =>
+            import('@/views/tailorMade/quickValuation')
+    },
+    {
+        path: '/selectFunction',
+        name: 'selectFunction',
+        component: () =>
+            import('@/views/tailorMade/selectFunction')
+    },
+    {
+        path: '/fillDemand',
+        name: 'fillDemand',
+        component: () =>
+            import('@/views/tailorDemand/fillDemand')
 
+    },
+    {
+        path: '/goods',
+        name: 'goods',
+        component: () =>
+            import('@/views/goods/goods')
+    },
+    {
+        path: '/goods-detail/:id',
+        name: 'goods-detail',
+        component: () =>
+            import('@/views/goods/goods-detail')
+    },
+    {
+        path: '/demonstration/:id',
+        name: 'demonstration',
+        component: () =>
+            import('@/views/goods/demonstration')
+    },
+    {
+        path: '/ai-promotion',
+        name: 'ai-promotion',
+        component: () =>
+            import('@/views/ai/ai-promotion')
+    },
+    {
+        path: '/investment',
+        name: 'investment',
+        component: () =>
+            import('@/views/investment/index')
+    },
+    {
+        path: '/aboutUs',
+        name: 'aboutUs',
+        component: () =>
+            import('@/views/aboutUs')
+    },
+    {
+        path: '/programSaaS',
+        name: 'programSaaS',
+        component: () =>
+            import('@/views/programSaaS/index')
+    },
+    {
+        path: '/selectCombo',
+        name: 'selectCombo',
+        component: () =>
+            import('@/views/programSaaS/selectCombo')
+    },
+    {
+        path: '/comboPay',
+        name: 'comboPay',
+        component: () =>
+            import('@/views/programSaaS/comboPay')
+    },
+    //登录后的路由
+    {
+        path: '/afterLoggin',
+        name: 'afterLoggin',
+        component: () =>
+            import('@/views/afterLoggin/afterLoggin'),
+        // import ('@/components/dingDan')
+        children: [{
+            path: "/afterLogginR",
+            name: "afterLogginR",
+            component: () =>
+                import('@/views/afterLoggin/afterLogginR'),
         },
         {
-            path: '/goods',
-            name: 'goods',
+            path: "/memberInformation",
+            name: "memberInformation",
             component: () =>
-                import ('@/views/goods/goods')
+                import('@/views/afterLoggin/memberInformation'),
         },
         {
-            path: '/goods-detail/:id',
-            name: 'goods-detail',
+            path: "/ceshi",
+            name: "ceshi",
             component: () =>
-                import ('@/views/goods/goods-detail')
+                import('@/views/afterLoggin/ceshi'),
         },
         {
-            path: '/demonstration/:id',
-            name: 'demonstration',
+            path: "/addEnterprise",
+            name: "addEnterprise",
             component: () =>
-                import ('@/views/goods/demonstration')
+                import('@/views/afterLoggin/addEnterprise'),
         },
         {
-            path: '/ai-promotion',
-            name: 'ai-promotion',
+            path: "/enterpriseList",
+            name: "enterpriseList",
             component: () =>
-                import ('@/views/ai/ai-promotion')
+                import('@/views/afterLoggin/enterpriseList'),
         },
         {
-            path: '/investment',
-            name: 'investment',
+            path: "/securityCenterIndex",
+            name: "securityCenterIndex",
             component: () =>
-                import ('@/views/investment/index')
+                import('@/views/afterLoggin/securityCenter/securityCenterIndex'),
         },
         {
-            path: '/aboutUs',
-            name: 'aboutUs',
+            path: "/safetyTabControl",
+            name: "safetyTabControl",
             component: () =>
-                import ('@/views/aboutUs')
+                import('@/views/afterLoggin/securityCenter/safetyTabControl'),
         },
         {
-            path: '/programSaaS',
-            name: 'programSaaS',
+            path: "/invitationX",
+            name: "invitationX",
             component: () =>
-                import ('@/views/programSaaS/index')
+                import('@/views/afterLoggin/securityCenter/invitationX'),
         },
         {
-            path: '/selectCombo',
-            name: 'selectCombo',
+            path: "/partnerCityX",
+            name: "partnerCityX",
             component: () =>
-                import ('@/views/programSaaS/selectCombo')
+                import('@/views/afterLoggin/partnerCity/partnerCityX'),
         },
         {
-            path: '/comboPay',
-            name: 'comboPay',
+            path: "/CityPartner",
+            name: "CityPartner",
             component: () =>
-                import ('@/views/programSaaS/comboPay')
+                import('@/views/afterLoggin/partnerCity/CityPartner'),
         },
-        //登录后的路由
         {
-            path: '/afterLoggin',
-            name: 'afterLoggin',
+            path: "/ClassMembersX",
+            name: "ClassMembersX",
             component: () =>
-                import ('@/views/afterLoggin/afterLoggin'),
-            // import ('@/components/dingDan')
-            children: [{
-                    path: "/afterLogginR",
-                    name: "afterLogginR",
-                    component: () =>
-                        import ('@/views/afterLoggin/afterLogginR'),
-                },
-                {
-                    path: "/memberInformation",
-                    name: "memberInformation",
-                    component: () =>
-                        import ('@/views/afterLoggin/memberInformation'),
-                },
-                {
-                    path: "/ceshi",
-                    name: "ceshi",
-                    component: () =>
-                        import ('@/views/afterLoggin/ceshi'),
-                },
-                {
-                    path: "/addEnterprise",
-                    name: "addEnterprise",
-                    component: () =>
-                        import ('@/views/afterLoggin/addEnterprise'),
-                },
-                {
-                    path: "/enterpriseList",
-                    name: "enterpriseList",
-                    component: () =>
-                        import ('@/views/afterLoggin/enterpriseList'),
-                },
-                {
-                    path: "/securityCenterIndex",
-                    name: "securityCenterIndex",
-                    component: () =>
-                        import ('@/views/afterLoggin/securityCenter/securityCenterIndex'),
-                },
-                {
-                    path: "/safetyTabControl",
-                    name: "safetyTabControl",
-                    component: () =>
-                        import ('@/views/afterLoggin/securityCenter/safetyTabControl'),
-                },
-                {
-                    path: "/invitationX",
-                    name: "invitationX",
-                    component: () =>
-                        import ('@/views/afterLoggin/securityCenter/invitationX'),
-                },
-                {
-                    path: "/partnerCityX",
-                    name: "partnerCityX",
-                    component: () =>
-                        import ('@/views/afterLoggin/partnerCity/partnerCityX'),
-                },
-                {
-                    path: "/CityPartner",
-                    name: "CityPartner",
-                    component: () =>
-                        import ('@/views/afterLoggin/partnerCity/CityPartner'),
-                },
-                {
-                    path: "/ClassMembersX",
-                    name: "ClassMembersX",
-                    component: () =>
-                        import ('@/views/afterLoggin/ClassMembers/ClassMembersX'),
-                },
-                {
-                    path: "/ClassMembersA",
-                    name: "ClassMembersA",
-                    component: () =>
-                        import ('@/views/afterLoggin/ClassMembers/ClassMembersA'),
-                },
-                {
-                    path: "/demand_order",
-                    name: "demand_order",
-                    component: () =>
-                        import ('@/views/afterLoggin/demand_order/demand_order'),
-                },
-                {
-<<<<<<< HEAD
-                    path: "/order_derail",
-                    name: "order_derail",
-                    component: () =>
-                        import ('@/views/afterLoggin/demand_order/order_derail'),
-=======
-                    path: "/subContractorIndex",
-                    name: "subContractorIndex",
-                    component: () =>
-                        import ('@/views/afterLoggin/subContractor/subContractorIndex'),
-                },
-                {
-                    path: "/subContractorSm1",
-                    name: "subContractorSm1",
-                    component: () =>
-                        import ('@/views/afterLoggin/subContractor/subContractorSm1'),
-                },
-                {
-                    path: "/financialDetailsI",
-                    name: "financialDetailsI",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/financialDetailsI'),
-                },
-                {
-                    path: "/recharge",
-                    name: "recharge",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/recharge'),
-                },
-                {
-                    path: "/withdraw",
-                    name: "withdraw",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/withdraw'),
-                },
-                {
-                    path: "/withdrawX",
-                    name: "withdrawX",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/withdrawX'),
-                },
-                {
-                    path: "/CardManagement",
-                    name: "CardManagement",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/CardManagement'),
-                },
-                {
-                    path: "/discountCoupon",
-                    name: "discountCoupon",
-                    component: () =>
-                        import ('@/views/afterLoggin/financialDetails/discountCoupon'),
->>>>>>> 4c43974c1f4efa6e5e854ebbdec0b0d56376265a
-                }
-            ]
+                import('@/views/afterLoggin/ClassMembers/ClassMembersX'),
         },
+        {
+            path: "/ClassMembersA",
+            name: "ClassMembersA",
+            component: () =>
+                import('@/views/afterLoggin/ClassMembers/ClassMembersA'),
+        },
+        {
+            path: "/demand_order",
+            name: "demand_order",
+            component: () =>
+                import('@/views/afterLoggin/demand_order/demand_order'),
+        },
+        {
+            path: "/order_derail",
+            name: "order_derail",
+            component: () =>
+                import('@/views/afterLoggin/demand_order/order_derail'),
+        },
+        {
+            path: "/subContractorIndex",
+            name: "subContractorIndex",
+            component: () =>
+                import('@/views/afterLoggin/subContractor/subContractorIndex'),
+        },
+        {
+            path: "/subContractorSm1",
+            name: "subContractorSm1",
+            component: () =>
+                import('@/views/afterLoggin/subContractor/subContractorSm1'),
+        },
+        {
+            path: "/financialDetailsI",
+            name: "financialDetailsI",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/financialDetailsI'),
+        },
+        {
+            path: "/recharge",
+            name: "recharge",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/recharge'),
+        },
+        {
+            path: "/withdraw",
+            name: "withdraw",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/withdraw'),
+        },
+        {
+            path: "/withdrawX",
+            name: "withdrawX",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/withdrawX'),
+        },
+        {
+            path: "/CardManagement",
+            name: "CardManagement",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/CardManagement'),
+        },
+        {
+            path: "/discountCoupon",
+            name: "discountCoupon",
+            component: () =>
+                import('@/views/afterLoggin/financialDetails/discountCoupon'),
+        }
+        ]
+    },
     ]
 })
