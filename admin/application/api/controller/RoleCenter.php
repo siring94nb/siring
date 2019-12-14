@@ -318,7 +318,7 @@ class RoleCenter extends Controller
             Db::startTrans();
             try {
                 $param['status'] = 1;
-
+                $param['no'] = 'RS'.date('YmdHi').rand(100000, 999999);
                 (new Subcontract())->allowField(true)->save($param,['id'=>$param['xid']]);
 
                 Db::commit();

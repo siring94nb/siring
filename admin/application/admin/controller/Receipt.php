@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: fyk
- * Date: 2019/12/13
- * Time: 11:03
+ * Date: 2019/12/14
+ * Time: 17:26
  */
 namespace app\admin\controller;
 use think\Request;
@@ -11,16 +11,16 @@ use think\Db;
 use think\Validate;
 
 /**
- * 分包项目
+ * 接单项目
  * @author fyk
- * Class Subcontract
+ * Class Receipt
  * @package app\admin\controller
  */
-class Subcontract extends Base
+class Receipt extends Base
 {
 
     /**
-     * 项目列表
+     * 接单列表
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -32,7 +32,7 @@ class Subcontract extends Base
         $param = $request->param();
 
         $where['deleted_at'] = null;
-        $where['status'] = 0;
+        $where['status'] = 1;
         if (!empty($param['name'])) {
             $where['name'] = ['like', '%' . $param['name'] . '%'];
         }
@@ -44,7 +44,7 @@ class Subcontract extends Base
             $param['size'] = 10;
         }
 
-        $field = 'id,name,dev,con,type,created_at';
+        $field = 'id,no,name,phone,dev,con,type,created_at';
         $order = 'id asc';
 
         $list = (new \app\data\model\Subcontract()) -> field( $field ) -> where( $where ) -> order( $order )
@@ -65,8 +65,11 @@ class Subcontract extends Base
                 $list['data'][$k]['dev_name'] = "无";
             }
             $list['data'][$k]['skills'] = $stocks;
+
+            $jurl = htmlspecialchars_decode($v['con']);
+            $list['data'][$k]['con']= strip_tags($jurl);
+
         }
-       // pp($list);die;
 
         return $this -> buildSuccess( array(
             'list' => $list['data'],
@@ -184,29 +187,5 @@ class Subcontract extends Base
         }
     }
 
-    /**
-     * 分类
-     * @return array
-     * @throws \think\db\exception\DataNotFoundException
-     * @throws \think\db\exception\ModelNotFoundException
-     * @throws \think\exception\DbException
-     */
-    public function classify()
-    {
-
-        $grade = new \app\data\model\JoinRole();
-
-        $data = $grade->where('type',3)->field('id,title,policy')->select();
-        foreach ($data as $k=>$v){
-
-            $res = explode(',',$v['policy']);
-            $data[$k]['res'] = $res;
-        }
-
-        // pp($res);die;
-        return $this->buildSuccess([
-            'list'=>$data,
-        ]);
-
-    }
 }
+
