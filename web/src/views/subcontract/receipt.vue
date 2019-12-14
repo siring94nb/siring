@@ -20,9 +20,9 @@
         <Row>
             <Col span="24">
                 <Card>
-                    <p slot="title" style="height: 32px">
-                        <Button type="primary" @click="alertAdd" icon="md-add">新增</Button>
-                    </p>
+                    <!--<p slot="title" style="height: 32px">-->
+                        <!--<Button type="primary" @click="alertAdd" icon="md-add">新增</Button>-->
+                    <!--</p>-->
                     <div>
                         <Table :columns="columnsList" :data="tableData" border disabled-hover></Table>
                     </div>
@@ -104,7 +104,7 @@
             },
             on: {
                 'on-ok': () => {
-                    axios.post('Discount/del', {
+                    axios.post('Receipt/del', {
                         id: currentRow.id
                     }).then(function (response) {
                         currentRow.loading = false;
@@ -146,12 +146,13 @@
                     {
                         title: '合同编号',
                         align: 'center',
-                        key: 'name',
+                        width: 180,
+                        key: 'no',
                     },
                     {
                         title: '项目名称',
                         align: 'center',
-                        key: 'num',
+                        key: 'name',
                     },
                     {
                         title: '终端类型',
@@ -159,52 +160,29 @@
                         key: '',
                     },
                     {
-                        title: '分包技能',
+                        title: '分包技能、语言',
                         align: 'center',
-                        key: 'available',
-
-                    },
-                    {
-                        title: '分包开发语言',
-                        align: 'center',
-                        key: 'available',
-
-                    },
-                    {
-                        title: '酬金',
-                        align: 'center',
-                        key: 'available',
-
-                    },
-                    {
-                        title: '指定人账号',
-                        align: 'center',
-                        key: 'available',
+                        width: 300,
+                        key: 'dev_name',
 
                     },
                     {
                         title: '项目功能描述',
                         align: 'center',
-                        key: 'available',
+                        key: 'con',
 
                     },
                     {
-                        title: '项目阶段',
+                        title: '接单人账号',
                         align: 'center',
-                        key: 'available',
+                        key: 'phone',
 
                     },
                     {
-                        title: '发布状态',
+                        title: '系统评分',
                         align: 'center',
-                        key: 'status',
-                        render: ( h , param ) => {
-                            if(param.row.status == 1){
-                                return h('div',['正常']);
-                            }else{
-                                return h('div',['失效']);
-                            }
-                        }
+                        key: 'available',
+
                     },
                     {
                         title: '操作',
@@ -284,9 +262,9 @@
                         self.modalSetting.loading = true;
                         let target = '';
                         if (this.formItem.id === 0) {
-                            target = 'Discount/add';
+                            target = 'Receipt/add';
                         } else {
-                            target = 'Discount/upd';
+                            target = 'Receipt/upd';
                         }
                         this.formItem.rule = new Object();
                         this.formItem.rule.full = this.formItem.full;
@@ -340,7 +318,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('Discount/index', {
+                axios.get('Receipt/index', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,

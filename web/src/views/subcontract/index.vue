@@ -65,6 +65,7 @@
         <Icon type="md-information-circle"></Icon>
         <span>{{formItem.id ? '编辑' : '新增'}}</span>
       </p>
+
       <Form
         ref="myForm"
         :rules="ruleValidate"
@@ -72,6 +73,9 @@
         :label-width="120"
         style="z-index:9999;"
       >
+        <FormItem label="项目名称" prop="name">
+          <Input style="width: 500px" v-model="formItem.name" placeholder="请输入项目名称" />
+        </FormItem>
         <FormItem
           :label="index > 0 ?'': '分包技能和酬金'"
           v-for=" (item, index) in formItem.skills"
@@ -79,15 +83,27 @@
         >
           <Row>
             <Col span="6">
-              <Select v-model="item.major" clearable placeholder="全部" style="width:200px;">
-                <Option :value="2">等待开通</Option>
-                <Option :value="3">确认开通</Option>
+              <Select
+                v-model="item.major"
+                clearable
+                placeholder
+                style="width:200px;"
+                @on-change="selChange($event,index)"
+              >
+                <Option
+                  v-for="(item, index) in skillsList"
+                  :value="item.title"
+                  :key="index"
+                >{{ item.title }}</Option>
               </Select>
             </Col>
             <Col span="6">
-              <Select v-model="item.language" clearable placeholder="全部" style="width:200px">
-                <Option :value="2">等待开通</Option>
-                <Option :value="3">确认开通</Option>
+              <Select v-model="item.language" clearable placeholder style="width:200px">
+                <Option
+                  v-for="(item, index) in resList[selIndex]"
+                  :value="item"
+                  :key="index"
+                >{{ item }}</Option>
               </Select>
             </Col>
             <Col span="6">
@@ -150,6 +166,21 @@ const editButton = (vm, h, currentRow, index) => {
           vm.html = vm.formItem.con;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
+          // let a = JSON.parse(JSON.stringify(currentRow.skills));
+          delete vm.formItem.skills;
+          vm.formItem.skills = JSON.parse(JSON.stringify(currentRow.skills));
+          vm.formItem.skills.reverse();
+          vm.formItem.skills = vm.formItem.skills.map((item, index, input) => {
+            item.money = Number(item.money);
+            vm.a = item.language
+            vm.skillsList.map((items, indexs, inputs) => {
+              if (item.major == items.title) {
+                vm.selIndex = indexs;
+              }
+            });
+            return item;
+          });
+          console.log(vm.formItem.skills)
         }
       }
     },
@@ -220,33 +251,18 @@ export default {
         {
           title: "项目名称",
           align: "center",
-          key: "num"
+          key: "name"
         },
         {
-          title: "分包技能",
+          title: "分包语言/酬金",
           align: "center",
-          key: "available"
+          key: "dev_name"
         },
-        {
-          title: "分包开发语言",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "酬金",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "指定人账号",
-          align: "center",
-          key: "available"
-        },
-        {
-          title: "项目功能描述",
-          align: "center",
-          key: "available"
-        },
+        // {
+        //   title: "项目功能描述",
+        //   align: "center",
+        //   key: "con"
+        // },
         {
           title: "发布状态",
           align: "center",
@@ -258,6 +274,11 @@ export default {
               return h("div", ["失效"]);
             }
           }
+        },
+        {
+          title: "发布时间",
+          align: "center",
+          key: "created_at"
         },
         {
           title: "操作",
@@ -286,8 +307,8 @@ export default {
         id: 0,
         skills: [
           {
-            major: "",
-            language: "",
+            major: 0,
+            language: 0,
             money: ""
           }
         ],
@@ -305,7 +326,10 @@ export default {
         // type: [
         //     { required: true, message: '请选择范围', trigger: 'change' }
         // ],
-      }
+      },
+      skillsList: [],
+      resList: [],
+      selIndex: 0
     };
   },
   created() {
@@ -333,40 +357,42 @@ export default {
     },
     submit() {
       let self = this;
-      this.$refs["myForm"].validate(valid => {
-        if (valid) {
-          self.modalSetting.loading = true;
-          let target = "";
-          if (this.formItem.id === 0) {
-            target = "Subcontract/add";
-          } else {
-            target = "Subcontract/upd";
-          }
-          axios.post(target, this.formItem).then(function(response) {
-            if (response.data.code === 1) {
-              self.$Message.success(response.data.msg);
-              self.getList();
-              self.cancel();
-            } else {
-              self.modalSetting.loading = false;
-              self.$Message.error(response.data.msg);
-            }
-          });
+      //   this.$refs["myForm"].validate(valid => {
+      // if (valid) {
+      self.modalSetting.loading = true;
+      let target = "";
+      if (this.formItem.id === 0) {
+        target = "Subcontract/add";
+      } else {
+        target = "Subcontract/upd";
+      }
+      axios.post(target, this.formItem).then(function(response) {
+        if (response.data.code === 1) {
+          self.$Message.success(response.data.msg);
+          self.getList();
+          self.cancel();
+        } else {
+          self.modalSetting.loading = false;
+          self.$Message.error(response.data.msg);
         }
       });
+      // }
+      //   });
     },
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
+      this.formItem.name = "";
       this.formItem.skills = [
         {
-          major: "",
-          language: "",
+          major: this.formItem.skills[0].major,
+          language: this.formItem.skills[0].language,
           money: ""
         }
       ];
       this.formItem.con = "";
-      this.formItem.type = "";
+      this.formItem.type = 0;
+      this.editor.txt.html(this.formItem.con);
     },
     doCancel(data) {
       if (!data) {
@@ -416,26 +442,45 @@ export default {
           }
         });
     },
-      getSkills() {
-          axios.get("Subcontract/classify").then(function(response) {
-              console.log(response)
-              if (response.data.code === 1) {
-
-              }
-          });
-      },
+    getSkills() {
+      let vm = this;
+      axios.get("Subcontract/classify").then(function(response) {
+        if (response.data.code === 1) {
+          vm.skillsList = response.data.data.list;
+          vm.formItem.skills[0].major = response.data.data.list[0].title;
+          vm.formItem.skills[0].language = response.data.data.list[0].res[0][0];
+          for (let i = 0; i < vm.skillsList.length; i++) {
+            vm.resList.push(vm.skillsList[i].res);
+          }
+        }
+      });
+    },
     //添加分包技能和酬金
     addSkills() {
       this.formItem.skills.push({
-        major: "",
-        language: "",
+        major: this.formItem.skills[0].major,
+        language: this.formItem.skills[0].language,
         money: ""
       });
+      this.$forceUpdate();
     },
     //删除分包技能和酬金
-    delSkills() {}
+    delSkills(index) {
+      let vm = this;
+      vm.formItem.skills.splice(vm.formItem.skills.indexOf(index), 1);
+      this.$forceUpdate();
+    },
+    selChange(event, index) {
+      for (let i = 0; i < this.skillsList.length; i++) {
+        if (this.skillsList[i].title == event) {
+          this.selIndex = i;
+          this.formItem.skills[index].language = this.resList[i][0];
+        }
+      }
+    }
   },
   mounted() {
+    let vm = this;
     this.editor = new wangEditor("#wangeditor");
     this.editor.customConfig.uploadFileName = "image";
     this.editor.customConfig.uploadImgMaxLength = 1;

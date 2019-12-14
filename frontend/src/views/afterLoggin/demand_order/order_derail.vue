@@ -9,8 +9,13 @@
     <div class="index">
         <div>
             <div>
-                <i class="el-icon-warning"></i>
-                <div style="border:1px solid;">22</div>
+                <!-- <i class="el-icon-warning"></i> -->
+                <span style="border:1px solid red;color:red;border-radius:50%;">！</span>
+            </div>
+            <div>
+              <ul>
+                <li>每项流程确认完成</li>
+              </ul>
             </div>
         </div>
     </div>

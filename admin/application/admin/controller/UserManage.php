@@ -27,7 +27,7 @@ class UserManage extends Base{
      * @time 2019/2/28
      */
 
-    public function index( Request $request ){
+    public function index(){
 
         $request = Request::instance();
         $param = $request->param();
