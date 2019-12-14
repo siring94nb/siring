@@ -57,21 +57,15 @@ class Subcontract extends Base
         $request = Request::instance();
         $param = $request->param();
         pp($param);die;
-        $rules = [
-            'name' => 'require',
-            'con' => 'require',
-            'type' => 'require|in:0,1,2',
-        ];
-        $message = [
-            'name.require' => '请填写名称',
-            'con.require' => '请填写数量',
-            'type.require' => '请选择类型',
-            'type.in' => '类型选择错误',
-        ];
-        $validate = new Validate($rules, $message);
-        if (!$validate->check($param)) {
-            return $this->buildFailed(0, $validate->getError());
+        $validate = new Validate([
+            ['pid', 'require', '省份id不能为空'],
+            ['name', 'require', '城市名称不能为空'],
+            ['type', 'require', '城市级别不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
         }
+
 
         Db::startTrans();
         try {
@@ -100,36 +94,15 @@ class Subcontract extends Base
         $request = Request::instance();
         $param = $request->param();
         pp($param);die;
-        $rules = [
-            'id' => 'require',
-            'name' => 'require',
-            'num' => 'require',
-            'add_time' => 'require',
-            'end_time' => 'require',
-            'rule' => 'require|array',
-            'range' => 'require|in:0,1,2',
-            'status' => 'require|in:0,1',
-            'type' => 'require|in:0,1,2',
-        ];
-        $message = [
-            'id.require' => '请选择数据',
-            'name.require' => '请填写名称',
-            'num.require' => '请填写数量',
-            'add_time.require' => '请填写开始时间',
-            'end_time.require' => '请填写结束时间',
-            'rule.require' => '请填写规则',
-            'rule.array' => '规则格式错误',
-            'range.require' => '请选择范围',
-            'range.in' => '范围选择错误',
-            'status.require' => '请选择状态',
-            'status.in' => '状态选择错误',
-            'type.require' => '请选择类型',
-            'type.in' => '类型选择错误',
-        ];
-        $validate = new Validate($rules, $message);
-        if (!$validate->check($param)) {
-            return $this->buildFailed(0, $validate->getError());
+        $validate = new Validate([
+            ['pid', 'require', '省份id不能为空'],
+            ['name', 'require', '城市名称不能为空'],
+            ['type', 'require', '城市级别不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
         }
+
 
         Db::startTrans();
         try {
