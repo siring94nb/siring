@@ -92,7 +92,7 @@
               >
                 <Option
                   v-for="(item, index) in skillsList"
-                  :value="item.id"
+                  :value="item.title"
                   :key="index"
                 >{{ item.title }}</Option>
               </Select>
@@ -169,15 +169,18 @@ const editButton = (vm, h, currentRow, index) => {
           // let a = JSON.parse(JSON.stringify(currentRow.skills));
           delete vm.formItem.skills;
           vm.formItem.skills = JSON.parse(JSON.stringify(currentRow.skills));
+          vm.formItem.skills.reverse();
           vm.formItem.skills = vm.formItem.skills.map((item, index, input) => {
-            item.major = Number(item.major);
+            item.money = Number(item.money);
+            vm.a = item.language
             vm.skillsList.map((items, indexs, inputs) => {
-              if (item.major == items.id) {
+              if (item.major == items.title) {
                 vm.selIndex = indexs;
               }
             });
             return item;
           });
+          console.log(vm.formItem.skills)
         }
       }
     },
@@ -444,7 +447,7 @@ export default {
       axios.get("Subcontract/classify").then(function(response) {
         if (response.data.code === 1) {
           vm.skillsList = response.data.data.list;
-          vm.formItem.skills[0].major = response.data.data.list[0].id;
+          vm.formItem.skills[0].major = response.data.data.list[0].title;
           vm.formItem.skills[0].language = response.data.data.list[0].res[0][0];
           for (let i = 0; i < vm.skillsList.length; i++) {
             vm.resList.push(vm.skillsList[i].res);
@@ -469,7 +472,7 @@ export default {
     },
     selChange(event, index) {
       for (let i = 0; i < this.skillsList.length; i++) {
-        if (this.skillsList[i].id == event) {
+        if (this.skillsList[i].title == event) {
           this.selIndex = i;
           this.formItem.skills[index].language = this.resList[i][0];
         }
