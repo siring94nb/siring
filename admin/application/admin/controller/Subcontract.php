@@ -63,6 +63,7 @@ class Subcontract extends Base
             }else{
                 $list['data'][$k]['dev_name'] = "无";
             }
+            $list['data'][$k]['skills'] = $stocks;
         }
        // pp($list);die;
 

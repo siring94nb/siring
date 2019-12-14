@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/application/data/model/Subcontract.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/Subcontract.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/Subcontract.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/views/subcontract/index.vue" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/views/subcontract/index.vue" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -73,7 +70,7 @@
           <entry key="gitignore" value="11" />
           <entry key="js" value="102" />
           <entry key="less" value="5" />
-          <entry key="php" value="13213" />
+          <entry key="php" value="13214" />
           <entry key="vue" value="1040" />
         </counts>
       </usages-collector>
@@ -81,7 +78,7 @@
         <counts>
           <entry key="JavaScript" value="102" />
           <entry key="Less" value="5" />
-          <entry key="PHP" value="13213" />
+          <entry key="PHP" value="13214" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="Vue.js" value="1040" />
         </counts>
@@ -130,8 +127,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Subcontract.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+            <state relative-caret-position="240">
+              <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
               <folding>
                 <element signature="e#118#136#0#PHP" expanded="true" />
               </folding>
@@ -321,7 +318,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
@@ -521,12 +518,12 @@
       <workItem from="1576026312487" duration="11832000" />
       <workItem from="1576113204441" duration="16591000" />
       <workItem from="1576199563775" duration="15868000" />
-      <workItem from="1576288559669" duration="3391000" />
+      <workItem from="1576288559669" duration="4761000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="498428000" />
+    <option name="totallyTimeSpent" value="499798000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -869,8 +866,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Subcontract.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="41" column="36" lean-forward="true" selection-start-line="41" selection-start-column="36" selection-end-line="41" selection-end-column="36" />
+        <state relative-caret-position="240">
+          <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
           <folding>
             <element signature="e#118#136#0#PHP" expanded="true" />
           </folding>
