@@ -4,6 +4,7 @@ namespace app\api\controller;
 use app\data\model\JoinOrder;
 use app\data\model\AllOrder;
 use app\data\model\Provinces;
+use app\data\model\Subcontract;
 use think\Controller;
 use think\Request;
 use app\data\model\User;
@@ -239,6 +240,32 @@ class RoleCenter extends Controller
             $data['reach_user_total'] = (new JoinOrder())::where('user_id',$user_data['id']) ->sum('money');//押金总数
 
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
+        }else{
+            returnJson(0,'请登录');
+        }
+
+    }
+
+    /**
+     *分包项目视窗
+     */
+    public function sub_view()
+    {
+
+        $uid = Session::get("uid");
+        if($uid){
+            $user_data = User::where('id',$uid)->find()->toarray();
+            if($user_data['is_city'] === 2){
+                returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
+            }
+            $join_order = (new Subcontract()) ->where('type',0) ->select()->toArray();
+            foreach ($join_order as $k =>$v){
+                $jurl = htmlspecialchars_decode($v['con']);
+                $join_order[$k]['con'] = $jurl;
+            }
+
+            return $join_order ? returnJson(1,'获取成功',$join_order) : returnJson(0,'获取失败',$join_order);
 
         }else{
             returnJson(0,'请登录');
