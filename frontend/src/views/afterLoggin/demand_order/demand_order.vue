@@ -198,7 +198,7 @@ export default {
     },
     handleEdit(status) {
       this.$router.push({
-        name: "order_derail",
+        name: "order_detail",
         params: {
           status: status
         }
