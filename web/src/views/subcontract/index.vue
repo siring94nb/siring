@@ -166,11 +166,12 @@ const editButton = (vm, h, currentRow, index) => {
           vm.html = vm.formItem.con;
           vm.modalSetting.show = true;
           vm.modalSetting.index = index;
-          delete vm.formItem.skills;
           vm.formItem.skills = JSON.parse(JSON.stringify(currentRow.skills));
-          vm.formItem.skills.reverse();
+          vm.formItem.skills = currentRow.skills;
           vm.formItem.skills = vm.formItem.skills.map((item, index, input) => {
-            item.money = Number(item.money);
+            // item.money = Number(item.money);
+            // vm.a = item.language;
+            
             vm.skillsList.map((items, indexs, inputs) => {
               if (item.major == items.title) {
                 vm.selIndex = indexs;
@@ -178,6 +179,7 @@ const editButton = (vm, h, currentRow, index) => {
             });
             return item;
           });
+          console.log(vm.formItem.skills);
         }
       }
     },
@@ -341,6 +343,7 @@ export default {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
+            // currentRowData.skills = JSON.parse(JSON.stringify(currentRowData.skills));
             return h("div", [
               editButton(vm, h, currentRowData, param.index),
               deleteButton(vm, h, currentRowData, param.index)
