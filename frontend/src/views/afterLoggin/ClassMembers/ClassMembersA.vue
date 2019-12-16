@@ -190,7 +190,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter} from "@/api/api";
+import {GetRoleCenter,MemberTotal} from "@/api/api";
 export default {
   data() {
     return {
@@ -287,6 +287,10 @@ export default {
   components: {
     logginHeader
   },
+  mounted(){
+    this.RoleCenter();
+    this.GetMemberTotal();
+  },
   methods: {
     handleEdit(index, row) {
       console.log(index, row);
@@ -308,11 +312,21 @@ export default {
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        console.log(123);
+        // console.log(123);
         if (code === 1) {
           this.handleClose();
         }
       });
+    },
+    // 获取我邀请的会员总数，佣金总数，get方式
+    GetMemberTotal(){
+      MemberTotal().then(res =>{
+        let {data,msg,code} = res;
+        this.showMsg(msg,code);
+        if(code === 1){
+          this.handleClose()
+        }
+      })
     }
   },
   watch: {

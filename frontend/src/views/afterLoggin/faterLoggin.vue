@@ -128,18 +128,18 @@ export default {
       this.classHuiyuanX(),
       this.fenbaoshangX(),
       this.withdrawX();
-      this.ceshi();
+      this.zhankai();
   },
   methods: {
-    // 测试
-    ceshi() {
+    // 保持侧边栏对应路由展开状态
+    zhankai() {
       let arr = this.arr;
       let val= this.$route.path
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].con.length; j++) {
           if (arr[i].con[j].rou == val) {
             this.num=String(i);
-            console.log(String(i))
+            // console.log(String(i))
           }
         }
       }

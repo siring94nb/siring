@@ -60,7 +60,10 @@
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
                 <div>
-                  <span style="padding-right:30px;color: #66CC00; cursor:pointer" @click.stop="ShowHidden">我要接单</span>
+                  <span
+                    style="padding-right:30px;color: #66CC00; cursor:pointer"
+                    @click.stop="ShowHidden"
+                  >我要接单</span>
                   <span style="color: #169BD5; padding-right:10px;">下一条</span>
                 </div>
               </div>
@@ -78,39 +81,81 @@
                     <div>
                       <span>
                         <span>手机号：</span>
-                        <span title="点击可修改"  @click.stop="xiugai('phone')"><input type="text" value="" v-model="phone" disabled="true" ref="phone" maxlength="11"/></span>
+                        <span title="点击可修改" @click.stop="xiugai('phone')">
+                          <input
+                            type="text"
+                            value
+                            v-model="phone"
+                            disabled="true"
+                            ref="phone"
+                            maxlength="11"
+                          />
+                        </span>
                         <!-- 方法传递参数，例如此处传递，phone，下放if判断，然后修改相应的input框的disabled值 -->
-                        <span class="confirm" ref="confirm" style="display:none" @click.stop="affirmBtn('phone')">确定</span>
-                        <span class="ac active"  @click.stop="firstChoice('phone')">首选</span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('phone')"
+                        >确定</span>
+                        <span class="ac active" @click.stop="firstChoice('phone')">首选</span>
                       </span>
                     </div>
                     <div>
                       <span>
                         <span>微信号：</span>
-                        <span title="点击可修改" @click.stop="xiugai('WXnum')"><input type="text" value="" v-model="WXnum" disabled="true" ref="WXnum" maxlength="11" /></span>
-                        <span class="confirm" ref="confirm" style="display:none" @click.stop="affirmBtn('WXnum')">确定</span>
-                        <span class="ac"  @click.stop="firstChoice('WXnum')">首选</span>
+                        <span title="点击可修改" @click.stop="xiugai('WXnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="WXnum"
+                            disabled="true"
+                            ref="WXnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('WXnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('WXnum')">首选</span>
                       </span>
                     </div>
                     <div>
                       <span>
                         <span>QQ号：</span>
-                        <span title="点击可修改" @click.stop="xiugai('QQnum')"><input type="text" value="" v-model="QQnum" disabled="true" ref="QQnum" maxlength="11"/></span>
-                        <span class="confirm" ref="confirm" style="display:none" @click.stop="affirmBtn('QQnum')">确定</span>
-                        <span class="ac"  @click.stop="firstChoice('QQnum')">首选</span>
+                        <span title="点击可修改" @click.stop="xiugai('QQnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="QQnum"
+                            disabled="true"
+                            ref="QQnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('QQnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('QQnum')">首选</span>
                       </span>
-                    </div> 
+                    </div>
                   </div>
                   <button class="confirmBtn">确定，我要接单联系我吧！</button>
                 </div>
               </div>
             </div>
           </div>
-        </div> 
+        </div>
       </div>
       <div>
         <el-tabs v-model="activeName">
-          <el-tab-pane label="城市累计会员明细" name="first" :key="'first'">
+          <el-tab-pane label="我承接的项目明细" name="first" :key="'first'">
             <div>
               <div class="suoyinlan">
                 <div class="block">
@@ -139,21 +184,26 @@
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
-                   @selection-change="ceshi1"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
+                  @selection-change="handleSelectionChange"
                 >
-                  <el-table-column type="selection" width="40" align="center"  @selection-change="ceshi1"></el-table-column>
+                  <el-table-column type="selection" width="40" align="center"></el-table-column>
                   <el-table-column prop="date" label="项目订单编号" width="130" align="center"></el-table-column>
                   <el-table-column prop="InviterAccount" label="订单名称" width="130" align="center"></el-table-column>
-                  <el-table-column prop="InviterInvitationCode" label="承接时间" width="170" align="center"></el-table-column>
                   <el-table-column
-                    prop="InviterLevel"
-                    label="要求完成时间"
-                    width="160"
+                    prop="InviterInvitationCode"
+                    label="承接时间"
+                    width="170"
                     align="center"
                   ></el-table-column>
+                  <el-table-column prop="InviterLevel" label="要求完成时间" width="160" align="center"></el-table-column>
                   <el-table-column prop="amount" label="项目开发文档" width="160" align="center"></el-table-column>
-                  <el-table-column prop="MinimumCommissions" label="延期扣款" width="125" align="center"></el-table-column>
+                  <el-table-column
+                    prop="MinimumCommissions"
+                    label="延期扣款"
+                    width="125"
+                    align="center"
+                  ></el-table-column>
                   <el-table-column
                     prop="StandardCommission"
                     label="佣金金额（元）"
@@ -163,7 +213,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox v-model="checked" @change="ceshi()">全选</el-checkbox>
+                    <el-checkbox class="quanxuan" @change="toggleSelection(list)">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -183,11 +233,10 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="分包商入驻订单" name="second" :key="'second'">
+          <el-tab-pane label="分包商申请订单" name="second" :key="'second'">
             <div>
               <div style="padding-bottom:20px;">
                 <el-table
-                  ref="multipleTable"
                   :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
@@ -216,14 +265,14 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter} from "@/api/api";
+import { GetRoleCenter } from "@/api/api";
 export default {
   data() {
     return {
-      phone:"12345678912",
-      WXnum:"12345674891",
-      QQnum:"12345678912",
-      checked: false,
+      multipleSelection: [],
+      phone: "12345678912",
+      WXnum: "12345674891",
+      QQnum: "12345678912",
       title: "我承接的项目明细",
       topList: [
         {
@@ -283,7 +332,7 @@ export default {
           StandardCommission: ""
         },
         {
-         date: "SR20170719",
+          date: "SR20170719",
           InviterAccount: "B2C购物商城",
           InviterInvitationCode: "2017-07-19 14:48:38",
           InviterLevel: "2017-07-19 14:48:38",
@@ -314,52 +363,44 @@ export default {
       currpage: 1,
       total: 100,
       DirectlyTo: 1,
-      fbxm:"flex"//控制分包项目位置显示隐藏
+      fbxm: "flex" //控制分包项目位置显示隐藏
     };
   },
   components: {
     logginHeader
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
     },
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    // 测试
-    ceshi1(){
-      // console.log(4121)
-      let arr = document.getElementsByClassName("el-checkbox");
-      let arr1 = document.getElementsByClassName("el-checkbox__input");
-      if(arr[0].classList.length !== 1){
-        arr[4].classList.add("is-checked")
-        arr1[4].classList.add("is-checked")
-      }else{
-        arr[4].classList.remove("is-checked")
-        arr1[4].classList.remove("is-checked")
+    // 根据官网制作全选功能
+    toggleSelection(rows) {
+      // 当前有问题，会串联，虽然能实现全选全不选功能，但是但已有部分选中时会出现正反选的效果而不是全选
+      if (rows) {
+        rows.forEach(row => {
+          console.log(11);
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
       }
     },
-    ceshi(){
-      let arr = document.getElementsByClassName("el-checkbox");
-      let arr1 = document.getElementsByClassName("el-checkbox__input");
-      if(arr[4].classList .length ===1){
-        
-      }else{
-        arr[0].classList.remove("is-checked")
-        arr1[0].classList.remove("is-checked")
-      }
+    handleSelectionChange(val) {
+      // console.log(val.length)
+      this.multipleSelection = val;
+      // if(val.length === 3){
+      // this.toggleSelection(this.list);
+      // }else{
+      //   this.toggleSelection();
+      // }
     },
     // 获取分包商数据
     RoleCenter() {
       const params = {
-        type:1
+        type: 1
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
@@ -370,83 +411,82 @@ export default {
       });
     },
     // 控制我要联系显示隐藏
-    ShowHidden(){
+    ShowHidden() {
       let dp = this.$refs.orderReceiving.style;
       // dp.display = "none"
-      if( dp.display===""||dp.display ==="none"){
-        dp.display = "block"
-      }else{
-        dp.display = "none"
+      if (dp.display === "" || dp.display === "none") {
+        dp.display = "block";
+      } else {
+        dp.display = "none";
       }
       //  this.$refs.orderReceiving.style.display = "none";
     },
     // 修改电话显示确认按钮显示隐藏
-    xiugai(src){
+    xiugai(src) {
       let spanArr = document.getElementsByClassName("confirm");
-      if(src === "phone"){
-         spanArr[0].style.display = "inline-block";
-         this.$refs.phone.disabled =false;
-         this.$refs.phone.focus();
-      }else if(src === "WXnum"){
+      if (src === "phone") {
+        spanArr[0].style.display = "inline-block";
+        this.$refs.phone.disabled = false;
+        this.$refs.phone.focus();
+      } else if (src === "WXnum") {
         spanArr[1].style.display = "inline-block";
-        this.$refs.WXnum.disabled =false;
+        this.$refs.WXnum.disabled = false;
         this.$refs.WXnum.focus();
-      }else{
+      } else {
         spanArr[2].style.display = "inline-block";
-        this.$refs.QQnum.disabled =false;
+        this.$refs.QQnum.disabled = false;
         this.$refs.QQnum.focus();
       }
     },
     // 修改完成，确定，控制输入框禁用，确认按钮消失
-    affirmBtn(src){
+    affirmBtn(src) {
       let spanArr = document.getElementsByClassName("confirm");
-      if(src === "phone"){
-         spanArr[0].style.display = "none";
-         this.$refs.phone.disabled =true;
-      }else if(src === "WXnum"){
+      if (src === "phone") {
+        spanArr[0].style.display = "none";
+        this.$refs.phone.disabled = true;
+      } else if (src === "WXnum") {
         spanArr[1].style.display = "none";
-        this.$refs.WXnum.disabled =true;
-      }else{
+        this.$refs.WXnum.disabled = true;
+      } else {
         spanArr[2].style.display = "none";
-        this.$refs.QQnum.disabled =true;
+        this.$refs.QQnum.disabled = true;
       }
     },
     // 首选项选择
-    firstChoice(src){
-      let spanArr =document.getElementsByClassName("ac");
-      if(src === "phone"){
-          spanArr[0].classList.add("active");
-          spanArr[1].classList.remove("active");
-          spanArr[2].classList.remove("active");
-      }else if(src === "WXnum"){
-          spanArr[1].classList.add("active");
-          spanArr[0].classList.remove("active");
-          spanArr[2].classList.remove("active");
-      }else{
-          spanArr[2].classList.add("active");
-          spanArr[1].classList.remove("active");
-          spanArr[0].classList.remove("active");
+    firstChoice(src) {
+      let spanArr = document.getElementsByClassName("ac");
+      if (src === "phone") {
+        spanArr[0].classList.add("active");
+        spanArr[1].classList.remove("active");
+        spanArr[2].classList.remove("active");
+      } else if (src === "WXnum") {
+        spanArr[1].classList.add("active");
+        spanArr[0].classList.remove("active");
+        spanArr[2].classList.remove("active");
+      } else {
+        spanArr[2].classList.add("active");
+        spanArr[1].classList.remove("active");
+        spanArr[0].classList.remove("active");
       }
     }
-
   },
   watch: {
     activeName: function(val) {
       //监听切换状态-计划单
       if (val === "first") {
         this.title = "我承接的项目明细";
-        this.fbxm = "flex"
+        this.fbxm = "flex";
         // console.log(this.fbxm)
       } else if (val === "second") {
         this.title = "分包商申请订单";
-         this.fbxm = "none"
+        this.fbxm = "none";
         //  console.log(this.fbxm)
       }
     }
   }
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss" scoped> 
 .bottomBox {
   background: #ffffff;
   margin: 5px 0 0 20px;
@@ -544,7 +584,7 @@ export default {
           //   border-right-color: transparent;
           //   color: #ffffff;
           // }
-          .confirmBtn{
+          .confirmBtn {
             background: rgba(22, 155, 213, 1);
             color: #ffffff;
             border-radius: 5px;
@@ -575,26 +615,27 @@ export default {
                   padding-bottom: 10px;
                   > div {
                     margin-bottom: 30px;
-                    &:nth-last-child(1){
+                    &:nth-last-child(1) {
                       margin: 0;
                     }
                     > span {
                       > span {
-                        &:nth-of-type(1){
+                        &:nth-of-type(1) {
                           display: inline-block;
                           width: 72px;
                         }
                         &:nth-of-type(2) {
                           color: #868686;
                           padding: 0 10px;
-                          input{
+                          input {
                             background: #ffffff;
                             border: none;
                             font-size: 18px;
                             width: 120px;
                           }
                         }
-                        &:nth-of-type(3),&:nth-of-type(4){
+                        &:nth-of-type(3),
+                        &:nth-of-type(4) {
                           font-size: 13px;
                           display: inline-block;
                           padding: 5px;
@@ -603,21 +644,20 @@ export default {
                         }
                       }
                     }
-                    .ac{
+                    .ac {
                       color: #e4e4e4;
                       border: 1px solid #e4e4e4;
                     }
-                    .active{
+                    .active {
                       color: #66cc00;
                       border: 1px solid #66cc00;
                     }
-                    .confirm{
+                    .confirm {
                       color: #66cc00;
                       border: 1px solid #66cc00;
                       margin-right: 15px;
                     }
                   }
-                  
                 }
               }
             }
