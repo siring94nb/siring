@@ -453,6 +453,40 @@ export const appRouter = [
         ]
     },
     {
+        path: '/Capital',
+        icon: 'md-card',
+        title: '资金管理',
+        name: 'Capital',
+        component: Main,
+        children: [
+            //
+            {
+                path: 'CapitalDetailed',
+                icon: 'ios-bookmarks',
+                name: 'CapitalDetailed',
+                access: 'admin/Capital/index',
+                title: '资金明细',
+                component: () => import('@/views/capital/detailed.vue')
+            },
+            {
+                path: 'Cash',
+                icon: 'ios-bookmarks',
+                name: 'Cash',
+                access: 'admin/Cash/index',
+                title: '提现审核',
+                component: () => import('@/views/capital/cash.vue')
+            },
+            {
+                path: 'Invoice',
+                icon: 'ios-bookmarks',
+                name: 'Invoice',
+                access: 'admin/Invoice/index',
+                title: '开票审核',
+                component: () => import('@/views/capital/invoice.vue')
+            },
+        ]
+    },
+    {
         path: '/Marketing',
         icon: 'md-pricetag',
         title: '营销管理',

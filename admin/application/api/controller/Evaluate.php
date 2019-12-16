@@ -13,7 +13,7 @@ use app\data\model\Evaluate as Eva;
  * lilu
  * 快捷估价控制器
  */
-class Evaluate extends Controller{
+class Evaluate extends Base{
 
 
     /**
@@ -43,12 +43,12 @@ class Evaluate extends Controller{
             $plate_list[$k]['plate_from']=Eva::getStatusAttr($v);
             $plate_list[$k]['plate_from_id']=$v;                                //平台id
             //2.获取平台对应的分类
-            $evaluate_type=Eva::getEvaluate_type($v);     //$v=>平台id 
+            $evaluate_type=Eva::getEvaluate_type($v);     //$v=>平台id
             //3.获取分类下对应的model
             $model2=[];
             foreach($evaluate_type as $k2 =>$v2){
                 $mo=Eva::getEvaluate_model($v,$v2);
-                $model2=array_merge($model2,$mo); 
+                $model2=array_merge($model2,$mo);
             }
             //4.获取对应模型下面的功能点
             foreach($model2 as $k4 =>$v4){
