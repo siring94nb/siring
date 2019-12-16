@@ -162,7 +162,11 @@
           </el-form>
         </div>
         <div class="ptbj-box" v-if="status == 2">
-          <img src="../../../assets/images/u4198.png" width="100%" alt />
+          <!-- <img src="../../../assets/images/u4198.png" width="100%" alt /> -->
+          <div class="wait-ptbj">
+            <img src="../../../assets/images/u9830.png" alt />
+            <div>请耐心等待平台报价！</div>
+          </div>
         </div>
       </div>
       <div class="line line-vice">平台顾问信息互动</div>
@@ -194,10 +198,12 @@
           <button class="lt-btn">发送</button>
         </div>
       </div>
-      <div class="obj-btn">
-        <div class="btns-all stop-obj" @click="stop_obj(1)">中止，本人放弃该项目</div>
+      <div class="obj-btn" >
+        <div class="btns-all stop-obj" @click="obj_btn(1)">中止，本人放弃该项目</div>
         <div style="flex:1;"></div>
-        <div class="btns-all start-obj" @click="stop_obj(2)">确定，本人已确认该需求方案</div>
+        <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 1" >确定，本人已确认该需求方案</div>
+        <div class="btns-all no-obj" v-if="status == 2" >等待报价单</div>
+        <!-- <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 2" >确定，本人已确认该报价方案</div> -->
       </div>
     </div>
   </div>
@@ -210,7 +216,7 @@ export default {
     return {
       userId: "",
       path: "ws://127.0.0.1:3000",
-      status: 1,
+      status: 2,
       socket: "",
       statusData: [
         {
@@ -300,7 +306,8 @@ export default {
         }
       ],
       UploadAction: "",
-      fileList: []
+      fileList: [],
+      value: ""
     };
   },
   mounted() {
@@ -369,9 +376,8 @@ export default {
       }
       return size;
     },
-    stop_obj(e) {
-      console.log(e);
-      let hr,hr1;
+    obj_btn(e) {
+      let hr, hr1;
       if (e == 1) {
         hr = "您确定要中止该项目么？！";
       } else {
@@ -381,10 +387,7 @@ export default {
       const h = this.$createElement;
       this.$msgbox({
         title: "温馨提示：",
-        message: h("div", null, [
-          h("p", null, hr),
-          h("p", null, hr1)
-        ]),
+        message: h("div", null, [h("p", null, hr), h("p", null, hr1)]),
         showCancelButton: true,
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -409,8 +412,7 @@ export default {
           message: "action: " + action
         });
       });
-    },
-    start_obj() {}
+    }
   },
   destroyed() {
     // 销毁监听
@@ -489,6 +491,22 @@ export default {
         display: inline-block;
         text-align: center;
         vertical-align: middle;
+      }
+    }
+    .ptbj-box {
+      .wait-ptbj {
+        text-align: center;
+        margin-top: 200px;
+        img {
+          width: 100px;
+          height: 100px;
+        }
+        div {
+          margin-top: 20px;
+          font-size: 20px;
+          color: #c9c9c9;
+          text-align: center;
+        }
       }
     }
   }
@@ -732,6 +750,9 @@ export default {
     }
     .stop-obj {
       background-color: rgb(51, 153, 255);
+    }
+    .no-obj{
+      background-color: rgb(174,174,174);
     }
   }
 }
