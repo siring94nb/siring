@@ -53,11 +53,13 @@
           </div>
           <div
             class="all-line"
+            :key="'l'+index"
             :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
             v-if="index < 6"
           ></div>
           <div
             class="all-line"
+            :key="'s'+index"
             :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
             v-if="index < 6"
           ></div>
@@ -548,6 +550,7 @@ export default {
           border-radius: 5px;
           background-color: rgb(242, 242, 242);
           padding-top: 15px;
+          box-sizing: border-box;
           .zip-text {
             color: rgb(0, 51, 102);
             line-height: 16px;

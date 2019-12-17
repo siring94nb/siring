@@ -65,11 +65,13 @@
         </div>
         <div
           class="all-line"
+          :key="'l'+index"
           :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
           v-if="index < 6"
         ></div>
         <div
           class="all-line"
+          :key="'s'+index"
           :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
           v-if="index < 6"
         ></div>
