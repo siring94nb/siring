@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs';
-
+// qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
 // https://manage.siring.com.cn/
 let base_url = ' https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'

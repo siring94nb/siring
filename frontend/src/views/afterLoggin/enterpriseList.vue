@@ -47,7 +47,9 @@ export default {
     },
     // 获取企业列表
     getEnterpriseList() {
-      const userId = sessionStorage.getItem("user_id");
+      const userId = parseInt(sessionStorage.getItem("user_id"));
+      console.log(typeof userId)
+      console.log(Number.isInteger( 123))
         const params = {
           user_id : userId
         }

@@ -103,7 +103,8 @@
 
         <gnmk :pd="false" :SumIndent = "SumIndent1" >我的订单</gnmk>
         <div class="dinDanCL" style="display: flex; flex:1">
-             <ding-dan v-for="(item,index) in arr" :key="index" />
+            <ding-dan :ceshi="ceshi"/>
+             <!-- <ding-dan v-for="(item,index) in arr" :key="index" /> -->
         </div>
         <gnmk :pd="true" :tuiguang="true" :SumIndent = "SumIndent2">角色收益</gnmk>
       </div>
@@ -120,6 +121,7 @@ export default {
   name:"afer-logginR",
   data() {
     return {
+      ceshi:"123123",
       userMessage1:{},
       SumIndent1:[1,2,3,4],
       SumIndent2:[9,6,7,8],

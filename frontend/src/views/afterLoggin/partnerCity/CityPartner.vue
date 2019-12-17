@@ -394,15 +394,14 @@ export default {
     },
     // 获取城市数据
     RoleCenter() {
-      // const params = {
-      //   type:1
-      // };
-      GetRoleCenter({type:1}).then(res => {
+      const params = {
+        type:1
+      };
+      GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
-        console.log(123);
+        console.log(res)
+        // this.showMsg(msg, code);
         if (code === 1) {
-          this.handleClose();
         }
       });
     },
@@ -410,10 +409,10 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
+        // this.showMsg(msg, code);
         console.log(res);
         if (code === 1) {
-          this.handleClose();
+        }else{
         }
       });
     },
@@ -427,10 +426,9 @@ export default {
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
-        console.log(123);
+        console.log(res)
+        // this.showMsg(msg, code);
         if (code === 1) {
-          this.handleClose();
         }
       });
     },

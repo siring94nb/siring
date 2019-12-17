@@ -63,7 +63,6 @@
           <el-input v-model="input2" placeholder="请输入支行名" style="width:300px"></el-input>
         </div>
         <div>
-          <el-input @keydown.enter.stop="ceshi"></el-input>
           <el-button
             type="danger"
             style="width:320px;"
@@ -209,15 +208,13 @@ export default {
   },
   created(){
     // 键盘事件直接绑定到document中，否则，需要光标选中控件才能触发键盘事件
-    document.onkeydown = function(e){
-      // 处理键盘事件兼容性
-      var key = window.event.keyCode ? window.event.keyCode:window.event.which
-      console.log(key)
-      // e.altKey判断alt是否处于按下状态
-      console.log(e.altKey)
-      // 阻止默认事件 ，此处不能随意使用，若使用，则键盘全部默认事件都无法使用
-      // e.preventDefault()
-    }
+    // document.onkeydown = function(e){
+    //   // 处理键盘事件兼容性
+    //   var key = window.event.keyCode ? window.event.keyCode:window.event.which
+    //   e.altKey判断alt是否处于按下状态
+    //   // 阻止默认事件 ，此处不能随意使用，若使用，则键盘全部默认事件都无法使用
+    //   e.preventDefault()
+    // }
   }
 };
 </script>

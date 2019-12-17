@@ -377,26 +377,27 @@ export default {
       this.pagesize = psize;
     },
     // 根据官网制作全选功能
+    /*
+    *Element-ui 中table 默认选中 toggleRowSelection
+    *结合vue的特殊属性ref引用到Dom元素上，再执行dom上的toggleRowSelection方法。
+    *toggleRowSelection(row, selected)接受两个参数，row传递被勾选行的数据，selected设置是否选中
+    *注意：调用toggleRowSelection这个方法 需要获取真实dom 所以需要注册 ref 来引用它 
+     */
     toggleSelection(rows) {
       // 当前有问题，会串联，虽然能实现全选全不选功能，但是但已有部分选中时会出现正反选的效果而不是全选
       if (rows) {
         rows.forEach(row => {
-          console.log(11);
+          console.log(this.$refs.multipleTable)
           this.$refs.multipleTable.toggleRowSelection(row);
         });
       } else {
+        //  console.log(this.$refs.multipleTable.toggleRowSelection)
         this.$refs.multipleTable.clearSelection();
       }
     },
     handleSelectionChange(val) {
-      // console.log(val.length)
       this.multipleSelection = val;
-      // if(val.length === 3){
-      // this.toggleSelection(this.list);
-      // }else{
-      //   this.toggleSelection();
-      // }
-    },
+    },    
     // 获取分包商数据
     RoleCenter() {
       const params = {

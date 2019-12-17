@@ -10,7 +10,7 @@ import './assets/iconfont/iconfont.css';
 import qs from 'qs';
 Vue.prototype.$qs = qs;
 import VueClipboard from 'vue-clipboard2'
-Vue.use( VueClipboard )
+Vue.use(VueClipboard)
 Vue.use(ElementUI);
 // 城市联动
 import vRegion from 'v-region';
@@ -30,10 +30,20 @@ router.beforeEach((to, from, next) => {
             meta2.content = data.data.tag;
             head[0].appendChild(meta)
             head[0].appendChild(meta2)
-            // if (userId == null && phone == null) {
-            //     // 通过缓存，判断当前登录状态
-            //     // next("/");
-            // }
+            // 全局路由守卫，当前不完善，需要修改，当前仅能拦截控制台路由
+            // to.meta.requireAut路由守卫开启标识
+            if (to.meta.requireAuth == true) {
+                let userId = sessionStorage.getItem("user_id");
+                if (userId == null) {
+                    next("/");
+                    // 路由守卫，登录提示处理延时出现，否则先行执行alert阻断页面跳转
+                    setTimeout(function(){
+                        alert("请先行登录")
+                    },500)
+                } else {
+                    next()
+                }
+            }
         }
     })
     next()
@@ -41,12 +51,6 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to, from, next) => {
     window.scrollTo(0, 0);
-    // let userId = JSON.parse(sessionStorage.getItem("user_id"));
-    // let phone = JSON.parse(sessionStorage.getItem("phone"))
-    // if (userId == null && phone == null) {
-    //     // 通过缓存，判断当前登录状态
-    //     next("/");
-    // }
 });
 
 new Vue({

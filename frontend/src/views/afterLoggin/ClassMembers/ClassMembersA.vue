@@ -311,7 +311,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
+        // this.showMsg(msg, code);
         // console.log(123);
         if (code === 1) {
           this.handleClose();
@@ -322,7 +322,7 @@ export default {
     GetMemberTotal(){
       MemberTotal().then(res =>{
         let {data,msg,code} = res;
-        this.showMsg(msg,code);
+        // this.showMsg(msg,code);
         if(code === 1){
           this.handleClose()
         }
