@@ -129,140 +129,183 @@ export default new Router({
     {
         path: '/afterLoggin',
         name: 'afterLoggin',
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
         component: () =>
             import('@/views/afterLoggin/afterLoggin'),
-        // import ('@/components/dingDan')
         children: [{
             path: "/afterLogginR",
             name: "afterLogginR",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/afterLogginR'),
         },
         {
             path: "/memberInformation",
             name: "memberInformation",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/memberInformation'),
-        },
-        {
-            path: "/ceshi",
-            name: "ceshi",
+        },{
+            path: "/recharge",
+            name: "recharge",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
-                import('@/views/afterLoggin/ceshi'),
+                import ('@/views/afterLoggin/financialDetails/recharge'),
         },
         {
             path: "/addEnterprise",
             name: "addEnterprise",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/addEnterprise'),
         },
         {
             path: "/enterpriseList",
             name: "enterpriseList",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/enterpriseList'),
         },
         {
             path: "/securityCenterIndex",
             name: "securityCenterIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/securityCenter/securityCenterIndex'),
         },
         {
             path: "/safetyTabControl",
             name: "safetyTabControl",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/securityCenter/safetyTabControl'),
         },
         {
             path: "/invitationX",
             name: "invitationX",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/securityCenter/invitationX'),
         },
         {
             path: "/partnerCityX",
             name: "partnerCityX",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/partnerCity/partnerCityX'),
         },
         {
             path: "/CityPartner",
             name: "CityPartner",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/partnerCity/CityPartner'),
         },
         {
             path: "/ClassMembersX",
             name: "ClassMembersX",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/ClassMembers/ClassMembersX'),
         },
         {
             path: "/ClassMembersA",
             name: "ClassMembersA",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/ClassMembers/ClassMembersA'),
         },
         {
             path: "/demand_order",
             name: "demand_order",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/demand_order/demand_order'),
         },
         {
-            path: "/order_detail",
-            name: "order_detail",
+            path: "/order_derail",
+            name: "order_derail",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/demand_order/order_detail'),
         },
         {
             path: "/subContractorIndex",
             name: "subContractorIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/subContractor/subContractorIndex'),
         },
         {
             path: "/subContractorSm1",
             name: "subContractorSm1",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/subContractor/subContractorSm1'),
         },
         {
             path: "/financialDetailsI",
             name: "financialDetailsI",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/financialDetailsI'),
-        },
-        {
-            path: "/recharge",
-            name: "recharge",
-            component: () =>
-                import('@/views/afterLoggin/financialDetails/recharge'),
-        },
-        {
+        },{
             path: "/withdraw",
             name: "withdraw",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/withdraw'),
         },
         {
             path: "/withdrawX",
             name: "withdrawX",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/withdrawX'),
         },
         {
             path: "/CardManagement",
             name: "CardManagement",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/CardManagement'),
         },
         {
             path: "/discountCoupon",
             name: "discountCoupon",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/discountCoupon'),
+        },
+        {
+            path: "/ceshi",
+            name: "ceshi",
+            // meta:{requireAuth:true},//路由守卫开启标识
+            // props: true,
+            component: () =>
+                import('@/views/afterLoggin/ceshi'),
         }
         ]
     },

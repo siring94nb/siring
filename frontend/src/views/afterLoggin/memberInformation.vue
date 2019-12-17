@@ -11,7 +11,12 @@
         <span>*</span>
         <span>用户绑定手机号：</span>
         <span>{{userMessage1.phone}}</span>
-        <button class="btnChaneg"><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}" style="color:#ffffff">修改绑定手机号</router-link></button>
+        <button class="btnChaneg">
+          <router-link
+            :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}"
+            style="color:#ffffff"
+          >修改绑定手机号</router-link>
+        </button>
       </div>
       <div>
         <span class="xg" style="margin-right:25px">我的邀请码：</span>
@@ -29,7 +34,7 @@
         <span>*</span>
         <span class="xg">姓名：</span>
         <div>
-          <input type="text" placeholder="请输入姓名" value="" v-model="name"/>
+          <input type="text" placeholder="请输入姓名" value v-model="name" />
           <div>*请输入真实姓名，确保电子合同或协议，身份真实有效，保障会员权益</div>
         </div>
       </div>
@@ -37,7 +42,7 @@
         <span>*</span>
         <span class="xg">身份证号</span>
         <div>
-          <input type="text" placeholder="请输入身份证号" value="" v-model="sfzId"/>
+          <input type="text" placeholder="请输入身份证号" value v-model="sfzId" />
           <div>*请输入真实身份证号，身份真实有效，保障会员权益</div>
         </div>
       </div>
@@ -91,7 +96,7 @@
         <span>*</span>
         <span class="xg">详细地址：</span>
         <div>
-          <input type="text" placeholder="请输入地址" value="" v-model="dizhi"/>
+          <input type="text" placeholder="请输入地址" value v-model="dizhi" />
           <div>*请输入真实地址，如需纸质合同或协议，将会邮寄到该地址</div>
         </div>
       </div>
@@ -122,10 +127,10 @@
         <span class="xg">性别:</span>
         <div class="sex">
           <label>
-            <input type="radio" name="sex" value="男生" checked="checked" v-model="sex"/>男生
+            <input type="radio" name="sex" value="男生" checked="checked" v-model="sex" />男生
           </label>
           <label>
-            <input type="radio" name="sex" value="女生" v-model="sex"/>女生
+            <input type="radio" name="sex" value="女生" v-model="sex" />女生
           </label>
         </div>
       </div>
@@ -133,11 +138,25 @@
       <div class="inputContent shangchuan">
         <span>*</span>
         <span class="xg">更改头像：</span>
-        <div style="width:72px;height:72px;">
+        <!-- <div style="width:72px;height:72px;">
           <img :src="userImg" style="width:100%;height:100%" />
-        </div>
+        </div> -->
         <div>
-          <span class="fileinput-button">
+          <el-upload
+            name="image"
+            class="avatar-uploader"
+            list-type="picture-card"
+            action="https://manage.siring.com.cn/api/file/qn_upload"
+            :show-file-list="false"
+            :on-preview="handlePictureCardPreview"
+            :on-remove="handleRemove"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
+          >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
+          <!-- <span class="fileinput-button">
             <span>上传头像</span>
             <input
               type="file"
@@ -147,10 +166,11 @@
               ref="userImgX"
               @change="userImgFun($event)"
               style="margin:-10px 0 0 0px;"
+              name="image"
             />
-          </span>
+          </span> -->
         </div>
-        <span>（备注：图片不得大于500k）</span>
+        <span>个人头像上传，点击头像即可更换<br/><span>（备注：图片不得大于500k）</span></span>
       </div>
       <div class="affirm" @click="UserUpdatingX()">确认</div>
     </div>
@@ -158,30 +178,32 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { GetUserMassage,UserUpdating } from "@/api/api";
+import { GetUserMassage, UserUpdating, Qnupload } from "@/api/api";
 export default {
   data() {
     return {
-      name:"",
+      imageUrl: require("../../assets/images/u158.png"),
+      name: "",
       userMessage1: {},
-      sfzId:"",
-      dizhi:"",
-      enterpriseName:"请选择",
-      sex:"男",
-      province:"",//省
-      city:"",//市
-      area:"",//县市区
-      userImg: require("../../assets/images/u158.png"),
+      sfzId: "",
+      dizhi: "",
+      enterpriseName: "请选择",
+      sex: "男",
+      province: "", //省
+      city: "", //市
+      area: "", //县市区
+      // userImg: require("../../assets/images/u158.png"),
       identityCardZImg: require("../../assets/images/shengFzz.png"),
       identityCardFImg: require("../../assets/images/shengFzf.png")
     };
   },
   mounted() {
     this.userMessage();
+    this.SetSS()
   },
   methods: {
     // 测试获取
-    ceshi(){
+    ceshi() {
       // console.log(this.name);
       // console.log(this.userMessage1);
       // console.log(this.sfzId);
@@ -193,9 +215,42 @@ export default {
       // console.log(this.identityCardFImg);
       console.log(this.userImg);
     },
+    // 进入修改上传样式
+    SetSS() {
+      let ceshi = document.getElementsByClassName("el-upload--picture-card");
+      ceshi[0].style.cssText = "width:72px;height:72px;border:0"
+    },
 
+    // 图片上传测试
+    handleRemove(file) {
+      console.log(file);
+    },
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
+    },
+    handleDownload(file) {
+      console.log(file);
+    },
+    handleAvatarSuccess(res, file) {
+      // this.valData.imageUrl = res.data.filePath;
+      console.log(res.data.filePath);
+      // this.imageUrl = URL.createObjectURL(file.raw);
+      // console.log(this.uploadList);
+      this.imageUrl = res.data.filePath;
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
 
-
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
 
     // 身份证正反面获取
     identityCardZFun(e) {
@@ -220,7 +275,7 @@ export default {
     userImgFun(e) {
       var file = e.target.files[0];
       const isJPG = file.type === "image/jpeg";
-      console.log(isJPG);
+      // console.log(isJPG);
       const isLt50KB = file.size % 1024 < 50000;
 
       if (!isJPG) {
@@ -233,16 +288,21 @@ export default {
         var that = this;
         reader.readAsDataURL(file);
         reader.onload = function(e) {
-          that.userImg = this.result;
+          Qnupload({ image: this.result }).then(res => {
+            let { data, msg, code } = res;
+            console.log(data);
+          });
+          // that.userImg = this.result;
+          // console.log(this.result)
         };
       }
       return isJPG && isLt50KB;
     },
     // 三级联动插件
     regionChange(data) {
-      this.province = data.province===null?"":data.province.value;
-      this.city = data.city===null?"":data.city.value;
-      this.area = data.area===null?"":data.area.value;
+      this.province = data.province === null ? "" : data.province.value;
+      this.city = data.city === null ? "" : data.city.value;
+      this.area = data.area === null ? "" : data.area.value;
       // console.log(this.province);
       // console.log(this.city);
       // console.log(this.area);
@@ -273,17 +333,17 @@ export default {
       const userId = sessionStorage.getItem("user_id");
       const params = {
         user_id: userId,
-        name:this.name,
-        id_card:this.sfzId,
-        id_card_just:this.identityCardZImg,
-        id_card_back:this.identityCardFImg,
-        province:this.province,
-        city:this.city,
-        area:this.area,
-        address:this.dizhi,
-        enterprise_id:this.enterpriseName,
-        sex:this.sex,
-        img:this.userImg
+        name: this.name,
+        id_card: this.sfzId,
+        id_card_just: this.identityCardZImg,
+        id_card_back: this.identityCardFImg,
+        province: this.province,
+        city: this.city,
+        area: this.area,
+        address: this.dizhi,
+        enterprise_id: this.enterpriseName,
+        sex: this.sex,
+        img: this.userImg
       };
       UserUpdating(params).then(res => {
         let { data, msg, code } = res;
@@ -398,8 +458,10 @@ export default {
       margin: 0 50px;
     }
     span:nth-of-type(3) {
-      height: 18px;
-      padding: 15px 0;
+      display: inline-block;
+      height: 60px;
+      padding: 20px 0  0 15px;
+      box-sizing: border-box;
     }
   }
   // 上传
@@ -451,6 +513,29 @@ export default {
     margin-left: 98px !important;
     border-radius: 5px;
   }
+
+  // 图片上传
+  .avatar-uploader .el-upload {
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 72px;
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+  }
+  .avatar {
+    width: 70px;
+    height: 70px;
+    display: block;
+    border-radius: 6px;
+  }
+
   // 修改input上传样式
   .fileinput-button {
     position: relative;

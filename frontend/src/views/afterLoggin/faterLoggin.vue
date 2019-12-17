@@ -5,16 +5,16 @@
     <el-row class="tac">
       <el-col :span="12">
         <el-menu
-          default-active="/afterLogginR"
+          :default-active="ru"
           class="el-menu-vertical-demo"
           @open="handleOpen"
           @close="handleClose"
-          background-color="#C0D8E7"
+          background-color="#7fadcc"
           active-background-color="#000000"
           text-color="#fff"
           :default-openeds="[num]"
-          router
-          active-text-color="#ffd04b"
+          :router="true"
+          
         >
           <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
             <!-- 控制中心 -->
@@ -26,6 +26,7 @@
               v-for="(con,index1) in item.con"
               :key="index1+''"
               :index="con.rou"
+              style="color:#000"
             >{{con.name}}</el-menu-item>
           </el-submenu>
         </el-menu>
@@ -36,12 +37,13 @@
 
 <script>
 // import Myheader from "@/components/header";
+import {GetRoleCenter,CityTotal,CityPartner} from "@/api/api";
 export default {
   // name: "fater-loggin",
   data() {
     return {
+      ru:this.$route.path=="/afterLoggin"?"/afterLogginR":this.$route.path,//确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
       num: '0',
-      cityHehuoren: 1,
       classHuiyuan: 1,
       fenbaoshang: 1,
       tixian: 1,
@@ -132,7 +134,7 @@ export default {
   },
   methods: {
     // 保持侧边栏对应路由展开状态
-    zhankai() {
+    zhankai(){
       let arr = this.arr;
       let val= this.$route.path
       for (var i = 0; i < arr.length; i++) {
@@ -147,11 +149,16 @@ export default {
     },
     // 城市合伙人
     cityHehuorenX() {
-      if (this.cityHehuoren === 0) {
-        this.arr[2].con[0].rou = "/partnerCityX";
-      } else {
-        this.arr[2].con[0].rou = "/CityPartner";
-      }
+      // 因为前期想法错误，当前修改较麻烦
+      CityTotal().then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+            this.arr[2].con[0].rou = "/CityPartner";            
+        }else{
+          this.arr[2].con[0].rou = "/CityPartner";
+          // this.arr[2].con[0].rou = "/partnerCityX";
+        }
+      });
     },
     // 等级会员
     classHuiyuanX() {
@@ -188,7 +195,6 @@ export default {
   }
 };
 </script>
-
 <style lang="scss" scoped>
 .tac {
   margin-top: 100px;
@@ -204,7 +210,12 @@ export default {
     min-width: 121px;
     text-align: center;
     background-color: #ffffff !important;
-    color: black !important;
+    // color: black !important;
+  }
+  .el-menu-item.is-active {
+    font-size: 16px;
+    font-weight: 700;
+    color: #409EFF !important;
   }
   li {
     width: 100%;
