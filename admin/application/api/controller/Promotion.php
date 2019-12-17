@@ -17,7 +17,7 @@ use think\Session;
  * Class Promotion
  * @package app\api\controller
  */
-class Promotion extends Controller
+class Promotion extends Base
 {
 
     /**

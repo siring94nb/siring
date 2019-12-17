@@ -242,7 +242,7 @@ export default new Router({
             meta:{requireAuth:true},//路由守卫开启标识
             props: true,
             component: () =>
-                import('@/views/afterLoggin/demand_order/order_derail'),
+                import('@/views/afterLoggin/demand_order/order_detail'),
         },
         {
             path: "/subContractorIndex",

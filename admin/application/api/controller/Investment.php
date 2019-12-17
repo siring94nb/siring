@@ -10,7 +10,7 @@ use think\Request;
 use think\Validate;
 use think\Session;
 use think\Db;
-class Investment extends Controller
+class Investment extends Base
 {
     /**
      * 行业领域

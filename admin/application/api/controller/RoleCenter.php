@@ -5,13 +5,12 @@ use app\data\model\JoinOrder;
 use app\data\model\AllOrder;
 use app\data\model\Provinces;
 use app\data\model\Subcontract;
-use think\Controller;
 use think\Request;
 use app\data\model\User;
 use think\Session;
 use think\Validate;
 use think\Db;
-class RoleCenter extends Controller
+class RoleCenter extends Base
 {
 
     /**
