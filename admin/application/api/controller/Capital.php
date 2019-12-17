@@ -78,7 +78,7 @@ class Capital extends Base
     public function invoice_amount()
     {
         $uid = Session::get("uid");
-        $data =   (new UserFund())->where('user_id',$uid)->find()->toArray();
+        $data =   (new UserFund())->where('user_id',$uid)->find();
 
         return $data ? returnJson(1,'获取成功',$data['money_invoice']) : returnJson(0,'暂无余额',$data['money_invoice']);
     }
