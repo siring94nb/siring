@@ -190,7 +190,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter,MemberTotal} from "@/api/api";
+import {GetRoleCenter,MemberTotal,MemberPartner} from "@/api/api";
 export default {
   data() {
     return {
@@ -290,6 +290,7 @@ export default {
   mounted(){
     this.RoleCenter();
     this.GetMemberTotal();
+    this.GetMemberPartner();
   },
   methods: {
     handleEdit(index, row) {
@@ -311,8 +312,22 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
+        // this.showMsg(msg, code);
         // console.log(123);
+        if (code === 1) {
+          this.handleClose();
+        }
+      });
+    },
+    // 获取等级会员列表数据
+    GetMemberPartner() {
+      const params = {
+        type:2
+      };
+      MemberPartner(params).then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg, code);
+        // console.log(msg);
         if (code === 1) {
           this.handleClose();
         }
@@ -322,7 +337,7 @@ export default {
     GetMemberTotal(){
       MemberTotal().then(res =>{
         let {data,msg,code} = res;
-        this.showMsg(msg,code);
+        // this.showMsg(msg,code);
         if(code === 1){
           this.handleClose()
         }

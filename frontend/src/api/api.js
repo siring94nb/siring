@@ -1,6 +1,6 @@
 import axios from 'axios'
 import qs from 'qs';
-
+// qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
 // https://manage.siring.com.cn/
 let base_url = ' https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
@@ -100,16 +100,46 @@ export const CityTotal = params => {
     return axios.get(`${base_url}api/RoleCenter/city_total`, { params: params });
 }
 /*
-*控制台-角色中心-城市合伙人列表
+*控制台-角色中心-城市合伙人列表(必选参数type类型为int（1：城市累计会员明细 2： 我邀请的会员明细 3：合伙人入驻订单）)
 */
 export const CityPartner = params => {
-    return axios.post(`${base_url}api/RoleCenter/city_partner`, { params: params });
+    return axios.post(`${base_url}api/RoleCenter/city_partner`, qs.stringify(params)).then(res => res.data);
 }
 /*
-*控制台-角色中心-等级会员（会员总数，佣金总数）
+*控制台-角色中心-会员等级总数统计(邀请的会员总数，佣金总数)
 */
 export const MemberTotal = params => {
     return axios.get(`${base_url}api/RoleCenter/member_total`, { params: params });
+}
+/*
+*等级会员页（会员列表 必选参数type类型为int（1：城市累计会员明细 2： 我邀请的会员明细 3：合伙人入驻订单））
+*/
+export const MemberPartner = params => {
+    return axios.post(`${base_url}api/RoleCenter/member_partner`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*分包商页（押金，佣金）
+*/
+export const SubcontractTotal = params => {
+    return axios.get(`${base_url}api/RoleCenter/subcontract_total`, { params: params });
+}
+/*
+*分包商页（必选参数type类型int（1：项目明细 2：申请订单））
+*/
+export const SubcontractPartner = params => {
+    return axios.post(`${base_url}api/RoleCenter/subcontract_partner`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*分包商页项目视窗
+*/
+export const SubView = params => {
+    return axios.get(`${base_url}api/RoleCenter/sub_view`, { params: params });
+}   
+/*
+*分包商页（分包商接单）
+*/
+export const Getreceipt = params => {
+    return axios.post(`${base_url}api/RoleCenter/receipt`, qs.stringify(params)).then(res => res.data);
 }
 /*
 *用户分享邀请码
@@ -325,3 +355,10 @@ export const needOrderAdd = data => {
 export const needOrderList = params => {
     return axios.get(`${base_url}api/NeedOrder/need_order_list`, { params: params });
 }
+/*
+*测试图片上传
+ */
+export const Qnupload = data => {
+    return axios.post(`${base_url}api/file/qn_upload`, qs.stringify(data)).then(res => res.data);
+}
+// https://manage.siring.com.cn/api/file/qn_upload
