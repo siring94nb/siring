@@ -265,7 +265,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { GetRoleCenter } from "@/api/api";
+import { GetRoleCenter,SubcontractTotal,SubcontractPartner,SubView,Getreceipt } from "@/api/api";
 export default {
   data() {
     return {
@@ -369,6 +369,12 @@ export default {
   components: {
     logginHeader
   },
+  mounted(){
+    this.RoleCenter();
+    this.GetSubcontractTotal();
+    this.GetSubcontractPartner();
+    this.GetSubView();
+  },
   methods: {
     handleCurrentChange(cpage) {
       this.currpage = cpage;
@@ -387,7 +393,7 @@ export default {
       // 当前有问题，会串联，虽然能实现全选全不选功能，但是但已有部分选中时会出现正反选的效果而不是全选
       if (rows) {
         rows.forEach(row => {
-          console.log(this.$refs.multipleTable)
+          // console.log(this.$refs.multipleTable)
           this.$refs.multipleTable.toggleRowSelection(row);
         });
       } else {
@@ -405,11 +411,54 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
+        // this.showMsg(msg, code);
         if (code === 1) {
-          this.handleClose();
         }
       });
+    },
+    // 获取分包商佣金，押金等
+    GetSubcontractTotal(){
+      SubcontractTotal().then(res =>{
+        let {data,msg,code} = res;
+        // this.showMsg(msg,code);
+        if(code === 1){
+        }
+      })
+    },
+    // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
+    GetSubcontractPartner(int = 1){
+      const params = {
+        type: int
+      };
+      SubcontractPartner(params).then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg, code);
+        if (code === 1) {
+        }
+      });
+    },
+    // 分包商视窗数据
+    GetSubView(){
+       SubView().then(res =>{
+        let {data,msg,code} = res;
+        // this.showMsg(msg,code);
+        if(code === 1){
+        }
+      })
+    },
+    //分包商接单（两个参数：项目id：xid，phone）
+    Receipt(){
+      const params = {
+        // 项目id先写死，后期更改
+        xid : 1,
+        phone:sessionStorage.getItem("phone")
+      };
+      Getreceipt(params).then(res=>{
+        let{data,msg,code} = res;
+        if(code === 1){
+
+        }
+      })
     },
     // 控制我要联系显示隐藏
     ShowHidden() {

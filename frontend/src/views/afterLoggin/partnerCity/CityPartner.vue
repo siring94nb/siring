@@ -267,6 +267,7 @@ import {GetRoleCenter,CityTotal,CityPartner} from "@/api/api";
 export default {
   data() {
     return {
+      CityData:{},//代理城市，有效期
       checked: false,
       title: "城市累积会员明细",
       topList: [
@@ -402,6 +403,8 @@ export default {
         console.log(res)
         // this.showMsg(msg, code);
         if (code === 1) {
+          this.CityData = data;
+          console.log(this.CityData)
         }
       });
     },

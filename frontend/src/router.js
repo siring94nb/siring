@@ -298,6 +298,14 @@ export default new Router({
             props: true,
             component: () =>
                 import('@/views/afterLoggin/financialDetails/discountCoupon'),
+        },
+        {
+            path: "/ceshi",
+            name: "ceshi",
+            // meta:{requireAuth:true},//路由守卫开启标识
+            // props: true,
+            component: () =>
+                import('@/views/afterLoggin/ceshi'),
         }
         ]
     },
