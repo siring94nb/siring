@@ -14,16 +14,8 @@ use app\util\ReturnCode;
  * lilu
  * 后端-定制需求订单
  */
-class NeedOrder extends Base{
-
-    /**
-     * lilu
-     * 构造方法
-     */
-    public function __construct()
-    {
-        $this->need = new NeedOrder();
-    }
+class NeedOrder extends Base
+{
 
     /**
      * lilu
