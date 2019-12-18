@@ -16,14 +16,6 @@ use app\util\ReturnCode;
  */
 class NeedOrder extends Base{
 
-    /**
-     * lilu
-     * 构造方法
-     */
-    public function __construct()
-    {
-        $this->need = new NeedOrder();
-    }
 
     /**
      * lilu
@@ -37,8 +29,9 @@ class NeedOrder extends Base{
         $param['order_status'] = $this->request->get('order_status', '');
         $param['start_time'] = $this->request->get('start_time', '');
         $param['end_time'] = $this->request->get('end_time', '');
+        // $param['user_id'] = $this->request->get('user_id', '');
         $model_order=new Need();
-        $data=$model_order->get_need_order($param);
+        $data=$model_order->get_need_order($param,0);
         if(!empty($data['data'])){
             return   $this->buildSuccess([
                 'data'=>$data['data'],

@@ -237,8 +237,8 @@ export default new Router({
                 import('@/views/afterLoggin/demand_order/demand_order'),
         },
         {
-            path: "/order_derail",
-            name: "order_derail",
+            path: "/order_detail",
+            name: "order_detail",
             meta:{requireAuth:true},//路由守卫开启标识
             props: true,
             component: () =>

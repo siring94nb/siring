@@ -14,7 +14,7 @@
           text-color="#fff"
           :default-openeds="[num]"
           :router="true"
-          
+          :unique-opened="true"
         >
           <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
             <!-- 控制中心 -->
@@ -37,7 +37,7 @@
 
 <script>
 // import Myheader from "@/components/header";
-import {GetRoleCenter,CityTotal,CityPartner} from "@/api/api";
+import {CityTotal,MemberTotal,SubcontractTotal} from "@/api/api";
 export default {
   // name: "fater-loggin",
   data() {
@@ -68,7 +68,7 @@ export default {
           classN: "el-icon-postcard",
           con: [
             // "城市合伙人", "等级会员", "分包商"
-            { name: "城市合伙人", rou: "/partnerCityX" },
+            { name: "城市合伙人", rou: "/CityPartner" },
             { name: "等级会员", rou: "/ClassMembersX" },
             { name: "分包商", rou: "/subContractorIndex" }
           ]
@@ -140,8 +140,13 @@ export default {
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].con.length; j++) {
           if (arr[i].con[j].rou == val) {
-            this.num=String(i);
-            // console.log(String(i))
+            // if(val =="/addEnterprise"||val =="/enterpriseList"){
+            // }else if(val =="/safetyTabControl"){
+              
+            // }else{
+              this.num=String(i);
+              // console.log(val)
+            // }
           }
         }
       }
@@ -157,24 +162,33 @@ export default {
         }else{
           this.arr[2].con[0].rou = "/CityPartner";
           // this.arr[2].con[0].rou = "/partnerCityX";
+          // 13260676780
         }
       });
     },
     // 等级会员
     classHuiyuanX() {
-      if (this.classHuiyuan === 0) {
-        this.arr[2].con[1].rou = "/ClassMembersX";
-      } else {
-        this.arr[2].con[1].rou = "/ClassMembersA";
-      }
+      MemberTotal().then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+            this.arr[2].con[1].rou = "/ClassMembersA";            
+        }else{
+          this.arr[2].con[1].rou = "/ClassMembersX";
+          // 13260676780
+        }
+      });
     },
     // 分包商
     fenbaoshangX() {
-      if (this.fenbaoshang === 0) {
-        this.arr[2].con[2].rou = "/subContractorIndex";
-      } else {
-        this.arr[2].con[2].rou = "/subContractorSm1";
-      }
+      SubcontractTotal().then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+            this.arr[2].con[2].rou = "/subContractorSm1";            
+        }else{
+          this.arr[2].con[2].rou = "/subContractorIndex";
+          // 13260676780
+        }
+      });
     },
     //提现
     withdrawX() {

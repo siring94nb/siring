@@ -51,35 +51,36 @@
         <span class="xg">身份认证:</span>
         <div class="shenFenZhengBox" style="display:flex">
           <div class="shenFenZhengZ">
-            <img :src="identityCardZImg" alt="身份证正面照" style="width:162px;height:107px" />
-            <br />
-            <span class="fileinput-button" style="margin:10px 0 0 30px ">
-              <span>+身份证正面照</span>
-              <input
-                type="file"
-                id="file"
-                class="filepath"
-                accept="image/jpg, image/jpeg, image/png, image/PNG"
-                ref="identityCardZX"
-                @change="identityCardZFun($event)"
-              />
-            </span>
-            <div style="margin:10px 0 0 10px">可选项</div>
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              list-type="picture-card"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :on-success="handleAvatarSuccess1"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="identityCardZImg" :src="identityCardZImg" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </div>
           <div class="shenFenZhengF">
-            <img :src="identityCardFImg" alt="身份证反面照" style="width:162px;height:107px" />
-            <br />
-            <span class="fileinput-button" style="margin:10px 0 0 30px">
-              <span>+身份证反面照</span>
-              <input
-                type="file"
-                id="file"
-                class="filepath"
-                accept="image/jpg, image/jpeg, image/png, image/PNG"
-                ref="identityCardFX"
-                @change="identityCardFun($event)"
-              />
-            </span>
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              list-type="picture-card"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-preview="handlePictureCardPreview"
+              :on-remove="handleRemove"
+              :on-success="handleAvatarSuccess2"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="identityCardFImg" :src="identityCardFImg" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </div>
         </div>
       </div>
@@ -138,9 +139,6 @@
       <div class="inputContent shangchuan">
         <span>*</span>
         <span class="xg">更改头像：</span>
-        <!-- <div style="width:72px;height:72px;">
-          <img :src="userImg" style="width:100%;height:100%" />
-        </div> -->
         <div>
           <el-upload
             name="image"
@@ -156,21 +154,12 @@
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
-          <!-- <span class="fileinput-button">
-            <span>上传头像</span>
-            <input
-              type="file"
-              id="file"
-              class="filepath"
-              accept="image/jpg, image/jpeg, image/png, image/PNG"
-              ref="userImgX"
-              @change="userImgFun($event)"
-              style="margin:-10px 0 0 0px;"
-              name="image"
-            />
-          </span> -->
         </div>
-        <span>个人头像上传，点击头像即可更换<br/><span>（备注：图片不得大于500k）</span></span>
+        <span>
+          个人头像上传，点击头像即可更换
+          <br />
+          <span>（备注：图片不得大于500k）</span>
+        </span>
       </div>
       <div class="affirm" @click="UserUpdatingX()">确认</div>
     </div>
@@ -192,33 +181,21 @@ export default {
       province: "", //省
       city: "", //市
       area: "", //县市区
-      // userImg: require("../../assets/images/u158.png"),
       identityCardZImg: require("../../assets/images/shengFzz.png"),
       identityCardFImg: require("../../assets/images/shengFzf.png")
     };
   },
   mounted() {
     this.userMessage();
-    this.SetSS()
+    this.SetSS();
   },
   methods: {
-    // 测试获取
-    ceshi() {
-      // console.log(this.name);
-      // console.log(this.userMessage1);
-      // console.log(this.sfzId);
-      // console.log(this.province);
-      // console.log(this.city);
-      // console.log(this.area);
-      // console.log(this.userImg);
-      // console.log(this.identityCardZImg);
-      // console.log(this.identityCardFImg);
-      console.log(this.userImg);
-    },
     // 进入修改上传样式
     SetSS() {
       let ceshi = document.getElementsByClassName("el-upload--picture-card");
-      ceshi[0].style.cssText = "width:72px;height:72px;border:0"
+      ceshi[0].style.cssText = "width:162px;height:107px;border:0";
+      ceshi[1].style.cssText = "width:162px;height:107px;border:0";
+      ceshi[2].style.cssText = "width:72px;height:72px;border:0";
     },
 
     // 图片上传测试
@@ -234,10 +211,14 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       // this.valData.imageUrl = res.data.filePath;
-      console.log(res.data.filePath);
-      // this.imageUrl = URL.createObjectURL(file.raw);
-      // console.log(this.uploadList);
+      // console.log(res.data.filePath);
       this.imageUrl = res.data.filePath;
+    },
+    handleAvatarSuccess1(res, file) {
+      this.identityCardZImg = res.data.filePath;
+    },
+    handleAvatarSuccess2(res, file) {
+      this.identityCardFImg = res.data.filePath;
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -250,53 +231,6 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
-    },
-
-    // 身份证正反面获取
-    identityCardZFun(e) {
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        that.identityCardZImg = this.result;
-      };
-    },
-    identityCardFun(e) {
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        that.identityCardFImg = this.result;
-      };
-    },
-    // 头像获取
-    userImgFun(e) {
-      var file = e.target.files[0];
-      const isJPG = file.type === "image/jpeg";
-      // console.log(isJPG);
-      const isLt50KB = file.size % 1024 < 50000;
-
-      if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
-      }
-      if (!isLt50KB) {
-        this.$message.error("上传头像图片大小不能超过 50kb!");
-      } else {
-        var reader = new FileReader();
-        var that = this;
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-          Qnupload({ image: this.result }).then(res => {
-            let { data, msg, code } = res;
-            console.log(data);
-          });
-          // that.userImg = this.result;
-          // console.log(this.result)
-        };
-      }
-      return isJPG && isLt50KB;
     },
     // 三级联动插件
     regionChange(data) {
@@ -343,13 +277,14 @@ export default {
         address: this.dizhi,
         enterprise_id: this.enterpriseName,
         sex: this.sex,
-        img: this.userImg
+        img: this.imageUrl
       };
       UserUpdating(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         if (code === 1) {
-          console.log(123123);
+          // console.log(123123);
+          this.$router.path("/afterLogginR");
         }
       });
     }
@@ -445,6 +380,38 @@ export default {
       }
     }
   }
+  .shenFenZhengZ {
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 162px;
+      height: 107px;
+      line-height: 72px;
+      text-align: center;
+    }
+    .avatar {
+      width: 162px;
+      height: 107px;
+      display: block;
+      border-radius: 6px;
+    }
+  }
+  .shenFenZhengF {
+    .avatar-uploader-icon {
+      font-size: 28px;
+      color: #8c939d;
+      width: 162px;
+      height: 107px;
+      line-height: 72px;
+      text-align: center;
+    }
+    .avatar {
+      width: 162px;
+      height: 107px;
+      display: block;
+      border-radius: 6px;
+    }
+  }
   .shangchuan {
     div:nth-of-type(2) {
       border: 1px solid rgba(14, 144, 210, 1);
@@ -460,7 +427,7 @@ export default {
     span:nth-of-type(3) {
       display: inline-block;
       height: 60px;
-      padding: 20px 0  0 15px;
+      padding: 20px 0 0 15px;
       box-sizing: border-box;
     }
   }
@@ -512,6 +479,7 @@ export default {
     width: 400px;
     margin-left: 98px !important;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   // 图片上传
@@ -534,27 +502,6 @@ export default {
     height: 70px;
     display: block;
     border-radius: 6px;
-  }
-
-  // 修改input上传样式
-  .fileinput-button {
-    position: relative;
-    display: inline-block;
-    overflow: hidden;
-    margin-left: -20px;
-  }
-
-  .fileinput-button input {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    /*
-    在chrome下input元素中的选择按钮露出来，但是没关系，可以通过后面的设透明的方式把它透明掉。
-    但是在IE下确是会把输入框露出来，关键是鼠标移到输入框上时，指针会变成输入状态，这个就很没法处理了。
-  通过right的定位方式把输入框移到左边去的方式，可以在IE下回避出现鼠标指针变成输入态的情况。
-     */
-    opacity: 0;
-    -ms-filter: "alpha(opacity=0)";
   }
   .shenFenZhengBox {
     > div {

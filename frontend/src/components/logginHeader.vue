@@ -12,7 +12,7 @@
 </template>
 <script>
 export default {
-    
+    name:"logginHeader"
 }
 </script>
 <style lang="scss" scoped>
@@ -21,7 +21,7 @@ export default {
         background: rgb(255, 255, 255);
         div:nth-of-type(1){
             padding: 10px;
-            i{
+            i{ 
                 padding-right: 10px 15px
             }
         }
