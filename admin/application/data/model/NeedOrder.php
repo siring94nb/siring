@@ -35,11 +35,13 @@ class NeedOrder extends Model
          * lilu
          * 获取定制需求订单
          */
-        public function get_need_order($parsm)
+        public function get_need_order($parsm,$po)
         {
             $where=[];
             $where['del_time'] = null;
-            $where['user_id'] = $parsm['user_id'];
+            if($po==1){
+                $where['user_id'] = $parsm['user_id'];
+            }
             if(array_key_exists('title',$parsm) && !empty($parsm['title'])){
                     $where['order_number']=$parsm['title'];
             }
