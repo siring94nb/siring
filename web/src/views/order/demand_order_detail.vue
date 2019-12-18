@@ -23,7 +23,7 @@
         </tr>
         <tr>
           <td class="td-one">终端版本：</td>
-          <td>{{JSON.parse(information.need_terminal)}}</td>
+          <td>{{information.need_terminal}}</td>
           <td class="td-one">合同金额：</td>
           <td>{{information.need_money}}</td>
         </tr>
@@ -37,57 +37,18 @@
       </table>
     </div>
     <div class="line line-marst">内容回复</div>
-    <div class="content-reply">
-      <template v-for="(item,index) in statusData">
-        <div class="content-main" :key="index">
-          <div
-            class="content-title"
-            :class="{'content-sel-color': status - 1 > index}"
-          >{{item.name}}</div>
-          <div v-if="status - 1 == index">
-            <div class="content-tips">
-              <img src="../../images/u3829.png" style="width:100%;height:100%;" alt />
-              <div class="content-text">{{item.tips}}</div>
-            </div>
-            <div class="content-arrow">
-              <img src="../../images/u3830.png" style="width:100%;height:100%;" alt />
-            </div>
-          </div>
-          <div class="content-zip" v-if="status - 1 > index">
-            <div class="zip-main">
-              <span class="zip-text">预览</span>
-              <img style="vertical-align: middle;" src="../../images/u587.gif" alt />
-              <span class="zip-text">下载</span>
-              <div>**需求表.zip</div>
-            </div>
-            <i></i>
-          </div>
-        </div>
-        <div
-          class="all-line"
-          :key="'l'+index"
-          :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
-          v-if="index < 6"
-        ></div>
-        <div
-          class="all-line"
-          :key="'s'+index"
-          :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
-          v-if="index < 6"
-        ></div>
-      </template>
-    </div>
+    <orderDetail :statusData="statusData" :status="status" />
 
     <div class="line line-vice">内容/合同/协议/确认文书</div>
     <!-- 定制需求 -->
     <div class="determine-box">
       <div class="dzxq-main" v-if="status == 1">
         <Form :label-width="80">
-          <FormItem label="需求名称：" prop="project_name">
+          <FormItem label="需求名称：">
             <Input placeholder="请输入" v-model="information.need_name" style="width: 450px;" />
           </FormItem>
-          <FormItem label="需求类型：" prop="category_id">
-            <Select style="width: 450px;" v-model="information.need_category">
+          <FormItem label="需求类型：">
+            <Select style="width: 450px;" :v-model="(information.need_category).toString()">
               <Option value="1">智能硬件</Option>
               <Option value="2">电子商务</Option>
               <Option value="3">生活娱乐</Option>
@@ -97,11 +58,11 @@
               <Option value="7">政府服务</Option>
             </Select>
           </FormItem>
-          <FormItem label="需求预算：" prop="project_price_up">
+          <FormItem label="需求预算：">
             <Input placeholder="请输入" v-model="information.need_budget_down" style="width: 200px;" />元 ~
             <Input placeholder="请输入" v-model="information.need_budget_up" style="width: 200px;" />元
           </FormItem>
-          <FormItem label="开发终端：" prop="develop">
+          <FormItem label="开发终端：">
             <CheckboxGroup v-model="information.need_terminal">
               <Checkbox label="原型UI">
                 <Icon type="ios-snow-outline" size="23" />原型UI
@@ -131,18 +92,23 @@
               <Input v-model="formValidate.project_price_up" placeholder="说明，不超过10个字" style="width: 200px;" />-->
             </CheckboxGroup>
           </FormItem>
-          <FormItem label prop="project_detail">
+          <FormItem label>
             <span>手机号</span>
             <Input placeholder="手机号" v-model="information.need_phone" style="width: 250px;" />
             <span style="margin-left:120px;">其他联系方式</span>
             <Input placeholder="XXX-XXXXXXX" style="width: 250px;" />
           </FormItem>
-          <FormItem label prop="project_detail">
+          <FormItem label>
             <span>微信号</span>
-            <Input placeholder  v-model="information.need_wx"  style="width: 250px;" />
+            <Input placeholder v-model="information.need_wx" style="width: 250px;" />
           </FormItem>
-          <FormItem label="需求描述：" prop="project_detail">
-            <Input type="textarea" :autosize="{minRows: 4,maxRows: 8}"  v-model="information.need_desc"  style="width:500px;" />
+          <FormItem label="需求描述：">
+            <Input
+              type="textarea"
+              :autosize="{minRows: 4,maxRows: 8}"
+              v-model="information.need_desc"
+              style="width:500px;"
+            />
           </FormItem>
           <FormItem label="添加附件：">
             <Upload action="//jsonplaceholder.typicode.com/posts/">
@@ -153,6 +119,88 @@
       </div>
       <div class="ptbj-box" v-if="status == 2">
         <img src="../../images/u4198.png" width="100%" alt />
+      </div>
+      <div class="contract" v-if="status == 3">
+        <p class="serial">合同编号：SR20190202</p>
+        <p class="contract-title">软件/定制开发合同</p>
+        <div class="identity">
+          甲方：
+          <input type="text" placeholder="请选择" style="width:390px;" />
+          <div>选择企业身份</div>
+        </div>
+        <p>乙方：深圳市思锐信息技术有限公司 914403001924280274</p>
+        <p>
+          甲乙双方基于平等互利、公平自愿原则，委托甲方进行
+          <span class="focus">装修小程序开发</span> 项目开发。经友好协商一致同意签订如下合同，共同遵守，双方对本合同的所有内容均无任何异议。
+        </p>
+        <p>
+          一、产品名称：
+          <span class="focus">装修小程序开发</span>
+        </p>
+        <p>
+          二、终端版本:
+          <span class="focus">安卓+苹果+小程序+微信公众号</span>
+        </p>
+        <p>
+          三、项目工期：
+          <span class="focus">20个工作。</span>
+        </p>
+        <p>
+          四、合同总金额：
+          <span class="focus">{{price}}元（{{convertToChinaNum(price)}}元整）</span>
+        </p>
+        <p>五、分期付款方式：甲方向乙方支付总开发费用实行分期付款方式。本项目分四期付款，第一期为总合同款的70%，第二期为总合同款的20%，第三期为总合同款10%,第四期为总合同款10%。</p>
+        <p class="retract">
+          5.1在本合同签订后的3工作日内，第一期甲方支付乙方项目预付款即合同总价的70%，小写：¥__
+          <span class="focus">{{price*0.7}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum(price*0.7)}}</span>__元整）。
+        </p>
+        <p class="retract">
+          5.2甲方在和乙方对完整套项目原型及UI时，经甲方签署原型确认单后，3个工作日内需向乙方支付第二期费用即合同总价的10%，小写：¥__
+          <span
+            class="focus"
+          >{{price*0.1}}</span>（大写：人民币：__
+          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+        </p>
+        <p class="retract">
+          5.3乙方完成项目DEMO版：即可运行90%功能的版本（不排除存在BUG），经甲方确认版本功能无误后，3个工作日内需向乙方支付第三期费用即合同总价的10%，小写：¥__
+          <span
+            class="focus"
+          >{{price*0.1}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+        </p>
+        <p class="retract">
+          5.4甲方应于收到乙方交付的最终定稿的产品安装包，之日起3个工作日内向乙方支付本合同第四期费用即合同总价的10%，小写：¥__
+          <span
+            class="focus"
+          >{{price*0.1}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+        </p>
+        <p>六、项目全自动流程：整体项目开发通过线上自动流程确认完成，并系统化管理方式，每个环节均可在我的软件/定制板块订单中跟进完成所有交易流程和步骤。</p>
+        <p>七、工期计算方式：甲方确认设计原型并付款之日，为项目开发工期的起始日期，乙方完成项目DEMO版之日，为项目完工日期。</p>
+        <p>八、免费维护期： 12个月，免费维护期内，产品出现的原型确认功能范围内的任何bug，乙方需第一时间免费处理。维护期自甲方进行产品确认验收完毕后开始计时。</p>
+        <p>九、有偿维护期：超过12个月后，乙方提供有偿技术维护，平台维护费为本合同金额+新增功能需求总计的10%；</p>
+        <p>十、新增功能需求： 如果甲方需要对于系统进行非内容性的修改，例如系统功能的添加、修改和删除，或对系统整体风格及页面布局进行调整，其费用根据甲方的具体需求另行商定，该费用不包含在本合同内。</p>
+        <p>十一、验收：项目完成，乙方自检完成后，报请甲方验收，甲方接到申请后应在 7 日内进行验收，验收完成后，甲方应在 5日内为乙方办妥竣工验收及结算资料。若甲方未在指定的期限内完成验收工作，到期后即默认视为验收合格。</p>
+        <p>十二、违约责任：甲方在项目制作过程中需与乙方积极配合，提供有效的修改意见或确认信息，若在项目进行过程中，甲方处于停滞状态，即对乙方提供的工作成果既不给出有效修改意见也不对其进行肯定确认，如果停滞时间超过20个工作日以上，则视作甲方主动解除本合同，甲方无权要求乙方返还已经支付的费用。</p>
+        <p>十三、电子合同：本合同电子档，经过甲方同意，付款后立即生效，合同电子档将长期保存在会员账号平台中。</p>
+        <p>十四、纸质合同：如需纸质合同，可将本合同下载打印一式两份，邮寄给乙方，经乙方盖章后，寄还给甲方一份，甲乙双方各执一份。</p>
+        <p>十五、免责：因不可抗力或者其他意外事件，或使得本合同的履行不可能、不必要或者无意义的，任一方均可以解除本合同。本合同所称不可抗力、意外事件是指不能预见、不能克服并不能避免且对一方当事人造成重大影响的客观事件，包括但不限于自然灾害以及社会事件如战争、动乱、政府行为等，但受不可抗力影响的一方应当及时通知对方并采取合理措施防止损失的扩大。</p>
+        <p>十六、协商：双方当事人对本合同的订立、解释、履行、效力等发生争议的，应友好协商解决；协商不成的，双方同意向乙方所在地有管辖权限的人民法院诉讼解决。</p>
+        <p>十七、附件及补充协议：本合同未及事宜，由双方协商作出补充协议，附件及补充协议与本合同具有同等效力。</p>
+        <div class="sign">
+          <div class="party-sign">
+            <p>甲方（签章）：刘德华</p>
+            <p>法定或签约代表：</p>
+            <p>日期： 2018 年 6 月 19 日</p>
+          </div>
+          <div style="flex:1;"></div>
+          <div class="party-sign" style="margin-right:120px;">
+            <p>乙方（签章）：深圳市思锐信息技术有限公司</p>
+            <p>法定或签约代表：</p>
+            <p>日期： 2018 年 6 月 19 日</p>
+          </div>
+        </div>
       </div>
     </div>
     <div class="line line-vice">平台顾问信息互动</div>
@@ -184,7 +232,7 @@
       </div>
     </div>
 
-    <div class="foot-box" v-if="status == 2">
+    <div class="foot-box">
       <div class="pt-bj">
         <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
         <div class="audit">
@@ -194,30 +242,75 @@
           <div class="arrow-pole"></div>
           <div class="arrow right-arrow"></div>
         </div>
-        <div class="project">
-          工期：
-          <input
-            type="number"
-            name="day"
-            id
-            placeholder="请填写"
-            style="width:60px;line-height:30px;color:red;"
-          />
-          工作日
+        <div class="project" v-if="status == 2">
+          <div>
+            工期：
+            <input
+              type="number"
+              name="day"
+              id
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            工作日
+          </div>
+          <div>
+            合同额：
+            <input
+              type="number"
+              name="money"
+              id
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            元
+          </div>
         </div>
-        <div>
-          合同额：
-          <input
-            type="number"
-            name="money"
-            id
-            placeholder="请填写"
-            style="width:60px;line-height:30px;color:red;"
-          />
-          元
+        <div class="project" v-if="status == 3">
+          <div>
+            1期：
+            <input
+              type="number"
+              name="one"
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            %
+          </div>
+          <div>
+            2期：
+            <input
+              type="number"
+              name="one"
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            %
+          </div>
+          <div>
+            3期：
+            <input
+              type="number"
+              name="one"
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            %
+          </div>
+          <div>
+            4期：
+            <input
+              type="number"
+              name="one"
+              placeholder="请填写"
+              style="width:60px;line-height:30px;color:red;"
+            />
+            %
+          </div>
         </div>
       </div>
-      <div class="audit-opinion">
+      <div></div>
+      <div class="audit-opinion" v-if="status == 2">
         <span>审核意见：</span>
         斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
@@ -232,15 +325,20 @@
 <script>
 import axios from "axios";
 import config from "../../../build/config";
+import orderDetail from "../main_components/order/orderDetail.vue";
 import qs from "qs";
 const apiPost = (url, params) => {
   return axios.post(url, qs.stringify(params)).then(res => res.data);
 };
 
 export default {
+  components: {
+    orderDetail
+  },
   data() {
     return {
-      status: 0,
+      price: 50000,
+      status: 3,
       id: 0,
       value: "",
       path: "ws://127.0.0.1:3000",
@@ -300,7 +398,7 @@ export default {
   },
   methods: {
     init() {
-      this.status = this.$route.params.status;
+      // this.status = this.$route.params.status;
       this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
@@ -352,10 +450,62 @@ export default {
         let { code, data, msg } = res;
         // console.log(data.data.need_terminal))
         if (code == 1) {
-          data.data.need_category = (data.data.need_category).toString();
+          // data.data.need_category = (data.data.need_category).toString();
           vm.information = data.data;
         }
       });
+    },
+    //数字转汉字
+    convertToChinaNum(num) {
+      var arr1 = new Array(
+        "零",
+        "一",
+        "二",
+        "三",
+        "四",
+        "五",
+        "六",
+        "七",
+        "八",
+        "九"
+      );
+      var arr2 = new Array(
+        "",
+        "十",
+        "百",
+        "千",
+        "万",
+        "十",
+        "百",
+        "千",
+        "亿",
+        "十",
+        "百",
+        "千",
+        "万",
+        "十",
+        "百",
+        "千",
+        "亿"
+      ); //可继续追加更高位转换值
+      if (!num || isNaN(num)) {
+        return "零";
+      }
+      var english = num.toString().split("");
+      var result = "";
+      for (var i = 0; i < english.length; i++) {
+        var des_i = english.length - 1 - i; //倒序排列设值
+        result = arr2[i] + result;
+        var arr1_index = english[des_i];
+        result = arr1[arr1_index] + result;
+      } //将【零千、零百】换成【零】 【十零】换成【十】
+      result = result.replace(/零(千|百|十)/g, "零").replace(/十零/g, "十"); //合并中间多个零为一个零
+      result = result.replace(/零+/g, "零"); //将【零亿】换成【亿】【零万】换成【万】
+      result = result.replace(/零亿/g, "亿").replace(/零万/g, "万"); //将【亿万】换成【亿】
+      result = result.replace(/亿万/g, "亿"); //移除末尾的零
+      result = result.replace(/零+$/, ""); //将【零一十】换成【零十】 //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十 //将【一十】换成【十】
+      result = result.replace(/^一十/g, "十");
+      return result;
     }
   },
   destroyed() {
@@ -391,6 +541,55 @@ export default {
     .dzxq-main {
       padding: 30px 30px 30px 300px;
     }
+    .contract {
+      font-size: 13px;
+      color: #333333;
+      padding: 25px;
+      p {
+        line-height: 30px;
+      }
+      .retract {
+        margin-left: 25px;
+      }
+      .serial {
+        float: right;
+      }
+      .contract-title {
+        clear: both;
+        font-weight: 700;
+        font-style: normal;
+        font-size: 22px;
+        text-align: center;
+        margin: 20px 0 60px 0;
+      }
+      .identity {
+        display: flex;
+        align-items: center;
+        div {
+          background-color: rgb(230, 247, 255);
+          border: 1px solid rgb(145, 213, 255);
+          font-size: 12px;
+          color: #1890ff;
+          line-height: 20px;
+          width: 100px;
+          text-align: center;
+        }
+      }
+      .focus {
+        font-weight: 700;
+        text-decoration: underline;
+      }
+      .sign {
+        margin-top: 50px;
+        display: flex;
+
+        .party-sign {
+          p {
+            line-height: 35px;
+          }
+        }
+      }
+    }
   }
   .main-top {
     table {
@@ -408,94 +607,6 @@ export default {
       width: 20%;
       font-weight: 700;
       font-size: 12px;
-    }
-  }
-  .content-reply {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    .content-main {
-      text-align: center;
-      width: 122px;
-      .content-title {
-        width: 122px;
-        height: 33px;
-        line-height: 33px;
-        background: inherit;
-        background-color: rgba(161, 161, 161, 1);
-        border: none;
-        border-radius: 63px;
-        font-weight: 700;
-        font-style: normal;
-        font-size: 16px;
-        color: #ffffff;
-        text-align: center;
-      }
-      .content-sel-color {
-        background-color: rgb(102, 153, 0);
-      }
-      .content-zip {
-        box-sizing: border-box;
-        position: relative;
-        display: table-cell;
-        padding-top: 10px;
-        min-height: 60px;
-        .zip-main {
-          background-color: rgb(242, 242, 242);
-          width: 122px;
-          height: 75px;
-          border-radius: 5px;
-          background-color: rgb(242, 242, 242);
-          padding-top: 15px;
-          .zip-text {
-            color: rgb(0, 51, 102);
-            line-height: 16px;
-          }
-        }
-      }
-      .content-zip i {
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        position: absolute;
-        top: 0;
-        border-bottom: 10px solid rgb(242, 242, 242);
-        left: 45%;
-      }
-      .content-tips {
-        width: 125px;
-        height: 85px;
-        position: relative;
-        .content-text {
-          position: absolute;
-          color: red;
-          top: 32px;
-          // left: 15px;
-          text-align: center;
-          width: 125px;
-          font-size: 16px;
-        }
-      }
-      .content-arrow {
-        width: 40px;
-        height: 40px;
-        margin: auto;
-      }
-    }
-    .all-line {
-      height: 3px;
-      width: 18px;
-      margin-top: 15px;
-    }
-    .g-line {
-      background-color: rgb(102, 153, 0) !important;
-    }
-    .h-line {
-      background-color: rgb(161, 161, 161);
-    }
-    .line-w {
-      width: 36px;
     }
   }
 
@@ -696,6 +807,8 @@ export default {
       }
       .project {
         margin: 0 30px;
+        display: flex;
+        div{margin-right: 20px;}
       }
     }
     .audit-opinion {
