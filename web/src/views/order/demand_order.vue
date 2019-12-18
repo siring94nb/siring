@@ -303,7 +303,8 @@ export default {
             title: vm.searchConf.title,
             // order_status: vm.searchConf.order_status,
             start_time: vm.searchConf.start_time,
-            end_time: vm.searchConf.end_time
+            end_time: vm.searchConf.end_time,
+            user_id:0
           }
         })
         .then(function(response) {

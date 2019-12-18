@@ -46,15 +46,15 @@
         </el-form>
       </div>
       <div class="btn-all">
-        <el-button size="mini" @click="handleEdit()" class="btns btn-qb">全部</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-dzxq">定制需求</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-ptbj">平台报价</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-qdht">签订合同</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-yxqr">原型确认</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-xmsx">项目上线</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-xmys">项目验收</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-xmnfw">项目年服务</el-button>
-        <el-button size="mini" @click="handleEdit()" class="btns btn-xmzz">中止项目</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-qb">全部</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-dzxq">定制需求</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-ptbj">平台报价</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-qdht">签订合同</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-yxqr">原型确认</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-xmsx">项目上线</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-xmys">项目验收</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-xmnfw">项目年服务</el-button>
+        <el-button size="mini" @click="handleEdit(1)" class="btns btn-xmzz">中止项目</el-button>
       </div>
       <div>
         <el-table
