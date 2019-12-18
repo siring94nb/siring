@@ -158,13 +158,12 @@ Route::group('api', function () {
         Route::any('callback','api/WxThree/callback'); //回调信息获取
     });
 
-    //控制台-AI推广套餐
+    //控制台-AI推广套餐 fyk
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
-        Route::any('sendMassage','api/SendMassage/sendMassage'); //短信中转
     });
 
-    //控制台-角色中心
+    //控制台-角色中心 fyk
     Route::group('RoleCenter',function(){
         Route::any('city_partner','api/RoleCenter/city_partner'); //合伙人列表
         Route::any('city_total','api/RoleCenter/city_total'); //合伙人统计总数
@@ -175,6 +174,19 @@ Route::group('api', function () {
         Route::any('subcontract_total','api/RoleCenter/subcontract_total'); //分包商统计
         Route::any('sub_view','api/RoleCenter/sub_view'); //分包项目视窗
         Route::any('receipt','api/RoleCenter/receipt'); //接单
+    });
+
+    //控制台-资金管理
+    Route::group('Capital',function(){
+        Route::any('capital_detailed','api/Capital/capital_detailed'); //资金明细
+        Route::any('invoice_amount','api/Capital/invoice_amount'); //剩余开票金额
+        Route::any('member_partner','api/Capital/member_partner'); //会员列表
+        Route::any('member_total','api/Capital/member_total'); //会员统计总数
+        Route::any('tips','api/Capital/tips'); //会员提示信息
+        Route::any('subcontract_partner','api/Capital/subcontract_partner'); //分包商列表
+        Route::any('subcontract_total','api/Capital/subcontract_total'); //分包商统计
+        Route::any('sub_view','api/Capital/sub_view'); //分包项目视窗
+        Route::any('receipt','api/Capital/receipt'); //接单
     });
 
 

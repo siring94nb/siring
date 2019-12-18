@@ -135,6 +135,8 @@
       :price="price"
       :percent="percent"
       :pay="pay"
+      :order="1"
+      :scale="0"
       @sendNum="getNum"
       :needCodeDialog="needCodeDialog"
     />

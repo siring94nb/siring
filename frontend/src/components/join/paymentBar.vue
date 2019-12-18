@@ -23,7 +23,14 @@
           @change="handleChange"
           :min="1"
           :max="10"
+          v-if="order != 1"
         ></el-input-number>
+        <div v-if="order==1">
+          <div class="bgw">{{scale}}%</div>
+          <p class="tip">
+           <span style="color:red;">*</span> 一期比例
+          </p>
+        </div>
         <div class="symbol">=</div>
         <div>
           <div class="bgw">￥{{total}}</div>
@@ -61,7 +68,9 @@ export default {
     "needCodeDialog",
     "price",
     "percent",
-    "pay"
+    "pay",
+    "scale",
+    "order"
   ],
   data() {
     return {
@@ -85,7 +94,7 @@ export default {
   },
   computed: {
     total() {
-      return this.price * (this.percent / 100) * this.num;
+      return this.price * (this.percent / 100) * (this.order == 1? this.scale/100 : this.num);
     }
   },
   methods: {
