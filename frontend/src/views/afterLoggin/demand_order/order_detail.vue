@@ -20,51 +20,13 @@
         </div>
         <div class="day-text">
           距离项目上线还有
-          <span class="for-day">_ _</span>
+          <span class="for-day">_&nbsp;_</span>
           天
         </div>
       </div>
 
-      <div class="content-reply">
-        <template v-for="(item,index) in statusData">
-          <div class="content-main" :key="index">
-            <div
-              class="content-title"
-              :class="{'content-sel-color': status - 1 > index}"
-            >{{item.name}}</div>
-            <div v-if="status - 1 == index">
-              <div class="content-tips">
-                <img src="../../../assets/images/u3829.png" style="width:100%;height:100%;" alt />
-                <div class="content-text">{{item.tips}}</div>
-              </div>
-              <div class="content-arrow">
-                <img src="../../../assets/images/u3830.png" style="width:100%;height:100%;" alt />
-              </div>
-            </div>
-            <div class="content-zip" v-if="status - 1 > index">
-              <div class="zip-main">
-                <span class="zip-text">预览</span>
-                <img style="vertical-align: middle;" src="../../../assets/images/u587.gif" alt />
-                <span class="zip-text">下载</span>
-                <div>**需求表.zip</div>
-              </div>
-              <i></i>
-            </div>
-          </div>
-          <div
-            class="all-line"
-            :key="'l'+index"
-            :class="{'h-line': status - 1 < index + 2, 'g-line' :  status - 1 > index}"
-            v-if="index < 6"
-          ></div>
-          <div
-            class="all-line"
-            :key="'s'+index"
-            :class="{'h-line': status - 1 < index + 2, 'g-line' : status - 1 > index + 1}"
-            v-if="index < 6"
-          ></div>
-        </template>
-      </div>
+      <!-- 流程条 -->
+      <orderProcess :statusData="statusData" :status="status" />
 
       <div class="line line-vice">内容/合同/协议/确认文书</div>
       <!-- 定制需求 -->
@@ -207,17 +169,23 @@
           </p>
           <p class="retract">
             5.2甲方在和乙方对完整套项目原型及UI时，经甲方签署原型确认单后，3个工作日内需向乙方支付第二期费用即合同总价的10%，小写：¥__
-            <span class="focus">{{price*0.1}}</span>（大写：人民币：__
+            <span
+              class="focus"
+            >{{price*0.1}}</span>（大写：人民币：__
             <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
           </p>
           <p class="retract">
             5.3乙方完成项目DEMO版：即可运行90%功能的版本（不排除存在BUG），经甲方确认版本功能无误后，3个工作日内需向乙方支付第三期费用即合同总价的10%，小写：¥__
-            <span class="focus">{{price*0.1}}</span>__（大写：人民币：__
+            <span
+              class="focus"
+            >{{price*0.1}}</span>__（大写：人民币：__
             <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
           </p>
           <p class="retract">
             5.4甲方应于收到乙方交付的最终定稿的产品安装包，之日起3个工作日内向乙方支付本合同第四期费用即合同总价的10%，小写：¥__
-            <span class="focus">{{price*0.1}}</span>__（大写：人民币：__
+            <span
+              class="focus"
+            >{{price*0.1}}</span>__（大写：人民币：__
             <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
           </p>
           <p>六、项目全自动流程：整体项目开发通过线上自动流程确认完成，并系统化管理方式，每个环节均可在我的软件/定制板块订单中跟进完成所有交易流程和步骤。</p>
@@ -246,6 +214,25 @@
             </div>
           </div>
         </div>
+        <div class="ptbj-box" v-if="status == 4 || status == 5">
+          <div class="wait-ptbj" v-if="status == 4">
+            <img src="../../../assets/images/u9830.png" alt />
+            <div>请耐心等待原型设计！</div>
+          </div>
+          <div class="wait-ptbj" v-if="status == 5">
+            <img src="../../../assets/images/u9830.png" alt />
+            <div style="width:330px;margin:10px auto;">项目开发中……<span style="color:red;">请积极配合第三方申请，加快项目开发！</span></div>
+          </div>
+          <!-- <div class="solutions">
+            <div class="solutions-h1">原型方案查阅</div>
+            <img src="../../../assets/images/u10329.png" alt />
+            <div class="solutions-url">
+              {{solutions_url}}
+              <span v-clipboard:copy="solutions_url" v-clipboard:success="copy">复制</span>
+            </div>
+          </div> -->
+        </div>
+        
       </div>
       <div class="line line-vice">平台顾问信息互动</div>
       <!-- 聊天 -->
@@ -277,12 +264,20 @@
         </div>
       </div>
       <div class="obj-btn">
-        <div class="btns-all stop-obj" @click="obj_btn(1)">中止，本人放弃该项目</div>
+        <div class="btns-all stop-obj" @click="obj_btn(1)" v-if="status < 4">中止，本人放弃该项目</div>
         <div style="flex:1;"></div>
         <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 1">确定，本人已确认该需求方案</div>
         <div class="btns-all no-obj" v-if="status == 2">等待报价单</div>
         <!-- <div class="btns-all start-obj" @click="obj_btn(3)" v-if="status == 2" >确定，本人已确认该报价方案</div> -->
-        <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 3">等待支付合同款</div>
+        <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 3||status == 4">等待支付合同款</div>
+
+        <!-- <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 4">等待原型确认</div> -->
+        <!-- <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 4">确定，本人已确认该原型方案</div> -->
+
+        <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 5">项目开发中......</div>
+      </div>
+      <div style="font-size:13px;text-align:center;" v-if="status==4">
+        <span style="color:red;">*敬请留意*：</span>所有开发依据原型为依据，如开发完成后提出与原型不一致情况，造成项目费用增加或者项目延迟，均由甲方承担！如无误，可点击确认，供工程师进行开发使用
       </div>
       <payment-bar
         ref="paymentbar"
@@ -302,12 +297,13 @@
 import logginHeader from "@/components/logginHeader";
 import { needOrderList } from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
+import orderProcess from "@/components/order/orderProcess";
 export default {
   data() {
     return {
       userId: "",
       path: "ws://127.0.0.1:3000",
-      status: 3,
+      status: 5,
       socket: "",
       statusData: [
         {
@@ -416,7 +412,8 @@ export default {
           }
         ]
       },
-      payqrcode: ""
+      payqrcode: "",
+      solutions_url: "https://oepz25.axshare.com"
     };
   },
   mounted() {
@@ -582,7 +579,10 @@ export default {
     getNum(value) {
       this.num = value;
     },
-    pay() {}
+    pay() {},
+    copy() {
+      this.$message.success("复制成功");
+    }
   },
   destroyed() {
     // 销毁监听
@@ -590,7 +590,8 @@ export default {
   },
   components: {
     logginHeader,
-    PaymentBar
+    PaymentBar,
+    orderProcess
   }
 };
 </script>
@@ -665,9 +666,9 @@ export default {
       }
     }
     .ptbj-box {
+      margin-top: 200px;
+      text-align: center;
       .wait-ptbj {
-        text-align: center;
-        margin-top: 200px;
         img {
           width: 100px;
           height: 100px;
@@ -677,6 +678,30 @@ export default {
           font-size: 20px;
           color: #c9c9c9;
           text-align: center;
+        }
+      }
+      .solutions {
+        img {
+          transform: rotate(180deg);
+          width: 60px;
+          height: 60px;
+          margin: 10px 0;
+        }
+        .solutions-h1 {
+          font-family: "Arial Negreta", "Arial Normal", "Arial";
+          font-weight: 700;
+          font-style: normal;
+          font-size: 32px;
+          color: #333333;
+        }
+        .solutions-url {
+          font-size: 18px;
+          color: #669900;
+          span {
+            color: #000;
+            margin-left: 30px;
+            cursor: pointer;
+          }
         }
       }
     }
@@ -731,95 +756,7 @@ export default {
     }
   }
   //流程
-  .content-reply {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    .content-main {
-      text-align: center;
-      width: 122px;
-      .content-title {
-        width: 122px;
-        height: 33px;
-        line-height: 33px;
-        background: inherit;
-        background-color: rgba(161, 161, 161, 1);
-        border: none;
-        border-radius: 63px;
-        font-weight: 700;
-        font-style: normal;
-        font-size: 16px;
-        color: #ffffff;
-        text-align: center;
-      }
-      .content-sel-color {
-        background-color: rgb(102, 153, 0);
-      }
-      .content-zip {
-        box-sizing: border-box;
-        position: relative;
-        display: table-cell;
-        padding-top: 10px;
-        min-height: 60px;
-        .zip-main {
-          background-color: rgb(242, 242, 242);
-          width: 122px;
-          height: 75px;
-          border-radius: 5px;
-          background-color: rgb(242, 242, 242);
-          padding-top: 15px;
-          box-sizing: border-box;
-          .zip-text {
-            color: rgb(0, 51, 102);
-            line-height: 16px;
-          }
-        }
-      }
-      .content-zip i {
-        width: 0;
-        height: 0;
-        border-left: 12px solid transparent;
-        border-right: 12px solid transparent;
-        position: absolute;
-        top: 0;
-        border-bottom: 10px solid rgb(242, 242, 242);
-        left: 45%;
-      }
-      .content-tips {
-        width: 125px;
-        height: 85px;
-        position: relative;
-        .content-text {
-          position: absolute;
-          color: red;
-          top: 32px;
-          // left: 15px;
-          text-align: center;
-          width: 125px;
-          font-size: 16px;
-        }
-      }
-      .content-arrow {
-        width: 40px;
-        height: 40px;
-        margin: auto;
-      }
-    }
-    .all-line {
-      height: 3px;
-      width: 18px;
-      margin-top: 15px;
-    }
-    .g-line {
-      background-color: rgb(102, 153, 0) !important;
-    }
-    .h-line {
-      background-color: rgb(161, 161, 161);
-    }
-    .line-w {
-      width: 36px;
-    }
-  }
+
   //聊天框
 
   .speak_window {
