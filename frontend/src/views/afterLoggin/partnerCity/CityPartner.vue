@@ -12,12 +12,13 @@
       <div class="smBox1">
         <div>
           <span>代理城市：</span>
-          <span>深圳</span>
+          <span>{{CityData.name}}</span>
         </div>
         <div>
           <span>有效期至：</span>
-          <span>2019年12月31日</span>
-          <span>续费</span>
+          <span v-if="CityData.end_time!=null">2019年12月31日</span>
+          <span v-if="CityData.end_time==null" style="color:red">永久</span>
+          <span v-if="CityData.end_time!=null">续费</span>
         </div>
       </div>
       <div class="smBox2">
@@ -36,7 +37,7 @@
         </div>
       </div>
       <div>
-        <el-tabs v-model="activeName">
+        <el-tabs v-model="activeName" @tab-click="ceshi"> 
           <el-tab-pane label="城市累计会员明细" name="first" :key="'first'">
             <div>
               <div class="suoyinlan">
@@ -76,28 +77,28 @@
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="邀请人账号" width="120" align="center">
+                  <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
+                  <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
                     <template slot-scope="scope">
                       <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
                   <el-table-column
-                    prop="InviterInvitationCode"
+                    prop="ot_yqm"
                     label="邀请人邀请码"
                     width="120"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
+                  <el-table-column prop="id" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
+                  <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
                   <el-table-column
-                    prop="MinimumCommissions"
+                    prop="bottom_money"
                     label="保底佣金金额（元）"
                     width="160"
                     align="center"
                   ></el-table-column>
                   <el-table-column
-                    prop="StandardCommission"
+                    prop="reach_money"
                     label="达标佣金金额（元）"
                     width="160"
                     align="center"
@@ -217,7 +218,7 @@
               </div>
             </div>
           </el-tab-pane>
-          <el-tab-pane label="我邀请的会员明细" name="third" :key="'third'">
+          <el-tab-pane label="合伙人入驻订单" name="third" :key="'third'">
             <div>
               <div class="lijifenxiang" style="padding:0">
                 <div>立即分享邀请</div>
@@ -274,24 +275,25 @@ export default {
         {
           imgUrl: require("../../../assets/images/leijiSum.png"),
           title: "城市累计会员总数",
-          num: "5000"
+          num: "city_user_total"
         },
         {
           imgUrl: require("../../../assets/images/u7232.png"),
           title: "城市保底佣金总额",
-          num: "55500.00"
+          num: "bottom_money_total"
         },
         {
           imgUrl: require("../../../assets/images/u7230.png"),
           title: "我邀请的会员总数",
-          num: "2"
+          num: "invite_user_total"
         },
         {
           imgUrl: require("../../../assets/images/u7231.png"),
           title: "城市达标佣金总额",
-          num: "5000.00"
+          num: "reach_user_total"
         }
       ],
+      // numArr:[],//与topList
       activeName: "first",
       // 时间范围选择
       pickerOptions: {
@@ -327,44 +329,7 @@ export default {
       },
       value: "",
       // 邀请分页表格
-      list: [
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          MinimumCommissions: "",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          MinimumCommissions: "",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          MinimumCommissions: "",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          MinimumCommissions: "",
-          StandardCommission: "230"
-        }
-      ],
+      list: [],
       pagesize: 3,
       currpage: 1,
       total: 100,
@@ -381,6 +346,9 @@ export default {
     this.GetCityPartner();
   },
   methods: {
+    ceshi(event,tab){
+      console.log(event.index)
+    },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -393,7 +361,7 @@ export default {
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    // 获取城市数据
+    // 获取城市数据及有效期数据
     RoleCenter() {
       const params = {
         type:1
@@ -402,7 +370,7 @@ export default {
         let { data, msg, code } = res;
         console.log(res)
         // this.showMsg(msg, code);
-        if (code === 1) {
+        if (code == 1) {
           this.CityData = data;
           console.log(this.CityData)
         }
@@ -412,16 +380,19 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg, code } = res;
-        // this.showMsg(msg, code);
-        console.log(res);
-        if (code === 1) {
-        }else{
+        if (code == 1) {
+          const newArr = this.topList.map(item => {
+            item.num = data[item.num];
+            return item;
+          });
+          this.topList = newArr;
         }
       });
     },
     /*
     *获取城市合伙人列表数据
-    *type为必选，
+    *type为必选，title:搜索条件，start_time：开始时间，end_time：结束时间，page：页码默认为第一页 一页显示10调数据
+    * 
     */
     GetCityPartner() {
       const params = {
@@ -432,6 +403,7 @@ export default {
         console.log(res)
         // this.showMsg(msg, code);
         if (code === 1) {
+          this.list = data.data
         }
       });
     },

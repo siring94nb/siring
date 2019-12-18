@@ -426,9 +426,9 @@ export default {
       })
     },
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
-    GetSubcontractPartner(int = 1){
+    GetSubcontractPartner(num = 1){
       const params = {
-        type: int
+        type: num
       };
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;

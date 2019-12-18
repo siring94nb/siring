@@ -12,13 +12,14 @@
       <div class="smBox1">
         <div>
           <span>当前会员等级：</span>
-          <span>金牌会员</span>
+          <span>{{CityData.name}}</span>
           <i class="el-icon-edit"></i>
         </div>
         <div>
           <span>有效期至：</span>
-          <span>2019年12月31日</span>
-          <span>续费</span>
+          <span v-if="CityData.end_time!=null">2019年12月31日</span>
+          <span v-if="CityData.end_time==null" style="color:red">永久</span>
+          <span v-if="CityData.end_time!=null">续费</span>
         </div>
       </div>
       <div class="smBox2">
@@ -194,18 +195,19 @@ import {GetRoleCenter,MemberTotal,MemberPartner} from "@/api/api";
 export default {
   data() {
     return {
+      hyTime:"",
       checked: false,
       title: "城市累积会员明细",
       topList: [
         {
           imgUrl: require("../../../assets/images/u7230.png"),
           title: "我邀请的会员总数",
-          num: "2"
+          num: "invite_user_total"
         },
         {
           imgUrl: require("../../../assets/images/u7231.png"),
           title: "城市达标佣金总额",
-          num: "5000.00"
+          num: "reach_user_total"
         }
       ],
       activeName: "first",
@@ -312,10 +314,8 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        // this.showMsg(msg, code);
-        // console.log(123);
         if (code === 1) {
-          this.handleClose();
+          this.hyTime = data
         }
       });
     },
@@ -326,10 +326,12 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
-        // this.showMsg(msg, code);
-        // console.log(msg);
         if (code === 1) {
-          this.handleClose();
+          const newArr = this.topList.map(item => {
+            item.num = data[item.num];
+            return item;
+          });
+          this.topList = newArr;
         }
       });
     },
@@ -339,7 +341,6 @@ export default {
         let {data,msg,code} = res;
         // this.showMsg(msg,code);
         if(code === 1){
-          this.handleClose()
         }
       })
     }
