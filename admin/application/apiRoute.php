@@ -180,9 +180,9 @@ Route::group('api', function () {
     Route::group('Capital',function(){
         Route::any('capital_detailed','api/Capital/capital_detailed'); //资金明细
         Route::any('invoice_amount','api/Capital/invoice_amount'); //剩余开票金额
-        Route::any('member_partner','api/Capital/member_partner'); //会员列表
-        Route::any('member_total','api/Capital/member_total'); //会员统计总数
-        Route::any('tips','api/Capital/tips'); //会员提示信息
+        Route::any('my_invoice','api/Capital/my_invoice'); //开票
+        Route::any('recharge','api/Capital/recharge'); //充值
+        Route::any('get_pay','api/Capital/get_pay'); //支付
         Route::any('subcontract_partner','api/Capital/subcontract_partner'); //分包商列表
         Route::any('subcontract_total','api/Capital/subcontract_total'); //分包商统计
         Route::any('sub_view','api/Capital/sub_view'); //分包项目视窗
