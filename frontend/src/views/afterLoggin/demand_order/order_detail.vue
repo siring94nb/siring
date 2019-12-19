@@ -221,7 +221,10 @@
           </div>
           <div class="wait-ptbj" v-if="status == 5">
             <img src="../../../assets/images/u9830.png" alt />
-            <div style="width:330px;margin:10px auto;">项目开发中……<span style="color:red;">请积极配合第三方申请，加快项目开发！</span></div>
+            <div style="width:330px;margin:10px auto;">
+              项目开发中……
+              <span style="color:red;">请积极配合第三方申请，加快项目开发！</span>
+            </div>
           </div>
           <!-- <div class="solutions">
             <div class="solutions-h1">原型方案查阅</div>
@@ -230,9 +233,8 @@
               {{solutions_url}}
               <span v-clipboard:copy="solutions_url" v-clipboard:success="copy">复制</span>
             </div>
-          </div> -->
+          </div>-->
         </div>
-        
       </div>
       <div class="line line-vice">平台顾问信息互动</div>
       <!-- 聊天 -->
@@ -295,7 +297,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { needOrderList } from "@/api/api";
+import { needOrderList, getOrderDetail, changeStatus, confirmNeedOrder } from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
 import orderProcess from "@/components/order/orderProcess";
 export default {
@@ -303,7 +305,8 @@ export default {
     return {
       userId: "",
       path: "ws://127.0.0.1:3000",
-      status: 5,
+      status: 0,
+      id:0,
       socket: "",
       statusData: [
         {
@@ -418,6 +421,7 @@ export default {
   },
   mounted() {
     this.init();
+    this.getDetail();
   },
   computed: {
     total() {
@@ -427,8 +431,8 @@ export default {
   methods: {
     init() {
       this.userId = JSON.parse(sessionStorage.getItem("user_id"));
-      // this.status = this.$route.params.status;
-      // this.id = this.$route.params.id;
+      this.status = this.$route.params.status;
+      this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -582,6 +586,32 @@ export default {
     pay() {},
     copy() {
       this.$message.success("复制成功");
+    },
+    modifyState(){
+       const params = this.form;
+      changeStatus(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        if (code === 1) {
+          // console.log(123123);
+          // this.$rotuer.path("/afterLogginR")
+        }
+      });
+    },
+    getDetail(){
+      let vm = this,
+        params = {
+          id: vm.id,
+          status: vm.status
+        };
+      getOrderDetail(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        if (code === 1) {
+          // console.log(123123);
+          // this.$rotuer.path("/afterLogginR")
+        }
+      });
     }
   },
   destroyed() {

@@ -248,7 +248,7 @@
             <input
               type="number"
               name="day"
-              id
+              min="0"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
             />
@@ -259,7 +259,7 @@
             <input
               type="number"
               name="money"
-              id
+              min="0"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
             />
@@ -273,6 +273,7 @@
               type="number"
               name="one"
               placeholder="请填写"
+              min="0"
               style="width:60px;line-height:30px;color:red;"
             />
             %
@@ -283,6 +284,7 @@
               type="number"
               name="one"
               placeholder="请填写"
+              min="0"
               style="width:60px;line-height:30px;color:red;"
             />
             %
@@ -293,6 +295,7 @@
               type="number"
               name="one"
               placeholder="请填写"
+              min="0"
               style="width:60px;line-height:30px;color:red;"
             />
             %
@@ -303,6 +306,7 @@
               type="number"
               name="one"
               placeholder="请填写"
+              min="0"
               style="width:60px;line-height:30px;color:red;"
             />
             %
