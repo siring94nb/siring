@@ -81,7 +81,7 @@ class  NeedOrder  extends  Base
         if ($postData) {
             $need = new Need();
             $param['user_id'] = $postData['user_id'];
-            $data = $need->get_need_order($param);
+            $data = $need->get_need_order($param,1);
             return $data ? returnJson(1, '获取成功', $data) : returnJson(0, '获取失败');
         } else {
             returnJson(0, '获取失败');
