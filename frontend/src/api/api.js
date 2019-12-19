@@ -367,4 +367,22 @@ export const needOrderList = params => {
 export const Qnupload = data => {
     return axios.post(`${base_url}api/file/qn_upload`, qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 定制需求订单表单内容
+ */
+export const getOrderDetail = data => {
+    return axios.post(`${base_url}api/NeedOrder/need_order_detail`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 定制需求订单修改状态
+ */
+export const changeStatus = data => {
+    return axios.post(`${base_url}api/NeedOrder/change_status`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 定制需求订单修改内容
+ */
+export const confirmNeedOrder = data => {
+    return axios.post(`${base_url}api/NeedOrder/confirm_need_order`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload

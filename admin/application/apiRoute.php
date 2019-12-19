@@ -150,6 +150,9 @@ Route::group('api', function () {
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
         Route::any('need_order_list','api/NeedOrder/need_order_list'); //定制需求列表
+        Route::any('change_status','api/NeedOrder/change_status'); //中止需求或确定需求
+        Route::any('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
+        Route::any('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
     });
 
     //微信第三方路由

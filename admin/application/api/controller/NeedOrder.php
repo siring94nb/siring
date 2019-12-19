@@ -18,14 +18,6 @@ class  NeedOrder  extends  Base
 {
 
     /**
-     * lilu
-     * 构造行函数
-     */
-    public function __construct()
-    {
-        $this->need = new Need();
-    }
-    /**
      * 需求定制订单
      * @author 李禄
      * @return \think\Response
@@ -89,7 +81,7 @@ class  NeedOrder  extends  Base
         if ($postData) {
             $need = new Need();
             $param['user_id'] = $postData['user_id'];
-            $data = $need->get_need_order($param);
+            $data = $need->get_need_order($param,1);
             return $data ? returnJson(1, '获取成功', $data) : returnJson(0, '获取失败');
         } else {
             returnJson(0, '获取失败');
@@ -109,13 +101,14 @@ class  NeedOrder  extends  Base
         //获取参数
         $request = Request::instance();
         $postData = $request->param();
+        $need = new Need();
         if ($postData) {
             if ($postData['status'] == '0') {
                 //中止需求
-                $res = $this->need->where('id', $postData['id'])->update(['status' => $postData['status']]);
+                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status']]);
             } else {
                 //进行下一步
-                $res = $this->need->where('id', $postData['id'])->update(['status' => $postData['status']]);
+                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status']]);
             }
             return $res ? returnJson(1, '操作成功', $res) : returnJson(0, '操作失败');
         } else {
@@ -148,9 +141,29 @@ class  NeedOrder  extends  Base
             exit();
         }
         if ($postData) {
-            $re=$this->need->saveAll($postData);
+            $need=new Need();
+            $re=$need->saveAll($postData);
             return $re ?  returnJson(1,'操作成功') : returnJson(0,'操作失败');
         } else {
+            returnJson(0, '获取参数失败');
+        }
+    }
+
+    /**
+     * lilu
+     * 获取定制需求内容
+     * id   
+     * status
+     */
+    public function need_order_detail()
+    {
+        $request=Request::instance();
+        $postData=$request->param();
+        if($postData){
+            //获取详情
+            $need_detail=Need::get($postData['id'])->toArray();
+            return $need_detail ?  returnJson(1,'操作成功',$need_detail) : returnJson(0,'操作失败');
+        }else{
             returnJson(0, '获取参数失败');
         }
     }
