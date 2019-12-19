@@ -186,8 +186,8 @@ Route::group('api', function () {
         Route::any('my_invoice','api/Capital/my_invoice'); //开票
         Route::any('recharge','api/Capital/recharge'); //充值
         Route::any('get_pay','api/Capital/get_pay'); //支付
-        Route::any('subcontract_partner','api/Capital/subcontract_partner'); //分包商列表
-        Route::any('subcontract_total','api/Capital/subcontract_total'); //分包商统计
+        Route::any('cash_with','api/Capital/cash_with'); //提现
+        Route::any('cash_details','api/Capital/cash_details'); //提现页面详情
         Route::any('sub_view','api/Capital/sub_view'); //分包项目视窗
         Route::any('receipt','api/Capital/receipt'); //接单
     });

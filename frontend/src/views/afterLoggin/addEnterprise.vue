@@ -48,7 +48,7 @@
       </div>
       <!-- 法人身份证-->
       <div class="inputContent">
-        <span style="margin-right:60px;color#5e5e5e">法人身份证:</span>
+        <span style="margin-right:60px;color:#5e5e5e">法人身份证:</span>
         <div class="shenFenZhengBox">
           <div class="shenFenZhengZ">
             <el-upload
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-      <button class="btn" @click="GetEnterpriseAdd">确定</button>
+      <button class="btn" @click="ceshi">确定</button>
     </div>
   </div>
 </template>
@@ -120,12 +120,15 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.yyZhizhaoImg = res.data.filePath;
+      console.log(this.yyZhizhaoImg)
     },
     handleAvatarSuccess1(res, file) {
       this.identityCardZImg = res.data.filePath;
+      console.log(this.identityCardZImg)
     },
     handleAvatarSuccess2(res, file) {
       this.identityCardFImg = res.data.filePath;
+      console.log(this.identityCardFImg)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -137,6 +140,13 @@ export default {
         this.$message.error("上传头像图片大小不能超过 2MB!");
       }
       return isJPG && isLt2M;
+    },
+    ceshi(){
+      console.log( typeof(this.name) )
+       console.log(typeof(this.num))
+        console.log(this.yyZhizhaoImg)
+         console.log(this.identityCardZImg)
+          console.log(this.identityCardFImg)
     },
     //企业信息新增
     GetEnterpriseAdd() {
@@ -152,7 +162,7 @@ export default {
         this.showMsg(msg, code);
         if (code === 1) {
           // console.log(123123);
-          this.$rotuer.path("/afterLogginR")
+          this.$router.push("/memberInformation")
         }
       });
     },

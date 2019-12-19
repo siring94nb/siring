@@ -7,6 +7,7 @@
  */
 namespace app\api\controller;
 use app\data\model\AllOrder;
+use app\data\model\CashWith;
 use app\data\model\InvestmentProject;
 use app\data\model\Invoice;
 use app\data\model\Recharge;
@@ -254,6 +255,68 @@ class Capital extends Base
         return $response;
     }
 
+    /**
+     * 提现接口
+     * @return \think\response\Json|void
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function cash_with()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['bank_card', 'require', '银行卡不能为空'],
+            ['price','require','提现金额不能为空'],
+            ['fund_password','require','密码不能为空'],
+            ['code','require','验证码不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        $user_id = Session::get("uid");
+        if(!$user_id){
+            returnJson(0,'该用户未登录');exit();
+        }
+        if (Session::get('mobileCode') != $param['code']) {
+            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
+        }
+        $user = db('user_fund') ->where('user_id',$user_id)->find();
+        if ($user['money'] < $param['price']) {
+            returnJson(0,'开票金额不足');exit();
+        }
+        if (password_verify($param['fund_password'] ,$user['pay_password'])) {
 
+            $recharge = new CashWith();
+            $data = $recharge->add($user_id,$param['price'],$param['bank_card']);
+
+            return $data ? returnJson(1,'提交成功') : returnJson(0,'提交失败');
+        }else {
+            return json(['code'=>0,'msg'=>'密码错误']);
+        }
+
+    }
+
+    /**
+     * 提现页面详情
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function cash_details()
+    {
+        $user_id = Session::get("uid");
+        if(!$user_id){
+            returnJson(0,'该用户未登录');exit();
+        }
+        $user = db('user_fund') ->where('user_id',$user_id)->find();
+        if($user['pay_password'] == null){
+            returnJson(0,'为了您的资金安全，您需要设置资密码');exit();
+        }
+        $data = db('user') ->where('id',$user_id)->field('id,phone')->find();
+        $data['money'] = $user['money'];
+        return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+    }
 
 }
