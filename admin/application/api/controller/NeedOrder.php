@@ -18,14 +18,6 @@ class  NeedOrder  extends  Base
 {
 
     /**
-     * lilu
-     * 构造行函数
-     */
-    public function __construct()
-    {
-        $this->need = new Need();
-    }
-    /**
      * 需求定制订单
      * @author 李禄
      * @return \think\Response
