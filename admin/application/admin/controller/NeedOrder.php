@@ -14,8 +14,8 @@ use app\util\ReturnCode;
  * lilu
  * 后端-定制需求订单
  */
-class NeedOrder extends Base{
-
+class NeedOrder extends Base
+{
 
     /**
      * lilu
@@ -41,7 +41,7 @@ class NeedOrder extends Base{
             return   $this->buildFailed(ReturnCode::DB_SAVE_ERROR, '操作失败');
         }
     }
-
+    
     /**
      * lilu
      * 获取定制需求内容
