@@ -37,7 +37,7 @@
         </div>
       </div>
       <div>
-        <el-tabs v-model="activeName" @tab-click="ceshi"> 
+        <el-tabs v-model="activeName" @tab-click="ceshi">
           <el-tab-pane label="城市累计会员明细" name="first" :key="'first'">
             <div>
               <div class="suoyinlan">
@@ -57,7 +57,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" />
-                  <button>搜索</button>
+                   <button @click="gb();GetCityPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
@@ -80,29 +80,14 @@
                   <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
                   <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
                     <template slot-scope="scope">
-                      <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
+                      <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="ot_yqm"
-                    label="邀请人邀请码"
-                    width="120"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
                   <el-table-column prop="id" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
                   <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="bottom_money"
-                    label="保底佣金金额（元）"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="reach_money"
-                    label="达标佣金金额（元）"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -130,90 +115,46 @@
           </el-tab-pane>
           <el-tab-pane label="我邀请的会员明细" name="second" :key="'second'">
             <div>
-              <div class="suoyinlan">
-                <div class="block">
-                  <span>时间：</span>
-                  <el-date-picker
-                    v-model="value"
-                    type="daterange"
-                    align="right"
-                    unlink-panels
-                    range-separator="至"
-                    start-placeholder="开始日期"
-                    end-placeholder="结束日期"
-                    :picker-options="pickerOptions"
-                  ></el-date-picker>
+              <el-table
+                ref="multipleTable"
+                :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                tooltip-effect="dark"
+                border
+                style="width: 98.3%"
+                :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
+              >
+                <el-table-column type="selection" width="40" align="center"></el-table-column>
+                <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
+                <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
+                  <template slot-scope="scope">
+                    <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
+                <el-table-column prop="id" label="邀请人订单项目" width="150" align="center"></el-table-column>
+                <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
+                <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
+                <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
+              </el-table>
+              <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
+                <div>
+                  <el-checkbox v-model="checked">全选</el-checkbox>
+                  <select>
+                    <option>数据一</option>
+                    <option>数据二</option>
+                  </select>
+                  <button>确定</button>
                 </div>
                 <div>
-                  <span>输入搜索：</span>
-                  <input type="text" />
-                  <button>搜索</button>
-                </div>
-              </div>
-              <div class="lijifenxiang">
-                <div>立即分享邀请</div>
-                <div>
-                  注：为确保达标佣金的获得，您还需要邀请
-                  <span>3000人</span>
-                </div>
-              </div>
-              <div>
-                <el-table
-                  ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
-                  tooltip-effect="dark"
-                  border
-                  style="width: 98.3%"
-                  :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
-                >
-                  <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="邀请人账号" width="120" align="center">
-                    <template slot-scope="scope">
-                      <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
-                    </template>
-                  </el-table-column>
-                  <el-table-column
-                    prop="InviterInvitationCode"
-                    label="邀请人邀请码"
-                    width="120"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="邀请人订单项目" width="150" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="MinimumCommissions"
-                    label="保底佣金金额（元）"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="达标佣金金额（元）"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                </el-table>
-                <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
-                  <div>
-                    <el-checkbox v-model="checked">全选</el-checkbox>
-                    <select>
-                      <option>数据一</option>
-                      <option>数据二</option>
-                    </select>
-                    <button>确定</button>
-                  </div>
-                  <div>
-                    <!-- <span>共</span><span>{{Math.ceil((list.length+1)/pagesize)}}</span><span>页</span>/<span>{{list.length}}</span><span>条数据</span> -->
-                    <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
-                    <el-pagination
-                      @current-change="handleCurrentChange"
-                      :current-page="DirectlyTo"
-                      :page-sizes="[pagesize]"
-                      layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
-                    ></el-pagination>
-                  </div>
+                  <!-- <span>共</span><span>{{Math.ceil((list.length+1)/pagesize)}}</span><span>页</span>/<span>{{list.length}}</span><span>条数据</span> -->
+                  <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
+                  <el-pagination
+                    @current-change="handleCurrentChange"
+                    :current-page="DirectlyTo"
+                    :page-sizes="[pagesize]"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="list1.length"
+                  ></el-pagination>
                 </div>
               </div>
             </div>
@@ -230,29 +171,29 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list2.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="date" label="城市选择" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="金额" width="120" align="center"></el-table-column>
+                  <el-table-column prop="grade_name" label="城市选择" width="120" align="center"></el-table-column>
+                  <el-table-column prop="money" label="金额" width="120" align="center"></el-table-column>
                   <el-table-column
-                    prop="InviterInvitationCode"
+                    prop="add_time"
                     label="生效时间"
                     width="120"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="到期时间" width="180" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="合伙人政策" width="180" align="center"></el-table-column>
+                  <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
+                  <el-table-column prop="grade_title" label="合伙人政策" width="180" align="center"></el-table-column>
                   <el-table-column
-                    prop="MinimumCommissions"
+                    prop="pay_type"
                     label="支付方式"
                     width="160"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="StandardCommission" label="操作" width="160" align="center"></el-table-column>
+                  <el-table-column prop="grade_img" label="操作" width="160" align="center"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -264,11 +205,11 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter,CityTotal,CityPartner} from "@/api/api";
+import { GetRoleCenter, CityTotal, CityPartner } from "@/api/api";
 export default {
   data() {
     return {
-      CityData:{},//代理城市，有效期
+      CityData: {}, //代理城市，有效期
       checked: false,
       title: "城市累积会员明细",
       topList: [
@@ -330,24 +271,33 @@ export default {
       value: "",
       // 邀请分页表格
       list: [],
-      pagesize: 3,
+      list1:[],
+      list2:[],
+      pagesize: 10,
       currpage: 1,
       total: 100,
-      DirectlyTo: 1
+      DirectlyTo: 1,
+      dis:true
     };
   },
   components: {
     logginHeader
   },
-  mounted(){
+  mounted() {
     this.RoleCenter();
     this.GetCityTotal();
     // 城市合伙人等列表数据
     this.GetCityPartner();
+    this.GetCityPartner1();
+    this.GetCityPartner2();
   },
   methods: {
-    ceshi(event,tab){
-      console.log(event.index)
+     gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
+    ceshi(event, tab) {
+      console.log(event.index);
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -364,15 +314,16 @@ export default {
     // 获取城市数据及有效期数据
     RoleCenter() {
       const params = {
-        type:1
+        type: 1
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
         console.log(res)
+        console.log(data);
         // this.showMsg(msg, code);
         if (code == 1) {
-          this.CityData = data;
-          console.log(this.CityData)
+          this.CityData = data; 
+          console.log(this.CityData);
         }
       });
     },
@@ -380,30 +331,77 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg, code } = res;
+        console.log(res)
+        console.log(data)
         if (code == 1) {
           const newArr = this.topList.map(item => {
             item.num = data[item.num];
             return item;
           });
           this.topList = newArr;
+          console.log(this.topList)
         }
       });
     },
     /*
-    *获取城市合伙人列表数据
-    *type为必选，title:搜索条件，start_time：开始时间，end_time：结束时间，page：页码默认为第一页 一页显示10调数据
-    * 
-    */
+     *获取城市合伙人列表数据
+     *type为必选，title:搜索条件，start_time：开始时间，end_time：结束时间，page：页码默认为第一页 一页显示10调数据
+     *YbWylo
+     */
     GetCityPartner() {
+      let params = {};
+      if (this.dis) {
+        params = {
+          type: 2
+        };
+      } else {
+        let start_time = this.value[0].getTime();
+        let end_time = this.value[1].getTime();
+        params = {
+          type: 2,
+          title: this.suoyin,
+          start_time: start_time,
+          end_time: end_time
+        };
+      } 
+      CityPartner(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(res)
+        console.log(data);
+        // this.showMsg(msg, code);
+        if (code === 1) {
+          this.list = data.data;
+          console.log(this.list)
+        }
+      });
+    },
+    GetCityPartner1() {
       const params = {
-        type:1
+        type: 2
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
         console.log(res)
+        console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
-          this.list = data.data
+          this.list1 = data.data;
+          console.log(this.list)
+        }
+      });
+    },
+    GetCityPartner2() {
+      const params = {
+        type: 3
+      };
+      CityPartner(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(res)
+        console.log(data);
+        // this.showMsg(msg, code);
+        if (code === 1) {
+          this.list2 = data.data;
+          console.log(this.list)
         }
       });
     },
@@ -437,9 +435,9 @@ export default {
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;
-     display: flex;
-      justify-content: space-between;
-    >div {
+    display: flex;
+    justify-content: space-between;
+    > div {
       &:nth-of-type(1) {
         span:nth-of-type(1) {
           color: #0099ff;
@@ -448,18 +446,18 @@ export default {
           color: #ff0000;
         }
       }
-      &:nth-of-type(2){
-        span{
-          &:nth-of-type(1){
-            color: #0099FF;
+      &:nth-of-type(2) {
+        span {
+          &:nth-of-type(1) {
+            color: #0099ff;
             padding-right: 5px;
           }
-          &:nth-of-type(2){
+          &:nth-of-type(2) {
             color: #ff0000;
             padding-right: 20px;
           }
-          &:nth-of-type(3){
-            background: rgb(102,153,0);
+          &:nth-of-type(3) {
+            background: rgb(102, 153, 0);
             color: #ffffff;
             padding: 5px 10px;
             font-size: 13px;

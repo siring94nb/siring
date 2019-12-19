@@ -137,7 +137,8 @@ export default {
         need_wx: "",
         need_other: "",
         need_desc: "",
-        need_file: ""
+        need_file: "",
+        user_id: ""
       },
       rules: {
         need_budget_down: [
@@ -196,6 +197,7 @@ export default {
   methods: {
     init() {
       let vm = this;
+      this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       vm.UploadAction = "https://manage.siring.com.cn/api/file/qn_upload";
     },
     handleSuccess(response, file, fileList) {

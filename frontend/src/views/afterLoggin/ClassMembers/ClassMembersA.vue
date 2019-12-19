@@ -12,14 +12,14 @@
       <div class="smBox1">
         <div>
           <span>当前会员等级：</span>
-          <span>{{CityData.name}}</span>
+          <span>{{hyTime.name}}</span>
           <i class="el-icon-edit"></i>
         </div>
         <div>
           <span>有效期至：</span>
-          <span v-if="CityData.end_time!=null">2019年12月31日</span>
-          <span v-if="CityData.end_time==null" style="color:red">永久</span>
-          <span v-if="CityData.end_time!=null">续费</span>
+          <span v-if="hyTime.end_time!=null">2019年12月31日</span>
+          <span v-if="hyTime.end_time==null" style="color:red">永久</span>
+          <span v-if="hyTime.end_time!=null">续费</span>
         </div>
       </div>
       <div class="smBox2">
@@ -57,8 +57,8 @@
                 </div>
                 <div>
                   <span>输入搜索：</span>
-                  <input type="text" />
-                  <button>搜索</button>
+                  <input type="text" value v-model="suoyin" />
+                  <button @click="gb();GetMemberPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
@@ -78,26 +78,16 @@
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="日期" width="160" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="邀请人账号" width="160" align="center">
+                  <el-table-column prop="created_at" label="日期" width="160" align="center"></el-table-column>
+                  <el-table-column prop="phone" label="邀请人账号" width="160" align="center">
                     <template slot-scope="scope">
-                      <div>{{scope.row.InviterAccount.replace(scope.row.InviterAccount.substring(3,7),"****")}}</div>
+                      <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
-                  <el-table-column
-                    prop="InviterInvitationCode"
-                    label="邀请人邀请码"
-                    width="150"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="邀请人订单项目" width="180" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="佣金金额（元）"
-                    width="180"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="150" align="center"></el-table-column>
+                  <el-table-column prop="entry_name" label="邀请人订单项目" width="180" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
+                  <el-table-column prop="bottom_money" label="佣金金额（元）" width="180" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -135,30 +125,19 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="date" label="会员等级" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="等级图标" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterInvitationCode" label="申请时间" width="120" align="center"></el-table-column>
-                  <el-table-column prop="InviterLevel" label="到期时间" width="150" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="年度费用标准" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="等级政策"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="amount" label="支付方式" width="170" align="center"></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="操作"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="id" label="会员等级" width="120" align="center"></el-table-column>
+                  <el-table-column prop="add_time" label="申请时间" width="120" align="center"></el-table-column>
+                  <el-table-column prop="end_time" label="到期时间" width="150" align="center"></el-table-column>
+                  <el-table-column prop="money" label="年度费用标准" width="170" align="center"></el-table-column>
+                  <el-table-column prop="grade_title	" label="等级政策" width="160" align="center"></el-table-column>
+                  <el-table-column prop="pay_type" label="支付方式" width="170" align="center"></el-table-column>
+                  <el-table-column prop="StandardCommission" label="操作" width="150" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -177,7 +156,7 @@
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
+                      :total="list1.length"
                     ></el-pagination>
                   </div>
                 </div>
@@ -191,11 +170,11 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetRoleCenter,MemberTotal,MemberPartner} from "@/api/api";
+import { GetRoleCenter, MemberTotal, MemberPartner } from "@/api/api";
 export default {
   data() {
     return {
-      hyTime:"",
+      hyTime: "",
       checked: false,
       title: "城市累积会员明细",
       topList: [
@@ -245,56 +224,30 @@ export default {
       },
       value: "",
       // 邀请分页表格
-      list: [
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          MinimumCommissions: "",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          StandardCommission: "230"
-        },
-        {
-          date: "2017-07-19",
-          InviterAccount: "12345678945",
-          InviterInvitationCode: "RJT045",
-          InviterLevel: "黄金",
-          amount: "300",
-          StandardCommission: "230"
-        }
-      ],
+      list: [],
+      list1: [],
       pagesize: 3,
       currpage: 1,
       total: 100,
-      DirectlyTo: 1
+      DirectlyTo: 1,
+      suoyin: "",
+      dis: true
     };
   },
   components: {
     logginHeader
   },
-  mounted(){
+  mounted() {
     this.RoleCenter();
     this.GetMemberTotal();
     this.GetMemberPartner();
+    this.GetMemberPartner1();
   },
   methods: {
+    gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -310,22 +263,55 @@ export default {
     // 获取等级会员数据
     RoleCenter() {
       const params = {
-        type:2
+        type: 2
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-          this.hyTime = data
+          this.hyTime = data;
         }
       });
     },
     // 获取等级会员列表数据
     GetMemberPartner() {
+      let params = {};
+      if (this.dis) {
+        params = {
+          type: 2
+        };
+      } else {
+        let start_time = this.value[0].getTime();
+        let end_time = this.value[1].getTime();
+        params = {
+          type: 2,
+          title: this.suoyin,
+          start_time: start_time,
+          end_time: end_time
+        };
+      }
+      MemberPartner(params).then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+          this.list = data;
+        }
+      });
+    },
+    GetMemberPartner1() {
       const params = {
-        type:2
+        type: 3
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        if (code === 1) {
+          this.list1 = data;
+        }
+      });
+    },
+    // 获取我邀请的会员总数，佣金总数，get方式
+    GetMemberTotal() {
+      MemberTotal().then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg,code);
         if (code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data[item.num];
@@ -334,15 +320,6 @@ export default {
           this.topList = newArr;
         }
       });
-    },
-    // 获取我邀请的会员总数，佣金总数，get方式
-    GetMemberTotal(){
-      MemberTotal().then(res =>{
-        let {data,msg,code} = res;
-        // this.showMsg(msg,code);
-        if(code === 1){
-        }
-      })
     }
   },
   watch: {
@@ -350,7 +327,7 @@ export default {
       //监听切换状态-计划单
       if (val === "first") {
         this.title = "我邀请的会员明细";
-      }else {
+      } else {
         this.title = "等级会员订单";
       }
     }
@@ -362,12 +339,15 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  button {
+    cursor: pointer;
+  }
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;
-     display: flex;
-      justify-content: space-between;
-    >div {
+    display: flex;
+    justify-content: space-between;
+    > div {
       &:nth-of-type(1) {
         span:nth-of-type(1) {
           color: #0099ff;
@@ -376,18 +356,18 @@ export default {
           color: #ff0000;
         }
       }
-      &:nth-of-type(2){
-        span{
-          &:nth-of-type(1){
-            color: #0099FF;
+      &:nth-of-type(2) {
+        span {
+          &:nth-of-type(1) {
+            color: #0099ff;
             padding-right: 5px;
           }
-          &:nth-of-type(2){
+          &:nth-of-type(2) {
             color: #ff0000;
             padding-right: 20px;
           }
-          &:nth-of-type(3){
-            background: rgb(102,153,0);
+          &:nth-of-type(3) {
+            background: rgb(102, 153, 0);
             color: #ffffff;
             padding: 5px 10px;
             font-size: 13px;

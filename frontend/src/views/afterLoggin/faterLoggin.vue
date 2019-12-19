@@ -69,7 +69,7 @@ export default {
           con: [
             // "城市合伙人", "等级会员", "分包商"
             { name: "城市合伙人", rou: "/CityPartner" },
-            { name: "等级会员", rou: "/ClassMembersX" },
+            { name: "等级会员", rou: "/ClassMembersA" },
             { name: "分包商", rou: "/subContractorIndex" }
           ]
         },
@@ -132,7 +132,7 @@ export default {
       this.withdrawX();
       this.zhankai();
   },
-  methods: {
+  methods: { 
     // 保持侧边栏对应路由展开状态
     zhankai(){
       let arr = this.arr;
@@ -140,13 +140,19 @@ export default {
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].con.length; j++) {
           if (arr[i].con[j].rou == val) {
-            // if(val =="/addEnterprise"||val =="/enterpriseList"){
             // }else if(val =="/safetyTabControl"){
               
             // }else{
+              const num = String(i);
+              console.log(num)
               this.num=String(i);
               // console.log(val)
             // }
+          }else if(val =="/addEnterprise"||val =="/enterpriseList"){
+            if(arr[i].con[j].rou.indexOf("/memberInformation")!=-1){
+               console.log(i)
+            }
+             
           }
         }
       }
@@ -160,8 +166,8 @@ export default {
         if (code === 1) {
             this.arr[2].con[0].rou = "/CityPartner";            
         }else{
-          this.arr[2].con[0].rou = "/CityPartner";
-          // this.arr[2].con[0].rou = "/partnerCityX";
+          // this.arr[2].con[0].rou = "/CityPartner";
+          this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
         }
       });
@@ -174,6 +180,7 @@ export default {
             this.arr[2].con[1].rou = "/ClassMembersA";            
         }else{
           this.arr[2].con[1].rou = "/ClassMembersX";
+          // this.arr[2].con[1].rou = "/ClassMembersA"; 
           // 13260676780
         }
       });
