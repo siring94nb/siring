@@ -59,6 +59,12 @@ export const GetCode = params => {
 export const GetEnterprise = params => {
     return axios.post(`${base_url}api/user/enterprise_list`, qs.stringify(params)).then(res => res.data);
 }
+/*
+ *新增企业信息（title:企业名称，duty：税号，business_license：营业执照，id_card_just：身份证正面，id_card_back：身份证反面）
+ */
+export const EnterpriseAdd = params => {
+    return axios.post(`${base_url}api/user/enterprise_add`, qs.stringify(params)).then(res => res.data);
+}
 /**
  * 忘记密码或修改密码
  * @param {phone, password, password_confirm, code}

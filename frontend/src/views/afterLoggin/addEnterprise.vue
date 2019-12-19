@@ -13,7 +13,7 @@
         <span>*</span>
         <span class="xg">企业名称:</span>
         <div>
-          <input type="text" placeholder="请输入企业名称" />
+          <input type="text" placeholder="请输入企业名称" value="" v-model="name"/>
           <div>*请输入真实公司名，确保电子合同或协议，身份真实获取，保障会员权益</div>
         </div>
       </div>
@@ -21,7 +21,7 @@
         <span>*</span>
         <span class="xg">企业税号:</span>
         <div>
-          <input type="text" placeholder="请输入纳税人识别号（唯一社会信用代码）" />
+          <input type="text" placeholder="请输入纳税人识别号（唯一社会信用代码）" value="" v-model="num"/>
           <div>*请输入真实税号，确保电子合同或协议，身份真实获取，保障会员权益</div>
         </div>
       </div>
@@ -30,67 +30,70 @@
         <span class="xg">上传营业执照:</span>
         <div class="zhiZhaoBox">
           <div class="zhiZhao">
-            <img :src="yyZhizhaoImg" alt="营业执照" style="width:140px;height:183px;" />
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              list-type="picture-card"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-preview="handlePictureCardPreview"
+              :on-success="handleAvatarSuccess"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="yyZhizhaoImg" :src="yyZhizhaoImg" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </div>
-          <span class="fileinput-button">
-            <span>+企业营业执照</span>
-            <input
-              type="file"
-              id="file"
-              class="filepath"
-              accept="image/jpg, image/jpeg, image/png, image/PNG"
-              ref="yyzhizhao"
-              @change="changeyyZhizhao($event)"
-            />
-          </span>
         </div>
       </div>
       <!-- 法人身份证-->
       <div class="inputContent">
-        <span class="xg">法人身份证:</span>
+        <span style="margin-right:60px;color#5e5e5e">法人身份证:</span>
         <div class="shenFenZhengBox">
           <div class="shenFenZhengZ">
-            <img :src="identityCardZImg" alt="身份证正面照" style="width:162px;height:107px" />
-            <br />
-            <span class="fileinput-button" style="margin-left:-30px">
-              <span>+身份证正面照</span>
-              <input
-                type="file"
-                id="file"
-                class="filepath"
-                accept="image/jpg, image/jpeg, image/png, image/PNG"
-                ref="identityCardZX"
-                @change="identityCardZFun($event)"
-              />
-            </span>
-            <div style="margin:10px 0 0 10px">可选项</div>
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              list-type="picture-card"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-preview="handlePictureCardPreview"
+              :on-success="handleAvatarSuccess1"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="identityCardZImg" :src="identityCardZImg" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </div>
           <div class="shenFenZhengF">
-            <img :src="identityCardFImg" alt="身份证反面照" style="width:162px;height:107px"/>
-            <br />
-            <span class="fileinput-button" style="margin-left:-30px">
-              <span>+身份证反面照</span>
-              <input
-                type="file"
-                id="file"
-                class="filepath"
-                accept="image/jpg, image/jpeg, image/png, image/PNG"
-                ref="identityCardFX"
-                @change="identityCardFun($event)"
-              />
-            </span>
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              list-type="picture-card"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-preview="handlePictureCardPreview"
+              :on-success="handleAvatarSuccess2"
+              :before-upload="beforeAvatarUpload"
+            >
+              <img v-if="identityCardFImg" :src="identityCardFImg" class="avatar" />
+              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
           </div>
         </div>
       </div>
-      <button class="btn">确定</button>
+      <button class="btn" @click="GetEnterpriseAdd">确定</button>
     </div>
   </div>
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import { EnterpriseAdd} from "@/api/api";
 export default {
   data() {
     return {
+      name:"",//企业名称
+      num:"",//企业税号
       yyZhizhaoImg: require("../../assets/images/yingyezhizhao.png"),
       identityCardZImg: require("../../assets/images/shengFzz.png"),
       identityCardFImg: require("../../assets/images/shengFzf.png")
@@ -99,39 +102,66 @@ export default {
   components: {
     logginHeader
   },
+  mounted() {
+    this.SetSS();
+  },
   methods: {
-    changeyyZhizhao(e) {
-      // for(var key in this.$refs){　　//遍历对象的所有属性，包括原型链上的所有属性
-      //   if(this.$refs.hasOwnProperty(key)){ //判断是否是对象自身的属性，而不包含继承自原型链上的属性
-      //   　　console.log(key);        //键名
-      //   　　console.log(this.$refs[key]);   //键值
-      // 　}
-      // }
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        that.yyZhizhaoImg = this.result;
-      };
+    // 进入修改上传样式
+    SetSS() {
+      let ceshi = document.getElementsByClassName("el-upload--picture-card");
+      ceshi[0].style.cssText = "width:140px;height:183px;border:0";
+      ceshi[1].style.cssText = "width:162px;height:107px;border:0";
+      ceshi[2].style.cssText = "width:162px;height:107px;border:0";
     },
-    identityCardZFun(e) {
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        that.identityCardZImg = this.result;
-      };
+    // 图片上传测试
+    handlePictureCardPreview(file) {
+      this.dialogImageUrl = file.url;
+      this.dialogVisible = true;
     },
-    identityCardFun(e) {
-      var file = e.target.files[0];
-      var reader = new FileReader();
-      var that = this;
-      reader.readAsDataURL(file);
-      reader.onload = function(e) {
-        that.identityCardFImg = this.result;
+    handleAvatarSuccess(res, file) {
+      this.yyZhizhaoImg = res.data.filePath;
+    },
+    handleAvatarSuccess1(res, file) {
+      this.identityCardZImg = res.data.filePath;
+    },
+    handleAvatarSuccess2(res, file) {
+      this.identityCardFImg = res.data.filePath;
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === "image/jpeg";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+      if (!isJPG) {
+        this.$message.error("上传头像图片只能是 JPG 格式!");
+      }
+      if (!isLt2M) {
+        this.$message.error("上传头像图片大小不能超过 2MB!");
+      }
+      return isJPG && isLt2M;
+    },
+    //企业信息新增
+    GetEnterpriseAdd() {
+      const params = {
+        title:this.name,
+        duty:this.num,
+        business_license:this.yyZhizhaoImg,
+        id_card_just:this.identityCardZImg,
+        id_card_back:this.identityCardFImg
       };
+      EnterpriseAdd(params).then(res => {
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        if (code === 1) {
+          // console.log(123123);
+          this.$rotuer.path("/afterLogginR")
+        }
+      });
+    },
+     // 返回
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
     }
   }
 };
@@ -139,6 +169,7 @@ export default {
 <style lang="scss" scoped>
 .boxBottom {
   background: #fff;
+  margin: 0 0 0 20px;
   .inputContent {
     background: #fff;
     padding: 10px 30px;
@@ -199,25 +230,58 @@ export default {
     border: 1px solid red;
     margin-left: 170px;
   }
-  // 修改input上传样式
-  .fileinput-button {
+  .avatar-uploader .el-upload {
+    border-radius: 6px;
+    cursor: pointer;
     position: relative;
-    display: inline-block;
     overflow: hidden;
-    margin-left: -20px;
   }
-
-  .fileinput-button input {
-    position: absolute;
-    right: 0px;
-    top: 0px;
-    /*
-    在chrome下input元素中的选择按钮露出来，但是没关系，可以通过后面的设透明的方式把它透明掉。
-    但是在IE下确是会把输入框露出来，关键是鼠标移到输入框上时，指针会变成输入状态，这个就很没法处理了。
-  通过right的定位方式把输入框移到左边去的方式，可以在IE下回避出现鼠标指针变成输入态的情况。
-     */
-    opacity: 0;
-    -ms-filter: "alpha(opacity=0)";
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 72px;
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+  }
+  .avatar {
+    width: 70px;
+    height: 70px;
+    display: block;
+    border-radius: 6px;
+  }
+  .zhiZhao {
+    .avatar-uploader-icon {
+      width: 140px;
+      height: 183px;
+      line-height: 183px;
+    }
+    .avatar {
+      width: 140px;
+      height: 183px;
+    }
+  }
+  .shenFenZhengZ {
+    .avatar-uploader-icon {
+      width: 162px;
+      height: 107px;
+      line-height: 107px;
+    }
+    .avatar {
+      width: 162px;
+      height: 107px;
+    }
+  }
+  .shenFenZhengF {
+    .avatar-uploader-icon {
+      width: 162px;
+      height: 107px;
+      line-height: 107px;
+    }
+    .avatar {
+      width: 162px;
+      height: 107px;
+    }
   }
 }
 </style>
