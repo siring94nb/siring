@@ -305,8 +305,8 @@ export default {
     return {
       userId: "",
       path: "ws://127.0.0.1:3000",
-      status: 0,
-      id:0,
+      status: 1,
+      // id:0,
       socket: "",
       statusData: [
         {
@@ -346,6 +346,7 @@ export default {
         }
       ],
       form: {
+        id:0,
         need_name: "",
         need_category: "",
         need_budget_down: "",
@@ -587,6 +588,7 @@ export default {
     copy() {
       this.$message.success("复制成功");
     },
+    //修改状态
     modifyState(){
        const params = this.form;
       changeStatus(params).then(res => {
@@ -598,19 +600,21 @@ export default {
         }
       });
     },
+    //获取表单信息
     getDetail(){
       let vm = this,
         params = {
           id: vm.id,
           status: vm.status
-        };
+        }; 
       getOrderDetail(params).then(res => {
+        console.log(res)
         let { data, msg, code } = res;
         this.showMsg(msg, code);
-        if (code === 1) {
+        // if (code === 1) {
           // console.log(123123);
           // this.$rotuer.path("/afterLogginR")
-        }
+        // }
       });
     }
   },

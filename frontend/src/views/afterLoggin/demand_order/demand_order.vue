@@ -81,7 +81,7 @@
             <template slot-scope="scope">
               <el-button
                 size="mini"
-                @click="handleEdit(scope.row.id,scope.row.need_status - 1)"
+                @click="handleEdit(scope.row.id,scope.row.need_status)"
                 class="btns"
                 :class="btnClassName[scope.row.need_status - 1]"
               >{{btnName[scope.row.need_status - 1]}}</el-button>
