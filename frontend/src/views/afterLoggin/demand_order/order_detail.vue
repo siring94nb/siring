@@ -121,7 +121,7 @@
               </el-upload>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" style="float:right;">确定修改</el-button>
+              <el-button type="primary" style="float:right;" @click="modifyState">确定修改</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -297,7 +297,12 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { needOrderList, getOrderDetail, changeStatus, confirmNeedOrder } from "@/api/api";
+import {
+  needOrderList,
+  getOrderDetail,
+  changeStatus,
+  confirmNeedOrder
+} from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
 import orderProcess from "@/components/order/orderProcess";
 export default {
@@ -346,7 +351,7 @@ export default {
         }
       ],
       form: {
-        id:0,
+        id: 0,
         need_name: "",
         need_category: "",
         need_budget_down: "",
@@ -589,11 +594,10 @@ export default {
       this.$message.success("复制成功");
     },
     //修改状态
-    modifyState(){
-       const params = this.form;
+    modifyState() {
+      const params = this.form;
       changeStatus(params).then(res => {
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
         if (code === 1) {
           // console.log(123123);
           // this.$rotuer.path("/afterLogginR")
@@ -601,20 +605,29 @@ export default {
       });
     },
     //获取表单信息
-    getDetail(){
+    getDetail() {
       let vm = this,
         params = {
           id: vm.id,
           status: vm.status
-        }; 
+        };
       getOrderDetail(params).then(res => {
-        console.log(res)
+        console.log(res);
         let { data, msg, code } = res;
-        this.showMsg(msg, code);
-        // if (code === 1) {
-          // console.log(123123);
-          // this.$rotuer.path("/afterLogginR")
-        // }
+        if (code === 1) {
+          (vm.form.id = data.id),
+            (vm.form.need_name = data.need_name),
+            (vm.form.need_category = data.need_category),
+            (vm.form.need_budget_down = data.need_budget_down),
+            (vm.form.need_budget_up = data.need_budget_up),
+            (vm.form.need_terminal = data.need_terminal),
+            (vm.form.need_phone = data.need_phone),
+            (vm.form.need_qq = data.need_qq),
+            (vm.form.need_wx = data.need_wx),
+            (vm.form.need_other = data.need_other),
+            (vm.form.need_desc = data.need_desc),
+            (vm.form.need_file = data.need_file);
+        }
       });
     }
   },
