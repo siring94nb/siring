@@ -105,7 +105,7 @@ class  NeedOrder  extends  Base
         if ($postData) {
             if ($postData['status'] == '0') {
                 //中止需求     
-                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status'],'need_status'=>8]);
+                $res = $need->where('id', $postData['id'])->update(['need_status'=>8]);
             } else {
                 //进行下一步  need_status=8
                 $res = $need->where('id', $postData['id'])->update(['need_status' => $postData['status']]);
