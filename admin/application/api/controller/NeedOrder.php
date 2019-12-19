@@ -104,11 +104,11 @@ class  NeedOrder  extends  Base
         $need = new Need();
         if ($postData) {
             if ($postData['status'] == '0') {
-                //中止需求
-                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status']]);
+                //中止需求     
+                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status'],'need_status'=>8]);
             } else {
-                //进行下一步
-                $res = $need->where('id', $postData['id'])->update(['status' => $postData['status']]);
+                //进行下一步  need_status=8
+                $res = $need->where('id', $postData['id'])->update(['need_status' => $postData['status']]);
             }
             return $res ? returnJson(1, '操作成功', $res) : returnJson(0, '操作失败');
         } else {
@@ -142,7 +142,7 @@ class  NeedOrder  extends  Base
         }
         if ($postData) {
             $need=new Need();
-            $re=$need->saveAll($postData);
+            $re=$need->update($postData);
             return $re ?  returnJson(1,'操作成功') : returnJson(0,'操作失败');
         } else {
             returnJson(0, '获取参数失败');
