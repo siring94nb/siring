@@ -121,7 +121,7 @@
               </el-upload>
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" style="float:right;" @click="modifyState">确定修改</el-button>
+              <el-button type="primary" style="float:right;" @click="need_submit">确定修改</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -308,7 +308,7 @@ import orderProcess from "@/components/order/orderProcess";
 export default {
   data() {
     return {
-      userId: "",
+      // userId: "",
       path: "ws://127.0.0.1:3000",
       status: 1,
       // id:0,
@@ -362,7 +362,8 @@ export default {
         need_wx: "",
         need_other: "",
         need_desc: "",
-        need_file: ""
+        need_file: "",
+        user_id: ""
       },
       typeList: [
         {
@@ -436,7 +437,7 @@ export default {
   },
   methods: {
     init() {
-      this.userId = JSON.parse(sessionStorage.getItem("user_id"));
+      this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
@@ -498,12 +499,17 @@ export default {
       return size;
     },
     obj_btn(e) {
-      let hr, hr1;
+      let vm = this,
+        hr,
+        hr1,
+        status;
       if (e == 1) {
         hr = "您确定要中止该项目么？！";
+        status = 8;
       } else {
         hr = "1、需求方案务必与平台顾问详细核实比对；";
         hr1 = "2、平台报价将依据您的需求方案进行报价。";
+        status = 2;
       }
       const h = this.$createElement;
       this.$msgbox({
@@ -517,21 +523,22 @@ export default {
           if (action === "confirm") {
             instance.confirmButtonLoading = true;
             instance.confirmButtonText = "执行中...";
+            vm.modifyState(status);
             setTimeout(() => {
               done();
               setTimeout(() => {
                 instance.confirmButtonLoading = false;
               }, 300);
-            }, 3000);
+            }, 1000);
           } else {
             done();
           }
         }
       }).then(action => {
-        this.$message({
-          type: "info",
-          message: "action: " + action
-        });
+        // this.$message({
+        //   type: "info",
+        //   message: "action: " + action
+        // });
       });
     },
     //数字转汉字
@@ -594,13 +601,26 @@ export default {
       this.$message.success("复制成功");
     },
     //修改状态
-    modifyState() {
-      const params = this.form;
-      changeStatus(params).then(res => {
+    modifyState(status) {
+      let vm = this,
+        data,
+        params = {
+          id: vm.id,
+          user_id: vm.form.user_id,
+          status: status
+        };
+      return changeStatus(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-          // console.log(123123);
-          // this.$rotuer.path("/afterLogginR")
+          vm.status = status;
+          vm.$message.success(msg);
+          if (status == 0) {
+            this.$router.push({
+              name: "demand_order"
+            });
+          }
+        } else {
+          vm.$message.error(msg);
         }
       });
     },
@@ -627,6 +647,16 @@ export default {
             (vm.form.need_other = data.need_other),
             (vm.form.need_desc = data.need_desc),
             (vm.form.need_file = data.need_file);
+          vm.fileList = [{ name: "需求文件", url: data.need_file }];
+        }
+      });
+    },
+    need_submit() {
+      let vm = this;
+      confirmNeedOrder(vm.form).then(res => {
+        let { code, data, msg } = res;
+        if (code === 1) {
+          vm.$message.success(msg);
         }
       });
     }

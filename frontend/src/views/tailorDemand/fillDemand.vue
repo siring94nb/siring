@@ -138,7 +138,8 @@ export default {
         need_other: "",
         need_desc: "",
         need_file: "",
-        user_id: ""
+        user_id: "",
+        need_status:1
       },
       rules: {
         need_budget_down: [
