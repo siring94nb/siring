@@ -30,7 +30,7 @@
               </el-col>
               <el-col :span="16">
                 <div class="tt">{{item.title}}</div>
-                <div class="num">{{item.num}}</div>
+                <div class="num">￥{{item.num}}</div>
               </el-col>
             </el-row>
           </div>

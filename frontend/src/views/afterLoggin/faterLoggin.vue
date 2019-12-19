@@ -70,7 +70,7 @@ export default {
             // "城市合伙人", "等级会员", "分包商"
             { name: "城市合伙人", rou: "/CityPartner" },
             { name: "等级会员", rou: "/ClassMembersA" },
-            { name: "分包商", rou: "/subContractorIndex" }
+            { name: "分包商", rou: "/subContractorSm1" }
           ]
         },
         {
@@ -193,10 +193,11 @@ export default {
             this.arr[2].con[2].rou = "/subContractorSm1";            
         }else{
           this.arr[2].con[2].rou = "/subContractorIndex";
+          //  this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
         }
       });
-    },
+    }, 
     //提现
     withdrawX() {
       if (this.tixian === 0) {

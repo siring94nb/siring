@@ -31,7 +31,7 @@
               </el-col>
               <el-col :span="16">
                 <div class="tt">{{item.title}}</div>
-                <div class="num">{{item.num}}</div>
+                <div class="num">￥{{item.num}}</div>
               </el-col>
             </el-row>
           </div>
@@ -174,7 +174,7 @@ import { GetRoleCenter, MemberTotal, MemberPartner } from "@/api/api";
 export default {
   data() {
     return {
-      hyTime: "",
+      hyTime: {},
       checked: false,
       title: "城市累积会员明细",
       topList: [
