@@ -142,7 +142,7 @@ class  NeedOrder  extends  Base
         }
         if ($postData) {
             $need=new Need();
-            $re=$need->saveAll($postData);
+            $re=$need->update($postData);
             return $re ?  returnJson(1,'操作成功') : returnJson(0,'操作失败');
         } else {
             returnJson(0, '获取参数失败');
