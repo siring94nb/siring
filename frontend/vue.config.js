@@ -6,6 +6,7 @@ module.exports = {
     proxy: {
       '/api': {
         target: 'https://manage.siring.com.cn/',
+        // target:'http:www.siring.com/',
         changeOrigin: true,
         pathRewrite: {
           '^/api': ''
