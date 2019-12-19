@@ -150,6 +150,9 @@ Route::group('api', function () {
     Route::group('NeedOrder',function(){
         Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
         Route::any('need_order_list','api/NeedOrder/need_order_list'); //定制需求列表
+        Route::any('change_status','api/NeedOrder/change_status'); //中止需求或确定需求
+        Route::any('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
+        Route::any('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
     });
 
     //微信第三方路由
@@ -180,11 +183,11 @@ Route::group('api', function () {
     Route::group('Capital',function(){
         Route::any('capital_detailed','api/Capital/capital_detailed'); //资金明细
         Route::any('invoice_amount','api/Capital/invoice_amount'); //剩余开票金额
-        Route::any('member_partner','api/Capital/member_partner'); //会员列表
-        Route::any('member_total','api/Capital/member_total'); //会员统计总数
-        Route::any('tips','api/Capital/tips'); //会员提示信息
-        Route::any('subcontract_partner','api/Capital/subcontract_partner'); //分包商列表
-        Route::any('subcontract_total','api/Capital/subcontract_total'); //分包商统计
+        Route::any('my_invoice','api/Capital/my_invoice'); //开票
+        Route::any('recharge','api/Capital/recharge'); //充值
+        Route::any('get_pay','api/Capital/get_pay'); //支付
+        Route::any('cash_with','api/Capital/cash_with'); //提现
+        Route::any('cash_details','api/Capital/cash_details'); //提现页面详情
         Route::any('sub_view','api/Capital/sub_view'); //分包项目视窗
         Route::any('receipt','api/Capital/receipt'); //接单
     });
