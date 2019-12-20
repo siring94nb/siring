@@ -38,7 +38,7 @@ class Console extends Base
         //pp($data);die;
         $user_fund =  UserFund::user($user_id);
         $data['money'] = $user_fund['money'];
-        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['other_code'],$data['created_at'],$data['end_time'],$data['delect_at']);
+        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 

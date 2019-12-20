@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs';
 // qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
 // https://manage.siring.com.cn/
-let base_url = ' https://manage.siring.com.cn/';
+let base_url = ' http://www.siring.com/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
 const env = process.env.NODE_ENV;
@@ -140,7 +140,7 @@ export const SubcontractPartner = params => {
 */
 export const SubView = params => {
     return axios.get(`${base_url}api/RoleCenter/sub_view`, { params: params });
-}   
+}
 /*
 *分包商页（分包商接单）
 */
@@ -162,7 +162,7 @@ export const Seo = params => {
 
 /**
  * 首页轮播图
- * 
+ *
  */
 export const GetBannerList = params => {
     return axios.post(`${base_url}api/banner/banner_list`, qs.stringify(params)).then(res => res.data);

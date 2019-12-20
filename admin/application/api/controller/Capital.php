@@ -316,7 +316,72 @@ class Capital extends Base
         }
         $data = db('user') ->where('id',$user_id)->field('id,phone')->find();
         $data['money'] = $user['money'];
+
         return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+    }
+
+
+    public function bankcard_list()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
+            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
+            ['num','require','数量必须'],
+            ['price','require','金额必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        $user_id = Session::get("uid");
+        if($user_id){
+            $user_id = Session::get("uid");
+        }else{
+            $user_id = $param["user_id"];
+        }
+    }
+
+    public function bankcard_add()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
+            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
+            ['num','require','数量必须'],
+            ['price','require','金额必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        $user_id = Session::get("uid");
+        if($user_id){
+            $user_id = Session::get("uid");
+        }else{
+            $user_id = $param["user_id"];
+        }
+    }
+
+    public function bankcard_del()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
+            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
+            ['num','require','数量必须'],
+            ['price','require','金额必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        $user_id = Session::get("uid");
+        if($user_id){
+            $user_id = Session::get("uid");
+        }else{
+            $user_id = $param["user_id"];
+        }
     }
 
 }
