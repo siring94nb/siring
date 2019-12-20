@@ -41,7 +41,7 @@
               <div class="fengbaoName">
                 <span>
                   项目名称：
-                  <span>直播电商</span>
+                  <span>{{shichuang.name}}</span>
                 </span>
                 <span>
                   酬金：
@@ -49,12 +49,12 @@
                 </span>
                 <span>
                   预计时间：
-                  <span>20190819至20191019</span>
+                  <span>{{shichuang.created_at}}</span>
                 </span>
               </div>
               <div>
                 <div>功能需求：</div>
-                <div>开发需求响应型公交系统,是雄安交通先行示范区的一大亮点,是为了推行需求即时响应、一人一座、免换乘的高品质公交服务系统。 交通专班相关开发需求响应型公交系统,是雄安交通先行示范区的一大亮点,了……</div>
+                <!-- <div>{{shichuang.con}}</div> -->
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
@@ -63,7 +63,8 @@
                     style="padding-right:30px;color: #66CC00; cursor:pointer"
                     @click.stop="ShowHidden"
                   >我要接单</span>
-                  <span style="color: #169BD5; padding-right:10px;">下一条</span>
+                  <span style="color: #169BD5; padding-right:10px;" v-if="lastPage==1" @click="GetSubView(lastPage-1)">上一条</span>
+                  <span style="color: #169BD5; padding-right:10px;" @click="GetSubView(lastPage+1)">下一条</span>
                 </div>
               </div>
               <!-- display: none; -->
@@ -145,7 +146,7 @@
                       </span>
                     </div>
                   </div>
-                  <button class="confirmBtn">确定，我要接单联系我吧！</button>
+                  <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
                 </div>
               </div>
             </div>
@@ -236,22 +237,22 @@
             <div>
               <div style="padding-bottom:20px;">
                 <el-table
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="date" label="申请专业技能" width="200" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="技能语言" width="220" align="center"></el-table-column>
+                  <el-table-column prop="id" label="申请专业技能" width="200" align="center"></el-table-column>
+                  <el-table-column prop="dev" label="技能语言" width="220" align="center"></el-table-column>
                   <el-table-column
-                    prop="InviterInvitationCode"
+                    prop="created_at"
                     label="申请时间"
                     width="220"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="技能押金" width="200" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="支付方式" width="200" align="center"></el-table-column>
+                  <el-table-column prop="money	" label="技能押金" width="200" align="center"></el-table-column>
+                  <el-table-column prop="role_type" label="支付方式" width="200" align="center"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -274,6 +275,7 @@ import {
 export default {
   data() {
     return {
+      lastPage:"",//当前页数
       dis:true,
       skillArr: {}, //技能以及过期时间
       multipleSelection: [],
@@ -329,6 +331,8 @@ export default {
       value: "",
       // 邀请分页表格
       list: [],
+      list1:[],
+      shichuang:[],
       pagesize: 3,
       currpage: 1,
       total: 100,
@@ -343,7 +347,8 @@ export default {
     this.RoleCenter();
     this.GetSubcontractTotal();
     this.GetSubcontractPartner();
-    this.GetSubView();
+    this.GetSubcontractPartner1();
+    this.GetSubView(1);
   },
   methods: {
     gb() {
@@ -430,26 +435,51 @@ export default {
         }
       });
     },
+    GetSubcontractPartner1() {
+        const params = {
+          type: 2,
+        };
+      SubcontractPartner(params).then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg, code);
+        if (code === 1) {
+          this.list1 = data;
+        }
+      });
+    },
     // 分包商视窗数据
-    GetSubView() {
-      SubView().then(res => {
+    GetSubView(num) {
+       let params = {
+          page:parseInt(num)
+        }
+      SubView(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
+        console.log(res);
         if (code === 1) {
+          this.lastPage = data.last_page;
+          this.shichuang = data.data;
         }
       });
     },
     //分包商接单（两个参数：项目id：xid，phone）
-    Receipt() {
+    Receipt(num) {
       const params = {
         // 项目id先写死，后期更改
-        xid: 1,
+        xid: num,
         phone: sessionStorage.getItem("phone")
       };
       Getreceipt(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
+          this.showMsg(msg,code)
         }
+      });
+    },
+     showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
       });
     },
     // 控制我要联系显示隐藏
