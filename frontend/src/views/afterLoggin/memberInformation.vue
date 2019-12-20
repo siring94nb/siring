@@ -284,7 +284,7 @@ export default {
         this.showMsg(msg, code);
         if (code === 1) {
           // console.log(123123);
-          this.$router.path("/afterLogginR");
+          this.$router.push("/afterLogginR");
         }
       });
     }

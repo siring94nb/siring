@@ -12,14 +12,13 @@
       <div class="smBox1">
         <div>
           <span>我的专业技能：</span>
-          <span>后端开发：</span>
-          <span style="padding-right:20px;">Java</span>
-          <span>移动开发：</span>
-          <span>ios</span>
+          <span>{{skillArr.name}}</span>
         </div>
         <div>
           <span>有效期至：</span>
-          <span>永久</span>
+          <span v-if="skillArr.end_time!=null">2019年12月31日</span>
+          <span v-if="skillArr.end_time==null" style="color:red">永久</span>
+          <span v-if="skillArr.end_time!=null">续费</span>
         </div>
       </div>
       <div class="smBox2">
@@ -31,7 +30,7 @@
               </el-col>
               <el-col :span="16">
                 <div class="tt">{{item.title}}</div>
-                <div class="num">{{item.num}}</div>
+                <div class="num">￥{{item.num}}</div>
               </el-col>
             </el-row>
           </div>
@@ -174,7 +173,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" />
-                  <button>搜索</button>
+                  <button @click="gb();GetMemberPartner()">搜索</button>
                 </div>
               </div>
               <div>
@@ -265,10 +264,18 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { GetRoleCenter,SubcontractTotal,SubcontractPartner,SubView,Getreceipt } from "@/api/api";
+import {
+  GetRoleCenter,
+  SubcontractTotal,
+  SubcontractPartner,
+  SubView,
+  Getreceipt
+} from "@/api/api";
 export default {
   data() {
     return {
+      dis:true,
+      skillArr: {}, //技能以及过期时间
       multipleSelection: [],
       phone: "12345678912",
       WXnum: "12345674891",
@@ -278,12 +285,12 @@ export default {
         {
           imgUrl: require("../../../assets/images/u8228.png"),
           title: "我的剩余押金",
-          num: "￥5000.00"
+          num: "invite_user_total"
         },
         {
           imgUrl: require("../../../assets/images/u7231.png"),
           title: "佣金总额",
-          num: "￥500.00"
+          num: "reach_user_total"
         }
       ],
       activeName: "first",
@@ -321,44 +328,7 @@ export default {
       },
       value: "",
       // 邀请分页表格
-      list: [
-        {
-          date: "SR20170719",
-          InviterAccount: "B2C购物商城",
-          InviterInvitationCode: "2017-07-19 14:48:38",
-          InviterLevel: "2017-07-19 14:48:38",
-          amount: "http://uqaovd.share.axure.org    ",
-          MinimumCommissions: "",
-          StandardCommission: ""
-        },
-        {
-          date: "SR20170719",
-          InviterAccount: "B2C购物商城",
-          InviterInvitationCode: "2017-07-19 14:48:38",
-          InviterLevel: "2017-07-19 14:48:38",
-          amount: "http://uqaovd.share.axure.org    ",
-          MinimumCommissions: "",
-          StandardCommission: ""
-        },
-        {
-          date: "SR20170719",
-          InviterAccount: "B2C购物商城",
-          InviterInvitationCode: "2017-07-19 14:48:38",
-          InviterLevel: "2017-07-19 14:48:38",
-          amount: "http://uqaovd.share.axure.org    ",
-          MinimumCommissions: "",
-          StandardCommission: ""
-        },
-        {
-          date: "SR20170719",
-          InviterAccount: "B2C购物商城",
-          InviterInvitationCode: "2017-07-19 14:48:38",
-          InviterLevel: "2017-07-19 14:48:38",
-          amount: "http://uqaovd.share.axure.org    ",
-          MinimumCommissions: "",
-          StandardCommission: ""
-        }
-      ],
+      list: [],
       pagesize: 3,
       currpage: 1,
       total: 100,
@@ -369,13 +339,17 @@ export default {
   components: {
     logginHeader
   },
-  mounted(){
+  mounted() {
     this.RoleCenter();
     this.GetSubcontractTotal();
     this.GetSubcontractPartner();
     this.GetSubView();
   },
   methods: {
+    gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
     },
@@ -384,10 +358,10 @@ export default {
     },
     // 根据官网制作全选功能
     /*
-    *Element-ui 中table 默认选中 toggleRowSelection
-    *结合vue的特殊属性ref引用到Dom元素上，再执行dom上的toggleRowSelection方法。
-    *toggleRowSelection(row, selected)接受两个参数，row传递被勾选行的数据，selected设置是否选中
-    *注意：调用toggleRowSelection这个方法 需要获取真实dom 所以需要注册 ref 来引用它 
+     *Element-ui 中table 默认选中 toggleRowSelection
+     *结合vue的特殊属性ref引用到Dom元素上，再执行dom上的toggleRowSelection方法。
+     *toggleRowSelection(row, selected)接受两个参数，row传递被勾选行的数据，selected设置是否选中
+     *注意：调用toggleRowSelection这个方法 需要获取真实dom 所以需要注册 ref 来引用它
      */
     toggleSelection(rows) {
       // 当前有问题，会串联，虽然能实现全选全不选功能，但是但已有部分选中时会出现正反选的效果而不是全选
@@ -403,62 +377,80 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    },    
+    },
     // 获取分包商数据
     RoleCenter() {
       const params = {
-        type: 1
+        type: 3
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
         if (code === 1) {
+          this.skillArr = data;
         }
       });
     },
     // 获取分包商佣金，押金等
-    GetSubcontractTotal(){
-      SubcontractTotal().then(res =>{
-        let {data,msg,code} = res;
+    GetSubcontractTotal() {
+      SubcontractTotal().then(res => {
+        let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        if(code === 1){
+        if (code === 1) {
+          const newArr = this.topList.map(item => {
+            item.num = data[item.num];
+            return item;
+          });
+          this.topList = newArr;
         }
-      })
+      });
     },
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
-    GetSubcontractPartner(num = 1){
-      const params = {
-        type: num
-      };
+    GetSubcontractPartner() {
+      let params = {};
+      if (this.dis) {
+        params = {
+          type: 1
+        };
+      } else {
+        let start_time = this.value[0].getTime();
+        let end_time = this.value[1].getTime();
+        params = {
+          type: 1,
+          title: this.suoyin,
+          start_time: start_time,
+          end_time: end_time
+        };
+      }
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
         if (code === 1) {
+          this.list = data;
         }
       });
     },
     // 分包商视窗数据
-    GetSubView(){
-       SubView().then(res =>{
-        let {data,msg,code} = res;
+    GetSubView() {
+      SubView().then(res => {
+        let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        if(code === 1){
+        if (code === 1) {
         }
-      })
+      });
     },
     //分包商接单（两个参数：项目id：xid，phone）
-    Receipt(){
+    Receipt() {
       const params = {
         // 项目id先写死，后期更改
-        xid : 1,
-        phone:sessionStorage.getItem("phone")
+        xid: 1,
+        phone: sessionStorage.getItem("phone")
       };
-      Getreceipt(params).then(res=>{
-        let{data,msg,code} = res;
-        if(code === 1){
-
+      Getreceipt(params).then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
         }
-      })
+      });
     },
     // 控制我要联系显示隐藏
     ShowHidden() {
@@ -536,7 +528,7 @@ export default {
   }
 };
 </script>
-<style lang="scss" scoped> 
+<style lang="scss" scoped>
 .bottomBox {
   background: #ffffff;
   margin: 5px 0 0 20px;
