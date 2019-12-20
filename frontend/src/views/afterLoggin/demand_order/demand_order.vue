@@ -83,8 +83,8 @@
                 size="mini"
                 @click="handleEdit(scope.row.id,scope.row.need_status)"
                 class="btns"
-                :class="btnClassName[scope.row.need_status - 1]"
-              >{{btnName[scope.row.need_status - 1]}}</el-button>
+                :class="btnClassName[scope.row.need_status-1]"
+              >{{btnName[scope.row.need_status-1]}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -197,13 +197,15 @@ export default {
       this.multipleSelection = val;
     },
     handleEdit(id, status) {
-      this.$router.push({
-        name: "order_detail",
-        params: {
-          status: status,
-          id: id
-        }
-      });
+      if (status < 8) {
+        this.$router.push({
+          name: "order_detail",
+          params: {
+            status: status,
+            id: id
+          }
+        });
+      }
     }
   },
   components: {

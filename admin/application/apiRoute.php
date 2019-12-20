@@ -188,11 +188,10 @@ Route::group('api', function () {
         Route::any('get_pay','api/Capital/get_pay'); //支付
         Route::any('cash_with','api/Capital/cash_with'); //提现
         Route::any('cash_details','api/Capital/cash_details'); //提现页面详情
-        Route::any('sub_view','api/Capital/sub_view'); //分包项目视窗
-        Route::any('receipt','api/Capital/receipt'); //接单
+        Route::any('bankcard_list','api/Capital/bankcard_list'); //银行卡列表
+        Route::any('bankcard_add','api/Capital/bankcard_add'); //银行卡新增
+        Route::any('bankcard_del','api/Capital/bankcard_del'); //银行卡删除
     });
-
-
 
 
 });

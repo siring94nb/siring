@@ -402,7 +402,7 @@ export default {
   },
   methods: {
     init() {
-      // this.status = this.$route.params.status;
+      this.status = this.$route.params.status;
       this.id = this.$route.params.id;
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
