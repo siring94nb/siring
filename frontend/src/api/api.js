@@ -148,6 +148,36 @@ export const Getreceipt = params => {
     return axios.post(`${base_url}api/RoleCenter/receipt`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*提现
+*/
+export const CashWith = params => {
+    return axios.post(`${base_url}api/Capital/cash_with`, qs.stringify( )).then(res => res.data);
+}
+/*
+*提现（提现页面详情，剩余余额、电话账户）
+*/
+export const CashDetails = params => {
+    return axios.post(`${base_url}api/Capital/cash_details`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*银行卡管理（银行卡详情）
+*/
+export const BankcardList = params => {
+    return axios.get(`${base_url}api/Capital/bankcard_list`, { params: params });
+}
+/*
+*银行卡管理（新增）
+*/
+export const BankcardAdd = params => {
+    return axios.post(`${base_url}api/Capital/bankcard_add`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*银行卡管理（删除）
+*/
+export const BankcardDel = params => {
+    return axios.post(`${base_url}api/Capital/bankcard_del`, qs.stringify(params)).then(res => res.data);
+}
+/*
 *用户分享邀请码
 */
 export const GetInvitationCode = params => {

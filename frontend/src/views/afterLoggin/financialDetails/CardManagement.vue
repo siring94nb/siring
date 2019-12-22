@@ -14,16 +14,16 @@
         </div>
         <div>
           <span>开户名：</span>
-          <span>{{item.name}}</span>
+          <span>{{item.card_name}}</span>
         </div>
         <div>
           <span>开户行：</span>
-          <span>{{item.bank}}</span>
+          <span>{{item.bank_name}}</span>
         </div>
         <div>
           <span>卡号：</span>
-          <span>{{item.cardId.replace(item.cardId.substring(5,11),"******")}}</span>
-          <i class="el-icon-delete" @click.stop="deleteList(index)"></i>
+          <span>{{item.card_number.replace(item.card_number.substring(5,11),"******")}}</span>
+          <i class="el-icon-delete" @click.stop="deleteList(item.id)"></i>
         </div>
       </div>
       <div class="addCard" @click.stop="dk">
@@ -66,7 +66,7 @@
           <el-button
             type="danger"
             style="width:320px;"
-            @click.stop="addBank"
+            @click.stop="getBankcardAdd"
             @keyup.enter="ceshi"
           >确定</el-button>
         </div>
@@ -76,6 +76,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {BankcardList,BankcardAdd,BankcardDel} from "@/api/api";
 export default {
   data() {
     return {
@@ -95,33 +96,17 @@ export default {
       // select选择器银行
       options: [
         {
-          value: "选项1",
+          value: "南京银行",
           label: "南京银行"
         },
         {
-          value: "选项2",
+          value: "中国人民银行",
           label: "中国人民银行"
         }
       ],
-      value: "选项1",
+      value: "南京银行",
       // 银行卡信息 ,当前写死，测试数据
-      cardImage: [
-        {
-          name: "刘德华1",
-          bank: "中国银行深圳分行",
-          cardId: "4567712345666666"
-        },
-        {
-          name: "刘德华2",
-          bank: "中国银行深圳分行",
-          cardId: "4567712345666666"
-        },
-        {
-          name: "刘德华3",
-          bank: "中国银行深圳分行",
-          cardId: "4567712345666666"
-        }
-      ]
+      cardImage: [],
     };
   },
   components: {
@@ -129,8 +114,39 @@ export default {
   },
   mounted() {
     this.xuanzhogn(this.moren);
+    this.getBankcardList();
   },
   methods: {
+    // 银行卡信息
+    getBankcardList(){
+      BankcardList().then(res=>{
+        let { data, msg, code } = res;
+         this.showMsg(msg, code);
+          if (code === 1) {
+           this.cardImage = data
+          }
+      })
+    },
+    // 添加银行卡
+    getBankcardAdd(){
+      let params = {
+        card_number:this.input1,
+        bank_name:this.value,
+        card_name:this.input,
+        bank_branch:this.input2,
+        province:this.province,
+        city:this.city,
+        area:this.area
+      };
+      BankcardAdd(params).then(res=>{
+         let { data, msg, code } = res;
+         this.showMsg(msg, code);
+          if (code === 1) {
+            this.getBankcardList();
+            this.dk();
+          }
+      })
+    },
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
@@ -164,42 +180,31 @@ export default {
     },
     // 删除，后继加接口，目前暂时将样式删除
     deleteList(num) {
-      // this.cardImage.splice(num,1);
-      // console.log(this.cardImage);
-      this.$confirm("此操作将永久删除该银行卡, 是否继续?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      BankcardDel({id:num}).then(res=>{
+        let { data, msg, code } = res;
+         this.showMsg(msg, code);
+          if (code === 1) {
+            this.getBankcardList();
+          }
       })
-        .then(() => {
-          this.cardImage.splice(num, 1);
-          this.$message({
-            type: "success",
-            message: "删除成功!"
-          });
-        })
-        .catch(() => {
-          this.$message({
-            type: "info",
-            message: "已取消删除"
-          });
-        });
-    },
-    // 添加银行卡
-    addBank() {
-      // 这样子获取，目前写死固定，刷新就消失，之后连接口在修改
-      let obj = {
-        name: this.input,
-        bank: this.input2,
-        cardId: this.input1
-      };
-      this.cardImage.push(obj);
-      this.$message({
-        message: "添加银行卡成功",
-        type: "success"
-      });
-      this.dk();
-      // 点击事件和回车事件使用同一个方法，判断
+      // this.$confirm("此操作将永久删除该银行卡, 是否继续?", "提示", {
+      //   confirmButtonText: "确定",
+      //   cancelButtonText: "取消",
+      //   type: "warning"
+      // })
+      //   .then(() => {
+      //     this.cardImage.splice(num, 1);
+      //     this.$message({
+      //       type: "success",
+      //       message: "删除成功!"
+      //     });
+      //   })
+      //   .catch(() => {
+      //     this.$message({
+      //       type: "info",
+      //       message: "已取消删除"
+      //     });
+      //   });
     },
     // 回车键测试
     ceshi() {

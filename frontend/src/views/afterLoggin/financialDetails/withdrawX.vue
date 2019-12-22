@@ -10,11 +10,11 @@
       <div class="leftBox">
         <div>
           <span>账户余额：</span>
-          <span class="biaozhi">￥10.00</span>
+          <span class="biaozhi">￥{{mList.money}}</span>
         </div>
         <div>
           <span>账户名：</span>
-          <span class="biaozhi">{{phone}}</span>
+          <span class="biaozhi">{{mList.phone}}</span>
         </div>
         <div>
           <span>
@@ -23,9 +23,9 @@
           </span>
           <select v-model="selectItem" @change="selectFn($event)">
             <option selected="selected" value>如没有添加银行卡，请添加→</option>
-            <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
+            <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.card_number}}</option>
           </select>
-          <router-link to class="biaozhi bank">+银行卡</router-link>
+          <router-link to="/CardManagement" class="biaozhi bank">+银行卡</router-link>
         </div>
         <div>
           <span>
@@ -33,7 +33,7 @@
             <span>提现金额：</span>
           </span>
 
-          <input type="number"/>
+          <input type="number" value="" v-model="price"/>
           <span>元</span>
         </div>
         <div>
@@ -51,7 +51,7 @@
             <span class="biaozhi">*</span>
             <span>资金密码：</span>
           </span>
-          <input type="text" />
+          <input type="text" value="" v-model="password" />
           <div>
             注：会员中心的
             <router-link :to="{path:'/safetyTabControl',query:{canshu:'third',title:'信息修改'}}">安全中心</router-link>设置
@@ -66,7 +66,7 @@
           <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click.stop="getPhoneCode" />
         </div>
         <div>
-          <button>确认</button>
+          <button @click="getCashWith">确认</button>
           <div>低于￥1000.00元不得提现</div>
         </div>
       </div>
@@ -98,7 +98,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetCode} from "@/api/api";
+import {GetCode,CashDetails,BankcardList,CashWith} from "@/api/api";
 export default {
   data() {
     return {
@@ -107,23 +107,24 @@ export default {
       showTime:false,//控制获取验证码时，按钮禁用
       validateTime: 60,//倒计时初始时间
       yanzhengma:"",//获取验证码
-      items: [
-        { id: 1, name: "卡一：1234567897897897" },
-        { id: 2, name: "卡二：1231231231231231" },
-        { id: 3, name: "卡三：1546545684168184" }
-      ]
+      mList:{},//剩余开票金额，手机号
+      bankCard:"",//银行卡卡号
+      price:"",//提现金额
+      password:"",//资金密码
+      items: []
     };
   },
   components: {
     logginHeader
   },
-  mounted() {},
+  mounted() {this.getCashDetails();this.getBankcardList()},
   methods: {
     // 获取select选中的银行卡
     selectFn(e) {
       console.log(e);
       console.log(e.target.selectedIndex); // 选择项的index索引
       console.log(e.target.value); // 选择项的value
+      this.bankCard = e.target.value
     },
     // 获取验证码
     getPhoneCode() {
@@ -153,6 +154,41 @@ export default {
           this.validateTime = time;
         }
       }, 1000);
+    },
+    // 提现
+    getCashWith(){
+       let params = {
+       bank_card : this.bankCard,
+       price:this.price, 
+       fund_password :this.password,
+       code : this.yanzhengma
+      };
+      CashWith(params).then(res=>{
+        let { data, msg, code } = res;
+          this.showMsg(msg, code);
+          if (code === 1) {
+          }
+      })
+    },
+    // 资金详情（余额以及电话）
+    getCashDetails(){
+      CashDetails().then(res=>{
+        let { data, msg, code } = res;
+         this.showMsg(msg, code);
+          if (code === 1) {
+           this.mList = data
+          }
+      })
+    },
+    // 银行卡信息
+    getBankcardList(){
+      BankcardList().then(res=>{
+        let { data, msg, code } = res;
+         this.showMsg(msg, code);
+          if (code === 1) {
+           this.items = data
+          }
+      })
     },
      // 返回值
     showMsg(msg, code) {
