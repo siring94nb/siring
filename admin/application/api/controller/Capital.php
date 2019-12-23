@@ -8,7 +8,7 @@
 namespace app\api\controller;
 use app\data\model\AllOrder;
 use app\data\model\CashWith;
-use app\data\model\InvestmentProject;
+use app\data\model\UserCard;
 use app\data\model\Invoice;
 use app\data\model\Recharge;
 use app\data\model\SoftOrder;
@@ -320,68 +320,140 @@ class Capital extends Base
         return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
     }
 
-
+    /**
+     * 银行卡列表
+     */
     public function bankcard_list()
     {
         $request = Request::instance();
         $param = $request->param();
-        $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
-            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
-            ['num','require','数量必须'],
-            ['price','require','金额必须'],
-        ]);
-        if(!$validate->check($param)){
-            returnJson (0,$validate->getError());exit();
-        }
         $user_id = Session::get("uid");
         if($user_id){
             $user_id = Session::get("uid");
         }else{
             $user_id = $param["user_id"];
         }
+        $data = (new UserCard()) ->where('user_id',$user_id)->select();
+
+        return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
     }
 
+    /**
+     * 银行卡新增
+     */
     public function bankcard_add()
     {
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
-            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
-            ['num','require','数量必须'],
-            ['price','require','金额必须'],
+            ['card_number', 'require|number|unique:UserCard', '卡号不能为空|卡号必须为数字|卡号已存在'],
+            ['bank_name','require|max:50','银行名称必须|名称最多不能超过500个字符'],
+            ['card_name','require','开户名必须'],
+            ['bank_branch','require','开户支行必须'],
+            ['province','require','省必须'],
+            ['city','require','市必须'],
+            ['area','require','区必须'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
         $user_id = Session::get("uid");
+
         if($user_id){
-            $user_id = Session::get("uid");
+            $param['user_id'] = Session::get("uid");
         }else{
-            $user_id = $param["user_id"];
+            $param['user_id'] = $param["user_id"];
         }
+        $card = new UserCard();
+        $data = $card->add($param);
+
+        return $data ? returnJson(1,'成功',$data) : returnJson(0,'失败',$data);
+
     }
 
+    /**
+     * 银行卡删除
+     */
     public function bankcard_del()
     {
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
-            ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
-            ['num','require','数量必须'],
-            ['price','require','金额必须'],
+            ['id','require','id必须'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
         $user_id = Session::get("uid");
-        if($user_id){
-            $user_id = Session::get("uid");
-        }else{
-            $user_id = $param["user_id"];
+        if(!$user_id){
+            returnJson(0,'该用户未登录');exit();
         }
+
+        $data = UserCard::destroy($param['id']);
+
+        return $data ? returnJson(1,'删除成功') : returnJson(0,'删除失败');
+    }
+
+    /**
+     * 优惠券列表
+     * @throws \think\exception\DbException
+     */
+    public function coupon()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+
+
+        $where = [];
+        if(!empty($param['status'])){
+            $where['status'] = $param['status'];
+        }
+        if(!empty($param['role_type'])){
+            $where['role_type'] = $param['role_type'];
+        }
+        if(!empty($param['start_time'])){
+            $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
+            $where['created_at'] = ['gt',$param['start_time']];
+        }
+        if(!empty($param['end_time'])){
+            $param['end_time'] = date('Y-m-d H:i:s',strtotime($param['end_time']));
+            $where['created_at'] = ['lt',$param['end_time']];
+        }
+        if(!empty($param['start_time']) && !empty($param['end_time'])){
+            $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
+        }
+        if(empty($param['page'])){
+            $param['page'] = 1;
+        }
+        if(empty($param['size'])){
+            $param['size'] = 10;
+        }
+        $field = '*';
+        $order = 'id desc';
+
+        $list = \app\data\model\UserDiscount::with('discount') -> field( $field ) -> where( $where ) -> order( $order )
+            -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+        foreach ($list['data'] as $k=>$v){
+            $list['data'][$k]['coupon_name'] = $v['discount']['name'];
+            $list['data'][$k]['rule'] = $v['discount']['rule'];
+            $list['data'][$k]['type'] = $v['discount']['type'];
+            $list['data'][$k]['range'] = $v['discount']['range'];
+            $list['data'][$k]['coupon_status'] = $v['discount']['status'];
+            $list['data'][$k]['add_time'] = date('Y-m-d H:i:s',$v['discount']['add_time']);
+            $list['data'][$k]['end_time'] = date('Y-m-d H:i:s',$v['discount']['end_time']);
+            unset($list['data'][$k]['discount']);
+        }
+        return $list ? returnJson(1,'获取成功',$list) : returnJson(0,'获取失败',$list);
+    }
+
+
+    /**
+     * 关联表
+     * @return mixed
+     */
+    public function discount()
+    {
+        return $this->belongsTo('Discount', 'discount_id', 'id');
     }
 
 }

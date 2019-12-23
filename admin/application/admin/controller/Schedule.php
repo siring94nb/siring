@@ -13,6 +13,12 @@ use think\Request;
 use think\Db;
 use think\Validate;
 
+/**
+ * @author fyk
+ * 日程管理
+ * Class Schedule
+ * @package app\admin\controller
+ */
 class Schedule extends Base{
 
     /**
