@@ -170,12 +170,7 @@ export default {
         {
           title: "终端类型",
           align: "center",
-          key: "need_terminal",
-          render: (h, param) => {
-            //   param.row.need_terminal = JSON.parse(param.row.need_terminal);
-            //   param.row.need_terminal = JSON.stringify(param.row.need_terminal);
-            return h("div", param.row.need_terminal);
-          }
+          key: "terminal",
         },
         {
           title: "用户账号",
@@ -247,7 +242,7 @@ export default {
                     status = "平台报价";
                     color = "rgb(204, 0, 204)";
                     break;
-            } 
+            }
               return h(
                 "Button",
                 {
