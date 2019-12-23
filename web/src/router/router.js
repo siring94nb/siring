@@ -396,6 +396,14 @@ export const appRouter = [
                         title: '定制需求订单',
                         component: () => import('@/views/order/demand_order.vue')
                     },
+                    {
+                        path: 'review_order',
+                        icon: 'ios-clipboard',
+                        name: 'review_order',
+                        access: 'admin/NeedOrderAudit/index',
+                        title: '订单审核',
+                        component: () => import('@/views/order/review_order.vue')
+                    },
                 ]
             },
             {
