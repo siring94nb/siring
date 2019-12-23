@@ -21,6 +21,7 @@ class  UserCard extends  Base{
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
+            //pp($postData);die;
             // if($postData['default_status']==1){    //银行是默认使用
             //     $re=UserCard::update(['user_id'=>$postData['user_id'],'default_status'=>0]);
             // }
@@ -56,6 +57,6 @@ class  UserCard extends  Base{
 
     }
 
-    
+
 
 }

@@ -191,6 +191,7 @@ Route::group('api', function () {
         Route::any('bankcard_list','api/Capital/bankcard_list'); //银行卡列表
         Route::any('bankcard_add','api/Capital/bankcard_add'); //银行卡新增
         Route::any('bankcard_del','api/Capital/bankcard_del'); //银行卡删除
+        Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
 

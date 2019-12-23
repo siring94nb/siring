@@ -18,5 +18,26 @@ class UserCard extends Model
     protected $table="user_card";
     protected $resultSetType = 'collection';
 
+    /**
+     * 新增
+     * @param $param
+     * @return false|int
+     */
+    public function add($param)
+    {
+        return $this->save([
+            'user_id' => $param['user_id'],
+            'card_number' => $param['card_number'],
+            'card_name' => $param['card_name'],
+            'bank_branch' => $param['bank_branch'],
+            'bank_name' => $param['bank_name'],
+            'province' => $param['province'],
+            'city' => $param['city'],
+            'area' => $param['area'],
+            'create_time' => time(),
+        ]);
+
+    }
+
 
 }
