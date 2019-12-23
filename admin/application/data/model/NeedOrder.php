@@ -12,14 +12,14 @@ use traits\model\SoftDelete;
  */
 class NeedOrder extends Model
 {
-   
+
         use SoftDelete;
         protected $deleteTime = 'del_time';
         protected $createTime = 'create_time';
         protected $updateTime = 'update_time';
         protected $table="need_order";
         protected $resultSetType = 'collection';
-    
+
         /**
          * lilu
          * 定制需求添加订单
@@ -65,11 +65,19 @@ class NeedOrder extends Model
             $order = 'create_time desc';
             $list = Db::table('need_order')->field($field) -> where( $where ) -> order( $order )
                 -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
-            return $list;
 
+            foreach ($list['data'] as $k =>$v){
+                $terminal= json_decode( $v['need_terminal'] , true );
+                if(!empty($terminal)){
+                    $res = join('/',$terminal);
+                    $list['data'][$k]['terminal'] = $res;
+                }else{
+                    $list['data'][$k]['terminal'] = "无";
+                }
+            }
+
+            return $list;
         }
-    
-    
 
 
 }
