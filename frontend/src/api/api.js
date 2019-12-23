@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs';
 // qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
 // https://manage.siring.com.cn/
-let base_url = ' http://www.siring.com/';
+let base_url = 'http://www.siring.com/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
 const env = process.env.NODE_ENV;
@@ -146,6 +146,48 @@ export const SubView = params => {
 */
 export const Getreceipt = params => {
     return axios.post(`${base_url}api/RoleCenter/receipt`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*资金管理（资金明细）
+*/
+export const CapitalDetailed = params => {
+    return axios.post(`${base_url}api/Capital/capital_detailed`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*资金管理（剩余开票金额）
+*/
+export const InvoiceAmount = params => {
+    return axios.post(`${base_url}api/Capital/invoice_amount`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*提现
+*/
+export const CashWith = params => {
+    return axios.post(`${base_url}api/Capital/cash_with`, qs.stringify( )).then(res => res.data);
+}
+/*
+*提现（提现页面详情，剩余余额、电话账户）
+*/
+export const CashDetails = params => {
+    return axios.post(`${base_url}api/Capital/cash_details`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*银行卡管理（银行卡详情）
+*/
+export const BankcardList = params => {
+    return axios.get(`${base_url}api/Capital/bankcard_list`, { params: params });
+}
+/*
+*银行卡管理（新增）
+*/
+export const BankcardAdd = params => {
+    return axios.post(`${base_url}api/Capital/bankcard_add`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*银行卡管理（删除）
+*/
+export const BankcardDel = params => {
+    return axios.post(`${base_url}api/Capital/bankcard_del`, qs.stringify(params)).then(res => res.data);
 }
 /*
 *用户分享邀请码

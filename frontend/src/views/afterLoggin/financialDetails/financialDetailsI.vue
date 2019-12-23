@@ -25,25 +25,34 @@
         <div>
           <span>收支类型</span>
           <select v-model="selected1">
-            <option value="全部">全部</option>
-            <option value="测试1">测试1</option>
-            <option value="测试2">测试2</option>
+            <option value="0">全部</option>
+            <option value="1">支出</option>
+            <option value="2">收入</option>
           </select>
         </div>
         <div>
           <span>账单项目</span>
           <select v-model="selected2">
-            <option value="全部">全部</option>
+            <option value="0">全部</option>
+            <option value="1">会员订单</option>
+            <option value="2">合伙人订单</option>
+            <option value="3">分包商订单</option>
+            <option value="4">软件定制订单</option>
+            <option value="5">AI订单</option>
+            <option value="6">投融订单</option>
+            <option value="8">Saas订单</option>
+            <option value="9">充值</option>
+            <option value="10">提现</option>
           </select>
         </div>
         <div>
-          <button>查询</button>
+          <button @click="gb();getCapitalDetailed();">查询</button>
         </div>
       </div>
       <div>
         <div class="invoice">
           <span>剩余可开票金额：</span>
-          <span>85875元</span>
+          <span>{{surplusMoney}}元</span>
           <button @click.stop="kaipiaoye">申请开票</button>
           <!-- 点击开票，弹出，发票样单 -->
           <div class="popupBox" style="display:none;">
@@ -150,12 +159,11 @@
               :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180" align="center"></el-table-column>
-              <el-table-column prop="name" label="收入（元）" align="center" width="160"></el-table-column>
-              <el-table-column prop="address" align="center" width="180" label="收入账号"></el-table-column>
-              <el-table-column prop="date" label="支出（元）" align="center" width="180"></el-table-column>
-              <el-table-column prop="name" label="支出账号" align="center" width="180"></el-table-column>
-              <el-table-column prop="address" align="center" label="账单项目"></el-table-column>
+              <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+              <el-table-column prop="income" label="收入（元）" align="center" width="160"></el-table-column>
+              <el-table-column prop="phone" align="center" width="180" label="收入账号"></el-table-column>
+              <el-table-column prop="money" label="支出（元）" align="center" width="180"></el-table-column>
+              <el-table-column prop="pay_type" align="center" label="支付类型"></el-table-column>
             </el-table>
             <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
               <div>
@@ -176,17 +184,19 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import { CapitalDetailed, InvoiceAmount } from "@/api/api";
 export default {
   data() {
     return {
+      dis: true,
       // 分页表格参数
-      pagesize: 6,
+      pagesize: 10,
       currpage: 1,
       total: 100,
       DirectlyTo: 1,
       // select参数
-      selected1: "全部",
-      selected2: "全部",
+      selected1: "0",
+      selected2: "0",
       selected3: "深圳市沃达峰",
       // 时间范围选择
       pickerOptions: {
@@ -229,35 +239,23 @@ export default {
       radioVal1: "普通发票",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
+      surplusMoney: "",
       // 表格数据占位
       tableData: [
-        {
-          date: "2017-07-19 14:48:38 ",
-          name: "3000.00",
-          address: "招商银行：838383399399"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
       ]
     };
   },
   components: {
     logginHeader
   },
+  mounted() {
+    this.getInvoiceAmount();
+  },
   methods: {
+    gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
     },
@@ -266,6 +264,41 @@ export default {
     },
     getRadioVal(value) {
       console.log(value);
+    },
+    // 获取资金明细数据
+    getCapitalDetailed() {
+      let params = {};
+      if (this.dis) {
+        CapitalDetailed().then(res => {
+          let {data,msg,code} = res;
+          if(code === 1){
+            this.pagesize  = data.per_page
+            this.tableData = data.data;
+          }
+        });
+      } else {
+        params = {
+          budget_type: this.selected1,
+          role_type: this.selected2
+        };
+        CapitalDetailed(params).then(res => {
+            let {data,msg,code} = res;
+            if(code === 1){
+              this.tableData = data.data;
+            }
+        });
+      }
+    },
+    // 剩余开票金额
+    getInvoiceAmount() {
+      InvoiceAmount().then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+          this.surplusMoney = data;
+        } else {
+          this.surplusMoney = 0;
+        }
+      });
     },
     // 点击输入框，释放禁用
     xiugai() {
