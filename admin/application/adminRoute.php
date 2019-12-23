@@ -431,7 +431,7 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/NeedOrder/need_index',
             ['method' => 'get']
         ],
-         'get_need_order_detail'   => [                //定制需求
+         'get_need_order_detail'   => [          //定制需求
              'admin/NeedOrder/get_need_order_detail',
              ['method' => 'post']
          ],
@@ -464,6 +464,26 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
 
     ],['after_behavior' => $afterBehavior]);
+
+    //审核列表
+    Route::group('NeedOrderAudit', [
+        'index' => [
+            'admin/NeedOrderAudit/index',
+            ['method' => 'get']
+        ],
+        'need_orderAudit_detail'   => [
+            'admin/NeedOrderAudit/need_orderAudit_detail',
+            ['method' => 'post']
+        ],
+        'orderAudit_upd'   => [
+            'admin/NeedOrderAudit/orderAudit_upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/NeedOrderAudit/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
 
     //消息管理
     Route::group('Msg', [
