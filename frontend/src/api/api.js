@@ -148,6 +148,18 @@ export const Getreceipt = params => {
     return axios.post(`${base_url}api/RoleCenter/receipt`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*资金管理（资金明细）
+*/
+export const CapitalDetailed = params => {
+    return axios.post(`${base_url}api/Capital/capital_detailed`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*资金管理（剩余开票金额）
+*/
+export const InvoiceAmount = params => {
+    return axios.post(`${base_url}api/Capital/invoice_amount`, qs.stringify(params)).then(res => res.data);
+}
+/*
 *用户分享邀请码
 */
 export const GetInvitationCode = params => {

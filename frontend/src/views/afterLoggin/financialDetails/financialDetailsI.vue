@@ -25,15 +25,24 @@
         <div>
           <span>收支类型</span>
           <select v-model="selected1">
-            <option value="全部">全部</option>
-            <option value="测试1">测试1</option>
-            <option value="测试2">测试2</option>
+            <option value="0">全部</option>
+            <option value="1">支出</option>
+            <option value="2">收入</option>
           </select>
         </div>
         <div>
           <span>账单项目</span>
           <select v-model="selected2">
-            <option value="全部">全部</option>
+            <option value="0">全部</option>
+            <option value="1">会员订单</option>
+            <option value="2">合伙人订单</option>
+            <option value="3">分包商订单</option>
+            <option value="4">软件定制订单</option>
+            <option value="5">AI订单</option>
+            <option value="6">投融订单</option>
+            <option value="8">Saas订单</option>
+            <option value="9">充值</option>
+            <option value="10">提现</option>
           </select>
         </div>
         <div>
@@ -43,7 +52,7 @@
       <div>
         <div class="invoice">
           <span>剩余可开票金额：</span>
-          <span>85875元</span>
+          <span>{{surplusMoney}}元</span>
           <button @click.stop="kaipiaoye">申请开票</button>
           <!-- 点击开票，弹出，发票样单 -->
           <div class="popupBox" style="display:none;">
@@ -176,6 +185,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {CapitalDetailed,InvoiceAmount} from "@/api/api"; 
 export default {
   data() {
     return {
@@ -185,8 +195,8 @@ export default {
       total: 100,
       DirectlyTo: 1,
       // select参数
-      selected1: "全部",
-      selected2: "全部",
+      selected1: "0",
+      selected2: "0",
       selected3: "深圳市沃达峰",
       // 时间范围选择
       pickerOptions: {
@@ -229,6 +239,7 @@ export default {
       radioVal1: "普通发票",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
+      surplusMoney:'',
       // 表格数据占位
       tableData: [
         {
@@ -257,6 +268,9 @@ export default {
   components: {
     logginHeader
   },
+  mounted(){
+    this.getInvoiceAmount();
+  },
   methods: {
     handleCurrentChange(cpage) {
       this.currpage = cpage;
@@ -266,6 +280,27 @@ export default {
     },
     getRadioVal(value) {
       console.log(value);
+    },
+    // 获取资金明细数据
+    getCapitalDetailed(){
+      const params = {
+        budget_type:this.selected1,
+        role_type:this.selected2,
+      }
+      CapitalDetailed().then(res=>{ 
+
+      })
+    },
+    // 剩余开票金额
+    getInvoiceAmount(){
+      InvoiceAmount().then(res=>{
+        let { data, msg, code } = res;
+        if (code === 1) {
+          this.surplusMoney = data;
+        }else{
+          this.surplusMoney = 0;
+        }
+      })
     },
     // 点击输入框，释放禁用
     xiugai() {
