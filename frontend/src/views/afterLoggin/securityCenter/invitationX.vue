@@ -15,10 +15,10 @@
             <div>方法一</div>
             <div>链接邀请</div>
             <div>
-              <el-input v-model="userLink"></el-input>
+              <el-input v-model="userLink" disabled="disabled"></el-input>
               <el-button
                 v-clipboard:copy="userLink"
-                v-clipboard:success="onCopy"
+                v-clipboard:success="toLink"
                 v-clipboard:error="onError"
               >复制</el-button>
             </div>
@@ -32,7 +32,7 @@
             <div>方法二</div>
             <div>分享邀请码</div>
             <div>
-              <el-input v-model="invitationCode"></el-input>
+              <el-input v-model="invitationCode" disabled="disabled"></el-input>
               <el-button
                 v-clipboard:copy="invitationCode"
                 v-clipboard:success="onCopy"
@@ -109,7 +109,7 @@ export default {
     return {
       activeName: "first",
       title: "邀请方法",
-      userLink: "https://sfsafdsfsdfasdfa",
+      userLink: "https://manage.siring.com.cn/#/index",
       invitationCode: "",
       // table数据
       tableData: [
@@ -153,6 +153,15 @@ export default {
           }
         }
       );
+    },
+    // 链接处写死，复制成功后跳转路由同时传参
+    toLink(){
+      this.$router.push({
+          name: 'ceshi',
+          params: {
+            id: 123123123
+          }
+        })
     },
     // 一键复制
     onCopy(e) {

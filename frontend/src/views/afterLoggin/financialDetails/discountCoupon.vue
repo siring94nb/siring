@@ -22,8 +22,7 @@
           unlink-panels
           range-separator="至"
           start-placeholder="开始月份"
-          end-placeholder="结束月份"
-          :picker-options="pickerOptions">
+          end-placeholder="结束月份">
         </el-date-picker>
         <span>消费类型</span>
         <el-select v-model="value" placeholder="请选择" style="width:120px;">
@@ -102,30 +101,6 @@ import logginHeader from "@/components/logginHeader";
 export default {
   data() {
     return {
-      // 时间选择器
-      pickerOptions: {
-          shortcuts: [{
-            text: '本月',
-            onClick(picker) {
-              picker.$emit('pick', [new Date(), new Date()]);
-            }
-          }, {
-            text: '今年至今',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date(new Date().getFullYear(), 0);
-              picker.$emit('pick', [start, end]);
-            }
-          }, {
-            text: '最近六个月',
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setMonth(start.getMonth() - 6);
-              picker.$emit('pick', [start, end]);
-            }
-          }]
-        },
         value1: '',
         // select1
         options: [{

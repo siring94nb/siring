@@ -45,6 +45,12 @@ export const GetUserMassage = params => {
 export const GetSumIndent = params => {
     return axios.post(`${base_url}api/Console/my_order`, qs.stringify(params)).then(res => res.data);
 }
+/*
+ *获取待付款订单总数
+ */
+export const PendingPayment = params => {
+    return axios.post(`${base_url}api/Console/pending_payment`, qs.stringify(params)).then(res => res.data);
+}
 
 /**
  * 获取手机验证码
