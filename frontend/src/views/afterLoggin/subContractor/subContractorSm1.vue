@@ -64,7 +64,7 @@
                     @click.stop="ShowHidden"
                   >我要接单</span>
                   <span style="color: #169BD5; padding-right:10px;" v-if="lastPage==1" @click="GetSubView(lastPage-1)">上一条</span>
-                  <span style="color: #169BD5; padding-right:10px;" @click="GetSubView(lastPage+1)">下一条</span>
+                  <span style="color: #169BD5; padding-right:10px; cursor: pointer;" @click="GetSubView(lastPage+1)">下一条</span>
                 </div>
               </div>
               <!-- display: none; -->
@@ -174,7 +174,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" />
-                  <button @click="gb();GetMemberPartner()">搜索</button>
+                  <button @click="gb();GetSubcontractPartner()">搜索</button>
                 </div>
               </div>
               <div>
@@ -465,7 +465,6 @@ export default {
     //分包商接单（两个参数：项目id：xid，phone）
     Receipt(num) {
       const params = {
-        // 项目id先写死，后期更改
         xid: num,
         phone: sessionStorage.getItem("phone")
       };
