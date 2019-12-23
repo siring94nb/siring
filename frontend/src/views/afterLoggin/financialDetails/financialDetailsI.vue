@@ -46,7 +46,7 @@
           </select>
         </div>
         <div>
-          <button>查询</button>
+          <button @click="gb();getCapitalDetailed();">查询</button>
         </div>
       </div>
       <div>
@@ -159,12 +159,11 @@
               :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180" align="center"></el-table-column>
-              <el-table-column prop="name" label="收入（元）" align="center" width="160"></el-table-column>
-              <el-table-column prop="address" align="center" width="180" label="收入账号"></el-table-column>
-              <el-table-column prop="date" label="支出（元）" align="center" width="180"></el-table-column>
-              <el-table-column prop="name" label="支出账号" align="center" width="180"></el-table-column>
-              <el-table-column prop="address" align="center" label="账单项目"></el-table-column>
+              <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+              <el-table-column prop="income" label="收入（元）" align="center" width="160"></el-table-column>
+              <el-table-column prop="phone" align="center" width="180" label="收入账号"></el-table-column>
+              <el-table-column prop="money" label="支出（元）" align="center" width="180"></el-table-column>
+              <el-table-column prop="pay_type" align="center" label="支付类型"></el-table-column>
             </el-table>
             <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
               <div>
@@ -185,12 +184,13 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {CapitalDetailed,InvoiceAmount} from "@/api/api"; 
+import { CapitalDetailed, InvoiceAmount } from "@/api/api";
 export default {
   data() {
     return {
+      dis: true,
       // 分页表格参数
-      pagesize: 6,
+      pagesize: 10,
       currpage: 1,
       total: 100,
       DirectlyTo: 1,
@@ -239,39 +239,23 @@ export default {
       radioVal1: "普通发票",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
-      surplusMoney:'',
+      surplusMoney: "",
       // 表格数据占位
       tableData: [
-        {
-          date: "2017-07-19 14:48:38 ",
-          name: "3000.00",
-          address: "招商银行：838383399399"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
       ]
     };
   },
   components: {
     logginHeader
   },
-  mounted(){
+  mounted() {
     this.getInvoiceAmount();
   },
   methods: {
+    gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
     },
@@ -282,25 +266,39 @@ export default {
       console.log(value);
     },
     // 获取资金明细数据
-    getCapitalDetailed(){
-      const params = {
-        budget_type:this.selected1,
-        role_type:this.selected2,
+    getCapitalDetailed() {
+      let params = {};
+      if (this.dis) {
+        CapitalDetailed().then(res => {
+          let {data,msg,code} = res;
+          if(code === 1){
+            this.pagesize  = data.per_page
+            this.tableData = data.data;
+          }
+        });
+      } else {
+        params = {
+          budget_type: this.selected1,
+          role_type: this.selected2
+        };
+        CapitalDetailed(params).then(res => {
+            let {data,msg,code} = res;
+            if(code === 1){
+              this.tableData = data.data;
+            }
+        });
       }
-      CapitalDetailed().then(res=>{ 
-
-      })
     },
     // 剩余开票金额
-    getInvoiceAmount(){
-      InvoiceAmount().then(res=>{
+    getInvoiceAmount() {
+      InvoiceAmount().then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
           this.surplusMoney = data;
-        }else{
+        } else {
           this.surplusMoney = 0;
         }
-      })
+      });
     },
     // 点击输入框，释放禁用
     xiugai() {
