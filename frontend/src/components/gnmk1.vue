@@ -5,6 +5,7 @@
         <span>
           <slot></slot>
         </span>
+        <el-date-picker v-model="year" type="year" placeholder="2019"></el-date-picker>
       </div>
       <div class="gnmkSmBox2">
         <el-row>
@@ -29,6 +30,7 @@ export default {
   name: "gnmk",
   data() {
     return {
+      year: "",
       SumIndent1: [
         {
           "num": 1,

@@ -26,7 +26,7 @@
       <div class="inputContent">
         <span class="xg" style="margin-right:25px">上级邀请码：</span>
         <div>
-          <input type="text" placeholder="合适的时机再填写吧，确认上级之后不可修改" />
+          <input type="text" placeholder="合适的时机再填写吧，确认上级之后不可修改" value="" v-model="otherCode" :disabled="otherCode==''?false:true"/>
           <div>*可选项</div>
         </div>
       </div>
@@ -127,11 +127,13 @@
         <span>*</span>
         <span class="xg">性别:</span>
         <div class="sex">
-          <label>
-            <input type="radio" name="sex" value="男生" checked="checked" v-model="sex" />男生
-          </label>
-          <label>
-            <input type="radio" name="sex" value="女生" v-model="sex" />女生
+          <label v-for="(item, index) in radioData" :key="index">
+            <input
+              type="radio"
+              v-model="radioVal"
+              :value="item.value"
+            />
+            {{ item.value }}
           </label>
         </div>
       </div>
@@ -172,12 +174,18 @@ export default {
   data() {
     return {
       imageUrl: require("../../assets/images/u158.png"),
+      otherCode:"",//他人邀请码
       name: "",
       userMessage1: {},
       sfzId: "",
       dizhi: "",
       enterpriseName: "请选择",
-      sex: "男",
+      // sex: "男",
+      radioData: [
+        { value: '男' },
+        { value: '女' },
+      ],
+      radioVal: '男',
       province: "", //省
       city: "", //市
       area: "", //县市区
@@ -258,7 +266,14 @@ export default {
         // this.showMsg(msg, code);
         if (code === 1) {
           this.userMessage1 = data;
-          // console.log(this.userMessage1);
+          this.imageUrl=data.img,
+          this.otherCode=data.other_code,//他人邀请码
+          this.name=data.realname,
+          this.sfzId=data.id_card,
+          this.dizhi=data.address,
+          this.radioVal=data.sex===1?"男":"女",
+          this.identityCardZImg=data.id_card_just,
+          this.identityCardFImg=data.id_card_back
         }
       });
     },
@@ -276,8 +291,9 @@ export default {
         area: this.area,
         address: this.dizhi,
         enterprise_id: this.enterpriseName,
-        sex: this.sex,
-        img: this.imageUrl
+        radioVal: this.sex,
+        img: this.imageUrl,
+        sex:this.radioVal==="男"?"1":"2"
       };
       UserUpdating(params).then(res => {
         let { data, msg, code } = res;

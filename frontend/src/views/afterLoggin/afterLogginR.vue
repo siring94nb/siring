@@ -88,11 +88,11 @@
                       <el-col :span="12">
                         <span>{{userMessage1.money}}</span>
                         <span>元</span>
-                        <i class="el-icon-arrow-right"></i>
+                        <!-- <i class="el-icon-arrow-right"></i> -->
                       </el-col>
                     </el-row>
                     <el-row>
-                      <span>提现</span>
+                      <span><router-link to="withdrawX" style="color:#0889f5">提现</router-link></span>
                     </el-row>
                   </div>
                 </el-col>
@@ -100,13 +100,12 @@
             </div>
           </template>
         </div>
-
-        <gnmk :pd="false" :SumIndent = "SumIndent1" >我的订单</gnmk>
+        <gnmk >我的订单</gnmk>
         <div class="dinDanCL" style="display: flex; flex:1">
-            <ding-dan :ceshi="ceshi"/>
+            <ding-dan/>
              <!-- <ding-dan v-for="(item,index) in arr" :key="index" /> -->
         </div>
-        <gnmk :pd="true" :tuiguang="true" :SumIndent = "SumIndent2">角色收益</gnmk>
+        <gnmk1 >角色收益</gnmk1>
       </div>
     </div>
   </div>
@@ -115,6 +114,7 @@
 import Myheader from "@/components/header";
 import faterLoggin from "@/views/afterLoggin/faterLoggin";
 import gnmk from "@/components/gnmk";
+import gnmk1 from "@/components/gnmk1";
 import dingDan from "@/components/dingDan";
 import {GetUserMassage,GetSumIndent} from "@/api/api";
 export default {
@@ -123,7 +123,6 @@ export default {
     return {
       ceshi:"123123",
       userMessage1:{},
-      SumIndent1:[1,2,3,4],
       SumIndent2:[9,6,7,8],
       arr: [1, 2, 3]
     };
@@ -163,15 +162,17 @@ export default {
       GetSumIndent(params).then(res=>{
         let { data, msg, code } = res;
           // this.showMsg(msg,code);
+          console.log(code);
           if(code === 1 ){
-              this.SumIndent = data;
-              // console.log(this.SumIndent);
+            this.SumIndent1 = Object.assign(this.SumIndent1,data)
+              console.log(this.SumIndent1);
           }
       })
     }
   },
   components: {
     gnmk,
+    gnmk1,
     dingDan
   }
 };

@@ -69,7 +69,7 @@
           <div>=</div>
           <div>￥{{sum}}</div>
           <div>
-            <button>立即支付</button>
+            <button class="zhifu"><router-link to="order">立即支付</router-link></button>
           </div>
         </div>
         <div>
@@ -300,6 +300,11 @@ export default {
           }
         }
       }
+    }
+  }
+  .zhifu{
+    a{
+      color: #ffffff;
     }
   }
 }

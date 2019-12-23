@@ -137,16 +137,18 @@ export default {
       console.log(this.uploadList);
     },
     ceshi() {
-      // var obj = this.topList.map((item, index) => {
-      //   return { ...item, ...this.numArr[index] };
+      // // var obj = this.topList.map((item, index) => {
+      // //   return { ...item, ...this.numArr[index] };
+      // // });
+      // const newArr = this.topList.map(item => {
+      //   item.num = this.numArr[item.num];
+      //   // console.log(this.numArr[item.num])
+      //   return item;
       // });
-      const newArr = this.topList.map(item => {
-        item.num = this.numArr[item.num];
-        // console.log(this.numArr[item.num])
-        return item;
-      });
-      this.topList = newArr;
-      console.log(this.topList);
+      // this.topList = newArr;
+      // console.log(this.topList);
+      let ceshi = this.$route.params.id
+      console.log(ceshi);
     }
   }
 };

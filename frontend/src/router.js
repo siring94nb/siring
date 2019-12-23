@@ -309,5 +309,12 @@ export default new Router({
         }
         ]
     },
-    ]
+    {
+        path: "/order",
+        name: "order",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/order'),
+    }]
 })
