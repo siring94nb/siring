@@ -67,6 +67,8 @@ class NeedOrderAudit extends Base
     /**
      * 审核详情
      * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
      */
     public function need_orderAudit_detail()
     {

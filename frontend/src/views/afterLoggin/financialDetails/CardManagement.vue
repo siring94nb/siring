@@ -150,7 +150,7 @@ export default {
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
-      if (this.checked[num] === true) {
+      if (this.checked[num] === true ||aDiv.length != 0) {
         aDiv[num].classList.add("active");
         for (let i = 0; i < this.checked.length; i++) {
           if (i !== num) {

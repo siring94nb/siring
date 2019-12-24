@@ -234,6 +234,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.hyTime = data;
         }
@@ -258,6 +259,7 @@ export default {
       }
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.list = data;
         }
@@ -269,6 +271,7 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.list1 = data;
         }
@@ -279,9 +282,10 @@ export default {
       MemberTotal().then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
+        console.log(res)
         if (code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data[item.num];
+            item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;

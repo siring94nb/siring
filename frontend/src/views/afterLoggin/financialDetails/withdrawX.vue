@@ -165,7 +165,7 @@ export default {
       };
       CashWith(params).then(res=>{
         let { data, msg, code } = res;
-          this.showMsg(msg, code);
+          // this.showMsg(msg, code);
           if (code === 1) {
           }
       })
@@ -174,7 +174,7 @@ export default {
     getCashDetails(){
       CashDetails().then(res=>{
         let { data, msg, code } = res;
-         this.showMsg(msg, code);
+        //  this.showMsg(msg, code);
           if (code === 1) {
            this.mList = data
           }
@@ -184,7 +184,7 @@ export default {
     getBankcardList(){
       BankcardList().then(res=>{
         let { data, msg, code } = res;
-         this.showMsg(msg, code);
+        //  this.showMsg(msg, code);
           if (code === 1) {
            this.items = data
           }
