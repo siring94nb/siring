@@ -223,7 +223,6 @@ export default {
           width: 130,
           render: (h, param) => {
             let status, color;
-            console.log(param.row)
             if (param.row.examine == 1 && param.row.examine_type == 1) {
               status = "报价审核";
               color = "rgb(204, 153, 0)";
