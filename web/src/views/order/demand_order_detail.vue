@@ -370,7 +370,7 @@
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine == 1 && qualification == 1"
+        v-if=" qualification == 1"
       >
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="auditObj">确认</Button>
@@ -604,26 +604,23 @@ export default {
       apiPost("NeedOrder/offer_sure", params).then(res => {
         let { code, data, msg } = res;
         this.$Message.success(msg);
-        if (code == 1) {
-          vm.information = data.data;
-        }
       });
     },
     //订单审核
     auditObj() {
-      let vm = this,
+      let vm = this,type,
         params;
+        if (vm.status == 2) type = 1;
+      else if (vm.status == 3) type = 2;
       params = {
         id: vm.id,
+        examine_type:type,
         examine: vm.information.examine,
         examine_opinion: vm.information.examine_opinion,
       };
       apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
         let { code, data, msg } = res;
         this.$Message.success(msg);
-        if (code == 1) {
-          vm.information = data.data;
-        }
       });
     },
     handleRemove(file) {

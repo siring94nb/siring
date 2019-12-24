@@ -126,8 +126,8 @@
           </el-form>
         </div>
         <div class="ptbj-box" v-if="status == 2">
-          <!-- <img src="../../../assets/images/u4198.png" width="100%" alt /> -->
-          <div class="wait-ptbj">
+          <img :src="listData.proposal" width="100%"  v-if="listData.proposal != ''"/>
+          <div class="wait-ptbj" v-else>
             <img src="../../../assets/images/u9830.png" alt />
             <div>请耐心等待平台报价！</div>
           </div>
@@ -269,8 +269,8 @@
         <div class="btns-all stop-obj" @click="obj_btn(1)" v-if="status < 4">中止，本人放弃该项目</div>
         <div style="flex:1;"></div>
         <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 1">确定，本人已确认该需求方案</div>
-        <div class="btns-all no-obj" v-if="status == 2">等待报价单</div>
-        <!-- <div class="btns-all start-obj" @click="obj_btn(3)" v-if="status == 2" >确定，本人已确认该报价方案</div> -->
+        <div class="btns-all no-obj" v-if="status == 2 && listData.examine != 2">等待报价单</div>
+        <div class="btns-all start-obj" @click="obj_btn(3)" v-if="status == 2 && listData.examine == 2" >确定，本人已确认该报价方案</div>
         <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 3||status == 4">等待支付合同款</div>
 
         <!-- <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 4">等待原型确认</div> -->
@@ -313,6 +313,7 @@ export default {
       status: 1,
       // id:0,
       socket: "",
+      listData:[],
       statusData: [
         {
           url: "",
@@ -648,6 +649,7 @@ export default {
             (vm.form.need_desc = data.need_desc),
             (vm.form.need_file = data.need_file);
           vm.fileList = [{ name: "需求文件", url: data.need_file }];
+          vm.listData = data;
         }
       });
     },
@@ -743,9 +745,9 @@ export default {
       }
     }
     .ptbj-box {
-      margin-top: 200px;
       text-align: center;
       .wait-ptbj {
+        margin-top: 200px;
         img {
           width: 100px;
           height: 100px;
