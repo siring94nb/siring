@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +46,7 @@
           <entry key="less" value="1" />
           <entry key="lock" value="2" />
           <entry key="md" value="15" />
-          <entry key="php" value="1354" />
+          <entry key="php" value="1364" />
           <entry key="vue" value="92" />
           <entry key="xml" value="1" />
         </counts>
@@ -58,7 +59,7 @@
           <entry key="JavaScript" value="69" />
           <entry key="Less" value="1" />
           <entry key="Markdown" value="15" />
-          <entry key="PHP" value="1354" />
+          <entry key="PHP" value="1364" />
           <entry key="PLAIN_TEXT" value="5" />
           <entry key="Vue.js" value="92" />
           <entry key="XML" value="1" />
@@ -71,7 +72,7 @@
           <entry key="gitignore" value="11" />
           <entry key="js" value="140" />
           <entry key="less" value="5" />
-          <entry key="php" value="15598" />
+          <entry key="php" value="15890" />
           <entry key="vue" value="1090" />
         </counts>
       </usages-collector>
@@ -79,7 +80,7 @@
         <counts>
           <entry key="JavaScript" value="140" />
           <entry key="Less" value="5" />
-          <entry key="PHP" value="15598" />
+          <entry key="PHP" value="15890" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="Vue.js" value="1090" />
         </counts>
@@ -97,7 +98,89 @@
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="535">
+              <caret line="158" column="51" lean-forward="true" selection-start-line="158" selection-start-column="51" selection-end-line="158" selection-end-column="51" />
+              <folding>
+                <element signature="e#41#78#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="384">
+              <caret line="172" column="13" lean-forward="true" selection-start-line="170" selection-start-column="12" selection-end-line="172" selection-end-column="13" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedOrder.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="415">
+              <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-144" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-288" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="42" column="33" lean-forward="true" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Notice.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="504">
+              <caret line="35" column="9" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="35" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Feedback.php">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Home.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-792" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceList.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-648" />
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -188,13 +271,13 @@
         <option value="$PROJECT_DIR$/admin/application/apiRoute.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/Discount.php" />
         <option value="$PROJECT_DIR$/admin/application/api/controller/Capital.php" />
-        <option value="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/Schedule.php" />
         <option value="$PROJECT_DIR$/admin/application/data/model/JoinOrder.php" />
         <option value="$PROJECT_DIR$/admin/application/adminRoute.php" />
-        <option value="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" />
         <option value="$PROJECT_DIR$/web/src/views/order/demand_order.vue" />
         <option value="$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php" />
+        <option value="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" />
+        <option value="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" />
       </list>
     </option>
   </component>
@@ -457,12 +540,12 @@
       <workItem from="1576726210509" duration="12056000" />
       <workItem from="1576805888442" duration="11720000" />
       <workItem from="1577067742627" duration="18393000" />
-      <workItem from="1577149793683" duration="2019000" />
+      <workItem from="1577149793683" duration="8897000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="591828000" />
+    <option name="totallyTimeSpent" value="598706000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -475,6 +558,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22547974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -571,13 +655,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/Extension.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="44" selection-start-line="9" selection-start-column="3" selection-end-line="12" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/Discount.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
@@ -592,18 +669,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Home.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Treaty.php">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="552">
-          <caret line="42" column="33" lean-forward="true" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Banner.php">
       <provider selected="true" editor-type-id="text-editor" />
@@ -626,20 +693,9 @@
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Base.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Feedback.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Extension.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-432" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Index.php">
@@ -648,11 +704,6 @@
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceGroup.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-360" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceList.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-432" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/JoinOrder.php">
@@ -674,11 +725,6 @@
         <state relative-caret-position="360">
           <caret line="29" column="33" selection-start-line="29" selection-start-column="33" selection-end-line="29" selection-end-column="33" />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Notice.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2952" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Receipt.php">
@@ -730,17 +776,13 @@
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/Promotion.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="33" column="33" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Schedule.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="504">
           <caret line="47" column="29" selection-start-line="47" selection-start-column="29" selection-end-line="47" selection-end-column="29" />
+          <folding>
+            <element signature="e#120#147#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -774,13 +816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="11472">
           <caret line="478" column="48" selection-start-line="478" selection-start-column="19" selection-end-line="478" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedOrder.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1680">
-          <caret line="72" column="47" selection-start-line="72" selection-start-column="39" selection-end-line="72" selection-end-column="47" />
         </state>
       </provider>
     </entry>
@@ -818,6 +853,67 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="576">
           <caret line="107" column="14" lean-forward="true" selection-start-line="107" selection-start-column="14" selection-end-line="107" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Goods.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-144" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Contact.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-288" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Feedback.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Home.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-792" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/InterfaceList.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-648" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Discount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="42" column="33" lean-forward="true" selection-start-line="42" selection-start-column="33" selection-end-line="42" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/Notice.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="35" column="9" lean-forward="true" selection-start-line="25" selection-start-column="8" selection-end-line="35" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/api/controller/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="172" column="13" lean-forward="true" selection-start-line="170" selection-start-column="12" selection-end-line="172" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="72" column="38" lean-forward="true" selection-start-line="72" selection-start-column="38" selection-end-line="72" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="158" column="51" lean-forward="true" selection-start-line="158" selection-start-column="51" selection-end-line="158" selection-end-column="51" />
+          <folding>
+            <element signature="e#41#78#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
