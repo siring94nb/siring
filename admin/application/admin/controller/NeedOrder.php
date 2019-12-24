@@ -63,23 +63,6 @@ class NeedOrder extends Base
         }
     }
 
-    /**
-     * lilu
-     * 上传报价单
-     * param   id   需求订单id
-     * param   proposal 报价单
-     */
-//    public function upload_proposal()
-//    {
-//        $request=Request::instance();
-//        $postData=$request->param();
-//        if($postData){
-//            $res=$this->need->update(['id'=>$postData['id'],'proposal'=>$postData['proposal']]);
-//            return $res ?  $this->buildSuccess([]) : $this->buildFailed(ReturnCode::DB_READ_ERROR,'上传失败');
-//        }else{
-//           return $this->buildFailed(ReturnCode::DB_READ_ERROR,'缺少必须参数');
-//        }
-//    }
 
     /**
      * lilu
@@ -92,32 +75,128 @@ class NeedOrder extends Base
     {
         $request=Request::instance();
         $postData=$request->param();
+
         $validate = new Validate([
+            ['type', 'require', '类型不能为空：1为平台报价，2签订合同'],
             ['id', 'require', '主键id不能为空'],
-            ['proposal', 'require', '报价单不能为空'],
-            ['work_day', 'require', '工作日不能为空'],
-            ['need_money', 'require', '合同金额不能为空'],
         ]);
+
         if (!$validate->check($postData)) {
             returnJson(0, $validate->getError());exit();
         }
-        $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
-        if($res !== false){
-            //修改需求订单的状态
-            $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
 
-            return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+        switch ($postData['type']){
+            case 1://平台报价
+                $validate = new Validate([
+                  //  ['id', 'require', '主键id不能为空'],
+                    ['proposal', 'require', '报价单不能为空'],
+                    ['work_day', 'require', '工作日不能为空'],
+                    ['need_money', 'require', '合同金额不能为空'],
+                ]);
+                if (!$validate->check($postData)) {
+                    returnJson(0, $validate->getError());exit();
+                }
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+                if($res !== false){
+                    //修改需求订单的状态
+                    $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
 
-        }else{
-            return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
+                    return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                }else{
+                    return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
+                }
+
+                break;
+            case 2://签订合同
+
+                if(!empty($postData['clause'])){
+
+                    $postData['need_status'] =3;
+                    $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+                    return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+                }
+                $postData['need_status'] =3;
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+                return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                break;
+            case 3://原型确认
+                $validate = new Validate([
+                    ['prototype_url', 'require', '原型地址不能为空'],
+                ]);
+                if (!$validate->check($postData)) {
+                    returnJson(0, $validate->getError());exit();
+                }
+                $postData['need_status'] = 4;
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+                return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                break;
+            case 4://项目上线
+                $validate = new Validate([
+                    ['project_url', 'require', '项目地址不能为空'],
+                ]);
+                if (!$validate->check($postData)) {
+                    returnJson(0, $validate->getError());exit();
+                }
+                $postData['need_status'] = 5;
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+                return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                break;
+            case 5://项目验收
+                $validate = new Validate([
+                    ['id', 'require', '主键id不能为空'],
+                    ['proposal', 'require', '报价单不能为空'],
+                    ['work_day', 'require', '工作日不能为空'],
+                    ['need_money', 'require', '合同金额不能为空'],
+                ]);
+                if (!$validate->check($postData)) {
+                    returnJson(0, $validate->getError());exit();
+                }
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+                if($res !== false){
+                    //修改需求订单的状态
+                    $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
+
+                    return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                }else{
+                    return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
+                }
+
+                break;
+            case 6:
+                $validate = new Validate([
+                    ['id', 'require', '主键id不能为空'],
+                    ['proposal', 'require', '报价单不能为空'],
+                    ['work_day', 'require', '工作日不能为空'],
+                    ['need_money', 'require', '合同金额不能为空'],
+                ]);
+                if (!$validate->check($postData)) {
+                    returnJson(0, $validate->getError());exit();
+                }
+                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+                if($res !== false){
+                    //修改需求订单的状态
+                    $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
+
+                    return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+
+                }else{
+                    return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
+                }
+
+                break;
         }
 
-    }
 
-    /**
-     * lilu
-     *
-     */
+    }
 
 
 
