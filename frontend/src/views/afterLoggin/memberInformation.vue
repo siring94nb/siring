@@ -198,6 +198,7 @@ export default {
   mounted() {
     this.userMessage();
     this.SetSS();
+    this.Enterprise();
   },
   methods: {
     // 进入修改上传样式
