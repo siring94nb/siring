@@ -32,41 +32,43 @@ class NeedOrder extends Model
         }
 
         /**
-         * lilu
+         * @author fyk
          * 获取定制需求订单
          */
-        public function get_need_order($parsm,$po)
+        public function get_need_order($param,$po)
         {
             $where=[];
             $where['del_time'] = null;
-            if($po==1){
-                $where['user_id'] = $parsm['user_id'];
+            if($po == 1){
+                $where['user_id'] = $param['user_id'];
             }
-            if(array_key_exists('title',$parsm) && !empty($parsm['title'])){
-                    $where['order_number']=$parsm['title'];
+
+            if(!empty($param['title'])){
+                $where['need_order|need_phone'] = $param['title'];
             }
-            if(array_key_exists('order_status',$parsm)){
-                if(!empty($parsm['order_status'])){
-                    $where['order_status']=$parsm['order_status'];
-                }
+
+            if(!empty($param['start_time'])){
+                $param['start_time'] = strtotime($param['start_time']);
+                $where['create_time'] = ['gt',$param['start_time']];
             }
-            if(!empty($parsm['start_time']) && !empty($parsm['end_time']))
-            {
-                $where['create_time']=array('between',array(strtotime($parsm['start_time']),strtotime($parsm['end_time'])));
-            }elseif(!empty($parsm['start_time']) && empty($parsm['end_time'])){
-                $where['create_time']=array('between',array(strtotime($parsm['start_time']),time()));
-            }elseif(empty($parsm['start_time']) && !empty($parsm['end_time'])){
-                $where['create_time']=array('between',array(time()-86400*30,strtotime($parsm['end_time'])));
+            if(!empty($param['end_time'])){
+                $param['end_time'] = strtotime($param['end_time']);
+                $where['create_time'] = ['lt',$param['end_time']];
             }
-            if(empty($parsm['page'])){
-                $parsm['page'] = 1;
+            if(!empty($param['start_time']) && !empty($param['end_time'])){
+                $where['create_time'] = ['between',[$param['start_time'],$param['end_time']]];
+            }
+
+            if(empty($param['page'])){
+                $param['page'] = 1;
             }
             $field = '*';
             $order = 'create_time desc';
-            $list = Db::table('need_order')->field($field) -> where( $where ) -> order( $order )
-                -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
+            $list = NeedOrder::field($field) -> where( $where ) -> order( $order )
+                -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
             foreach ($list['data'] as $k =>$v){
+
                 $terminal= json_decode( $v['need_terminal'] , true );
                 if(!empty($terminal)){
                     $res = join('/',$terminal);

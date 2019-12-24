@@ -29,8 +29,8 @@ class NeedOrderAudit extends Base
         $param = $request->param();
 
         $where =[];
-        $where['examine'] = null;
-        $where['examine_type'] = null;
+        $where['examine'] = ['in','1,2'];
+        $where['examine_type'] = ['in','1,2'];
         if(!empty($param['title'])){
             $where['need_order|need_phone'] = $param['title'];
         }
