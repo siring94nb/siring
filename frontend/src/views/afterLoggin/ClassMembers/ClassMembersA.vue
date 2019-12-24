@@ -52,7 +52,6 @@
                     range-separator="至"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
-                    :picker-options="pickerOptions"
                   ></el-date-picker>
                 </div>
                 <div>
@@ -190,38 +189,6 @@ export default {
         }
       ],
       activeName: "first",
-      // 时间范围选择
-      pickerOptions: {
-        shortcuts: [
-          {
-            text: "最近一周",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近一个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-              picker.$emit("pick", [start, end]);
-            }
-          },
-          {
-            text: "最近三个月",
-            onClick(picker) {
-              const end = new Date();
-              const start = new Date();
-              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-              picker.$emit("pick", [start, end]);
-            }
-          }
-        ]
-      },
       value: "",
       // 邀请分页表格
       list: [],
@@ -267,6 +234,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.hyTime = data;
         }
@@ -291,6 +259,7 @@ export default {
       }
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.list = data;
         }
@@ -302,6 +271,7 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(res)
         if (code === 1) {
           this.list1 = data;
         }
@@ -312,9 +282,10 @@ export default {
       MemberTotal().then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
+        console.log(res)
         if (code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data[item.num];
+            item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;

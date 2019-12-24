@@ -1,14 +1,14 @@
 <template>
   <div class="dingDanBox">
     <el-row>
-      <el-col :span="20">{{ceshi}}</el-col>
+      <el-col :span="20">{{dfk[0].name}}</el-col>
       <el-col :span="4">
         (
-        <span>0</span>)
+        <span>{{dfk[0].num}}</span>)
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span="6" v-for="(item,index) in ceShiArr" :key="index"><div>定制(<span>0</span>)</div></el-col>
+      <el-col :span="6" v-for="(item,index) in dfk" :key="index"><div>{{item.name}}(<span>{{item.num}}</span>)</div></el-col>
       <!-- <el-col :span="6">
         <div>
           定制(
@@ -37,17 +37,57 @@
   </div>
 </template>
 <script>
+import { PendingPayment } from "@/api/api";
 export default {
   name: "dingDan",
   data() {
     return {
-      ceShiArr: [1, 2, 3, 4]
+      dfk:[
+        {
+          "name":"待付款订单",
+          "biaozhi":"total"
+        },
+        {
+          "name":"定制",
+          "biaozhi":"total_customized"
+        },
+        {
+          "name":"投融",
+          "biaozhi":"total_investment"
+        },
+        {
+          "name":"AI推广",
+          "biaozhi":"total_promotion"
+        },
+        {
+          "name":"小程序",
+          "biaozhi":"total_xcx"
+        },
+      ]
     };
   },
-  props: {
-    ceshi: {
-      type: String,
-      default: "待付款订单"
+  mounted() {
+    this.getPendingPayment();
+  },
+  methods: {
+    getPendingPayment(){
+      const userId = sessionStorage.getItem("user_id");
+      const params = {
+        user_id: userId
+      };
+      PendingPayment(params).then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg,code);
+        if (code === 1) {
+          const newArr = this.dfk.map(item => {
+            console.log(data["total"]);
+            item.biaozhi = data[item.biaozhi];
+            return item;
+          });
+          this.dfk = newArr;
+          // console.log(this.dfk)
+        }
+      });
     }
   }
 };
