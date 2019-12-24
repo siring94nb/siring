@@ -248,13 +248,16 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$router.push({
-                      name: "demand_order_detail",
-                      params: {
-                        id: param.row.id,
-                        status: param.row.need_status
-                      }
-                    });
+                    if (param.row.examine < 2) {
+                      this.$router.push({
+                        name: "demand_order_detail",
+                        params: {
+                          id: param.row.id,
+                          status: param.row.need_status,
+                          qualification: 1
+                        }
+                      });
+                    }
                   }
                 }
               },
@@ -272,7 +275,7 @@ export default {
   methods: {
     init() {
       let vm = this;
-      console.log(vm.tableData)
+      console.log(vm.tableData);
       this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {

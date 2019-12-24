@@ -52,7 +52,7 @@ class NeedOrderAudit extends Base
             $param['size'] = 10;
         }
 
-        $field = 'id,need_order,need_name,need_category,need_terminal,need_money,need_order_money,create_time,examine,examine_type,need_surplus,work_day,status,need_info_c';
+        $field = 'id,need_order,need_name,need_category,need_terminal,need_money,need_order_money,create_time,need_status,examine,examine_type,need_surplus,work_day,status,need_info_c';
         $order = 'id desc';
 
         $list = (new NeedOrder())->field($field) -> where( $where ) -> order( $order )
