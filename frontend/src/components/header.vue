@@ -309,6 +309,7 @@ export default {
   },
   mounted() {
     this.isLogin();
+    this.ceshi();
   },
   methods: {
     isLogin() {
@@ -405,6 +406,16 @@ export default {
         this.showMsg(msg, code);
         this.handleClose();
       });
+    },
+    // 测试通过他人邀请码过来
+    ceshi(){
+      let roPath = this.$route.query.isRegister;
+      let yqm = this.$route.query.invitationCode
+      if(roPath == 1){
+        this.dialogVisible = true;
+        this.isRegister = 1
+        this.dataObj.invit = yqm;
+      }
     },
     // 登录
     onLogin() {

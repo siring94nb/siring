@@ -3,6 +3,7 @@ namespace  app\admin\controller;
 
 
 use app\data\model\NeedOrder as Need;
+use app\data\model\NeedScore;
 use think\Request;
 use think\Db;
 use think\Session;
@@ -150,25 +151,12 @@ class NeedOrder extends Base
 
                 break;
             case 5://项目验收
-                $validate = new Validate([
-                    ['id', 'require', '主键id不能为空'],
-                    ['proposal', 'require', '报价单不能为空'],
-                    ['work_day', 'require', '工作日不能为空'],
-                    ['need_money', 'require', '合同金额不能为空'],
-                ]);
-                if (!$validate->check($postData)) {
-                    returnJson(0, $validate->getError());exit();
-                }
+
+                $postData['need_status'] = 6;
                 $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
-                if($res !== false){
-                    //修改需求订单的状态
-                    $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
 
-                    return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
+                return $res !== false ? $this->buildSuccess(1,'提交成功') : $this->buildFailed(0,'提交失败');
 
-                }else{
-                    return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
-                }
 
                 break;
             case 6:
@@ -198,7 +186,31 @@ class NeedOrder extends Base
 
     }
 
+    /**
+     * @author fyk
+     * 软件/定制开发满意度调查表
+     * @return array
+     * @return int 2非常不满意 4不满意 6一般 8满意 10非常满意
+     * @throws \think\exception\DbException
+     */
+    public function investigation()
+    {
+        $request=Request::instance();
+        $param=$request->param();
 
+        $validate = new Validate([
+            ['order_id', 'require', '订单号不能为空'],
+        ]);
 
+        if (!$validate->check($param)) {
+            returnJson(0, $validate->getError());exit();
+        }
+        $order = NeedScore::get(['order_id'=>$param['order_id']]);
+        if(!$order)returnJson(0,'订单有误');
+        $order['total'] = $order['satisfied'] + $order['satisfy'] + $order['reliable'] + $order['easy']
+            + $order['beautiful'] + $order['serve'] + $order['knowledge'] + $order['response'] + $order['complaint'] + $order['sale'];
+
+        return $order !== false ? $this->buildSuccess(['data'=> $order,]) : $this->buildFailed(0,'失败');
+    }
 
 }

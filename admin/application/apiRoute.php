@@ -153,6 +153,7 @@ Route::group('api', function () {
         Route::any('change_status','api/NeedOrder/change_status'); //中止需求或确定需求
         Route::any('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
         Route::any('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
+        Route::any('need_comment','api/NeedOrder/need_comment'); //评价
     });
 
     //微信第三方路由

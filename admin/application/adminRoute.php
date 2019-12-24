@@ -447,6 +447,10 @@ Route::group('admin', function () use ($afterBehavior) {
              'admin/NeedOrder/proposal_verify',
              ['method' => 'post']
          ],
+         'investigation'   => [                //调查表
+             'admin/NeedOrder/investigation',
+             ['method' => 'post']
+         ],
     ], ['after_behavior' => $afterBehavior]);
 
     /**

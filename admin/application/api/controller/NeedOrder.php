@@ -6,6 +6,7 @@ namespace  app\api\controller;
 use app\data\model\Category;
 use app\data\model\Good;
 use app\data\model\NeedOrder as Need;
+use app\data\model\NeedScore;
 use app\data\model\Special;
 use app\data\model\WechatPay;
 use think\Request;
@@ -104,7 +105,7 @@ class  NeedOrder  extends  Base
         $need = new Need();
         if ($postData) {
             if ($postData['status'] == '0') {
-                //中止需求     
+                //中止需求
                 $res = $need->where('id', $postData['id'])->update(['need_status'=>8]);
             } else {
                 //进行下一步  need_status=8
@@ -152,7 +153,7 @@ class  NeedOrder  extends  Base
     /**
      * lilu
      * 获取定制需求内容
-     * id   
+     * id
      * status
      */
     public function need_order_detail()
@@ -161,7 +162,7 @@ class  NeedOrder  extends  Base
         $postData=$request->param();
         if($postData){
             //获取详情
-            $need_detail=Need::get($postData['id'])->toArray();
+            $need_detail = Need::get($postData['id'])->toArray();
             return $need_detail ?  returnJson(1,'操作成功',$need_detail) : returnJson(0,'操作失败');
         }else{
             returnJson(0, '获取参数失败');
@@ -173,7 +174,43 @@ class  NeedOrder  extends  Base
      * 前端-用户修改协议
      */
 
+    /**
+     * @author fyk
+     * 评价
+     * @throws \think\exception\DbException
+     */
+    public function need_comment()
+    {
+        $request = Request::instance();
+        $param = $request->param();
 
+        $validate = new Validate([
+            ['order_id', 'require|unique:NeedScore', '订单号不能为空|该订单已评价'],
+            ['satisfied', 'require|number', '满意度不能为空'],
+            ['satisfy', 'require|number', '功能满足不能为空'],
+            ['reliable', 'require|number', '可靠性不能为空'],
+            ['easy', 'require|number', '易用性不能为空'],
+            ['beautiful', 'require|number', '美观性不能为空'],
+            ['serve', 'require|number', '总体服务不能为空'],
+            ['knowledge', 'require|number', '知识水平不能为空'],
+            ['response', 'require|number', '响应速度不能为空'],
+            ['complaint', 'require|number', '投诉处理不能为空'],
+            ['sale', 'require|number', '售后服务不能为空'],
+        ]);
+        if (!$validate->check($param)) {
+            returnJson(0, $validate->getError());exit();
+        }
+        $order = Need::get(['need_order'=>$param['order_id']]);
+        if(!$order)returnJson(0,'订单有误');
+
+        $param['user_id'] = $order['user_id'];
+        unset($param['id']);
+        $need = new NeedScore($param);
+        $res = $need->allowField(true)->save();
+
+        return $res  ? returnJson(1,'提交成功') : returnJson(0,'提交失败');
+
+    }
 
 
 

@@ -92,6 +92,7 @@ class NeedOrderAudit extends Base
         $postData=$request->param();
         $validate = new Validate([
             ['id', 'require', '主键id不能为空'],
+            ['examine_type', 'require', '报价审核1，合同审核2'],
             ['examine', 'require', '2为通过，3为不通过'],
             ['examine_opinion', 'require', '审核意见不能为空'],
         ]);
@@ -101,7 +102,7 @@ class NeedOrderAudit extends Base
         $res = NeedOrder::where('id',$postData['id'])->strict(false)->update($postData);
         if($res !== false){
             //修改需求订单的状态
-            $re = NeedOrder::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>$postData['examine']]);
+            $re = NeedOrder::where('id',$postData['id'])->update(['examine_type'=>$postData['examine_type'],'examine'=>$postData['examine']]);
 
             return $re !== false ? $this->buildSuccess(1,'意见提交成功') : $this->buildFailed(0,'意见提交失败');
 

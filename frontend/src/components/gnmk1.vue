@@ -27,28 +27,28 @@
 <script>
 import { GetSumIndent } from "@/api/api";
 export default {
-  name: "gnmk",
+  name: "gnmk1",
   data() {
     return {
       year: "",
       SumIndent1: [
         {
-          "num": 1,
+          "num": 9,
           "name": "软件定制总数",
           "biaozhi": "total_customized"
         },
         {
-          "num": 2,
+          "num": 6,
           "name": "小程序订单总数",
           "biaozhi": "total_xcx"
         },
         {
-          "num": 3,
+          "num": 7,
           "name": "AI订单总数",
           "biaozhi": "total_promotion"
         },
         {
-          "num": 4,
+          "num": 8,
           "name": "投融订单总数",
           "biaozhi": "total_investment"
         }
@@ -70,7 +70,6 @@ export default {
         // this.showMsg(msg,code);
         if (code === 1) {
           const newArr = this.SumIndent1.map(item => {
-            console.log(data[item.biaozhi])
             item.biaozhi = data[item.biaozhi];
             return item;
           });

@@ -26,7 +26,7 @@ export default new Router({
         name: 'home',
         component: () =>
             import('@/views/Home'),
-        redirect: 'index'
+        redirect: 'index'//重定向
     },
     {
         path: '/index',

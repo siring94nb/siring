@@ -144,7 +144,7 @@ export default {
               
             // }else{
               const num = String(i);
-              console.log(num)
+              // console.log(num)
               this.num=String(i);
               // console.log(val)
             // }

@@ -123,13 +123,11 @@ export default {
     return {
       ceshi:"123123",
       userMessage1:{},
-      SumIndent2:[9,6,7,8],
       arr: [1, 2, 3]
     };
   },
   mounted(){
     this.userMessage();
-    this.userIndent();
   },
   methods:{
     showMsg(msg, code) {
@@ -153,22 +151,6 @@ export default {
           }
         })
     },
-    //获取订单总数
-    userIndent(){
-      const userId = sessionStorage.getItem("user_id");
-      const params = {
-          user_id : userId
-      }
-      GetSumIndent(params).then(res=>{
-        let { data, msg, code } = res;
-          // this.showMsg(msg,code);
-          console.log(code);
-          if(code === 1 ){
-            this.SumIndent1 = Object.assign(this.SumIndent1,data)
-              console.log(this.SumIndent1);
-          }
-      })
-    }
   },
   components: {
     gnmk,
@@ -183,7 +165,7 @@ export default {
   border-top: 2px solid #ffffff; 
   // max-width: 1260px;
   // min-width:1260px;
-  height: 1000px;
+  // height: 1000px;
   .left {
     width: 123px;
     float: left;
