@@ -2,13 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin/application/data/model/NeedScore.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/adminRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/adminRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +18,7 @@
     <session id="-2066920816">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="55" />
+          <entry key="project.closed" value="56" />
           <entry key="project.open.time.0" value="5" />
           <entry key="project.open.time.1" value="5" />
           <entry key="project.open.time.10" value="3" />
@@ -101,13 +95,16 @@
       </usages-collector>
     </session>
   </component>
+  <component name="FavoritesManager">
+    <favorites_list name="siring" />
+  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1327">
-              <caret line="196" column="5" lean-forward="true" selection-start-line="196" selection-start-column="5" selection-end-line="196" selection-end-column="5" />
+              <caret line="196" column="5" selection-start-line="196" selection-start-column="5" selection-end-line="196" selection-end-column="5" />
               <folding>
                 <element signature="e#41#78#0#PHP" expanded="true" />
               </folding>
@@ -128,7 +125,7 @@
         <entry file="file://$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1999">
-              <caret line="203" column="40" lean-forward="true" selection-start-line="202" selection-start-column="8" selection-end-line="203" selection-end-column="40" />
+              <caret line="203" column="40" selection-start-line="202" selection-start-column="8" selection-end-line="203" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -155,7 +152,7 @@
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedScore.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="168">
-              <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+              <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -164,7 +161,7 @@
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/About.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
-              <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+              <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -172,8 +169,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="583">
-              <caret line="108" column="14" lean-forward="true" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
+            <state relative-caret-position="305">
+              <caret line="98" column="43" lean-forward="true" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -346,7 +343,7 @@
       <path value="$PROJECT_DIR$/admin/vendor/yansongda/pay" />
     </include_path>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-24" />
     <option name="y" value="2" />
     <option name="width" value="1936" />
@@ -571,12 +568,12 @@
       <workItem from="1576726210509" duration="12056000" />
       <workItem from="1576805888442" duration="11720000" />
       <workItem from="1577067742627" duration="18393000" />
-      <workItem from="1577149793683" duration="16300000" />
+      <workItem from="1577149793683" duration="20374000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="606109000" />
+    <option name="totallyTimeSpent" value="610183000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -589,11 +586,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22547974" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49945712" visible="true" weight="0.22547974" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info id="Favorites" order="2" sideWeight="0.5005429" side_tool="true" weight="0.22547974" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32899022" />
@@ -909,7 +905,7 @@
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/About.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
-          <caret line="12" column="10" lean-forward="true" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
+          <caret line="12" column="10" selection-start-line="12" selection-start-column="10" selection-end-line="12" selection-end-column="10" />
         </state>
       </provider>
     </entry>
@@ -930,14 +926,14 @@
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedScore.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="12" column="1" lean-forward="true" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
+          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1327">
-          <caret line="196" column="5" lean-forward="true" selection-start-line="196" selection-start-column="5" selection-end-line="196" selection-end-column="5" />
+          <caret line="196" column="5" selection-start-line="196" selection-start-column="5" selection-end-line="196" selection-end-column="5" />
           <folding>
             <element signature="e#41#78#0#PHP" expanded="true" />
           </folding>
@@ -947,14 +943,14 @@
     <entry file="file://$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1999">
-          <caret line="203" column="40" lean-forward="true" selection-start-line="202" selection-start-column="8" selection-end-line="203" selection-end-column="40" />
+          <caret line="203" column="40" selection-start-line="202" selection-start-column="8" selection-end-line="203" selection-end-column="40" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/admin/controller/NeedOrderAudit.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="108" column="14" lean-forward="true" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
+        <state relative-caret-position="305">
+          <caret line="98" column="43" lean-forward="true" selection-start-line="98" selection-start-column="43" selection-end-line="98" selection-end-column="43" />
         </state>
       </provider>
     </entry>
