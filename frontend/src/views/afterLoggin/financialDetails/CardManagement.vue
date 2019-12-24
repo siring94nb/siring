@@ -150,18 +150,20 @@ export default {
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
-      if (this.checked[num] === true ||aDiv.length != 0) {
-        aDiv[num].classList.add("active");
-        for (let i = 0; i < this.checked.length; i++) {
-          if (i !== num) {
-            this.checked[i] = false;
-            aDiv[i].classList.remove("active");
+      if(aDiv.length != 0){
+        if (this.checked[num] === true) {
+          aDiv[num].classList.add("active");
+          for (let i = 0; i < this.checked.length; i++) {
+            if (i !== num) {
+              this.checked[i] = false;
+              aDiv[i].classList.remove("active");
+            }
           }
+        } else {
+          aDiv[0].classList.add("active");
+          aDiv[num].classList.remove("active");
+          this.checked[0] = true;
         }
-      } else {
-        aDiv[0].classList.add("active");
-        aDiv[num].classList.remove("active");
-        this.checked[0] = true;
       }
     },
     // 城市三级联动插件

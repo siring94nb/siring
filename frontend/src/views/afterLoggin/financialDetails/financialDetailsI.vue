@@ -61,7 +61,7 @@
             </div>
             <div>
               <span>开票金额：</span>
-              <input type="text" placeholder="请填写要开票的金额" />
+              <input v-model="price" type="text" placeholder="请填写要开票的金额" />
               <span style="color:#000000">元</span>
             </div>
             <div>
@@ -85,9 +85,8 @@
             </div>
             <div>
               <span>发票抬头：</span>
-              <select v-model="selected3">
-                <option value="深圳市沃达峰">深圳市沃达峰</option>
-                <option value="深圳市思锐">深圳市思锐</option>
+              <select v-model="selected3"  @change="selectFn($event)">
+                 <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
               </select>
               <div>
                 <router-link to="addEnterprise">
@@ -110,7 +109,8 @@
                   :disabled="disabledX"
                   title="点击可修改，回车确认修改"
                   @keydown.stop="keyup_submit"
-                >广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025</textarea>
+                  v-model="address"
+                ></textarea>
               </div>
               <!-- <input type="text" title="点击可修改" value="广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"> -->
               <!-- <div @click="xiugai"><textarea cols="58" rows="2" ref="textXiugai" :disabled="disabledX" :title="disabledX">广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025</textarea></div> -->
@@ -183,7 +183,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { CapitalDetailed, InvoiceAmount } from "@/api/api";
+import { CapitalDetailed, InvoiceAmount,MyInvoice,GetEnterprise } from "@/api/api";
 export default {
   data() {
     return {
@@ -196,20 +196,39 @@ export default {
       // select参数
       selected1: "0",
       selected2: "0",
-      selected3: "深圳市沃达峰",
+      items:[],//企业列表
+      selected3: "",
       value: "",
       // 单选框
       radioData: [{ value: "企业" }, { value: "个人" }],
       radioVal: "企业",
       //发票种类
-      radioData1: [{ value: "普通发票" }, { value: "增值税发票" }],
-      radioVal1: "普通发票",
+      radioData1: [
+        {
+          value: "普通发票（电子发票）"
+        },
+        {
+          value: "普通发票（纸质发票）"
+        }, 
+        {
+          value: "专用发票"
+        }, 
+        {
+          value: "收购发票（电子票）"
+        },  
+        {
+          value: "收购发票（纸质发票）"
+        },
+        ],
+      radioVal1: "普通发票(电子票)",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
       surplusMoney: "",
       // 表格数据占位
       tableData: [
-      ]
+      ],
+      price:0,
+      address:"广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"
     };
   },
   components: {
@@ -217,6 +236,7 @@ export default {
   },
   mounted() {
     this.getInvoiceAmount();
+    this.Enterprise();
   },
   methods: {
     gb() {
@@ -250,6 +270,7 @@ export default {
         };
         CapitalDetailed(params).then(res => {
             let {data,msg,code} = res;
+            console.log(data)
             if(code === 1){
               this.tableData = data.data;
             }
@@ -260,12 +281,33 @@ export default {
     getInvoiceAmount() {
       InvoiceAmount().then(res => {
         let { data, msg, code } = res;
+        console.log(data)
         if (code === 1) {
           this.surplusMoney = data;
         } else {
           this.surplusMoney = 0;
         }
       });
+    },
+    // 开票
+    getMyInvoice(){
+       let params = {
+         price:this.price,
+         type:this.radioVal=="企业"?1:2,
+         status:2,
+         rise:this.selected3,
+         invoiceLine:"",
+         address:this.address
+       };
+      MyInvoice(params).then(res=>{
+        let { data, msg, code } = res;
+        console.log(data)
+        if (code === 1) {
+          this.surplusMoney = data;
+        } else {
+          this.surplusMoney = 0;
+        }
+      })
     },
     // 点击输入框，释放禁用
     xiugai() {
@@ -289,6 +331,21 @@ export default {
       } else {
         gb.style.display = "none";
       }
+    },
+    // 企业列表信息
+    selectFn(e){
+      this.selected3 = e.target.value;
+    },
+    Enterprise(){
+      let userId = sessionStorage.getItem("user_id");
+      let params = {user_id:userId};
+      GetEnterprise(params).then(res=>{
+         let {data,msg,code} = res;
+          if(code === 1){
+            console.log(data)
+            this.items = data;
+          }
+      })
     }
   }
 };
@@ -442,6 +499,12 @@ export default {
           label {
             &:nth-of-type(1) {
               padding-right: 70px;
+            }
+            &:nth-of-type(3){
+              padding:0 178px 0 110px;
+            }
+            &:nth-of-type(5){
+              padding-left: 110px;
             }
           }
         }

@@ -12,7 +12,7 @@
       <div class="smBox1">
         <div>
           <span>我的专业技能：</span>
-          <span>{{skillArr.name.skillValue}}{{skillArr.name.lang}}</span>
+          <span v-for="(item,index) in skillArr.name" :key="index">{{item.skillValue}}{{item.lang}}</span>
         </div>
         <div>
           <span>有效期至：</span>
@@ -357,7 +357,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res)
+        console.log(data)
         // this.showMsg(msg, code);
         if (code === 1) {
           this.skillArr = data;
@@ -369,7 +369,7 @@ export default {
       SubcontractTotal().then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        console.log(res)
+        console.log(data)
         if (code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
@@ -399,7 +399,7 @@ export default {
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
-        console.log(res)
+        console.log(data)
         if (code === 1) {
           this.list = data;
         }
@@ -412,7 +412,7 @@ export default {
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
-        console.log(res)
+        console.log(data)
         if (code === 1) {
           this.list1 = data;
         }
@@ -426,7 +426,7 @@ export default {
       SubView(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        console.log(res);
+        console.log(data);
         if (code === 1) {
           this.lastPage = data.last_page;
           this.shichuang = data.data.data;

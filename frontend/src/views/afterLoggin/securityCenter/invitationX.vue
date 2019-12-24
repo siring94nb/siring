@@ -18,7 +18,7 @@
               <el-input v-model="userLink" disabled="disabled"></el-input>
               <el-button
                 v-clipboard:copy="userLink"
-                v-clipboard:success="toLink"
+                v-clipboard:success="onCopy"
                 v-clipboard:error="onError"
               >复制</el-button>
             </div>
@@ -109,7 +109,8 @@ export default {
     return {
       activeName: "first",
       title: "邀请方法",
-      userLink: "https://manage.siring.com.cn/#/index",
+      userLink: "https://manage.siring.com.cn/#/index?isRegister=1&invitationCode=",
+      // userLink: "http://localhost:8080/#/index?isRegister=1",
       invitationCode: "",
       // table数据
       tableData: [
@@ -149,6 +150,7 @@ export default {
           // this.showMsg(msg,code);
           //  console.log(sessionStorage.getItem("user_id"))
           if (code === 1) {
+            this.userLink = this.userLink+ data.invitation 
             this.invitationCode = data.invitation;
           }
         }
@@ -157,7 +159,7 @@ export default {
     // 链接处写死，复制成功后跳转路由同时传参
     toLink(){
       this.$router.push({
-          name: 'ceshi',
+          name: 'index',
           params: {
             id: 123123123
           }

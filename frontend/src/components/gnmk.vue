@@ -68,7 +68,6 @@ export default {
         // this.showMsg(msg,code);
         if (code === 1) {
           const newArr = this.SumIndent1.map(item => {
-            console.log(data[item.biaozhi])
             item.biaozhi = data[item.biaozhi];
             return item;
           });

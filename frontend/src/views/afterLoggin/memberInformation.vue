@@ -108,7 +108,7 @@
           <div style="display:flex; margin-bottom: 3px">
             <select v-model="enterpriseName">
               <option value="请选择" selected="selected">请选择</option>
-              <option value="深圳市沃达峰">深圳市沃达峰</option>
+              <option v-for="(item,index) in items" :key="index">{{item.name}}</option>
             </select>
             <div>
               <router-link to="addEnterprise">
@@ -169,10 +169,11 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { GetUserMassage, UserUpdating, Qnupload } from "@/api/api";
+import { GetUserMassage, UserUpdating, Qnupload,GetEnterprise } from "@/api/api";
 export default {
   data() {
     return {
+      userId:sessionStorage.getItem("user_id"),
       imageUrl: require("../../assets/images/u158.png"),
       otherCode:"",//他人邀请码
       name: "",
@@ -180,6 +181,7 @@ export default {
       sfzId: "",
       dizhi: "",
       enterpriseName: "请选择",
+      items: [],//企业信息
       // sex: "男",
       radioData: [
         { value: '男' },
@@ -303,6 +305,16 @@ export default {
           this.$router.push("/afterLogginR");
         }
       });
+    },
+    // 获取企业信息
+    Enterprise(){
+      const params = {user_id:this.userId}
+      GetEnterprise(params).then(res=>{
+        let {code, data , msg} = res
+        if(code == 1) {
+          this.items = data
+        }
+      })
     }
   },
   components: {
