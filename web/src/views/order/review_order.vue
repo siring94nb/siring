@@ -49,7 +49,7 @@
     <Card style="margin-bottom: 10px">
       <Row>
         <Col span="2">
-          <Button type="primary" class="btns btn-bjsh" >报价审核</Button>
+          <Button type="primary" class="btns btn-bjsh">报价审核</Button>
         </Col>
         <Col span="2">
           <Button type="primary" class="btns btn-htsh">合同审核</Button>
@@ -60,7 +60,6 @@
         <Col span="2">
           <Button type="primary" class="btns btn-shbtg">审核不通过</Button>
         </Col>
-        
       </Row>
     </Card>
     <!-- <Modal
@@ -224,40 +223,44 @@ export default {
           width: 130,
           render: (h, param) => {
             let status, color;
-            switch(param.row.need_status) {
-                case 1:
-                    status = "定制需求";
-                    color = "rgb(204, 51, 102)";
-                    break;
-                case 2:
-                    status = "平台报价";
-                    color = "rgb(204, 0, 204)";
-                    break;
-            } 
-              return h(
-                "Button",
-                {
-                  props: {
-                    type: "primary"
-                  },
-                  style: {
-                    "background-color": color,
-                    border: "0"
-                  },
-                  on: {
-                    click: () => {
-                      this.$router.push({
-                        name: "demand_order_detail",
-                        params: {
-                          id: param.row.id,
-                          status:param.row.need_status
-                        }
-                      });
-                    }
-                  }
+            console.log(param.row)
+            if (param.row.examine == 1 && param.row.examine_type == 1) {
+              status = "报价审核";
+              color = "rgb(204, 153, 0)";
+            } else if (param.row.examine == 1 && param.row.examine_type == 2) {
+              status = "合同审核";
+              color = "rgb(102, 51, 204)";
+            } else if (param.row.examine == 2) {
+              status = "审核通过";
+              color = "rgb(102, 153, 0)";
+            } else if (param.row.examine == 3) {
+              status = "审核不通过";
+              color = "rgb(148, 148, 148)";
+            }
+            return h(
+              "Button",
+              {
+                props: {
+                  type: "primary"
                 },
-                status
-              );
+                style: {
+                  "background-color": color,
+                  border: "0"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "demand_order_detail",
+                      params: {
+                        id: param.row.id,
+                        status: param.row.need_status
+                      }
+                    });
+                  }
+                }
+              },
+              status
+            );
           }
         }
       ]
@@ -270,6 +273,7 @@ export default {
   methods: {
     init() {
       let vm = this;
+      console.log(vm.tableData)
       this.columnsList.forEach(item => {
         if (item.handle) {
           item.render = (h, param) => {
@@ -295,8 +299,8 @@ export default {
         .then(function(response) {
           let res = response.data;
           if (res.code === 1) {
-            vm.tableData = res.data.data;
-            vm.tableShow.listCount = res.data.listCount;
+            vm.tableData = res.data.list;
+            vm.tableShow.listCount = res.data.count;
           }
         });
     },
@@ -311,8 +315,7 @@ export default {
     search() {
       this.tableShow.page = 1;
       this.getMade();
-    },
-
+    }
   },
   mounted() {}
 };
@@ -324,15 +327,15 @@ export default {
   border: 0;
 }
 .btn-bjsh {
-    background-color: rgb(204,153,0);
+  background-color: rgb(204, 153, 0);
 }
 .btn-htsh {
-    background-color: rgb(102,51,204);
+  background-color: rgb(102, 51, 204);
 }
 .btn-shtg {
-    background-color: rgb(102,153,0);
+  background-color: rgb(102, 153, 0);
 }
 .btn-shbtg {
-    background-color: rgb(148,148,148);
+  background-color: rgb(148, 148, 148);
 }
 </style>
