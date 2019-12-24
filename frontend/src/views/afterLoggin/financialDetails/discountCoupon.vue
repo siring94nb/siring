@@ -22,16 +22,16 @@
           unlink-panels
           range-separator="至"
           start-placeholder="开始月份"
-          end-placeholder="结束月份">
-        </el-date-picker>
+          end-placeholder="结束月份"
+        ></el-date-picker>
         <span>消费类型</span>
         <el-select v-model="value" placeholder="请选择" style="width:120px;">
           <el-option
             v-for="item in options"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
-          </el-option>
+            :value="item.value"
+          ></el-option>
         </el-select>
         <span>适用范围</span>
         <el-select v-model="value2" placeholder="请选择" style="width:120px;">
@@ -39,52 +39,39 @@
             v-for="item in options1"
             :key="item.value"
             :label="item.label"
-            :value="item.value">
-          </el-option>
+            :value="item.value"
+          ></el-option>
         </el-select>
-        <el-button type="danger" style="float: right;">确定</el-button>
+        <el-button type="danger" style="float: right;" @click="gb();Register()">确定</el-button>
       </div>
       <div>
         <el-table
-          :data="tableData"
+          :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" 
           border
           style="width: 100%; font-size:13px;color:#797979"
-          :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }">
-          <el-table-column
-            prop="hqTime"
-            label="获得时间"
-            width="180"
-            align="center">
-          </el-table-column>
-          <el-table-column
-            prop="dqTime"
-            label="到期时间"
-            width="180"
-            align="center">
-          </el-table-column>
-          <el-table-column
-            prop="syTime"
-            label="使用时间"
-            align="center">
-          </el-table-column>
-          <el-table-column
-            label="优惠券说明"
-            align="center">
+          :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }"
+        >
+          <el-table-column prop="created_at" label="获得时间" width="180" align="center"></el-table-column>
+          <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
+          <el-table-column prop="coupon_status" label="优惠券状态" align="center"></el-table-column>
+          <el-table-column label="优惠券说明" align="type">
             <template slot-scope="scope">
-              <div>{{scope.row.youhuiquan.name}}</div>
-              <div>{{scope.row.youhuiquan.num}}</div>
+              <div v-if="scope.row.type == 0">所有商品</div>
+              <div v-if="scope.row.type == 1">软件定制类商品</div>
+              <div v-if="scope.row.type == 2">固定选择商品</div>
             </template>
           </el-table-column>
-          <el-table-column
-            label="获得优惠券"
-            align="center">
+          <el-table-column label="获得优惠券" align="center">
             <template slot-scope="scope">
               <div>
-                <div>{{scope.row.hdYouhuiquan.num}}<span>元</span></div>
                 <div>
-                  <div>{{scope.row.hdYouhuiquan.leixing}}</div>
-                  <div>{{scope.row.hdYouhuiquan.youxiaoqi}}</div>
-                  <div>{{scope.row.hdYouhuiquan.shiyongfanwei}}</div>
+                  <span>100元</span>
+                </div>
+                <div>
+                  <div>{{scope.row.coupon_name}}</div>
+                  <div v-if="scope.row.range == 0">全部</div>
+                  <div v-if="scope.row.range == 1">黄金会员</div>
+                  <div v-if="scope.row.range == 2">白金会员</div>
                   <div>立即使用&gt;&gt;</div>
                 </div>
               </div>
@@ -92,97 +79,100 @@
             </template>
           </el-table-column>
         </el-table>
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          　　　　
+          layout="total, prev, pager, next,jumper"
+          :total="tableData.length"
+        ></el-pagination>
       </div>
     </div>
   </div>
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import { getRegister } from "@/api/api";
 export default {
   data() {
     return {
-        value1: '',
-        // select1
-        options: [{
-          value: '选项1',
-          label: '全部'
-        }, {
-          value: '选项2',
-          label: '普通优惠券'
-        }, {
-          value: '选项3',
-          label: '特殊优惠券'
-        }],
-        value: '选项1',
-        // select2
-        options1: [{
-          value: '选项1',
-          label: '全部'
-        }, {
-          value: '选项2',
-          label: '已使用'
-        }, {
-          value: '选项3',
-          label: '未使用'
-        }],
-        value2: '选项1',
-        // 表格数据
-        tableData: [{
-          hqTime: '2018年6月18日 12:32:45',
-          dqTime: '2018年6月18日 12:32:45',
-          syTime: '2018年6月18日 12:32:45',
-          youhuiquan:{"name":"普通优惠券","num":"（发行数量1000，适用所有商品）"},
-          hdYouhuiquan:{
-            "num":"100",
-            "fanwei":"满任意金额可用",
-            "leixing":"新人现金券",
-            "youxiaoqi":"永久",
-            "shiyongfanwei":"所有会员"
-          }
-        },{
-          hqTime: '2018年6月18日 12:32:45',
-          dqTime: '2018年6月18日 12:32:45',
-          syTime: '未使用',
-          youhuiquan:{"name":"特殊优惠券","num":"（发行数量1000，适用所有商品）"},
-          hdYouhuiquan:{
-            "num":"100",
-            "fanwei":"满任意金额可用",
-            "leixing":"新人现金券",
-            "youxiaoqi":"永久",
-            "shiyongfanwei":"所有会员"
-          }
-        },{
-          hqTime: '2018年6月18日 12:32:45',
-          dqTime: '2018年6月18日 12:32:45',
-          syTime: '2018年6月18日 12:32:45',
-          youhuiquan:{"name":"普通优惠券","num":"（发行数量1000，适用所有商品）"},
-          hdYouhuiquan:{
-            "num":"100",
-            "fanwei":"满任意金额可用",
-            "leixing":"新人现金券",
-            "youxiaoqi":"永久",
-            "shiyongfanwei":"所有会员"
-          }
-        },{
-          hqTime: '2018年6月18日 12:32:45',
-          dqTime: '2018年6月18日 12:32:45',
-          syTime: '2018年6月18日 12:32:45',
-          youhuiquan:{"name":"普通优惠券","num":"（发行数量1000，适用所有商品）"},
-          hdYouhuiquan:{
-            "num":"100",
-            "fanwei":"满任意金额可用",
-            "leixing":"新人现金券",
-            "youxiaoqi":"永久",
-            "shiyongfanwei":"所有会员"
-          }
-        }]
+      dis: true,
+      value1: "",
+      // select1
+      options: [
+        {
+          value: "选项1",
+          label: "全部"
+        },
+        {
+          value: "选项2",
+          label: "普通优惠券"
+        },
+        {
+          value: "选项3",
+          label: "特殊优惠券"
+        }
+      ],
+      value: "选项1",
+      // select2
+      options1: [
+        {
+          value: "选项1",
+          label: "全部"
+        },
+        {
+          value: "选项2",
+          label: "已使用"
+        },
+        {
+          value: "选项3",
+          label: "未使用"
+        }
+      ],
+      value2: "选项1",
+      // 表格数据
+      tableData: [
+      ],
+      pageSize: 3,
+      currentPage: 1
     };
   },
   components: {
     logginHeader
   },
-  mounted() {},
-  methods: {}
+  mounted() {this.Register()},
+  methods: {
+    handleSizeChange: function() {},
+    handleCurrentChange: function() {},
+
+    gb() {
+      // 修改状态判断是否有索引条件
+      this.dis = false;
+    },
+    Register() {
+      let params = {};
+      if (this.dis) {
+        getRegister().then(res => {
+          let { data, msg, code } = res;
+            console.log(res)
+          if (code == 1) {
+            this.tableData = data.data;
+            console.log(this.tableData)
+          }
+        });
+      } else {
+        params = {};
+        getRegister(params).then(res => {
+          let { data, msg, code } = res;
+          if (code == 1) {
+            this.tableData = data.data;
+          }
+        });
+      }
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -202,20 +192,20 @@ export default {
   background: #ffffff;
   margin: 10px 0 0 20px;
   padding: 20px;
-  .shaixuan{
+  .shaixuan {
     padding: 10px;
-    background: rgb(243,243,243);
+    background: rgb(243, 243, 243);
     border-left: 3px solid #ff0000;
-    >span{
+    > span {
       font-size: 13px;
       color: #666666;
-      &:nth-of-type(1){
+      &:nth-of-type(1) {
         padding-right: 10px;
       }
-      &:nth-of-type(2){
+      &:nth-of-type(2) {
         padding: 0 10px 0 40px;
       }
-      &:nth-of-type(3){
+      &:nth-of-type(3) {
         padding: 0 10px 0 40px;
       }
     }

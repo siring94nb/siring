@@ -237,6 +237,7 @@ export default {
   mounted() {
     this.getInvoiceAmount();
     this.Enterprise();
+    this.getCapitalDetailed();
   },
   methods: {
     gb() {

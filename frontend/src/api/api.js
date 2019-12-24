@@ -1,7 +1,7 @@
 import axios from 'axios'
 import qs from 'qs';
 // qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
-// https://manage.siring.com.cn/
+// http://www.siring.com/
 let base_url = 'https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
@@ -226,6 +226,12 @@ export const BankcardAdd = params => {
 */
 export const BankcardDel = params => {
     return axios.post(`${base_url}api/Capital/bankcard_del`, qs.stringify(params)).then(res => res.data);
+}
+/**
+ * 资金管理（优惠券）
+ */
+export const getRegister = params =>{
+    return axios.post(`${base_url}api/user/register`,qs.stringify(params)).then(res=>res.data);
 }
 /*
 *用户分享邀请码
