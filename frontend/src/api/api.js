@@ -2,7 +2,7 @@ import axios from 'axios'
 import qs from 'qs';
 // qs 是一个增加了一些安全性的查询字符串解析和序列化字符串的库。
 // https://manage.siring.com.cn/
-let base_url = 'http://www.siring.com/';
+let base_url = 'https://manage.siring.com.cn/';
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 // axios.defaults.headers['Content-Type']='application/json'
 const env = process.env.NODE_ENV;
@@ -52,6 +52,20 @@ export const PendingPayment = params => {
     return axios.post(`${base_url}api/Console/pending_payment`, qs.stringify(params)).then(res => res.data);
 }
 
+/*
+ *获取待处理订单总数
+ */
+export const PendingDisposal = params => {
+    return axios.post(`${base_url}api/Console/pending_disposal`, qs.stringify(params)).then(res => res.data);
+}
+
+/*
+ *获取待处理后续订单总数
+ */
+export const AfterService = params => {
+    return axios.post(`${base_url}api/Console/after_service`, qs.stringify(params)).then(res => res.data);
+}
+
 /**
  * 获取手机验证码
  * @param {phone}
@@ -66,10 +80,22 @@ export const GetEnterprise = params => {
     return axios.post(`${base_url}api/user/enterprise_list`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*删除企业信息
+*/
+export const EnterpriseDel = params => {
+    return axios.post(`${base_url}api/user/enterprise_del`, qs.stringify(params)).then(res => res.data);
+}
+/*
  *新增企业信息（title:企业名称，duty：税号，business_license：营业执照，id_card_just：身份证正面，id_card_back：身份证反面）
  */
 export const EnterpriseAdd = params => {
     return axios.post(`${base_url}api/user/enterprise_add`, qs.stringify(params)).then(res => res.data);
+}
+/*
+ *企业信息修改
+ */
+export const EnterprisEdit = params => {
+    return axios.post(`${base_url}api/user/enterprise_edit`, qs.stringify(params)).then(res => res.data);
 }
 /**
  * 忘记密码或修改密码
@@ -164,6 +190,12 @@ export const CapitalDetailed = params => {
 */
 export const InvoiceAmount = params => {
     return axios.post(`${base_url}api/Capital/invoice_amount`, qs.stringify(params)).then(res => res.data);
+}
+/*
+*资金管理（开票）
+*/
+export const MyInvoice = params => {
+    return axios.post(`${base_url}api/Capital/my_invoice`, qs.stringify(params)).then(res => res.data);
 }
 /*
 *提现

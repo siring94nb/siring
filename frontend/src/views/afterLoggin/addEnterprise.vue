@@ -13,7 +13,7 @@
         <span>*</span>
         <span class="xg">企业名称:</span>
         <div>
-          <input type="text" placeholder="请输入企业名称" value="" v-model="name"/>
+          <input type="text" placeholder="请输入企业名称" value v-model="name" />
           <div>*请输入真实公司名，确保电子合同或协议，身份真实获取，保障会员权益</div>
         </div>
       </div>
@@ -21,7 +21,7 @@
         <span>*</span>
         <span class="xg">企业税号:</span>
         <div>
-          <input type="text" placeholder="请输入纳税人识别号（唯一社会信用代码）" value="" v-model="num"/>
+          <input type="text" placeholder="请输入纳税人识别号（唯一社会信用代码）" value v-model="num" />
           <div>*请输入真实税号，确保电子合同或协议，身份真实获取，保障会员权益</div>
         </div>
       </div>
@@ -83,17 +83,19 @@
         </div>
       </div>
       <button class="btn" @click="ceshi">确定</button>
+      <!-- <button class="btn" @click="GetEnterpriseAdd">确定</button> -->
     </div>
   </div>
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { EnterpriseAdd} from "@/api/api";
+import { EnterpriseAdd } from "@/api/api";
 export default {
   data() {
     return {
-      name:"",//企业名称
-      num:"",//企业税号
+      KeyId: 0, //辅助企业信息修改等，主键id
+      name: "", //企业名称
+      num: "", //企业税号
       yyZhizhaoImg: require("../../assets/images/yingyezhizhao.png"),
       identityCardZImg: require("../../assets/images/shengFzz.png"),
       identityCardFImg: require("../../assets/images/shengFzf.png")
@@ -104,6 +106,7 @@ export default {
   },
   mounted() {
     this.SetSS();
+    this.jiance();
   },
   methods: {
     // 进入修改上传样式
@@ -120,15 +123,12 @@ export default {
     },
     handleAvatarSuccess(res, file) {
       this.yyZhizhaoImg = res.data.filePath;
-      console.log(this.yyZhizhaoImg)
     },
     handleAvatarSuccess1(res, file) {
       this.identityCardZImg = res.data.filePath;
-      console.log(this.identityCardZImg)
     },
     handleAvatarSuccess2(res, file) {
       this.identityCardFImg = res.data.filePath;
-      console.log(this.identityCardFImg)
     },
     beforeAvatarUpload(file) {
       const isJPG = file.type === "image/jpeg";
@@ -141,36 +141,60 @@ export default {
       }
       return isJPG && isLt2M;
     },
-    ceshi(){
-      console.log( typeof(this.name) )
-       console.log(typeof(this.num))
-        console.log(this.yyZhizhaoImg)
-         console.log(this.identityCardZImg)
-          console.log(this.identityCardFImg)
-    },
     //企业信息新增
     GetEnterpriseAdd() {
       const params = {
-        title:this.name,
-        duty:this.num,
-        business_license:this.yyZhizhaoImg,
-        id_card_just:this.identityCardZImg,
-        id_card_back:this.identityCardFImg
+        title: this.name,
+        duty: this.num,
+        business_license: this.yyZhizhaoImg,
+        id_card_just: this.identityCardZImg,
+        id_card_back: this.identityCardFImg
       };
       EnterpriseAdd(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         if (code === 1) {
           // console.log(123123);
-          this.$router.push("/memberInformation")
+          this.$router.push("/memberInformation");
         }
       });
     },
-     // 返回
+    // 返回
     showMsg(msg, code) {
       this.$message({
         message: msg,
         type: code === 1 ? "success" : "error"
+      });
+    },
+    //检测路由是否带有总企业列表页传递的数据
+    jiance() {
+      let ro = this.$route.path;
+      let qu = this.$route.query;
+      if (qu.id != undefined) {
+        this.KeyId = parseInt(qu.id);
+        this.name = qu.name;
+        this.num = qu.duty;
+        (this.yyZhizhaoImg = qu.business_license), //营业执照
+          (this.identityCardZImg = qu.id_card_just), //身份证正面
+          (this.identityCardFImg = qu.id_card_back); //身份证反面
+      }
+    },
+    // 修改企业信息
+    enterprisEdit() {
+      let params = {
+        id: this.KeyId,
+        title:this.name,
+        duty:this.num,
+        business_license:this.yyZhizhaoImg,
+        id_card_just:this.identityCardZImg,
+        id_card_back:this.identityCardFImg
+      };
+      EnterprisEdit(params).then(res => {
+        let { data, code, msg } = res;
+        this.showMsg(msg, code);
+        if(code == 1){
+          this.$router.push("/enterpriseList")
+        }
       });
     }
   }
