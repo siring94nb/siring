@@ -65,16 +65,16 @@
             <div></div>
             <div>
               <span class="bj">资金密码：</span>
-              <input type="text" placeholder="请输入字母或数字组合的6到15位密码" />
+              <input type="text" v-model="zjMima1" placeholder="请输入字母或数字组合的6到15位密码" />
               <span style="padding-left:30px">(请妥善保管好个人资金密码)</span>
             </div>
             <div>
               <span class="bj">确认资金密码：</span>
-              <input type="text" placeholder="请输入字母或数组组合的6到15位密码" />
+              <input type="text" v-model="zjMima2" placeholder="请输入字母或数组组合的6到15位密码" />
             </div>
             <div>
               <span class="bj">验证码：</span>
-              <input type="text" placeholder="请输入平台账号手机验证码" />
+              <input type="text" v-model="yanzhengma" placeholder="请输入平台账号手机验证码" />
               <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click.stop="getPhoneCode"/>
             </div>
             <div class="btnList">
@@ -107,6 +107,8 @@ export default {
       yanzhengma:"",//获取验证码
       mewPass:"",//修改密码新密码
       mewPass1:"",//修改密码确认密码
+      zjMima1:'',//资金密码
+      zjMima2:''
     };
   },
   components: {
@@ -146,7 +148,8 @@ export default {
     onPaymentCode() {
       const params = {
         phone: this.phone,
-        password: this.mewPass,
+        password: this.zjMima1,
+        password_confirm:this.zjMima2,
         code: this.yanzhengma
       };
       paymentCode(params).then(res => {
@@ -155,7 +158,8 @@ export default {
         if (code === 1) {
           this.handleClose();
           // 修改成功，返回上一层
-          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
+          this.$router.go(-1)
+          // this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },

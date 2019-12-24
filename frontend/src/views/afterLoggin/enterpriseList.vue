@@ -19,12 +19,12 @@
           <el-table-column prop="name" label="企业身份名" width="180"></el-table-column>
           <el-table-column prop="business_license" label="营业执照" width="180">
             <template slot-scope="scope">
-              <img :src="scope.row.business_license" alt />
+              <img :src="scope.row.business_license" alt  style="width:100px;height:120px"/>
             </template>
           </el-table-column>
           <el-table-column prop="id_card_just" label="法人身份证" width="180">
             <template slot-scope="scope">
-              <img :src="scope.row.id_card_just" alt />
+              <img :src="scope.row.id_card_just" alt style="width:120px;height:100px" />
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -50,6 +50,7 @@ export default {
   },
   mounted() {
     this.getEnterpriseList();
+    this.ceshi()
   },
   methods: {
     handleRemove(file, fileList) {
@@ -110,7 +111,11 @@ export default {
       //   let { data, code, msg } = res;
       //   this.showMsg(msg, code);
       // });
+    },
+    ceshi(){
+      console.log(this.$route)
     }
+    
   },
   components: {
     logginHeader
