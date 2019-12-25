@@ -631,6 +631,7 @@ export default {
     },
     pay() {
       let params = {
+        id: this.id,
         order_amount: this.total,
         user_id: this.form.user_id,
         order_type: this.order
