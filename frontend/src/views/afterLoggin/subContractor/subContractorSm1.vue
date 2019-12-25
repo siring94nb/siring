@@ -63,8 +63,15 @@
                     style="padding-right:30px;color: #66CC00; cursor:pointer"
                     @click.stop="ShowHidden"
                   >我要接单</span>
-                  <span style="color: #169BD5; padding-right:10px;" v-if="lastPage==1" @click="GetSubView(lastPage-1)">上一条</span>
-                  <span style="color: #169BD5; padding-right:10px; cursor: pointer;" @click="GetSubView(lastPage+1)">下一条</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px;"
+                    v-if="lastPage==1"
+                    @click="GetSubView(lastPage-1)"
+                  >上一条</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px; cursor: pointer;"
+                    @click="GetSubView(lastPage+1)"
+                  >下一条</span>
                 </div>
               </div>
               <!-- display: none; -->
@@ -172,7 +179,7 @@
                 </div>
                 <div>
                   <span>输入搜索：</span>
-                  <input type="text" />
+                  <input type="text" v-model="suoyin" />
                   <button @click="gb();GetSubcontractPartner()">搜索</button>
                 </div>
               </div>
@@ -244,12 +251,7 @@
                 >
                   <el-table-column prop="id" label="申请专业技能" width="200" align="center"></el-table-column>
                   <el-table-column prop="dev" label="技能语言" width="220" align="center"></el-table-column>
-                  <el-table-column
-                    prop="created_at"
-                    label="申请时间"
-                    width="220"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="created_at" label="申请时间" width="220" align="center"></el-table-column>
                   <el-table-column prop="money	" label="技能押金" width="200" align="center"></el-table-column>
                   <el-table-column prop="role_type" label="支付方式" width="200" align="center"></el-table-column>
                 </el-table>
@@ -274,13 +276,13 @@ import {
 export default {
   data() {
     return {
-      lastPage:"",//当前页数
-      dis:true,
+      lastPage: "", //当前页数
+      dis: true,
       skillArr: {}, //技能以及过期时间
       multipleSelection: [],
-      phone: "12345678912",
-      WXnum: "12345674891",
-      QQnum: "12345678912",
+      phone: sessionStorage.getItem("phone"),
+      WXnum: "请输入微信号",
+      QQnum: "请输入QQ号",
       title: "我承接的项目明细",
       topList: [
         {
@@ -298,12 +300,13 @@ export default {
       value: "",
       // 邀请分页表格
       list: [],
-      list1:[],
-      shichuang:[],
+      list1: [],
+      shichuang: [],
       pagesize: 3,
       currpage: 1,
       total: 100,
       DirectlyTo: 1,
+      suoyin: "",
       fbxm: "flex" //控制分包项目位置显示隐藏
     };
   },
@@ -320,7 +323,14 @@ export default {
   methods: {
     gb() {
       // 修改状态判断是否有索引条件
-      this.dis = false;
+      if (this.suoyin == "" && this.value == "") {
+        this.dis = true;
+      } else if (this.value == null && this.suoyin == "") {
+        this.dis = true;
+        this.value = "";
+      } else {
+        this.dis = false;
+      }
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
@@ -357,7 +367,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
           this.skillArr = data;
@@ -369,7 +379,7 @@ export default {
       SubcontractTotal().then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
@@ -382,37 +392,53 @@ export default {
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
     GetSubcontractPartner() {
       let params = {};
+      let times = this.value;
       if (this.dis) {
         params = {
           type: 1
         };
       } else {
-        let start_time = this.value[0].getTime();
-        let end_time = this.value[1].getTime();
-        params = {
-          type: 1,
-          title: this.suoyin,
-          start_time: start_time,
-          end_time: end_time
-        };
+        if (this.value == "") {
+          params = {
+            type: 1,
+            title: this.suoyin
+          };
+        } else if (this.suoyin == "" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 1,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        } else {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 1,
+            title: this.suoyin,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        }
       }
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           this.list = data;
         }
       });
     },
     GetSubcontractPartner1() {
-        const params = {
-          type: 2,
-        };
+      const params = {
+        type: 2
+      };
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           this.list1 = data;
         }
@@ -420,9 +446,9 @@ export default {
     },
     // 分包商视窗数据
     GetSubView(num) {
-       let params = {
-          page:parseInt(num)
-        }
+      let params = {
+        page: parseInt(num)
+      };
       SubView(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
@@ -442,11 +468,11 @@ export default {
       Getreceipt(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-          this.showMsg(msg,code)
+          this.showMsg(msg, code);
         }
       });
     },
-     showMsg(msg, code) {
+    showMsg(msg, code) {
       this.$message({
         message: msg,
         type: code === 1 ? "success" : "error"

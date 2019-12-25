@@ -29,27 +29,28 @@ import { GetSumIndent } from "@/api/api";
 export default {
   name: "gnmk1",
   data() {
+    // 这个位置会有问题，貌似没有这个接口，所以数据是我的订单的，不是角色收益的东西
     return {
       year: "",
       SumIndent1: [
         {
           "num": 9,
-          "name": "软件定制总数",
+          "name": "合伙人酬金",
           "biaozhi": "total_customized"
         },
         {
           "num": 6,
-          "name": "小程序订单总数",
+          "name": "会员酬金",
           "biaozhi": "total_xcx"
         },
         {
           "num": 7,
-          "name": "AI订单总数",
+          "name": "分包酬金",
           "biaozhi": "total_promotion"
         },
         {
           "num": 8,
-          "name": "投融订单总数",
+          "name": "推广人数",
           "biaozhi": "total_investment"
         }
       ]

@@ -37,13 +37,14 @@
 
 <script>
 // import Myheader from "@/components/header";
-import {CityTotal,MemberTotal,SubcontractTotal} from "@/api/api";
+import { CityTotal, MemberTotal, SubcontractTotal } from "@/api/api";
 export default {
   // name: "fater-loggin",
   data() {
     return {
-      ru:this.$route.path=="/afterLoggin"?"/afterLogginR":this.$route.path,//确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
-      num: '0',
+      ru:
+        this.$route.path == "/afterLoggin" ? "/afterLogginR" : this.$route.path, //确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
+      num: "0",
       classHuiyuan: 1,
       fenbaoshang: 1,
       tixian: 1,
@@ -130,29 +131,28 @@ export default {
       this.classHuiyuanX(),
       this.fenbaoshangX(),
       this.withdrawX();
-      this.zhankai();
+    this.zhankai();
   },
-  methods: { 
+  methods: {
     // 保持侧边栏对应路由展开状态
-    zhankai(){
+    zhankai() {
       let arr = this.arr;
-      let val= this.$route.path
+      let val = this.$route.path;
       for (var i = 0; i < arr.length; i++) {
         for (var j = 0; j < arr[i].con.length; j++) {
           if (arr[i].con[j].rou == val) {
             // }else if(val =="/safetyTabControl"){
-              
+
             // }else{
-              const num = String(i);
-              // console.log(num)
-              this.num=String(i);
-              // console.log(val)
+            const num = String(i);
+            // console.log(num)
+            this.num = String(i);
+            // console.log(val)
             // }
-          }else if(val =="/addEnterprise"||val =="/enterpriseList"){
-            if(arr[i].con[j].rou.indexOf("/memberInformation")!=-1){
-               console.log(i)
+          } else if (val == "/addEnterprise" || val == "/enterpriseList") {
+            if (arr[i].con[j].rou.indexOf("/memberInformation") != -1) {
+              console.log(i);
             }
-             
           }
         }
       }
@@ -164,8 +164,8 @@ export default {
       CityTotal().then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-            this.arr[2].con[0].rou = "/CityPartner";            
-        }else{
+          this.arr[2].con[0].rou = "/CityPartner";
+        } else {
           this.arr[2].con[0].rou = "/CityPartner";
           // this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
@@ -177,10 +177,10 @@ export default {
       MemberTotal().then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-            this.arr[2].con[1].rou = "/ClassMembersA";            
-        }else{
+          this.arr[2].con[1].rou = "/ClassMembersA";
+        } else {
           // this.arr[2].con[1].rou = "/ClassMembersX";
-          this.arr[2].con[1].rou = "/ClassMembersA"; 
+          this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
         }
       });
@@ -190,14 +190,14 @@ export default {
       SubcontractTotal().then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-            this.arr[2].con[2].rou = "/subContractorSm1";            
-        }else{
+          this.arr[2].con[2].rou = "/subContractorSm1";
+        } else {
           // this.arr[2].con[2].rou = "/subContractorIndex";
-           this.arr[2].con[2].rou = "/subContractorSm1";
+          this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
         }
       });
-    }, 
+    },
     //提现
     withdrawX() {
       if (this.tixian === 0) {
@@ -237,7 +237,7 @@ export default {
   .el-menu-item.is-active {
     font-size: 16px;
     font-weight: 700;
-    color: #409EFF !important;
+    color: #409eff !important;
   }
   li {
     width: 100%;
