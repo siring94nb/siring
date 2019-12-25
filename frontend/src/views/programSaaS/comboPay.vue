@@ -246,7 +246,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay, addBank, subBankPay, codeGetPay } from "@/api/api";
+import { templatePay, addBank, subBankPay, codeGetPay, getCoupou, getBalance } from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -331,6 +331,8 @@ export default {
   mounted() {
     this.init();
     // console.log(this.$route.params)
+      this.GetCoupou();
+
   },
   methods: {
     init() {
@@ -349,6 +351,7 @@ export default {
           });
         }
       });
+      // vm.GetBalance();
     },
     //下单生成二维码
     codePay() {
@@ -437,7 +440,23 @@ export default {
         console.log(res);
         return res;
       });
-    }
+    },
+    GetCoupou(){
+      let params = {
+        uid: this.form.user_id
+      }
+      getCoupou(params).then(res => {
+        console.log(res);
+      });
+    },
+    GetBalance(){
+      let params = {
+        uid: this.form.user_id
+      }
+      getBalance(params).then(res => {
+        console.log(res);
+      });
+    },
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
     //   console.log(bank);
