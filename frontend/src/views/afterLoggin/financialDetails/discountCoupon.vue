@@ -53,8 +53,12 @@
         >
           <el-table-column prop="created_at" label="获得时间" width="180" align="center"></el-table-column>
           <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
-          <el-table-column prop="coupon_status" label="优惠券状态" align="center"></el-table-column>
-          <el-table-column label="优惠券说明" align="type">
+          <el-table-column prop="coupon_status" label="优惠券状态" align="center" width="180">
+            <template slot-scope="scope">
+              <div>{{scope.row.coupon_status==0?"已使用":"未使用"}}</div>
+            </template>
+          </el-table-column>
+          <el-table-column label="优惠券说明（类型）" align="center" width="180">
             <template slot-scope="scope">
               <div v-if="scope.row.type == 0">所有商品</div>
               <div v-if="scope.row.type == 1">软件定制类商品</div>
@@ -63,17 +67,32 @@
           </el-table-column>
           <el-table-column label="获得优惠券" align="center">
             <template slot-scope="scope">
-              <div>
-                <div>
-                  <!-- 返回值有个rule:"{\"full\":130,\"reduce\":50}"    \"也就是转义字符-->
-                  <span>满{{scope.row.rule.full}}减{{scope.row.rule.reduce}}</span>
-                </div>
-                <div>
-                  <div>{{scope.row.coupon_name}}</div>
-                  <div v-if="scope.row.range == 0">全部</div>
-                  <div v-if="scope.row.range == 1">黄金会员</div>
-                  <div v-if="scope.row.range == 2">白金会员</div>
-                  <div>立即使用&gt;&gt;</div>
+              <div class="youhuiquan">
+                <img :src="img1" alt v-if="scope.row.coupon_status!=0" />
+                <img :src="img2" alt v-if="scope.row.coupon_status==0" />
+                <div class="yhqBox">
+                  <div>
+                    <!-- 返回值有个rule:"{\"full\":130,\"reduce\":50}"    \"也就是转义字符-->
+                    <div>
+                      <span>{{JSON.parse(scope.row.rule).full-JSON.parse(scope.row.rule).reduce}}</span>
+                      <span>元</span>
+                    </div>
+                    <div>满{{JSON.parse(scope.row.rule).full}}减{{JSON.parse(scope.row.rule).reduce}}</div>
+                  </div>
+                  <div>
+                    <div>{{scope.row.coupon_name}}</div>
+                    <div v-if="scope.row.range == 0">全部</div>
+                    <div v-if="scope.row.range == 1">黄金会员</div>
+                    <div v-if="scope.row.range == 2">白金会员</div>
+                    <div>
+                      <router-link
+                        to="/goods"
+                        v-if="scope.row.coupon_status==1"
+                        style="color:#00b5d2"
+                      >立即使用&gt;&gt;</router-link>
+                      <span v-if="scope.row.coupon_status==0" style="color:#949494">已使用</span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div></div>
@@ -104,16 +123,20 @@ export default {
       // select1
       options: [
         {
-          value: "全部",
+          value: "0",
           label: "全部"
         },
         {
-          value: "普通优惠券",
-          label: "普通优惠券"
+          value: "1",
+          label: "所有商品"
         },
         {
-          value: "特殊优惠券",
-          label: "特殊优惠券"
+          value: "2",
+          label: "固定选择商品"
+        },
+        {
+          value: "3",
+          label: "所有商品"
         }
       ],
       value: "全部",
@@ -136,7 +159,9 @@ export default {
       // 表格数据
       tableData: [],
       pageSize: 3,
-      currentPage: 1
+      currentPage: 1,
+      img1: require("../../../assets/images/youhuiquan1.png"),
+      img2: require("../../../assets/images/youhuiquan2.png")
     };
   },
   components: {
@@ -165,7 +190,7 @@ export default {
     },
     Register() {
       let params = {};
-      let times = this.value;
+      let times = this.value1;
       if (this.dis) {
         getRegister().then(res => {
           let { data, msg, code } = res;
@@ -176,26 +201,26 @@ export default {
           }
         });
       } else {
-        if (this.value1 == "") {
+        if (times == "") {
           params = {
             status: this.value2
           };
           this.dis = true;
-        } else if (this.value2 == "全部" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
+        } else if (this.value2 == "全部" && times != null) {
+          let start_time = times[0];
+          let end_time = times[1];
           params = {
             start_time: start_time.getTime(),
             end_time: end_time.getTime()
           };
           this.dis;
         } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
+          let start_time = times[0];
+          let end_time = ttimes[1];
           params = {
             status: this.value2,
-            start_time: this.value[0].getTime(),
-            end_time: this.value[1].getTime()
+            start_time: times[0].getTime(),
+            end_time: times[1].getTime()
           };
           this.dis = true;
         }
@@ -242,6 +267,43 @@ export default {
       }
       &:nth-of-type(3) {
         padding: 0 10px 0 40px;
+      }
+    }
+  }
+}
+.youhuiquan {
+  // background-size:100px  160px;
+  padding-left: 10px;
+  position: relative;
+  height: 100px;
+  img {
+    left: 0;
+    position: absolute;
+    width: 300px;
+  }
+  .yhqBox {
+    position: absolute;
+    z-index: 55;
+    display: flex;
+    >div{
+      &:nth-of-type(1){
+        >div{
+          &:nth-of-type(1){
+            span{
+              color: #03b1d8;
+              &:nth-of-type(1){
+                font-size: 28px;
+                font-weight: 700;
+              }
+               &:nth-of-type(2){
+                font-size: 12px;
+              }
+            }
+          }
+          &:nth-of-type(2){
+             color: #03b1d8;
+          }
+        }
       }
     }
   }

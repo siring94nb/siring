@@ -231,7 +231,7 @@ export const BankcardDel = params => {
  * 资金管理（优惠券）
  */
 export const getRegister = params =>{
-    return axios.post(`${base_url}api/user/register`,qs.stringify(params)).then(res=>res.data);
+    return axios.post(`${base_url}api/Capital/coupon`,qs.stringify(params)).then(res=>res.data);
 }
 /*
 *用户分享邀请码
