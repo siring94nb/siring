@@ -75,7 +75,8 @@ class Payment extends Base
                 returnJson (0,$validate->getError());exit();
             }
             $data = UserFund::user($param['uid']);
-            $res = $data['money'];
+            $res['money'] = $data['money'];
+            $res['pay_password'] = $data['pay_password'];
 
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
         }
