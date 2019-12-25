@@ -82,4 +82,54 @@ class NeedOrder extends Model
         }
 
 
+    public function pay($id,$money,$pay_type)
+    {
+        switch ($pay_type){
+            case 1://支付宝支付
+
+                $alipay = new Alipay();
+                $res = $alipay->index();
+
+                return $res;
+                break;
+            case 2://微信支付
+                $data = self::get($id);
+                if(!$data) returnJson(0,'订单有误');
+                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+                //查询等级
+                $user = UserGrade::get(['user_id'=>$data['user_id']]);
+                //查询比例
+                $grade = JoinRole::member_details($user['grade']);
+                //算出金额
+                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+                //比较
+                if($money != $pay_money) returnJson(0,'系统有误');
+
+                // 查询订单信息
+                $url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';
+
+                $pay = 1;//先测试1分钱
+
+                $title = '软件定制';
+                $res = (new WechatPay())->pay($title,$data['need_order'], $pay, $url);
+
+                return $res; exit();
+
+
+
+            break;
+
+            case 3://银联卡支付
+
+                break;
+            case 4://余额支付
+
+                break;
+            default:
+                returnJson(0,'参数有误');
+        }
+
+    }
+
+
 }

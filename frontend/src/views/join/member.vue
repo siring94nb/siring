@@ -130,7 +130,7 @@
         :price="price"
         :percent="percent"
         :pay="pay"
-        :order="1"
+        :order="0"
         :scale="0"
         @sendNum="getNum"
         :needCodeDialog="needCodeDialog"

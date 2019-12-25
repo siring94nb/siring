@@ -8,6 +8,7 @@ use app\data\model\Good;
 use app\data\model\NeedOrder as Need;
 use app\data\model\NeedScore;
 use app\data\model\Special;
+use app\data\model\UserGrade;
 use app\data\model\WechatPay;
 use think\Request;
 use think\Db;
@@ -212,6 +213,29 @@ class  NeedOrder  extends  Base
 
     }
 
+    /**
+     *
+     */
+    public function get_pay($type,$id,$money,$pay_type)
+    {
+        switch ($type){
+            case 1:
+                $data = (new Need())->pay($id,$money,$pay_type);
 
+                return $data  ? returnJson(1,'成功') : returnJson(0,'失败');
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            default:
+                returnJson(0,'参数有误');
+
+        }
+
+
+    }
 
 }

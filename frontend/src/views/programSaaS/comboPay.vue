@@ -17,7 +17,7 @@
             </span>
           </div>
           <div style="margin-left:100px;">
-            <el-select v-model="value" placeholder="请选择优惠券">
+            <el-select v-model="valuee" placeholder="请选择优惠券">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -246,7 +246,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay, addBank, subBankPay } from "@/api/api";
+import { templatePay, addBank, subBankPay, codeGetPay } from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -280,6 +280,7 @@ export default {
       ],
       codeType: "1", //支付宝或微信
       value: "",
+      valuee: "",
       pay_time: "",
       money: 0, //套餐金额
       real_money: 0, //最终实付金额
@@ -352,18 +353,26 @@ export default {
     //下单生成二维码
     codePay() {
       //支付类型
-      const vm = this;
+      let vm = this;
       if (this.radio != "1") vm.params.pay_type = this.radio;
       else vm.params.pay_type = this.codeType;
-      vm.params.order_amount = this.real_money; //实付金额
-      let res = vm.payOrder(vm.params);
-      let { code, imgData, msg } = res;
-      this.$message(msg);
-      if (code === 1) {
-        this.imgData = imgData;
-        this.isShow = !this.isShow;
-        this.isDisabl = !this.isDisabl;
+      // vm.params.order_amount = this.real_money; //实付金额
+      // let res = vm.payOrder(vm.params);
+      let params = {
+        id:vm.params.id,
+        pay_type:vm.params.pay_type,
+        money: vm.real_money,
+        type: vm.params.order_type
       }
+      codeGetPay(params).then(res => {
+        let { code, imgData, msg } = res;
+        this.$message(msg);
+        if (code === 1) {
+          this.imgData = imgData;
+          this.isShow = !this.isShow;
+          this.isDisabl = !this.isDisabl;
+        }
+      })
     },
     //添加银行卡
     submitForm(formName) {

@@ -154,6 +154,7 @@ Route::group('api', function () {
         Route::any('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
         Route::any('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
         Route::any('need_comment','api/NeedOrder/need_comment'); //评价
+        Route::any('get_pay','api/NeedOrder/get_pay'); //支付
     });
 
     //微信第三方路由
@@ -195,6 +196,12 @@ Route::group('api', function () {
         Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
+    //支付页面参数
+    Route::group('Payment',function(){
+        Route::any('coupou','api/Payment/coupou'); //优惠卷列表
+        Route::any('balance','api/Payment/balance'); //用户余额
+        Route::any('my_invoice','api/Payment/my_invoice'); //开票
+    });
 
 });
 
