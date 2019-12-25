@@ -179,10 +179,10 @@ class JoinRole extends Model
                 return   self::get(['id',3])->toArray();
                 break;
             case 2:
-                return self::get(['id',4]);
+                return self::get(['id',4])->toArray();
                 break;
             case 3:
-                return self::get(['id',5]);
+                return self::get(['id',5])->toArray();
                 break;
         }
     }
