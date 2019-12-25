@@ -195,7 +195,7 @@
             使用账户余额支付：
             <span class="money">
               ￥
-              <span class="red">0.00</span>
+              <span class="red">{{balance}}</span>
             </span>
             <span class="blue">充值</span>
           </div>
@@ -246,7 +246,14 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay, addBank, subBankPay, codeGetPay, getCoupou, getBalance } from "@/api/api";
+import {
+  templatePay,
+  addBank,
+  subBankPay,
+  codeGetPay,
+  getCoupou,
+  getBalance
+} from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -268,16 +275,7 @@ export default {
       isSubmit: false,
       checked: [],
       radio: "3",
-      options: [
-        {
-          value: "1",
-          label: "黄金糕"
-        },
-        {
-          value: "2",
-          label: "双皮奶"
-        }
-      ],
+      options: [], //优惠券
       codeType: "1", //支付宝或微信
       value: "",
       valuee: "",
@@ -302,7 +300,7 @@ export default {
         city: "",
         user_id: 0
       },
-
+      balance:'0.00',//余额
       paymentAccount: "0", //选择收款账号
       payAccount: [
         "工商银行-6212264000061706160",
@@ -331,8 +329,8 @@ export default {
   mounted() {
     this.init();
     // console.log(this.$route.params)
-      this.GetCoupou();
-
+    this.GetCoupou();
+    this.GetBalance();
   },
   methods: {
     init() {
@@ -362,11 +360,11 @@ export default {
       // vm.params.order_amount = this.real_money; //实付金额
       // let res = vm.payOrder(vm.params);
       let params = {
-        id:vm.params.id,
-        pay_type:vm.params.pay_type,
+        id: vm.params.id,
+        pay_type: vm.params.pay_type,
         money: vm.real_money,
         type: vm.params.order_type
-      }
+      };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
         this.$message(msg);
@@ -375,7 +373,7 @@ export default {
           this.isShow = !this.isShow;
           this.isDisabl = !this.isDisabl;
         }
-      })
+      });
     },
     //添加银行卡
     submitForm(formName) {
@@ -441,22 +439,30 @@ export default {
         return res;
       });
     },
-    GetCoupou(){
-      let params = {
-        uid: this.form.user_id
-      }
+    //获取优惠券
+    GetCoupou() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
       getCoupou(params).then(res => {
-        console.log(res);
+        if (res.code == 1) {
+          vm.options = res.data;
+        }
       });
     },
-    GetBalance(){
-      let params = {
-        uid: this.form.user_id
-      }
+    //获取余额
+    GetBalance() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
       getBalance(params).then(res => {
-        console.log(res);
+        if(res.code == 1) {
+          vm.balance = res.data;
+        }
       });
-    },
+    }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
     //   console.log(bank);
