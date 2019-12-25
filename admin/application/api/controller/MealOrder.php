@@ -81,7 +81,7 @@ class MealOrder extends Base
             case 1:    //支付宝
                 returnJson(0, '暂未支付宝开通');
             return $res;exit();
-                break;  
+                break;
             case 2:     //微信支付
                  // 查询订单信息
             $url = 'https://manage.siring.com.cn/api/MealOrder/hy_model_notice';
@@ -94,14 +94,14 @@ class MealOrder extends Base
                 $res = $wechatpay->pay($title,$order['order_number'], $pay, $url);
                 return $res;
                 break;
-            case 3 :    //银行转账 
+            case 3 :    //银行转账
                 //添加审核记录
                 $order = Db::table('model_order')->getById($id);
                 $data['create_time']=time();
                 $data['order_number']=$order['order_number'];
                 $data['member_account']=$order['member_account'];
                 $data['pay_type']='Saas套餐费用';
-                $detail=json_decode($order['pay_detail'],true);
+                $detail = json_decode($order['pay_detail'],true);
                 $data['bank_name']=$detail['bank_name'];      //银行名称
                 $data['comment']=$detail['comment'];
                 $data['account_number']=$detail['account_number'];
@@ -128,7 +128,7 @@ class MealOrder extends Base
                 }
             break;
         }
-        
+
     }
 
     /**
@@ -195,11 +195,11 @@ class MealOrder extends Base
      * param    user_id    用户id
      */
     public function is_use_code()
-    {   
+    {
         $request=Request::instance();
         $postData=$request->param();
         if($postData){
-            
+
         }else{
             return json(['code'=>0,'msg'=>'获取参数失败']);
         }

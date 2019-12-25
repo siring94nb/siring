@@ -52,7 +52,7 @@
             <div style="text-align:center;">
               <el-radio v-model="radio" label="1">在线支付</el-radio>
               <el-radio v-model="radio" label="3">银行转账</el-radio>
-              <el-radio v-model="radio" label="4">余额支付</el-radio>
+              <el-radio v-model="radio" label="4" @change="payPassword">余额支付</el-radio>
             </div>
           </el-col>
         </el-row>
@@ -195,7 +195,7 @@
             使用账户余额支付：
             <span class="money">
               ￥
-              <span class="red">0.00</span>
+              <span class="red">{{balance}}</span>
             </span>
             <span class="blue">充值</span>
           </div>
@@ -246,7 +246,14 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay, addBank, subBankPay, codeGetPay } from "@/api/api";
+import {
+  templatePay,
+  addBank,
+  subBankPay,
+  codeGetPay,
+  getCoupou,
+  getBalance
+} from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -268,16 +275,7 @@ export default {
       isSubmit: false,
       checked: [],
       radio: "3",
-      options: [
-        {
-          value: "1",
-          label: "黄金糕"
-        },
-        {
-          value: "2",
-          label: "双皮奶"
-        }
-      ],
+      options: [], //优惠券
       codeType: "1", //支付宝或微信
       value: "",
       valuee: "",
@@ -302,7 +300,7 @@ export default {
         city: "",
         user_id: 0
       },
-
+      balance: "0.00", //余额
       paymentAccount: "0", //选择收款账号
       payAccount: [
         "工商银行-6212264000061706160",
@@ -325,12 +323,15 @@ export default {
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
         card_number: [{ validator: validatePass, trigger: "blur" }]
-      }
+      },
+      password: ""
     };
   },
   mounted() {
     this.init();
     // console.log(this.$route.params)
+    this.GetCoupou();
+    this.GetBalance();
   },
   methods: {
     init() {
@@ -349,6 +350,7 @@ export default {
           });
         }
       });
+      // vm.GetBalance();
     },
     //下单生成二维码
     codePay() {
@@ -359,11 +361,12 @@ export default {
       // vm.params.order_amount = this.real_money; //实付金额
       // let res = vm.payOrder(vm.params);
       let params = {
-        id:vm.params.id,
-        pay_type:vm.params.pay_type,
+        id: vm.params.id,
+        pay_type: vm.params.pay_type,
         money: vm.real_money,
-        type: vm.params.order_type
-      }
+        type: vm.params.order_type,
+        password: vm.password
+      };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
         this.$message(msg);
@@ -372,7 +375,7 @@ export default {
           this.isShow = !this.isShow;
           this.isDisabl = !this.isDisabl;
         }
-      })
+      });
     },
     //添加银行卡
     submitForm(formName) {
@@ -437,6 +440,51 @@ export default {
         console.log(res);
         return res;
       });
+    },
+    //获取优惠券
+    GetCoupou() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
+      getCoupou(params).then(res => {
+        if (res.code == 1) {
+          vm.options = res.data;
+        }
+      });
+    },
+    //获取余额
+    GetBalance() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
+      getBalance(params).then(res => {
+        if (res.code == 1) {
+          vm.balance = res.data.money;
+          vm.password = res.data.pay_password;
+        }
+      });
+    },
+    payPassword(e) {
+      if (this.password == null || this.password == "") {
+        this.$confirm("您未设置支付密码，是否前往设置？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true
+        })
+          .then(() => {
+            this.$router.push({
+              name: "safetyTabControl",
+              params: {
+                canshu: "third",
+                title: "信息修改"
+              }
+            });
+          })
+          .catch(() => {});
+      }
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);

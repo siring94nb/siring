@@ -82,7 +82,7 @@ class NeedOrder extends Model
         }
 
 
-    public function pay($id,$money,$pay_type,$password)
+    public function pay($id,$money,$pay_type,$password,$unionpay)
     {
         switch ($pay_type){
             case 1://支付宝支付
@@ -120,6 +120,9 @@ class NeedOrder extends Model
             break;
 
             case 3://银联卡支付
+                $union = json_decode($unionpay,true);
+                pp($union);die;
+
 
                 break;
             case 4://余额支付
