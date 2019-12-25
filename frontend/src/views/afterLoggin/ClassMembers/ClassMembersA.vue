@@ -56,12 +56,14 @@
                 </div>
                 <div>
                   <span>输入搜索：</span>
-                  <input type="text" value v-model="suoyin" />
+                  <input type="text" v-model="suoyin" />
                   <button @click="gb();GetMemberPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
-                <div>立即分享邀请</div>
+                <div>
+                  <router-link to="/invitationX" style="color:#ffffff">立即分享邀请</router-link>
+                </div>
                 <div>
                   注：为确保达标佣金的获得，您还需要邀请
                   <span>3000人</span>
@@ -115,7 +117,9 @@
           <el-tab-pane label="等级会员订单" name="second" :key="'second'">
             <div>
               <div class="lijifenxiang">
-                <div>立即分享邀请</div>
+                <div>
+                  <router-link to="/invitationX" style="color:#ffffff">立即分享邀请</router-link>
+                </div>
                 <div>
                   注：为确保达标佣金的获得，您还需要邀请
                   <span>3000人</span>
@@ -213,7 +217,14 @@ export default {
   methods: {
     gb() {
       // 修改状态判断是否有索引条件
-      this.dis = false;
+      if (this.suoyin == "" && this.value == "") {
+        this.dis = true;
+      } else if (this.value == null && this.suoyin == "") {
+        this.dis = true;
+        this.value = "";
+      } else {
+        this.dis = false;
+      }
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -234,7 +245,7 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           this.hyTime = data;
         }
@@ -243,25 +254,41 @@ export default {
     // 获取等级会员列表数据
     GetMemberPartner() {
       let params = {};
+      let times = this.value;
       if (this.dis) {
         params = {
           type: 2
         };
       } else {
-        let start_time = this.value[0].getTime();
-        let end_time = this.value[1].getTime();
-        params = {
-          type: 2,
-          title: this.suoyin,
-          start_time: start_time,
-          end_time: end_time
-        };
+        if (this.value == "") {
+          params = {
+            type: 2,
+            title: this.suoyin
+          };
+        } else if (this.suoyin == "" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 2,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        } else {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 2,
+            title: this.suoyin,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        }
       }
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         if (code === 1) {
-          this.list = data;
+          this.list = data.data;
         }
       });
     },
@@ -271,9 +298,9 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         if (code === 1) {
-          this.list1 = data;
+          this.list1 = data.data;
         }
       });
     },
@@ -282,7 +309,7 @@ export default {
       MemberTotal().then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];

@@ -46,7 +46,7 @@
       </div>
       <div>
         <el-table
-          :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)" 
+          :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
           border
           style="width: 100%; font-size:13px;color:#797979"
           :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }"
@@ -65,7 +65,8 @@
             <template slot-scope="scope">
               <div>
                 <div>
-                  <span>100元</span>
+                  <!-- 返回值有个rule:"{\"full\":130,\"reduce\":50}"    \"也就是转义字符-->
+                  <span>满{{scope.row.rule.full}}减{{scope.row.rule.reduce}}</span>
                 </div>
                 <div>
                   <div>{{scope.row.coupon_name}}</div>
@@ -103,38 +104,37 @@ export default {
       // select1
       options: [
         {
-          value: "选项1",
+          value: "全部",
           label: "全部"
         },
         {
-          value: "选项2",
+          value: "普通优惠券",
           label: "普通优惠券"
         },
         {
-          value: "选项3",
+          value: "特殊优惠券",
           label: "特殊优惠券"
         }
       ],
-      value: "选项1",
+      value: "全部",
       // select2
       options1: [
         {
-          value: "选项1",
+          value: "全部",
           label: "全部"
         },
         {
-          value: "选项2",
+          value: "0",
           label: "已使用"
         },
         {
-          value: "选项3",
+          value: "1",
           label: "未使用"
         }
       ],
-      value2: "选项1",
+      value2: "全部",
       // 表格数据
-      tableData: [
-      ],
+      tableData: [],
       pageSize: 3,
       currentPage: 1
     };
@@ -142,28 +142,63 @@ export default {
   components: {
     logginHeader
   },
-  mounted() {this.Register()},
+  mounted() {
+    this.Register();
+  },
   methods: {
     handleSizeChange: function() {},
     handleCurrentChange: function() {},
-
     gb() {
       // 修改状态判断是否有索引条件
-      this.dis = false;
+      if (this.value == "全部" && this.value2 == "全部" && this.value1 == "") {
+        this.dis = true;
+      } else if (
+        this.value1 == null &&
+        this.value == "全部" &&
+        this.value2 == "全部"
+      ) {
+        this.dis = true;
+        this.value1 = "";
+      } else {
+        this.dis = false;
+      }
     },
     Register() {
       let params = {};
+      let times = this.value;
       if (this.dis) {
         getRegister().then(res => {
           let { data, msg, code } = res;
-            console.log(res)
+          console.log(res);
           if (code == 1) {
             this.tableData = data.data;
-            console.log(this.tableData)
+            console.log(this.tableData);
           }
         });
       } else {
-        params = {};
+        if (this.value1 == "") {
+          params = {
+            status: this.value2
+          };
+          this.dis = true;
+        } else if (this.value2 == "全部" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+          this.dis;
+        } else {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            status: this.value2,
+            start_time: this.value[0].getTime(),
+            end_time: this.value[1].getTime()
+          };
+          this.dis = true;
+        }
         getRegister(params).then(res => {
           let { data, msg, code } = res;
           if (code == 1) {

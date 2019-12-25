@@ -67,12 +67,7 @@
             <div>
               <span>发票类型：</span>
               <label v-for="(item, index) in radioData" :key="index">
-                <input
-                  type="radio"
-                  v-model="radioVal"
-                  :value="item.value"
-                  @click="getRadioVal(item.value)"
-                />
+                <input type="radio" v-model="radioVal" :value="item.value" />
                 {{ item.value }}
               </label>
             </div>
@@ -85,8 +80,8 @@
             </div>
             <div>
               <span>发票抬头：</span>
-              <select v-model="selected3"  @change="selectFn($event)">
-                 <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
+              <select v-model="selected3" @change="selectFn($event)">
+                <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
               </select>
               <div>
                 <router-link to="addEnterprise">
@@ -118,12 +113,7 @@
             <div>
               <span>发票类型：</span>
               <label v-for="(item, index) in radioData1" :key="index">
-                <input
-                  type="radio"
-                  v-model="radioVal1"
-                  :value="item.value"
-                  @click="getRadioVal(item.value)"
-                />
+                <input type="radio" v-model="radioVal1" :value="item.value" />
                 {{ item.value }}
               </label>
             </div>
@@ -158,11 +148,30 @@
               :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
-              <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
-              <el-table-column prop="income" label="收入（元）" align="center" width="160"></el-table-column>
+              <el-table-column prop="created_at" label="日期" width="180" align="center">
+                <template slot-scope="scope">
+                  <div>{{scope.row.created_at==null?"未知":scope.row.created_at}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="income" label="收入（元）" align="center" width="160">
+                <template slot-scope="scope">
+                  <div>{{scope.row.income==null?0:scope.row.income}}</div>
+                </template>
+              </el-table-column>
               <el-table-column prop="phone" align="center" width="180" label="收入账号"></el-table-column>
-              <el-table-column prop="money" label="支出（元）" align="center" width="180"></el-table-column>
-              <el-table-column prop="pay_type" align="center" label="支付类型"></el-table-column>
+              <el-table-column prop="money" label="支出（元）" align="center" width="180">
+                <template slot-scope="scope">
+                  <div>{{scope.row.money==null?0:scope.row.income}}</div>
+                </template>
+              </el-table-column>
+              <el-table-column prop="pay_type" align="center" label="支付类型">
+                <template slot-scope="scope">
+                  <div v-if="scope.row.pay_type == 1||scope.row.pay_type == null">支付宝</div>
+                  <div v-if="scope.row.pay_type == 2">微信</div>
+                  <div v-if="scope.row.pay_type == 3">汇款</div>
+                  <div v-if="scope.row.pay_type == 4">余额</div>
+                </template>
+              </el-table-column>
             </el-table>
             <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
               <div>
@@ -183,7 +192,12 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import { CapitalDetailed, InvoiceAmount,MyInvoice,GetEnterprise } from "@/api/api";
+import {
+  CapitalDetailed,
+  InvoiceAmount,
+  MyInvoice,
+  GetEnterprise
+} from "@/api/api";
 export default {
   data() {
     return {
@@ -196,9 +210,9 @@ export default {
       // select参数
       selected1: "0",
       selected2: "0",
-      items:[],//企业列表
+      items: [], //企业列表
       selected3: "",
-      value: "",
+      value: "", //时间选择
       // 单选框
       radioData: [{ value: "企业" }, { value: "个人" }],
       radioVal: "企业",
@@ -209,26 +223,26 @@ export default {
         },
         {
           value: "普通发票（纸质发票）"
-        }, 
+        },
         {
           value: "专用发票"
-        }, 
+        },
         {
           value: "收购发票（电子票）"
-        },  
+        },
         {
           value: "收购发票（纸质发票）"
-        },
-        ],
+        }
+      ],
       radioVal1: "普通发票(电子票)",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
       surplusMoney: "",
       // 表格数据占位
-      tableData: [
-      ],
-      price:0,
-      address:"广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"
+      tableData: [],
+      price: 0,
+      address:
+        "广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"
     };
   },
   components: {
@@ -242,7 +256,14 @@ export default {
   methods: {
     gb() {
       // 修改状态判断是否有索引条件
-      this.dis = false;
+      if (this.selected1 == "0" && this.selected2 == "0" && this.value == "") {
+        this.dis = true;
+      }else if(this.value == null && this.selected1 == "0" && this.selected2 == "0"){
+        this.dis = true;
+        this.value = "";
+      }else {
+        this.dis = false;
+      }
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
@@ -250,31 +271,52 @@ export default {
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
-    getRadioVal(value) {
-      console.log(value);
-    },
     // 获取资金明细数据
     getCapitalDetailed() {
       let params = {};
+      let times = this.value;
+      // let start_time = this.value[0];
+      // let end_time = this.value[1];
       if (this.dis) {
         CapitalDetailed().then(res => {
-          let {data,msg,code} = res;
-          if(code === 1){
-            this.pagesize  = data.per_page
+          let { data, msg, code } = res;
+          if (code === 1) {
+            this.pagesize = data.per_page;
             this.tableData = data.data;
           }
         });
       } else {
-        params = {
-          budget_type: this.selected1,
-          role_type: this.selected2
-        };
+        if (this.value == "") {
+          params = {
+            budget_type: this.selected1,
+            role_type: this.selected2
+          };
+          this.dis = true;
+        } else if (this.selected1 == "0" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            role_type: this.selected2,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+          this.dis;
+        } else {
+           let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            budget_type: this.selected1,
+            role_type: this.selected2,
+            start_time: this.value[0].getTime(),
+            end_time: this.value[1].getTime()
+          };
+          this.dis = true;
+        }
         CapitalDetailed(params).then(res => {
-            let {data,msg,code} = res;
-            console.log(data)
-            if(code === 1){
-              this.tableData = data.data;
-            }
+          let { data, msg, code } = res;
+          if (code === 1) {
+            this.tableData = data.data;
+          }
         });
       }
     },
@@ -282,7 +324,7 @@ export default {
     getInvoiceAmount() {
       InvoiceAmount().then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           this.surplusMoney = data;
         } else {
@@ -291,24 +333,24 @@ export default {
       });
     },
     // 开票
-    getMyInvoice(){
-       let params = {
-         price:this.price,
-         type:this.radioVal=="企业"?1:2,
-         status:2,
-         rise:this.selected3,
-         invoiceLine:"",
-         address:this.address
-       };
-      MyInvoice(params).then(res=>{
+    getMyInvoice() {
+      let params = {
+        price: this.price,
+        type: this.radioVal == "企业" ? 1 : 2,
+        status: 2,
+        rise: this.selected3,
+        invoiceLine: "",
+        address: this.address
+      };
+      MyInvoice(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data)
+        console.log(data);
         if (code === 1) {
           this.surplusMoney = data;
         } else {
           this.surplusMoney = 0;
         }
-      })
+      });
     },
     // 点击输入框，释放禁用
     xiugai() {
@@ -334,19 +376,19 @@ export default {
       }
     },
     // 企业列表信息
-    selectFn(e){
+    selectFn(e) {
       this.selected3 = e.target.value;
     },
-    Enterprise(){
+    Enterprise() {
       let userId = sessionStorage.getItem("user_id");
-      let params = {user_id:userId};
-      GetEnterprise(params).then(res=>{
-         let {data,msg,code} = res;
-          if(code === 1){
-            console.log(data)
-            this.items = data;
-          }
-      })
+      let params = { user_id: userId };
+      GetEnterprise(params).then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+          console.log(data);
+          this.items = data;
+        }
+      });
     }
   }
 };
@@ -501,10 +543,10 @@ export default {
             &:nth-of-type(1) {
               padding-right: 70px;
             }
-            &:nth-of-type(3){
-              padding:0 178px 0 110px;
+            &:nth-of-type(3) {
+              padding: 0 178px 0 110px;
             }
-            &:nth-of-type(5){
+            &:nth-of-type(5) {
               padding-left: 110px;
             }
           }

@@ -55,12 +55,14 @@
                 </div>
                 <div>
                   <span>输入搜索：</span>
-                  <input type="text" />
-                   <button @click="gb();GetCityPartner()">搜索</button>
+                  <input type="text" v-model="suoyin" />
+                  <button @click="gb();GetCityPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
-                <div>立即分享邀请</div>
+                <div>
+                  <router-link to="/invitationX" style="color:#ffffff">立即分享邀请</router-link>
+                </div>
                 <div>
                   注：为确保达标佣金的获得，您还需要邀请
                   <span>3000人</span>
@@ -145,8 +147,6 @@
                   <button>确定</button>
                 </div>
                 <div>
-                  <!-- <span>共</span><span>{{Math.ceil((list.length+1)/pagesize)}}</span><span>页</span>/<span>{{list.length}}</span><span>条数据</span> -->
-                  <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
                   <el-pagination
                     @current-change="handleCurrentChange"
                     :current-page="DirectlyTo"
@@ -161,7 +161,9 @@
           <el-tab-pane label="合伙人入驻订单" name="third" :key="'third'">
             <div>
               <div class="lijifenxiang" style="padding:0">
-                <div>立即分享邀请</div>
+                <div>
+                  <router-link to="/invitationX" style="color:#ffffff">立即分享邀请</router-link>
+                </div>
                 <div>
                   注：为确保达标佣金的获得，您还需要邀请
                   <span>3000人</span>
@@ -176,23 +178,20 @@
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="grade_name" label="城市选择" width="120" align="center"></el-table-column>
+                  <el-table-column prop="city_name" label="城市选择" width="120" align="center"></el-table-column>
                   <el-table-column prop="money" label="金额" width="120" align="center"></el-table-column>
-                  <el-table-column
-                    prop="add_time"
-                    label="生效时间"
-                    width="120"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="add_time" label="生效时间" width="120" align="center"></el-table-column>
                   <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
                   <el-table-column prop="grade_title" label="合伙人政策" width="180" align="center"></el-table-column>
-                  <el-table-column
-                    prop="pay_type"
-                    label="支付方式"
-                    width="160"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="grade_img" label="操作" width="160" align="center"></el-table-column>
+                  <el-table-column prop="pay_type" label="支付方式" width="160" align="center">
+                    <template slot-scope="scope">
+                      <div v-if="scope.row.pay_type==1">支付宝</div>
+                      <div v-if="scope.row.pay_type==2">微信</div>
+                      <div v-if="scope.row.pay_type==3">汇款</div>
+                      <div v-if="scope.row.pay_type==4">余额</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="user_id" label="操作" width="160" align="center"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -238,13 +237,14 @@ export default {
       value: "",
       // 邀请分页表格
       list: [],
-      list1:[],
-      list2:[],
+      list1: [],
+      list2: [],
       pagesize: 10,
       currpage: 1,
       total: 100,
       DirectlyTo: 1,
-      dis:true
+      dis: true,
+      suoyin: ""
     };
   },
   components: {
@@ -259,12 +259,16 @@ export default {
     this.GetCityPartner2();
   },
   methods: {
-     gb() {
+    gb() {
       // 修改状态判断是否有索引条件
-      this.dis = false;
-    },
-    ceshi(event, tab) {
-      console.log(event.index);
+      if (this.suoyin == "" && this.value == "") {
+        this.dis = true;
+      } else if (this.value == null && this.suoyin == "") {
+        this.dis = true;
+        this.value = "";
+      } else {
+        this.dis = false;
+      }
     },
     handleEdit(index, row) {
       console.log(index, row);
@@ -285,12 +289,9 @@ export default {
       };
       GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res)
-        console.log(data);
         // this.showMsg(msg, code);
         if (code == 1) {
-          this.CityData = data; 
-          console.log(this.CityData);
+          this.CityData = data;
         }
       });
     },
@@ -298,15 +299,16 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg, code } = res;
-        console.log(res)
-        console.log(data)
+        console.log(res);
+        console.log(data.data);
         if (code == 1) {
           const newArr = this.topList.map(item => {
+            console.log()
             item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;
-          console.log(this.topList)
+          console.log(this.topList);
         }
       });
     },
@@ -317,28 +319,44 @@ export default {
      */
     GetCityPartner() {
       let params = {};
+      let times = this.value;
       if (this.dis) {
         params = {
           type: 2
         };
       } else {
-        let start_time = this.value[0].getTime();
-        let end_time = this.value[1].getTime();
-        params = {
-          type: 2,
-          title: this.suoyin,
-          start_time: start_time,
-          end_time: end_time
-        };
-      } 
+        if (this.value == "") {
+          params = {
+            type: 2,
+            title: this.suoyin
+          };
+        } else if (this.suoyin == "" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 2,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        } else {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 2,
+            title: this.suoyin,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        }
+      }
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res)
+        console.log(res);
         console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list = data.data;
-          console.log(this.list)
+          console.log(this.list);
         }
       });
     },
@@ -348,12 +366,12 @@ export default {
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res)
+        console.log(res);
         console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list1 = data.data;
-          console.log(this.list)
+          console.log(this.list);
         }
       });
     },
@@ -363,12 +381,12 @@ export default {
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res)
+        console.log(res);
         console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list2 = data.data;
-          console.log(this.list)
+          console.log(this.list);
         }
       });
     },

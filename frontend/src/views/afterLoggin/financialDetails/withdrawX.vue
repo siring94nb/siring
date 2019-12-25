@@ -32,26 +32,25 @@
             <span class="biaozhi">*</span>
             <span>提现金额：</span>
           </span>
-
-          <input type="number" value="" v-model="price"/>
+          <input type="number" value v-model="price" />
           <span>元</span>
         </div>
         <div>
           <span>手续费：</span>
           <!-- 手续费看怎么算，先写死 -->
-          <span class="biaozhi">￥2.00</span>
+          <span class="biaozhi">￥{{this.price*0.03}}</span>
         </div>
         <div>
           <span>到账金额：</span>
           <!-- 手续费看怎么算，先写死 -->
-          <span class="biaozhi">￥8.00</span>
+          <span class="biaozhi">￥{{this.price - ( this.price * 0.03)}}</span>
         </div>
         <div>
           <span>
             <span class="biaozhi">*</span>
             <span>资金密码：</span>
           </span>
-          <input type="text" value="" v-model="password" />
+          <input type="text" value v-model="password" />
           <div>
             注：会员中心的
             <router-link :to="{path:'/safetyTabControl',query:{canshu:'third',title:'信息修改'}}">安全中心</router-link>设置
@@ -63,7 +62,13 @@
             <span>短信验证码：</span>
           </span>
           <input type="text" placeholder="请输入手机验证码" />
-          <input type="button" :value="showTime?`${validateTime}秒后失效`:'获取验证码'" class="btn"  :disabled="showTime" @click.stop="getPhoneCode" />
+          <input
+            type="button"
+            :value="showTime?`${validateTime}秒后失效`:'获取验证码'"
+            class="btn"
+            :disabled="showTime"
+            @click.stop="getPhoneCode"
+          />
         </div>
         <div>
           <button @click="getCashWith">确认</button>
@@ -98,47 +103,51 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
-import {GetCode,CashDetails,BankcardList,CashWith} from "@/api/api";
+import { GetCode, CashDetails, BankcardList, CashWith } from "@/api/api";
 export default {
   data() {
     return {
       phone: sessionStorage.getItem("phone"),
       selectItem: "",
-      showTime:false,//控制获取验证码时，按钮禁用
-      validateTime: 60,//倒计时初始时间
-      yanzhengma:"",//获取验证码
-      mList:{},//剩余开票金额，手机号
-      bankCard:"",//银行卡卡号
-      price:"",//提现金额
-      password:"",//资金密码
-      items: []
+      showTime: false, //控制获取验证码时，按钮禁用
+      validateTime: 60, //倒计时初始时间
+      yanzhengma: "", //获取验证码
+      mList: {}, //剩余开票金额，手机号
+      bankCard: "", //银行卡卡号
+      price: "", //提现金额
+      password: "", //资金密码
+      items: [],
+      serviceHarge: "0" //手续费
     };
   },
   components: {
     logginHeader
   },
-  mounted() {this.getCashDetails();this.getBankcardList()},
+  mounted() {
+    this.getCashDetails();
+    this.getBankcardList();
+  },
   methods: {
     // 获取select选中的银行卡
     selectFn(e) {
       console.log(e);
       console.log(e.target.selectedIndex); // 选择项的index索引
       console.log(e.target.value); // 选择项的value
-      this.bankCard = e.target.value
+      this.bankCard = e.target.value;
     },
     // 获取验证码
     getPhoneCode() {
-       let params = {
+      let params = {
         phone: this.phone
       };
       GetCode(params).then(res => {
-          let { data, msg, code } = res;
-          this.showMsg(msg, code);
-          if (code === 1) {
-            this.showTime = true;
-            this.countDown();
-          }
-        });
+        let { data, msg, code } = res;
+        this.showMsg(msg, code);
+        if (code === 1) {
+          this.showTime = true;
+          this.countDown();
+        }
+      });
       // console.log(this.phone);
     },
     // 验证码倒计时
@@ -156,47 +165,51 @@ export default {
       }, 1000);
     },
     // 提现
-    getCashWith(){
-       let params = {
-       bank_card : this.bankCard,
-       price:this.price, 
-       fund_password :this.password,
-       code : this.yanzhengma
-      };
-      CashWith(params).then(res=>{
-        let { data, msg, code } = res;
-          // this.showMsg(msg, code);
+    getCashWith() {
+      if (this.price < 1000) {
+        this.$message('提现金额不可少于1000.00元');
+      } else {
+        let params = {
+          bank_card: this.bankCard,
+          price: this.price - this.price * 0.03,
+          fund_password: this.password,
+          code: this.yanzhengma
+        };
+        CashWith(params).then(res => {
+          let { data, msg, code } = res;
+          this.showMsg(msg, code);
           if (code === 1) {
           }
-      })
+        });
+      }
     },
     // 资金详情（余额以及电话）
-    getCashDetails(){
-      CashDetails().then(res=>{
+    getCashDetails() {
+      CashDetails().then(res => {
         let { data, msg, code } = res;
         //  this.showMsg(msg, code);
-          if (code === 1) {
-           this.mList = data
-          }
-      })
+        if (code === 1) {
+          this.mList = data;
+        }
+      });
     },
     // 银行卡信息
-    getBankcardList(){
-      BankcardList().then(res=>{
+    getBankcardList() {
+      BankcardList().then(res => {
         let { data, msg, code } = res;
         //  this.showMsg(msg, code);
-          if (code === 1) {
-           this.items = data
-          }
-      })
+        if (code === 1) {
+          this.items = data;
+        }
+      });
     },
-     // 返回值
+    // 返回值
     showMsg(msg, code) {
       this.$message({
         message: msg,
         type: code === 1 ? "success" : "error"
       });
-    },
+    }
   }
 };
 </script>
@@ -212,27 +225,27 @@ export default {
     padding-right: 30px;
     margin-right: 30px;
     font-size: 13px;
-    >div {
+    > div {
       margin-bottom: 25px;
-      >span{
-        &:nth-of-type(1){
+      > span {
+        &:nth-of-type(1) {
           display: inline-block;
           width: 100px;
           text-align: right;
           margin-right: 10px;
         }
       }
-      select{
+      select {
         width: 268px;
         padding: 10px 5px;
       }
-      &:nth-of-type(4){
-        >input{
+      &:nth-of-type(4) {
+        > input {
           display: inline-block;
           width: 221px;
           height: 35px;
         }
-        >span:nth-last-child(1){
+        > span:nth-last-child(1) {
           padding: 12px 15px;
           background: #f2f2f2;
           border: 1px solid #cccccc;
@@ -240,29 +253,29 @@ export default {
           color: #333333;
         }
       }
-      &:nth-of-type(7){
-        >input{
+      &:nth-of-type(7) {
+        > input {
           display: inline-block;
           width: 270px;
           height: 35px;
         }
-        >div{
+        > div {
           margin: 10px 0 0 120px;
-          >a{
+          > a {
             color: #6699ff;
-          } 
+          }
         }
       }
-      &:nth-of-type(8){
-        input{
-          &:nth-of-type(1){
+      &:nth-of-type(8) {
+        input {
+          &:nth-of-type(1) {
             padding: 10px 5px;
             border-radius: 5px;
             border: 1px solid rgb(204, 204, 204);
             outline: none;
             width: 220px;
           }
-          &:nth-of-type(2){
+          &:nth-of-type(2) {
             padding: 10px 20px;
             border: 1px solid rgb(204, 204, 204);
             background: #ffffff;
@@ -271,9 +284,9 @@ export default {
           }
         }
       }
-      &:nth-last-child(1){
+      &:nth-last-child(1) {
         margin-left: 110px;
-        button{
+        button {
           background: #e62d31;
           color: #ffffff;
           border: 1px solid #e62d31;
