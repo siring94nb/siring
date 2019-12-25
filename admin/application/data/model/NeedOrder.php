@@ -102,7 +102,6 @@ class NeedOrder extends Model
                 $grade = JoinRole::member_details($user['grade']);
                 //算出金额
                 $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
-                pp($pay_money);die;
                 //比较
                 if($money != $pay_money) returnJson(0,'系统有误');
 
