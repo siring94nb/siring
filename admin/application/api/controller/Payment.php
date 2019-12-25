@@ -81,4 +81,5 @@ class Payment extends Base
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
         }
     }
+    
 }

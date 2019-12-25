@@ -216,11 +216,11 @@ class  NeedOrder  extends  Base
     /**
      *
      */
-    public function get_pay($type,$id,$money,$pay_type,$password)
+    public function get_pay($type,$id,$money,$pay_type,$password,$unionpay)
     {
         switch ($type){
             case 1:
-                $data = (new Need())->pay($id,$money,$pay_type,$password);
+                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay);
 
                 return $data;
                 break;
