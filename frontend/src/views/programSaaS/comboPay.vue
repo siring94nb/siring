@@ -52,7 +52,7 @@
             <div style="text-align:center;">
               <el-radio v-model="radio" label="1">在线支付</el-radio>
               <el-radio v-model="radio" label="3">银行转账</el-radio>
-              <el-radio v-model="radio" label="4">余额支付</el-radio>
+              <el-radio v-model="radio" label="4" @change="payPassword">余额支付</el-radio>
             </div>
           </el-col>
         </el-row>
@@ -300,7 +300,7 @@ export default {
         city: "",
         user_id: 0
       },
-      balance:'0.00',//余额
+      balance: "0.00", //余额
       paymentAccount: "0", //选择收款账号
       payAccount: [
         "工商银行-6212264000061706160",
@@ -323,7 +323,8 @@ export default {
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
         card_number: [{ validator: validatePass, trigger: "blur" }]
-      }
+      },
+      password: ""
     };
   },
   mounted() {
@@ -363,7 +364,8 @@ export default {
         id: vm.params.id,
         pay_type: vm.params.pay_type,
         money: vm.real_money,
-        type: vm.params.order_type
+        type: vm.params.order_type,
+        password: vm.password
       };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
@@ -458,10 +460,31 @@ export default {
           uid: vm.form.user_id
         };
       getBalance(params).then(res => {
-        if(res.code == 1) {
-          vm.balance = res.data;
+        if (res.code == 1) {
+          vm.balance = res.data.money;
+          vm.password = res.data.pay_password;
         }
       });
+    },
+    payPassword(e) {
+      if (this.password == null || this.password == "") {
+        this.$confirm("您未设置支付密码，是否前往设置？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true
+        })
+          .then(() => {
+            this.$router.push({
+              name: "safetyTabControl",
+              params: {
+                canshu: "third",
+                title: "信息修改"
+              }
+            });
+          })
+          .catch(() => {});
+      }
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
