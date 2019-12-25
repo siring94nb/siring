@@ -31,7 +31,23 @@ class Payment extends Base
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
 
         }else{
-            returnJson(0,'请登录');
+            $request = Request::instance();
+            $param = $request->param();
+
+            $validate = new Validate([
+                ['uid', 'require', '用户Id不能为空'],
+            ]);
+            if(!$validate->check($param)){
+                returnJson (0,$validate->getError());exit();
+            }
+            $data = (new \app\data\model\UserDiscount())->dis_list(1,$param['uid']);//目前全部返回未使用优惠卷
+            foreach ($data as $k =>$v){
+                $data[$k]['name'] = $v['discount']['name'];
+                $data[$k]['rule'] = $v['discount']['rule'];
+                unset($data[$k]['discount']);
+            }
+
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
         }
     }
 
@@ -49,7 +65,19 @@ class Payment extends Base
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
 
         }else{
-            returnJson(0,'请登录');
+            $request = Request::instance();
+            $param = $request->param();
+
+            $validate = new Validate([
+                ['uid', 'require', '用户Id不能为空'],
+            ]);
+            if(!$validate->check($param)){
+                returnJson (0,$validate->getError());exit();
+            }
+            $data = UserFund::user($param['uid']);
+            $res = $data['money'];
+
+            return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
         }
     }
 }
