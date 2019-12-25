@@ -118,7 +118,7 @@
         </Form>
       </div>
       <div class="ptbj-box" v-if="status == 2">
-        <img src="../../images/u4198.png" width="100%" alt />
+        <img :src="information.proposal" width="100%" alt />
       </div>
       <div class="contract" v-if="status == 3">
         <p class="serial">合同编号：SR20190202</p>
@@ -234,8 +234,28 @@
 
     <div class="foot-box">
       <div class="pt-bj">
-        <Button class="upload-btn" :disabled="uploadBtn">上传报价单</Button>
-        <div class="audit">
+        <Upload
+          ref="upload"
+          :show-upload-list="false"
+          :default-file-list="iconList"
+          :on-success="handleSuccess"
+          :format="['jpg','jpeg','png']"
+          :max-size="10240"
+          :on-format-error="handleFormatError"
+          :on-exceeded-size="handleMaxSize"
+          :before-upload="handleBeforeUpload"
+          type="drag"
+          name="image"
+          :action="UploadAction"
+          style="display: inline-block;width: auto;"
+        >
+          <Button
+            class="upload-btn"
+            :class="information.proposal != '' ? 'upload-btn-dis': ''"
+            :disabled="information.proposal != ''"
+          >上传报价单</Button>
+        </Upload>
+        <div class="audit" v-if="information.proposal != ''">
           <div class="arrow left-arrow"></div>
           <div class="arrow-pole"></div>
           <div class="audit-status">等待审核</div>
@@ -249,8 +269,10 @@
               type="number"
               name="day"
               min="0"
+              v-model="information.work_day"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
+              :disabled="information.work_day != ''"
             />
             工作日
           </div>
@@ -260,8 +282,10 @@
               type="number"
               name="money"
               min="0"
+              v-model="information.need_money"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
+              :disabled="information.need_money != ''"
             />
             元
           </div>
@@ -273,8 +297,10 @@
               type="number"
               name="one"
               placeholder="请填写"
+              v-model="percent.one"
               min="0"
               style="width:60px;line-height:30px;color:red;"
+              disabled
             />
             %
           </div>
@@ -284,8 +310,10 @@
               type="number"
               name="one"
               placeholder="请填写"
+              v-model="percent.two"
               min="0"
               style="width:60px;line-height:30px;color:red;"
+              disabled
             />
             %
           </div>
@@ -295,8 +323,10 @@
               type="number"
               name="one"
               placeholder="请填写"
+              v-model="percent.three"
               min="0"
               style="width:60px;line-height:30px;color:red;"
+              disabled
             />
             %
           </div>
@@ -307,20 +337,43 @@
               name="one"
               placeholder="请填写"
               min="0"
+              v-model="percent.four"
               style="width:60px;line-height:30px;color:red;"
+              disabled
             />
             %
           </div>
         </div>
       </div>
       <div></div>
-      <div class="audit-opinion" v-if="status == 2">
+      <div class="audit-opinion" v-if="information.examine == 3">
         <span>审核意见：</span>
         斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
-      <div class="pt-bj-btn" style="text-align:center;">
+      <div class="audit" v-if="qualification == 1">
+        <textarea name="audit" v-model="information.examine_opinion" style="width:100%;" rows="10" placeholder="审核意见"></textarea>
+        <div class="sel">
+          <RadioGroup v-model="information.examine">
+            <Radio label="3"><span>不通过</span></Radio>
+            <Radio label="2"><span style="color:red;">通过</span></Radio>
+          </RadioGroup>
+        </div>
+      </div>
+      <div
+        class="pt-bj-btn"
+        style="text-align:center;"
+        v-if="information.examine > 1 && qualification == 0"
+      >
         <Button style="margin-right:30px;">返回</Button>
-        <Button type="primary">确认</Button>
+        <Button type="primary" @click="submitObj">确认</Button>
+      </div>
+      <div
+        class="pt-bj-btn"
+        style="text-align:center;"
+        v-if=" qualification == 1"
+      >
+        <Button style="margin-right:30px;">返回</Button>
+        <Button type="primary" @click="auditObj">确认</Button>
       </div>
     </div>
   </div>
@@ -393,8 +446,28 @@ export default {
         need_name: "",
         need_category: "",
         create_time: "",
-        need_order_money: ""
-      }
+        need_order_money: "",
+        work_day: 0,
+        need_money: 0,
+        proposal: "",
+        examine_opinion:'',
+        examine:''
+      },
+      percent: {
+        one: 70,
+        two: 10,
+        three: 10,
+        four: 10
+      },
+      qualification: 0, //审核进来
+      // 图片
+      UploadAction: "",
+      visible: false,
+      uploadList: [],
+      iconList: [],
+      // 图片
+      // examine:"2",
+      // examine_opinion:''
     };
   },
   created() {
@@ -404,6 +477,8 @@ export default {
     init() {
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
+      this.qualification = this.$route.params.qualification;
+      console.log(this.$route.params);
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -510,15 +585,82 @@ export default {
       result = result.replace(/零+$/, ""); //将【零一十】换成【零十】 //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十 //将【一十】换成【十】
       result = result.replace(/^一十/g, "十");
       return result;
+    },
+
+    //提交
+    submitObj() {
+      let vm = this,
+        params,
+        type;
+      if (vm.status == 2) type = 1;
+      else if (vm.status == 3) type = 2;
+      params = {
+        id: vm.id,
+        type: type,
+        work_day: vm.information.work_day,
+        need_money: vm.information.need_money,
+        proposal: vm.information.proposal
+      };
+      apiPost("NeedOrder/offer_sure", params).then(res => {
+        let { code, data, msg } = res;
+        this.$Message.success(msg);
+      });
+    },
+    //订单审核
+    auditObj() {
+      let vm = this,type,
+        params;
+        if (vm.status == 2) type = 1;
+      else if (vm.status == 3) type = 2;
+      params = {
+        id: vm.id,
+        examine_type:type,
+        examine: vm.information.examine,
+        examine_opinion: vm.information.examine_opinion,
+      };
+      apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
+        let { code, data, msg } = res;
+        this.$Message.success(msg);
+      });
+    },
+    handleRemove(file) {
+      const fileList = this.$refs.upload.fileList;
+      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+      this.information.proposal = "";
+    },
+    handleSuccess(res, file) {
+      file.url = res.data.filePath; //获取图片路径
+      this.information.proposal = res.data.filePath;
+    },
+    handleFormatError(file) {
+      this.$Message.error("文件格式不正确, 请选择jpg或者png.");
+    },
+    handleMaxSize(file) {
+      this.$Message.error("文件大小不能超过10M");
+    },
+    handleBeforeUpload() {
+      const check = this.uploadList.length < 2;
+      if (!check) {
+        this.$Message.error("只能上传一张报价单");
+      }
+      return check;
     }
   },
   destroyed() {
     // 销毁监听
     this.socket.onclose = this.close;
+  },
+  mounted() {
+    this.UploadAction = config.front_url + "file/qn_upload";
+    this.uploadList = this.$refs.upload.fileList;
   }
 };
 </script>
-
+<style>
+.pt-bj .ivu-upload-drag {
+  border: 0;
+}
+</style>
 <style lang="less" scoped>
 .index {
   width: 100%;
@@ -812,7 +954,9 @@ export default {
       .project {
         margin: 0 30px;
         display: flex;
-        div{margin-right: 20px;}
+        div {
+          margin-right: 20px;
+        }
       }
     }
     .audit-opinion {
@@ -823,6 +967,14 @@ export default {
       span {
         color: red;
         font-weight: 700;
+      }
+    }
+    .audit{
+      position: relative;
+      .sel{
+        position: absolute;
+        bottom: 10px;
+        right: 0;
       }
     }
     .pt-bj-btn {
