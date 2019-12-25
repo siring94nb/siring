@@ -88,7 +88,7 @@ class NeedOrder extends Model
             case 1://微信支付
                 $data = self::get($id);
                 if(!$data) returnJson(0,'订单有误');
-                if($data['pay_type'] = 2) returnJson(0,'当前订单已支付');
+                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
                 //查询等级
                 $user = UserGrade::get(['user_id'=>$data['user_id']]);
                 //查询比例
@@ -104,7 +104,7 @@ class NeedOrder extends Model
                 $pay = 1;//先测试1分钱
 
                 $title = '软件定制';
-                $res = (new WechatPay())->pay($title,$data['no'], $pay, $url);
+                $res = (new WechatPay())->pay($title,$data['need_order'], $pay, $url);
 
                 return $res; exit();
 

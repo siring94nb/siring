@@ -2,11 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d5068154-c861-46ee-8676-ddbf96babf4b" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/JoinOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/api/controller/NeedOrder.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/apiRoute.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/apiRoute.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/JoinRole.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" beforeDir="false" afterPath="$PROJECT_DIR$/admin/application/data/model/NeedOrder.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -75,7 +70,7 @@
           <entry key="gitignore" value="11" />
           <entry key="js" value="140" />
           <entry key="less" value="5" />
-          <entry key="php" value="16759" />
+          <entry key="php" value="16760" />
           <entry key="vue" value="1090" />
         </counts>
       </usages-collector>
@@ -83,7 +78,7 @@
         <counts>
           <entry key="JavaScript" value="140" />
           <entry key="Less" value="5" />
-          <entry key="PHP" value="16759" />
+          <entry key="PHP" value="16760" />
           <entry key="PLAIN_TEXT" value="14" />
           <entry key="Vue.js" value="1090" />
         </counts>
@@ -141,8 +136,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedOrder.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="458">
-              <caret line="115" column="39" lean-forward="true" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
+            <state relative-caret-position="746">
+              <caret line="106" column="70" selection-start-line="106" selection-start-column="70" selection-end-line="106" selection-end-column="70" />
             </state>
           </provider>
         </entry>
@@ -558,12 +553,12 @@
       <workItem from="1576805888442" duration="11720000" />
       <workItem from="1577067742627" duration="18393000" />
       <workItem from="1577149793683" duration="20374000" />
-      <workItem from="1577237137527" duration="8006000" />
+      <workItem from="1577237137527" duration="8631000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="618189000" />
+    <option name="totallyTimeSpent" value="618814000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -956,8 +951,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/admin/application/data/model/NeedOrder.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="458">
-          <caret line="115" column="39" lean-forward="true" selection-start-line="115" selection-start-column="39" selection-end-line="115" selection-end-column="39" />
+        <state relative-caret-position="746">
+          <caret line="106" column="70" selection-start-line="106" selection-start-column="70" selection-end-line="106" selection-end-column="70" />
         </state>
       </provider>
     </entry>
