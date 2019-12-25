@@ -287,6 +287,7 @@ export default {
     display: flex;
     >div{
       &:nth-of-type(1){
+        padding: 20px; 
         >div{
           &:nth-of-type(1){
             span{
@@ -302,6 +303,18 @@ export default {
           }
           &:nth-of-type(2){
              color: #03b1d8;
+          }
+        }
+      }
+      &:nth-of-type(2){
+        padding:10px 50px;
+        >div{
+          font-size: 13px;
+          color: #949494;
+          &:nth-of-type(1){
+            font-size: 16px; 
+            color: #5e5e5e;
+            font-weight: 700;
           }
         }
       }
