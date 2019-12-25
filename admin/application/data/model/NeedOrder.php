@@ -82,7 +82,7 @@ class NeedOrder extends Model
         }
 
 
-    public function pay($id,$money,$pay_type)
+    public function pay($id,$money,$pay_type,$password)
     {
         switch ($pay_type){
             case 1://支付宝支付
@@ -124,6 +124,27 @@ class NeedOrder extends Model
                 break;
             case 4://余额支付
 
+                $data = self::get($id);
+                if(!$data) returnJson(0,'订单有误');
+                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+                //查询等级
+                $user = UserGrade::get(['user_id'=>$data['user_id']]);
+                //查询比例
+                $grade = JoinRole::member_details($user['grade']);
+                //算出金额
+                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+                //比较
+                if($money != $pay_money) returnJson(0,'系统有误');
+                // 判断密码是否正确
+                $fund = UserFund::user($data['user_id']);
+                //pp($fund);die;
+                if (password_verify($password ,$fund['pay_password'])) {
+                    $re = db('user_fund')->where('user_id', $data['user_id'])->setDec('money', $pay_money);
+
+                    return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
+                }else{
+                    returnJson(0, '支付密码错误');
+                }
                 break;
             default:
                 returnJson(0,'参数有误');
