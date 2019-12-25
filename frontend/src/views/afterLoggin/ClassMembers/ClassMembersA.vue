@@ -72,7 +72,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="alist.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -100,14 +100,12 @@
                     <button>确定</button>
                   </div>
                   <div>
-                    <!-- <span>共</span><span>{{Math.ceil((list.length+1)/pagesize)}}</span><span>页</span>/<span>{{list.length}}</span><span>条数据</span> -->
-                    <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
                     <el-pagination
                       @current-change="handleCurrentChange"
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
+                      :total="alist.length"
                     ></el-pagination>
                   </div>
                 </div>
@@ -128,7 +126,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="blist1.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -152,14 +150,12 @@
                     <button>确定</button>
                   </div>
                   <div>
-                    <!-- <span>共</span><span>{{Math.ceil((list.length+1)/pagesize)}}</span><span>页</span>/<span>{{list.length}}</span><span>条数据</span> -->
-                    <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
                     <el-pagination
                       @current-change="handleCurrentChange"
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list1.length"
+                      :total="blist1.length"
                     ></el-pagination>
                   </div>
                 </div>
@@ -195,8 +191,8 @@ export default {
       activeName: "first",
       value: "",
       // 邀请分页表格
-      list: [],
-      list1: [],
+      alist: [],
+      blist1: [],
       pagesize: 3,
       currpage: 1,
       total: 100,
@@ -288,7 +284,7 @@ export default {
         let { data, msg, code } = res;
         console.log(data);
         if (code === 1) {
-          this.list = data.data;
+          this.alist = data.data;
         }
       });
     },
@@ -300,7 +296,8 @@ export default {
         let { data, msg, code } = res;
         console.log(data);
         if (code === 1) {
-          this.list1 = data.data;
+          this.blist1 =data.data;
+          console.log(this.blist1)
         }
       });
     },

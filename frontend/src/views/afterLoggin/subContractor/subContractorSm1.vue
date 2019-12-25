@@ -186,7 +186,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="slist.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -219,7 +219,7 @@
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
-                    <el-checkbox class="quanxuan" @change="toggleSelection(list)">全选</el-checkbox>
+                    <el-checkbox class="quanxuan" @change="toggleSelection(slist)">全选</el-checkbox>
                     <select>
                       <option>数据一</option>
                       <option>数据二</option>
@@ -232,7 +232,7 @@
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
+                      :total="slist.length"
                     ></el-pagination>
                   </div>
                 </div>
@@ -243,7 +243,7 @@
             <div>
               <div style="padding-bottom:20px;">
                 <el-table
-                  :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="slist1.slice((currpage-1)*pagesize,currpage*pagesize)"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -299,8 +299,8 @@ export default {
       activeName: "first",
       value: "",
       // 邀请分页表格
-      list: [],
-      list1: [],
+      slist: [],
+      slist1: [],
       shichuang: [],
       pagesize: 3,
       currpage: 1,
@@ -427,7 +427,7 @@ export default {
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.list = data;
+          this.slist = data;
         }
       });
     },
@@ -440,7 +440,7 @@ export default {
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.list1 = data;
+          this.slist1 = data;
         }
       });
     },
