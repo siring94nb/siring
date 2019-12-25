@@ -49,7 +49,7 @@
     <Card style="margin-bottom: 10px">
       <Row>
         <Col span="2">
-          <Button type="primary" class="btns btn-qb" >全部</Button>
+          <Button type="primary" class="btns btn-qb">全部</Button>
         </Col>
         <Col span="2">
           <Button type="primary" class="btns btn-dzxq">定制需求</Button>
@@ -170,7 +170,7 @@ export default {
         {
           title: "终端类型",
           align: "center",
-          key: "terminal",
+          key: "terminal"
         },
         {
           title: "用户账号",
@@ -233,40 +233,64 @@ export default {
           width: 130,
           render: (h, param) => {
             let status, color;
-            switch(param.row.need_status) {
-                case 1:
-                    status = "定制需求";
-                    color = "rgb(204, 51, 102)";
-                    break;
-                case 2:
-                    status = "平台报价";
-                    color = "rgb(204, 0, 204)";
-                    break;
+            switch (param.row.need_status) {
+              case 1:
+                status = "定制需求";
+                color = "rgb(204, 51, 102)";
+                break;
+              case 2:
+                status = "平台报价";
+                color = "rgb(204, 0, 204)";
+                break;
+              case 3:
+                status = "签订合同";
+                color = "rgb(255, 0, 0)";
+                break;
+              case 4:
+                status = "原型确认";
+                color = "rgb(102, 153, 0)";
+                break;
+              case 5:
+                status = "项目上线";
+                color = "rgb(204, 153, 0)";
+                break;
+              case 6:
+                status = "项目验收";
+                color = "rgb(0, 102, 255)";
+                break;
+              case 7:
+                status = "项目年服务";
+                color = "rgb(255, 102, 0)";
+                break;
+              case 8:
+                status = "中止项目";
+                color = "rgb(174, 174, 174)";
+                break;
             }
-              return h(
-                "Button",
-                {
-                  props: {
-                    type: "primary"
-                  },
-                  style: {
-                    "background-color": color,
-                    border: "0"
-                  },
-                  on: {
-                    click: () => {
-                      this.$router.push({
-                        name: "demand_order_detail",
-                        params: {
-                          id: param.row.id,
-                          status:param.row.need_status
-                        }
-                      });
-                    }
-                  }
+            return h(
+              "Button",
+              {
+                props: {
+                  type: "primary"
                 },
-                status
-              );
+                style: {
+                  "background-color": color,
+                  border: "0"
+                },
+                on: {
+                  click: () => {
+                    this.$router.push({
+                      name: "demand_order_detail",
+                      params: {
+                        id: param.row.id,
+                        status: param.row.need_status
+                      }
+                    });
+                  }
+                }
+              },
+              status
+            );
           }
         }
       ]
@@ -320,8 +344,7 @@ export default {
     search() {
       this.tableShow.page = 1;
       this.getMade();
-    },
-
+    }
   },
   mounted() {}
 };

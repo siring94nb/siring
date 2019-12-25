@@ -130,7 +130,8 @@ export default {
       model_grade: 1,
       years: 1,
       model_meal_type: '',
-      model_type:''
+      model_type:'',
+      user_id:0
     };
   },
   mounted() {
@@ -139,6 +140,7 @@ export default {
   },
   methods: {
     init() {
+      this.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.getTempList();
       this.model_meal_category = this.$route.params.model_meal_category;
       if(this.model_meal_category == 1) this.model_type = 'diy';
@@ -170,7 +172,7 @@ export default {
     pay(){
       if(this.radio) {
         var params = {
-          user_id: 66,
+          user_id: this.user_id,
           model_type: this.model_type,
           model_meal_type: this.model_meal_type,
           order_amount: this.total,

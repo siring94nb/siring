@@ -17,7 +17,7 @@
             </span>
           </div>
           <div style="margin-left:100px;">
-            <el-select v-model="value" placeholder="请选择优惠券">
+            <el-select v-model="valuee" placeholder="请选择优惠券">
               <el-option
                 v-for="item in options"
                 :key="item.value"
@@ -280,6 +280,7 @@ export default {
       ],
       codeType: "1", //支付宝或微信
       value: "",
+      valuee: "",
       pay_time: "",
       money: 0, //套餐金额
       real_money: 0, //最终实付金额

@@ -23,12 +23,12 @@
           @change="handleChange"
           :min="1"
           :max="10"
-          v-if="order != 1"
+          v-if="order < 1"
         ></el-input-number>
-        <div v-if="order==1">
+        <div v-if="order > 0">
           <div class="bgw">{{scale}}%</div>
           <p class="tip">
-           <span style="color:red;">*</span> 一期比例
+           <span style="color:red;">*</span> {{order}}期比例
           </p>
         </div>
         <div class="symbol">=</div>
