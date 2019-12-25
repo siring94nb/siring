@@ -175,6 +175,9 @@ class JoinRole extends Model
     public static function member_details($grade)
     {
         switch ($grade){
+            case 0:
+                return   self::get(['id',2])->toArray();
+                break;
             case 1:
                 return   self::get(['id',3])->toArray();
                 break;

@@ -222,7 +222,7 @@ class  NeedOrder  extends  Base
             case 1:
                 $data = (new Need())->pay($id,$money,$pay_type);
 
-                return $data  ? returnJson(1,'成功') : returnJson(0,'失败');
+                return $data;
                 break;
             case 2:
 
