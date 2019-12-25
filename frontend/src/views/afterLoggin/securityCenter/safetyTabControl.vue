@@ -189,8 +189,8 @@ export default {
       });
     },
     gainCan() {
-      this.activeName = this.$route.query.canshu;
-      this.title = this.$route.query.title;
+      this.activeName = this.$route.query.canshu||this.$route.params.canshu;
+      this.title = this.$route.query.title||this.$router.params.title;
     },
     // 获取验证码
     getPhoneCode(str) {

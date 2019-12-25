@@ -30,14 +30,14 @@
               </el-col>
               <el-col :span="16">
                 <div class="tt">{{item.title}}</div>
-                <div class="num">￥{{item.num}}</div>
+                <div class="num">{{item.num}}</div>
               </el-col>
             </el-row>
           </div>
         </div>
       </div>
       <div>
-        <el-tabs v-model="activeName" @tab-click="ceshi">
+        <el-tabs v-model="activeName">
           <el-tab-pane label="城市累计会员明细" name="first" :key="'first'">
             <div>
               <div class="suoyinlan">
@@ -299,11 +299,9 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg, code } = res;
-        console.log(res);
         console.log(data.data);
         if (code == 1) {
           const newArr = this.topList.map(item => {
-            console.log()
             item.num = data.data[item.num];
             return item;
           });
@@ -366,7 +364,6 @@ export default {
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res);
         console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
@@ -381,7 +378,6 @@ export default {
       };
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res);
         console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
