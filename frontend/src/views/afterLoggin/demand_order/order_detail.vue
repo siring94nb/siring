@@ -126,7 +126,7 @@
           </el-form>
         </div>
         <div class="ptbj-box" v-if="status == 2">
-          <img :src="listData.proposal" width="100%"  v-if="listData.proposal != ''"/>
+          <img :src="listData.proposal" width="100%" v-if="listData.proposal != ''" />
           <div class="wait-ptbj" v-else>
             <img src="../../../assets/images/u9830.png" alt />
             <div>请耐心等待平台报价！</div>
@@ -266,12 +266,18 @@
         </div>
       </div>
       <div class="obj-btn">
-        <div class="btns-all stop-obj" @click="obj_btn(1)" v-if="status < 4">中止，本人放弃该项目</div>
+        <div class="btns-all stop-obj" @click="obj_btn(8)" v-if="status < 4">中止，本人放弃该项目</div>
         <div style="flex:1;"></div>
         <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 1">确定，本人已确认该需求方案</div>
+
         <div class="btns-all no-obj" v-if="status == 2 && listData.examine != 2">等待报价单</div>
-        <div class="btns-all start-obj" @click="obj_btn(3)" v-if="status == 2 && listData.examine == 2" >确定，本人已确认该报价方案</div>
-        <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 3||status == 4">等待支付合同款</div>
+        <div
+          class="btns-all start-obj"
+          @click="obj_btn(3)"
+          v-if="status == 2 && listData.examine == 2"
+        >确定，本人已确认该报价方案</div>
+
+        <div class="btns-all no-obj" @click="open" v-if="status == 3">等待支付合同款</div>
 
         <!-- <div class="btns-all no-obj" @click="obj_btn(4)" v-if="status == 4">等待原型确认</div> -->
         <!-- <div class="btns-all start-obj" @click="obj_btn(2)" v-if="status == 4">确定，本人已确认该原型方案</div> -->
@@ -287,7 +293,7 @@
         :price="price"
         :percent="percent"
         :pay="pay"
-        :order="1"
+        :order="order"
         :scale="scale"
         @sendNum="getNum"
         :needCodeDialog="needCodeDialog"
@@ -313,7 +319,7 @@ export default {
       status: 1,
       // id:0,
       socket: "",
-      listData:[],
+      listData: [],
       statusData: [
         {
           url: "",
@@ -408,9 +414,10 @@ export default {
       value: "",
       showPaymentFlag: false,
       needCodeDialog: true, //需要显示扫码弹窗
-      price: 50000,
+      price: 50000, //合同金额
       percent: 100,
-      scale: 70,
+      scale: 70, //支付比例
+      order: 1, //支付第几期
       payway: {
         way: 1
       },
@@ -441,6 +448,19 @@ export default {
       this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
+      if (this.status == 3) {
+        this.scale = 70;
+        this.order = 1;
+      } else if (this.status == 4) {
+        this.scale = 10;
+        this.order = 2;
+      } else if (this.status == 5) {
+        this.scale = 10;
+        this.order = 3;
+      } else if (this.status == 6) {
+        this.scale = 10;
+        this.order = 4;
+      }
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
       } else {
@@ -499,18 +519,21 @@ export default {
       }
       return size;
     },
-    obj_btn(e) {
+    obj_btn(status) {
       let vm = this,
         hr,
-        hr1,
-        status;
-      if (e == 1) {
-        hr = "您确定要中止该项目么？！";
-        status = 8;
-      } else {
-        hr = "1、需求方案务必与平台顾问详细核实比对；";
-        hr1 = "2、平台报价将依据您的需求方案进行报价。";
-        status = 2;
+        hr1;
+      switch (status) {
+        case 1:
+          hr = "您确定要中止该项目么？！";
+          break;
+        case 2:
+          hr = "1、需求方案务必与平台顾问详细核实比对；";
+          hr1 = "2、平台报价将依据您的需求方案进行报价。";
+          break;
+        case 3:
+          hr = "您确认该报价单了吗？";
+          break;
       }
       const h = this.$createElement;
       this.$msgbox({
@@ -540,6 +563,15 @@ export default {
         //   type: "info",
         //   message: "action: " + action
         // });
+      });
+    },
+    open() {
+      this.$alert("请在底部浮框处支付相应合同款项", "温馨提示", {
+        confirmButtonText: "确定",
+        center: true,
+        callback: action => {
+          this.showPaymentFlag = true;
+        }
       });
     },
     //数字转汉字
@@ -597,10 +629,25 @@ export default {
     getNum(value) {
       this.num = value;
     },
-    pay() {},
+    pay() {
+      let params = {
+        id: this.id,
+        order_amount: this.total,
+        user_id: this.form.user_id,
+        order_type: this.order
+      };
+      this.$router.push({
+        name: "comboPay",
+        params: params
+      });
+    },
     copy() {
       this.$message.success("复制成功");
     },
+    // //报价
+    // status_next(status){
+    //   this.modifyState(status);
+    // },
     //修改状态
     modifyState(status) {
       let vm = this,
@@ -633,7 +680,6 @@ export default {
           status: vm.status
         };
       getOrderDetail(params).then(res => {
-        console.log(res);
         let { data, msg, code } = res;
         if (code === 1) {
           (vm.form.id = data.id),
@@ -649,6 +695,7 @@ export default {
             (vm.form.need_desc = data.need_desc),
             (vm.form.need_file = data.need_file);
           vm.fileList = [{ name: "需求文件", url: data.need_file }];
+          vm.price = Number(data.need_money);
           vm.listData = data;
         }
       });
