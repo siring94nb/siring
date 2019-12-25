@@ -221,7 +221,7 @@ class  NeedOrder  extends  Base
         switch ($type){
             case 1:
                 $data = (new Need())->pay($id,$money,$pay_type);
-                pp($data);die;
+
                 return $data  ? returnJson(1,'成功') : returnJson(0,'失败');
                 break;
             case 2:
@@ -234,6 +234,8 @@ class  NeedOrder  extends  Base
                 returnJson(0,'参数有误');
 
         }
+
+
     }
 
 }

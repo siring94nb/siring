@@ -85,7 +85,14 @@ class NeedOrder extends Model
     public function pay($id,$money,$pay_type)
     {
         switch ($pay_type){
-            case 1://微信支付
+            case 1://支付宝支付
+
+                $alipay = new Alipay();
+                $res = $alipay->index();
+
+                return $res;
+                break;
+            case 2://微信支付
                 $data = self::get($id);
                 if(!$data) returnJson(0,'订单有误');
                 if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
@@ -111,13 +118,7 @@ class NeedOrder extends Model
 
 
             break;
-            case 2://支付宝支付
 
-                $alipay = new Alipay();
-                $res = $alipay->index();
-
-                return $res;
-                break;
             case 3://银联卡支付
 
                 break;

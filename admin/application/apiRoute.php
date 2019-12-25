@@ -196,6 +196,12 @@ Route::group('api', function () {
         Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
+    //支付页面参数
+    Route::group('Payment',function(){
+        Route::any('coupou','api/Payment/coupou'); //优惠卷列表
+        Route::any('balance','api/Payment/balance'); //用户余额
+        Route::any('my_invoice','api/Payment/my_invoice'); //开票
+    });
 
 });
 
