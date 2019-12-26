@@ -1,132 +1,220 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="日期" width="180">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
-        </template>
+    <el-table
+      ref="multipleTable"
+      :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="changeFun">
+      <el-table-column
+        type="selection"
+        width="55"
+      >
       </el-table-column>
-      <el-table-column label="姓名" width="180">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <p>姓名: {{ scope.row.name }}</p>
-            <p>住址: {{ scope.row.address }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
+      <el-table-column
+        prop="name"
+        label="姓名"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="age"
+        label="年龄"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="sex"
+        label="性别"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="department"
+        label="部门"
+        width="150">
+      </el-table-column>
+      <el-table-column
+        prop="floor"
+        label="楼层"
+        width="120">
+      </el-table-column>
+      <el-table-column
+        prop="area"
+        label="区域"
+        width="120">
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <el-button
+            size="mini"
+            @click="handleEdit(scope.$index, scope.row)">修改
+          </el-button>
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)">删除
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-date-picker
-      v-model="value1"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-    ></el-date-picker>
-    <button @click="ceshi" style="width:200px;">测试时间数据获取</button>
+    <div style="text-align: center;margin-top: 30px;">
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="pagesize"
+        >
+      </el-pagination>
+    </div>
+    <el-checkbox @change="changeFun(tableData)" :indeterminate="Indeterminate" >全选</el-checkbox>
   </div>
 </template>
 <script>
 import VDistpicker from "v-distpicker";
 import { GetRoleCenter, CityTotal, CityPartner, Qnupload } from "@/api/api";
 export default {
+  name: "dataList",
   data() {
     return {
+      checkAll: false,
+      Indeterminate: false,
+      checkedCities:[],
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+         {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+         {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+         {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+         {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+        {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
+        {
+          selection:'123123',
+          name:"姓名",
+          age:'age',
+          sex:'sex',
+          department:"部门",
+          floor:"楼层",
+          area:"区域"
+        },
       ],
-      value1: ""
+        multipleSelection: [],
+        total:10,
+        pagesize:5,
+        currentPage:1
     };
+  },
+  computed:{
+    //  lengthLong:function(){
+    //    return this.total = this.tableData.length;
+    //  }
   },
   components: {},
   mounted() {},
   methods: {
-    ceshi() {
-      console.log(this.value1 == "");
-    },
-    handleEdit(index, row) {
-      console.log(row.date);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-
-    getCapitalDetailed() {
-      let params = {};
-      let times = this.value;
-      // let start_time = this.value[0];
-      // let end_time = this.value[1];
-      if (this.dis) {
-        CapitalDetailed().then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.pagesize = data.per_page;
-            this.tableData = data.data;
-          }
-        });
-      } else {
-        if (this.value == "") {
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2
-          };
-          this.dis = true;
-        } else if (this.selected1 == "0" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            role_type: this.selected2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-          this.dis;
-        } else {
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2,
-            start_time: this.value[0].getTime(),
-            end_time: this.value[1].getTime()
-          };
-          this.dis = true;
+      // handleCheckAllChange(val) {
+      //   console.log(val)
+      //   this.checkedCities = val ? console.log( this.tableData) : [];
+      //   this.isIndeterminate = false;
+      // },
+      // handleCheckedCitiesChange(value) {
+      //   let checkedCount = value.length;
+      //   this.checkAll = checkedCount === this.tableData.length;
+      //   this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+      // },
+      // toggleSelection(rows) {
+      //   console.log(112111)
+      //   if (rows) {
+      //     rows.forEach(row => {
+      //       this.$refs.multipleTable.toggleRowSelection(row);
+      //     });
+      //   } else {
+      //     this.$refs.multipleTable.clearSelection();
+      //   }
+      // },
+      changeFun(val){
+        // 测试，当if条件成立，会触发两次，目前不知原因
+        if(val.length == this.pagesize){
+          this.Indeterminate=true;
+          console.log(1111111)
+        }else{
+          this.Indeterminate = false
         }
-        CapitalDetailed(params).then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.tableData = data.data;
-          }
-        });
+        console.log(val.length);
+        console.log(this.pagesize);
+        // console.log(val)
       }
-    },
-
-
   }
 };
 </script>

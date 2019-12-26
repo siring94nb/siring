@@ -147,6 +147,12 @@ export default {
           }
       })
     },
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
@@ -208,10 +214,6 @@ export default {
       //     });
       //   });
     },
-    // 回车键测试
-    ceshi() {
-      console.log(12123153131);
-    }
   },
   created(){
     // 键盘事件直接绑定到document中，否则，需要光标选中控件才能触发键盘事件

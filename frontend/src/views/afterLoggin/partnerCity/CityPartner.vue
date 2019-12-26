@@ -241,7 +241,6 @@ export default {
       list2: [],
       pagesize: 10,
       currpage: 1,
-      total: 100,
       DirectlyTo: 1,
       dis: true,
       suoyin: ""
@@ -302,7 +301,8 @@ export default {
         console.log(data.data);
         if (code == 1) {
           const newArr = this.topList.map(item => {
-            item.num = data.data[item.num];
+            item.num = data[item.num];
+            console.log(item)
             return item;
           });
           this.topList = newArr;

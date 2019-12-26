@@ -310,12 +310,22 @@ export default new Router({
         ]
     },
     {
+        //备用支付页
         path: "/order",
         name: "order",
         meta:{requireAuth:true},//路由守卫开启标识
         props: true,
         component: () =>
             import('@/views/order'),
+    },
+    {
+        // 添加投融项目路由
+        path:"/addForMelting",
+        name:"addForMelting",
+        meta:{requireAuth:true},
+        props:true,
+        component:() => 
+            import('@/views/afterLoggin/forMelting/addForMelting')
     },
     {
         path: "/alipay",

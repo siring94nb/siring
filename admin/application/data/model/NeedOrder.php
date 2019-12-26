@@ -86,11 +86,25 @@ class NeedOrder extends Model
     {
         switch ($pay_type){
             case 1://支付宝支付
+                $data = self::get($id);
+                if(!$data) returnJson(0,'订单有误');
+                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+                //查询等级
+                $user = UserGrade::get(['user_id'=>$data['user_id']]);
+                //查询比例
+                $grade = JoinRole::member_details($user['grade']);
+                //算出金额
+                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+//                pp($pay_money);die;
+//                //比较
+//                if($money != $pay_money) returnJson(0,'系统有误');
+                $pay = 0.1 ;//先测试1分钱
+                $title = '软件定制' ;
+                $notify_url = 'https://manage.siring.com.cn/api/'; // 异步通知 url，*强烈建议加上本参数*
+                $return_url = 'https://manage.siring.com.cn/api/'; // 同步通知 url，*强烈建议加上本参数*
+                $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
-                $alipay = new Alipay();
-                $res = $alipay->index();
-
-                return $res;
+                return $res; exit();
                 break;
             case 2://微信支付
                 $data = self::get($id);
@@ -120,14 +134,20 @@ class NeedOrder extends Model
             break;
 
             case 3://银联卡支付
-                $union = json_decode($unionpay,true);
-                pp($union);die;
 
+                $data = [
+                    'need_pay_type'=>3,
+                    'unionpay'=> $unionpay,
+                ];
+                $re = self::where('id', $id)->update($data);
+
+                return $re ? returnJson(1, '提交成功，请等待审核', $re) : returnJson(0, '提交失败', $re);
 
                 break;
             case 4://余额支付
 
                 $data = self::get($id);
+
                 if(!$data) returnJson(0,'订单有误');
                 if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
                 //查询等级

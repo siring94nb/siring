@@ -43,7 +43,7 @@ return [
     // 是否开启多语言
     'lang_switch_on'         => false,
     // 默认全局过滤方法 用逗号分隔多个
-    'default_filter'         => 'htmlspecialchars,addslashes,strip_tags',//过滤
+    'default_filter'         => '',//过滤
     // 默认语言
     'default_lang'           => 'zh-cn',
     // 应用类库后缀
@@ -242,5 +242,12 @@ return [
     'front_pic_domain' => 'http://localhost/siring/admin/public/',
     'back_pic_domain' => 'http://localhost/siring/admin/public',
     'goods_detail_domain' => 'https://www.siring.cn.com/siring/',
+
+    //支付宝参数
+    'alipay' => [
+        'app_id' => '2018082861128764',
+        'ali_public_key'        => 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmKw/C4jHlGLUhpATv2yesGaZOSI9MmOuw5AMcB6odktNj19CSNDAmS5gDCKM4bJyVFOCFb3BNgvADvhoXHMPngGUkqHkJuRotGpvbr3A5UCyWLsF442cFnO7KZC5blKY59DmB/zZ7E9gRT5BhmQebJkkMls2PcVkvEUNTdQiorcNunhxOfsyUuYqsZP0yPoptR8YarmiWZVXwNxJ7Ha3zVzc7kVPqNYyDkCYtSfvVjOeutUh2dGsz1irsYUZpQP4Kra2YyhPlXpNS/KR3TSl1eLXxAQH6g1YWIsQ7/AZRi+Qv1mczwB9miYjQyPkEtjyYQkHVaItxeGW3fvsSvXy9QIDAQAB',
+        'private_key'     => 'MIIEowIBAAKCAQEAydhpt8EHQWE6lv1ExOuWo9dOZ09v4i4zW2r0/ftC6lUVwkLwiXberMQl4GZd7CDnYL9Te5nhce1jJ2VerIhFn0pZmFZwjcRUBVGtZC39m4ziGrrTrdwrCVXvLzje2QXGfU2kf80NsWht3QEXBXs4yeAjJdscC+IXo8bopR9Gav7Byxt38thDErUGvX4Mw5e3eag4UGwDffp2q9SyWZaCZdOS3SuE2HM5baPyoyp6bjcMSi3p4pqr5YePc3BXAZ/AVKYblmhOe1oM+TjCinh+NdHhWvDOki9/Hb69dBKCxWMgjvikRw3b2QtOPLFIgU9GMdTRdnaV53wbPreLuJMNjQIDAQABAoIBABpfd3i19O+693/Q+dJNAfLIaAshmvnPlZBFSluBH/4kPeKTAoDDkla6jkRiu7Tlm7XNaegFdCqBnOoB2bvrVkV43noEGVK8q0nCoUgspi1T3Bsn/A6EbO8cVlMyOBPdKFEo+uxj630ZqvksckiaEBJ4gb8pgOGgmfwhOjaQ/o9uHGaS2ay58EXrG3gWC5ldA5N7Kd1EVf7x4H1Z+ymvjsyCcg1n3d0h7dNPHt/kXhlupbsQsuRu0QXOXc7ZP1YshQgMx1tVTFexzLEnnkU/qVnG6SM40/mksfTLGRJnOvKjJlkVOOqQlZfaXIq4aGiPDdm8Cyq7JEuirgSFFx4Np9UCgYEA9jU5McmfpiLXvMSePufbLLjj3MmQqJMvbPUcnuWakD/G714tp6jHgBCcM0qJaTkvX+JBuU7D/q2B56AKWvr/DpkIC2Y5PdgJz90XuLyQjO7ldORE+mrnbZ2uAn2v5W7VXGsN8z9gb6qVFhaAYWRNspT6p3ck+OSarsqGCuwpZk8CgYEA0d+CqLYLDSvLbe5s1VH1BHmXn2hqq0T2pLAoYU/3vvbtBY9B7eXsY/kehdNnsmmnlSfIYCNg17ZhkU6/dTZBpgbIJQ1lKBtINwrXAL/yVBIHkmXPlBobcgzI1ZW44leY41CfzUnDPfL4ULD//S13Dk/+GiEXlZLkAUzoHn71c2MCgYAGkwlB8RZYQ1nranynRV2u5gj/nkpElhmQGUN4Yr0r2OghACzL60/YdZkWLYlZy/Md5lbG8fl91XhAjR95qnYhF6kFVOd2ZUxtxoOZpT9e5Aowgt/sp+oiHTHGU0DdKYZ8/0bSFgEnOjDc9CDdeOYyPJQs4JuWIdSXkkTeCcxZNQKBgEHTE3zs09yGruBE1pe1g96qcFbL/iDHmYAfzBpxZWfctIx42RnPcmwMt3kLzEtV/fy3JI6aqgYeKs3TYBNYOBDlsaKFaAPDQswYt0SB73RUz1EoY4m1AoSr49WxhvJevRIWuHg/uV/Vs/JDAZcbymqPxkfVtzrvflm2EFt4QG23AoGBAJMUb4qxT4cIiQ5beUHD99mogeQzuLdd03jZy/udPRG0Q9fnIu4xR2V3UtedPF4h5jQGzy/HXjteBl+F3PRyBog3/EjlZ6fpxiaYtRTAPHFYpkk/CckHn4uzhx4snM1s69YSdn/ypisdqFO0AH3qTm12GeoAcWX/iO0VnEok6H7U',
+    ],
 
 ];
