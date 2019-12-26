@@ -365,15 +365,28 @@ export default {
         pay_type: vm.params.pay_type,
         money: vm.real_money,
         type: vm.params.order_type,
-        password: vm.password
+        password: vm.password,
+        unionpay: ""
       };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
         this.$message(msg);
-        if (code === 1) {
-          this.imgData = imgData;
+        if (vm.params.pay_type == 1) {
+          const { href } = this.$router.resolve({
+            path: "alipay",
+            query: {
+              pdf: JSON.stringify(res)
+            }
+          });
+          window.open(href, '_blank');
           this.isShow = !this.isShow;
           this.isDisabl = !this.isDisabl;
+        } else {
+          if (code === 1) {
+            this.imgData = imgData;
+            this.isShow = !this.isShow;
+            this.isDisabl = !this.isDisabl;
+          }
         }
       });
     },
