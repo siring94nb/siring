@@ -21,6 +21,8 @@ class Alipay extends Model
 
     public function index()
     {
+
+
         $config_biz = [
             'out_trade_no' => time(),
             'total_amount' => '1',
@@ -28,7 +30,7 @@ class Alipay extends Model
         ];
 
         $pay = new Pay($this->config);
-        return $pay->driver('alipay')->gateway('scan')->pay($config_biz);
+        return $pay->driver('alipay')->gateway('web')->pay($config_biz);
 //        return $pay->driver('alipay')->gateway()->pay($config_biz);
     }
 
