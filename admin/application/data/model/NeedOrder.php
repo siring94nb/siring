@@ -120,14 +120,20 @@ class NeedOrder extends Model
             break;
 
             case 3://银联卡支付
-                $union = json_decode($unionpay,true);
-                pp($union);die;
 
+                $data = [
+                    'need_pay_type'=>3,
+                    'unionpay'=> $unionpay,
+                ];
+                $re = self::where('id', $id)->update($data);
+
+                return $re ? returnJson(1, '提交成功，请等待审核', $re) : returnJson(0, '提交失败', $re);
 
                 break;
             case 4://余额支付
 
                 $data = self::get($id);
+
                 if(!$data) returnJson(0,'订单有误');
                 if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
                 //查询等级
