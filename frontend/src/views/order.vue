@@ -36,11 +36,12 @@
             <span>90.00</span>
             <select v-model="selectItem" @change="selectFn($event)">
               <!--选择项的value值默认选择项文本 可动态绑定选择项的value值 更改v-model指令绑定数据-->
+              <option>请选择优惠券</option>
               <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
             </select>
           </div>
           <div>
-            <label>
+            <label if="otherCode==''">
               <input type="checkbox" />使用邀请码
               <span>（填写推荐邀请码，优惠30元）</span>
             </label>
@@ -109,9 +110,11 @@
   </div>
 </template>
 <script>
+import {Register,GetUserMassage} from "@/api/api"
 export default {
   data() {
     return {
+      otherCode:"",//他人邀请码
       phone:sessionStorage.getItem("phone"),
       // 单选框
       radioData: [
@@ -121,18 +124,17 @@ export default {
       ],
       radioVal: "在线支付",
       // 下拉列表
-      selectItem: "测试卡号111111",
-      items: [
-        { id: "测试卡号111111", name: "测试卡号111111" },
-        { id: "测试卡号222222", name: "测试卡号222222" },
-        { id: "测试卡号333333", name: "测试卡号333333" }
-      ],
+      selectItem: "请选择优惠券",
+      items: [],
       // 时间选择
       timeValue: ""
     };
   },
   components: {},
-  mounted() {},
+  mounted() {
+    this.GetRegister();
+    this.userMessage()
+  },
   methods: {
     // 下拉列表测试
     selectFn(e) {
@@ -140,6 +142,35 @@ export default {
       console.log(e.target.selectedIndex); // 选择项的index索引
       console.log(e.target.value); // 选择项的value
     }
+    ,
+    // 获取优惠券信息
+    GetRegister(){
+      const params = {
+        status : 1 
+      }
+      Register(params).then(res => {
+        let {data,code,msg} = res;
+        console.log(res)
+        if(code == 1) {
+          this.items = data;
+        }
+      })
+    },
+    // 获取用户信息
+    userMessage() {
+      const userId = sessionStorage.getItem("user_id");
+      const params = {
+        user_id: userId
+      };
+      GetUserMassage(params).then(res => {
+        let { data, msg, code } = res;
+        // this.showMsg(msg, code);
+        console.log(data)
+        if (code === 1) {
+          this.otherCode=data.other_code//他人邀请码
+        }
+      });
+    },
   }
 };
 </script>

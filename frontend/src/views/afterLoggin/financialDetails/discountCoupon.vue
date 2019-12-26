@@ -194,14 +194,14 @@ export default {
       if (this.dis) {
         getRegister().then(res => {
           let { data, msg, code } = res;
-          console.log(res);
           if (code == 1) {
             this.tableData = data.data;
-            console.log(this.tableData);
+            this.pageSize = data.per_page
           }
         });
       } else {
         if (times == "") {
+          console.log(this.value2);
           params = {
             status: this.value2
           };
@@ -228,6 +228,7 @@ export default {
           let { data, msg, code } = res;
           if (code == 1) {
             this.tableData = data.data;
+            console.log(res.per_page)
           }
         });
       }

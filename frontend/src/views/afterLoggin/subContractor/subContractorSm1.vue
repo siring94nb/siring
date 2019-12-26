@@ -382,7 +382,7 @@ export default {
         console.log(data);
         if (code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data.data[item.num];
+            item.num = data[item.num];
             return item;
           });
           this.topList = newArr;
@@ -427,7 +427,7 @@ export default {
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.slist = data;
+          this.slist = data.data;
         }
       });
     },
@@ -440,7 +440,7 @@ export default {
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.slist1 = data;
+          this.slist1 = data.data;
         }
       });
     },
@@ -454,8 +454,8 @@ export default {
         // this.showMsg(msg,code);
         console.log(data);
         if (code === 1) {
-          this.lastPage = data.last_page;
-          this.shichuang = data.data.data;
+          this.lastPage = data.last_page; 
+          this.shichuang = data.data  ;
         }
       });
     },
