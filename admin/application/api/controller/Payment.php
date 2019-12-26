@@ -7,11 +7,18 @@
  */
 namespace app\api\controller;
 use app\data\model\UserFund;
+use app\data\model\UserGrade;
 use think\Request;
 use think\Db;
 use think\Session;
 use think\Validate;
 
+/**
+ * @author fyk
+ * 支付相关数据
+ * Class Payment
+ * @package app\api\controller
+ */
 class Payment extends Base
 {
     /**
@@ -81,5 +88,40 @@ class Payment extends Base
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
         }
     }
-    
+
+    /**
+     * 会员折扣
+     */
+    public function discount()
+    {
+        $uid = Session::get("uid");
+        if($uid){
+
+            $data = UserGrade::where('user_id',$uid)->field('id,user_id,grade')->find();
+            returnArray($data);
+            $join = New \app\data\model\JoinRole();
+            //查询折扣
+            $grade = $join->member_details($data['grade']);
+            $res = $grade['discount'];
+            return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
+
+        }else{
+            $request = Request::instance();
+            $param = $request->param();
+
+            $validate = new Validate([
+                ['uid', 'require', '用户Id不能为空'],
+            ]);
+            if(!$validate->check($param)){
+                returnJson (0,$validate->getError());exit();
+            }
+            $data = UserGrade::where('user_id',$uid)->field('id,user_id,grade')->find();
+            returnArray($data);
+            $join = New \app\data\model\JoinRole();
+            //查询折扣
+            $grade = $join->member_details($data['grade']);
+            $res = $grade['discount'];
+            return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
+        }
+    }
 }

@@ -200,7 +200,7 @@ Route::group('api', function () {
     Route::group('Payment',function(){
         Route::any('coupou','api/Payment/coupou'); //优惠卷列表
         Route::any('balance','api/Payment/balance'); //用户余额
-        Route::any('my_invoice','api/Payment/my_invoice'); //开票
+        Route::any('discount','api/Payment/discount'); //用户折扣
     });
 
 });
