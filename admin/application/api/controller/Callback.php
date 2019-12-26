@@ -1,17 +1,33 @@
 <?php
-
-namespace app\data\model;
-
-use think\Model;
-use Yansongda\Pay\Pay;
-use think\Request;
 /**
- * @author fyk
- * 支付宝支付
- * Class Alipay
- * @package app\data\model
+ * Created by PhpStorm.
+ * User: fyk
+ * Date: 2019/12/26
+ * Time: 18:39
  */
-class Alipay extends Model
+namespace app\api\controller;
+use app\data\model\AllOrder;
+use app\data\model\CashWith;
+use app\data\model\UserCard;
+use app\data\model\Invoice;
+use app\data\model\Recharge;
+use app\data\model\SoftOrder;
+use app\data\model\MealOrder;
+use app\data\model\PromotionOrder;
+use app\data\model\UserFund;
+use app\data\model\WechatPay;
+use think\Request;
+use think\Db;
+use think\Session;
+use think\Validate;
+
+/**
+ * 支付回调
+ * @author fyk
+ * Class Callback
+ * @package app\api\controller
+ */
+class Callback extends Base
 {
     protected $config = [
         'alipay' => [
@@ -22,53 +38,22 @@ class Alipay extends Model
     ];
 
     /**
-     * 扫码支付接口
-     * @param $no
-     * @param $money
-     * @param $title
-     * @return mixed
-     */
-    public function get_alipay($notify_url,$return_url,$no,$money,$title)
-    {
-
-        $config = [
-            'alipay' => [
-                'app_id' => config('alipay.app_id'),
-                'notify_url' => $notify_url,
-                'return_url' => $return_url,
-                'ali_public_key'        => config('alipay.ali_public_key'),
-                'private_key'     => config('alipay.private_key'),
-            ],
-        ];
-
-        $config_biz = [
-            'out_trade_no' => $no,
-            'total_amount' => $money,
-            'subject'      => $title,
-        ];
-
-        $pay = new Pay($config);
-
-        return $pay->driver('alipay')->gateway('web')->pay($config_biz);
-    }
-
-    /**
-     * 同步回调
+     * 软件定制同步回调
      * @param Request $request
      * @return array|bool
      */
-//    public function return(Request $request)
-//    {
-//        $pay = new Pay($this->config);
-//
-//        return $pay->driver('alipay')->gateway()->verify($request->all());
-//    }
+    public function software_return(Request $request)
+    {
+        $pay = new Pay($this->config);
+
+        return $pay->driver('alipay')->gateway()->verify($request->all());
+    }
 
     /**
-     * 异步回调
+     * 软件定制异步回调
      * @param Request $request
      */
-    public function notify(Request $request)
+    public function software_notify(Request $request)
     {
         $pay = new Pay($this->config);
 
