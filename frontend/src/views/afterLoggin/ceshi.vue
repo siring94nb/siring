@@ -8,7 +8,8 @@
       @selection-change="changeFun">
       <el-table-column
         type="selection"
-        width="55">
+        width="55"
+      >
       </el-table-column>
       <el-table-column
         prop="name"
@@ -60,9 +61,10 @@
         layout="prev, pager, next"
         :total="total"
         :page-size="pagesize"
-        @current-change="current_change">
+        >
       </el-pagination>
     </div>
+    <el-checkbox @change="changeFun(tableData)" :indeterminate="Indeterminate" >全选</el-checkbox>
   </div>
 </template>
 <script>
@@ -72,6 +74,9 @@ export default {
   name: "dataList",
   data() {
     return {
+      checkAll: false,
+      Indeterminate: false,
+      checkedCities:[],
       tableData: [
         {
           selection:'123123',
@@ -178,12 +183,37 @@ export default {
   components: {},
   mounted() {},
   methods: {
-      current_change:function(currentPage){
-        this.currentPage = currentPage;
-        console.log(this.currentPage);
-      },
+      // handleCheckAllChange(val) {
+      //   console.log(val)
+      //   this.checkedCities = val ? console.log( this.tableData) : [];
+      //   this.isIndeterminate = false;
+      // },
+      // handleCheckedCitiesChange(value) {
+      //   let checkedCount = value.length;
+      //   this.checkAll = checkedCount === this.tableData.length;
+      //   this.isIndeterminate = checkedCount > 0 && checkedCount < this.cities.length;
+      // },
+      // toggleSelection(rows) {
+      //   console.log(112111)
+      //   if (rows) {
+      //     rows.forEach(row => {
+      //       this.$refs.multipleTable.toggleRowSelection(row);
+      //     });
+      //   } else {
+      //     this.$refs.multipleTable.clearSelection();
+      //   }
+      // },
       changeFun(val){
-        console.log(val)
+        // 测试，当if条件成立，会触发两次，目前不知原因
+        if(val.length == this.pagesize){
+          this.Indeterminate=true;
+          console.log(1111111)
+        }else{
+          this.Indeterminate = false
+        }
+        console.log(val.length);
+        console.log(this.pagesize);
+        // console.log(val)
       }
   }
 };
