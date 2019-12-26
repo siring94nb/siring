@@ -143,17 +143,17 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="0">
+                  <el-radio v-model="paymentAccount" label="1">
                     <div></div>
                   </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
                 <div class="pay-accout">
-                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '1'}">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '2'}">
                     <img src="../../assets/images/u1956.png" alt />
                   </div>
-                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '1'}">
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '2'}">
                     <p>账户名：吴雪</p>
                     <p>开户银行：中国工商银行深圳深圳湾支行</p>
                     <p>账号：6212264000061706160</p>
@@ -165,17 +165,17 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="1">
+                  <el-radio v-model="paymentAccount" label="2">
                     <div></div>
                   </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
                 <div class="pay-accout">
-                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '0'}">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '1'}">
                     <img src="../../assets/images/u1956.png" alt />
                   </div>
-                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '0'}">
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '1'}">
                     <p>户 名：深圳市思锐信息技术有限公司</p>
                     <p>账 号:4000040209200016204</p>
                     <p>开户银行:工行深圳深东支行</p>
@@ -324,7 +324,7 @@ export default {
         ],
         card_number: [{ validator: validatePass, trigger: "blur" }]
       },
-      password: ""
+      ispassword: ""
     };
   },
   mounted() {
@@ -358,14 +358,12 @@ export default {
       let vm = this;
       if (this.radio != "1") vm.params.pay_type = this.radio;
       else vm.params.pay_type = this.codeType;
-      // vm.params.order_amount = this.real_money; //实付金额
-      // let res = vm.payOrder(vm.params);
       let params = {
         id: vm.params.id,
         pay_type: vm.params.pay_type,
         money: vm.real_money,
         type: vm.params.order_type,
-        password: vm.password,
+        password: "",
         unionpay: ""
       };
       codeGetPay(params).then(res => {
@@ -375,10 +373,10 @@ export default {
           const { href } = this.$router.resolve({
             path: "alipay",
             query: {
-              pdf: JSON.stringify(res)
+              pdf: res
             }
           });
-          window.open(href, '_blank');
+          window.open(href, "_blank");
           this.isShow = !this.isShow;
           this.isDisabl = !this.isDisabl;
         } else {
@@ -398,7 +396,7 @@ export default {
       addBank(params).then(res => {
         console.log(res);
         let { code, data, msg } = res;
-        vm.$message(msg);
+        vm.$message.success(msg);
         if (code == "1") {
           this.init();
           this.resetForm();
@@ -423,37 +421,47 @@ export default {
     //银行支付
     bankPay() {
       let vm = this,
-        pay_detail = this.params;
-      pay_detail.account_number = vm.payAccount[vm.paymentAccount];
-      pay_detail.bank_name = vm.bankCards[vm.value].bank_name;
-      pay_detail.bank_number = vm.bankCards[vm.value].card_number;
-      pay_detail.pay_time = vm.pay_time;
-      pay_detail.comment = vm.comment;
-      pay_detail.pay_type = vm.radio;
-      // pay_detail = JSON.stringify(pay_detail);
-      // pay_detail = JSON.parse(pay_detail);
-      // console.log(pay_detail)
-      let res = vm.payOrder(pay_detail);
-      console.log(res);
-      let { code, imgData, msg } = res;
-      vm.$message(msg);
-      if (code === 1) {
+        pay_detail = {
+          account_number: vm.paymentAccount,
+          bank_name: vm.bankCards[vm.value].bank_name,
+          bank_number: vm.bankCards[vm.value].card_number,
+          pay_time: vm.pay_time,
+          comment: vm.comment,
+          pay_type: vm.radio,
+          pay_money: vm.real_money,
+          type: 2
+        };
+      pay_detail = JSON.stringify(pay_detail);
+      let params = {
+        id: vm.params.id,
+        pay_type: vm.radio,
+        money: vm.real_money,
+        type: vm.params.order_type,
+        password: "",
+        unionpay: pay_detail
+      };
+      codeGetPay(params).then(res => {
+        console.log(res);
+        // let { code, imgData, msg } = res;
+        // vm.$message(msg);
+        // if (code === 1) {
         // this.imgData = imgData;
         // this.isShow = !this.isShow;
         // this.isDisabl = !this.isDisabl;
-      }
+        // }
+      });
     },
     regionChange(data) {
       if (data.province) this.form.province = data.province.value;
       if (data.city) this.form.city = data.city.value;
     },
     //下单
-    payOrder(params) {
-      templatePay(params).then(res => {
-        console.log(res);
-        return res;
-      });
-    },
+    // payOrder(params) {
+    //   templatePay(params).then(res => {
+    //     console.log(res);
+    //     return res;
+    //   });
+    // },
     //获取优惠券
     GetCoupou() {
       let vm = this,
@@ -475,12 +483,12 @@ export default {
       getBalance(params).then(res => {
         if (res.code == 1) {
           vm.balance = res.data.money;
-          vm.password = res.data.pay_password;
+          vm.ispassword = res.data.pay_password;
         }
       });
     },
     payPassword(e) {
-      if (this.password == null || this.password == "") {
+      if (this.ispassword == null || this.ispassword == "") {
         this.$confirm("您未设置支付密码，是否前往设置？", "提示", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
