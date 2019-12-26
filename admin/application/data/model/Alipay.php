@@ -4,6 +4,13 @@ namespace app\data\model;
 
 use think\Model;
 use Yansongda\Pay\Pay;
+
+/**
+ * @author fyk
+ * 支付宝支付
+ * Class Alipay
+ * @package app\data\model
+ */
 class Alipay extends Model
 {
     protected $config = [
@@ -19,19 +26,26 @@ class Alipay extends Model
         ],
     ];
 
-    public function index()
+    /**
+     * 扫码支付接口
+     * @param $no
+     * @param $money
+     * @param $title
+     * @return mixed
+     */
+    public function get_alipay($no,$money,$title)
     {
 
 
         $config_biz = [
-            'out_trade_no' => time(),
-            'total_amount' => '1',
-            'subject'      => 'test subject',
+            'out_trade_no' => $no,
+            'total_amount' => $money,
+            'subject'      => $title,
         ];
 
         $pay = new Pay($this->config);
+
         return $pay->driver('alipay')->gateway('web')->pay($config_biz);
-//        return $pay->driver('alipay')->gateway()->pay($config_biz);
     }
 
     public function return(Request $request)
@@ -40,6 +54,7 @@ class Alipay extends Model
 
         return $pay->driver('alipay')->gateway()->verify($request->all());
     }
+
 
     public function notify(Request $request)
     {

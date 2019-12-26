@@ -86,11 +86,23 @@ class NeedOrder extends Model
     {
         switch ($pay_type){
             case 1://支付宝支付
+                $data = self::get($id);
+                if(!$data) returnJson(0,'订单有误');
+                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+                //查询等级
+                $user = UserGrade::get(['user_id'=>$data['user_id']]);
+                //查询比例
+                $grade = JoinRole::member_details($user['grade']);
+                //算出金额
+                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+                //比较
+                if($money != $pay_money) returnJson(0,'系统有误');
+                $pay = 1;//先测试1分钱
 
-                $alipay = new Alipay();
-                $res = $alipay->index();
+                $title = '软件定制';
+                $res = ( new Alipay()) ->get_alipay($data['need_order'],$pay,$title);
 
-                return $res;
+                return $res; exit();
                 break;
             case 2://微信支付
                 $data = self::get($id);
