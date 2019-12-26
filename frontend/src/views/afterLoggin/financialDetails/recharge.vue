@@ -90,7 +90,7 @@ export default {
       activeName: "1", //折叠面板默认打开数值
       chognzhi: "1000", //充值费用
       discount: "98%", //会员折扣
-      sum: "" //充值费用*会员折扣（若是会员的话）
+      sum: "" //充值费用*会员折扣（若是会员的话） 
     };
   },
   components: {

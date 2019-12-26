@@ -309,7 +309,7 @@ export default {
         console.log(data);
         if (code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data.data[item.num];
+            item.num = data[item.num];
             return item;
           });
           this.topList = newArr;
