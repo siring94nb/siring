@@ -241,7 +241,6 @@ export default {
       list2: [],
       pagesize: 10,
       currpage: 1,
-      total: 100,
       DirectlyTo: 1,
       dis: true,
       suoyin: ""

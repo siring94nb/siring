@@ -117,7 +117,7 @@ export default {
           classN: "el-icon-bank-card",
           con: [
             // "我的投融", "中止项目"
-            { name: "我的投融", rou: "/ceshi" },
+            { name: "我的投融", rou: "/addForMelting" },
             { name: "我的投融", rou: "/ceshi" }
           ]
         }
