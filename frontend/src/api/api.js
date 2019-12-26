@@ -489,4 +489,10 @@ export const getCoupou = data => {
 export const getBalance = data => {
     return axios.post(`${base_url}api/Payment/balance`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 投融介（行业领域数据）
+ */
+export const industryField = params => {
+    return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
+}
 // https://manage.siring.com.cn/api/file/qn_upload
