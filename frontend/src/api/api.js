@@ -472,9 +472,21 @@ export const confirmNeedOrder = data => {
     return axios.post(`${base_url}api/NeedOrder/confirm_need_order`,  qs.stringify(data)).then(res => res.data);
 }
 /**
- * 定制需求订单修改内容
+ * 定制需求订单支付
  */
 export const codeGetPay = data => {
     return axios.post(`${base_url}api/NeedOrder/get_pay`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 优惠券
+ */
+export const getCoupou = data => {
+    return axios.post(`${base_url}api/Payment/coupou`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户余额
+ */
+export const getBalance = data => {
+    return axios.post(`${base_url}api/Payment/balance`,  qs.stringify(data)).then(res => res.data);
 }
 // https://manage.siring.com.cn/api/file/qn_upload
