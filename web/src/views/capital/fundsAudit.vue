@@ -39,31 +39,57 @@
     </Row>
     <Modal
       v-model="modalSetting.show"
-      width="700"
+      width="500"
       :styles="{top: '30px'}"
       @on-visible-change="doCancel"
     >
-      <p slot="header" style="color:#2d8cf0;">
-        <Icon type="md-information-circle"></Icon>
-        <span>{{formItem.id ? '编辑' : '新增'}}</span>
+      <p slot="header" style="font-size:18px;text-align:center;">
+        <span>审核</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
-        <FormItem label="名称" prop="name">
-          <Input style="width: 500px" v-model="formItem.name" placeholder="请输入优惠卷名称" />
-        </FormItem>
-        <FormItem label="发行数量" prop="num">
-          <InputNumber :min="1" v-model="formItem.num"></InputNumber>
-        </FormItem>
-        <FormItem label="分包发布" prop="type">
+      <Form ref="myForm" :model="formItem" :label-width="80">
+        <div style="width:200px;margin:auto;">
           <RadioGroup v-model="formItem.type">
-            <Radio :label="0">立即发布</Radio>
-            <Radio :label="1">暂不发布</Radio>
-            <Radio :label="2">自开发</Radio>
+            <div style="margin-bottom: 20px;">
+              <Radio :label="2">通过</Radio>
+              <div style="display:inline-block;vertical-align: top;">
+                <p>审核通过，款项已到帐</p>
+                <p style="color:rgb(148,148,148);">*弹框以及短信内容</p>
+              </div>
+            </div>
+            <div>
+              <Radio :label="3">驳回</Radio>
+              <div style="display:inline-block;vertical-align: top;">
+                <p>审核通过，款项已到帐</p>
+                <p style="color:rgb(148,148,148);">*弹框以及短信内容</p>
+              </div>
+            </div>
           </RadioGroup>
-        </FormItem>
+        </div>
       </Form>
-      <div slot="footer">
-        <Button type="text" @click="cancel" style="margin-right: 8px">取消</Button>
+      <div slot="footer" style="text-align:center;">
+        <Button type="text" @click="cancel" style="margin-right: 8px">返回</Button>
+        <Button type="primary" @click="toQue">确定</Button>
+      </div>
+    </Modal>
+    <Modal
+      v-model="modalSetting.twoShow"
+      width="500"
+      :styles="{top: '30px'}"
+      @on-visible-change="tCancel"
+    >
+      <p slot="header" style="font-size:18px;text-align:center;">
+        <span>温馨提示</span>
+      </p>
+      <div style="text-align:center;margin:50px 0;">
+        确定
+        <span
+          style="font-weight:700;"
+          :style="formItem.type == 2 ? 'color:rgb(102,204,0);':'color:red;'"
+        >{{formItem.type == 2 ? '已收到':'未收到'}}</span>
+        款项么？！
+      </div>
+      <div slot="footer" style="text-align:center;">
+        <Button type="text" @click="twoCancel" style="margin-right: 8px">返回</Button>
         <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
       </div>
     </Modal>
@@ -73,41 +99,47 @@
 import axios from "axios";
 import config from "../../../build/config";
 const editButton = (vm, h, currentRow, index) => {
-  return h(
-    "Button",
-    {
-      props: {
-        type: "primary"
-      },
-      style: {
-        margin: "0 5px"
-      },
-      on: {
-        click: () => {
-          vm.formItem.id = currentRow.id;
-          vm.formItem.name = currentRow.name;
-          vm.formItem.num = currentRow.num;
-          vm.formItem.range = currentRow.range;
-          if (currentRow.rule.full !== undefined) {
-            vm.formItem.full = currentRow.rule.full;
+  if (currentRow.order_status == 1) {
+    return h(
+      "Button",
+      {
+        props: {
+          type: "primary"
+        },
+        style: {
+          margin: "0 5px",
+          "background-color": "rgb(255,153,0)",
+          "border-color": "rgb(255,153,0)"
+        },
+        on: {
+          click: () => {
+            vm.modalSetting.show = true;
+            vm.formItem.id = currentRow.id;
           }
-          if (currentRow.rule.reduce !== undefined) {
-            vm.formItem.reduce = currentRow.rule.reduce;
-          }
-          vm.formItem.add_time = currentRow.add_time;
-          vm.formItem.end_time = currentRow.end_time;
-          vm.formItem.status = currentRow.status;
-          vm.formItem.type = currentRow.type;
-
-          vm.modalSetting.show = true;
-          vm.modalSetting.index = index;
         }
-      }
-    },
-    "编辑"
-  );
+      },
+      "待审核"
+    );
+  } else {
+    let status_font, color;
+    if (currentRow.order_status == 2) {
+      status_font = "已到账";
+      color = "rgb(102,204,0)";
+    } else {
+      status_font = "已驳回";
+      color = "red";
+    }
+    return h(
+      "div",
+      {
+        style: {
+          color: color
+        }
+      },
+      status_font
+    );
+  }
 };
-
 
 export default {
   name: "system_user",
@@ -124,7 +156,7 @@ export default {
         {
           title: "订单号",
           align: "center",
-          width: 180,
+          width: 200,
           key: "order_number"
         },
         {
@@ -140,7 +172,7 @@ export default {
         {
           title: "支付账号",
           align: "center",
-          width: 300,
+          width: 200,
           key: "bank_number"
         },
         {
@@ -150,6 +182,7 @@ export default {
         },
         {
           title: "支付时间",
+          width: 180,
           align: "center",
           key: "create_time"
         },
@@ -184,29 +217,15 @@ export default {
       modalSetting: {
         show: false,
         loading: false,
-        index: 0
+        index: 0,
+        twoShow: false
       },
       formItem: {
         id: 0,
-        name: "",
-        num: 1,
-        range: 0,
-        full: 1,
-        reduce: 1,
-        status: 1,
-        type: 0
+        type: ""
       },
       ruleValidate: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-        // add_time: [
-        //     { required: true, message: '请选择开始时间', trigger: 'blur' }
-        // ],
-        // end_time: [
-        //     { required: true, message: '请选择结束时间', trigger: 'blur' }
-        // ],
-        // type: [
-        //     { required: true, message: '请选择范围', trigger: 'change' }
-        // ],
+        // type: [{ required: true, message: "请输入名称", trigger: "blur" }]
       }
     };
   },
@@ -221,9 +240,10 @@ export default {
         if (item.handle) {
           item.render = (h, param) => {
             let currentRowData = vm.tableData[param.index];
+
             return h("div", [
-              editButton(vm, h, currentRowData, param.index),
-              deleteButton(vm, h, currentRowData, param.index)
+              editButton(vm, h, currentRowData, param.index)
+              //   deleteButton(vm, h, currentRowData, param.index)
             ]);
           };
         }
@@ -234,51 +254,40 @@ export default {
     },
     submit() {
       let self = this;
-      this.$refs["myForm"].validate(valid => {
-        if (valid) {
-          self.modalSetting.loading = true;
-          let target = "";
-          if (this.formItem.id === 0) {
-            target = "Receipt/add";
-          } else {
-            target = "Receipt/upd";
-          }
-          this.formItem.rule = new Object();
-          this.formItem.rule.full = this.formItem.full;
-          this.formItem.rule.reduce = this.formItem.reduce;
-          axios.post(target, this.formItem).then(function(response) {
-            if (response.data.code === 1) {
-              self.$Message.success(response.data.msg);
-              self.getList();
-              self.cancel();
-            } else {
-              self.modalSetting.loading = false;
-              self.$Message.error(response.data.msg);
-            }
-          });
+      self.modalSetting.loading = true;
+      axios.post("CapitalCard/upd", this.formItem).then(function(response) {
+        if (response.code === 1) {
+          self.$Message.success(response.msg);
+          self.getList();
+          self.cancel();
+        } else {
+          self.modalSetting.loading = false;
+          self.$Message.error(response.msg);
         }
       });
     },
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.name = "";
-      this.formItem.num = 1;
-      this.formItem.add_time = "";
-      this.formItem.end_time = "";
-      this.formItem.range = 0;
-      this.formItem.full = 1;
-      this.formItem.reduce = 1;
-      this.formItem.status = 1;
       this.formItem.type = "";
     },
-    doCancel(data) {
+     doCancel(data) {
       if (!data) {
         this.formItem.id = 0;
-        this.$refs["myForm"].resetFields();
         this.modalSetting.loading = false;
         this.modalSetting.index = 0;
         this.cancel();
+      }
+    },
+    twoCancel() {
+      this.modalSetting.twoShow = false;
+    },
+    toQue() {
+      this.modalSetting.twoShow = true;
+    },
+    tCancel(data) {
+      if (!data) {
+        this.twoCancel();
       }
     },
     changePage(page) {
