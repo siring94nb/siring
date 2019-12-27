@@ -98,10 +98,10 @@ class NeedOrder extends Model
 //                pp($pay_money);die;
 //                //比较
 //                if($money != $pay_money) returnJson(0,'系统有误');
-                $pay = 0.1 ;//先测试1分钱
+                $pay = 0.01 ;//先测试1分钱
                 $title = '软件定制' ;
-                $notify_url = 'https://manage.siring.com.cn/api/'; // 异步通知 url，*强烈建议加上本参数*
-                $return_url = 'https://manage.siring.com.cn/api/'; // 同步通知 url，*强烈建议加上本参数*
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 异步通知 url，*强烈建议加上本参数*
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
                 return $res; exit();
@@ -128,7 +128,6 @@ class NeedOrder extends Model
                 $res = (new WechatPay())->pay($title,$data['need_order'], $pay, $url);
 
                 return $res; exit();
-
 
 
             break;
