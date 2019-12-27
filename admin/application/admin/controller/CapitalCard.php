@@ -94,7 +94,7 @@ class CapitalCard extends Base
                 return $res1 && $res2  && $res3 ? true : false;
             });
 
-            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 0 , '失败' );
+            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1006 , '用户修改失败' );;
 
         }else{
             $res = Db::transaction( function() use ( $param ){
@@ -112,7 +112,7 @@ class CapitalCard extends Base
 
                 return $res1 && $res2   ? true : false;
             });
-            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 0 , '失败' );
+            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1006 , '用户修改失败' );
 
         }
 
