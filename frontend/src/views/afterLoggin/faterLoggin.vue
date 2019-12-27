@@ -109,7 +109,7 @@
             classN: "iconfont icon-tuiguang",
             con: [
               // "推广订单"
-              { name: "推广订单", rou: "/ceshi" }
+              { name: "推广订单", rou: "/generalizeIndex" }
             ]
           },
           {

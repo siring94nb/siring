@@ -158,8 +158,8 @@ export default {
         if (code === 1) {
           this.handleClose();
           // 修改成功，返回上一层
-          this.$router.go(-1)
-          // this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
+          // this.$router.go(-1)
+          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },
