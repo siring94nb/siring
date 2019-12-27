@@ -141,6 +141,7 @@ class NeedOrder extends Model
                 try {
                     $data_need = [
                         'need_pay_type'=>3,
+                        'pay_type'=> 2,
                         'unionpay'=> $unionpay,
                     ];
                     self::where('id', $id)->update($data_need);
@@ -163,6 +164,7 @@ class NeedOrder extends Model
 
                 // 判断密码是否正确
                 $fund = UserFund::user($data['user_id']);
+                if($fund['money'] < $pay_money )returnJson(0,'余额不足请充值');
                 //pp($fund);die;
                 if (password_verify($password ,$fund['pay_password'])) {
                     $this->startTrans();
