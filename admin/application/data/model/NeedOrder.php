@@ -81,45 +81,48 @@ class NeedOrder extends Model
             return $list;
         }
 
-
+    /**
+     * 支付流程
+     * @author fyk
+     * @param $id
+     * @param $money
+     * @param $pay_type
+     * @param $password
+     * @param $unionpay
+     * @return array|mixed|string|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     public function pay($id,$money,$pay_type,$password,$unionpay)
     {
+        $data = self::get($id);
+        if(!$data) returnJson(0,'订单有误');
+        if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+        //查询等级
+        $user = UserGrade::get(['user_id'=>$data['user_id']]);
+        //查询比例
+        $grade = JoinRole::member_details($user['grade']);
+        //算出金额
+        $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+        //比较
+        if($money != $pay_money) returnJson(0,'系统有误');
+
         switch ($pay_type){
             case 1://支付宝支付
-                $data = self::get($id);
-                if(!$data) returnJson(0,'订单有误');
-                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
-                //查询等级
-                $user = UserGrade::get(['user_id'=>$data['user_id']]);
-                //查询比例
-                $grade = JoinRole::member_details($user['grade']);
-                //算出金额
-                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
-//                pp($pay_money);die;
-//                //比较
-//                if($money != $pay_money) returnJson(0,'系统有误');
+
                 $pay = 0.01 ;//先测试1分钱
                 $title = '软件定制' ;
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 异步通知 url，*强烈建议加上本参数*
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
+                self::save(['alipay' => $res],['id' => $id]);
                 return $res; exit();
                 break;
             case 2://微信支付
-                $data = self::get($id);
-                if(!$data) returnJson(0,'订单有误');
-                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
-                //查询等级
-                $user = UserGrade::get(['user_id'=>$data['user_id']]);
-                //查询比例
-                $grade = JoinRole::member_details($user['grade']);
-                //算出金额
-                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
-                //比较
-                if($money != $pay_money) returnJson(0,'系统有误');
 
-                // 查询订单信息
+                // 回调地址
                 $url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';
 
                 $pay = 1;//先测试1分钱
@@ -134,36 +137,63 @@ class NeedOrder extends Model
 
             case 3://银联卡支付
 
-                $data = [
-                    'need_pay_type'=>3,
-                    'unionpay'=> $unionpay,
-                ];
-                $re = self::where('id', $id)->update($data);
+                $this->startTrans();
+                try {
+                    $data_need = [
+                        'need_pay_type'=>3,
+                        'unionpay'=> $unionpay,
+                    ];
+                    self::where('id', $id)->update($data_need);
 
-                return $re ? returnJson(1, '提交成功，请等待审核', $re) : returnJson(0, '提交失败', $re);
+                    $off = (new Offline())->get_add($data['need_order'],$data['user_id'],$unionpay);
 
+                    $this->commit();
+
+                    return $off ? returnJson(1, '提交成功，请等待审核', $off) : returnJson(0, '提交失败', $off);
+
+
+                } catch (\Exception $e) {
+
+                    $this->rollback();
+
+                    returnJson(0,'事务失败');exit();
+                }
                 break;
             case 4://余额支付
 
-                $data = self::get($id);
-
-                if(!$data) returnJson(0,'订单有误');
-                if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
-                //查询等级
-                $user = UserGrade::get(['user_id'=>$data['user_id']]);
-                //查询比例
-                $grade = JoinRole::member_details($user['grade']);
-                //算出金额
-                $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
-                //比较
-                if($money != $pay_money) returnJson(0,'系统有误');
                 // 判断密码是否正确
                 $fund = UserFund::user($data['user_id']);
                 //pp($fund);die;
                 if (password_verify($password ,$fund['pay_password'])) {
-                    $re = db('user_fund')->where('user_id', $data['user_id'])->setDec('money', $pay_money);
+                    $this->startTrans();
+                    try {
+                        //减去余额
+                        $re = (new UserFund())::where('user_id', $data['user_id'])->setDec('money', $pay_money);
+                        //修改订单表
+                        $data_need = [
+                            'need_pay_type'=>4,
+                            'pay_type'=> 2,
+                            'pay_time'=> time(),
+                            'process'=>1,
+                            'need_status'=> 4,
+                        ];
+                        self::save($data_need,['id' => $id]);
+                        //订单统计表添加
+                        $role_type = 4;
+                        $budget_type = 1;
+                        $income = '';//收入金额
+                        (new AllOrder())->allorder_add($role_type,$budget_type,$data,$pay_money,$income);
 
-                    return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
+                        $this->commit();
+
+                        return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
+
+                    } catch (\Exception $e) {
+
+                        $this->rollback();
+
+                        returnJson(0,'事务失败');exit();
+                    }
                 }else{
                     returnJson(0, '支付密码错误');
                 }

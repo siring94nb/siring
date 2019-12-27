@@ -312,4 +312,47 @@ class AllOrder extends Model
                 break;
         }
     }
+
+    /**
+     * 支付成功添加统计订单
+     * @param $role_type
+     * @param $budget_type
+     * @param $data
+     * @param $income
+     * @return false|int
+     */
+    public function allorder_add($role_type,$budget_type,$data,$pay_money,$income)
+    {
+
+            $user = (new User())->user_detail($data['user_id']);//查询个人信息
+            //判断等级
+            if(empty($dev)){
+                $dev = '';
+            }
+            return $this->save([
+
+                'role_type' => $role_type,
+                'budget_type' => $budget_type,
+                'user_id' => $user['id'],
+                'phone' => $user['phone'],
+                'yqm' => $user['invitation'],
+                'pay_type' => $data['need_pay_type'],
+                'ot_yqm' => $user['other_code'],
+                'entry_name' => $data['need_name'],
+                'no' => $data['need_order'],
+                'money' => $pay_money,
+                'income' => $income,
+                'payment' => 2,
+                'pay_time' => time(),
+                'status' => 2,
+               // 'bottom_money' => $bottom_money,
+               // 'reach_money' => $reach_money,
+                'dev' => $dev,
+                'grade' => $user['grade'],
+                'created_at' => time(),
+                'province_id' => $user['province_id'],
+                'city_id' => $user['city_id'],
+            ]);
+
+    }
 }

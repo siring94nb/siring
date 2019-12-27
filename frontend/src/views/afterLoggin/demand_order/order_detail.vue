@@ -161,7 +161,7 @@
             四、合同总金额：
             <span class="focus">{{price}}元（{{convertToChinaNum(price)}}元整）</span>
           </p>
-          <p>五、分期付款方式：甲方向乙方支付总开发费用实行分期付款方式。本项目分四期付款，第一期为总合同款的70%，第二期为总合同款的20%，第三期为总合同款10%,第四期为总合同款10%。</p>
+          <p>五、分期付款方式：甲方向乙方支付总开发费用实行分期付款方式。本项目分四期付款，第一期为总合同款的70%，第二期为总合同款的10%，第三期为总合同款10%,第四期为总合同款10%。</p>
           <p class="retract">
             5.1在本合同签订后的3工作日内，第一期甲方支付乙方项目预付款即合同总价的70%，小写：¥__
             <span class="focus">{{price*0.7}}</span>__（大写：人民币：__
@@ -307,7 +307,8 @@ import {
   needOrderList,
   getOrderDetail,
   changeStatus,
-  confirmNeedOrder
+  confirmNeedOrder,
+  getDiscount
 } from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
 import orderProcess from "@/components/order/orderProcess";
@@ -415,7 +416,7 @@ export default {
       showPaymentFlag: false,
       needCodeDialog: true, //需要显示扫码弹窗
       price: 50000, //合同金额
-      percent: 100,
+      percent: 100,//会员折扣
       scale: 70, //支付比例
       order: 1, //支付第几期
       payway: {
@@ -437,6 +438,7 @@ export default {
   mounted() {
     this.init();
     this.getDetail();
+    this.GetDiscount();
   },
   computed: {
     total() {
@@ -699,6 +701,16 @@ export default {
           vm.listData = data;
         }
       });
+    },
+    GetDiscount(){
+      let vm = this, params= {
+        uid : vm.form.user_id
+      }
+      getDiscount(params).then(res => {
+        if(res.code == 1) {
+          vm.percent = res.data;
+        }
+      })
     },
     need_submit() {
       let vm = this;

@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div class="invite">
+        <!-- <div class="invite">
           <el-checkbox v-model="checked">
             使用邀请码
             <span class="hui">（填写推荐邀请码，优惠30元）</span>
@@ -36,7 +36,7 @@
           <div class="invite-code">
             <el-input placeholder="请填写邀请人的会员绑定手机号或邀请码" style="font-size:12px;"></el-input>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="payment">
         选择一下方式支付：
@@ -394,7 +394,6 @@ export default {
       vm.isSubmit = !vm.isSubmit;
       let params = vm.form;
       addBank(params).then(res => {
-        console.log(res);
         let { code, data, msg } = res;
         vm.$message.success(msg);
         if (code == "1") {
@@ -558,6 +557,7 @@ export default {
       }
       .payable {
         display: flex;
+        margin-bottom: 50px;
         .price {
           font-size: 23px;
         }

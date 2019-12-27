@@ -501,4 +501,10 @@ export const getBalance = data => {
 export const industryField = params => {
     return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
 }
+/**
+ * 投融介（行业领域数据）
+ */
+export const getDiscount = data => {
+    return axios.post(`${base_url}api/Payment/discount`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload
