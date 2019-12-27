@@ -46,9 +46,9 @@
       <p slot="header" style="font-size:18px;text-align:center;">
         <span>审核</span>
       </p>
-      <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
+      <Form ref="myForm" :model="formItem" :label-width="80">
         <div style="width:200px;margin:auto;">
-          <RadioGroup v-model="formItem.udit_status">
+          <RadioGroup v-model="formItem.type">
             <div style="margin-bottom: 20px;">
               <Radio :label="2">通过</Radio>
               <div style="display:inline-block;vertical-align: top;">
@@ -66,8 +66,30 @@
           </RadioGroup>
         </div>
       </Form>
-      <div slot="footer" style="text=align:center;">
+      <div slot="footer" style="text-align:center;">
         <Button type="text" @click="cancel" style="margin-right: 8px">返回</Button>
+        <Button type="primary" @click="toQue">确定</Button>
+      </div>
+    </Modal>
+    <Modal
+      v-model="modalSetting.twoShow"
+      width="500"
+      :styles="{top: '30px'}"
+      @on-visible-change="tCancel"
+    >
+      <p slot="header" style="font-size:18px;text-align:center;">
+        <span>温馨提示</span>
+      </p>
+      <div style="text-align:center;margin:50px 0;">
+        确定
+        <span
+          style="font-weight:700;"
+          :style="formItem.type == 2 ? 'color:rgb(102,204,0);':'color:red;'"
+        >{{formItem.type == 2 ? '已收到':'未收到'}}</span>
+        款项么？！
+      </div>
+      <div slot="footer" style="text-align:center;">
+        <Button type="text" @click="twoCancel" style="margin-right: 8px">返回</Button>
         <Button type="primary" @click="submit" :loading="modalSetting.loading">确定</Button>
       </div>
     </Modal>
@@ -92,6 +114,7 @@ const editButton = (vm, h, currentRow, index) => {
         on: {
           click: () => {
             vm.modalSetting.show = true;
+            vm.formItem.id = currentRow.id;
           }
         }
       },
@@ -194,24 +217,16 @@ export default {
       modalSetting: {
         show: false,
         loading: false,
-        index: 0
+        index: 0,
+        twoShow: false
       },
       formItem: {
         id: 0,
-        audit_status: ""
+        type: ""
       },
       ruleValidate: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }]
-        // add_time: [
-        //     { required: true, message: '请选择开始时间', trigger: 'blur' }
-        // ],
-        // end_time: [
-        //     { required: true, message: '请选择结束时间', trigger: 'blur' }
-        // ],
-        // type: [
-        //     { required: true, message: '请选择范围', trigger: 'change' }
-        // ],
-      },
+        // type: [{ required: true, message: "请输入名称", trigger: "blur" }]
+      }
     };
   },
   created() {
@@ -239,43 +254,40 @@ export default {
     },
     submit() {
       let self = this;
-      this.$refs["myForm"].validate(valid => {
-        if (valid) {
-          self.modalSetting.loading = true;
-          let target = "";
-          if (this.formItem.id === 0) {
-            target = "Receipt/add";
-          } else {
-            target = "Receipt/upd";
-          }
-          this.formItem.rule = new Object();
-          this.formItem.rule.full = this.formItem.full;
-          this.formItem.rule.reduce = this.formItem.reduce;
-          axios.post(target, this.formItem).then(function(response) {
-            if (response.data.code === 1) {
-              self.$Message.success(response.data.msg);
-              self.getList();
-              self.cancel();
-            } else {
-              self.modalSetting.loading = false;
-              self.$Message.error(response.data.msg);
-            }
-          });
+      self.modalSetting.loading = true;
+      axios.post("CapitalCard/upd", this.formItem).then(function(response) {
+        if (response.data.code === 1) {
+          self.$Message.success(response.data.msg);
+          self.getList();
+          self.cancel();
+        } else {
+          self.modalSetting.loading = false;
+          self.$Message.error(response.data.msg);
         }
       });
     },
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.audit_status = '';
+      this.formItem.audit_status = "";
     },
-    doCancel(data) {
+     doCancel(data) {
       if (!data) {
         this.formItem.id = 0;
-        this.$refs["myForm"].resetFields();
         this.modalSetting.loading = false;
         this.modalSetting.index = 0;
         this.cancel();
+      }
+    },
+    twoCancel() {
+      this.modalSetting.twoShow = false;
+    },
+    toQue() {
+      this.modalSetting.twoShow = true;
+    },
+    tCancel(data) {
+      if (!data) {
+        this.twoCancel();
       }
     },
     changePage(page) {
