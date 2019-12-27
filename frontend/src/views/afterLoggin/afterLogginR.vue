@@ -8,7 +8,7 @@
       <div class="right" ref="rightBox" style="padding:0">
         <div style="border-bottom:5px solid rgb(242, 247, 250);padding:0 0 10px 5px">
           <p>
-            <i class="el-icon-edit"></i>控制中心
+            <i class="iconfont icon-kongzhitai" style="color:rgb(201,0,0)"></i>控制中心
             <span>&gt;</span>控制台
           </p>
         </div>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-jiaose"></i>
       <span>角色中心</span>
       <span>&gt;</span>
       <span>分包商</span>

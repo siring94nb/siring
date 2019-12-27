@@ -1,7 +1,7 @@
 <template>
   <div class="bigBox">
     <div class="smBox">
-      <div><i class="el-icon-circle-close"></i></div>
+      <div><i class="iconfont icon--zijinguanli"></i></div>
       <div>温馨提示：</div>
       <div>为了您的资金安全您需要设施资金密码</div>
       <div>

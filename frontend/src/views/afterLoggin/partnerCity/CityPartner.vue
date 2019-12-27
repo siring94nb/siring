@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-jiaose"></i>
       <span>角色中心</span>
       <span>&gt;</span>
       <span>城市合伙人</span>
@@ -299,9 +299,10 @@ export default {
       CityTotal().then(res => {
         let { data, msg, code } = res;
         console.log(data.data);
+        console.log(code)
         if (code == 1) {
           const newArr = this.topList.map(item => {
-            item.num = data[item.num];
+            item.num = data.data[item.num];
             console.log(item)
             return item;
           });

@@ -7,6 +7,7 @@ import store from './store';
 import '@/assets/style/index.scss';
 import { Seo } from '@/api/api';
 import './assets/iconfont/iconfont.css';
+import './assets/iconfont1/iconfont.css';
 import qs from 'qs';
 Vue.prototype.$qs = qs;
 import VueClipboard from 'vue-clipboard2'

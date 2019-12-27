@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon--zijinguanli"></i>
       <span>资金管理</span>
       <span>&gt;</span>
       <span>银行卡管理</span>
@@ -121,7 +121,8 @@ export default {
     getBankcardList(){
       BankcardList().then(res=>{
         let { data, msg, code } = res;
-         this.showMsg(msg, code);
+        console.log(data);
+        //  this.showMsg(msg, code);
           if (code === 1) {
            this.cardImage = data
           }
