@@ -26,7 +26,8 @@ export default {
         div:nth-of-type(1){
             padding: 10px;
             i{ 
-                padding-right: 10px 15px
+                padding-right:15px;
+                color: rgb(201,0,0);
             }
         }
     }

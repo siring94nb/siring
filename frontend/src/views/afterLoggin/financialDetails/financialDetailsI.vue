@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon--zijinguanli"></i>
       <span>资金管理</span>
       <span>&gt;</span>
       <span>资金明细</span>

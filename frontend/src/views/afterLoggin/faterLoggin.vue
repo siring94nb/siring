@@ -19,7 +19,7 @@
             <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
               <!-- 控制中心 -->
               <template slot="title">
-                <i :class="item.classN"></i>
+                <i :class="item.classN" style="padding-right:15px;"></i>
                 <span>{{item.title}}</span>
               </template>
               <el-menu-item
@@ -51,12 +51,12 @@
         arr: [
           {
             title: "控制中心",
-            classN: "el-icon-s-platform",
+            classN: "iconfont icon-kongzhitai",
             con: [{ name: "控制台", rou: "/afterLogginR" }]
           },
           {
             title: "会员中心",
-            classN: "el-icon-user-solid",
+            classN: "iconfont icon-huiyuan",
             con: [
               // "会员信息", "安全中心", "邀请好友"
               { name: "会员信息", rou: "/memberInformation" },
@@ -66,7 +66,7 @@
           },
           {
             title: "角色中心",
-            classN: "el-icon-postcard",
+            classN: "iconfont icon-jiaose",
             con: [
               // "城市合伙人", "等级会员", "分包商"
               { name: "城市合伙人", rou: "/CityPartner" },
@@ -76,7 +76,7 @@
           },
           {
             title: "资金管理",
-            classN: "el-icon-s-finance",
+            classN: "iconfont icon--zijinguanli",
             con: [
               // "资金明细", "充值", "提现", "银行卡管理", "优惠券"
               { name: "资金明细", rou: "/financialDetailsI" },
@@ -88,7 +88,7 @@
           },
           {
             title: "软件/定制",
-            classN: "el-icon-edit-outline",
+            classN: "iconfont icon-dingzhi",
             con: [
               // "定制需求订单", "定制类似订单"
               { name: "定制需求订单", rou: "/demand_order" },
@@ -97,7 +97,7 @@
           },
           {
             title: "小程序SaaS",
-            classN: "el-icon-magic-stick",
+            classN: "iconfont icon-SaaS",
             con: [
               // "SaaS店铺订单", "增值服务订单"
               { name: "SaaS店铺订单", rou: "/ceshi" },
@@ -106,7 +106,7 @@
           },
           {
             title: "AI推广运营",
-            classN: "el-icon-s-promotion",
+            classN: "iconfont icon-tuiguang",
             con: [
               // "推广订单"
               { name: "推广订单", rou: "/ceshi" }
@@ -114,7 +114,7 @@
           },
           {
             title: "投融介",
-            classN: "el-icon-bank-card",
+            classN: "iconfont icon-tourongziqingkuang  ",
             con: [
               // "我的投融", "中止项目"
               { name: "我的投融", rou: "/addForMelting" },
