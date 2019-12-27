@@ -36,7 +36,7 @@
           <div class="invite-code">
             <el-input placeholder="请填写邀请人的会员绑定手机号或邀请码" style="font-size:12px;"></el-input>
           </div>
-        </div> -->
+        </div>-->
       </div>
       <div class="payment">
         选择一下方式支付：
@@ -201,11 +201,11 @@
           </div>
           <div class="password" style="display:flex;">
             <div class="pass-title">支付密码：</div>
-            <el-input placeholder="请输入密码" style="font-size:12px;width:330px;"></el-input>
+            <el-input placeholder="请输入密码" v-model="password" style="font-size:12px;width:330px;"></el-input>
           </div>
           <div class="blue forgot-pass">忘记支付密码</div>
           <div class="pay-btn">
-            <el-button type="danger" style="width:250px;">确定</el-button>
+            <el-button type="danger" style="width:250px;" @click="bankPay">确定</el-button>
           </div>
         </div>
         <!-- 余额支付 -->
@@ -324,7 +324,8 @@ export default {
         ],
         card_number: [{ validator: validatePass, trigger: "blur" }]
       },
-      ispassword: ""
+      ispassword: "",
+      password: "" //支付密码
     };
   },
   mounted() {
@@ -352,7 +353,7 @@ export default {
       });
       // vm.GetBalance();
     },
-    //下单生成二维码
+    //支付宝微信支付
     codePay() {
       //支付类型
       let vm = this;
@@ -388,6 +389,45 @@ export default {
         }
       });
     },
+    //银行支付&余额支付
+    bankPay() {
+      let vm = this,
+        pay_detail;
+      if (vm.radio == 3) {
+        pay_detail = {
+          account_number: vm.paymentAccount,
+          bank_name: vm.bankCards[vm.value].bank_name,
+          bank_number: vm.bankCards[vm.value].card_number,
+          pay_time: vm.pay_time,
+          comment: vm.comment,
+          pay_type: vm.radio,
+          pay_money: vm.real_money,
+          type: 2
+        };
+        pay_detail = JSON.stringify(pay_detail);
+      }
+      let params = {
+        id: vm.params.id,
+        pay_type: vm.radio,
+        money: vm.real_money,
+        type: vm.params.order_type,
+        password: vm.password,
+        unionpay: pay_detail || ""
+      };
+      codeGetPay(params).then(res => {
+        let { code, imgData, msg } = res;
+        if (code === 1) {
+          vm.$message.success(msg);
+          vm.$router.push({
+            name:'demand_order'
+          })
+        } else {
+          vm.$message.error(msg);
+        }
+      });
+    },
+    
+    
     //添加银行卡
     submitForm(formName) {
       let vm = this;
@@ -417,39 +457,7 @@ export default {
       this.isSubmit = !this.isSubmit;
       // this.$refs[formName].resetFields();
     },
-    //银行支付
-    bankPay() {
-      let vm = this,
-        pay_detail = {
-          account_number: vm.paymentAccount,
-          bank_name: vm.bankCards[vm.value].bank_name,
-          bank_number: vm.bankCards[vm.value].card_number,
-          pay_time: vm.pay_time,
-          comment: vm.comment,
-          pay_type: vm.radio,
-          pay_money: vm.real_money,
-          type: 2
-        };
-      pay_detail = JSON.stringify(pay_detail);
-      let params = {
-        id: vm.params.id,
-        pay_type: vm.radio,
-        money: vm.real_money,
-        type: vm.params.order_type,
-        password: "",
-        unionpay: pay_detail
-      };
-      codeGetPay(params).then(res => {
-        console.log(res);
-        // let { code, imgData, msg } = res;
-        // vm.$message(msg);
-        // if (code === 1) {
-        // this.imgData = imgData;
-        // this.isShow = !this.isShow;
-        // this.isDisabl = !this.isDisabl;
-        // }
-      });
-    },
+
     regionChange(data) {
       if (data.province) this.form.province = data.province.value;
       if (data.city) this.form.city = data.city.value;
