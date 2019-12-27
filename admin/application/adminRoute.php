@@ -980,6 +980,18 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
+    //资金管理-银行卡审核
+    Route::group('CapitalCard', [
+        'index' => [
+            'admin/CapitalCard/index',
+            ['method' => 'get']
+        ],
+        'upd'   => [
+            'admin/CapitalCard/upd',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
 });
 
 //<!--

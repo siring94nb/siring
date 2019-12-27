@@ -477,6 +477,14 @@ export const appRouter = [
                 component: () => import('@/views/capital/detailed.vue')
             },
             {
+                path: 'fundsAudit',
+                icon: 'ios-bookmarks',
+                name: 'fundsAudit',
+                access: 'admin/CapitalCard/index',
+                title: '线下支付审核',
+                component: () => import('@/views/capital/fundsAudit.vue')
+            },
+            {
                 path: 'Cash',
                 icon: 'ios-bookmarks',
                 name: 'Cash',
