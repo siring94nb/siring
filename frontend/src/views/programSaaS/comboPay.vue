@@ -394,7 +394,6 @@ export default {
       vm.isSubmit = !vm.isSubmit;
       let params = vm.form;
       addBank(params).then(res => {
-        console.log(res);
         let { code, data, msg } = res;
         vm.$message.success(msg);
         if (code == "1") {
@@ -558,6 +557,7 @@ export default {
       }
       .payable {
         display: flex;
+        margin-bottom: 50px;
         .price {
           font-size: 23px;
         }
