@@ -144,6 +144,7 @@ export default {
   margin:10px 0 0 20px;
   padding: 20px 100px;
   font-size: 18px;
+  min-height: 78.5vh;
   .el-row{
       height: 120px;
     }

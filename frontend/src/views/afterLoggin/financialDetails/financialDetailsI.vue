@@ -144,22 +144,22 @@
               :data="tableData.slice((currpage-1)*pagesize,currpage*pagesize)"
               tooltip-effect="dark"
               border
-              style="width: 100%;font-size: 12px"
+              style="width: 100%;font-size: 14px"
               :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
-              <el-table-column prop="created_at" label="日期" width="180" align="center">
+              <el-table-column prop="created_at" label="日期" width="240" align="center">
                 <template slot-scope="scope">
-                  <div>{{scope.row.created_at==null?"未知":scope.row.created_at}}</div>
+                  <div>{{scope.row.created_at==null?"未知":(new Date(parseInt(scope.row.created_at) * 1000).toLocaleString().replace(/:\d{1,2}$/,' '))}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="income" label="收入（元）" align="center" width="160">
+              <el-table-column prop="income" label="收入（元）" align="center" width="240">
                 <template slot-scope="scope">
                   <div>{{scope.row.income==null?0:scope.row.income}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="phone" align="center" width="180" label="收入账号"></el-table-column>
-              <el-table-column prop="money" label="支出（元）" align="center" width="180">
+              <el-table-column prop="phone" align="center" width="240" label="收入账号"></el-table-column>
+              <el-table-column prop="money" label="支出（元）" align="center" width="240">
                 <template slot-scope="scope">
                   <div>{{scope.row.money==null?0:scope.row.income}}</div>
                 </template>
@@ -398,6 +398,7 @@ export default {
   background: #ffffff;
   padding: 10px;
   margin: 10px 0 0 20px;
+  min-height: 80vh;
   .screenX {
     display: flex;
     background: #f3f3f3;
@@ -419,7 +420,7 @@ export default {
         }
       }
       &:nth-of-type(3) {
-        margin-right: 160px;
+        margin-right: 520px;
         span {
           padding-right: 10px;
         }

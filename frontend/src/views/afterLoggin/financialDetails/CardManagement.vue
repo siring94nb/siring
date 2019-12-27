@@ -120,11 +120,11 @@ export default {
     // 银行卡信息
     getBankcardList(){
       BankcardList().then(res=>{
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         console.log(data);
         //  this.showMsg(msg, code);
-          if (code === 1) {
-           this.cardImage = data
+          if (data.code === 1) {
+           this.cardImage = data.data
           }
       })
     },
@@ -235,6 +235,7 @@ export default {
   margin: 10px 0 0 20px;
   display: flex;
   flex-wrap: wrap;
+  min-height: 77vh;
   > div {
     margin-right: 20px;
   }

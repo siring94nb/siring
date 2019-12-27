@@ -265,6 +265,7 @@ export default {
   margin: 10px 0 0 20px;
   padding: 20px;
   font-size: 13px;
+  min-height: 78.5vh;
   .el-tab-pane{
     margin-left: 200px;
     margin-top: 20px;

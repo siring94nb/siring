@@ -79,16 +79,16 @@
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="created_at" label="日期" width="160" align="center"></el-table-column>
-                  <el-table-column prop="phone" label="邀请人账号" width="160" align="center">
+                  <el-table-column prop="created_at" label="日期" width="230" align="center"></el-table-column>
+                  <el-table-column prop="phone" label="邀请人账号" width="225" align="center">
                     <template slot-scope="scope">
-                      <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
+                      <div v-if="scope.row.phone != ''">{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="150" align="center"></el-table-column>
-                  <el-table-column prop="entry_name" label="邀请人订单项目" width="180" align="center"></el-table-column>
-                  <el-table-column prop="reach_money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column prop="bottom_money" label="佣金金额（元）" width="180" align="center"></el-table-column>
+                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="200" align="center"></el-table-column>
+                  <el-table-column prop="entry_name" label="邀请人订单项目" width="240" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="邀请人购买金额（元）" width="240" align="center"></el-table-column>
+                  <el-table-column prop="bottom_money" label="佣金金额（元）" width="240" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -132,13 +132,13 @@
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="id" label="会员等级" width="120" align="center"></el-table-column>
-                  <el-table-column prop="add_time" label="申请时间" width="120" align="center"></el-table-column>
-                  <el-table-column prop="end_time" label="到期时间" width="150" align="center"></el-table-column>
-                  <el-table-column prop="money" label="年度费用标准" width="170" align="center"></el-table-column>
-                  <el-table-column prop="grade_title	" label="等级政策" width="160" align="center"></el-table-column>
-                  <el-table-column prop="pay_type" label="支付方式" width="170" align="center"></el-table-column>
-                  <el-table-column prop="StandardCommission" label="操作" width="150" align="center"></el-table-column>
+                  <el-table-column prop="id" label="会员等级" width="200" align="center"></el-table-column>
+                  <el-table-column prop="add_time" label="申请时间" width="200" align="center"></el-table-column>
+                  <el-table-column prop="end_time" label="到期时间" width="200" align="center"></el-table-column>
+                  <el-table-column prop="money" label="年度费用标准" width="200" align="center"></el-table-column>
+                  <el-table-column prop="grade_title	" label="等级政策" width="200" align="center"></el-table-column>
+                  <el-table-column prop="pay_type" label="支付方式" width="200" align="center"></el-table-column>
+                  <el-table-column prop="StandardCommission" label="操作" width="215" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -286,12 +286,13 @@ export default {
         console.log(data);
         if (code === 1) {
           this.alist = data.data;
+          console.log(this.alist);
         }
       });
     },
     GetMemberPartner1() {
       const params = {
-        type: 3
+        type: 1
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
@@ -306,10 +307,10 @@ export default {
     // 获取我邀请的会员总数，佣金总数，get方式
     GetMemberTotal() {
       MemberTotal().then(res => {
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         // this.showMsg(msg,code);
         console.log(data);
-        if (code === 1) {
+        if (data.code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
             return item;
@@ -336,6 +337,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  min-height: 81vh;
   button {
     cursor: pointer;
   }

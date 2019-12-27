@@ -194,26 +194,26 @@
                   @selection-change="handleSelectionChange"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="项目订单编号" width="130" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="订单名称" width="130" align="center"></el-table-column>
+                  <el-table-column prop="date" label="项目订单编号" width="200" align="center"></el-table-column>
+                  <el-table-column prop="InviterAccount" label="订单名称" width="205" align="center"></el-table-column>
                   <el-table-column
                     prop="InviterInvitationCode"
                     label="承接时间"
                     width="170"
                     align="center"
                   ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="要求完成时间" width="160" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="项目开发文档" width="160" align="center"></el-table-column>
+                  <el-table-column prop="InviterLevel" label="要求完成时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="amount" label="项目开发文档" width="220" align="center"></el-table-column>
                   <el-table-column
                     prop="MinimumCommissions"
                     label="延期扣款"
-                    width="125"
+                    width="180"
                     align="center"
                   ></el-table-column>
                   <el-table-column
                     prop="StandardCommission"
                     label="佣金金额（元）"
-                    width="125"
+                    width="180"
                     align="center"
                   ></el-table-column>
                 </el-table>
@@ -249,11 +249,11 @@
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="id" label="申请专业技能" width="200" align="center"></el-table-column>
-                  <el-table-column prop="dev" label="技能语言" width="220" align="center"></el-table-column>
-                  <el-table-column prop="created_at" label="申请时间" width="220" align="center"></el-table-column>
-                  <el-table-column prop="money	" label="技能押金" width="200" align="center"></el-table-column>
-                  <el-table-column prop="role_type" label="支付方式" width="200" align="center"></el-table-column>
+                  <el-table-column prop="id" label="申请专业技能" width="295" align="center"></el-table-column>
+                  <el-table-column prop="dev" label="技能语言" width="280" align="center"></el-table-column>
+                  <el-table-column prop="created_at" label="申请时间" width="280" align="center"></el-table-column>
+                  <el-table-column prop="money	" label="技能押金" width="280" align="center"></el-table-column>
+                  <el-table-column prop="role_type" label="支付方式" width="280" align="center"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -261,7 +261,6 @@
         </el-tabs>
       </div>
     </div>
-    <div class="aba"></div>
   </div>
 </template>
 <script>
@@ -377,10 +376,10 @@ export default {
     // 获取分包商佣金，押金等
     GetSubcontractTotal() {
       SubcontractTotal().then(res => {
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         // this.showMsg(msg,code);
         console.log(data);
-        if (code === 1) {
+        if (data.code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data[item.num];
             return item;
@@ -391,37 +390,40 @@ export default {
     },
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
     GetSubcontractPartner() {
-      let params = {};
-      let times = this.value;
-      if (this.dis) {
-        params = {
-          type: 1
-        };
-      } else {
-        if (this.value == "") {
-          params = {
-            type: 1,
-            title: this.suoyin
-          };
-        } else if (this.suoyin == "" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 1,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 1,
-            title: this.suoyin,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        }
-      }
+      // let params = {};
+      // let times = this.value;
+      // if (this.dis) {
+      //   params = {
+      //     type: 1
+      //   };
+      // } else {
+      //   if (this.value == "") {
+      //     params = {
+      //       type: 1,
+      //       title: this.suoyin
+      //     };
+      //   } else if (this.suoyin == "" && this.value != null) {
+      //     let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       type: 1,
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //   } else {
+      //     let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       type: 1,
+      //       title: this.suoyin,
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //   }
+      // }
+      const params = {
+        type: 1
+      };
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
@@ -453,7 +455,7 @@ export default {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
         console.log(data);
-        if (code === 1) {
+        if (data.code === 1) {
           this.lastPage = data.last_page; 
           this.shichuang = data.data  ;
         }
@@ -559,6 +561,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  min-height: 81vh;
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;
@@ -615,6 +618,7 @@ export default {
         position: relative;
         font-size: 13px;
         color: #5e5e5e;
+        margin-left: 10px;
         > div {
           &:nth-of-type(1) {
             background: rgba(102, 204, 255, 1);

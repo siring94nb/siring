@@ -59,7 +59,9 @@ export default {
         //   console.log(this.$route.path)
         //     rightBox.style.maxWidth = "1100px"
         // }
-        if (screenWidth > 1260) {
+        if (screenWidth > 1500) {
+          console.log(leftBox.clientWidth + rightBox.clientWidth);
+          console.log((screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2)
           leftBox.style.marginLeft =
             (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 -
             20 +
@@ -84,7 +86,7 @@ export default {
   padding: 5px 10px;
   border-top: 2px solid #ffffff;
   // max-width: 1260px;
-  min-width: 1500px;
+  min-width: 1463px;
   .left {
     width: 123px;
     float: left;
@@ -93,7 +95,7 @@ export default {
     margin-left: 150px;
     // padding-left: 10px;
     margin-top: 100px;
-    max-width: 1100px;
+    width: 1480px;
   }
   // 伪元素清除浮动
   .clearfix:after {

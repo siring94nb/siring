@@ -13,7 +13,7 @@
           </p>
         </div>
 
-        <div class="account_information">
+        <div class="account_information" style="min-height: 78.5vh;">
           <template>
             <div style="width:100%">
               <el-row>
