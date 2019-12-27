@@ -196,10 +196,10 @@ export default {
     // 银行卡信息
     getBankcardList() {
       BankcardList().then(res => {
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         //  this.showMsg(msg, code);
-        if (code === 1) {
-          this.items = data;
+        if (data.code === 1) {
+          this.items = data.data;
         }
       });
     },
@@ -219,11 +219,12 @@ export default {
   padding: 30px 0 30px 100px;
   margin: 10px 0 0 20px;
   display: flex;
+  min-height: 76.5vh;
   // justify-content: space-between;
   .leftBox {
     border-right: 1px solid rgb(201, 201, 201);
-    padding-right: 30px;
-    margin-right: 30px;
+    padding-right: 100px;
+    margin-right: 100px;
     font-size: 13px;
     > div {
       margin-bottom: 25px;

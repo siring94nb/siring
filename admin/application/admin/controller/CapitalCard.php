@@ -94,7 +94,7 @@ class CapitalCard extends Base
                 return $res1 && $res2  && $res3 ? true : false;
             });
 
-            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 0 , '失败' );
+            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1006 , '用户修改失败' );;
 
         }else{
             $res = Db::transaction( function() use ( $param ){
@@ -104,7 +104,7 @@ class CapitalCard extends Base
                 $res1 = Offline::where('id',$param['id'])->update(['order_status'=>$param['type']]);
 
                 //更改订单状态
-                $res2 = NeedOrder::where('id',$param['id'])->update([
+                $res2 = NeedOrder::where('need_order',$off['order_number'])->update([
                     'need_pay_type'  => 3,
                     'pay_type' => 1,
                     'pay_time' => ''
@@ -112,7 +112,7 @@ class CapitalCard extends Base
 
                 return $res1 && $res2   ? true : false;
             });
-            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 0 , '失败' );
+            return $res  !== false  ?   $this -> buildSuccess( [] , '成功' ) :  $this -> buildFailed( 1006 , '用户修改失败' );
 
         }
 
