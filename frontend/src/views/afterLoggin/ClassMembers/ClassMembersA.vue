@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-jiaose"></i>
       <span>角色中心</span>
       <span>&gt;</span>
       <span>等级会员</span>
@@ -294,7 +294,7 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data);
+        console.log(res);
         if (code === 1) {
           this.blist1 =data.data;
           console.log(this.blist1)
@@ -309,7 +309,7 @@ export default {
         console.log(data);
         if (code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data[item.num];
+            item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;

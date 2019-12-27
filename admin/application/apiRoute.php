@@ -203,6 +203,13 @@ Route::group('api', function () {
         Route::any('discount','api/Payment/discount'); //用户折扣
     });
 
+    //支付回调
+    Route::group('Callback',function(){
+        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调
+        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调
+
+    });
+
 });
 
 $afterBehavior = [

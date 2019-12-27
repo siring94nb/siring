@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-huiyuan"></i>
       <span>会员中心</span>
       <span>&gt;</span>
       <span>安全中心</span>

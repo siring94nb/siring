@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-huiyuan"></i>
       <span>会员中心</span>
       <span>&gt;</span>
       <span>邀请好友</span>
@@ -179,6 +179,16 @@ export default {
         message: "复制失败！",
         type: "error"
       });
+    }
+  },
+  watch: {
+    activeName: function(val) {
+      //监听切换状态-计划单
+      if (val === "first") {
+        this.title = "邀请方法";
+      } else {
+        this.title = "邀请记录";
+      }
     }
   }
 };

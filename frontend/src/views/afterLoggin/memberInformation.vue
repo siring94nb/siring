@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-huiyuan"></i>
       <span>会员中心</span>
       <span>&gt;</span>
       <span>会员信息</span>
@@ -269,14 +269,14 @@ export default {
         // this.showMsg(msg, code);
         if (code === 1) {
           this.userMessage1 = data;
-          this.imageUrl=data.img,
+          this.imageUrl=data.img||this.imageUrl,
           this.otherCode=data.other_code,//他人邀请码
           this.name=data.realname,
           this.sfzId=data.id_card,
           this.dizhi=data.address,
           this.radioVal=data.sex===1?"男":"女",
-          this.identityCardZImg=data.id_card_just,
-          this.identityCardFImg=data.id_card_back
+          this.identityCardZImg=data.id_card_just||this.identityCardZImg,
+          this.identityCardFImg=data.id_card_back||this.identityCardFImg
         }
       });
     },
