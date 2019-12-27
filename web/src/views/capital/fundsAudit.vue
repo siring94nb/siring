@@ -260,6 +260,7 @@ export default {
           self.$Message.success(response.msg);
           self.getList();
           self.cancel();
+          self.twoCancel();
         } else {
           self.modalSetting.loading = false;
           self.$Message.error(response.msg);
