@@ -78,17 +78,17 @@
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
+                  <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+                  <el-table-column prop="phone" label="邀请人账号" width="180" align="center">
                     <template slot-scope="scope">
                       <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
-                  <el-table-column prop="id" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
-                  <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
-                  <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
+                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="175" align="center"></el-table-column>
+                  <el-table-column prop="id" label="邀请人购买会员等级" width="180" align="center"></el-table-column>
+                  <el-table-column prop="money" label="邀请人购买金额（元）" width="220" align="center"></el-table-column>
+                  <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="220" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="达标佣金金额（元）" width="220" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -125,17 +125,17 @@
                 :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
               >
                 <el-table-column type="selection" width="40" align="center"></el-table-column>
-                <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
-                <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
+                <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+                <el-table-column prop="phone" label="邀请人账号" width="180" align="center">
                   <template slot-scope="scope">
                     <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
-                <el-table-column prop="id" label="邀请人订单项目" width="150" align="center"></el-table-column>
-                <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
-                <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
+                <el-table-column prop="ot_yqm" label="邀请人邀请码" width="175" align="center"></el-table-column>
+                <el-table-column prop="id" label="邀请人订单项目" width="180" align="center"></el-table-column>
+                <el-table-column prop="money" label="邀请人购买金额（元）" width="220" align="center"></el-table-column>
+                <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="220" align="center"></el-table-column>
+                <el-table-column prop="reach_money" label="达标佣金金额（元）" width="220" align="center"></el-table-column>
               </el-table>
               <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                 <div>
@@ -178,12 +178,12 @@
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="city_name" label="城市选择" width="120" align="center"></el-table-column>
-                  <el-table-column prop="money" label="金额" width="120" align="center"></el-table-column>
-                  <el-table-column prop="add_time" label="生效时间" width="120" align="center"></el-table-column>
-                  <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
-                  <el-table-column prop="grade_title" label="合伙人政策" width="180" align="center"></el-table-column>
-                  <el-table-column prop="pay_type" label="支付方式" width="160" align="center">
+                  <el-table-column prop="city_name" label="城市选择" width="180" align="center"></el-table-column>
+                  <el-table-column prop="money" label="金额" width="180" align="center"></el-table-column>
+                  <el-table-column prop="add_time" label="生效时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="end_time" label="到期时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="grade_title" label="合伙人政策" width="220" align="center"></el-table-column>
+                  <el-table-column prop="pay_type" label="支付方式" width="235" align="center">
                     <template slot-scope="scope">
                       <div v-if="scope.row.pay_type==1">支付宝</div>
                       <div v-if="scope.row.pay_type==2">微信</div>
@@ -298,9 +298,11 @@ export default {
     //获取城市合伙人数据
     GetCityTotal() {
       CityTotal().then(res => {
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         console.log(data.data);
-        console.log(code)
+        console.log(res);
+        console.log(res.code);
+        console.log(data.code);
         if (data.code == 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
@@ -370,7 +372,7 @@ export default {
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list1 = data.data;
-          console.log(this.list);
+          console.log(this.list1);
         }
       });
     },
@@ -384,7 +386,7 @@ export default {
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list2 = data.data;
-          console.log(this.list);
+          console.log(this.list2);
         }
       });
     },
@@ -415,6 +417,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  min-height: 81vh;
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;

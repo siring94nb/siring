@@ -204,6 +204,7 @@ export default {
 .boxBottom {
   background: #fff;
   margin: 0 0 0 20px;
+  min-height: 83.5vh;
   .inputContent {
     background: #fff;
     padding: 10px 30px;

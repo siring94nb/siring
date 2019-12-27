@@ -127,6 +127,7 @@ export default {
   background: #fff;
   margin: 10px 0 0 20px;
   padding: 15px;
+  min-height: 79.5vh;
   .addBox {
     // border: 1px solid;
     width: 143px;

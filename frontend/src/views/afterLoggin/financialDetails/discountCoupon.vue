@@ -51,14 +51,14 @@
           style="width: 100%; font-size:13px;color:#797979"
           :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }"
         >
-          <el-table-column prop="created_at" label="获得时间" width="180" align="center"></el-table-column>
-          <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
-          <el-table-column prop="coupon_status" label="优惠券状态" align="center" width="180">
+          <el-table-column prop="created_at" label="获得时间" width="240" align="center"></el-table-column>
+          <el-table-column prop="end_time" label="到期时间" width="240" align="center"></el-table-column>
+          <el-table-column prop="coupon_status" label="优惠券状态" align="center" width="240">
             <template slot-scope="scope">
               <div>{{scope.row.coupon_status==0?"已使用":"未使用"}}</div>
             </template>
           </el-table-column>
-          <el-table-column label="优惠券说明（类型）" align="center" width="180">
+          <el-table-column label="优惠券说明（类型）" align="center" width="240">
             <template slot-scope="scope">
               <div v-if="scope.row.type == 0">所有商品</div>
               <div v-if="scope.row.type == 1">软件定制类商品</div>
@@ -253,6 +253,7 @@ export default {
   background: #ffffff;
   margin: 10px 0 0 20px;
   padding: 20px;
+  min-height: 78.5vh;
   .shaixuan {
     padding: 10px;
     background: rgb(243, 243, 243);
@@ -274,6 +275,7 @@ export default {
 }
 .youhuiquan {
   // background-size:100px  160px;
+  margin-left: 70px;
   padding-left: 10px;
   position: relative;
   height: 100px;

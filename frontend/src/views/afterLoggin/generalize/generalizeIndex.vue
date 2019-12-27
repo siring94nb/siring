@@ -57,14 +57,14 @@
           border
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="120" align="center"></el-table-column>
-          <el-table-column prop="name" label="姓名" width="160" align="center"></el-table-column>
-          <el-table-column width="130" label="操作" align="center">
+          <el-table-column prop="name" label="稿件编号" width="140" align="center"></el-table-column>
+          <el-table-column prop="name" label="标题" width="200" align="center"></el-table-column>
+          <el-table-column prop="name" label="稿件类型" width="160" align="center"></el-table-column>
+          <el-table-column prop="name" label="套餐费用" width="200" align="center"></el-table-column>
+          <el-table-column prop="name" label="稿件费用" width="180" align="center"></el-table-column>
+          <el-table-column prop="name" label="总计费用" width="180" align="center"></el-table-column>
+          <el-table-column prop="name" label="创建时间" width="180" align="center"></el-table-column>
+          <el-table-column width="150" label="操作" align="center">
             <template>
               <span class="spanDefault spanXuqiu">需求确认...</span>
             </template>
