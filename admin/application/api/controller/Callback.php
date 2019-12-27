@@ -20,7 +20,7 @@ use think\Request;
 use think\Db;
 use think\Session;
 use think\Validate;
-
+use Yansongda\Pay\Pay;
 /**
  * 支付回调
  * @author fyk
