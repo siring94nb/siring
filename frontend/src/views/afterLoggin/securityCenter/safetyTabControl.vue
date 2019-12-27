@@ -4,7 +4,7 @@
       <i class="el-icon-edit"></i>
       <span>会员中心</span>
       <span>&gt;</span>
-      <span>安全中心</span>
+      <router-link to="/securityCenterIndex" style="color:lightBlue">安全中心</router-link>
       <span>&gt;</span>
       <span>{{title}}</span>
     </logginHeader>
@@ -244,6 +244,18 @@ export default {
         }
       }, 1000);
     },
+  },
+  watch: {
+    activeName: function(val) {
+      //监听切换状态-计划单
+      if (val === "first") {
+        this.title = "绑定手机";
+      } else if (val === "second") {
+        this.title = "登录密码";
+      } else {
+        this.title = "资金密码";
+      }
+    }
   }
 };
 </script>

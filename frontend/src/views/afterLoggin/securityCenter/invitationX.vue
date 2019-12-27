@@ -180,6 +180,16 @@ export default {
         type: "error"
       });
     }
+  },
+  watch: {
+    activeName: function(val) {
+      //监听切换状态-计划单
+      if (val === "first") {
+        this.title = "邀请方法";
+      } else {
+        this.title = "邀请记录";
+      }
+    }
   }
 };
 </script>

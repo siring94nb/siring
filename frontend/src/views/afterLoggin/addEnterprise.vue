@@ -4,7 +4,7 @@
       <i class="el-icon-edit"></i>
       <span>会员中心</span>
       <span>&gt;</span>
-      <span>会员信息</span>
+      <router-link to="/memberInformation" style="color:lightBlue">会员信息</router-link>
       <span>&gt;</span>
       <span>添加企业身份</span>
     </logginHeader>

@@ -17,6 +17,10 @@ export default {
 </script>
 <style lang="scss" scoped>
     .box{
+        a{
+            position: relative;
+            z-index: 55;
+        }
         margin-left: 20px;
         background: rgb(255, 255, 255);
         div:nth-of-type(1){
