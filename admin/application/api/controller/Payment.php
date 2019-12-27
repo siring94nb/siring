@@ -116,7 +116,7 @@ class Payment extends Base
                 returnJson (0,$validate->getError());exit();
             }
             $data = UserGrade::where('user_id',$param['uid'])->field('id,user_id,grade')->find();
-           
+
             returnArray($data);
             $join = New \app\data\model\JoinRole();
             //查询折扣

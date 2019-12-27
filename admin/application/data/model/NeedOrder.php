@@ -81,7 +81,19 @@ class NeedOrder extends Model
             return $list;
         }
 
-
+    /**
+     * 支付流程
+     * @author fyk
+     * @param $id
+     * @param $money
+     * @param $pay_type
+     * @param $password
+     * @param $unionpay
+     * @return array|mixed|string|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     public function pay($id,$money,$pay_type,$password,$unionpay)
     {
         $data = self::get($id);
@@ -168,10 +180,10 @@ class NeedOrder extends Model
                         //订单统计表添加
                         $role_type = 4;
                         $budget_type = 1;
-                        (new AllOrder())->allorder_add($role_type,$budget_type,$data);
+                        $income = '';//收入金额
+                        (new AllOrder())->allorder_add($role_type,$budget_type,$data,$pay_money,$income);
 
-
-                    $this->commit();
+                        $this->commit();
 
                         return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
 
