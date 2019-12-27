@@ -301,7 +301,7 @@ export default {
         let { data, msg, code } = res;
         console.log(data.data);
         console.log(code)
-        if (code == 1) {
+        if (data.code == 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
             console.log(item)
