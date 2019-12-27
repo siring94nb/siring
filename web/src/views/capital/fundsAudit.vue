@@ -139,7 +139,7 @@ export default {
         {
           title: "用户账号",
           align: "center",
-          key: "member_account"
+          key: "phone"
         },
         {
           title: "支付类型",
