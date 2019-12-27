@@ -256,13 +256,13 @@ export default {
       let self = this;
       self.modalSetting.loading = true;
       axios.post("CapitalCard/upd", this.formItem).then(function(response) {
-        if (response.code === 1) {
-          self.$Message.success(response.msg);
+        if (response.data.code === 1) {
+          self.$Message.success(response.data.msg);
           self.getList();
           self.cancel();
         } else {
           self.modalSetting.loading = false;
-          self.$Message.error(response.msg);
+          self.$Message.error(response.data.msg);
         }
       });
     },
