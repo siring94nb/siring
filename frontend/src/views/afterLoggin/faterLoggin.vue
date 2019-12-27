@@ -237,7 +237,7 @@
     .el-menu-item.is-active {
       font-size: 16px;
       font-weight: 700;
-      color: #409eff !important;
+      color: rgb(177,18,14) !important;
     }
     li {
       width: 100%;

@@ -342,5 +342,15 @@ export default new Router({
         props: true,
         component: () =>
             import('@/views/alipay'),
-    }]
+    },
+    // 添加新稿件
+    {
+        path: "/newManuscript",
+        name: "newManuscript",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/newManuscript/index'),
+    }
+]
 })

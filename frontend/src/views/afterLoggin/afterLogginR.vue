@@ -12,8 +12,7 @@
             <span>&gt;</span>控制台
           </p>
         </div>
-
-        <div class="account_information" style="min-height: 78.5vh;">
+        <div class="account_information">
           <template>
             <div style="width:100%">
               <el-row>

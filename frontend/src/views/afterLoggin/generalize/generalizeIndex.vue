@@ -41,7 +41,7 @@
           <router-link to style="background:rgb(134,134,134)">智推完成</router-link>
         </div>
         <div>
-          <router-link to style="color:#0099ff;border:1px solid #0099ff">
+          <router-link to="/newManuscript" style="color:#0099ff;border:1px solid #0099ff">
             <i class="el-icon-plus"></i>
             <span>新发稿</span>
           </router-link>
