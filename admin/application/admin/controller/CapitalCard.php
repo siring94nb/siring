@@ -104,7 +104,7 @@ class CapitalCard extends Base
                 $res1 = Offline::where('id',$param['id'])->update(['order_status'=>$param['type']]);
 
                 //更改订单状态
-                $res2 = NeedOrder::where('id',$param['id'])->update([
+                $res2 = NeedOrder::where('need_order',$off['order_number'])->update([
                     'need_pay_type'  => 3,
                     'pay_type' => 1,
                     'pay_time' => ''
