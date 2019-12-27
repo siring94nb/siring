@@ -986,16 +986,8 @@ Route::group('admin', function () use ($afterBehavior) {
             'admin/CapitalCard/index',
             ['method' => 'get']
         ],
-        'add'   => [
-            'admin/CapitalCard/add',
-            ['method' => 'post']
-        ],
         'upd'   => [
             'admin/CapitalCard/upd',
-            ['method' => 'post']
-        ],
-        'del'   => [
-            'admin/CapitalCard/del',
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
