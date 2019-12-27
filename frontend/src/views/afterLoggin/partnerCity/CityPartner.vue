@@ -283,6 +283,7 @@ export default {
     },
     // 获取城市数据及有效期数据
     RoleCenter() {
+      console.log(1227)
       const params = {
         type: 1
       };
