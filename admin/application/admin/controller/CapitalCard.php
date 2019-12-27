@@ -6,6 +6,7 @@
  * Time: 16:22
  */
 namespace app\admin\controller;
+use app\data\model\AllOrder;
 use app\data\model\Offline;
 use app\data\model\NeedOrder;
 use think\Request;
@@ -74,11 +75,11 @@ class CapitalCard extends Base
 
                 $off = Offline::get($param['id']);
                 //更改审核状态
-                $res1 = Offline::save(['order_status'=>$param['type']],['id'=>$param['id']]);
+                $res1 = Offline::update(['order_status'=>$param['type']],['id'=>$param['id']]);
 
                 //更改订单状态
                 $data = NeedOrder::get(['need_order'=>$off['order_number']]);
-                $res2 = NeedOrder::save([
+                $res2 = NeedOrder::update([
                     'need_pay_type'  => 3,
                     'need_status'  => 4,
                     'update_time' => time()
@@ -88,7 +89,7 @@ class CapitalCard extends Base
                 $role_type = 4;
                 $budget_type = 1;
                 $income = '';//收入金额
-                $res3 = (new AllOrder())->allorder_add($role_type,$budget_type,$data,$pay_money,$income);
+                $res3 = (new AllOrder())->allorder_add($role_type,$budget_type,$data,$off['pay_money'],$income);
 
                 return $res1 && $res2  && $res3 ? true : false;
             });
@@ -100,15 +101,14 @@ class CapitalCard extends Base
 
                 $off = Offline::get($param['id']);
                 //更改审核状态
-                $res1 = Offline::save(['order_status'=>$param['type']],['id'=>$param['id']]);
+                $res1 = Offline::where('id',$param['id'])->update(['order_status'=>$param['type']]);
 
                 //更改订单状态
-                $data = NeedOrder::get(['need_order'=>$off['order_number']]);
-                $res2 = NeedOrder::save([
+                $res2 = NeedOrder::where('id',$param['id'])->update([
                     'need_pay_type'  => 3,
                     'pay_type' => 1,
                     'pay_time' => ''
-                ],['id' => $data['id']]);
+                ]);
 
                 return $res1 && $res2   ? true : false;
             });
