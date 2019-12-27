@@ -101,15 +101,14 @@ class CapitalCard extends Base
 
                 $off = Offline::get($param['id']);
                 //更改审核状态
-                $res1 = Offline::save(['order_status'=>$param['type']],['id'=>$param['id']]);
+                $res1 = Offline::where('id',$param['id'])->update(['order_status'=>$param['type']]);
 
                 //更改订单状态
-                $data = NeedOrder::get(['need_order'=>$off['order_number']]);
-                $res2 = NeedOrder::save([
+                $res2 = NeedOrder::where('id',$param['id'])->update([
                     'need_pay_type'  => 3,
                     'pay_type' => 1,
                     'pay_time' => ''
-                ],['id' => $data['id']]);
+                ]);
 
                 return $res1 && $res2   ? true : false;
             });
