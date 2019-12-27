@@ -82,8 +82,8 @@
           </div>
         </div>
       </div>
-      <button class="btn" >确定</button>
-      <!-- <button class="btn" @click="GetEnterpriseAdd">确定</button> -->
+      <!-- <button class="btn" >确定</button> -->
+      <button class="btn" @click="GetEnterpriseAdd">确定</button>
     </div>
   </div>
 </template>
