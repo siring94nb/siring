@@ -256,20 +256,20 @@ export default {
       let self = this;
       self.modalSetting.loading = true;
       axios.post("CapitalCard/upd", this.formItem).then(function(response) {
-        if (response.data.code === 1) {
-          self.$Message.success(response.data.msg);
+        if (response.code === 1) {
+          self.$Message.success(response.msg);
           self.getList();
           self.cancel();
         } else {
           self.modalSetting.loading = false;
-          self.$Message.error(response.data.msg);
+          self.$Message.error(response.msg);
         }
       });
     },
     cancel() {
       this.modalSetting.show = false;
       this.formItem.id = 0;
-      this.formItem.audit_status = "";
+      this.formItem.type = "";
     },
      doCancel(data) {
       if (!data) {
