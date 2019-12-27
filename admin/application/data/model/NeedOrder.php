@@ -117,7 +117,7 @@ class NeedOrder extends Model
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
-                //self::save(['alipay' => $res],['id' => $id]);
+                self::save(['alipay' => $res],['id' => $id]);
                 return $res; exit();
                 break;
             case 2://微信支付
@@ -141,6 +141,7 @@ class NeedOrder extends Model
                 try {
                     $data_need = [
                         'need_pay_type'=>3,
+                        'pay_type'=> 2,
                         'unionpay'=> $unionpay,
                     ];
                     self::where('id', $id)->update($data_need);
@@ -163,6 +164,7 @@ class NeedOrder extends Model
 
                 // 判断密码是否正确
                 $fund = UserFund::user($data['user_id']);
+                if($fund['money'] < $pay_money )returnJson(0,'余额不足请充值');
                 //pp($fund);die;
                 if (password_verify($password ,$fund['pay_password'])) {
                     $this->startTrans();
@@ -175,6 +177,7 @@ class NeedOrder extends Model
                             'pay_type'=> 2,
                             'pay_time'=> time(),
                             'process'=>1,
+                            'need_status'=> 4,
                         ];
                         self::save($data_need,['id' => $id]);
                         //订单统计表添加

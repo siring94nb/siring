@@ -282,6 +282,7 @@ export default {
       }
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(222)
         console.log(data);
         if (code === 1) {
           this.alist = data.data;
@@ -294,6 +295,7 @@ export default {
       };
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
+        console.log(1111)
         console.log(res);
         if (code === 1) {
           this.blist1 =data.data;

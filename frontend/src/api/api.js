@@ -210,6 +210,12 @@ export const CashDetails = params => {
     return axios.post(`${base_url}api/Capital/cash_details`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*安全中心，资金密码显示
+*/
+export const GetBalance = params => {
+    return axios.post(`${base_url}api/Payment/balance`, qs.stringify(params)).then(res => res.data);
+}
+/*
 *银行卡管理（银行卡详情）
 */
 export const BankcardList = params => {

@@ -46,7 +46,7 @@
               <i class="iconfont icon-zhengque"></i>
               <span>已设置</span>
               <span>|</span>
-              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}">修改绑定</router-link></span>
+              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'first',title:'信息修改'}}" style="color:lightblue">修改绑定</router-link></span>
             </div>
           </el-col>
         </el-row>
@@ -70,7 +70,7 @@
               <i class="iconfont icon-zhengque"></i>
               <span>已设置</span>
               <span>|</span>
-              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'second',title:'信息修改'}}">修改密码</router-link></span>
+              <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'second',title:'信息修改'}}" style="color:lightblue">修改密码</router-link></span>
             </div>
           </el-col>
         </el-row>
@@ -89,10 +89,10 @@
               资金密码非常重要，是在资金账户变动时需要输入的密码，要及时设置
             </div>
           </el-col>
-          <el-col :span="4" class="zanfang"> 
+          <el-col :span="4" :class="dis?'zanfang1':'zanfang'"> 
             <div>
               <i class="iconfont icon-zhengque"></i>
-              <span class="zanfangs">未设置</span>
+              <span class="zanfangs">{{dis?"已设置":"未设置"}}</span>
               <span>|</span>
               <span><router-link :to="{path:'/safetyTabControl',query:{canshu:'third',title:'信息修改'}}">设置</router-link></span>
             </div>
@@ -104,18 +104,37 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {GetBalance} from "@/api/api"
 export default {
   data(){
     return{
-      phone:sessionStorage.getItem("phone")
+      phone:sessionStorage.getItem("phone"),
+      dis:false//判断是否已设置资金密码
     }
   },
   components: {
     logginHeader
   },
    mounted(){
+     this.Balance();
   },
   methods:{
+    Balance(){
+      const params ={
+        uid:sessionStorage.getItem("user_id")
+      };
+      GetBalance(params).then(res=>{
+        let { data, msg, code } = res;
+        // this.showMsg(msg, code);
+        if (code == 1) {
+          console.log(data)
+            if(data.pay_password != null){
+              console.log(123123)
+              this.dis = true;
+            }
+        }
+      })
+    }
   }
 };
 </script>
@@ -190,6 +209,11 @@ export default {
     .zanfang{
       i,.zanfangs{
         color: red !important;
+      }
+    }
+    .zanfang1{
+      i,.zanfangs{
+        color: lightblue !important;
       }
     }
   }
