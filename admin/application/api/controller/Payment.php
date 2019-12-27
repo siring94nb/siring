@@ -68,7 +68,7 @@ class Payment extends Base
         if($uid){
             $data = UserFund::user($uid);
             $res = $data['money'];
-
+            $res['pay_password'] = $data['pay_password'];
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
 
         }else{
@@ -115,7 +115,8 @@ class Payment extends Base
             if(!$validate->check($param)){
                 returnJson (0,$validate->getError());exit();
             }
-            $data = UserGrade::where('user_id',$uid)->field('id,user_id,grade')->find();
+            $data = UserGrade::where('user_id',$param['uid'])->field('id,user_id,grade')->find();
+
             returnArray($data);
             $join = New \app\data\model\JoinRole();
             //查询折扣

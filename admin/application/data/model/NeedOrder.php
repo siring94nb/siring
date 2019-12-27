@@ -81,7 +81,19 @@ class NeedOrder extends Model
             return $list;
         }
 
-
+    /**
+     * 支付流程
+     * @author fyk
+     * @param $id
+     * @param $money
+     * @param $pay_type
+     * @param $password
+     * @param $unionpay
+     * @return array|mixed|string|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
+     */
     public function pay($id,$money,$pay_type,$password,$unionpay)
     {
         $data = self::get($id);
@@ -105,7 +117,7 @@ class NeedOrder extends Model
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
-                self::save(['alipay' => $res],['id' => $id]);
+                //self::save(['alipay' => $res],['id' => $id]);
                 return $res; exit();
                 break;
             case 2://微信支付
@@ -153,9 +165,34 @@ class NeedOrder extends Model
                 $fund = UserFund::user($data['user_id']);
                 //pp($fund);die;
                 if (password_verify($password ,$fund['pay_password'])) {
-                    $re = db('user_fund')->where('user_id', $data['user_id'])->setDec('money', $pay_money);
+                    $this->startTrans();
+                    try {
+                        //减去余额
+                        $re = (new UserFund())::where('user_id', $data['user_id'])->setDec('money', $pay_money);
+                        //修改订单表
+                        $data_need = [
+                            'need_pay_type'=>4,
+                            'pay_type'=> 2,
+                            'pay_time'=> time(),
+                            'process'=>1,
+                        ];
+                        self::save($data_need,['id' => $id]);
+                        //订单统计表添加
+                        $role_type = 4;
+                        $budget_type = 1;
+                        $income = '';//收入金额
+                        (new AllOrder())->allorder_add($role_type,$budget_type,$data,$pay_money,$income);
 
-                    return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
+                        $this->commit();
+
+                        return $re ? returnJson(1, '支付成功', $re) : returnJson(0, '支付失败', $re);
+
+                    } catch (\Exception $e) {
+
+                        $this->rollback();
+
+                        returnJson(0,'事务失败');exit();
+                    }
                 }else{
                     returnJson(0, '支付密码错误');
                 }

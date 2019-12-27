@@ -23,4 +23,6 @@ class UserGrade extends Model
         ]);
         return $data ? $data : returnJson(0,'新增用户等级失败');
     }
+
+
 }

@@ -94,7 +94,7 @@ class User extends Model
     public function edit($param)
     {
         $user = new User;
-        $user->save([
+        $user ->save([
             'realname'=>$param['name'],
             'id_card'=>$param['id_card'],
             'id_card_just'=>$param['id_card_just'],
@@ -109,6 +109,7 @@ class User extends Model
             'other_code'=>$param['invitation'],
             'updated_at'=>time()
         ],['id' =>$param["uid"]]);
+
         return $user  !== false ? $user : false;
     }
 }
