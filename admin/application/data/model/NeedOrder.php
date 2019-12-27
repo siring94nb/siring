@@ -175,6 +175,7 @@ class NeedOrder extends Model
                             'pay_type'=> 2,
                             'pay_time'=> time(),
                             'process'=>1,
+                            'need_status'=> 4,
                         ];
                         self::save($data_need,['id' => $id]);
                         //订单统计表添加
