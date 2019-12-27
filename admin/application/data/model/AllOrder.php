@@ -312,4 +312,36 @@ class AllOrder extends Model
                 break;
         }
     }
+
+
+    public function allorder_add($role_type,$budget_type,$data)
+    {
+        pp($data);die;
+            $user = (new User())->user_detail($data['user_id']);
+
+            pp($user);die;
+            return $this->save([
+                'role_type' => $role_type,
+                'budget_type' => $budget_type,
+                'user_id' => $user['id'],
+                'phone' => $user['phone'],
+                'yqm' => $user['invitation'],
+                'pay_type' => $data['need_pay_type'],
+                'ot_yqm' => $ot_yqm,
+                'entry_name' => $data['need_name'],
+                'no' => $data['need_name'],
+                'money' => $data['need_name'],
+                'income' => $role_type,
+                'payment' => $budget_type,
+                'pay_time' => $user_id,
+                'status' => 2,
+                'bottom_money' => $yqm,
+                'dev' => $pay_type,
+                'grade' => $grade,
+                'created_at' => $entry_name,
+                'province_id' => $no,
+                'city_id' => $no,
+            ]);
+
+    }
 }
