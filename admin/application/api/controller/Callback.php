@@ -64,11 +64,11 @@ class Callback extends Base
             // 3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）；
             // 4、验证app_id是否为该商户本身。
             // 5、其它业务逻辑情况
-            file_put_contents(storage_path('notify.txt'), "收到来自支付宝的异步通知\r\n", FILE_APPEND);
-            file_put_contents(storage_path('notify.txt'), '订单号：' . $request->out_trade_no . "\r\n", FILE_APPEND);
-            file_put_contents(storage_path('notify.txt'), '订单金额：' . $request->total_amount . "\r\n\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单号：' . $request->out_trade_no . "\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单金额：' . $request->total_amount . "\r\n\r\n", FILE_APPEND);
         } else {
-            file_put_contents(storage_path('notify.txt'), "收到异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
         }
 
         echo "success";
