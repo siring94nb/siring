@@ -60,8 +60,6 @@ export default {
         //     rightBox.style.maxWidth = "1100px"
         // }
         if (screenWidth > 1500) {
-          console.log(leftBox.clientWidth + rightBox.clientWidth);
-          console.log((screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2)
           leftBox.style.marginLeft =
             (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 -
             20 +

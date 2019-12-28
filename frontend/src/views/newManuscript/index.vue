@@ -1,7 +1,7 @@
 <template>
   <div style="background:rgb(246,246,246);padding-top:10px;max-width:1260px;margin:0 auto">
     <Myheader />
-    <div style="margin:100px 15px 0 15px;">
+    <div style="margin:100px 15px 0px 15px;">
       <div class="topHeader">
         <div>发稿推广</div>
       </div>
@@ -238,8 +238,9 @@
           <img src="../../assets/images/u2173.png" alt="">
           <img src="../../assets/images/u2173.png" alt="">
         </div>
+        <Myfooter/>
         <!-- 业务介绍 -->
-        <div class="ywjieshao">
+        <!-- <div class="ywjieshao">
           <div>
             <div class="title">定制开发</div>
             <img :src="borderImg" alt="">
@@ -316,9 +317,9 @@
             </div>
             <div class="dpu">淘宝店铺</div>
           </div>
-        </div>
+        </div> -->
         <!-- 友情链接 -->
-        <div class="youqingLink">
+        <!-- <div class="youqingLink">
           <div style="font-size:28px;width:200px;padding-left:10px;">友情链接</div>
           <div>
             <a href="">微信公众平台</a>
@@ -345,13 +346,14 @@
             <a href="">CSDN</a>
             <a href="">亚马逊云</a>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
 </template>
 <script>
 import Myheader from "@/components/header";
+import Myfooter from "@/components/footer";
 export default {
   data() {
     return {
@@ -384,7 +386,8 @@ export default {
     };
   },
   components: {
-    Myheader
+    Myheader,
+    Myfooter
   },
   mounted() {},
   methods: {
