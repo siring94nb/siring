@@ -181,7 +181,29 @@
           <el-form-item label="邀请码">
             <el-input v-model="dataObj.invit" placeholder="邀请码可不填"></el-input>
           </el-form-item>
-
+          <div class="selectCity">
+              <!-- 注册页添加城市三级联动下拉列表 -->
+              <span><span style="color:#F56C6C">*</span>城市</span>
+           <el-select v-model="selectItem" @change="selectFn($event)" placeholder="请选择" style="width:157.5px;">
+            <!--选择项的value值默认选择项文本 可动态绑定选择项的value值 更改v-model指令绑定数据-->
+              <!-- <el-option v-for="(item,index) in items" :value="item.id" :key="index" :id="item.id"></el-option> -->
+               <el-option
+                v-for="(item,index) in items"
+                :key="index+item.name"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+          </el-select>
+          <el-select v-model="selectItem1" @change="selectFn1($event)" placeholder="请选择"  style="width:157.5px;">
+              <!-- <el-option v-for="(item,index) in items1" :value="item.id" :key="index">{{item.name}}</el-option> -->
+               <el-option
+                v-for="(item,index) in items1"
+                :key="index+item.name"
+                :label="item.name"
+                :value="item.id">
+              </el-option>
+          </el-select>
+          </div>
           <div class="prot">
             <div>
               <input type="checkbox" v-model="protocol" />
@@ -278,7 +300,7 @@
 
 <script>
 import validCode from "@/components/vaildcode";
-import { Login, Register, GetCode, ForgetPwd, Logout } from "@/api/api";
+import { Login, Register, GetCode, ForgetPwd, Logout,GetProvince,GetCityList } from "@/api/api";
 export default {
   components: {
     validCode
@@ -299,7 +321,14 @@ export default {
       showPwd: false,
       protocol: false,
       showTime: false,
-      validateTime: 60
+      validateTime: 60,
+      // 城市三级联动下拉框
+      selectItem: "请选择",
+      items: [],
+      selectItem1: "请选择",
+      items1: [],
+      pid:0,//省份id
+      cid:0//市id
     };
   },
   computed: {
@@ -310,6 +339,7 @@ export default {
   mounted() {
     this.isLogin();
     this.ceshi();
+    this.getGetProvince();
   },
   methods: {
     isLogin() {
@@ -399,13 +429,24 @@ export default {
         password: this.dataObj.password,
         password_confirm: this.dataObj.password,
         invitation: this.dataObj.invit,
-        code: this.dataObj.code
+        code: this.dataObj.code,
+        pid:this.pid,
+        cid:this.cid
       };
       Register(params).then(res => {
         let { data, msg, code } = res;
         this.showMsg(msg, code);
         this.handleClose();
       });
+    },
+    //获取省份
+    getGetProvince(){
+      GetProvince().then(res=>{
+        let{data,code,msg} = res;
+        if(code == 1){
+          this.items = data;
+        }
+      })
     },
     // 测试通过他人邀请码过来
     ceshi(){
@@ -416,6 +457,25 @@ export default {
         this.isRegister = 1
         this.dataObj.invit = yqm;
       }
+    },
+    // 城市改变，获取相应的二级城市等
+    selectFn() {
+      let pid = this.selectItem;
+      this.pid =parseInt(pid);
+      const params = {pid:pid}
+      GetCityList(params).then(res=>{
+        let {data,code,msg} = res;
+        if(code == 1) {
+          this.items1 = data;
+          this.selectItem1 = data[0].id;
+          this.cid = data[0].id
+        }
+      })
+    },
+    //pid,cid
+    selectFn1() {
+      this.cid = parseInt(this.selectItem1);
+      console.log(this.cid)
     },
     // 登录
     onLogin() {
@@ -679,6 +739,17 @@ export default {
     .logo-wrap {
       text-align: center;
       margin-bottom: 20px;
+    }
+  }
+  .selectCity{
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    >span{
+      width: 70px;
+      padding-right: 12px;
+      box-sizing:border-box;
+      text-align: right;
     }
   }
 }
