@@ -47,7 +47,11 @@ class Callback extends Base
         $request = Request::instance();
         $pay = new Pay($this->config);
 
-        return $pay->driver('alipay')->gateway()->verify($request->param());
+        if($pay->driver('alipay')->gateway()->verify($request->param())){
+            $url = 'https://manage.siring.com.cn/#/afterLoggin';
+
+            header('Location:'.$url);
+        };
     }
 
     /**
