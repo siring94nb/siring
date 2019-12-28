@@ -42,11 +42,12 @@ class Callback extends Base
      * @param Request $request
      * @return array|bool
      */
-    public function software_return(Request $request)
+    public function software_return()
     {
+        $request = Request::instance();
         $pay = new Pay($this->config);
 
-        return $pay->driver('alipay')->gateway()->verify($request->request());
+        return $pay->driver('alipay')->gateway()->verify($request->param());
     }
 
     /**
