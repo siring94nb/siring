@@ -73,6 +73,7 @@ class Callback extends Base
             file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
             file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
             file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单返回所有参数：' . $request->param() . "\r\n\r\n", FILE_APPEND);
             $no = $request->param('out_trade_no');
             db('need_order')->where('need_order',$no)->update(['pay_time'=>time()]);
         } else {
