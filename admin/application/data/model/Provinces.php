@@ -22,13 +22,13 @@ class Provinces extends Model
     {
         $validate = new Validate([
             ['pid', 'require', '省份id不能为空'],
-            ['type', 'require', '城市级别不能为空'],
+//            ['type', 'require', '城市级别不能为空'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
         }
 
-        $data =  Provinces::all(['pid'=>$param['pid'],'type'=>$param['type']]);
+        $data =  Provinces::all(['pid'=>$param['pid']]);
 
         return $data ? $data->toArray() : returnJson(0,'数据不存在');
     }

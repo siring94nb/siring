@@ -113,8 +113,8 @@ class NeedOrder extends Model
 
                 $pay = 0.01 ;//先测试1分钱
                 $title = '软件定制' ;
-                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 异步通知 url，*强烈建议加上本参数*
-                $return_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 同步通知 url，*强烈建议加上本参数*
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
 
                 self::save(['alipay' => $res],['id' => $id]);

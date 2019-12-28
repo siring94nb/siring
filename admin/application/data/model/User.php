@@ -45,6 +45,8 @@ class User extends Model
             'salt' => $param['salt'],
             'ip' => $param['ip'],
             'province' => $param['region'],
+            'province_id' => $param['pid'],
+            'city_id' => $param['cid'],
             'created_at' => time(),
         ]);
         return $user  !== false ? $user : false;
