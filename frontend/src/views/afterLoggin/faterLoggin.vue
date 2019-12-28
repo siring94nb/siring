@@ -162,8 +162,8 @@
       cityHehuorenX() {
         // 因为前期想法错误，当前修改较麻烦
         CityTotal().then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
+          let { data, msg } = res;
+          if (data.code === 1) {
             this.arr[2].con[0].rou = "/CityPartner";
           } else {
             // this.arr[2].con[0].rou = "/CityPartner";
@@ -175,8 +175,8 @@
       // 等级会员
       classHuiyuanX() {
         MemberTotal().then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
+          let { data, msg } = res;
+          if (data.code === 1) {
             this.arr[2].con[1].rou = "/ClassMembersA";
           } else {
             this.arr[2].con[1].rou = "/ClassMembersX";
@@ -189,7 +189,7 @@
       fenbaoshangX() {
         SubcontractTotal().then(res => {
           let { data, msg, code } = res;
-          if (code === 1) {
+          if (data.code === 1) {
             this.arr[2].con[2].rou = "/subContractorSm1";
           } else {
             this.arr[2].con[2].rou = "/subContractorIndex";

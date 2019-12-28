@@ -596,7 +596,7 @@ export default {
   padding: 30px 0; 
   text-align: center;
   position: relative;
-  bottom: 200px;
+  margin-top: -220px;
   z-index: 60;
   .hzs{
     margin: 50px;
