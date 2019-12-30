@@ -74,27 +74,26 @@ class Callback extends Base
             file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
             file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
             file_put_contents('notify.txt', '订单返回所有参数：' . $request->param() . "\r\n\r\n", FILE_APPEND);
-            $no['order_no'] = $request->param('out_trade_no');
-            $no['money'] = $request->param('total_amount');
-            $res = Db::transaction( function() use ( $no ){
-                $need = new NeedOrder();
-                //查询订单
-                $data = $need::get(['need_order'=>$no['order_no']]);
-                $res1 = $need->where('need_order',$no['order_no'])->update([
-                    'pay_type'=>2,
-                    'need_pay_type'=>1,
-                    'pay_time'=>time(),
-                ]);
 
-                //订单统计表添加
-                $role_type = 4;
-                $budget_type = 1;
-                $income = '';//收入金额
-                $res2 = (new AllOrder())->allorder_add($role_type,$budget_type,$data,$no['money'],$income);
-                    return $res1 && $res2   ? true : false;
-            });
+            $no = $request->param('out_trade_no');
+            $money = $request->param('total_amount');
 
-            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
+            //查询订单
+            $data = NeedOrder::get(['need_order'=>$no]);
+
+            $res1 = NeedOrder::where('need_order',$no)->update([
+                'pay_type'=>2,
+                'need_pay_type'=>1,
+                'pay_time'=>time(),
+            ]);
+
+            //订单统计表添加
+            $role_type = 4;
+            $budget_type = 1;
+            $income = '';//收入金额
+            $res2 = (new AllOrder())->allorder_add($role_type,$budget_type,$data,$money,$income);
+
+           // return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
 
         } else {
             file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
