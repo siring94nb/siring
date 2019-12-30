@@ -1,5 +1,5 @@
 <template>
-<div style="display:flex">
+<div style="display:flex;background:#ffffff" class="box">
   <div class="dingDanBox">
     <el-row>
       <el-col :span="20">{{daifukuanDD[0].name}}</el-col>
@@ -160,15 +160,21 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.box{
+  margin:10px 0 0 20px;
+  padding-bottom: 10px;
+}
 .dingDanBox {
+  background: #ffffff;
   font-size: 13px !important;
   font-family: "微软雅黑";
   margin: 0 30px;
-  width: 295px;
+  width: 425px;
   .el-row:nth-of-type(1) {
     border-bottom: 1px solid rgb(242, 242, 242);
     padding: 10px 0;
     margin-bottom: 10px;
+    background: #ffffff;
   }
   .el-col span {
     color: red;

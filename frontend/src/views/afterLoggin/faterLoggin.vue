@@ -165,7 +165,7 @@
           let { data, msg } = res;
             console.log(res)
             console.log(data.code)
-          if (data.code === 1) {
+          if (data.code == 1) {
             this.arr[2].con[0].rou = "/CityPartner";
           } else {
             this.arr[2].con[0].rou = "/CityPartner";
@@ -178,7 +178,7 @@
       classHuiyuanX() {
         MemberTotal().then(res => {
           let { data, msg } = res;
-          if (data.code === 1) {
+          if (data.code == 1) {
             this.arr[2].con[1].rou = "/ClassMembersA";
           } else {
             // this.arr[2].con[1].rou = "/ClassMembersX";
@@ -191,7 +191,7 @@
       fenbaoshangX() {
         SubcontractTotal().then(res => {
           let { data, msg, code } = res;
-          if (data.code === 1) {
+          if (data.code == 1) {
             this.arr[2].con[2].rou = "/subContractorSm1";
           } else {
             // this.arr[2].con[2].rou = "/subContractorIndex";

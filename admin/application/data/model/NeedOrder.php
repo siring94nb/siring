@@ -94,7 +94,7 @@ class NeedOrder extends Model
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function pay($id,$money,$pay_type,$password,$unionpay)
+    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio)
     {
         $data = self::get($id);
         if(!$data) returnJson(0,'订单有误');
@@ -104,7 +104,7 @@ class NeedOrder extends Model
         //查询比例
         $grade = JoinRole::member_details($user['grade']);
         //算出金额
-        $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+        $pay_money = $data['need_money'] * ($grade['discount']/100) * $ratio;
         //比较
         if($money != $pay_money) returnJson(0,'系统有误');
 
