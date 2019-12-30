@@ -80,9 +80,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .gnmkBox {
-  width: 100%;
+  width: 98.5%;
   background: #ffffff;
-  padding: 10px 20px;
+  padding: 10px;
+  margin-left: 20px;
   margin-top: 5px;
   box-sizing: border-box;
   font-family: "微软雅黑 Bold", "微软雅黑 Regular", "微软雅黑";
