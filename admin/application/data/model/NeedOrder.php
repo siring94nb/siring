@@ -94,7 +94,7 @@ class NeedOrder extends Model
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function pay($id,$money,$pay_type,$password,$unionpay)
+    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio)
     {
         $data = self::get($id);
         if(!$data) returnJson(0,'订单有误');
@@ -104,14 +104,14 @@ class NeedOrder extends Model
         //查询比例
         $grade = JoinRole::member_details($user['grade']);
         //算出金额
-        $pay_money = $data['need_money'] * ($grade['discount']/100) * 0.7;
+        $pay_money = $data['need_money'] * ($grade['discount']/100) * $ratio;
         //比较
         if($money != $pay_money) returnJson(0,'系统有误');
 
         switch ($pay_type){
             case 1://支付宝支付
 
-                $pay = 0.01 ;//先测试1分钱
+                $pay = 1 ;//先测试1分钱
                 $title = '软件定制' ;
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*

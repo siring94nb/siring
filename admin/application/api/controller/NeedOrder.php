@@ -220,7 +220,8 @@ class  NeedOrder  extends  Base
     {
         switch ($type){
             case 1:
-                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay);
+                $ratio = 0.7;
+                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
 
                 return $data;
                 break;

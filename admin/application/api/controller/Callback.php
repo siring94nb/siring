@@ -7,7 +7,7 @@
  */
 namespace app\api\controller;
 use app\data\model\AllOrder;
-use app\data\model\CashWith;
+use app\data\model\NeedOrder;
 use app\data\model\UserCard;
 use app\data\model\Invoice;
 use app\data\model\Recharge;
@@ -80,7 +80,11 @@ class Callback extends Base
                 $need = new NeedOrder();
                 //查询订单
                 $data = $need::get(['need_order'=>$no['order_no']]);
-                $res1 = $need->where('need_order',$no['order_no'])->update(['pay_time'=>time()]);
+                $res1 = $need->where('need_order',$no['order_no'])->update([
+                    'pay_type'=>2,
+                    'need_pay_type'=>1,
+                    'pay_time'=>time(),
+                ]);
 
                 //订单统计表添加
                 $role_type = 4;
