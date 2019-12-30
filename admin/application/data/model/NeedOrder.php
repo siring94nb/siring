@@ -111,7 +111,7 @@ class NeedOrder extends Model
         switch ($pay_type){
             case 1://支付宝支付
 
-                $pay = 1 ;//先测试1分钱
+                $pay = 0.01 ;//先测试1分钱
                 $title = '软件定制' ;
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*
