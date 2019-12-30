@@ -9,6 +9,8 @@ namespace app\api\controller;
 use app\data\model\InvestmentProject;
 use app\data\model\SoftOrder;
 use app\data\model\MealOrder;
+use app\data\model\NeedOrder;
+use app\data\model\AllOrder;
 use app\data\model\PromotionOrder;
 use app\data\model\UserFund;
 use think\Request;
@@ -33,13 +35,14 @@ class Console extends Base
             $user_id = $param["user_id"];
         }
 
-        $user = new \app\data\model\User();
-        $data = $user->user_detail($user_id);
-        //pp($data);die;
-        $user_fund =  UserFund::user($user_id);
-        $data['money'] = $user_fund['money'];
-        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
-        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+
+//        $user = new \app\data\model\User();
+//        $data = $user->user_detail($user_id);
+//        //pp($data);die;
+//        $user_fund =  UserFund::user($user_id);
+//        $data['money'] = $user_fund['money'];
+//        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
+//        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**
