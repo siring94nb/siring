@@ -67,7 +67,8 @@ class Payment extends Base
         $uid = Session::get("uid");
         if($uid){
             $data = UserFund::user($uid);
-            $res = $data['money'];
+
+            $res['money'] = $data['money'];
             $res['pay_password'] = $data['pay_password'];
             return $res ? returnJson(1,'获取成功',$res) : returnJson(0,'获取失败',$res);
 
