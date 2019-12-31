@@ -408,7 +408,13 @@ export const GetSetMeal = params => {
 export const GetCustomCase = params => {
     return axios.get(`${base_url}api/Website/custom_case`, { params: params });
 }
-
+/*
+*ai推广引擎
+demand_add
+ */
+export const demandAdd = params =>{
+    return axios.post(`${base_url}api/Manuscript/demand_add`, params).then(res => res.data);
+}
 /**
  * 小程序SaaS 模板列表
  */

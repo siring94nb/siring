@@ -46,31 +46,21 @@ export default {
   },
   methods: {
     changeSize() {
+      let screenWidth = document.body.clientWidth;
+      let leftBox = this.$refs.leftBox;
+      let rightBox = this.$refs.rightBox;
       return (() => {
-        let screenWidth = document.body.clientWidth;
-        let leftBox = this.$refs.leftBox;
-        let rightBox = this.$refs.rightBox;
-        // console.log(this.$route.path)
-        // if(this.$route.path === "/demand_order"){
-        //     rightBox.style.maxWidth = "1340px"
-        //     console.log(this.$route.path)
-        //     console.log( rightBox.style.maxWidth)
-        // }else{
-        //   console.log(this.$route.path)
-        //     rightBox.style.maxWidth = "1100px"
-        // }
         if (screenWidth > 1500) {
-          leftBox.style.marginLeft =
-            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 -
-            20 +
-            "px";
           rightBox.style.marginLeft =
-            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 +
+            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 + 20+
             leftBox.clientWidth +
             "px";
+            document.body.style.width = "100%";
         } else {
-          leftBox.style.marginLeft = "0px";
-          rightBox.style.marginLeft = leftBox.clientWidth + "px";
+          // leftBox.style.marginLeft = "0px";
+          // console.log(1111)
+          rightBox.style.marginLeft = leftBox.clientWidth+ 20  + "px";
+          document.body.style.width = leftBox.clientWidth + rightBox.clientWidth +"px";
         }
       })();
     }
@@ -78,16 +68,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 .afLogginBox {
   min-height: 98.5vh;
   background: rgb(242, 247, 250);
-  padding: 5px 10px;
+  padding: 5px 10px 10px 0;
   border-top: 2px solid #ffffff;
   // max-width: 1260px;
-  min-width: 1463px;
+  // width: 1480px;
   .left {
     width: 123px;
     float: left;
+    position: relative;
+    z-index: 100;
   }
   .right {
     margin-left: 150px;

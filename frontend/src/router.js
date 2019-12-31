@@ -307,6 +307,14 @@ export default new Router({
             component: () =>
                 import('@/views/afterLoggin/generalize/generalizeIndex'),
         },
+        {   //ai推广流程
+            path: "/flowIndex",
+            name: "flowIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/generalize/flowIndex'),
+        },
         {
             path: "/ceshi",
             name: "ceshi",

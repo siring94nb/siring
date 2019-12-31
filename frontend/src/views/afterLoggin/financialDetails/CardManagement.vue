@@ -30,9 +30,10 @@
         <i class="el-icon-bank-card"></i>
         <span>添加银行卡</span>
       </div>
-      <div class="addCardList" :style="{display:kzCanshu}">
+      <el-dialog :visible.sync="dialogVisible" width="700px">
+        <div class="addCardList" >
         <div>
-          <i class="el-icon-circle-close" @click.stop="dk"></i>
+          <!-- <i class="el-icon-circle-close" @click.stop="dk"></i> -->
         </div>
         <div>添加银行卡</div>
         <div>
@@ -71,6 +72,8 @@
           >确定</el-button>
         </div>
       </div>
+      </el-dialog>
+      
     </div>
   </div>
 </template>
@@ -80,6 +83,7 @@ import {BankcardList,BankcardAdd,BankcardDel} from "@/api/api";
 export default {
   data() {
     return {
+      dialogVisible :false,
       moren: 0,
       // 测试卡号
       // cardId: "4567712345666666",
@@ -181,11 +185,7 @@ export default {
     },
     // 打开添加银行卡面板
     dk() {
-      if (this.kzCanshu === "none") {
-        this.kzCanshu = "block";
-      } else {
-        this.kzCanshu = "none";
-      }
+      this.dialogVisible = true;
     },
     // 删除，后继加接口，目前暂时将样式删除
     deleteList(num) {
@@ -300,16 +300,16 @@ export default {
     }
   }
   .addCardList {
-    border-radius: 5px;
-    position: absolute;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    z-index: 50;
-    width: 695px;
-    left: 50%;
-    margin-left: -347px;
-    top: 260px;
+    // border-radius: 5px;
+    // position: absolute;
+    // background: #ffffff;
+    // border: 1px solid rgba(0, 0, 0, 0.1);
+    // padding: 5px;
+    // z-index: 50;
+    // width: 695px;
+    // left: 50%;
+    // margin-left: -347px;
+    // top: 260px;
     > div {
       margin-bottom: 20px;
       > span {

@@ -1,5 +1,6 @@
 <template>
   <div>
+   <el-dialog :visible.sync="dialogVisible">
     <el-table
       ref="multipleTable"
       :data="tableData.slice((currentPage-1)*pagesize,currentPage*pagesize)"
@@ -55,6 +56,7 @@
         </template>
       </el-table-column>
     </el-table>
+    </el-dialog>
     <div style="text-align: center;margin-top: 30px;">
       <el-pagination
         background
@@ -65,6 +67,9 @@
       </el-pagination>
     </div>
     <el-checkbox @change="changeFun(tableData)" :indeterminate="Indeterminate" >全选</el-checkbox>
+    <button @click="addRoleHandle">gb</button>
+    <button @click="checkWord">读取word</button>
+    <div></div>
   </div>
 </template>
 <script>
@@ -74,6 +79,8 @@ export default {
   name: "dataList",
   data() {
     return {
+      dialogType: 'new',
+      dialogVisible: false,
       checkAll: false,
       Indeterminate: false,
       checkedCities:[],
@@ -183,6 +190,10 @@ export default {
   components: {},
   mounted() {},
   methods: {
+     addRoleHandle() {
+        //  this.dialogType = 'new'
+         this.dialogVisible = true
+     },
       // handleCheckAllChange(val) {
       //   console.log(val)
       //   this.checkedCities = val ? console.log( this.tableData) : [];
@@ -214,7 +225,27 @@ export default {
         console.log(val.length);
         console.log(this.pagesize);
         // console.log(val)
+      },
+      checkWord(){
+        var w = new ActiveXObject('Word.Application');
+        var docText;
+        var obj;
+        if(w != null) {
+          w.Visible = true;
+          obj = w.Documents.Open("D:\\word\\go.doc");
+          docText = obj.Content;
+          w.Selection.TypeText("Hello");
+          w.Documents.Save();
+          document.write(docText);//Print on webpage
+          w.Documents.Add();
+          w.Selection.TypeText("Writing This Message ....");
+          w.Documents.Save("D:\\word\\go.doc");
+          w.Quit();
+          /*Don't forget
+          set w.Visible=false */
+        }
       }
+  
   }
 };
 </script>

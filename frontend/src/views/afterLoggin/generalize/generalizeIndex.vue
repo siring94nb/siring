@@ -34,7 +34,7 @@
       </div>
       <div class="skipScreen">
         <div>
-          <router-link to style="background:red">需求确认...</router-link>
+          <router-link to="flowIndex" style="background:red">需求确认...</router-link>
           <router-link to style="background:rgb(102,153,0)">代写中...</router-link>
           <router-link to style="background:rgb(0,51,255)">确认稿件</router-link>
           <router-link to style="background:rgb(171,147,48)">智推中</router-link>
@@ -59,7 +59,7 @@
           <el-table-column type="selection" width="59" align="center"></el-table-column>
           <el-table-column prop="name" label="稿件编号" width="140" align="center"></el-table-column>
           <el-table-column prop="name" label="标题" width="200" align="center"></el-table-column>
-          <el-table-column prop="name" label="稿件类型" width="160" align="center"></el-table-column>
+          <el-table-column prop="name" label="稿件类型" width="170" align="center"></el-table-column>
           <el-table-column prop="name" label="套餐费用" width="200" align="center"></el-table-column>
           <el-table-column prop="name" label="稿件费用" width="180" align="center"></el-table-column>
           <el-table-column prop="name" label="总计费用" width="180" align="center"></el-table-column>
@@ -172,7 +172,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .bottomBox {
-  margin: 10px 0 0 30px;
+  margin: 10px 0 0 20px;
   background: #ffffff;
   font-family: "Arial Normal", "Arial";
   .suoyin {

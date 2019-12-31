@@ -160,6 +160,13 @@
       "unicode_decimal": 58884
     },
     {
+      "icon_id": "5831349",
+      "name": "查阅原卷",
+      "font_class": "chayueyuanjuan",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
       "icon_id": "5896578",
       "name": "感叹号",
       "font_class": "gantanhao",

@@ -1,134 +1,97 @@
 <template>
   <div>
-    <!-- <Myheader/> -->
-    <div class="afLogginBox" style="padding:0">
-      <!-- <div class="left" ref="leftBox">
-        <faterLoggin />
-      </div> -->
-      <div class="right" ref="rightBox" style="padding:0">
-        <div style="border-bottom:5px solid rgb(242, 247, 250);padding:0 0 10px 5px">
-          <p>
-            <i class="iconfont icon-kongzhitai" style="color:rgb(201,0,0)"></i>控制中心
-            <span>&gt;</span>控制台
-          </p>
-        </div>
-        <div class="account_information">
-          <template>
-            <div style="width:100%">
-              <el-row>
-                <el-col :span="18">
-                  <div>
-                    <el-row>
-                      <!-- 最左侧个人头像 -->
-                      <el-col :span="4">
-                        <img
-                          :src="userMessage1.img!==null?userMessage1.img:require('../../assets/images/u158.png')"
-                        />
-                        <!-- <img src="../../assets/images/1.png"/> -->
-                      </el-col>
-                      <!-- 小图标 -->
-                      <el-col :span="3">
-                        <ul>
-                          <li v-for="(item,index) in arr" :key="index">
-                            <img
-                              :src="require('../../assets/images/'+(index+5)+'.png')"
-                              :class="[index===0?'hhr':'hhr1']"
-                            />
-                          </li>
-                        </ul>
-                      </el-col>
-                      <!-- 中部账号信息 -->
-                      <el-col :span="11" class="middle_message">
-                        <el-row>
-                          <el-col :span="8" class="mm_left">账号：</el-col>
-                          <el-col :span="12" class="mm_right">{{userMessage1.phone}}</el-col>
-                        </el-row>
-                        <el-row>
-                          <el-col :span="8" class="mm_left">{{userMessage1.type===1?"普通会员":userMessage1.type===2?"合伙人":"分包商"}}</el-col>
-                          <el-col :span="14" class="mm_right">
-                            <span class="upgrade">升级会员获佣金</span>
-                          </el-col>
-                        </el-row>
-                        <el-row>
-                          <el-col :span="8" class="mm_left">邀请码：</el-col>
-                          <el-col :span="14" class="mm_right invite">
-                            <span>{{userMessage1.invitation	}}</span>
-                            <span>详细</span>
-                          </el-col>
-                        </el-row>
-                      </el-col>
-                      <!-- 安全信息 -->
-                      <el-col :span="4" class="aq">
-                        <el-row>
-                          <el-col :span="24">
-                            <el-card :body-style="{ padding: '0px' }" shadow="never">
-                              <img
-                                style="width:116px;height:116px"
-                                :src="require('../../assets/images/u194.png')"
-                              />
-                              <div>
-                                <span>安全等级：</span>
-                                <span>高</span>
-                              </div>
-                            </el-card>
-                          </el-col>
-                        </el-row>
-                      </el-col>
-                    </el-row>
-                  </div>
-                </el-col>
-                <el-col :span="6" class="mLeft">
-                  <div>
-                    <el-row>
-                      <el-col :span="12">
-                        <i class="el-icon-circle-check"></i>
-                        <span>余额</span>
-                      </el-col>
-                      <el-col :span="12">
-                        <span>{{userMessage1.money}}</span>
-                        <span>元</span>
-                        <!-- <i class="el-icon-arrow-right"></i> -->
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <span><router-link to="withdrawX" style="color:#0889f5">提现</router-link></span>
-                    </el-row>
-                  </div>
-                </el-col>
-              </el-row>
+    <div>
+      <logginHeader>
+        <i class="iconfont icon-huiyuan"></i>
+        <span>会员中心</span>
+        <span>&gt;</span>
+        <span>会员信息</span>
+      </logginHeader>
+      <div style="display: flex;">
+        <div class="boxM">
+          <div style=" display: flex">
+            <div class="defaultImg">
+              <img :src="imgTou" alt="用户头像" />
             </div>
-          </template>
+            <div class="biaozhi">
+              <i class="iconfont icon-huaban_fuzhi"></i>
+              <ul>
+                <li v-for="(item,index) in arr" :key="index">
+                  <img :src="require('../../assets/images/'+(index+6)+'.png')" />
+                </li>
+              </ul>
+            </div>
+            <div class="account">
+              <ul>
+                <li>
+                  <span>账号：</span>
+                  <span>{{userMessage1.phone}}</span>
+                </li>
+                <li>
+                  <span>{{userMessage1.type===1?"普通会员":userMessage1.type===2?"合伙人":"分包商"}}：</span>
+                  <span>升级会员获佣金</span>
+                </li>
+                <li style="padding-top:10px;">
+                  <span>邀请码：</span>
+                  <span>{{userMessage1.invitation }}</span>
+                  <span>详细</span>
+                </li>
+              </ul>
+            </div>
+            <div class="anquan">
+              <img style="width:116px;height:116px" :src="require('../../assets/images/u194.png')" />
+              <div>
+                <span>安全等级：</span>
+                <span>中</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <gnmk >我的订单</gnmk>
-        <div class="dinDanCL" style="display: flex; flex:1">
-            <ding-dan/>
-             <!-- <ding-dan v-for="(item,index) in arr" :key="index" /> -->
+        <div class="yue">
+          <div>
+            <i class="iconfont icon--zijinguanli"></i>
+            <span>余额</span>
+          </div>
+          <div>
+            <div class="yueBox">
+              <span style="font-size:24px;padding-right:10px;">{{userMessage1.money}}</span>
+              <span style="font-size:13px;">元</span>
+              <i class="el-icon-arrow-right"></i>
+            </div>
+            <div class="tx">提现</div>
+          </div>
         </div>
-        <gnmk1 >角色收益</gnmk1>
       </div>
     </div>
+    <gnmk>我的订单</gnmk>
+    <div class="dinDanCL" style="display: flex; flex:1">
+      <ding-dan />
+    </div>
+    <gnmk1>角色收益</gnmk1>
   </div>
 </template>
 <script>
 import Myheader from "@/components/header";
 import faterLoggin from "@/views/afterLoggin/faterLoggin";
+import logginHeader from "@/components/logginHeader";
 import gnmk from "@/components/gnmk";
 import gnmk1 from "@/components/gnmk1";
 import dingDan from "@/components/dingDan";
-import {GetUserMassage,GetSumIndent} from "@/api/api";
+import { GetUserMassage, GetSumIndent } from "@/api/api";
 export default {
-  name:"afer-logginR",
+  name: "afer-logginR",
   data() {
     return {
-      ceshi:"123123",
-      userMessage1:{},
-      arr: [1, 2, 3]
+      userMessage1: {},
+      arr: [1, 2],
+      imgTou: "",
+      defaultImg: require("../../assets/images/u158.png")
     };
   },
-  mounted(){
+  mounted() {
     this.userMessage();
   },
-  methods:{
+  methods: {
     showMsg(msg, code) {
       this.$message({
         message: msg,
@@ -136,178 +99,142 @@ export default {
       });
     },
     // 获取用户信息
-    userMessage(){
-      console.log(11111,1228)
-        const userId = sessionStorage.getItem("user_id");
-        const params = {
-          user_id : userId
+    userMessage() {
+      console.log(11111, 1228);
+      const userId = sessionStorage.getItem("user_id");
+      const params = {
+        user_id: userId
+      };
+      GetUserMassage(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(data);
+        // this.showMsg(msg,code);
+        if (code === 1) {
+          this.userMessage1 = data;
+          this.imgTou = data.img || this.defaultImg;
+          // console.log(this.userMessage1);
         }
-        GetUserMassage(params).then(res=>{
-          let { data, msg, code } = res;
-          // this.showMsg(msg,code);
-          if(code === 1 ){
-              this.userMessage1 = data;
-              // console.log(this.userMessage1);
-          }
-        })
-    },
+      });
+    }
   },
   components: {
     gnmk,
     gnmk1,
-    dingDan
+    dingDan,
+    logginHeader
   }
 };
 </script>
 <style lang="scss" scoped>
-.afLogginBox {
-  background: rgb(242, 247, 250);
-  border-top: 2px solid #ffffff; 
-  // max-width: 1260px;
-  // min-width:1260px;
-  // height: 1000px;
-  .left {
-    width: 123px;
-    float: left;
-  }
-  .right {
-    // margin-left: 150px;
-    padding-left: 10px;
-    // margin-top: 100px;
-    max-width: 1100px;
-    div {
-      background: #ffffff;
-    }
-    div:nth-of-type(1) {
-      padding: 10px 10px 0 10px;
-      font-size: 18px;
-      i {
-        margin-right: 10px;
-      }
-      span:nth-of-type(1) {
-        margin: 0 4px;
-      }
-    }
-    .account_information {
-      display: flex;
-      width: 100%;
-      margin-top: 10px;
-      border: none;
-      img:nth-of-type(1) {
-        width: 120px;
-        height: 123px;
-      }
-      .el-row {
-        width: 100%;
-        padding: 0;
-        .el-row {
-          ul {
-            li {
-              margin-bottom: 25px;
-            }
-          }
-        }
-        .mm_left {
-          font-size: 20px;
-          color: #949494;
-        }
-        .mm_right {
-          font-size: 28px;
-          .upgrade {
-            display: inline-block;
-            color: #0766bc;
-            font-size: 18px;
-            background: rgb(204, 230, 253);
-            padding: 10px 20px;
-            border-radius: 5px;
-          }
-        }
-        .invite {
-          font-size: 20px;
-          span:nth-of-type(2) {
-            font-size: 14px;
-            color: #bcbcbc;
-            display: inline-block;
-            padding: 6px 12px;
-            border: 1px solid #bcbcbc;
-            border-radius: 5px;
-            margin-left: 20%;
-          }
-        }
-      }
-      .middle_message {
-        .el-row {
-          margin-bottom: 25px;
-          &:last-child {
-            margin-bottom: 0;
-          }
-        }
-      }
-      .el-col {
-        padding: 0;
-        ul {
-          li {
-            img {
-              width: 30px;
-              height: 30px;
-              margin-left: 25px;
-            }
-            .hhr {
-              width: 80px;
-              height: 23px;
-              margin: 0;
-            }
-            .hhr1{
-              width: 30px;
-              height: 30px;
-            }
-          }
-        }
-      }
+.boxM {
+  background: #fff;
+  margin: 10px 0 0 20px;
+  padding: 40px;
+  .defaultImg {
+    img {
+      width: 120px;
+      height: 123px;
     }
   }
-  .el-card {
-    padding: 0 !important;
-    border: 0;
-    margin-top: -10px;
-    color: #bcbcbc;
-    font-size: 16px;
-    div {
-      padding: 10px 0 0 0 !important;
-    }
-    span:nth-of-type(2) {
-      font-size: 18px;
-      color: #669900;
-      font-weight: 700;
-    }
-  }
-  .mLeft {
-    color: #ff0000;
-    font-weight: 400;
-    span:nth-of-type(1) {
+  .biaozhi{
+    margin-left: 85px;
+    margin-right: 20px;
+    i{
+      width: 80px;
+      height: 23px;
+      color: rgb(252,193,45);
       font-size: 20px;
     }
-    span:nth-of-type(2) {
-      font-size: 13px;
-    }
-    i {
-      font-size: 25px;
-    }
-    .el-row {
-      margin-bottom: 50px;
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
-    .el-row:nth-of-type(2) span {
-      font-size: 18px;
-      color: #0889f5;
-      // float:right;
-      display: inline-block;
-      border: 1px solid #0889f5;
-      border-radius: 5px;
-      padding: 5px 30px;
+    img{
+      width: 40px; 
+      height: 40px;
+      padding: 10px 0 0 20px; 
+      padding-top: 10px;
     }
   }
+  .account{
+    margin-right: 90px;
+    li{
+      padding-bottom: 20px;
+      >span{
+        font-size: 20px;
+        &:nth-of-type(1){
+          display: inline-block;
+          width: 120px;
+          color: #949494;
+          padding-right: 10px;
+        }
+      }
+      &:nth-of-type(2){
+        span{
+          &:nth-of-type(2){
+            background: rgb(204,235,253);
+            color: #0766bc;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 18px;
+          }
+        }
+      }
+      &:nth-of-type(3){
+        span{
+          &:nth-of-type(3){
+            font-size: 14px;
+            color: #bcbcbc;
+            font-weight: 700;
+            padding: 5px 15px;
+            border-radius: 5px;
+            border: 1px solid #bbccbc;
+            margin-left: 15px;
+          }
+        }
+      }
+    }
+  }
+  .anquan{
+    >div{
+      text-align: center;
+      span{
+        &:nth-of-type(1){
+          font-size: 16px;
+          color: #bcbcbc;
+        }
+        &:nth-of-type(2){
+          font-size: 18px;
+          color: #669900;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+.yue{
+    padding: 50px;
+    margin: 10px 0 0 10px;
+    background: #ffffff;
+    display: flex;
+    div:nth-of-type(1){
+      margin-right: 150px;
+    }
+    i{
+      font-size: 32px;
+      color:rgb(216,30,6);
+      padding-right: 10px;
+    }
+    span{
+      color:rgb(216,30,6);
+      font-size: 20px;
+    }
+    .tx{
+      color: #0889f5;
+      border:1px solid #0889f5;
+      padding: 8px 50px;
+      border-radius: 5px;
+      width: 40px;
+      font-weight: 700;
+    }
+    .yueBox{
+      padding-bottom: 50px;
+    }
 }
 </style>

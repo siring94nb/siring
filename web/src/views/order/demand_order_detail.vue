@@ -248,19 +248,21 @@
           name="image"
           :action="UploadAction"
           style="display: inline-block;width: auto;"
+          v-if="status == 2"
         >
           <Button
             class="upload-btn"
-            :class="information.proposal != '' ? 'upload-btn-dis': ''"
-            :disabled="information.proposal != ''"
+            :class="information.proposal != null ? 'upload-btn-dis': ''"
+            :disabled="information.proposal != null"
           >上传报价单</Button>
         </Upload>
-        <div class="audit" v-if="information.proposal != ''">
-          <div class="arrow left-arrow"></div>
-          <div class="arrow-pole"></div>
-          <div class="audit-status">等待审核</div>
-          <div class="arrow-pole"></div>
-          <div class="arrow right-arrow"></div>
+        <div class="audit" v-if="information.proposal != null && status == 2">
+          <div class="arrow left-arrow" :class="information.examine > 1 ? 'left-arrow-dis':''"></div>
+          <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
+          <div class="audit-status" v-if="information.examine == 1">等待审核</div>
+          <div class="audit-status audit-true" else>{{information.examine == 2 ? '审核通过':'审核不通过'}}</div>
+          <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
+          <div class="arrow right-arrow" :class="information.examine > 1 ? 'right-arrow-dis':''"></div>
         </div>
         <div class="project" v-if="status == 2">
           <div>
@@ -272,7 +274,7 @@
               v-model="information.work_day"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
-              :disabled="information.work_day != ''"
+              :disabled="isWork_day"
             />
             工作日
           </div>
@@ -285,11 +287,15 @@
               v-model="information.need_money"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
-              :disabled="information.need_money != ''"
+              :disabled="isNeed_money"
             />
             元
           </div>
         </div>
+
+        <div style="flex:1;" v-if="status == 3"></div>
+        <Button class="upload-btn" v-if="status == 3" @click="changeXy">用户要求修改协议</Button>
+        <div style="flex:1;" v-if="status == 3"></div>
         <div class="project" v-if="status == 3">
           <div>
             1期：
@@ -351,27 +357,33 @@
         斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
       <div class="audit" v-if="qualification == 1">
-        <textarea name="audit" v-model="information.examine_opinion" style="width:100%;" rows="10" placeholder="审核意见"></textarea>
+        <textarea
+          name="audit"
+          v-model="information.examine_opinion"
+          style="width:100%;"
+          rows="10"
+          placeholder="审核意见"
+        ></textarea>
         <div class="sel">
           <RadioGroup v-model="information.examine">
-            <Radio label="3"><span>不通过</span></Radio>
-            <Radio label="2"><span style="color:red;">通过</span></Radio>
+            <Radio label="3">
+              <span>不通过</span>
+            </Radio>
+            <Radio label="2">
+              <span style="color:red;">通过</span>
+            </Radio>
           </RadioGroup>
         </div>
       </div>
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine > 1 && qualification == 0"
+        v-if="information.examine == null && qualification == 0"
       >
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="submitObj">确认</Button>
       </div>
-      <div
-        class="pt-bj-btn"
-        style="text-align:center;"
-        v-if=" qualification == 1"
-      >
+      <div class="pt-bj-btn" style="text-align:center;" v-if=" qualification == 1">
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="auditObj">确认</Button>
       </div>
@@ -450,8 +462,8 @@ export default {
         work_day: 0,
         need_money: 0,
         proposal: "",
-        examine_opinion:'',
-        examine:''
+        examine_opinion: "",
+        examine: ""
       },
       percent: {
         one: 70,
@@ -467,7 +479,9 @@ export default {
       iconList: [],
       // 图片
       // examine:"2",
-      // examine_opinion:''
+      // examine_opinion:'',
+      isWork_day: false,
+      isNeed_money: false
     };
   },
   created() {
@@ -477,7 +491,7 @@ export default {
     init() {
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
-      this.qualification = this.$route.params.qualification;
+      this.qualification = this.$route.params.qualification || 0;
       console.log(this.$route.params);
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
@@ -531,6 +545,12 @@ export default {
         if (code == 1) {
           // data.data.need_category = (data.data.need_category).toString();
           vm.information = data.data;
+          if (data.data.need_money) {
+            vm.isNeed_money = true;
+          }
+          if (data.data.work_day) {
+            vm.isWork_day = true;
+          }
         }
       });
     },
@@ -603,25 +623,43 @@ export default {
       };
       apiPost("NeedOrder/offer_sure", params).then(res => {
         let { code, data, msg } = res;
+        if (code == 1) {
+          vm.isWork_day = true;
+          vm.isNeed_money = true;
+        }
         this.$Message.success(msg);
       });
     },
     //订单审核
     auditObj() {
-      let vm = this,type,
+      let vm = this,
+        type,
         params;
-        if (vm.status == 2) type = 1;
+      if (vm.status == 2) type = 1;
       else if (vm.status == 3) type = 2;
+      if (vm.information.examine < 2) {
+        this.$Message.error("请选择通过或不通过");
+        return false;
+      }
       params = {
         id: vm.id,
-        examine_type:type,
+        examine_type: type,
         examine: vm.information.examine,
-        examine_opinion: vm.information.examine_opinion,
+        examine_opinion: vm.information.examine_opinion
       };
       apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
         let { code, data, msg } = res;
         this.$Message.success(msg);
+        if (code == 1) {
+          vm.$router.push({
+            name: "review_order"
+          });
+        }
       });
+    },
+    //用户修改协议
+    changeXy(){
+      
     },
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
@@ -969,9 +1007,9 @@ export default {
         font-weight: 700;
       }
     }
-    .audit{
+    .audit {
       position: relative;
-      .sel{
+      .sel {
         position: absolute;
         bottom: 10px;
         right: 0;

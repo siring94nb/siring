@@ -47,17 +47,18 @@
         <div>
           <button @click="gb();getCapitalDetailed();">查询</button>
         </div>
-      </div>
+      </div>        
       <div>
         <div class="invoice">
           <span>剩余可开票金额：</span>
           <span>{{surplusMoney}}元</span>
           <button @click.stop="kaipiaoye">申请开票</button>
           <!-- 点击开票，弹出，发票样单 -->
-          <div class="popupBox" style="display:none;">
+          <el-dialog :visible.sync="dialogVisible" width="830px">
+             <div class="popupBox">
             <div>
               <span>我要开票</span>
-              <i class="el-icon-edit" @click.stop="kaipiaoye"></i>
+              <i class="el-icon-edit"></i>
             </div>
             <div>
               <span>开票金额：</span>
@@ -137,6 +138,7 @@
               </div>
             </div>
           </div>
+          </el-dialog>
           <!-- 分页表格 -->
           <div style="margin-top:15px;">
             <el-table
@@ -201,6 +203,7 @@ import {
 export default {
   data() {
     return {
+      dialogVisible :false,
       dis: true,
       // 分页表格参数
       pagesize: 10,
@@ -368,12 +371,13 @@ export default {
     },
     // 控制开票页显隐
     kaipiaoye() {
-      let gb = document.getElementsByClassName("popupBox")[0];
-      if (gb.style.display === "none") {
-        gb.style.display = "block";
-      } else {
-        gb.style.display = "none";
-      }
+      // let gb = document.getElementsByClassName("popupBox")[0];
+      // if (gb.style.display === "none") {
+      //   gb.style.display = "block";
+      // } else {
+      //   gb.style.display = "none";
+      // }
+      this.dialogVisible = true
     },
     // 企业列表信息
     selectFn(e) {
@@ -460,16 +464,16 @@ export default {
       border-radius: 3px;
     }
     .popupBox {
-      z-index: 5;
+      // z-index: 5;
       font-size: 18px;
       color: #a1a1a1;
-      position: absolute;
+      // position: absolute;
       background: #ffffff;
-      padding: 35px;
+      // padding: 35px;
       border-radius: 10px;
-      width: 614px;
-      top: 50px;
-      left: 180px;
+      width: 790px;
+      // top: 50px;
+      // left: 180px; 
       > div {
         margin-bottom: 25px;
         &:nth-of-type(1) {
@@ -541,14 +545,11 @@ export default {
         }
         &:nth-of-type(8) {
           label {
-            &:nth-of-type(1) {
-              padding-right: 70px;
+            &:nth-of-type(1), &:nth-of-type(2),&:nth-of-type(3)  {
+              padding-right: 50px;
             }
-            &:nth-of-type(3) {
-              padding: 0 178px 0 110px;
-            }
-            &:nth-of-type(5) {
-              padding-left: 110px;
+            &:nth-of-type(4) {
+              padding:0 68px 0 110px;
             }
           }
         }
@@ -598,6 +599,13 @@ export default {
         }
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.popupBox{ 
+  .el-dialog__body{
+    width: 100px !important;
   }
 }
 </style>
