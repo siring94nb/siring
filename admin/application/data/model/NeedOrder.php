@@ -14,20 +14,22 @@ class NeedOrder extends Model
 {
 
         use SoftDelete;
-        protected $deleteTime = 'del_time';
-        protected $createTime = 'create_time';
-        protected $updateTime = 'update_time';
-        protected $table="need_order";
+        protected $deleteTime = 'delect_at';
+        protected $createTime = 'created_at';
+        protected $updateTime = 'updated_at';
+        protected $table="order";
         protected $resultSetType = 'collection';
-
+        protected $hidden = [
+            'goods_id','num','rew_num','city_grade',
+            'add_time','end_time','advantage'];
         /**
          * lilu
          * 定制需求添加订单
          * param   订单参数
          */
-        public function order_add()
+        public function order_add($need)
         {
-            $data = new SoftOrder;
+            $data = $need;
             return $data !== false ? $data : false;
         }
 
@@ -38,7 +40,6 @@ class NeedOrder extends Model
         public function get_need_order($param,$po)
         {
             $where=[];
-            $where['del_time'] = null;
             if($po == 1){
                 $where['user_id'] = $param['user_id'];
             }
@@ -49,27 +50,27 @@ class NeedOrder extends Model
 
             if(!empty($param['start_time'])){
                 $param['start_time'] = strtotime($param['start_time']);
-                $where['create_time'] = ['gt',$param['start_time']];
+                $where['created_at'] = ['gt',$param['start_time']];
             }
             if(!empty($param['end_time'])){
                 $param['end_time'] = strtotime($param['end_time']);
-                $where['create_time'] = ['lt',$param['end_time']];
+                $where['created_at'] = ['lt',$param['end_time']];
             }
             if(!empty($param['start_time']) && !empty($param['end_time'])){
-                $where['create_time'] = ['between',[$param['start_time'],$param['end_time']]];
+                $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
             }
 
             if(empty($param['page'])){
                 $param['page'] = 1;
             }
             $field = '*';
-            $order = 'create_time desc';
-            $list = NeedOrder::field($field) -> where( $where ) -> order( $order )
+            $order = 'id desc';
+            $list = NeedOrder::where( $where ) ->field($field) ->  order( $order )
                 -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
             foreach ($list['data'] as $k =>$v){
 
-                $terminal= json_decode( $v['need_terminal'] , true );
+                $terminal= json_decode( $v['dev'] , true );
                 if(!empty($terminal)){
                     $res = join('/',$terminal);
                     $list['data'][$k]['terminal'] = $res;
@@ -79,6 +80,28 @@ class NeedOrder extends Model
             }
 
             return $list;
+        }
+
+
+    /**
+     * 详情
+     * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     */
+        public function need_detail($id)
+        {
+            $need_detail = self::get($id)->toArray();
+            $terminal= json_decode( $need_detail['dev'] , true );
+            if(!empty($terminal)){
+                $res = join('/',$terminal);
+                $need_detail['terminal'] = $res;
+            }else{
+                $need_detail['terminal'] = "无";
+            }
+
+            return $need_detail;
         }
 
     /**
@@ -98,13 +121,13 @@ class NeedOrder extends Model
     {
         $data = self::get($id);
         if(!$data) returnJson(0,'订单有误');
-        if($data['pay_type'] == 2) returnJson(0,'当前订单已支付');
+        if($data['payment'] == 2) returnJson(0,'当前订单已支付');
         //查询等级
         $user = UserGrade::get(['user_id'=>$data['user_id']]);
         //查询比例
         $grade = JoinRole::member_details($user['grade']);
         //算出金额
-        $pay_money = $data['need_money'] * ($grade['discount']/100) * $ratio;
+        $pay_money = $data['money'] * ($grade['discount']/100) * $ratio;
         //比较
         if($money != $pay_money) returnJson(0,'系统有误');
 
@@ -115,7 +138,7 @@ class NeedOrder extends Model
                 $title = '软件定制' ;
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*
-                $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['need_order'],$pay,$title);
+                $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['no'],$pay,$title);
 
                 self::save(['alipay' => $res],['id' => $id]);
                 return $res; exit();
@@ -128,7 +151,7 @@ class NeedOrder extends Model
                 $pay = 1;//先测试1分钱
 
                 $title = '软件定制';
-                $res = (new WechatPay())->pay($title,$data['need_order'], $pay, $url);
+                $res = (new WechatPay())->pay($title,$data['no'], $pay, $url);
 
                 return $res; exit();
 
@@ -140,13 +163,13 @@ class NeedOrder extends Model
                 $this->startTrans();
                 try {
                     $data_need = [
-                        'need_pay_type'=>3,
-                        'pay_type'=> 2,
+                        'pay_type'=>3,
+                        'payment'=> 2,
                         'unionpay'=> $unionpay,
                     ];
                     self::where('id', $id)->update($data_need);
 
-                    $off = (new Offline())->get_add($data['need_order'],$data['user_id'],$unionpay);
+                    $off = (new Offline())->get_add($data['no'],$data['user_id'],$unionpay);
 
                     $this->commit();
 
@@ -173,10 +196,9 @@ class NeedOrder extends Model
                         $re = (new UserFund())::where('user_id', $data['user_id'])->setDec('money', $pay_money);
                         //修改订单表
                         $data_need = [
-                            'need_pay_type'=>4,
-                            'pay_type'=> 2,
+                            'pay_type'=>4,
+                            'payment'=> 2,
                             'pay_time'=> time(),
-                            'process'=>1,
                             'need_status'=> 4,
                         ];
                         self::save($data_need,['id' => $id]);

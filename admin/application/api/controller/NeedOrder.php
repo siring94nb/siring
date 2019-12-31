@@ -35,7 +35,8 @@ class  NeedOrder  extends  Base
             ['need_budget_up', 'require', '高价预算不能不好空'],
             ['need_phone', 'require', '手机必须'],
             ['need_desc', 'require', '需求描述必须'],
-            // ['need_file','require','附件必须'],
+            ['need_terminal', 'require', '需求终端必须'],
+//            ['need_file','require','附件必须'],
         ]);
         if (!$validate->check($param)) {
             returnJson(0, $validate->getError());
@@ -43,18 +44,28 @@ class  NeedOrder  extends  Base
         }
         $user_id = Session::get("uid");
         if ($user_id) {
-            $user_id = Session::get("uid");
+            $uid = Session::get("uid");
         } else {
-            $user_id = '16';
-            // $user_id = $param["user_id"];
+            $uid = $param["user_id"];
         }
+        $need = [
+            'user_id'=>$uid,
+            'name'=>$param["need_name"],
+            'need_category'=>$param["need_category"],
+            'need_budget_down'=>$param["need_budget_down"],
+            'need_budget_up'=>$param["need_budget_up"],
+            'phone'=>$param["need_phone"],
+            'con'=>$param["need_desc"],
+            'no'=>'DZ' . date('Ymdhis') . mt_rand('111111', '999999'),
+            'dev'=>json_encode($param['need_terminal']),
+            'created_at'=>time(),
+            'type'=>7,
+
+        ];
         //开启事务
         Db::startTrans();
         try {
-            $param['create_time'] = time();
-            $param['need_order'] = 'DZ' . date('Ymdhis') . mt_rand('111111', '999999');
-            $param['need_terminal'] = json_encode($param['need_terminal']);
-            $data = Need::create($param)->toArray();
+            $data = Need::create($need);
             $order_id = $data['id'];
             Db::commit();
             return $data ? returnJson(1, '提交成功', $order_id) : returnJson(0, '提交失败', $order_id);
@@ -72,22 +83,32 @@ class  NeedOrder  extends  Base
      */
     public function need_order_list()
     {
+        $request = Request::instance();
+        $postData = $request->param();
         $param['size'] = $this->request->get('size', config('apiAdmin.ADMIN_LIST_DEFAULT'));
         $param['page'] = $this->request->get('page', 1);
         $param['title'] = $this->request->get('title', '');
         $param['order_status'] = $this->request->get('order_status', '');
         $param['start_time'] = $this->request->get('start_time', '');
         $param['end_time'] = $this->request->get('end_time', '');
-        $request = Request::instance();
-        $postData = $request->param();
+
+        $user_id = Session::get("uid");
+        if ($user_id) {
+            $postData["user_id"] = Session::get("uid");
+        } else {
+            $postData["user_id"] = $postData["user_id"];
+        }
+
         if ($postData) {
             $need = new Need();
             $param['user_id'] = $postData['user_id'];
             $data = $need->get_need_order($param,1);
+
             return $data ? returnJson(1, '获取成功', $data) : returnJson(0, '获取失败');
+
         } else {
-            returnJson(0, '获取失败');
-            exit();
+
+            returnJson(0, '获取失败');exit();
         }
     }
 
@@ -114,8 +135,7 @@ class  NeedOrder  extends  Base
             }
             return $res ? returnJson(1, '操作成功', $res) : returnJson(0, '操作失败');
         } else {
-            returnJson(0, '获取参数失败');
-            exit();
+            returnJson(0, '获取参数失败');exit();
         }
     }
 
@@ -127,7 +147,7 @@ class  NeedOrder  extends  Base
     {
         //获取参数
         $request = Request::instance();
-        $postData = $request->param();
+        $param = $request->param();
         //必填字段验证
         $validate = new Validate([
             ['need_name', 'require', '需求名称不能为空'],
@@ -138,13 +158,29 @@ class  NeedOrder  extends  Base
             ['need_desc', 'require', '需求描述必须'],
             // ['need_file','require','附件必须'],
         ]);
-        if (!$validate->check($postData)) {
+        if (!$validate->check($param)) {
             returnJson(0, $validate->getError());
             exit();
         }
-        if ($postData) {
+        $user_id = Session::get("uid");
+        if ($user_id) {
+            $uid = Session::get("uid");
+        } else {
+            $uid = $param["user_id"];
+        }
+        $need_data = [
+            'user_id'=>$uid,
+            'name'=>$param["need_name"],
+            'need_category'=>$param["need_category"],
+            'need_budget_down'=>$param["need_budget_down"],
+            'need_budget_up'=>$param["need_budget_up"],
+            'phone'=>$param["need_phone"],
+            'need_desc'=>$param["need_desc"],
+
+        ];
+        if ($param) {
             $need=new Need();
-            $re=$need->update($postData);
+            $re=$need->update($need_data);
             return $re ?  returnJson(1,'操作成功') : returnJson(0,'操作失败');
         } else {
             returnJson(0, '获取参数失败');
@@ -152,7 +188,7 @@ class  NeedOrder  extends  Base
     }
 
     /**
-     * lilu
+     * fyk
      * 获取定制需求内容
      * id
      * status
@@ -163,17 +199,13 @@ class  NeedOrder  extends  Base
         $postData=$request->param();
         if($postData){
             //获取详情
-            $need_detail = Need::get($postData['id'])->toArray();
+            $need_detail= (new Need())->need_detail($postData['id']);
             return $need_detail ?  returnJson(1,'操作成功',$need_detail) : returnJson(0,'操作失败');
         }else{
             returnJson(0, '获取参数失败');
         }
     }
 
-    /**
-     * lilu
-     * 前端-用户修改协议
-     */
 
     /**
      * @author fyk
@@ -214,22 +246,45 @@ class  NeedOrder  extends  Base
     }
 
     /**
-     *
+     * 订单支付
+     * @author fyk
+     * @param $type
+     * @param $id
+     * @param $money
+     * @param $pay_type
+     * @param $password
+     * @param $unionpay
+     * @return array|mixed|string|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function get_pay($type,$id,$money,$pay_type,$password,$unionpay)
     {
         switch ($type){
-            case 1:
+            case 1://签订合同
                 $ratio = 0.7;
                 $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
 
                 return $data;
                 break;
-            case 2:
+            case 2://项目上线
+                $ratio = 0.1;
+                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
 
+                return $data;
                 break;
-            case 3:
+            case 3://项目验收
+                $ratio = 0.1;
+                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
 
+                return $data;
+                break;
+            case 4://项目年服务
+                $ratio = 1;
+                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
+
+                return $data;
                 break;
             default:
                 returnJson(0,'参数有误');

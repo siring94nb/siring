@@ -5,34 +5,34 @@
       <table>
         <tr>
           <td class="td-one">用户账号：</td>
-          <td>{{information.need_phone}}</td>
+          <td>{{information.phone}}</td>
           <td class="td-one">订单号：</td>
-          <td>{{information.need_order}}</td>
+          <td>{{information.no}}</td>
         </tr>
         <tr>
           <td class="td-one">商品名称：</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.name}}</td>
           <td class="td-one">订单类型：</td>
           <td>{{information.need_category}}</td>
         </tr>
         <tr>
           <td class="td-one">下单时间：</td>
-          <td>{{information.create_time}}</td>
+          <td>{{information.created_at}}</td>
           <td class="td-one">订单金额：</td>
-          <td>{{information.need_order_money}}</td>
+          <td>{{information.order_amount}}</td>
         </tr>
         <tr>
           <td class="td-one">终端版本：</td>
-          <td>{{information.need_terminal}}</td>
+          <td>{{information.terminal}}</td>
           <td class="td-one">合同金额：</td>
-          <td>{{information.need_money}}</td>
+          <td>{{information.money}}</td>
         </tr>
 
         <tr>
           <td class="td-one">项目剩余金额</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.surplus}}</td>
           <td class="td-one">项目剩余时间</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.end_time}}</td>
         </tr>
       </table>
     </div>

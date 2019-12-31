@@ -27,19 +27,20 @@ class InvestmentProject extends Model
         //pp($param);die;
         $data = new InvestmentProject;
         $data->save([
-            'title' => $param['title'],
-            'uid' => $param['uid'],
-            'cid' => $param['cid'],
+            'type' => 6,
+            'name' => $param['title'],
+            'user_id' => $param['uid'],
+            'sid' => $param['cid'],
             'no' => $this->get_sn(),
-            'reward' => $param['reward'],
-            'location' =>$param['location'],
-            'bright' => $param['bright'],
-            'revenue' => $param['revenue'],
-            'user_data' => $param['user_data'],
-            'valuation' => $param['valuation'],
-            'background' =>$param['background'],
+            'surplus' => $param['reward'],
+            'con' =>$param['location'],
+            'resume' => $param['bright'],
+            'other' => $param['revenue'],
+            'proposal' => $param['user_data'],
+            'examine_opinion' => $param['valuation'],
+            'user_clause' =>$param['background'],
             'advantage' => $param['advantage'],
-            'bp_url' => $param['bp_url'],
+            'url' => $param['bp_url'],
 
         ]);
 
@@ -85,12 +86,12 @@ class InvestmentProject extends Model
 
             }
         }
-        if(!empty($param['cid'])){
-            $where['cid'] = $param['cid'];
+        if(!empty($param['sid'])){
+            $where['sid'] = $param['sid'];
         }
 
         if(!empty($param['title'])){
-            $where['title'] = ['like','%'.$param['title'].'%'];
+            $where['name'] = ['like','%'.$param['title'].'%'];
         }
 
         if(empty($param['page'])){
@@ -99,7 +100,7 @@ class InvestmentProject extends Model
         if(empty($param['size'])){
             $param['size'] = 10;
         }
-        $field = 'id,title,cid,bright';
+        $field = 'id,name,sid,resume';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -143,12 +144,12 @@ class InvestmentProject extends Model
 
             }
         }
-        if(!empty($param['cid'])){
-            $where['cid'] = $param['cid'];
+        if(!empty($param['sid'])){
+            $where['sid'] = $param['sid'];
         }
 
         if(!empty($param['title'])){
-            $where['title'] = ['like','%'.$param['title'].'%'];
+            $where['name'] = ['like','%'.$param['title'].'%'];
         }
 
         if(empty($param['page'])){
@@ -157,7 +158,7 @@ class InvestmentProject extends Model
         if(empty($param['size'])){
             $param['size'] = 12;
         }
-        $field = 'id,title,cid,bright';
+        $field = 'id,name,sid,resume';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -186,8 +187,9 @@ class InvestmentProject extends Model
      */
     public function details($param)
     {
+
         $data = InvestmentProject::with('InvestmentClass') ->where('id',$param['id'])
-            -> field('id,title,cid,reward,location,bright,revenue,user_data,valuation,background,advantage,bp_url')
+            -> field('id,name,sid,surplus,con,resume,other,proposal,examine_opinion,user_clause,advantage,url')
             -> find()->toArray();
 
         $data['industry_field'] = $data['investment_class']['title'];
@@ -203,7 +205,7 @@ class InvestmentProject extends Model
      */
     public function InvestmentClass()
     {
-        return $this->belongsTo('InvestmentClass', 'cid', 'id');
+        return $this->belongsTo('InvestmentClass', 'sid', 'id');
     }
 
     /**
@@ -218,11 +220,11 @@ class InvestmentProject extends Model
         $where = array();
         $where['uid'] = $uid;
         if(!empty($param['process'])){
-            $where['process'] = $param['process'];
+            $where['need_status'] = $param['process'];
 
         }
         if(!empty($param['title'])){
-            $where['title|no'] = ['like','%'.$param['title'].'%'];
+            $where['name|no'] = ['like','%'.$param['title'].'%'];
         }
 
         if(!empty($param['type'])){
@@ -248,7 +250,7 @@ class InvestmentProject extends Model
             $param['size'] = 6;
         }
 
-        $field = 'id,no,title,cid,bright,reward,created_at';
+        $field = 'id,name,sid,resume,surplus,created_at';
         $order = 'id desc';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )

@@ -23,15 +23,9 @@ class MealOrder extends Base
      */
     public function   meal_order_add()
     {
-        $request=Request::instance();
-        $postData=$request->param();
+        $request = Request::instance();
+        $postData = $request->param();
         if($postData){
-            $postData['order_number']='HY'.date('Ymdhis').rand(000000,999999);
-            $postData['create_time']=time();
-            $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
-            $postData['order_status']=1;    //  1   未付款
-            $postData['member_account']=$postData['user_id'];
-            unset($postData['user_id']);
             $detail=[];
             if(array_key_exists('pay_time',$postData)){
                 $postData['pay_time']=strtotime($postData['pay_time']);
@@ -52,9 +46,28 @@ class MealOrder extends Base
                 $detail['account_number']=$postData['account_number'];
                 unset($postData['account_number']);
             }
-            $postData['pay_detail']=json_encode($detail);
-            $meal=new Meal();
-            $res=$meal->allowField(true)->create($postData)->toArray();
+
+            $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
+            $postData['order_status']=1;    //  1   未付款
+            $postData['member_account'] = $postData['user_id'];
+            unset($postData['user_id']);
+            $postData['pay_detail']= json_encode($detail);
+            $meal_data = [
+                'user_id' => $uid,
+                'name' => $param["need_name"],
+                'need_category' => $param["need_category"],
+                'need_budget_down' => $param["need_budget_down"],
+                'need_budget_up' => $param["need_budget_up"],
+                'phone' => $param["need_phone"],
+                'con'=> $param["need_desc"],
+                'no' => 'HY'.date('Ymdhis').rand(000000,999999),
+                'dev' => json_encode($param['need_terminal']),
+                'created_at' => time(),
+                'type' => 7,
+
+            ];
+            $meal = new Meal();
+            $res = $meal->allowField(true)->create($meal_data)->toArray();
             if($res){
                 //下单成功
                 $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
@@ -80,7 +93,6 @@ class MealOrder extends Base
         switch($type) {
             case 1:    //支付宝
                 returnJson(0, '暂未支付宝开通');
-            return $res;exit();
                 break;
             case 2:     //微信支付
                  // 查询订单信息

@@ -44,7 +44,7 @@ class NeedOrder extends Base
     }
 
     /**
-     * lilu
+     * fyk
      * 获取定制需求内容
      * id
      * status
@@ -55,10 +55,9 @@ class NeedOrder extends Base
         $postData=$request->param();
         if($postData){
             //获取详情
-            $need_detail=Need::get($postData['id'])->toArray();
-            return  $this->buildSuccess([
-                'data'=>$need_detail,
-            ]);
+            $need_detail= (new Need())->need_detail($postData['id']);
+
+            return  $this->buildSuccess(['data'=>$need_detail]);
         }else{
             return $this->buildFailed(ReturnCode::DB_READ_ERROR,'操作失败');
         }

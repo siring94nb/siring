@@ -6,7 +6,7 @@ use think\Model;
 
 class PromotionOrder extends Model
 {
-    protected $table = "promotion_order";
+    protected $table = "order";
     protected $resultSetType = 'collection';
 
 
@@ -15,15 +15,16 @@ class PromotionOrder extends Model
 
         $data = new PromotionOrder;
         $data->save([
+            'type'=> 5,
             'role_type' => $role_type,
             'user_id' => $uid,
-            'title' => $title,
-            'object' => $object,
+            'name' => $title,
+            'resume' => $object,
             'no' => $this->get_sn(),
             'num' => $num,
             'money' => $money,
-            'tid' => $tid,
-            'ask'=>$ask,
+            'model_id' => $tid,
+            'need_status'=>$ask,
             'yid' => $yid,
             'grade' => $grade,
             'con' => $con,
@@ -53,11 +54,10 @@ class PromotionOrder extends Model
      */
     public function promotion_list($param,$uid)
     {
-
-        $where = array();
+        $where['type'] = 5;
         $where['user_id'] = $uid;
         if(!empty($param['process'])){
-            $where['process'] = $param['process'];
+            $where['oeder_status'] = $param['process'];
 
         }
         if(!empty($param['title'])){
@@ -87,7 +87,7 @@ class PromotionOrder extends Model
             $param['size'] = 6;
         }
 
-        $field = 'id,no,title,role_type,tid,money,created_at';
+        $field = 'id,no,name,role_type,model_id,money,created_at';
         $order = 'id desc';
 
         $list = PromotionOrder::with('Extension') -> field( $field ) -> where( $where ) -> order( $order )
@@ -108,6 +108,6 @@ class PromotionOrder extends Model
      */
     public function Extension()
     {
-        return $this->belongsTo('Extension', 'tid', 'id');
+        return $this->belongsTo('Extension', 'model_id', 'id');
     }
 }

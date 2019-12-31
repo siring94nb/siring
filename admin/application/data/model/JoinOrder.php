@@ -11,30 +11,31 @@ use think\Model;
 
 class JoinOrder extends Model
 {
-    protected $table = "join_order";
+    protected $table = "order";
     protected $resultSetType = 'collection';
     protected $autoWriteTimestamp = true;
     protected $createTime = 'created_at';
     protected $updateTime = 'updated_at';
 //    protected $hidden = ['created_at','updated_at'];1572839536
-//    protected $auto = ['created_at'];
-//    protected $update = ['updated_at'];
-//    public function setTimeAttr()
-//    {
-//        return time();
-//    }
-//
-//    public function setTimeUpdateAttr()
-//    {
-//        return time();
-//    }
 
-    //新增订单
+
+    /**
+     * 新增订单
+     * @param $role_type
+     * @param $uid
+     * @param $pay_type
+     * @param $num
+     * @param $money
+     * @param $dev
+     * @param $grade
+     * @param $con
+     * @return JoinOrder|bool
+     */
     public function order_add($role_type,$uid,$pay_type,$num,$money,$dev,$grade,$con)
     {
         $data = new JoinOrder;
         $data->save([
-            'role_type' => $role_type,
+            'type' => $role_type,
             'user_id' => $uid,
             'pay_type' => $pay_type,
             'no' => $this->get_sn(),
@@ -52,12 +53,19 @@ class JoinOrder extends Model
         return $data !== false ? $data : false;
     }
 
-    //生成订单号
+    /**
+     * 生成订单号
+     * @return string
+     */
     function get_sn() {
         return 'JS'.date('YmdHi').rand(100000, 999999);
     }
 
-    //展示
+    /**
+     * 获取全部数据
+     * @return mixed
+     * @throws \think\exception\DbException
+     */
     public function join_order_list()
     {
 
@@ -65,11 +73,6 @@ class JoinOrder extends Model
 
     }
 
-//    //当前用户
-//    public function user($id)
-//    {
-//        return self::get(['id'=>$id]);
-//    }
 
     /**
      * 加盟角色订单列表分类
@@ -82,7 +85,7 @@ class JoinOrder extends Model
     {
 
         $where = [];
-        $where['role_type'] = $param['type'];
+        $where['type'] = $param['type'];
         if(!empty($param['phone'])){
             $where['b.phone'] = ['like','%'.$param['phone'].'%'];
         }
@@ -103,7 +106,7 @@ class JoinOrder extends Model
         if(empty($param['size'])){
             $param['size'] = 10;
         }
-        $field = 'a.id,a.role_type,a.user_id,a.pay_type,a.pay_time,a.created_at,
+        $field = 'a.id,a.type,a.user_id,a.pay_type,a.pay_time,a.created_at,
         a.no,a.money,a.payment,a.status,a.grade,a.dev,a.updated_at,b.phone';
         $order = 'a.id desc';
 

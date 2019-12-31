@@ -32,6 +32,7 @@ class SoftOrder extends Model
 
         $data = new SoftOrder;
         $data->save([
+            'type' => 4,
             'pay_type' => $pay_type,
             'user_id' => $uid,
             'sid' => $sid,
@@ -45,7 +46,7 @@ class SoftOrder extends Model
             'bank_card' => $bank_card,
             'bank_pay_time' => $bank_pay_time,
             'con' =>$con,
-            'create_time'=>time(),
+            'created_at'=>time(),
 
         ]);
 

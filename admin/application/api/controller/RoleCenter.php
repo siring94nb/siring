@@ -34,7 +34,7 @@ class RoleCenter extends Base
                     if($user_data['type'] = 2){
 
                             $order = new JoinOrder();
-                            $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>2]) -> field('id,grade,end_time') ->find();
+                            $data = $order ->where(['user_id'=>$user_data['id'],'type'=>2]) -> field('id,grade,end_time') ->find();
                             $city = Provinces::province_query($data['grade']);
                             $data['name'] = $city['name'];
 
@@ -57,7 +57,7 @@ class RoleCenter extends Base
                     if($user_data['type'] != 0){
 
                         $order = new JoinOrder();
-                        $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>1]) -> field('id,grade,end_time') ->find();
+                        $data = $order ->where(['user_id'=>$user_data['id'],'type'=>1]) -> field('id,grade,end_time') ->find();
                         $data['name'] = $user_data['grade'] == 1 ?'金牌会员' :($user_data['grade'] == 2 ?'钻石会员' : $user_data['grade'] == 3 ? '皇冠会员':'普通会员');
 
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
@@ -78,7 +78,7 @@ class RoleCenter extends Base
                     if($user_data['type'] = 2){
 
                         $order = new JoinOrder();
-                        $data = $order ->where(['user_id'=>$user_data['id'],'role_type'=>3]) -> field('id,dev,end_time') ->find();
+                        $data = $order ->where(['user_id'=>$user_data['id'],'type'=>3]) -> field('id,dev,end_time') ->find();
                         $data['name'] = json_decode($data['dev'],true);
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
                     }else{
