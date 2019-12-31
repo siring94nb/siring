@@ -227,39 +227,19 @@ export default {
         // console.log(val)
       },
       checkWord(){
-        
-var w;
- 
-//判断浏览器是否支持ActiveX控件
- 
-if(window.ActiveXObject){
- 
-//支持-通过ActiveXObject的一个新实例来创建XMLHttpRequest对象
- 
-w = new ActiveXObject("Microsoft.XMLHTTP");
- 
-}
- 
-//不支持
- 
-else if(window.XMLHttpRequest){
- 
-w = new XMLHttpRequest()
-}
-
-        // var w = new ActiveXObject('Word.Application');
+        var w = new ActiveXObject('Word.Application');
         var docText;
         var obj;
         if(w != null) {
           w.Visible = true;
-          obj = w.Documents.Open("C:\Users\Administrator\Desktop\测试.docx");
+          obj = w.Documents.Open("D:\\word\\go.doc");
           docText = obj.Content;
           w.Selection.TypeText("Hello");
           w.Documents.Save();
           document.write(docText);//Print on webpage
           w.Documents.Add();
           w.Selection.TypeText("Writing This Message ....");
-          w.Documents.Save("C:\Users\Administrator\Desktop\测试.docx");
+          w.Documents.Save("D:\\word\\go.doc");
           w.Quit();
           /*Don't forget
           set w.Visible=false */

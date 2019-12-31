@@ -46,19 +46,21 @@ export default {
   },
   methods: {
     changeSize() {
+      let screenWidth = document.body.clientWidth;
+      let leftBox = this.$refs.leftBox;
+      let rightBox = this.$refs.rightBox;
       return (() => {
-        let screenWidth = document.body.clientWidth;
-        let leftBox = this.$refs.leftBox;
-        let rightBox = this.$refs.rightBox;
         if (screenWidth > 1500) {
           rightBox.style.marginLeft =
             (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 + 20+
             leftBox.clientWidth +
             "px";
+            document.body.style.width = "100%";
         } else {
           // leftBox.style.marginLeft = "0px";
-          console.log(1111)
+          // console.log(1111)
           rightBox.style.marginLeft = leftBox.clientWidth+ 20  + "px";
+          document.body.style.width = leftBox.clientWidth + rightBox.clientWidth +"px";
         }
       })();
     }
@@ -66,13 +68,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+
 .afLogginBox {
   min-height: 98.5vh;
   background: rgb(242, 247, 250);
   padding: 5px 10px 10px 0;
   border-top: 2px solid #ffffff;
   // max-width: 1260px;
-  min-width: 1463px;
+  // width: 1480px;
   .left {
     width: 123px;
     float: left;

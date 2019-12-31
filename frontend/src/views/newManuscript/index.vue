@@ -30,7 +30,7 @@
           <div class="right">
             <div class="xuqiu">
               <span>填写需求（*为必填）：</span>
-              <el-input v-model="xuqiu" placeholder style="width:80%;border:0"></el-input>
+              <el-input v-model="xuqiu" placeholder style="width:77%;border:0"></el-input>
             </div>
             <div>
               <div>
@@ -60,15 +60,15 @@
                     <span>推广材料</span>
                   </div>
                   <div>
-                    <el-radio v-model="radio" label="1">委托代写</el-radio>
-                    <el-radio v-model="radio" label="2">自有稿件</el-radio>
+                    <el-radio v-model="radio" label="1" @change="qiehuan">委托代写</el-radio>
+                    <el-radio v-model="radio" label="2"  @change="qiehuan">自有稿件</el-radio>
                   </div>
                 </div>
                 <div class="beizhu">您可以找平台代写稿，也可使用自己的稿件</div>
               </div>
             </div>
             <!-- 委托代写内容 -->
-            <div style="display:none">
+            <div class="weituoDaixie">
               <div class="wtDaixie">
                 <div class="daixieyaoq">
                   <div class="sp">
@@ -204,7 +204,7 @@
               </div>
             </div>
             <!-- 自有稿件内容 -->
-            <div>
+            <div class="ziyouGaojian" style="display:none">
               <div class="zyShangchuan">
                 <div class="sp">
                   <div>
@@ -225,18 +225,19 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="yuelanBox">
+              <div class="yuelanBox">
               <div class="sp">
                 <div>
                   <span>阅览显示</span>
                 </div>
                 <div>
-                  <tinymce-editor ref="editor" />
+                  <tinymce-editor ref="editor"/>
                 </div>
               </div>
               <div class="beizhu">您上传的内容会直接呈现显示，您还可以进行微调</div>
             </div>
+            </div>
+            
           </div>
         </div>
         <div class="bFooter">
@@ -249,114 +250,6 @@
             <img src="../../assets/images/u2173.png" alt />
           </div>
           <Myfooter />
-          <!-- 业务介绍 -->
-          <!-- <div class="ywjieshao">
-          <div>
-            <div class="title">定制开发</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>IOS APP开发</div>
-              <div>安卓APP开发</div>
-              <div>Html5 开发</div>
-              <div>微信开发</div>
-              <div>小程序开发</div>
-              <div>区块链+开发</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">云平台</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>小程序SaaS平台</div>
-              <div>支付平台</div>
-              <div>短信平台</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">模板商城</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>智能硬件</div>
-              <div>电子商务</div>
-              <div>生活娱乐</div>
-              <div>金融</div>
-              <div>媒体</div>
-              <div>企业服务</div>
-              <div>政府公益</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">投融介</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>项目融资申请</div>
-              <div>融资评审会</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">代理加盟</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>申请代理</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">联系我们</div>
-            <img :src="borderImg" alt="">
-            <div>
-              <div>座机：0755-36609873</div>
-              <div>专家顾问直线：</div>
-              <div>19925374651</div>
-              <div>邮箱</div>
-              <div>zhq@siring.com.cn</div>
-              <div>地址</div>
-              <div>深圳市福田区新闻路1</div>
-              <div>号中电信息大厦东座</div>
-              <div>1518</div>
-            </div>
-          </div>
-          <div>
-            <div class="title">快速登录</div>
-            <img :src="borderImg" alt="">  
-            <br>
-            <span v-for="(item,index) in carouselData1" :key="index+item.url" class="qh">
-              <img :src="item.url" alt="">
-            </span>
-            <div v-for="(item,index) in carouselData1a" :key="index+item.url" class="erweima">
-              <img :src="item.url" alt="">
-            </div>
-            <div class="dpu">淘宝店铺</div>
-          </div>
-          </div>-->
-          <!-- 友情链接 -->
-          <!-- <div class="youqingLink">
-          <div style="font-size:28px;width:200px;padding-left:10px;">友情链接</div>
-          <div>
-            <a href="">微信公众平台</a>
-            <a href="">微信开放平台</a>
-            <a href="">微信支付平台</a>
-            <a href="">微信</a>
-            <a href="">快递100</a>
-            <a href="">阿里云</a>
-            <a href="">腾讯云</a>
-            <a href="">西部数据</a>
-            <a href="">新浪微博</a>
-            <a href="">极光推送</a>
-            <a href="">支付宝</a>
-            <a href="">七牛云</a>
-            <a href="">银联</a>
-            <a href="">神箭手云</a>
-            <a href="">PayPal</a>
-            <a href="">360移动开放平台</a>
-            <a href="">蒲公英</a>
-            <a href="">腾讯开放平台</a>
-            <a href="">苹果开发者  </a>
-            <a href="">阿里云市场 </a>
-            <a href="">17素材</a>
-            <a href="">CSDN</a>
-            <a href="">亚马逊云</a>
-          </div>
-          </div>-->
         </div>
       </div>
     </div>
@@ -367,7 +260,7 @@
           <span class="yongtu" @click.stop="addRoleHandle" style="color:#0099ff">体验套餐价：</span>
         </div>
         <div>
-          <div class="feiyong">￥1111</div>
+          <div class="feiyong">￥{{price}}</div>
           <div class="jianshu">
             <span class="biaozhi">*</span>
             <span>套餐价</span>
@@ -406,8 +299,8 @@
         <el-radio v-model="radioYonghu" label="1">本人已确认，支付后执行下一流程</el-radio>
       </div>
     </div>
-     <el-dialog :visible.sync="dialogVisible" width="900px">
-      <el-tabs v-model="activeName">
+    <el-dialog :visible.sync="dialogVisible" width="900px">
+      <!-- <el-tabs v-model="activeName">
         <el-tab-pane label="体验套餐" name="first" :key="'first'">
           <div>
             <div v-html="aiList[0]['con']==undefined?'':aiList[0]['con']" class="neirongBox"></div>
@@ -444,7 +337,27 @@
             </div>
           </div>
         </el-tab-pane>
+      </el-tabs>-->
+      <el-tabs v-model="activeName">
+        <el-tab-pane
+          :label="item.name"
+          :name="index+''"
+          v-for="(item,index) in aiList"
+          :key="index"
+        >
+          <div>
+            <div v-html="item.con" class="neirongBox"></div>
+            <div class="jk">
+              <div>
+                <span>￥{{item.money}}</span>
+                <span>￥{{item.price}}</span>
+              </div>
+              <div @click.stop="closeRoleHandle(item)">&gt;&gt;选择套餐</div>
+            </div>
+          </div>
+        </el-tab-pane>
       </el-tabs>
+      <!-- <div v-for="(item,index) in aiList" :key="index">{{item.con}}</div> -->
     </el-dialog>
   </div>
 </template>
@@ -475,8 +388,13 @@ export default {
       ],
       //ai推广套餐
       aiList: [],
-      activeName: "first",
-      dialogVisible:false,
+      activeName: "0",
+      dialogVisible: false,
+      // 传递套餐价格 
+      price:0,
+      Remuneration:0,//稿费
+      discount:'',//会员折扣
+      sumMoney:0,//总价
     };
   },
   components: {
@@ -503,7 +421,6 @@ export default {
       // ai推广套餐
       GetSetMeal().then(res => {
         let data = res;
-        // console.log(data.data.data);
         if (data.data.code == 1) {
           this.aiList = data.data.data;
         }
@@ -516,17 +433,32 @@ export default {
         }
       });
       // 测试获取ai推广引擎
-      demandAdd().then(res => {
-        console.log(res);
-      });
+      // demandAdd().then(res => {
+      //   console.log(res);
+      // });
     },
     // 套餐选择
     addRoleHandle() {
-      this.dialogVisible = true
+      this.dialogVisible = true;
     },
-    // 获取当前套餐信息，同时关闭遮罩
-    closeRoleHandle(e){
-      console.log(e);
+    // 获取当前套餐信息，同时关闭遮罩,并将数据传递给固定结算栏
+    closeRoleHandle(arr) {
+      this.price = arr.price;
+      this.dialogVisible = false;
+    },
+    // 单选框切换，显示自由稿件已经代写稿件
+    qiehuan(){
+      let weituo = document.getElementsByClassName("weituoDaixie")[0];
+      let ziyou = document.getElementsByClassName("ziyouGaojian")[0];
+      if(this.radio == 1){
+        weituo.style.display = "block";
+        ziyou.style.display = "none";
+      } else{
+        weituo.style.display = "none";
+        ziyou.style.display = "block";
+      }
+      // console.log(this.radio);
+      
     }
   }
 };
@@ -805,14 +737,17 @@ export default {
   bottom: 0;
   z-index: 100;
   width: 100%;
+  min-width: 950px;
   padding: 15px;
-  // height: 70px;
   background: rgb(204, 235, 248);
   .xiadan {
     display: flex;
-    padding: 10px 0;
-    margin-left: 950px;
-    // align-items: center;
+    padding: 10px 0 40px 0;
+    // margin-left: 950px;
+    // position: relative;
+    // right: 0;
+    float: right;
+    margin-right: 100px;
     .feiyong {
       font-size: 18px;
       color: #ff0000;
@@ -854,31 +789,34 @@ export default {
     }
   }
   .queren {
-    margin-left: 1500px;
+    position: absolute;
+    right: 120px; 
+    top: 80px;
+    // margin-left: 1500px;
   }
 }
-.jk{
+.jk {
   display: flex;
   margin-top: 20px;
   align-items: center;
   justify-content: space-between;
-  >div{
-    &:nth-of-type(1){
-      span{
-        &:nth-of-type(1){
+  > div {
+    &:nth-of-type(1) {
+      span {
+        &:nth-of-type(1) {
           font-size: 28px;
           color: #cccccc;
-          text-decoration:line-through;
+          text-decoration: line-through;
           padding-right: 30px;
         }
-        &:nth-of-type(2){
+        &:nth-of-type(2) {
           font-size: 36px;
           color: #ff0e35;
           font-weight: 700;
         }
       }
     }
-    &:nth-of-type(2){
+    &:nth-of-type(2) {
       font-size: 25px;
       color: #ff0000;
       border: 1px solid #ff0000;
@@ -887,8 +825,9 @@ export default {
     }
   }
 }
-.neirongBox /deep/  p{//为获取返回回来，即使用v-html渲染的html添加样式，>>>可能会被浏览器忽略，使用/deep/代替
-   padding: 10px 0;
+.neirongBox /deep/ p {
+  //为获取返回回来，即使用v-html渲染的html添加样式，>>>可能会被浏览器忽略，使用/deep/代替
+  padding: 10px 0;
   //  background: #000000
 }
 </style>
