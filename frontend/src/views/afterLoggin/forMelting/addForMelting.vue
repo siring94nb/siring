@@ -7,7 +7,25 @@
         <div style="flexGrow: 1">
           <span class="active">全部</span>
           <span v-for="(item,index) in IndustryField" :key="index+1" :id="item.id">{{item.title}}</span>
-          <span style="float: right;">更多>></span>
+          <span style="float: right;">更多&gt;&gt;</span>
+        </div>
+      </div>
+      <div>
+        <button>全部排序</button>
+        <div>
+          <el-select v-model="value" placeholder="请选择">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div>
+          <el-input v-model="suoyin" placeholder="请输入名称"
+            prefix-icon="el-icon-search"></el-input>
+            <div>搜索</div>
         </div>
       </div>
     </div>
@@ -19,7 +37,25 @@ import { industryField } from "@/api/api";
 export default {
   data() {
     return {
-      IndustryField: [] //添加投融，行业领域数据
+      IndustryField: [], //添加投融，行业领域数据
+      options: [{
+          value: '1',
+          label: '按打赏数量'
+        }, {
+          value: '2',
+          label: '双皮奶'
+        }, {
+          value: '3',
+          label: '蚵仔煎'
+        }, {
+          value: '4',
+          label: '龙须面'
+        }, {
+          value: '5',
+          label: '北京烤鸭'
+        }],
+        value: '1',
+        suoyin:"",
     };
   },
   components: {
