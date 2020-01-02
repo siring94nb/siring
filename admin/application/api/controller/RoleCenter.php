@@ -208,6 +208,7 @@ class RoleCenter extends Base
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
             $param['user_id'] = $user_data['id'];
+            $param['invitation'] = $user_data['other_code'];
             if($user_data['type'] = 2){
 
                 $order = new AllOrder();
