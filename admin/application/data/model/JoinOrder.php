@@ -85,7 +85,7 @@ class JoinOrder extends Model
     {
 
         $where = [];
-        $where['type'] = $param['type'];
+        $where['a.type'] = $param['type'];
         if(!empty($param['phone'])){
             $where['b.phone'] = ['like','%'.$param['phone'].'%'];
         }

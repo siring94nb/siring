@@ -50,6 +50,8 @@ class MealOrder extends Base
             $meal_data = [
                 'user_id' => $postData['user_id'],
                 'name' => $postData["applet_name"],
+                'model_type' => $postData['model_type'],
+                'model_meal_type' => $postData["model_meal_type"],
                 'url' => $postData["applet_logo"],
                 'num' => $postData["num"],
                 'model_id' => $postData["tid"],

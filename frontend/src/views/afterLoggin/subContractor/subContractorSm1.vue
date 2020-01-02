@@ -456,8 +456,8 @@ export default {
         // this.showMsg(msg,code);
         console.log(data);
         if (data.code === 1) {
-          this.lastPage = data.last_page; 
-          this.shichuang = data.data  ;
+          this.lastPage = data.data.last_page; 
+          this.shichuang = data.data.data  ;
         }
       });
     },

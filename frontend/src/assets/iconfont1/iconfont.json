@@ -34,6 +34,13 @@
       "unicode_decimal": 58932
     },
     {
+      "icon_id": "887915",
+      "name": "关注",
+      "font_class": "guanzhu1",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
       "icon_id": "1577787",
       "name": "空白",
       "font_class": "kongbai",
@@ -181,6 +188,13 @@
       "unicode_decimal": 58896
     },
     {
+      "icon_id": "7417097",
+      "name": "音量",
+      "font_class": "yinliang",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
       "icon_id": "7667621",
       "name": "任务",
       "font_class": "renwu",
@@ -193,6 +207,13 @@
       "font_class": "huaban_fuzhi",
       "unicode": "e622",
       "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "10056799",
+      "name": "关注",
+      "font_class": "guanzhu",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
     },
     {
       "icon_id": "10131354",
