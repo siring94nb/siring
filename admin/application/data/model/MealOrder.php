@@ -13,10 +13,10 @@ use traits\model\SoftDelete;
 class MealOrder extends Model
 {
     use SoftDelete;
-    protected $deleteTime = 'del_time';
-    protected $createTime = 'create_time';
-    protected $updateTime = 'update_time';
-    protected $table="model_order";
+    protected $deleteTime = 'delect_at';
+    protected $createTime = 'created_at';
+    protected $updateTime = 'updated_at';
+    protected $table="order";
     protected $resultSetType = 'collection';
 
     /**
@@ -38,19 +38,19 @@ class MealOrder extends Model
         }
         if(!empty($parsm['start_time']) && !empty($parsm['end_time']))
         {
-            $where['create_time']=array('between',array(strtotime($parsm['start_time']),strtotime($parsm['end_time'])));
+            $where['created_at']=array('between',array(strtotime($parsm['start_time']),strtotime($parsm['end_time'])));
         }elseif(!empty($parsm['start_time']) && empty($parsm['end_time'])){
-            $where['create_time']=array('between',array(strtotime($parsm['start_time']),time()));
+            $where['created_at']=array('between',array(strtotime($parsm['start_time']),time()));
         }elseif(empty($parsm['start_time']) && !empty($parsm['end_time'])){
-            $where['create_time']=array('between',array(time()-86400*30,strtotime($parsm['end_time'])));
+            $where['created_at']=array('between',array(time()-86400*30,strtotime($parsm['end_time'])));
         }
         if(empty($parsm['page'])){
             $parsm['page'] = 1;
         }
         $field = 'a.*,u.phone';
         $order = 'create_time desc';
-        $mealorder = new MealOrder();
-        $list = Db::table('model_order')->alias('a')->join('user u', 'u.id=a.member_account','left' )->field($field) -> where( $where ) -> order( $order )
+        $meal_order = new MealOrder();
+        $list = $meal_order ->alias('a')->join('user u', 'u.id=a.member_account','left' )->field($field) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
         return $list;
 

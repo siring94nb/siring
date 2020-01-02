@@ -6,10 +6,11 @@ use think\Model;
 
 class SoftOrder extends Model
 {
-    protected $table = "soft_order";
+    protected $table = "order";
     protected $resultSetType = 'collection';
-//    protected $autoWriteTimestamp = true;
-//    protected $createTime = 'create_time';
+    protected $autoWriteTimestamp = true;
+    protected $createTime = 'created_at';
+    protected $updateTime  = 'updated_at';
 
 
     /**
@@ -27,26 +28,20 @@ class SoftOrder extends Model
      * @param $con
      * @return JoinOrder|bool
      */
-    public function order_add($pay_type,$uid,$sid,$yid,$goods_id,$paid_price,$balance,$money,$invite_code,$bank_card,$bank_pay_time,$con)
+    public function order_add($param)
     {
 
         $data = new SoftOrder;
         $data->save([
             'type' => 4,
-            'pay_type' => $pay_type,
-            'user_id' => $uid,
-            'sid' => $sid,
-            'yid' => $yid,
+            'user_id' => $param['user_id'],
+            'sid' => $param['sid'],
+            'yid' => $param['yid'],
             'no' => $this->get_sn(),
-            'goods_id' => $goods_id,
-            'paid_price' => $paid_price,
-            'balance_price' => $balance,
-            'money' => $money,
-            'invite_code' => $invite_code,
-            'bank_card' => $bank_card,
-            'bank_pay_time' => $bank_pay_time,
-            'con' =>$con,
-            'created_at'=>time(),
+            'goods_id' => $param['goods_id'],
+            'money' => $param['price'],
+            'invite_code' => $param['invitation'],
+            //'created_at'=>time(),
 
         ]);
 
@@ -58,6 +53,6 @@ class SoftOrder extends Model
      * @return string
      */
     function get_sn() {
-        return 'RJ'.date('YmdHi').rand(100000, 999999);
+        return 'RJ'.date('YmdHis').rand(100000, 999999);
     }
 }

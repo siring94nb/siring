@@ -43,7 +43,7 @@ class PromotionOrder extends Model
      * @return string
      */
     function get_sn() {
-        return 'TG'.date('YmdHi').rand(100000, 999999);
+        return 'TG'.date('YmdHis').rand(100000, 999999);
     }
 
     /**

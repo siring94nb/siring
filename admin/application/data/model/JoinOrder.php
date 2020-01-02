@@ -58,7 +58,7 @@ class JoinOrder extends Model
      * @return string
      */
     function get_sn() {
-        return 'JS'.date('YmdHi').rand(100000, 999999);
+        return 'JS'.date('YmdHis').rand(100000, 999999);
     }
 
     /**

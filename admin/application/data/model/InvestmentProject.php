@@ -52,7 +52,7 @@ class InvestmentProject extends Model
      * @return string
      */
     function get_sn() {
-        return 'TR'.date('YmdHi').rand(100000, 999999);
+        return 'TR'.date('YmdHis').rand(100000, 999999);
     }
 
     /**
