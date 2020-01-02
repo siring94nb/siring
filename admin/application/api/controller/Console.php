@@ -85,10 +85,10 @@ class Console extends Base
         }
 
 
-        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>1])->count();//软件定制总数
-        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>1])->count();//小程序订单总数
-        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>1])->count();//AI订单总数
-        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>1])->count();//投融订单总数
+        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>1,'type'=>4])->count();//软件定制总数
+        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>1,'type'=>8])->count();//小程序订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>1,'type'=>5])->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>1,'type'=>6])->count();//投融订单总数
         $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
@@ -110,10 +110,10 @@ class Console extends Base
         }
 
 
-        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2])->count();//软件定制总数
-        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>2])->count();//小程序订单总数
-        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2])->count();//AI订单总数
-        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>2])->count();//投融订单总数
+        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>4])->count();//软件定制总数
+        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>8])->count();//小程序订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>5])->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>2,'type'=>6])->count();//投融订单总数
         $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
@@ -135,10 +135,10 @@ class Console extends Base
         }
 
 
-        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',1)->count();//软件定制总数
-        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',1)->count();//小程序订单总数
-        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',2)->count();//AI订单总数
-        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>2])->where('status','<>',2)->count();//投融订单总数
+        $data['total_customized'] =  SoftOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>4])->where('status','<>',1)->count();//软件定制总数
+        $data['total_xcx'] =  MealOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>8])->where('status','<>',1)->count();//小程序订单总数
+        $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>5])->where('status','<>',2)->count();//AI订单总数
+        $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>2,'type'=>6])->where('status','<>',2)->count();//投融订单总数
         $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
