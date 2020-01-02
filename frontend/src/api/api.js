@@ -484,10 +484,10 @@ export const confirmNeedOrder = data => {
     return axios.post(`${base_url}api/NeedOrder/confirm_need_order`,  qs.stringify(data)).then(res => res.data);
 }
 /**
- * 定制需求订单支付
+ * 订单支付
  */
 export const codeGetPay = data => {
-    return axios.post(`${base_url}api/NeedOrder/get_pay`,  qs.stringify(data)).then(res => res.data);
+    return axios.post(`${base_url}api/Payment/get_pay`,  qs.stringify(data)).then(res => res.data);
 }
 /**
  * 优惠券
