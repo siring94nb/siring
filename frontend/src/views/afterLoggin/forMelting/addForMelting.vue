@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div style="background:rgb(246,246,246);min-height:100vh">
     <Myheader />
-    <div class="box" ref="box">
+    <div class="box" ref="box" >
       <div class="topBox">
         <div style="margin-right:30px; width: 100px; padding:10px 0px; ">行业领域：</div>
         <div style="flexGrow: 1">
@@ -166,12 +166,16 @@ export default {
 <style lang="scss" scoped>
 .box {
   background: rgb(246, 246, 246);
-  margin-top: 110px;
+  // margin-top: 110px;
   max-width: 1260px;
+  margin: 100px auto;
   .topBox {
     display: flex;
     background: #ffffff;
     font-size: 13px;
+    padding:20px 20px  0px 20px;
+    // margin-top: 20px;
+    // overflow: hidden;
     span {
       font-size: 13px;
       display: inline-block;
@@ -192,6 +196,8 @@ export default {
     display: flex;
     background: #ffffff;
     padding-left: 135px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
     .searchBox {
       display: flex;
     }

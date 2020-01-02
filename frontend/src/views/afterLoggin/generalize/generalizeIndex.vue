@@ -34,11 +34,11 @@
       </div>
       <div class="skipScreen">
         <div>
-          <router-link to="flowIndex" style="background:red">需求确认...</router-link>
-          <router-link to style="background:rgb(102,153,0)">代写中...</router-link>
-          <router-link to style="background:rgb(0,51,255)">确认稿件</router-link>
-          <router-link to style="background:rgb(171,147,48)">智推中</router-link>
-          <router-link to style="background:rgb(134,134,134)">智推完成</router-link>
+          <router-link to="/flowIndex" style="background:red">需求确认...</router-link>
+          <router-link to="/flowIndex" style="background:rgb(102,153,0)">代写中...</router-link>
+          <router-link to="/flowIndex" style="background:rgb(0,51,255)">确认稿件</router-link>
+          <router-link to="/flowIndex" style="background:rgb(171,147,48)">智推中</router-link>
+          <router-link to="/flowIndex" style="background:rgb(134,134,134)">智推完成</router-link>
         </div>
         <div>
           <router-link to="/newManuscript" style="color:#0099ff;border:1px solid #0099ff">

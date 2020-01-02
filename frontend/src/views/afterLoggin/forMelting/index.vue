@@ -34,12 +34,12 @@
       </div>
       <div class="skipScreen">
         <div>
-          <router-link to style="background:rgb(204,255,255)">全部</router-link>
-          <router-link to style="background:red">线上沟通...</router-link>
-          <router-link to style="background:rgb(102,153,0)">线下见面会...</router-link>
-          <router-link to style="background:rgb(0,51,255)">合同保管</router-link>
-          <router-link to style="background:rgb(171,147,48)">委托检视</router-link>
-          <router-link to style="background:rgb(134,134,134)">已放弃</router-link>
+          <router-link to="/flowIndex" style="background:rgb(204,255,255)">全部</router-link>
+          <router-link to="/flowIndex" style="background:red">线上沟通...</router-link>
+          <router-link to="/flowIndex" style="background:rgb(102,153,0)">线下见面会...</router-link>
+          <router-link to="/flowIndex" style="background:rgb(0,51,255)">合同保管</router-link>
+          <router-link to="/flowIndex" style="background:rgb(171,147,48)">委托检视</router-link>
+          <router-link to="/flowIndex" style="background:rgb(134,134,134)">已放弃</router-link>
         </div>
         <div>
           <router-link to="/addForMelting" style="color:#0099ff;border:1px solid #0099ff">

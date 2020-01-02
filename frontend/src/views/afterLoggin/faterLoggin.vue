@@ -118,7 +118,7 @@
             con: [
               // "我的投融", "中止项目"
               { name: "我的投融", rou: "/forMelting" },
-              { name: "我的投融", rou: "/ceshi" }
+              { name: "中止项目", rou: "/zhongzhi" }
             ]
           }
         ],
@@ -238,8 +238,8 @@
     }
     .el-menu-item.is-active {
       font-size: 16px;
-      font-weight: 700;
-      color: rgb(177,18,14) !important;
+      // font-weight: 700;
+      color: #7fadcc !important;
     }
     li {
       width: 100%;
