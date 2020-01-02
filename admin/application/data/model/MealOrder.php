@@ -26,8 +26,7 @@ class MealOrder extends Model
      */
     public function get_saas_order($parsm)
     {
-        $where=[];
-        $where['del_time'] = null;
+        $where['a.type'] = 8;
         if(array_key_exists('title',$parsm) && !empty($parsm['title'])){
                 $where['order_number|model_type']=$parsm['title'];
         }
@@ -48,9 +47,10 @@ class MealOrder extends Model
             $parsm['page'] = 1;
         }
         $field = 'a.*,u.phone';
-        $order = 'create_time desc';
+        $order = 'id desc';
         $meal_order = new MealOrder();
-        $list = $meal_order ->alias('a')->join('user u', 'u.id=a.member_account','left' )->field($field) -> where( $where ) -> order( $order )
+        $list = $meal_order
+            ->alias('a')->join('user u', 'u.id = a.user_id','left' )->field($field) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
         return $list;
 

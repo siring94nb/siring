@@ -126,7 +126,7 @@ export default {
         {
           title: "订单编号",
           align: "center",
-          key: "order_number",
+          key: "no",
           width: 200
         },
         {
@@ -142,7 +142,7 @@ export default {
         {
           title: "用户账号",
           align: "center",
-          key: "member_account"
+          key: "phone"
         },
         {
           title: "订单金额",
@@ -169,12 +169,12 @@ export default {
         {
           title: "下单时间",
           align: "center",
-          key: "create_time"
+          key: "created_at"
         },
         {
           title: "套餐到期时间",
           align: "center",
-          key: "meal_end_time"
+          key: "end_time"
         },
         // 1：未支付，2：待开通，3：已完成，4：已关闭
         {
