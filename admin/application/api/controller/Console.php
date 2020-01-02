@@ -36,13 +36,13 @@ class Console extends Base
         }
 
 
-//        $user = new \app\data\model\User();
-//        $data = $user->user_detail($user_id);
-//        //pp($data);die;
-//        $user_fund =  UserFund::user($user_id);
-//        $data['money'] = $user_fund['money'];
-//        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
-//        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        $user = new \app\data\model\User();
+        $data = $user->user_detail($user_id);
+        //pp($data);die;
+        $user_fund =  UserFund::user($user_id);
+        $data['money'] = $user_fund['money'];
+        unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
     /**

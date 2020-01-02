@@ -9,6 +9,8 @@ use app\data\model\WechatPay;
 use think\Request;
 use think\Session;
 use think\Db;
+use think\Validate;
+
 /**
  * lilu
  * 行业模板控制器
@@ -23,45 +25,47 @@ class MealOrder extends Base
      */
     public function   meal_order_add()
     {
-        $request=Request::instance();
-        $postData=$request->param();
+        $request = Request::instance();
+        $postData = $request->param();
+        $user_id = Session::get("uid");
+        if($user_id){
+            $postData["user_id"] = Session::get("uid");
+        }else{
+            $postData["user_id"] = $postData["user_id"];
+        }
         if($postData){
-            $postData['order_number']='HY'.date('Ymdhis').rand(000000,999999);
-            $postData['create_time']=time();
-            $postData['meal_end_time']=time()+$postData['meal_end_time']*2*365*24*60*60;
-            $postData['order_status']=1;    //  1   未付款
-            $postData['member_account']=$postData['user_id'];
-            unset($postData['user_id']);
-            $detail=[];
-            if(array_key_exists('pay_time',$postData)){
-                $postData['pay_time']=strtotime($postData['pay_time']);
+            $validate = new Validate([
+                ['user_id', 'require', '标题不能为空'],
+                ['model_type', 'require', '模板类型1diy、2固定必须'],
+                ['model_meal_type', 'require', '模板套餐类型必须'],
+                ['applet_name', 'require', '小程序名称必须'],
+                ['applet_logo', 'require', '小程序logo必须'],
+                ['num', 'require', '年份必须'],
+                ['tid', 'require', '套餐id不能为空'],
+                ['price', 'require', '金额不能为空'],
+            ]);
+            if (!$validate->check($postData)) {
+                returnJson (0, $validate->getError());exit();
             }
-            if(array_key_exists('bank_name',$postData)){
-                $detail['bank_name']=$postData['bank_name'];
-                unset($postData['bank_name']);
-            }
-            if(array_key_exists('bank_number',$postData)){
-                $detail['bank_number']=$postData['bank_number'];
-                unset($postData['bank_number']);
-            }
-            if(array_key_exists('comment',$postData)){
-                $detail['comment']=$postData['comment'];
-                unset($postData['comment']);
-            }
-            if(array_key_exists('account_number',$postData)){
-                $detail['account_number']=$postData['account_number'];
-                unset($postData['account_number']);
-            }
-            $postData['pay_detail']=json_encode($detail);
-            $meal=new Meal();
-            $res=$meal->allowField(true)->create($postData)->toArray();
-            if($res){
-                //下单成功
-                $re=$this->meal_order_pay($res['id'],$postData['pay_type'],$postData['order_amount']);
-                return  $re;
-            }else{
-                return   json(['0','下单失败']);
-            }
+            $meal_data = [
+                'user_id' => $postData['user_id'],
+                'name' => $postData["applet_name"],
+                'model_type' => $postData['model_type'],
+                'model_meal_type' => $postData["model_meal_type"],
+                'url' => $postData["applet_logo"],
+                'num' => $postData["num"],
+                'model_id' => $postData["tid"],
+                'money' => $postData["price"],
+                'no' => 'HY'.date('YmdHis').rand(000000,999999),
+                'created_at' => time(),
+                'type' => 8,
+
+            ];
+            $meal = new Meal();
+            $res = $meal->allowField(true)->create($meal_data)->toArray();
+
+            return $res ? returnJson(1,'下单成功',$res['id']) : returnJson(0,'下单失败');
+
         }else{
             return   json('0','获取参数失败');
         }
@@ -80,7 +84,6 @@ class MealOrder extends Base
         switch($type) {
             case 1:    //支付宝
                 returnJson(0, '暂未支付宝开通');
-            return $res;exit();
                 break;
             case 2:     //微信支付
                  // 查询订单信息

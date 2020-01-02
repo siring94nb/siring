@@ -10,6 +10,11 @@ namespace app\data\model;
 use think\Model;
 use traits\model\SoftDelete;
 
+/**
+ * 分包商项目
+ * Class Subcontract
+ * @package app\data\model
+ */
 class Subcontract extends Model
 {
     use SoftDelete;

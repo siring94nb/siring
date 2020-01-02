@@ -154,45 +154,53 @@ export default {
         {
           title: "合同编号",
           align: "center",
-          key: "need_order",
+          key: "no",
           width: 200
         },
         {
           title: "项目名称",
           align: "center",
-          key: "need_name"
+          key: "name"
         },
         {
           title: "订单类型",
           align: "center",
-          key: "need_category"
+          key: "need_category",
+            render: ( h , param ) => {
+                if(param.row.need_category == '1'){
+                    return h('div','智能硬件');
+                }else if(param.row.need_category == '2'){
+                    return h('div','电子商务');
+                }else{
+                    return h('div','');
+                }
+            }
         },
         {
           title: "终端类型",
           align: "center",
-          key: "terminal"
+          key: "terminal",
+            width: 200
         },
         {
           title: "用户账号",
           align: "center",
-          key: "need_phone",
-          width: 120
+          key: "phone",
         },
         {
           title: "合同金额",
           align: "center",
-          key: "need_money"
+          key: "order_amount"
         },
         {
           title: "付款金额",
           align: "center",
-          key: "need_order_money"
+          key: "money"
         },
         {
           title: "付款账号",
           align: "center",
           key: "need_pay_account",
-          width: 250,
           render: (h, param) => {
             let bankNumber, pay_detail;
             if (param.row.pay_type == 1) bankNumber = "支付宝支付";
@@ -208,13 +216,13 @@ export default {
         {
           title: "下单时间",
           align: "center",
-          key: "create_time",
+          key: "created_at",
           width: 120
         },
         {
           title: "剩余款",
           align: "center",
-          key: "need_surplus"
+          key: "surplus"
         },
         {
           title: "剩余天数",
@@ -224,7 +232,7 @@ export default {
         {
           title: "用户最新消息",
           align: "center",
-          key: "need_new_info"
+          key: "need_info_c"
         },
         {
           title: "操作",

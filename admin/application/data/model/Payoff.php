@@ -1,109 +1,22 @@
 <?php
-
+/**
+ * Created by PhpStorm.
+ * User: fyk
+ * Date: 2020/1/2
+ * Time: 11:55
+ */
 namespace app\data\model;
-use think\Model;
-use think\Db;
-use traits\model\SoftDelete;
 
+use think\Model;
 
 /**
- * lilu
- * 定制需求订单
+ * 支付公共接口
+ * Class PayMent
  */
-class NeedOrder extends Model
+class Payoff extends Model
 {
-
-        use SoftDelete;
-        protected $deleteTime = 'delect_at';
-        protected $createTime = 'created_at';
-        protected $updateTime = 'updated_at';
-        protected $table="order";
-        protected $resultSetType = 'collection';
-        protected $hidden = [
-            'goods_id','num','rew_num','city_grade',
-            'add_time','end_time','advantage'];
-        /**
-         * lilu
-         * 定制需求添加订单
-         * param   订单参数
-         */
-        public function order_add($need)
-        {
-            $data = $need;
-            return $data !== false ? $data : false;
-        }
-
-        /**
-         * @author fyk
-         * 获取定制需求订单
-         */
-        public function get_need_order($param,$po)
-        {
-            $where['type'] = 7;
-            if($po == 1){
-                $where['user_id'] = $param['user_id'];
-            }
-
-            if(!empty($param['title'])){
-                $where['need_order|need_phone'] = $param['title'];
-            }
-
-            if(!empty($param['start_time'])){
-                $param['start_time'] = strtotime($param['start_time']);
-                $where['created_at'] = ['gt',$param['start_time']];
-            }
-            if(!empty($param['end_time'])){
-                $param['end_time'] = strtotime($param['end_time']);
-                $where['created_at'] = ['lt',$param['end_time']];
-            }
-            if(!empty($param['start_time']) && !empty($param['end_time'])){
-                $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
-            }
-
-            if(empty($param['page'])){
-                $param['page'] = 1;
-            }
-            $field = '*';
-            $order = 'id desc';
-            $list = NeedOrder::where( $where ) ->field($field) ->  order( $order )
-                -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
-
-            foreach ($list['data'] as $k =>$v){
-
-                $terminal= json_decode( $v['dev'] , true );
-                if(!empty($terminal)){
-                    $res = join('/',$terminal);
-                    $list['data'][$k]['terminal'] = $res;
-                }else{
-                    $list['data'][$k]['terminal'] = "无";
-                }
-            }
-
-            return $list;
-        }
-
-
-    /**
-     * 详情
-     * @param $id
-     * @return array
-     * @throws \think\Exception
-     * @throws \think\exception\DbException
-     */
-        public function need_detail($id)
-        {
-            $need_detail = self::get($id)->toArray();
-            $terminal= json_decode( $need_detail['dev'] , true );
-            if(!empty($terminal)){
-                $res = join('/',$terminal);
-                $need_detail['terminal'] = $res;
-            }else{
-                $need_detail['terminal'] = "无";
-            }
-
-            return $need_detail;
-        }
-
+    protected $table="order";
+    protected $resultSetType = 'collection';
     /**
      * 支付流程
      * @author fyk
@@ -124,6 +37,7 @@ class NeedOrder extends Model
         if($data['payment'] == 2) returnJson(0,'当前订单已支付');
         //查询等级
         $user = UserGrade::get(['user_id'=>$data['user_id']]);
+
         //查询比例
         $grade = JoinRole::member_details($user['grade']);
         //算出金额
@@ -156,7 +70,7 @@ class NeedOrder extends Model
                 return $res; exit();
 
 
-            break;
+                break;
 
             case 3://银联卡支付
 
