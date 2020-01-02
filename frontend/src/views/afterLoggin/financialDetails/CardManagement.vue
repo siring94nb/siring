@@ -117,7 +117,7 @@ export default {
     logginHeader
   },
   mounted() {
-    this.xuanzhogn(this.moren);
+    this.xuanzhogn(0);
     this.getBankcardList();
   },
   methods: {
@@ -244,7 +244,7 @@ export default {
     border: 1px solid rgba(202, 149, 142, 1);
     border-radius: 5px;
     padding: 5px 10px;
-    height: 130px;
+    height: 120px;
     margin-bottom: 15px;
     > div {
       span {

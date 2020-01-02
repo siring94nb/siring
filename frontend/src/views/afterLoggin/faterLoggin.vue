@@ -117,7 +117,7 @@
             classN: "iconfont icon-tourongziqingkuang  ",
             con: [
               // "我的投融", "中止项目"
-              { name: "我的投融", rou: "/addForMelting" },
+              { name: "我的投融", rou: "/forMelting" },
               { name: "我的投融", rou: "/ceshi" }
             ]
           }
@@ -168,8 +168,8 @@
           if (data.code == 1) {
             this.arr[2].con[0].rou = "/CityPartner";
           } else {
-            this.arr[2].con[0].rou = "/CityPartner";
-            // this.arr[2].con[0].rou = "/partnerCityX";
+            // this.arr[2].con[0].rou = "/CityPartner";
+            this.arr[2].con[0].rou = "/partnerCityX";
             // 13260676780
           }
         });
@@ -181,8 +181,8 @@
           if (data.code == 1) {
             this.arr[2].con[1].rou = "/ClassMembersA";
           } else {
-            // this.arr[2].con[1].rou = "/ClassMembersX";
-            this.arr[2].con[1].rou = "/ClassMembersA";
+            this.arr[2].con[1].rou = "/ClassMembersX";
+            // this.arr[2].con[1].rou = "/ClassMembersA";
             // 13260676780
           }
         });
@@ -194,8 +194,8 @@
           if (data.code == 1) {
             this.arr[2].con[2].rou = "/subContractorSm1";
           } else {
-            // this.arr[2].con[2].rou = "/subContractorIndex";
-            this.arr[2].con[2].rou = "/subContractorSm1";
+            this.arr[2].con[2].rou = "/subContractorIndex";
+            // this.arr[2].con[2].rou = "/subContractorSm1";
             // 13260676780
           }
         });
