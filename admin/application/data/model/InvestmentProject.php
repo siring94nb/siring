@@ -11,7 +11,7 @@ use think\Model;
  */
 class InvestmentProject extends Model
 {
-    protected $table = "investment_project";
+    protected $table = "order";
     protected $resultSetType = 'collection';
     protected $autoWriteTimestamp = true;
     protected $createTime = 'created_at';
