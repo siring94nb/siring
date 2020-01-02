@@ -39,7 +39,7 @@ class NeedOrder extends Model
          */
         public function get_need_order($param,$po)
         {
-            $where=[];
+            $where['type'] = 7;
             if($po == 1){
                 $where['user_id'] = $param['user_id'];
             }
