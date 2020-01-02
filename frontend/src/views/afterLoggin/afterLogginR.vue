@@ -154,6 +154,7 @@ export default {
   }
   .account{
     margin-right: 90px;
+    width: 280px;
     li{
       padding-bottom: 20px;
       >span{
@@ -214,7 +215,8 @@ export default {
     background: #ffffff;
     display: flex;
     div:nth-of-type(1){
-      margin-right: 150px;
+      margin-right: 45px;
+      width: 200px;
     }
     i{
       font-size: 32px;

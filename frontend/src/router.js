@@ -315,6 +315,14 @@ export default new Router({
             component: () =>
                 import('@/views/afterLoggin/generalize/flowIndex'),
         },
+        {   //投融介
+            path: "/forMelting",
+            name: "forMelting",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/forMelting/index'),
+        },
         {
             path: "/ceshi",
             name: "ceshi",
@@ -359,6 +367,15 @@ export default new Router({
         props: true,
         component: () =>
             import('@/views/newManuscript/index'),
+    },
+    // 新投资，新融资
+    {
+        path: "/newInvestment",
+        name: "newInvestment",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/newManuscript/investment'),
     }
 ]
 })

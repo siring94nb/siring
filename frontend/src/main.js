@@ -36,6 +36,7 @@ router.beforeEach((to, from, next) => {
             if (to.meta.requireAuth == true) {
                 let userId = sessionStorage.getItem("user_id");
                 if (userId == null) {
+                    // let rou = this.$router.path;
                     next("/");
                     // 路由守卫，登录提示处理延时出现，否则先行执行alert阻断页面跳转
                     setTimeout(function(){

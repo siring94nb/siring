@@ -5,19 +5,19 @@
       <div class="circle">
         <img :src="require('@/assets/images/u4685.png')" alt />
       </div>
-      <router-link to="/city">合伙人</router-link>
+      <router-link to="/CityPartner">合伙人</router-link>
     </div>
     <div class="item">
       <div class="circle">
         <img :src="require('@/assets/images/u4679.png')" alt />
       </div>
-      <router-link to="/member">等级会员</router-link>
+      <router-link to="/ClassMembersA">等级会员</router-link>
     </div>
     <div class="item">
       <div class="circle">
         <img :src="require('@/assets/images/u4692.png')" alt />
       </div>
-      <router-link to="/contractor">分包商</router-link>
+      <router-link to="/subContractorSm1">分包商</router-link>
     </div>
   </div>
 </template>
