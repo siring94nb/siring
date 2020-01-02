@@ -52,6 +52,7 @@ class MealOrder extends Model
         $list = $meal_order
             ->alias('a')->join('user u', 'u.id = a.user_id','left' )->field($field) -> where( $where ) -> order( $order )
             -> paginate( $parsm['size'] , false , array( 'page' => $parsm['page'] ) ) -> toArray();
+
         return $list;
 
     }
