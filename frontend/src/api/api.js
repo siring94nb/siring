@@ -508,6 +508,19 @@ export const industryField = params => {
     return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
 }
 /**
+ * 投融介（新发稿页表格）
+ */
+export const industryList = data => {
+    return axios.post(`${base_url}api/Investment/industry_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融介（新发稿，我要融资部分）
+ */
+export const financeAdd = data => {
+    return axios.post(`${base_url}api/Investment/finance_add`,  qs.stringify(data)).then(res => res.data);
+}
+
+/**
  * 订单会员折扣
  */
 export const getDiscount = data => {

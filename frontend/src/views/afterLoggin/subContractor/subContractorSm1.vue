@@ -194,28 +194,21 @@
                   @selection-change="handleSelectionChange"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="项目订单编号" width="200" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="订单名称" width="205" align="center"></el-table-column>
-                  <el-table-column
-                    prop="InviterInvitationCode"
-                    label="承接时间"
-                    width="170"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="id" label="项目订单编号" width="200" align="center"></el-table-column>
+                  <el-table-column prop="entry_name" label="订单名称" width="205" align="center"></el-table-column>
+                  <el-table-column prop="created_at" label="承接时间" width="170" align="center"></el-table-column>
                   <el-table-column prop="InviterLevel" label="要求完成时间" width="220" align="center"></el-table-column>
                   <el-table-column prop="amount" label="项目开发文档" width="220" align="center"></el-table-column>
-                  <el-table-column
-                    prop="MinimumCommissions"
-                    label="延期扣款"
-                    width="180"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="佣金金额（元）"
-                    width="180"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="reach_money" label="延期扣款" width="180" align="center">
+                    <template slot-scope="scope">
+                      <div>{{scope.row.reach_money==null?"0":scope.row.reach_money}}</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="money" label="佣金金额（元）" width="180" align="center">
+                    <template slot-scope="scope">
+                      <div>{{scope.row.money==null?"0":scope.row.money}}</div>
+                    </template>
+                  </el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -368,8 +361,8 @@ export default {
         let { data, msg, code } = res;
         console.log(data);
         // this.showMsg(msg, code);
-        if (code === 1) {
-          this.skillArr = data;
+        if (data.code === 1) {
+          this.skillArr = data.data;
         }
       });
     },
@@ -390,40 +383,40 @@ export default {
     },
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
     GetSubcontractPartner() {
-      // let params = {};
-      // let times = this.value;
-      // if (this.dis) {
-      //   params = {
-      //     type: 1
-      //   };
-      // } else {
-      //   if (this.value == "") {
-      //     params = {
-      //       type: 1,
-      //       title: this.suoyin
-      //     };
-      //   } else if (this.suoyin == "" && this.value != null) {
-      //     let start_time = this.value[0];
-      //     let end_time = this.value[1];
-      //     params = {
-      //       type: 1,
-      //       start_time: start_time.getTime(),
-      //       end_time: end_time.getTime()
-      //     };
-      //   } else {
-      //     let start_time = this.value[0];
-      //     let end_time = this.value[1];
-      //     params = {
-      //       type: 1,
-      //       title: this.suoyin,
-      //       start_time: start_time.getTime(),
-      //       end_time: end_time.getTime()
-      //     };
-      //   }
-      // }
-      const params = {
-        type: 1
-      };
+      let params = {};
+      let times = this.value;
+      if (this.dis) {
+        params = {
+          type: 1
+        };
+      } else {
+        if (this.value == "") {
+          params = {
+            type: 1,
+            title: this.suoyin
+          };
+        } else if (this.suoyin == "" && this.value != null) {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 1,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        } else {
+          let start_time = this.value[0];
+          let end_time = this.value[1];
+          params = {
+            type: 1,
+            title: this.suoyin,
+            start_time: start_time.getTime(),
+            end_time: end_time.getTime()
+          };
+        }
+      }
+      // const params = {
+      //   type: 1
+      // };
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
@@ -456,8 +449,8 @@ export default {
         // this.showMsg(msg,code);
         console.log(data);
         if (data.code === 1) {
-          this.lastPage = data.data.last_page; 
-          this.shichuang = data.data.data  ;
+          this.lastPage = data.data.last_page;
+          this.shichuang = data.data.data;
         }
       });
     },
