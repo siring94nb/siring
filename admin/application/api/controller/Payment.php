@@ -142,11 +142,11 @@ class Payment extends Base
         $param = $request->param();
         $validate = new Validate([
             ['type', 'require', '支付分类不能为空'],
-            ['order_id', 'require', '商品id不能为空'],
+            ['order_id', 'require', '订单id不能为空'],
             ['money','require','支付金额不能为空'],
             ['pay_type','require','支付方式必须'],
-            ['password','require','余额密码必须'],
-            ['unionpay','require','银行卡支付参数必须'],
+//            ['password','require','余额密码必须'],
+//            ['unionpay','require','银行卡支付参数必须'],
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
@@ -157,6 +157,35 @@ class Payment extends Base
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
                 return $data;
+            case 2://签订合同
+                $ratio = 0.7;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+                return $data;
+                break;
+            case 3://项目上线
+                $ratio = 0.1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            case 4://项目验收
+                $ratio = 0.1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            case 5://项目年服务
+                $ratio = 1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            default:
+                returnJson(0,'参数有误');
 
         }
     }

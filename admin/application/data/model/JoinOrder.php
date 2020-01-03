@@ -44,7 +44,7 @@ class JoinOrder extends Model
             'payment' => 1,
             'status' => 1,
             'dev' => $dev,
-            'grade' => $grade,
+            'city_id' => $grade,
             'con' =>$con,
             'created_at' => time(),
 
