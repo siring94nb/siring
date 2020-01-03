@@ -43,6 +43,8 @@ class Alipay extends Model
         $pay = new Pay($config);
 
         $data = $pay->driver('alipay')->gateway('scan')->pay($config_biz);
+
+
         //生成支付码
         $imgData = 'http://qr.topscan.com/api.php?text='. $data;
 
