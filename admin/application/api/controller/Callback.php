@@ -117,20 +117,18 @@ class Callback extends Base
         $response = $app->payment->handleNotify(function($notify, $successful){
             // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
             $rstArr = json_decode($notify,true);
-            file_put_contents('notify.txt', '订单金额：' . $rstArr . "\r\n\r\n", FILE_APPEND);
-            $money = $rstArr['total_fee'];
             $data =  Order::get(['no'=>$rstArr['out_trade_no']]);
 
             if (empty($data)) {
-                returnJson(0,'订单不存在');
+                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
             }
             if ($data['payment'] == 2) {
-                returnJson(0,'订单已支付'); // 已经支付成功了就不再更新了
+                return true;  // 已经支付成功了就不再更新了
             }
             // 用户是否支付成功
             if ($successful) {
                 // 不是已经支付状态则修改为已经支付状态
-                Db::transaction(function()use ( $data,$money ){
+                Db::transaction(function()use ( $data){
                     $res1 =  Order::where('id',$data['id'])->update([
                         //  'need_status'=>4,
                         'payment'=>2,
@@ -141,12 +139,13 @@ class Callback extends Base
                     //订单统计表添加
                     $budget_type = 1;
                     $income = '';//收入金额
-                    $res2 = (new AllOrder())->allorder_add($budget_type,$data,$money,$income);
+                    $res2 = (new AllOrder())->allorder_add($budget_type,$data,$data['money'],$income);
 
                     return $res1 && $res2   ? true : false;
 
                 });
             }
+            return true;
 
         });
         // 将响应输出
