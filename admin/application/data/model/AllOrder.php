@@ -321,7 +321,7 @@ class AllOrder extends Model
      * @param $income
      * @return false|int
      */
-    public function allorder_add($role_type,$budget_type,$data,$pay_money,$income)
+    public function allorder_add($budget_type,$data,$pay_money,$income)
     {
 
             $user = (new User())->user_detail($data['user_id']);//查询个人信息
@@ -331,7 +331,7 @@ class AllOrder extends Model
             }
             return $this->save([
 
-                'role_type' => $role_type,
+                'role_type' => $data['type'],
                 'budget_type' => $budget_type,
                 'user_id' => $user['id'],
                 'phone' => $user['phone'],
