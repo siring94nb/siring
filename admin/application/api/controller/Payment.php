@@ -6,6 +6,7 @@
  * Time: 15:52
  */
 namespace app\api\controller;
+use app\data\model\Order;
 use app\data\model\UserFund;
 use app\data\model\UserGrade;
 use app\data\model\Payoff;
@@ -175,5 +176,28 @@ class Payment extends Base
                 returnJson(0,'参数有误');
 
         }
+    }
+
+    /**
+     * 支付成功回调
+     * @throws \think\exception\DbException
+     */
+    public function pay_status()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['order_id', 'require', '订单id不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+
+        $data =  Order::get($param['order_id']);
+
+        if($data['payment'] == 2){
+            returnJson(1,'当前订单已支付');
+        }
+        returnJson(0,'当前订单未支付');
     }
 }
