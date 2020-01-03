@@ -152,7 +152,7 @@ class Payment extends Base
             returnJson (0,$validate->getError());exit();
         }
         switch ($param['type']) {
-            case 1://软件定制
+            case 1://软件定制+角色加盟+项目年服务
                 $ratio = 1;
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
@@ -163,27 +163,14 @@ class Payment extends Base
 
                 return $data;
                 break;
-            case 3://项目上线
+            case 3://项目上线 + 项目验收 + 原型确认
                 $ratio = 0.1;
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
 
                 return $data;
                 break;
-            case 4://项目验收
-                $ratio = 0.1;
-                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
-
-                return $data;
-                break;
-            case 5://项目年服务
-                $ratio = 1;
-                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
-
-
-                return $data;
-                break;
             default:
                 returnJson(0,'参数有误');
 
