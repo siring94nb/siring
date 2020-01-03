@@ -1,7 +1,7 @@
 <template>
   <div style="background:rgb(246,246,246);min-height:100vh">
     <Myheader />
-    <div class="box" ref="box" >
+    <div class="box" ref="box">
       <div class="topBox">
         <div style="margin-right:30px; width: 100px; padding:10px 0px; ">行业领域：</div>
         <div style="flexGrow: 1">
@@ -41,12 +41,12 @@
       </div>
       <div>
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="date" label="邀请码" width="200" align="center"></el-table-column>
+          <el-table-column prop="id" label="邀请码" width="200" align="center"></el-table-column>
           <el-table-column prop="name" label="项目名称" width="200" align="center"></el-table-column>
-          <el-table-column prop="address" label="行业领域" width="200" align="center"></el-table-column>
-          <el-table-column prop="ceshi" label="项目亮点" width="400" align="center"></el-table-column>
+          <el-table-column prop="resume" label="行业领域" width="200" align="center"></el-table-column>
+          <el-table-column prop="resume" label="项目亮点" width="400" align="center"></el-table-column>
           <el-table-column prop="deshi" label="操作" align="center">
-            <template  slot-scope="scope">
+            <template slot-scope="scope">
               <div class="caozuoBox">
                 <div @click="tiaozhuan(scope.$index, tableData)">{{scope.row.deshi}}</div>
                 <div class="guanzhu">
@@ -58,12 +58,12 @@
           </el-table-column>
         </el-table>
       </div>
-    </div>  
+    </div>
   </div>
 </template>
 <script>
 import Myheader from "@/components/header";
-import { industryField,industryList } from "@/api/api";
+import { industryField, industryList } from "@/api/api";
 export default {
   data() {
     return {
@@ -95,45 +95,50 @@ export default {
       // 表格
       tableData: [
         {
-          date: "MU3838",
-          name: "物联网摇摇车",
-          address: "医疗健康",
-          ceshi:"非常好的项目",
-          deshi:"我要投资"
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
         },
         {
-          date: "MU3838",
-          name: "物联网摇摇车",
-          address: "医疗健康",
-          ceshi:"非常好的项目",
-          deshi:"我要投资"
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
         },
         {
-          date: "MU3838",
-          name: "物联网摇摇车",
-          address: "医疗健康",
-          ceshi:"非常好的项目",
-          deshi:"我要融资"
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
         },
         {
-          date: "MU3838",
-          name: "物联网摇摇车",
-          address: "医疗健康",
-          ceshi:"非常好的项目",
-          deshi:"我要融资"
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要融资"
         },
         {
-          date: "MU3838",
-          name: "物联网摇摇车",
-          address: "医疗健康",
-          ceshi:"非常好的项目",
-          deshi:"我要融资"
-        },
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要融资"
+        }
       ]
     };
   },
   components: {
-    Myheader,
+    Myheader
   },
   mounted() {
     this.getIndustryField();
@@ -150,26 +155,28 @@ export default {
       });
     },
     // 投资，融资跳转传参
-    tiaozhuan(index, rows){
+    tiaozhuan(index, rows) {
       // console.log(index)
       // console.log(rows[index]);
       this.$router.push({
         name: `newInvestment`,
         params: {
-          leixing: rows[index].deshi == "我要投资"?"我要投资":"我要融资",
+          leixing: rows[index].deshi == "我要投资" ? "我要投资" : "我要融资",
+          id: rows[index].id
           // code: '8989'
         }
-      })
+      });
     },
     // 获取表格信息
-    getindustryList(){
-      let parmas = {type:1}
-      industryList(parmas).then(res=>{
-        let {data,code,msg} = res
-        if(code == 1) {
+    getindustryList() {
+      let parmas = { type: 1 };
+      industryList(parmas).then(res => {
+        let { data, code, msg } = res;
+        console.log(res);
+        if (code == 1) {
           // this.tableData = data.data
         }
-      })
+      });
     },
     // 控制屏幕过大，两侧留白
     changeSize() {
@@ -196,7 +203,7 @@ export default {
     display: flex;
     background: #ffffff;
     font-size: 13px;
-    padding:20px 20px  0px 20px;
+    padding: 20px 20px 0px 20px;
     // margin-top: 20px;
     // overflow: hidden;
     span {
@@ -257,13 +264,13 @@ export default {
     color: rgb(244, 234, 42);
     font-size: 20px;
   }
-  .caozuoBox{
+  .caozuoBox {
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 0 50px;
-    >div{
-      &:nth-of-type(1){
+    > div {
+      &:nth-of-type(1) {
         padding: 10px 20px;
         border: 1px solid #ff0000;
         border-radius: 5px;

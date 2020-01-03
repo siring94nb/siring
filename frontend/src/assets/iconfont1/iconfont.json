@@ -41,6 +41,13 @@
       "unicode_decimal": 58910
     },
     {
+      "icon_id": "1277548",
+      "name": "文件",
+      "font_class": "wenjian",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
       "icon_id": "1577787",
       "name": "空白",
       "font_class": "kongbai",
@@ -109,6 +116,13 @@
       "font_class": "dingdan1",
       "unicode": "e672",
       "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "4237369",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
     },
     {
       "icon_id": "4764483",

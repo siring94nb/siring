@@ -34,7 +34,7 @@
                 <li style="padding-top:10px;">
                   <span>邀请码：</span>
                   <span>{{userMessage1.invitation }}</span>
-                  <span>详细</span>
+                  <!-- <span>详细</span> -->
                 </li>
               </ul>
             </div>
