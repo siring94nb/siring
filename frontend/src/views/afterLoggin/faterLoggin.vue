@@ -150,6 +150,7 @@ export default {
       this.withdrawX();
     this.zhankai();
     this.gb();
+    this.userMessage();
   },
   methods: {
     // 保持侧边栏对应路由展开状态

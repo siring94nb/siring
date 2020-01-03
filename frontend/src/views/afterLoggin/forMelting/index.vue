@@ -166,7 +166,9 @@ export default {
   components: {
     logginHeader
   },
-  mounted() {},
+  mounted() {
+    this.getconsoleList()
+  },
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;

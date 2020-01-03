@@ -151,13 +151,14 @@ export default {
   },
   mounted() {
     this.getmanuscriptList();
+    this.userMessage();
   },
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;
     },
     // 获取列表数据
-    getmanuscriptList(){
+    userMessage(){
       manuscriptList().then(res=>{
         let {data,code} = res;
         if(code == 1){
