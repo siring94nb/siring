@@ -35,7 +35,7 @@ class MealOrder extends Base
         }
         if($postData){
             $validate = new Validate([
-                ['user_id', 'require', '标题不能为空'],
+                ['user_id', 'require', '用户id不能为空'],
                 ['model_type', 'require', '模板类型1diy、2固定必须'],
                 ['model_meal_type', 'require', '模板套餐类型必须'],
                 ['applet_name', 'require', '小程序名称必须'],

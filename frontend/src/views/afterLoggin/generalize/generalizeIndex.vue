@@ -57,13 +57,18 @@
           border
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
-          <el-table-column prop="name" label="稿件编号" width="140" align="center"></el-table-column>
-          <el-table-column prop="name" label="标题" width="200" align="center"></el-table-column>
-          <el-table-column prop="name" label="稿件类型" width="170" align="center"></el-table-column>
-          <el-table-column prop="name" label="套餐费用" width="200" align="center"></el-table-column>
-          <el-table-column prop="name" label="稿件费用" width="180" align="center"></el-table-column>
-          <el-table-column prop="name" label="总计费用" width="180" align="center"></el-table-column>
-          <el-table-column prop="name" label="创建时间" width="180" align="center"></el-table-column>
+          <el-table-column prop="no" label="稿件编号" width="140" align="center"></el-table-column>
+          <el-table-column prop="title" label="标题" width="200" align="center"></el-table-column>
+          <el-table-column prop="role_type" label="稿件类型" width="170" align="center">
+            <template slot-scope="scope">
+                <div v-if="scope.row.role_type==1">委托代写</div>
+                <div v-if="scope.row.role_type!=1">自有稿件</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="package_fee" label="套餐费用" width="200" align="center"></el-table-column>
+          <el-table-column prop="money" label="稿件费用" width="180" align="center"></el-table-column>
+          <el-table-column prop="money" label="总计费用" width="180" align="center"></el-table-column>
+          <el-table-column prop="created_at" label="创建时间" width="180" align="center"></el-table-column>
           <el-table-column width="150" label="操作" align="center">
             <template>
               <span class="spanDefault spanXuqiu">需求确认...</span>
@@ -96,6 +101,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {manuscriptList} from "@/api/api"
 export default {
   data() {
     return {
@@ -134,26 +140,7 @@ export default {
       ],
       selectValue1: "商品上架",
       // 分页表格数据
-      tableData: [
-        {
-          name: 111
-        },
-        {
-          name: 111
-        },
-        {
-          name: 222
-        },
-        {
-          name: 222
-        },
-        {
-          name: 333
-        },
-        {
-          name: 333
-        }
-      ],
+      tableData: [],
       total: 6,
       pagesize: 10,
       currentPage: 1
@@ -162,10 +149,21 @@ export default {
   components: {
     logginHeader
   },
-  mounted() {},
+  mounted() {
+    this.getmanuscriptList();
+  },
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;
+    },
+    // 获取列表数据
+    getmanuscriptList(){
+      manuscriptList().then(res=>{
+        let {data,code} = res;
+        if(code == 1){
+          this.tableData =data.data
+        }
+      })
     }
   }
 };

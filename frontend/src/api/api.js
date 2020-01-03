@@ -508,10 +508,45 @@ export const industryField = params => {
     return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
 }
 /**
+ * 投融介（新发稿页表格）
+ */
+export const industryList = data => {
+    return axios.post(`${base_url}api/Investment/industry_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融介（新发稿，我要融资部分）
+ */
+export const financeAdd = data => {
+    return axios.post(`${base_url}api/Investment/finance_add`,  qs.stringify(data)).then(res => res.data);
+}
+/*
+*投融介（新发稿处项目详细内容）
+*/
+export const projectDetails = data => {
+    return axios.post(`${base_url}api/Investment/project_details`,  qs.stringify(data)).then(res => res.data);
+}
+/**
  * 订单会员折扣
  */
 export const getDiscount = data => {
     return axios.post(`${base_url}api/Payment/discount`,  qs.stringify(data)).then(res => res.data);
 }
-
+/**
+ * 充值下单 
+ */
+export const Recharge = data => {
+    return axios.post(`${base_url}api/Capital/recharge`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai推广运营列表
+ */
+export const manuscriptList = data => {
+    return axios.post(`${base_url}api/promotion/manuscript_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 我的投融列表
+ */
+export const consoleList = data => {
+    return axios.post(`${base_url}api/Investment/console_list`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload

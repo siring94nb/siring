@@ -331,6 +331,15 @@ export default new Router({
             component: () =>
                 import('@/views/afterLoggin/forMelting/zhongzhi'),
         }
+        ,
+        {//中止项目
+            path: "/ceshi",
+            name: "ceshi",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/ceshi'),
+        }
         ]
     },
     {

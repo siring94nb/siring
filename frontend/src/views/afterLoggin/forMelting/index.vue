@@ -58,16 +58,21 @@
           border
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
-          <el-table-column prop="name" label="序列号" width="73" align="center"></el-table-column>
-          <el-table-column prop="name" label="订单类型" width="80" align="center"></el-table-column>
-          <el-table-column prop="name" label="项目名称" width="97" align="center"></el-table-column>
+          <el-table-column prop="no" label="序列号" width="73" align="center"></el-table-column>
+          <el-table-column prop="type" label="订单类型" width="80" align="center">
+            <template slot-scope="scope">
+                <div v-if="scope.row.type==1">融资</div>
+                <div v-if="scope.row.type!=1">投资</div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="title" label="项目名称" width="97" align="center"></el-table-column>
           <el-table-column prop="name" label="行业领域" width="90" align="center"></el-table-column>
-          <el-table-column prop="name" label="项目亮点" width="130" align="center"></el-table-column>
-          <el-table-column prop="name" label="打赏金额" width="80" align="center"></el-table-column>
-          <el-table-column prop="name" label="平台顾问最新回复内容" width="160" align="center"></el-table-column>
-          <el-table-column prop="name" label="回复时间" width="140" align="center"></el-table-column>
-          <el-table-column prop="name" label="投融人最新回复内容" width="150" align="center"></el-table-column>
-          <el-table-column prop="name" label="回复时间" width="140" align="center"></el-table-column>
+          <el-table-column prop="bright" label="项目亮点" width="130" align="center"></el-table-column>
+          <el-table-column prop="bright" label="打赏金额" width="80" align="center"></el-table-column>
+          <el-table-column prop="bright" label="平台顾问最新回复内容" width="160" align="center"></el-table-column>
+          <el-table-column prop="bright" label="回复时间" width="140" align="center"></el-table-column>
+          <el-table-column prop="bright" label="投融人最新回复内容" width="150" align="center"></el-table-column>
+          <el-table-column prop="bright" label="回复时间" width="140" align="center"></el-table-column>
           <el-table-column width="260" label="操作" align="center">
             <template>
               <div style="display:flex;align-items:center; justify-content: space-around;">
@@ -113,6 +118,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {consoleList} from "@/api/api"
 export default {
   data() {
     return {
@@ -151,26 +157,7 @@ export default {
       ],
       selectValue1: "商品上架",
       // 分页表格数据
-      tableData: [
-        {
-          name: 1000001
-        },
-        {
-          name: "融资"
-        },
-        {
-          name: 222
-        },
-        {
-          name: 222
-        },
-        {
-          name: 333
-        },
-        {
-          name: 333
-        }
-      ],
+      tableData: [],
       total: 6,
       pagesize: 10,
       currentPage: 1
@@ -183,6 +170,15 @@ export default {
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;
+    },
+    // 获取我的投融列表数据
+    getconsoleList(){
+      consoleList().then(res=>{
+        let {data,code} = res;
+        if(code == 1){
+          this.tableData = data.data;
+        }
+      })
     }
   }
 };

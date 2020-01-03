@@ -22,7 +22,7 @@
                     <span class="name">项目名称：</span>
                     <span class="biaozhi">*</span>
                   </div>
-                  <div class="duanluo">项目name</div>
+                  <div class="duanluo">{{dataBox.name}}</div>
                 </div>
                 <!-- 行业领域 -->
                 <div style="display:flex;">
@@ -31,12 +31,12 @@
                       <span class="name">行业领域：</span>
                       <span class="biaozhi">*</span>
                     </div>
-                    <div class="duanluo">行业领域描述</div>
+                    <div class="duanluo">{{dataBox.industry_field}}</div>
                   </div>
                   <div>
                     <div class="name nameBox">期待赏金：</div>
                     <div class="duanluo">
-                      <span>金额</span>
+                      <span>{{dataBox.surplus}}</span>
                       <span>元</span>
                     </div>
                   </div>
@@ -48,8 +48,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.con}}
                   </div>
                 </div>
                 <!--  项目亮点-->
@@ -59,8 +58,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                   {{dataBox.resume}}
                   </div>
                 </div>
                 <!-- 营收模式 -->
@@ -70,8 +68,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.other}}
                   </div>
                 </div>
                 <!-- 目前用户数据 -->
@@ -81,8 +78,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.proposal}}
                   </div>
                 </div>
                 <!-- 目前融资阶段，资金需求，估值 -->
@@ -92,8 +88,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.examine_opinion}}
                   </div>
                 </div>
                 <!-- 创始人背景-->
@@ -103,8 +98,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.user_clause}}
                   </div>
                 </div>
                 <!-- 核心优势（竞争壁垒）-->
@@ -114,8 +108,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.advantage}}
                   </div>
                 </div>
                 <!-- 商业计划书（BP）-->
@@ -125,7 +118,9 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <!-- 这是一个文件，初次点击没有进行打赏时，弹出提示框提示，需打赏才能进行下一步 -->
-                  <div class="duanluo">文件</div>
+                  <div class="duanluo">
+                    <a :href="dataBox.url"><i class="iconfont icon-wenjian fileBox"></i></a>
+                  </div>
                 </div>
               </div>
             </el-tab-pane>
@@ -153,8 +148,8 @@
                       <span class="biaozhi">*</span>
                     </div>
                     <div class="miaoshu">项目归属方向</div>
-                    <el-select style="width:350px" value="">
-                      <option ></option>
+                    <el-select style="width:350px" :value="hangyeItem" @change="selectFn($event)">
+                      <el-option v-for="(item,index) in hangye" :value="item.id" :key="index">{{item.title}}</el-option>
                     </el-select>
                   </div>
                   <div>
@@ -164,7 +159,7 @@
                     </div>
                     <div class="miaoshu">如不填写，默认要求打赏金10元，款项扣除20%交易费后，将打入您的余额中</div>
                     <div style="display:flex;align-items:center">
-                      <el-input v-model="xiangmuName" placeholder="不大于100" maxlength="20"></el-input>
+                      <el-input v-model="shangjin" placeholder="不大于100" maxlength="20"></el-input>
                       <span style="color:#ff0000;font-size:18px;padding-left:10px;">元</span>
                     </div>
                   </div>
@@ -220,17 +215,28 @@
                   </div>
                   <el-input v-model="beijing" type="textarea"></el-input>
                 </div>
+                <!-- 项目亮点 -->
+                <div>
+                  <div class="titleBox">
+                    <span class="title">项目亮点：</span>
+                    <span class="biaozhi">*</span>
+                  </div>
+                  <div class="miaoshu">
+                    <div>主要写明项目出彩的地方；</div>
+                  </div>
+                  <el-input v-model="liangdian" type="textarea"></el-input>
+                </div>
                 <!-- 核心优势（竞争壁垒） -->
                 <div>
                   <div class="titleBox">
-                    <span class="title">创始人背景：</span>
+                    <span class="title">核心优势：</span>
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="miaoshu">
                     <div>主要写明稀有资源或独家技术或版权等；</div>
                     <div>譬如：拥有在全息影像呈现艺术作品精确度上有核心专利技术；</div>
                   </div>
-                  <el-input v-model="beijing" type="textarea"></el-input>
+                  <el-input v-model="youshi" type="textarea"></el-input>
                 </div>
                 <!-- 商业计划书 -->
                 <div>
@@ -241,19 +247,18 @@
                   <div class="miaoshu">支持ppt, pdf, doc, exl,等格式；最多上传1份方案；</div>
                   <div>
                     <el-upload
+                      name="image"
                       class="upload-demo"
-                      action="https://jsonplaceholder.typicode.com/posts/"
-                      multiple
-                      :limit="1"
-                      :on-exceed="handleExceed"
-                      :file-list="fileList"
+                      :action="aUrl"
+                      :on-success="handleAvatarSuccess"
+                      :before-upload="beforeAvatarUpload"
                     >
                       <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
                   </div>
                 </div>
                 <div class="yulanBox">
-                  <button>预览</button>
+                  <button @click="setfinanceAdd">确定上传</button>
                 </div>
               </div>
             </el-tab-pane>
@@ -327,9 +332,11 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
+import {financeAdd,industryField,projectDetails} from "@/api/api";
 export default {
   data() {
     return {
+      id:29,//项目id
       activeName: "first",
       xiangmuName: "", //项目名称
       xmDingwei: "", //项目定位内容
@@ -338,8 +345,16 @@ export default {
       rongzi: "", //当前融资阶段
       beijing: "", //创始人背景
       fileList: [], //文件上传列表
+      bpUrl:"",//文件上传成功回调
       price:0,
-      radioYonghu:"0"
+      shangjin:"10",//打赏金
+      radioYonghu:"0",
+      hangye:[],
+      hangyeItem:"",
+      liangdian:"",//项目亮点
+      youshi:"",//核心优势
+      aUrl:"https://manage.siring.com.cn/api/file/qn_upload",
+      dataBox:[]
     };
   },
   components: {
@@ -347,9 +362,81 @@ export default {
     Myfooter,
     Quickaside
   },
+  mounted(){
+    this.setindustryField();
+    this.getshuju();
+    this.getprojectDetails();
+  },
   methods: {
-    handleExceed(files, fileList) {
-      this.$message.warning(`仅能上传一个文件`);
+    // 行业领域数据获取
+    setindustryField(){
+      industryField().then(res=>{
+        let {data,code,msg} = res
+        if(data.code == 1){
+          this.hangye = data.data;
+          // console.log(this.hangye)
+        }
+      })
+    },
+    selectFn(e){
+      this.hangyeItem = e;
+      // console.log(e)
+    },
+    // 收跳转携带的蚕食，控制显示哪个部分，同时，若是我要投资，按照传递过来的id查询项目详细数据
+    getshuju(){
+      let leixing = this.$route.params.leixing;
+      this.id = this.$route.params.id==undefined?29:this.$route.params.id;
+      this.getprojectDetails();
+      if(leixing == "我要投资"){
+        this.activeName = "first"
+      }else{
+        this.activeName = "second"
+      }
+      // console.log(123132)
+      // console.log(this.$route.params.leixing)
+    },
+    // 上传检测
+    beforeAvatarUpload(file){
+      console.log(file)
+    },
+    // 文件上传成功回掉
+    handleAvatarSuccess(res, file) {
+      this.bpUrl = res.data.filePath;
+      console.log(res)
+    },
+    // 我要融资上传
+    setfinanceAdd(){
+      let params = {
+        title:this.xiangmuName,
+        cid:this.hangyeItem,
+        reward:this.shangjin,
+        location:this.xmDingwei,
+        bright:this.liangdian,
+        revenue:this.yinghsou,
+        user_data:this.dquser,
+        valuation:this.rongzi,
+        background:this.beijing,
+        advantage:this.youshi,
+        bp_url:this.bpUrl
+      }
+      financeAdd(params).then(res=>{
+        let {data,code,msg} = res;
+        // console.log(res)
+        if(code == 1){
+          console.log("上传成功")
+        }
+      })
+    },
+    // 获取投资处项目详细内容,通过获取url传递过来的项目id
+    getprojectDetails(){
+      console.log(this.id)
+      const params = {id:parseInt(this.id)}
+      projectDetails(params).then(res=>{
+        let {data,code,msg} = res
+        if(code == 1) {
+          this.dataBox = data
+        }
+      })
     }
   }
 };
@@ -361,6 +448,7 @@ export default {
 }
 .right {
   margin-left: 220px;
+  min-width: 1040px;
   .touziBox {
     padding: 20px 50px;
     font-size: 13px;
@@ -451,6 +539,10 @@ export default {
       width: 100%;
     }
   }
+}
+.fileBox{
+  font-size: 40px;
+  color: rgb(51,133,255)
 }
 //
   .xiadanBox {

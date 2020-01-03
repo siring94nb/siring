@@ -202,12 +202,14 @@ Route::group('api', function () {
         Route::any('balance','api/Payment/balance'); //用户余额
         Route::any('discount','api/Payment/discount'); //用户折扣
         Route::any('get_pay','api/Payment/get_pay'); //支付接口
+        Route::any('pay_status','api/Payment/pay_status'); //支付订单状态
     });
 
     //支付回调
     Route::group('Callback',function(){
-        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调
-        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调
+        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调-支付宝
+        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调-支付宝
+        Route::any('app_notice','api/Callback/app_notice'); //异步回调-微信
 
     });
 
