@@ -41,7 +41,7 @@
               <div class="fengbaoName">
                 <span>
                   项目名称：
-                  <span>{{shichuang.name}}</span>
+                  <span>{{shichuang[0].name}}</span>
                 </span>
                 <span>
                   酬金：
@@ -49,12 +49,12 @@
                 </span>
                 <span>
                   预计时间：
-                  <span>{{shichuang.created_at}}</span>
+                  <span>{{shichuang[0].created_at}}</span>
                 </span>
               </div>
               <div>
                 <div>功能需求：</div>
-                <!-- <div>{{shichuang.con}}</div> -->
+                <div>{{shichuang[0].con}}</div>
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
@@ -361,8 +361,8 @@ export default {
         let { data, msg, code } = res;
         console.log(data);
         // this.showMsg(msg, code);
-        if (data.code === 1) {
-          this.skillArr = data.data;
+        if (code === 1) {
+          this.skillArr = data;
         }
       });
     },
@@ -374,7 +374,7 @@ export default {
         console.log(data);
         if (data.code === 1) {
           const newArr = this.topList.map(item => {
-            item.num = data[item.num];
+            item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;

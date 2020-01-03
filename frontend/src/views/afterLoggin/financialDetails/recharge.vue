@@ -69,7 +69,7 @@
           <div>=</div>
           <div>￥{{sum}}</div>
           <div>
-            <button class="zhifu"><router-link to="order">立即支付</router-link></button>
+            <button class="zhifu" @click="getRecharge">立即支付</button>
           </div>
         </div>
         <div>
@@ -84,12 +84,13 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {Recharge} from "@/api/api"
 export default {
   data() {
     return {
       activeName: "1", //折叠面板默认打开数值
       chognzhi: "1000", //充值费用
-      discount: "98%", //会员折扣
+      discount: "100%", //会员折扣
       sum: "" //充值费用*会员折扣（若是会员的话） 
     };
   },
@@ -128,6 +129,27 @@ export default {
     sumNum() {
       this.sum = (this.chognzhi * this.discount.replace("%", "")) / 100;
       //  console.log(this.chognzhi)
+    },
+    // 下单，获取订单号
+    getRecharge(){
+      const params = {
+        type:1,
+        price:this.sum
+      }
+      Recharge(params).then(res=>{
+        let {data,code} = res;
+        if(code == 1){
+          this.$router.push({
+                name: "comboPay",
+                params: {
+                  order_amount:this.sum,
+                  user_id: sessionStorage.getItem("user_id"),
+                  id: data,
+                  order_type: 1
+                }
+              });
+        }
+      })
     }
   }
 };
@@ -207,6 +229,7 @@ export default {
   padding: 10px;
   display: flex;
   justify-content: flex-end;
+  z-index: 100;
   > div {
     margin-right: 100px;
     > div {

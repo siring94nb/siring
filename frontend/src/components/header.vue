@@ -49,7 +49,8 @@
             <i class="icon iconfont icon-ruanjiandingzhi"></i>
             <span>软件/定制</span>
             <p class="en-name">Software develop</p>
-            <i class="iconfont icon-remen fire"></i>
+            <!-- <i class="iconfont icon-remen fire"></i> -->
+            <img src="../assets/images/image561611.gif" class="fire" alt="">
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/programSaaS">
@@ -648,7 +649,8 @@ export default {
           top: -70%;
           right: -10px;
           color: rgb(250, 41, 1);
-          font-size: 18px;
+          // font-size: 18px;
+          width: 20px;
         }
         .en-name {
           position: absolute;
@@ -664,9 +666,9 @@ export default {
           white-space: nowrap;
         }
         &:hover {
-          color: #ff0000;
+          color: rgb(177,18,14);
           .el-dropdown {
-            color: #ff0000;
+            color: rgb(177,18,14);
           }
           .en-name {
             opacity: 1;

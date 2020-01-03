@@ -22,7 +22,7 @@
                     <span class="name">项目名称：</span>
                     <span class="biaozhi">*</span>
                   </div>
-                  <div class="duanluo">项目name</div>
+                  <div class="duanluo">{{dataBox.name}}</div>
                 </div>
                 <!-- 行业领域 -->
                 <div style="display:flex;">
@@ -31,12 +31,12 @@
                       <span class="name">行业领域：</span>
                       <span class="biaozhi">*</span>
                     </div>
-                    <div class="duanluo">行业领域描述</div>
+                    <div class="duanluo">{{dataBox.industry_field}}</div>
                   </div>
                   <div>
                     <div class="name nameBox">期待赏金：</div>
                     <div class="duanluo">
-                      <span>金额</span>
+                      <span>{{dataBox.surplus}}</span>
                       <span>元</span>
                     </div>
                   </div>
@@ -48,8 +48,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.con}}
                   </div>
                 </div>
                 <!--  项目亮点-->
@@ -59,8 +58,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                   {{dataBox.resume}}
                   </div>
                 </div>
                 <!-- 营收模式 -->
@@ -70,8 +68,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.other}}
                   </div>
                 </div>
                 <!-- 目前用户数据 -->
@@ -81,8 +78,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.proposal}}
                   </div>
                 </div>
                 <!-- 目前融资阶段，资金需求，估值 -->
@@ -92,8 +88,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.examine_opinion}}
                   </div>
                 </div>
                 <!-- 创始人背景-->
@@ -103,8 +98,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.user_clause}}
                   </div>
                 </div>
                 <!-- 核心优势（竞争壁垒）-->
@@ -114,8 +108,7 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="duanluo">
-                    摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，
-                    前部可加有屏幕，在摇摆的同时有音乐伴奏。摇摇车又称摇摆机、摇摆车、儿童投币摇摇机、摇篮车等，是游乐设备中的一种。摇摆机是会摇的，前部可加有屏幕，在摇摆的同时有音乐伴奏。
+                    {{dataBox.advantage}}
                   </div>
                 </div>
                 <!-- 商业计划书（BP）-->
@@ -125,7 +118,9 @@
                     <span class="biaozhi">*</span>
                   </div>
                   <!-- 这是一个文件，初次点击没有进行打赏时，弹出提示框提示，需打赏才能进行下一步 -->
-                  <div class="duanluo">文件</div>
+                  <div class="duanluo">
+                    <a :href="dataBox.url"><i class="iconfont icon-wenjian fileBox"></i></a>
+                  </div>
                 </div>
               </div>
             </el-tab-pane>
@@ -337,10 +332,11 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
-import {financeAdd,industryField} from "@/api/api";
+import {financeAdd,industryField,projectDetails} from "@/api/api";
 export default {
   data() {
     return {
+      id:29,//项目id
       activeName: "first",
       xiangmuName: "", //项目名称
       xmDingwei: "", //项目定位内容
@@ -355,9 +351,10 @@ export default {
       radioYonghu:"0",
       hangye:[],
       hangyeItem:"",
-      liangdian:"测试项目亮点",//项目亮点
+      liangdian:"",//项目亮点
       youshi:"",//核心优势
       aUrl:"https://manage.siring.com.cn/api/file/qn_upload",
+      dataBox:[]
     };
   },
   components: {
@@ -367,7 +364,8 @@ export default {
   },
   mounted(){
     this.setindustryField();
-    this.getshuju()
+    this.getshuju();
+    this.getprojectDetails();
   },
   methods: {
     // 行业领域数据获取
@@ -387,6 +385,8 @@ export default {
     // 收跳转携带的蚕食，控制显示哪个部分，同时，若是我要投资，按照传递过来的id查询项目详细数据
     getshuju(){
       let leixing = this.$route.params.leixing;
+      this.id = this.$route.params.id==undefined?29:this.$route.params.id;
+      this.getprojectDetails();
       if(leixing == "我要投资"){
         this.activeName = "first"
       }else{
@@ -421,9 +421,20 @@ export default {
       }
       financeAdd(params).then(res=>{
         let {data,code,msg} = res;
-        console.log(res)
+        // console.log(res)
         if(code == 1){
           console.log("上传成功")
+        }
+      })
+    },
+    // 获取投资处项目详细内容,通过获取url传递过来的项目id
+    getprojectDetails(){
+      console.log(this.id)
+      const params = {id:parseInt(this.id)}
+      projectDetails(params).then(res=>{
+        let {data,code,msg} = res
+        if(code == 1) {
+          this.dataBox = data
         }
       })
     }
@@ -528,6 +539,10 @@ export default {
       width: 100%;
     }
   }
+}
+.fileBox{
+  font-size: 40px;
+  color: rgb(51,133,255)
 }
 //
   .xiadanBox {

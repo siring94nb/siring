@@ -299,18 +299,12 @@ export default {
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg } = res;
-        console.log(data.data);
-        console.log(res);
-        console.log(res.code);
-        console.log(data.code);
         if (data.code == 1) {
           const newArr = this.topList.map(item => {
-            item.num = data.data[item.num];
-            console.log(item)
+            item.num = data.data[item.num]; 
             return item;
           });
           this.topList = newArr;
-          console.log(this.topList);
         }
       });
     },
