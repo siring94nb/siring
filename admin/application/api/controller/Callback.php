@@ -7,14 +7,10 @@
  */
 namespace app\api\controller;
 use app\data\model\AllOrder;
-use app\data\model\NeedOrder;
 use app\data\model\Order;
 use app\data\model\UserCard;
 use app\data\model\Invoice;
 use app\data\model\Recharge;
-use app\data\model\SoftOrder;
-use app\data\model\MealOrder;
-use app\data\model\PromotionOrder;
 use app\data\model\UserFund;
 use app\data\model\WechatPay;
 use think\Request;
@@ -22,6 +18,7 @@ use think\Db;
 use think\Session;
 use think\Validate;
 use Yansongda\Pay\Pay;
+use EasyWeChat\Foundation\Application;
 /**
  * 支付回调
  * @author fyk
@@ -106,9 +103,10 @@ class Callback extends Base
     }
 
     /**
-     * @author
-     *  微信支付回调
-     * @return mixed
+     * 微信支付回调
+     * @author fyk
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \EasyWeChat\Core\Exceptions\FaultException
      */
     public function app_notice(){
 
@@ -136,7 +134,7 @@ class Callback extends Base
                     $res1 =  Order::where('id',$data['id'])->update([
                         //  'need_status'=>4,
                         'payment'=>2,
-                        'pay_type'=>1,
+                        'pay_type'=>2,
                         'pay_time'=>time(),
                     ]);
 
