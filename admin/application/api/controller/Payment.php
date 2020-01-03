@@ -164,7 +164,7 @@ class Payment extends Base
                 //单独回调
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
-                $wx_url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';//微信
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
                         $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
@@ -176,7 +176,7 @@ class Payment extends Base
                 //单独回调
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
-                $wx_url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';//微信
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
                     $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
@@ -188,7 +188,7 @@ class Payment extends Base
                 //单独回调
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
-                $wx_url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';//微信
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
                     $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
@@ -199,7 +199,7 @@ class Payment extends Base
                 //单独回调
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
-                $wx_url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';//微信
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
                     $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);

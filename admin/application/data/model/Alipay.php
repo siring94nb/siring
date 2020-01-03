@@ -42,7 +42,11 @@ class Alipay extends Model
 
         $pay = new Pay($config);
 
-        return $pay->driver('alipay')->gateway('web')->pay($config_biz);
+        $data = $pay->driver('alipay')->gateway('scan')->pay($config_biz);
+        //生成支付码
+        $imgData = 'http://qr.topscan.com/api.php?text='. $data;
+
+        return json(['code'=>1,'msg'=>'发起支付成功','imgData'=>$imgData]);exit();
     }
 
 }
