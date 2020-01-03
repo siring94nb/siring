@@ -207,8 +207,9 @@ Route::group('api', function () {
 
     //支付回调
     Route::group('Callback',function(){
-        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调
-        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调
+        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调-支付宝
+        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调-支付宝
+        Route::any('app_notice','api/Callback/app_notice'); //异步回调-微信
 
     });
 
