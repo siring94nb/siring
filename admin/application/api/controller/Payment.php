@@ -157,6 +157,35 @@ class Payment extends Base
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
                 return $data;
+            case 2://签订合同
+                $ratio = 0.7;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+                return $data;
+                break;
+            case 3://项目上线
+                $ratio = 0.1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            case 4://项目验收
+                $ratio = 0.1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            case 5://项目年服务
+                $ratio = 1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+
+                return $data;
+                break;
+            default:
+                returnJson(0,'参数有误');
 
         }
     }
