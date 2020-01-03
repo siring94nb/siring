@@ -29,7 +29,7 @@ class JoinOrder extends Base
         $request = Request::instance();
         $param = $request->param();
         $validate = new Validate([
-            ['grade', 'require|unique:JoinOrder', '城市id不能为空|该城市已申请|已存在'],
+            ['city_id', 'require|unique:JoinOrderAll', '城市id不能为空|该城市已申请|已存在'],
             ['con','require|max:100','优势介绍必须|名称最多不能超过100个字符'],
             ['num','require','数量必须'],
             ['price','require','金额必须'],
