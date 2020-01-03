@@ -159,7 +159,7 @@ export default {
     // 获取列表数据
     getmanuscriptList(){
       manuscriptList().then(res=>{
-        let {data} = res;
+        let {data,code} = res;
         if(code == 1){
           this.tableData =data.data
         }
