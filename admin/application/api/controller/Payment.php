@@ -6,9 +6,11 @@
  * Time: 15:52
  */
 namespace app\api\controller;
+use app\data\model\Order;
 use app\data\model\UserFund;
 use app\data\model\UserGrade;
 use app\data\model\Payoff;
+use app\data\model\NeedOrder;
 use think\Request;
 use think\Db;
 use think\Session;
@@ -152,28 +154,89 @@ class Payment extends Base
             returnJson (0,$validate->getError());exit();
         }
         switch ($param['type']) {
-            case 1://软件定制+角色加盟+项目年服务
+            case 1://软件定制+角色加盟
                 $ratio = 1;
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
                 return $data;
             case 2://签订合同
-                $ratio = 0.7;
-                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+                $ratio = 0.7;//付款比例
+                //单独回调
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
+
+                $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
+                        $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
 
                 return $data;
                 break;
-            case 3://项目上线 + 项目验收 + 原型确认
+            case 3://项目上线
                 $ratio = 0.1;
-                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+                //单独回调
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
+                $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
+                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
 
                 return $data;
                 break;
+            case 4://项目验收
+                $ratio = 0.1;
+                //单独回调
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
 
+                $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
+                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                return $data;
+                break;
+            case 5://原型确认
+                $ratio = 0.1;
+                //单独回调
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
+                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
+                $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
+
+                $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
+                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                return $data;
+                break;
+            case 6://项目年服务
+                $ratio = 1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+                return $data;
+                break;
             default:
                 returnJson(0,'参数有误');
 
         }
+    }
+
+    /**
+     * 支付成功回调
+     * @throws \think\exception\DbException
+     */
+    public function pay_status()
+    {
+        $request = Request::instance();
+        $param = $request->param();
+        $validate = new Validate([
+            ['order_id', 'require', '订单id不能为空'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+
+        $data =  Order::get($param['order_id']);
+
+        if($data['payment'] == 2){
+            returnJson(1,'当前订单已支付');
+        }
+        returnJson(0,'当前订单未支付');
     }
 }

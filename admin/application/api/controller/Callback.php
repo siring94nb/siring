@@ -7,14 +7,10 @@
  */
 namespace app\api\controller;
 use app\data\model\AllOrder;
-use app\data\model\NeedOrder;
 use app\data\model\Order;
 use app\data\model\UserCard;
 use app\data\model\Invoice;
 use app\data\model\Recharge;
-use app\data\model\SoftOrder;
-use app\data\model\MealOrder;
-use app\data\model\PromotionOrder;
 use app\data\model\UserFund;
 use app\data\model\WechatPay;
 use think\Request;
@@ -22,6 +18,7 @@ use think\Db;
 use think\Session;
 use think\Validate;
 use Yansongda\Pay\Pay;
+use EasyWeChat\Foundation\Application;
 /**
  * 支付回调
  * @author fyk
@@ -39,7 +36,7 @@ class Callback extends Base
     ];
 
     /**
-     * 软件定制同步回调
+     * 支付宝同步回调
      * @param Request $request
      * @return array|bool
      */
@@ -55,8 +52,9 @@ class Callback extends Base
         };
     }
 
+
     /**
-     * 软件定制异步回调
+     * 支付宝异步回调
      * @param Request $request
      */
     public function software_notify()
@@ -78,7 +76,7 @@ class Callback extends Base
             $no['order_no'] = $request->param('out_trade_no');
             $no['money'] = $request->param('total_amount');
             //事务
-            $res = Db::transaction( function() use ( $no ){
+            Db::transaction( function() use ( $no ){
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
                 $res1 =  Order::where('id',$data['id'])->update([
@@ -96,12 +94,61 @@ class Callback extends Base
                 return $res1 && $res2   ? true : false;
             });
 
-            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
 
         } else {
             file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
         }
 
         echo "success";
+    }
+
+    /**
+     * 微信支付回调
+     * @author fyk
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \EasyWeChat\Core\Exceptions\FaultException
+     */
+    public function app_notice(){
+
+        //初始化微信sdk
+        $wxConf = config('wechat');
+
+        $app = new Application($wxConf);
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
+            $rstArr = json_decode($notify,true);
+            $data =  Order::get(['no'=>$rstArr['out_trade_no']]);
+
+            if (empty($data)) {
+                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }
+            if ($data['payment'] == 2) {
+                return true;  // 已经支付成功了就不再更新了
+            }
+            // 用户是否支付成功
+            if ($successful) {
+                // 不是已经支付状态则修改为已经支付状态
+                Db::transaction(function()use ( $data){
+                    $res1 =  Order::where('id',$data['id'])->update([
+                        //  'need_status'=>4,
+                        'payment'=>2,
+                        'pay_type'=>2,
+                        'pay_time'=>time(),
+                    ]);
+
+                    //订单统计表添加
+                    $budget_type = 1;
+                    $income = '';//收入金额
+                    $res2 = (new AllOrder())->allorder_add($budget_type,$data,$data['money'],$income);
+
+                    return $res1 && $res2   ? true : false;
+
+                });
+            }
+            return true;
+
+        });
+        // 将响应输出
+        return $response;
     }
 }

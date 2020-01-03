@@ -246,52 +246,137 @@ class  NeedOrder  extends  Base
     }
 
     /**
-     * 订单支付
-     * @author fyk
-     * @param $type
-     * @param $id
-     * @param $money
-     * @param $pay_type
-     * @param $password
-     * @param $unionpay
-     * @return array|mixed|string|\think\response\Json
-     * @throws \think\Exception
-     * @throws \think\exception\DbException
-     * @throws \think\exception\PDOException
+     * 签订合同异步回调-支付宝
+     * @param Request $request
      */
-    public function get_pay($type,$id,$money,$pay_type,$password,$unionpay)
+    public function qd_notify()
     {
-        switch ($type){
-            case 1://签订合同
-                $ratio = 0.7;
-                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
+        $request = Request::instance();
+        $pay = new Pay($this->config);
 
-                return $data;
-                break;
-            case 2://项目上线
-                $ratio = 0.1;
-                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
+        if ($pay->driver('alipay')->gateway()->verify($request->param())) {
 
-                return $data;
-                break;
-            case 3://项目验收
-                $ratio = 0.1;
-                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
+            file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
 
-                return $data;
-                break;
-            case 4://项目年服务
-                $ratio = 1;
-                $data = (new Need())->pay($id,$money,$pay_type,$password,$unionpay,$ratio);
+            $no['order_no'] = $request->param('out_trade_no');
+            $no['money'] = $request->param('total_amount');
+            //事务
+            $res = Db::transaction( function() use ( $no ){
+                //查询订单
+                $data =  Order::get(['no'=>$no['order_no']]);
+                $res1 =  Order::where('id',$data['id'])->update([
+                    //  'need_status'=>4,
+                    'payment'=>2,
+                    'pay_type'=>1,
+                    'pay_time'=>time(),
+                ]);
 
-                return $data;
-                break;
-            default:
-                returnJson(0,'参数有误');
+                //订单统计表添加
+                $budget_type = 1;
+                $income = '';//收入金额
+                $res2 = (new AllOrder())->allorder_add($budget_type,$data,$no['money'],$income);
 
+                return $res1 && $res2   ? true : false;
+            });
+
+            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
+
+        } else {
+            file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
         }
 
+        echo "success";
+    }
 
+    /**
+     * 项目上线异步回调-支付宝
+     * @param Request $request
+     */
+    public function sx_notify()
+    {
+        $request = Request::instance();
+        $pay = new Pay($this->config);
+
+        if ($pay->driver('alipay')->gateway()->verify($request->param())) {
+            file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
+
+            $no['order_no'] = $request->param('out_trade_no');
+            $no['money'] = $request->param('total_amount');
+            //事务
+            $res = Db::transaction( function() use ( $no ){
+                //查询订单
+                $data =  Order::get(['no'=>$no['order_no']]);
+                $res1 =  Order::where('id',$data['id'])->update([
+                    //  'need_status'=>4,
+                    'payment'=>2,
+                    'pay_type'=>1,
+                    'pay_time'=>time(),
+                ]);
+
+                //订单统计表添加
+                $budget_type = 1;
+                $income = '';//收入金额
+                $res2 = (new AllOrder())->allorder_add($budget_type,$data,$no['money'],$income);
+
+                return $res1 && $res2   ? true : false;
+            });
+
+            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
+
+        } else {
+            file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
+        }
+
+        echo "success";
+    }
+
+    /**
+     * 项目验收异步回调-支付宝
+     * @param Request $request
+     */
+    public function ys_notify()
+    {
+        $request = Request::instance();
+        $pay = new Pay($this->config);
+
+        if ($pay->driver('alipay')->gateway()->verify($request->param())) {
+
+            file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
+
+            $no['order_no'] = $request->param('out_trade_no');
+            $no['money'] = $request->param('total_amount');
+            //事务
+            $res = Db::transaction( function() use ( $no ){
+                //查询订单
+                $data =  Order::get(['no'=>$no['order_no']]);
+                $res1 =  Order::where('id',$data['id'])->update([
+                    //  'need_status'=>4,
+                    'payment'=>2,
+                    'pay_type'=>1,
+                    'pay_time'=>time(),
+                ]);
+
+                //订单统计表添加
+                $budget_type = 1;
+                $income = '';//收入金额
+                $res2 = (new AllOrder())->allorder_add($budget_type,$data,$no['money'],$income);
+
+                return $res1 && $res2   ? true : false;
+            });
+
+            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
+
+        } else {
+            file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
+        }
+
+        echo "success";
     }
 
 }

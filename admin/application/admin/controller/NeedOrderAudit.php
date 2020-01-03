@@ -32,7 +32,7 @@ class NeedOrderAudit extends Base
         $where['examine'] = ['in','1,2'];
         $where['examine_type'] = ['in','1,2'];
         if(!empty($param['title'])){
-            $where['need_order|need_phone'] = $param['title'];
+            $where['no|phone'] = $param['title'];
         }
         if(!empty($param['start_time'])){
             $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));

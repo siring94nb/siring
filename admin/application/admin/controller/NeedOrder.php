@@ -84,8 +84,9 @@ class NeedOrder extends Base
         if (!$validate->check($postData)) {
             returnJson(0, $validate->getError());exit();
         }
-
-        switch ($postData['type']){
+        $need_type = $postData['type'];
+        unset($postData['type']);
+        switch ($need_type){
             case 1://平台报价
                 $validate = new Validate([
                   //  ['id', 'require', '主键id不能为空'],

@@ -60,7 +60,7 @@ class Payoff extends Model
             case 2://微信支付
 
                 // 回调地址
-                $url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';
+                $url = 'https://manage.siring.com.cn/api/Callback/app_notice';
 
                 $pay = 1;//先测试1分钱
 
