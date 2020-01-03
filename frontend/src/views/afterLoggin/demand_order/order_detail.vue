@@ -418,7 +418,7 @@ export default {
       price: 50000, //合同金额
       percent: 100,//会员折扣
       scale: 70, //支付比例
-      order: 1, //支付第几期
+      order: 2, //支付第几期
       payway: {
         way: 1
       },
@@ -452,16 +452,16 @@ export default {
       this.id = this.$route.params.id;
       if (this.status == 3) {
         this.scale = 70;
-        this.order = 1;
+        this.order = 2;
       } else if (this.status == 4) {
         this.scale = 10;
-        this.order = 2;
+        this.order = 3;
       } else if (this.status == 5) {
         this.scale = 10;
         this.order = 3;
       } else if (this.status == 6) {
         this.scale = 10;
-        this.order = 4;
+        this.order = 3;
       }
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
