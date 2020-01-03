@@ -370,23 +370,23 @@ export default {
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
         this.$message(msg);
-        if (vm.params.pay_type == 1) {
-          const { href } = this.$router.resolve({
-            path: "alipay",
-            query: {
-              pdf: res
-            }
-          });
-          window.open(href, "_blank");
-          this.isShow = !this.isShow;
-          this.isDisabl = !this.isDisabl;
-        } else {
+        // if (vm.params.pay_type == 1) {
+        //   const { href } = this.$router.resolve({
+        //     path: "alipay",
+        //     query: {
+        //       pdf: res
+        //     }
+        //   });
+        //   window.open(href, "_blank");
+        //   this.isShow = !this.isShow;
+        //   this.isDisabl = !this.isDisabl;
+        // } else {
           if (code === 1) {
             this.imgData = imgData;
             this.isShow = !this.isShow;
             this.isDisabl = !this.isDisabl;
           }
-        }
+        // }
       });
     },
     //银行支付&余额支付

@@ -56,11 +56,15 @@
       </div>
     </div>
     <div class="square" @click.self="showLevelMsg">
-      <i class="icon iconfont icon-liuyan" @click.self="showLevelMsg" />
+      <i class="el-icon-edit icon" @click.self="showLevelMsg" />
       <p @click.self="showLevelMsg">留言</p>
       <div class="float-cont" v-show="levelMsgBool">
         <div class="float-title">
-          <i class="icon iconfont icon-liuyan" />留言反馈：
+          <i class="el-icon-phone" />联系方式：
+        </div>
+        <input class="levelmsg levelmsg-input" type="text" placeholder="您的联系方式" />
+        <div class="float-title">
+          <i class="el-icon-edit" />留言反馈：
         </div>
         <textarea class="levelmsg" placeholder="您还可以留下您的联系方式，让我们联系您！"></textarea>
         <button class="send-lm" @click="sendMsg">发送</button>
@@ -155,7 +159,11 @@ export default {
       .float-title {
         font-size: 16px;
         color: #b83733;
-        margin-bottom: 10px;
+        margin: 10px 0;
+        float: left;
+        i{
+          font-size: 20px;
+        }
         .aside-text {
           font-size: 12px;
         }
@@ -190,6 +198,9 @@ export default {
         height: 80px;
         border: 0;
       }
+      .levelmsg-input {
+        height: 40px;
+      }
       .send-lm {
         float: right;
         cursor: pointer;
@@ -209,7 +220,7 @@ export default {
   }
   .topBtn {
     opacity: 1 !important;
-    transition: opacity .4s;
+    transition: opacity 0.4s;
   }
 }
 </style>

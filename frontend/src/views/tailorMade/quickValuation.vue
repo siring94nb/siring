@@ -4,7 +4,7 @@
     <div class="quick-main">
       <h3 class="title">快捷估价</h3>
       <div class="quick-cont clearfix">
-        <quickaside />
+        <quickaside :type="2"/>
         <div class="types-right">
           <div class="types-list">
             <div class="types-title">选择开发端（可多选）</div>
@@ -171,6 +171,7 @@ export default {
       font-size: 28px;
       background-color: #ffffff;
       height: 50px;
+      padding-left: 15px;
       line-height: 50px;
       margin-bottom: 10px;
     }
