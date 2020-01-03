@@ -112,9 +112,7 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="title" label="等级名称" align="center"></el-table-column>
           <el-table-column label="费用标准" align="center">
-            <template slot-scope="scope">
-              {{scope.row.money}}元/年
-            </template>
+            <template slot-scope="scope">{{scope.row.money}}元/年</template>
           </el-table-column>
           <el-table-column label="登记政策" align="center">
             <template slot-scope="scope">
@@ -205,6 +203,7 @@ export default {
       needCodeDialog: true, //需要显示扫码弹窗
       price: 0,
       percent: 100,
+      num: 1,
       payway: {
         way: 1
       },
@@ -217,7 +216,8 @@ export default {
           }
         ]
       },
-      payqrcode: ""
+      payqrcode: "",
+      user_id: 0
     };
   },
   mounted() {
@@ -230,6 +230,7 @@ export default {
   },
   methods: {
     init() {
+      this.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.getProvince();
       this.getLevelList();
       this.getdiscount();
@@ -293,20 +294,30 @@ export default {
       });
     },
     pay() {
+      let vm = this;
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
           CityOrderAdd({
-            grade: this.ruleForm.cityVal,
-            con: this.ruleForm.textarea,
-            num: this.num,
-            price: this.total,
-            user_id: 1
+            city_id: vm.ruleForm.cityVal,
+            con: vm.ruleForm.textarea,
+            num: vm.num,
+            price: vm.total,
+            user_id: vm.user_id
           }).then(res => {
             let { code, data, msg } = res;
             if (code === 1) {
-              // this.showPayWayFlag = true; //显示扫码弹窗
-              this.$refs.paymentbar.getOrderId(data);
-              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法
+              // vm.showPayWayFlag = true; //显示扫码弹窗
+              // vm.$refs.paymentbar.getOrderId(data);
+              // vm.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法
+              vm.$router.push({
+                name: "comboPay",
+                params: {
+                  order_amount: vm.total,
+                  user_id: vm.user_id,
+                  id: data,
+                  order_type: 1
+                }
+              });
             } else {
               this.$message.error(msg);
             }
@@ -325,14 +336,14 @@ export default {
     getNum(value) {
       this.num = value;
     },
-    getProfit(){
-      GetProfit({type: 2}).then(res => {
-        let {msg, code, data} = res;
-        if(code === 1){
-          console.log(data)
+    getProfit() {
+      GetProfit({ type: 2 }).then(res => {
+        let { msg, code, data } = res;
+        if (code === 1) {
+          console.log(data);
           this.tableData = data;
         }
-      })
+      });
     }
   }
 };
@@ -354,7 +365,7 @@ export default {
     .title {
       height: 100px;
       line-height: 100px;
-      border-bottom: 20px solid rgb(242,242,242);
+      border-bottom: 20px solid rgb(242, 242, 242);
       text-align: center;
       font-size: 34px;
       margin-bottom: 30px;

@@ -360,7 +360,7 @@ export default {
       if (this.radio != "1") vm.params.pay_type = this.radio;
       else vm.params.pay_type = this.codeType;
       let params = {
-        id: vm.params.id,
+        order_id: vm.params.id,
         pay_type: vm.params.pay_type,
         money: vm.real_money,
         type: vm.params.order_type,
@@ -407,7 +407,7 @@ export default {
         pay_detail = JSON.stringify(pay_detail);
       }
       let params = {
-        id: vm.params.id,
+        order_id: vm.params.id,
         pay_type: vm.radio,
         money: vm.real_money,
         type: vm.params.order_type,
