@@ -117,7 +117,7 @@ class NeedOrder extends Model
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio)
+    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio,$notify_url,$return_url,$wx_url)
     {
         $data = self::get($id);
         if(!$data) returnJson(0,'订单有误');
@@ -136,8 +136,6 @@ class NeedOrder extends Model
 
                 $pay = 0.01 ;//先测试1分钱
                 $title = '软件定制' ;
-                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
-                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['no'],$pay,$title);
 
                 self::save(['alipay' => $res],['id' => $id]);
@@ -145,13 +143,10 @@ class NeedOrder extends Model
                 break;
             case 2://微信支付
 
-                // 回调地址
-                $url = 'https://manage.siring.com.cn/api/NeedOrder/app_notice';
-
                 $pay = 1;//先测试1分钱
 
                 $title = '软件定制';
-                $res = (new WechatPay())->pay($title,$data['no'], $pay, $url);
+                $res = (new WechatPay())->pay($title,$data['no'], $pay, $wx_url);
 
                 return $res; exit();
 
