@@ -48,7 +48,7 @@
           <el-table-column prop="deshi" label="操作" align="center">
             <template  slot-scope="scope">
               <div class="caozuoBox">
-                <div><router-link to="/newInvestment" style="color:black">{{scope.row.deshi}}</router-link></div>
+                <div @click="tiaozhuan(scope.$index, tableData)">{{scope.row.deshi}}</div>
                 <div class="guanzhu">
                   <i class="iconfont icon-guanzhu Idefault" v-if="false"></i>
                   <i class="iconfont icon-guanzhu1 iActive"></i>
@@ -63,7 +63,7 @@
 </template>
 <script>
 import Myheader from "@/components/header";
-import { industryField } from "@/api/api";
+import { industryField,industryList } from "@/api/api";
 export default {
   data() {
     return {
@@ -138,6 +138,7 @@ export default {
   mounted() {
     this.getIndustryField();
     this.changeSize();
+    this.getindustryList();
   },
   methods: {
     getIndustryField() {
@@ -147,6 +148,28 @@ export default {
           this.IndustryField = data.data;
         }
       });
+    },
+    // 投资，融资跳转传参
+    tiaozhuan(index, rows){
+      // console.log(index)
+      // console.log(rows[index]);
+      this.$router.push({
+        name: `newInvestment`,
+        params: {
+          leixing: rows[index].deshi == "我要投资"?"我要投资":"我要融资",
+          // code: '8989'
+        }
+      })
+    },
+    // 获取表格信息
+    getindustryList(){
+      let parmas = {type:1}
+      industryList(parmas).then(res=>{
+        let {data,code,msg} = res
+        if(code == 1) {
+          // this.tableData = data.data
+        }
+      })
     },
     // 控制屏幕过大，两侧留白
     changeSize() {
