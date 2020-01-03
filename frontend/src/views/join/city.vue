@@ -112,9 +112,7 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="title" label="等级名称" align="center"></el-table-column>
           <el-table-column label="费用标准" align="center">
-            <template slot-scope="scope">
-              {{scope.row.money}}元/年
-            </template>
+            <template slot-scope="scope">{{scope.row.money}}元/年</template>
           </el-table-column>
           <el-table-column label="登记政策" align="center">
             <template slot-scope="scope">
@@ -219,7 +217,7 @@ export default {
         ]
       },
       payqrcode: "",
-      user_id:0
+      user_id: 0
     };
   },
   mounted() {
@@ -312,14 +310,14 @@ export default {
               // vm.$refs.paymentbar.getOrderId(data);
               // vm.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法
               vm.$router.push({
-              name: "comboPay",
-              params: {
-                'order_amount':vm.total,
-                'user_id': vm.user_id,
-                'id': data,
-                'order_type': 1
-              }
-            });
+                name: "comboPay",
+                params: {
+                  order_amount: vm.total,
+                  user_id: vm.user_id,
+                  id: data,
+                  order_type: 1
+                }
+              });
             } else {
               this.$message.error(msg);
             }
@@ -338,14 +336,14 @@ export default {
     getNum(value) {
       this.num = value;
     },
-    getProfit(){
-      GetProfit({type: 2}).then(res => {
-        let {msg, code, data} = res;
-        if(code === 1){
-          console.log(data)
+    getProfit() {
+      GetProfit({ type: 2 }).then(res => {
+        let { msg, code, data } = res;
+        if (code === 1) {
+          console.log(data);
           this.tableData = data;
         }
-      })
+      });
     }
   }
 };
@@ -367,7 +365,7 @@ export default {
     .title {
       height: 100px;
       line-height: 100px;
-      border-bottom: 20px solid rgb(242,242,242);
+      border-bottom: 20px solid rgb(242, 242, 242);
       text-align: center;
       font-size: 34px;
       margin-bottom: 30px;

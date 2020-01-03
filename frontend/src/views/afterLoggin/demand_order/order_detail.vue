@@ -458,10 +458,10 @@ export default {
         this.order = 3;
       } else if (this.status == 5) {
         this.scale = 10;
-        this.order = 4;
+        this.order = 3;
       } else if (this.status == 6) {
         this.scale = 10;
-        this.order = 5;
+        this.order = 3;
       }
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
