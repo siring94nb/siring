@@ -96,7 +96,7 @@ class Callback extends Base
                 return $res1 && $res2   ? true : false;
             });
 
-            return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
+           // return $res    ?   returnJson(1,'支付成功') : returnJson(0,'支付失败');
 
         } else {
             file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
