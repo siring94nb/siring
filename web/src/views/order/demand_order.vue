@@ -227,7 +227,7 @@ export default {
         {
           title: "剩余天数",
           align: "center",
-          key: "meal_end_time"
+          key: "end_time"
         },
         {
           title: "用户最新消息",
