@@ -117,11 +117,11 @@ class Callback extends Base
         $response = $app->payment->handleNotify(function($notify, $successful){
             // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
             $rstArr = json_decode($notify,true);
+            file_put_contents('notify.txt', '订单金额：' . $rstArr . "\r\n\r\n", FILE_APPEND);
             $money = $rstArr['total_fee'];
             $data =  Order::get(['no'=>$rstArr['out_trade_no']]);
 
-            if (empty($orderArr)) {
-                // 如果订单不存在
+            if (empty($data)) {
                 returnJson(0,'订单不存在');
             }
             if ($data['payment'] == 2) {
