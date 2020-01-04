@@ -89,16 +89,16 @@
             <i class="el-icon-phone" />联系方式：
           </div>
           <el-form-item>
-              <el-input type="text" placeholder="您的联系方式" v-model.number="ruleForm.desc"></el-input>
+              <el-input style="margin-bottom:10px;" type="text" placeholder="您的联系方式" v-model.number="ruleForm.desc"></el-input>
           </el-form-item>
           <div class="float-title">
             <i class="el-icon-edit" />留言反馈：
           </div>
           <el-form-item>
-            <el-input type="textarea" placeholder="您的需求或反馈，我们将在48个小时内，联系您" v-model="ruleForm.desc1" class="texts"></el-input>
+            <el-input  type="textarea" placeholder="您的需求或反馈，我们将在48个小时内，联系您" v-model="ruleForm.desc1" class="texts"></el-input>
           </el-form-item>
           <el-form-item style="float:right;">
-            <el-button type="danger" style="background-color: #b83733;border-color:#b83733;">发送</el-button>
+            <el-button type="danger" style="background-color: #b83733;border-color:#b83733; margin-top:10px;">发送</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -453,6 +453,7 @@ export default {
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       width: 500px;
+      height: 625px;
       .message-title {
         font-size: 18px;
         text-align: center;
