@@ -382,7 +382,7 @@ export default {
       this.hangyeItem = e;
       // console.log(e)
     },
-    // 收跳转携带的蚕食，控制显示哪个部分，同时，若是我要投资，按照传递过来的id查询项目详细数据
+    // 收跳转携带的参数，控制显示哪个部分，同时，若是我要投资，按照传递过来的id查询项目详细数据
     getshuju(){
       let leixing = this.$route.params.leixing;
       this.id = this.$route.params.id==undefined?29:this.$route.params.id;

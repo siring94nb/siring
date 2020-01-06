@@ -307,6 +307,22 @@ export default new Router({
             component: () =>
                 import('@/views/afterLoggin/generalize/generalizeIndex'),
         },
+        {   //小程序SaaS（小程序管理）
+            path: "/storeIndex",
+            name: "storeIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/appletSaaS/storeIndex'),
+        },
+        {   //小程序SaaS（增值服务订单）
+            path: "/appreciationIndex",
+            name: "appreciationIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/appletSaaS/appreciationIndex'),
+        },
         {   //ai推广流程
             path: "/flowIndex",
             name: "flowIndex",

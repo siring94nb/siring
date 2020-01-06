@@ -78,9 +78,11 @@ export default {
   // width: 1480px;
   .left {
     width: 123px;
-    float: left;
-    position: relative;
+    // float: left;
+    // position: relative;
     z-index: 100;
+    position: fixed;
+    left: 0;
   }
   .right {
     margin-left: 150px;

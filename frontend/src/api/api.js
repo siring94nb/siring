@@ -549,4 +549,10 @@ export const manuscriptList = data => {
 export const consoleList = data => {
     return axios.post(`${base_url}api/Investment/console_list`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 收藏/关注接口（参数 ---- pid→产品id（int） type→1为软件定制商品收藏，2为投融界关注   user_id→用户id（int） 三个参数全为必须）
+ */
+export const collectX = data => {
+    return axios.post(`${base_url}api/user/collect`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload

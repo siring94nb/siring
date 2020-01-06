@@ -115,8 +115,8 @@ export default {
           classN: "iconfont icon-SaaS",
           con: [
             // "SaaS店铺订单", "增值服务订单"
-            { name: "SaaS店铺订单", rou: "/ceshi" },
-            { name: "增值服务订单", rou: "/ceshi" }
+            { name: "SaaS店铺订单", rou: "/storeIndex" },
+            { name: "增值服务订单", rou: "/appreciationIndex" }
           ]
         },
         {
@@ -150,6 +150,7 @@ export default {
       this.withdrawX();
     this.zhankai();
     this.gb();
+    this.userMessage();
   },
   methods: {
     // 保持侧边栏对应路由展开状态
