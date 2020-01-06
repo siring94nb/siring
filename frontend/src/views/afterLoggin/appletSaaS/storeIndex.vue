@@ -90,8 +90,11 @@
               <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                 <div>
                   <el-checkbox v-model="checked">全选</el-checkbox>
-                  <button>关闭订单</button><button></button>
                 </div>
+                <div class="btnBox">
+                    <button>关闭订单</button>
+                    <button>删除订单</button>
+                  </div>
                 <div>
                   <el-pagination
                     @current-change="handleCurrentChange"
@@ -224,6 +227,20 @@ export default {
     }
     .sjTiShiBox{
       display: flex;
+      align-items: center;
+    }
+    .btnBox{
+      margin: 0 20px;
+      button{
+        padding: 5px 10px ;
+        border-radius: 3px;
+        background: #ffffff;
+        border: 1px solid #DCDFE6;
+        color: #333333;
+        &:nth-of-type(1){
+          margin-right: 10px;
+        }
+      }
     }
   }
 }
