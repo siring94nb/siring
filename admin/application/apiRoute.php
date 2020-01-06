@@ -166,6 +166,10 @@ Route::group('api', function () {
     //控制台-AI推广套餐 fyk
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
+        Route::any('promotion_details','api/Promotion/promotion_details'); //订单详情
+        Route::any('promotion_upd','api/Promotion/promotion_upd'); //订单修改
+        Route::any('promotion_status','api/Promotion/promotion_status'); //订单状态确认
+        Route::any('manuscripts_upd','api/Promotion/manuscripts_upd'); //修改稿件
     });
 
     //控制台-角色中心 fyk
@@ -196,6 +200,12 @@ Route::group('api', function () {
         Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
+    //控制台-资金管理
+    Route::group('Saas',function(){
+        Route::any('saas_list','api/Saas/saas_list'); //订单列表
+        Route::any('saas_cancel','api/Saas/saas_cancel'); //订单取消
+    });
+
     //支付页面参数
     Route::group('Payment',function(){
         Route::any('coupou','api/Payment/coupou'); //优惠卷列表
@@ -211,6 +221,13 @@ Route::group('api', function () {
         Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调-支付宝
         Route::any('app_notice','api/Callback/app_notice'); //异步回调-微信
 
+    });
+
+    //消息留言
+    Route::group('Chat',function (){
+        Route::post('msg_add','api/Chat/add_message');//新增留言
+        Route::post('msg_list','api/Chat/msg_list');//留言列表
+        Route::post('msg_read','api/Chat/msg_read');//读取消息
     });
 
 });

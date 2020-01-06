@@ -42,6 +42,7 @@ class Console extends Base
         $user_fund =  UserFund::user($user_id);
         $data['money'] = $user_fund['money'];
         unset($data['password'],$data['salt'],$data['remark'],$data['status'],$data['open_id'],$data['created_at'],$data['end_time'],$data['delect_at']);
+
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
@@ -142,7 +143,7 @@ class Console extends Base
         $data['total_promotion'] =  PromotionOrder::where(['user_id'=>$user_id,'payment'=>2,'type'=>5])->where('status','<>',2)->count();//AI订单总数
 
         $data['total_investment'] =  InvestmentProject::where(['user_id'=>$user_id,'payment'=>2,'type'=>6])->where('status','<>',2)->count();//投融订单总数
-        
+
         $data['total'] = $data['total_customized'] + $data['total_xcx'] + $data['total_promotion'] + $data['total_investment'];//总数
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
