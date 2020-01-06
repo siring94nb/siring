@@ -34,42 +34,47 @@ class Capital extends Base
      */
     public function capital_detailed()
     {
-        $request = Request::instance();
-        $param = $request->param();
+        $uid = Session::get("uid");
+        if($uid){
+            $request = Request::instance();
+            $param = $request->param();
 
 
-        $where = [];
-        if(!empty($param['budget_type'])){
-            $where['budget_type'] = $param['budget_type'];
-        }
-        if(!empty($param['role_type'])){
-            $where['role_type'] = $param['role_type'];
-        }
-        if(!empty($param['start_time'])){
-            $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
-            $where['created_at'] = ['gt',$param['start_time']];
-        }
-        if(!empty($param['end_time'])){
-            $param['end_time'] = date('Y-m-d H:i:s',strtotime($param['end_time']));
-            $where['created_at'] = ['lt',$param['end_time']];
-        }
-        if(!empty($param['start_time']) && !empty($param['end_time'])){
-            $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
-        }
-        if(empty($param['page'])){
-            $param['page'] = 1;
-        }
-        if(empty($param['size'])){
-            $param['size'] = 10;
-        }
-        $field = 'id,role_type,budget_type,phone,income,money,money,pay_type,created_at';
-        $order = 'id desc';
+            $where = [];
+            $where['user_id'] = $uid;
+            if(!empty($param['budget_type'])){
+                $where['budget_type'] = $param['budget_type'];
+            }
+            if(!empty($param['role_type'])){
+                $where['role_type'] = $param['role_type'];
+            }
+            if(!empty($param['start_time'])){
+                $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
+                $where['created_at'] = ['gt',$param['start_time']];
+            }
+            if(!empty($param['end_time'])){
+                $param['end_time'] = date('Y-m-d H:i:s',strtotime($param['end_time']));
+                $where['created_at'] = ['lt',$param['end_time']];
+            }
+            if(!empty($param['start_time']) && !empty($param['end_time'])){
+                $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
+            }
+            if(empty($param['page'])){
+                $param['page'] = 1;
+            }
+            if(empty($param['size'])){
+                $param['size'] = 10;
+            }
+            $field = 'id,role_type,budget_type,phone,income,money,money,pay_type,created_at';
+            $order = 'id desc';
 
-        $user = new AllOrder();
-        $list = $user -> field( $field ) -> where( $where ) -> order( $order )
-            -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+            $user = new AllOrder();
+            $list = $user -> field( $field ) -> where( $where ) -> order( $order )
+                -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
-        return $list ? returnJson(1,'获取成功',$list) : returnJson(0,'获取失败',$list);
+            return $list ? returnJson(1,'获取成功',$list) : returnJson(0,'获取失败',$list);
+        }
+        returnJson(3,'你当前未登录');
     }
 
     /**
@@ -129,7 +134,7 @@ class Capital extends Base
             });
             return $result ? returnJson(1,'开票成功') : returnJson(0,'开票失败');
         }
-        returnJson(0,'登录失效，请重新登录');exit();
+        returnJson(3,'登录失效，请重新登录');exit();
 
     }
 
@@ -150,7 +155,7 @@ class Capital extends Base
         }
         $user_id = Session::get("uid");
         if(!$user_id){
-            returnJson(0,'该用户未登录');exit();
+            returnJson(3,'该用户未登录');exit();
         }
         if(empty($param['coupon'])){
             $param['coupon'] = '';
@@ -277,7 +282,7 @@ class Capital extends Base
         }
         $user_id = Session::get("uid");
         if(!$user_id){
-            returnJson(0,'该用户未登录');exit();
+            returnJson(3,'该用户未登录');exit();
         }
         if (Session::get('mobileCode') != $param['code']) {
             return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
@@ -308,7 +313,7 @@ class Capital extends Base
     {
         $user_id = Session::get("uid");
         if(!$user_id){
-            returnJson(0,'该用户未登录');exit();
+            returnJson(3,'该用户未登录');exit();
         }
         $user = db('user_fund') ->where('user_id',$user_id)->find();
         if($user['pay_password'] == null){
@@ -386,7 +391,7 @@ class Capital extends Base
         }
         $user_id = Session::get("uid");
         if(!$user_id){
-            returnJson(0,'该用户未登录');exit();
+            returnJson(3,'该用户未登录');exit();
         }
 
         $data = UserCard::destroy($param['id']);
