@@ -8,6 +8,7 @@
 namespace app\api\controller;
 use app\data\model\Message;
 use think\Request;
+use think\Session;
 use EasyWeChat\Foundation\Application;
 /**
  * 生成带参数二维码
@@ -53,6 +54,9 @@ class WxQrcode extends Base
         $user   = $app->user;
         $server->setMessageHandler(function ($message) use ($user) {
             $openid =     $message->FromUserName;
+            $user = new \app\data\model\User();
+            $user->upd($openid);
+
             $userInfo = $user->get($message->FromUserName);
 
             return "您好".$userInfo->nickname."！欢迎关注我!";

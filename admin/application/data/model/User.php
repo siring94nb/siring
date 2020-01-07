@@ -7,6 +7,7 @@
  */
 namespace app\data\model;
 use think\Model;
+use think\Session;
 class User extends Model
 {
     /**
@@ -111,6 +112,18 @@ class User extends Model
             'other_code'=>$param['invitation'],
             'updated_at'=>time()
         ],['id' =>$param["uid"]]);
+
+        return $user  !== false ? $user : false;
+    }
+
+    //更新openid
+    public function upd($open_id)
+    {
+        $user_id = Session::get("uid");
+        $user = new User;
+        $user ->save([
+            'open_id'=>$open_id,
+        ],['id' =>$user_id]);
 
         return $user  !== false ? $user : false;
     }
