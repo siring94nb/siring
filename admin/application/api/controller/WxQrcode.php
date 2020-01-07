@@ -52,35 +52,10 @@ class WxQrcode extends Base
         $server = $app->server;
         $user   = $app->user;
         $server->setMessageHandler(function ($message) use ($user) {
-            $openid =     $message->FromUserName; // 用户的 openid
+            $openid =     $message->FromUserName;
             $userInfo = $user->get($message->FromUserName);
-            switch ($message->MsgType) {
-                case 'event':
-                    return '收到事件消息'.$openid;
-                    break;
-                case 'text':
-                    return '收到文字消息'.$openid;
-                    break;
-                case 'image':
-                    return '收到图片消息'.$userInfo->nickname;
-                    break;
-                case 'voice':
-                    return '收到语音消息'.$userInfo->nickname;
-                    break;
-                case 'video':
-                    return '收到视频消息'.$userInfo->nickname;
-                    break;
-                case 'location':
-                    return '收到坐标消息'.$userInfo->nickname;
-                    break;
-                case 'link':
-                    return '收到链接消息'.$userInfo->nickname;
-                    break;
-                // ... 其它消息
-                default:
-                    return '收到其它消息'.$userInfo->nickname;
-                    break;
-            }
+
+            return "您好".$userInfo->nickname."！欢迎关注我!";
 
             // ...
         });
