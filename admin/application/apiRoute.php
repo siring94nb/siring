@@ -145,6 +145,8 @@ Route::group('api', function () {
 
         Route::any('console_list','api/Investment/console_list'); //控制台-我的投融列表
         Route::any('investment_details','api/Investment/investment_details'); //控制台-我的投融详情
+        Route::any('investment_status','api/Investment/investment_status'); //控制台-我的投融修改状态
+        Route::any('activities','api/Investment/activities'); //控制台-我的投融见面会
     });
 
     //定制需求
@@ -229,7 +231,15 @@ Route::group('api', function () {
         Route::post('msg_add','api/Chat/add_message');//新增留言
         Route::post('msg_list','api/Chat/msg_list');//留言列表
         Route::post('msg_read','api/Chat/msg_read');//读取消息
+
     });
+
+    //微信二维码
+    Route::group('WxQrcode',function (){
+        Route::post('code_add','api/WxQrcode/code_add');//生成带参数二维码
+
+    });
+
 
 });
 

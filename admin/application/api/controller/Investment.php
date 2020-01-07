@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\data\model\InvestmentClass;
 use app\data\model\InvestmentProject;
 use app\data\model\InvestmentSet;
+use app\data\model\Meeting;
 use think\Controller;
 use think\Request;
 use think\Validate;
@@ -229,6 +230,24 @@ class Investment extends Base
             $data = (new InvestmentProject()) ->status($order_id,$status);
 
             return $data !== false ? returnJson(1,'操作成功') : returnJson(0,'操作失败');
+        } else {
+
+            return  returnJson(3,'请登录');
+        }
+    }
+
+    /**
+     * 见面会
+     */
+    public function activities()
+    {
+        $user_id = Session::get("uid");
+
+        if ($user_id) {
+
+            $data = (new Meeting()) ->meeting_list();
+
+            return $data ? returnJson(1,'操作成功',$data) : returnJson(0,'操作失败',$data);
         } else {
 
             return  returnJson(3,'请登录');
