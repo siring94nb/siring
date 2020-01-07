@@ -167,7 +167,7 @@ class Investment extends Base
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
         }
 
-        return  returnJson(0,'请登录');
+        return  returnJson(3,'请登录');
     }
 
 

@@ -43,7 +43,7 @@ class RoleCenter extends Base
                         returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
                     }
                 }else{
-                    returnJson(0,'请登录');
+                    returnJson(3,'请登录');
                 }
 
 
@@ -65,7 +65,7 @@ class RoleCenter extends Base
                         returnJson(0,'亲，您暂时还不是等级会员，赶紧去申请吧！');
                     }
                 }else{
-                    returnJson(0,'请登录');
+                    returnJson(3,'请登录');
                 }
 
                 break;
@@ -85,7 +85,7 @@ class RoleCenter extends Base
                         returnJson(0,'亲，您暂时还不是分包商，赶紧去申请吧！');
                     }
                 }else{
-                    returnJson(0,'请登录');
+                    returnJson(3,'请登录');
                 }
                 break;
         }
@@ -114,7 +114,7 @@ class RoleCenter extends Base
                 returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
             }
         }else{
-                returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
 
@@ -140,7 +140,7 @@ class RoleCenter extends Base
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
 
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
     }
@@ -168,7 +168,7 @@ class RoleCenter extends Base
                 returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
             }
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
 
@@ -192,7 +192,7 @@ class RoleCenter extends Base
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
 
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
     }
@@ -219,7 +219,7 @@ class RoleCenter extends Base
                 returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
             }
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
 
@@ -243,7 +243,7 @@ class RoleCenter extends Base
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
 
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
     }
@@ -282,7 +282,7 @@ class RoleCenter extends Base
             return $join_order ? returnJson(1,'获取成功',$join_order) : returnJson(0,'获取失败',$join_order);
 
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
 
     }
@@ -328,7 +328,7 @@ class RoleCenter extends Base
                 return returnJson(0,'接单失败');exit();
             }
         }else{
-            returnJson(0,'请登录');
+            returnJson(3,'请登录');
         }
     }
 

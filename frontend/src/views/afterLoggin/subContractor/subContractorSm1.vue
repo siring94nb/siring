@@ -54,7 +54,7 @@
               </div>
               <div>
                 <div>功能需求：</div>
-                <div>{{shichuang[0].con}}</div>
+                <div v-html="shichuang[0].con"></div>
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>

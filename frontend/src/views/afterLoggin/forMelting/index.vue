@@ -10,7 +10,7 @@
     <div class="bottomBox">
       <div class="suoyin">
         <span>请搜索：</span>
-        <el-input style="width:192px;" type="text" name id placeholder="订单编号/标题"></el-input>
+        <el-input style="width:192px;" v-model="title" type="text" name id placeholder="订单编号/标题"></el-input>
         <span>订单类型：</span>
         <el-select v-model="selectValue" placeholder="请选择">
           <el-option
@@ -28,18 +28,18 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-        <el-button>
+        <el-button @click="getconsoleList">
           <i class="el-icon-search"></i>搜索
         </el-button>
       </div>
       <div class="skipScreen">
         <div>
-          <router-link to="/flowIndex" style="background:rgb(204,255,255)">全部</router-link>
-          <router-link to="/flowIndex" style="background:red">线上沟通...</router-link>
-          <router-link to="/flowIndex" style="background:rgb(102,153,0)">线下见面会...</router-link>
-          <router-link to="/flowIndex" style="background:rgb(0,51,255)">合同保管</router-link>
-          <router-link to="/flowIndex" style="background:rgb(171,147,48)">委托检视</router-link>
-          <router-link to="/flowIndex" style="background:rgb(134,134,134)">已放弃</router-link>
+          <div @click="xuanze('全部')" value ="" style="background:rgb(204,255,255)">全部</div>
+          <div @click="xuanze(1)" value ="1"  style="background:red">线上沟通...</div>
+          <div @click="xuanze(2)" style="background:rgb(102,153,0)">线下见面会...</div>
+          <div @click="xuanze(3)" style="background:rgb(0,51,255)">合同保管</div>
+          <div @click="xuanze(4)" style="background:rgb(171,147,48)">委托检视</div>
+          <div @click="xuanze(5)" style="background:rgb(134,134,134)">已放弃</div>
         </div>
         <div>
           <router-link to="/addForMelting" style="color:#0099ff;border:1px solid #0099ff">
@@ -122,25 +122,26 @@ import {consoleList} from "@/api/api"
 export default {
   data() {
     return {
+      title:"",//订单/编号
       value: "",
       // 时间选择
       value1: "",
       // 下拉列表
       options: [
         {
-          value: "请选择",
+          value: "0",
           label: "请选择"
         },
         {
-          value: "投资",
+          value: "1",
           label: "投资"
         },
         {
-          value: "融资",
+          value: "2",
           label: "融资"
         }
       ],
-      selectValue: "请选择",
+      selectValue: "0",
       options1: [
         {
           value: "商品上架",
@@ -160,20 +161,43 @@ export default {
       tableData: [],
       total: 6,
       pagesize: 10,
-      currentPage: 1
+      currentPage: 1,
+      xuanzeValue:""
     };
   },
   components: {
     logginHeader
   },
-  mounted() {},
+  mounted() {
+    this.getconsoleList()
+  },
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;
     },
     // 获取我的投融列表数据
+    xuanze(str){
+      if(str == "全部"){
+        this.xuanzeValue = ""
+        this.getconsoleList();
+      }else{
+        this.xuanzeValue = str;
+        this.getconsoleList();
+      }
+    },
     getconsoleList(){
-      consoleList().then(res=>{
+      if(this.value1 != ""){
+        var startTime = this.value1[0].getTime() || ""
+        var endTime = this.value1[1].getTime() || ""
+      }
+      let params = {
+        process : parseInt(this.xuanzeValue),
+        title :this.title,
+        role_type:this.selectValue == 0 ? "" : parseInt(this.selectValue),
+        start_time:startTime,
+        end_time:endTime,
+      }
+      consoleList(params).then(res=>{
         let {data,code} = res;
         if(code == 1){
           this.tableData = data.data;
@@ -207,7 +231,7 @@ export default {
     padding: 10px;
     display: flex;
     justify-content: space-between;
-    a {
+    div,a {
       display: inline-block;
       padding: 5px 10px;
       color: #ffffff;

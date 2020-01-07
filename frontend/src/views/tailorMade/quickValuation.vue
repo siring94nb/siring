@@ -78,7 +78,7 @@ export default {
   },
   data() {
     return {
-      activeName: "1",
+      activeName: "",
       typeList: [
         {
           className: "iconfont icon-gongyinglian",

@@ -5,15 +5,14 @@
       <div class="topBox">
         <div style="margin-right:30px; width: 100px; padding:10px 0px; ">行业领域：</div>
         <div style="flexGrow: 1">
-          <span class="active">全部</span>
-          <span v-for="(item,index) in IndustryField" :key="index+1" :id="item.id">{{item.title}}</span>
+          <span :class="{'active': cid==''}" @click="gbBiaozhi('全部')">全部</span>
+          <span :class="{'active': cid==item.id}" v-for="(item,index) in IndustryField" :key="index+1" :id="item.id" @click="gbBiaozhi(item.id)">{{item.title}}</span>
           <span style="float: right;">更多&gt;&gt;</span>
         </div>
       </div>
       <div class="shaixuanBox">
-        <button>全部排序</button>
-        <div>
-          <el-select v-model="value" placeholder="请选择" style="width:120px; margin-right:30px;">
+        <div style="margin-left:250px">
+          <el-select @change="getindustryList" v-model="value" placeholder="请选择" style="width:120px; margin-right:30px;">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -24,9 +23,9 @@
         </div>
         <div class="searchBox">
           <el-input v-model="suoyin" placeholder="请输入名称" prefix-icon="el-icon-search"></el-input>
-          <el-button style="background:#ff0000;color:#ffffff">搜索</el-button>
+          <el-button style="background:#ff0000;color:#ffffff" @click="getindustryList">搜索</el-button>
         </div>
-        <div class="iBox">
+        <div class="iBox" @click="tiaozhuan('','')">
           <i class="el-icon-s-promotion"></i>
           <div>
             创业者发布
@@ -49,9 +48,8 @@
             <template slot-scope="scope">
               <div class="caozuoBox">
                 <div @click="tiaozhuan(scope.$index, tableData)">{{scope.row.deshi}}</div>
-                <div class="guanzhu">
-                  <i class="iconfont icon-guanzhu Idefault" v-if="false"></i>
-                  <i class="iconfont icon-guanzhu1 iActive"></i>
+                <div class="guanzhu" @click="setcollectX(tableData,scope.$index)">
+                  <i class="iconfont icon-guanzhu1 iActive zhuanhuan"></i>
                 </div>
               </div>
             </template>
@@ -63,7 +61,7 @@
 </template>
 <script>
 import Myheader from "@/components/header";
-import { industryField, industryList } from "@/api/api";
+import { industryField, industryList,collectX} from "@/api/api";
 export default {
   data() {
     return {
@@ -71,27 +69,20 @@ export default {
       options: [
         {
           value: "1",
-          label: "按打赏数量"
+          label: "全部"
         },
         {
           value: "2",
-          label: "双皮奶"
+          label: "按打赏数量最高"
         },
         {
           value: "3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "4",
-          label: "龙须面"
-        },
-        {
-          value: "5",
-          label: "北京烤鸭"
+          label: "按打赏数量最低"
         }
       ],
       value: "1",
       suoyin: "",
+      cid:"",
       // 表格
       tableData: [
         {
@@ -156,23 +147,36 @@ export default {
     },
     // 投资，融资跳转传参
     tiaozhuan(index, rows) {
-      // console.log(index)
-      // console.log(rows[index]);
+      let leixing = "";
+      let id = ""
+      console.log(index);
+      console.log(rows);
+      if(index != "" && rows != ""){
+        leixing= rows[index].deshi
+        id= rows[index].id
+      }else{
+        leixing ="我要融资"
+        id = this.tableData[0].id
+      }
       this.$router.push({
         name: `newInvestment`,
         params: {
-          leixing: rows[index].deshi == "我要投资" ? "我要投资" : "我要融资",
-          id: rows[index].id
+          leixing: leixing,
+          id: id
           // code: '8989'
         }
       });
     },
     // 获取表格信息
     getindustryList() {
-      let parmas = { type: 1 };
+      let parmas = {
+        type:this.value,
+        cid:this.cid,
+        title:this.suoyin,
+      };
       industryList(parmas).then(res => {
         let { data, code, msg } = res;
-        console.log(res);
+        // console.log(res);
         if (code == 1) {
           // this.tableData = data.data
         }
@@ -189,6 +193,51 @@ export default {
           Box.style.marginLeft = "0px";
         }
       })();
+    },
+    // 获取标识
+    gbBiaozhi(str){
+      // console.log(str);
+      if(str == "全部"){
+        this.cid = ""
+        this.getindustryList()
+      }else{
+        this.cid = parseInt(str);
+        this.getindustryList()
+      }
+    },
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
+    // 关注操作
+    setcollectX(item,index){
+      let zhuanhuanArr = document.getElementsByClassName("zhuanhuan")
+      let classListA = zhuanhuanArr[index].classList;
+      let params = {
+        pid :parseInt(item[index].id),
+        type:1,
+        user_id : parseInt(sessionStorage.getItem("user_id")) 
+      }
+      // console.log(params)
+      if(classListA.toString().indexOf("iActive") != -1){
+        zhuanhuanArr[index].classList.remove("iActive")
+        collectX(params).then(res=>{
+          let {code} = res
+          if(code){
+            this.showMsg("关注成功",code)
+          }
+        })
+      }else{
+        zhuanhuanArr[index].classList.add("iActive")
+        collectX(params).then(res=>{
+          let {code} = res
+          if(code){
+            this.showMsg("取消关注",code)
+          }
+        })
+      }
     }
   }
 };
@@ -197,7 +246,7 @@ export default {
 .box {
   background: rgb(246, 246, 246);
   // margin-top: 110px;
-  max-width: 1260px;
+  width: 1260px;
   margin: 100px auto;
   .topBox {
     display: flex;
@@ -209,15 +258,21 @@ export default {
     span {
       font-size: 13px;
       display: inline-block;
-      padding: 10px 12px;
+      padding: 5px 12px;
       margin-bottom: 20px;
-      width: 92px;
+      margin-right: 30px;
+      // width: 92px;
       text-align: left;
+      text-align: center;
     }
     .active {
-      background-image: url("../../../assets/images/u773.png");
+      background-image: url("~@/assets/images/arrow-top.png");
+      background-position: 100% 0; 
       background-repeat: no-repeat;
       color: #ff0000;
+      border: 1px solid rgb(230,45,49);
+      background-size:10px;
+      border-radius: 3px;
     }
   }
   // 头部筛选

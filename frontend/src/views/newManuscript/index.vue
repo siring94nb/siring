@@ -129,9 +129,9 @@
                           style="display:block;padding:0px 0 10px 30px;margin:15px 0;border-bottom:1px solid rgb(228,228,228);"
                         >
                           <span class="djXuanxiang">
-                            <span>普通</span>
-                            <span>300元/500字</span>
-                            <span>出稿时间1-2工作日，稿件不满意最多只能修改一次，下单前请看好备注！</span>
+                            <span>高手</span>
+                            <span>600元/500字</span>
+                            <span>出稿时间1-4工作日，稿件不满意最多只能修改一次，下单前请看好备注！</span>
                           </span>
                         </el-radio>
                         <el-radio
@@ -140,9 +140,9 @@
                           style="display:block;padding:0px 0 0px 30px;margin:15px 0"
                         >
                           <span class="djXuanxiang">
-                            <span>普通</span>
-                            <span>300元/500字</span>
-                            <span>出稿时间1-2工作日，稿件不满意最多只能修改一次，下单前请看好备注！</span>
+                            <span style="padding:15px 20px;">资深写手</span>
+                            <span style="padding:15px 30px;">1000元/500字</span>
+                            <span>出稿时间1-6工作日，稿件不满意最多只能修改一次，下单前请看好备注！</span>
                           </span>
                         </el-radio>
                       </div>
@@ -173,6 +173,7 @@
                     </div>
                     <div>
                       <el-upload
+                        name="image"
                         class="upload-demo"
                         action="https://jsonplaceholder.typicode.com/posts/"
                         :before-remove="beforeRemove"
@@ -180,6 +181,7 @@
                         :limit="1"
                         :on-exceed="handleExceed"
                         :file-list="fileList"
+                        :on-success="handleAvatarSuccess1"
                       >
                         <el-button size="small" type="primary">点击上传</el-button>
                         <div
@@ -271,7 +273,7 @@
         </div>
         <div class="yongtu">撰稿费用：</div>
         <div>
-          <div class="feiyong">￥1111</div>
+          <div class="feiyong">￥0</div>
           <div class="jianshu">
             <span class="biaozhi">*</span>
             <span>稿费</span>
@@ -282,7 +284,7 @@
           <span style="font-size:26px; padding-right:10px">×</span>
         </div>
         <div>
-          <div class="feiyong">￥1111</div>
+          <div class="feiyong">{{discount}}</div>
           <div class="jianshu">
             <span class="biaozhi">*</span>
             <span style="color: #949494; font-size: 13px;">会员折扣</span>
@@ -290,9 +292,9 @@
           </div>
         </div>
         <div style="font-size:26px; padding:0 10px">=</div>
-        <div class="feiyong sumJia">￥3333333</div>
+        <div class="feiyong sumJia">￥{{sumMoney}}</div>
         <div>
-          <button class="zhifuBtn">立即支付</button>
+          <button class="zhifuBtn" @click="setdemandAdd">立即支付</button>
         </div>
       </div>
       <div class="queren">
@@ -375,6 +377,7 @@ export default {
       radio3: "1", //字数单选框
       radioYonghu: "", //用户确认
       fileList: [], //文件上传
+      resume:"",//上传后回馈
       title: "",
       xuqiu: "",
       gsname: "",
@@ -393,8 +396,9 @@ export default {
       // 传递套餐价格 
       price:0,
       Remuneration:0,//稿费
-      discount:'',//会员折扣
+      discount:'100%',//会员折扣
       sumMoney:0,//总价
+      tid:1,//选择的套餐id
     };
   },
   components: {
@@ -416,6 +420,11 @@ export default {
     },
     beforeRemove(file, fileList) {
       return this.$confirm(`确定移除 ${file.name}？`);
+    },
+    // 上传成功回调
+     handleAvatarSuccess1(res, file) {
+      // console.log(res)
+      this.resume = res.id
     },
     SetMeal() {
       // ai推广套餐
@@ -443,7 +452,9 @@ export default {
     },
     // 获取当前套餐信息，同时关闭遮罩,并将数据传递给固定结算栏
     closeRoleHandle(arr) {
+      let zekou = parseInt(this.discount);
       this.price = arr.price;
+      this.sumMoney = (this.price + this.Remuneration) * zekou / 100
       this.dialogVisible = false;
     },
     // 单选框切换，显示自由稿件已经代写稿件
@@ -459,6 +470,41 @@ export default {
       }
       // console.log(this.radio);
       
+    },
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
+    // 数据上传
+    setdemandAdd(){
+      let con = ""
+      if(this.radio == 1){
+        con = ""
+      }else{
+        con = "232323"
+      }
+      let params = {
+        role_type:parseInt(this.radio),
+        title :this.title,
+        object:this.gsname,
+        tid:this.tid,
+        num:parseInt(this.radio3),
+        ask:parseInt(this.radio1),
+        price:this.price,
+        grade:parseInt(this.radio2),
+        url:this.sumMoney,
+        resume:this.resume,
+        con	:""
+      }
+      demandAdd(params).then(res=>{
+        let {code,msg} = res
+        if(code == 1) {
+          this.showMsg(msg,code);
+          console.log(res)
+        }
+      })
     }
   }
 };
@@ -606,10 +652,10 @@ export default {
           padding: 10px 24px;
         }
         &:nth-of-type(2) {
-          padding: 10px 18px;
+          padding: 10px 22px;
         }
         &:nth-of-type(3) {
-          padding: 10px 56px;
+          padding: 10px 60px;
         }
         &:nth-of-type(4) {
           border: none;
@@ -622,7 +668,7 @@ export default {
       .djXuanxiang {
         > span {
           // padding-right: 20px;
-          padding: 15px 30px;
+          padding: 15px 34px;
           border-left: 1px solid rgb(228, 228, 228);
           &:nth-of-type(1) {
             margin-left: 20px;

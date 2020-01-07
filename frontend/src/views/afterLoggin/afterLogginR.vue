@@ -100,7 +100,7 @@ export default {
     },
     // 获取用户信息
     userMessage() {
-      console.log(11111, 1228);
+      console.log( "0106");
       const userId = sessionStorage.getItem("user_id");
       const params = {
         user_id: userId

@@ -3,6 +3,7 @@
 namespace app\data\model;
 
 use think\Model;
+use think\Validate;
 
 class PromotionOrder extends Model
 {
@@ -31,6 +32,7 @@ class PromotionOrder extends Model
             'resume' => $resume,
             'url'=>$url,
             'status' =>1,
+            'order_status'=>1,
             'created_at'=>time(),
 
         ]);
@@ -57,7 +59,7 @@ class PromotionOrder extends Model
         $where['type'] = 5;
         $where['user_id'] = $uid;
         if(!empty($param['process'])){
-            $where['oeder_status'] = $param['process'];
+            $where['order_status'] = $param['process'];
 
         }
         if(!empty($param['title'])){
@@ -87,7 +89,7 @@ class PromotionOrder extends Model
             $param['size'] = 6;
         }
 
-        $field = 'id,no,name,role_type,model_id,money,created_at';
+        $field = 'id,no,name,role_type,model_id,money,order_status,created_at';
         $order = 'id desc';
 
         $list = PromotionOrder::with('Extension') -> field( $field ) -> where( $where ) -> order( $order )
@@ -110,4 +112,54 @@ class PromotionOrder extends Model
     {
         return $this->belongsTo('Extension', 'model_id', 'id');
     }
+
+    /**
+     * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function details($id)
+    {
+        return self::where('id',$id)->field('id,name,resume,url,grade,num,need_status')->find()->toArray();
+    }
+
+    /**
+     * 修改
+     * @param $param
+     * @return false|int
+     */
+    public function upd($param)
+    {
+        //必填字段验证
+        $validate = new Validate([
+            ['id', 'require', '订单id不能为空'],
+            ['name', 'require', '标题不能为空'],
+            ['resume', 'require', '推广对象不能为空'],
+            ['grade', 'require', '高手等级不能不好空'],
+            ['url', 'require', '参考不能不好空'],
+            ['need_status', 'require', '内容类型必须'],
+            ['num', 'require', '字数必须'],
+        ]);
+        if (!$validate->check($param)) {
+            returnJson(0, $validate->getError());exit();
+        }
+
+        return $this->allowField(true)->save($param,['id'=>$param['id']]);
+
+    }
+
+    /**
+     * 1：为需求确认，2：为代写中, 3:为确认稿件，4：为智推中，5为：智推完成
+     * @param $id
+     * @param $process
+     * @return false|int
+     */
+    public function status($id,$process)
+    {
+        return self::save(['order_status'=>$process],['id'=>$id]);
+    }
+
 }

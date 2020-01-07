@@ -10,7 +10,7 @@
     <div class="bottomBox">
       <div class="suoyin">
         <span>请搜索：</span>
-        <el-input style="width:192px;" type="text" name id placeholder="订单编号/标题"></el-input>
+        <el-input style="width:192px;" type="text" name id placeholder="订单编号/标题" v-model="titleValue"></el-input>
         <span>订单类型：</span>
         <el-select v-model="selectValue" placeholder="请选择">
           <el-option
@@ -28,17 +28,18 @@
           start-placeholder="开始日期"
           end-placeholder="结束日期"
         ></el-date-picker>
-        <el-button>
+        <el-button @click="userMessage">
           <i class="el-icon-search"></i>搜索
         </el-button>
       </div>
       <div class="skipScreen">
         <div>
-          <router-link to="/flowIndex" style="background:red">需求确认...</router-link>
-          <router-link to="/flowIndex" style="background:rgb(102,153,0)">代写中...</router-link>
-          <router-link to="/flowIndex" style="background:rgb(0,51,255)">确认稿件</router-link>
-          <router-link to="/flowIndex" style="background:rgb(171,147,48)">智推中</router-link>
-          <router-link to="/flowIndex" style="background:rgb(134,134,134)">智推完成</router-link>
+          <div style="background:rgb(103,194,58)" @click="xuanze('全部')">全部</div>
+          <div  style="background:red" @click="xuanze(1)">需求确认</div>
+          <div style="background:rgb(102,153,0)" @click="xuanze(2)">代写中</div>
+          <div  style="background:rgb(0,51,255)" @click="xuanze(3)">确认稿件</div>
+          <div  style="background:rgb(171,147,48)" @click="xuanze(4)">智推中</div>
+          <div  style="background:rgb(134,134,134)" @click="xuanze(5)">智推完成</div>
         </div>
         <div>
           <router-link to="/newManuscript" style="color:#0099ff;border:1px solid #0099ff">
@@ -105,25 +106,26 @@ import {manuscriptList} from "@/api/api"
 export default {
   data() {
     return {
+      titleValue:"",//订单号/标题
       value: "",
       // 时间选择
       value1: "",
       // 下拉列表
       options: [
         {
-          value: "请选择",
+          value: "0",
           label: "请选择"
         },
         {
-          value: "自撰稿件",
-          label: "自撰稿件"
+          value: "1",
+          label: "自有稿件"
         },
         {
-          value: "代写稿件",
-          label: "代写稿件"
+          value: "2",
+          label: "委托代写"
         }
       ],
-      selectValue: "请选择",
+      selectValue: "0",
       options1: [
         {
           value: "商品上架",
@@ -143,23 +145,48 @@ export default {
       tableData: [],
       total: 6,
       pagesize: 10,
-      currentPage: 1
+      currentPage: 1,
+      xuanzeValue:""
     };
   },
   components: {
     logginHeader
   },
   mounted() {
-    this.getmanuscriptList();
+    // this.getmanuscriptList();
+    this.userMessage();
   },
+
   methods: {
-    current_change: function(currentPage) {
-      this.currentPage = currentPage;
-    },
     // 获取列表数据
-    getmanuscriptList(){
+    xuanze(e){
+      console.log(e)
+      let xuanze = e.target.innerText
+      if(xuanze == "全部"){
+        this.xuanzeValue = ""
+        this.userMessage();
+      }else{
+        this.xuanzeValue = xuanze;
+        this.userMessage();
+      }
+    },
+    userMessage(){
+      console.log(this.selectValue);
+      if(this.value1 != ""){
+        var startTime = this.value1[0].getTime() || ""
+        var endTime = this.value1[1].getTime() || ""
+      }
+      let params = {
+        process : parseInt(this.xuanzeValue),
+        title :this.title,
+        role_type:this.selectValue == 0 ? "" : parseInt(this.selectValue),
+        start_time:startTime,
+        end_time:endTime,
+      }
       manuscriptList().then(res=>{
         let {data,code} = res;
+        console.log(res)
+        console.log(data)
         if(code == 1){
           this.tableData =data.data
         }
@@ -192,7 +219,8 @@ export default {
     padding: 10px;
     display: flex;
     justify-content: space-between;
-    a {
+    >div{
+     div,a {
       display: inline-block;
       padding: 5px 10px;
       color: #ffffff;
@@ -200,6 +228,8 @@ export default {
       font-family: "Arial Normal", "Arial";
       margin-right: 10px;
     }
+    }
+    
   }
   // 表格内按钮
   .spanDefault {

@@ -437,6 +437,7 @@ export default {
       line-height: 12px;
       margin-right: 20px;
       width: 150px;
+      margin-top: 2px;
     }
   }
   .abstract {
