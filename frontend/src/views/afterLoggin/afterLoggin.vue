@@ -46,13 +46,14 @@ export default {
   },
   methods: {
     changeSize() {
+      // setInterval(() => {
       let screenWidth = document.body.clientWidth;
       let leftBox = this.$refs.leftBox;
       let rightBox = this.$refs.rightBox;
       return (() => {
         if (screenWidth > 1500) {
           rightBox.style.marginLeft =
-            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 + 20+
+            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 +10 +
             leftBox.clientWidth +
             "px";
             document.body.style.width = "100%";
@@ -63,6 +64,7 @@ export default {
           document.body.style.width = leftBox.clientWidth + rightBox.clientWidth +"px";
         }
       })();
+      // }, 1000);
     }
   }
 };

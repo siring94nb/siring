@@ -68,22 +68,32 @@
                 :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
               >
                 <el-table-column type="selection" width="40" align="center"></el-table-column>
-                <el-table-column prop="name" label="订单编号" width="160" align="center"></el-table-column>
-                <el-table-column prop="name" label="行业模板" width="120" align="center"></el-table-column>
-                <el-table-column prop="name" label="模板套餐" width="120" align="center"></el-table-column>
-                <el-table-column prop="name" label="订单金额" width="90" align="center"></el-table-column>
-                <el-table-column prop="name" label="付款方式" width="80" align="center"></el-table-column>
-                <el-table-column prop="name" label="账号" width="220" align="center"></el-table-column>
-                <el-table-column prop="name" label="下单时间" width="200" align="center"></el-table-column>
-                <el-table-column prop="name" label="套餐到期时间" width="200" align="center"></el-table-column>
-                <el-table-column prop="name" label="操作" width="165" align="center">
+                <el-table-column prop="no" label="订单编号" width="160" align="center"></el-table-column>
+                <el-table-column prop="model_type	" label="行业模板" width="120" align="center"></el-table-column>
+                <el-table-column prop="model_meal_type" label="模板套餐" width="120" align="center"></el-table-column>
+                <el-table-column prop="money" label="订单金额" width="90" align="center"></el-table-column>
+                <el-table-column prop="pay_type" label="付款方式" width="80" align="center">
                   <template slot-scope="scope">
-                    <span v-if="false">{{scope.row.name}}</span>
-                    <span class="default" style="background:rgb(140,218,255)" v-if="false">全部</span>
-                    <span class="default"  style="background:rgb(204,51,102)" v-if="false">待付款</span>
-                    <span class="default"  style="background:rgb(204,0,204)" v-if="false">待开通</span>
-                    <span class="default"  style="background:rgb(102,153,0)" v-if="false">已完成</span>
-                    <span class="default"  style="background:rgb(161,161,161)">已关闭</span>
+                    <span v-if="scope.row.pay_type == 1">支付宝</span>
+                    <span v-if="scope.row.pay_type == 2">微信</span>
+                    <span v-if="scope.row.pay_type == 3">汇款</span>
+                    <span v-if="scope.row.pay_type == 4">余额</span>
+                    <span v-if="scope.row.pay_type == null">未知</span>
+                  </template>
+                </el-table-column>
+                <el-table-column prop="phone" label="账号" width="220" align="center"></el-table-column>
+                <el-table-column prop="created_at" label="下单时间" width="200" align="center"></el-table-column>
+                <el-table-column prop="end_time" label="套餐到期时间" width="200" align="center"></el-table-column>
+                <el-table-column prop="payment" label="操作" width="165" align="center">
+                  <template slot-scope="scope">
+                    <span v-if="scope.row.payment == 1">未到账</span>
+                    <span v-if="scope.row.payment == 2">已到账</span>
+                    <span v-if="scope.row.payment == 3">汇款待审核</span>
+                    <span v-if="scope.row.payment == 4">汇款未到账</span>
+                    <span v-if="scope.row.payment == 4">汇款已到账</span>
+                    <span class="default"  style="background:rgb(204,0,204)" v-if="scope.row.payment == 6">待开通</span>
+                    <span class="default"  style="background:rgb(102,153,0)" v-if="scope.row.payment == 7">已完成</span>
+                    <span class="default"  style="background:rgb(161,161,161)" v-if="scope.row.payment == 8">已关闭</span>
                   </template>
                 </el-table-column>
               </el-table>
@@ -114,6 +124,7 @@
 </template>
 <script>
 import logginHeader from "@/components/logginHeader";
+import {saasList} from "@/api/api"
 export default {
   data() {
     return {
@@ -130,18 +141,32 @@ export default {
       ],
       // 时间范围，返回值会是一个数组，两个值，初始时间与结束时间，获取通过.getTime()转时间戳
       timeValue: "",
-      list: [{ name: 123123 }], //分页表格数据
+      list: [], //分页表格数据
       pagesize: 10,
       currpage: 1,
       DirectlyTo: 1,
       checked: false //全选
     };
   },
-  mounted() {},
+  mounted() {
+    this.getsaasList();
+  },
   methods: {
     // 分页表格切换
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+    },
+    // 列表数据
+    getsaasList(){
+      saasList().then(res=>{
+        let {data,code,msg} = res;
+        console.log(res);
+        if(code == 1){
+          this.list = data.data;
+          this.total = total
+          console.log(data.data)
+        }
+      })
     }
   },
   components: {
