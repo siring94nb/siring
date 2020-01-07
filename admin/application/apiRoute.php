@@ -238,6 +238,8 @@ Route::group('api', function () {
     Route::group('WxQrcode',function (){
         Route::any('code_add','api/WxQrcode/code_add');//生成带参数二维码
         Route::any('serve','api/WxQrcode/serve');//服务器返回
+        Route::any('wx_accredit','api/WxQrcode/wx_accredit');//生成带参数二维码
+        Route::any('wx_code','api/WxQrcode/wx_code');//服务器返回
 
     });
 
