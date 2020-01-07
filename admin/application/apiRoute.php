@@ -236,8 +236,8 @@ Route::group('api', function () {
 
     //微信二维码
     Route::group('WxQrcode',function (){
-        Route::post('code_add','api/WxQrcode/code_add');//生成带参数二维码
-        Route::post('serve','api/WxQrcode/serve');//服务器返回
+        Route::any('code_add','api/WxQrcode/code_add');//生成带参数二维码
+        Route::any('serve','api/WxQrcode/serve');//服务器返回
 
     });
 
