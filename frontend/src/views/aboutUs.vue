@@ -249,7 +249,7 @@ export default {
           name: "安全联盟信誉企业"
         },
         {
-          url: require("../assets/images/image536147.jpeg"),
+          url: require("../assets/images/image536147.jpg"),
           name: "深圳市福田区人民政府英才证"
         },
         {
