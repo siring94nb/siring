@@ -185,10 +185,10 @@ class InvestmentProject extends Model
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function details($param)
+    public function details($id)
     {
 
-        $data = InvestmentProject::with('InvestmentClass') ->where('id',$param['id'])
+        $data = InvestmentProject::with('InvestmentClass') ->where('id',$id)
             -> field('id,name,sid,surplus,con,resume,other,proposal,examine_opinion,user_clause,advantage,url')
             -> find()->toArray();
 
@@ -217,8 +217,8 @@ class InvestmentProject extends Model
     public function investment_project_list($param,$uid)
     {
 
-        $where = array();
-        $where['uid'] = $uid;
+        $where['type'] = 6;
+        $where['user_id'] = $uid;
         if(!empty($param['process'])){
             $where['need_status'] = $param['process'];
 
@@ -250,7 +250,7 @@ class InvestmentProject extends Model
             $param['size'] = 6;
         }
 
-        $field = 'id,name,sid,resume,surplus,created_at';
+        $field = 'id,model_type,name,user_id,sid,resume,surplus,created_at,need_status';
         $order = 'id desc';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
@@ -263,6 +263,42 @@ class InvestmentProject extends Model
         }
 
         return $list;
+    }
+
+    /**
+     * 修改
+     * @param $param
+     * @return false|int
+     */
+    public function upd($param)
+    {
+        //必填字段验证
+        $validate = new Validate([
+            ['id', 'require', '订单id不能为空'],
+            ['name', 'require', '标题不能为空'],
+            ['resume', 'require', '推广对象不能为空'],
+            ['grade', 'require', '高手等级不能不好空'],
+            ['url', 'require', '参考不能不好空'],
+            ['need_status', 'require', '内容类型必须'],
+            ['num', 'require', '字数必须'],
+        ]);
+        if (!$validate->check($param)) {
+            returnJson(0, $validate->getError());exit();
+        }
+
+        return $this->allowField(true)->save($param,['id'=>$param['id']]);
+
+    }
+
+    /**
+     * 1：为需求确认，2：为代写中, 3:为确认稿件，4：为智推中，5为：智推完成
+     * @param $id
+     * @param $process
+     * @return false|int
+     */
+    public function status($id,$process)
+    {
+        return self::save(['need_status'=>$process],['id'=>$id]);
     }
 
 }

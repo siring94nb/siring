@@ -114,6 +114,7 @@ class PromotionOrder extends Model
     }
 
     /**
+     * 详情
      * @param $id
      * @return array
      * @throws \think\Exception

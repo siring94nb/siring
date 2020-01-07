@@ -144,6 +144,7 @@ Route::group('api', function () {
         Route::any('project_details','api/Investment/project_details'); //项目详情
 
         Route::any('console_list','api/Investment/console_list'); //控制台-我的投融列表
+        Route::any('investment_details','api/Investment/investment_details'); //控制台-我的投融详情
     });
 
     //定制需求
