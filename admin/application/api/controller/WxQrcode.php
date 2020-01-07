@@ -22,22 +22,27 @@ class WxQrcode extends Base
      */
     public function code_add()
     {
+        $uid = Session::get("uid");
 
-        $options = config('wechat');
+        if($uid){
 
-        $app = new Application($options);
+            $options = config('wechat');
 
-        $qrcode = $app->qrcode;
+            $app = new Application($options);
 
-        $result = $qrcode->forever(56);// 或者 $qrcode->forever("foo");
+            $qrcode = $app->qrcode;
 
-        $url = $result->url;
+            $result = $qrcode->temporary($uid, 60);
 
-        $imgData = 'http://qr.topscan.com/api.php?text='. $url;
-        pp($imgData);die;
-        $content = file_get_contents($url); // 得到二进制图片内容
+            $url = $result->url;
 
-        file_put_contents(__DIR__ . '/code.jpg', $content); // 写入文件
+            $imgData = 'http://qr.topscan.com/api.php?text='. $url;
+
+            echo "<img src='".$imgData."'>";
+        }else{
+            return  returnJson(3,'请登录');
+        }
+
     }
 
     /**
@@ -54,19 +59,19 @@ class WxQrcode extends Base
         $user   = $app->user;
         $server->setMessageHandler(function ($message) use ($user) {
             $openid =     $message->FromUserName;
+
+            $msg = $message->EventKey;
             $user = new \app\data\model\User();
-            $user->upd($openid);
+            $user->upd($openid,$msg);
 
             $userInfo = $user->get($message->FromUserName);
 
             return "您好".$userInfo->nickname."！欢迎关注我!";
-
-            // ...
+            
         });
 
         $response = $app->server->serve();
 
-        // $response 为 `Symfony\Component\HttpFoundation\Response` 实例
         // 对于需要直接输出响应的框架，或者原生 PHP 环境下
         $response->send();
 

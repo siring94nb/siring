@@ -117,14 +117,11 @@ class User extends Model
     }
 
     //更新openid
-    public function upd($open_id)
+    public function upd($open_id,$msg)
     {
-        $user_id = Session::get("uid");
         $user = new User;
-        $user ->save([
-            'open_id'=>$open_id,
-        ],['id' =>$user_id]);
+        $data = $user ->save(['open_id'=>$open_id,],['id' =>$msg]);
 
-        return $user  !== false ? $user : false;
+        return $data  !== false ? $data : false;
     }
 }
