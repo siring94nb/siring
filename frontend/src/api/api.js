@@ -561,4 +561,10 @@ export const collectX = data => {
 export const saasList = data => {
     return axios.post(`${base_url}api/Saas/saas_list`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 小程序SaaS套餐列表取消订单（参数 order_id→订单id）
+ */
+export const saasCancel = data => {
+    return axios.post(`${base_url}api/Saas/saas_cancel`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload
