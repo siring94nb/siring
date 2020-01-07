@@ -19,7 +19,7 @@ return [
     'app_id'  => 'wx7a8782e472a6c34a',         // AppID
     'secret'  => 'ae3dce2528dc43edd49e571cb95b9c25',     // AppSecret
     'token'   => 'TOKEN',          // Token
-    'aes_key' => '',                    // EncodingAESKey，安全模式下请一定要填写！！！
+    'aes_key' => '7QoMgv72vByXsQKdvzEDJqPl8FzZxdQbg5WH3wvSKv6',                    // EncodingAESKey，安全模式下请一定要填写！！！
 
     /**
      * 日志配置
