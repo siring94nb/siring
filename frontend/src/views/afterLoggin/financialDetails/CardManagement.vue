@@ -164,7 +164,7 @@ export default {
       if(aDiv.length != 0){
         if (this.checked[num] === true) {
           aDiv[num].classList.add("active");
-          console.log(classList);
+          // console.log(classList);
           for (let i = 0; i < this.checked.length; i++) {
             if (i !== num) {
               this.checked[i] = false;

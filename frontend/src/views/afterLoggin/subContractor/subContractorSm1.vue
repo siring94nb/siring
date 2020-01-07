@@ -37,7 +37,7 @@
           <!-- 分包项目视窗 -->
           <div class="fengbaoshang" :style="{'display':fbxm}">
             <div>分包项目</div>
-            <div>
+            <!-- <div>
               <div class="fengbaoName">
                 <span>
                   项目名称：
@@ -55,6 +55,124 @@
               <div>
                 <div>功能需求：</div>
                 <div v-html="shichuang[0].con"></div>
+              </div>
+              <div style="display: flex; justify-content:space-between">
+                <div style="color: #FF9900;">详情</div>
+                <div>
+                  <span
+                    style="padding-right:30px;color: #66CC00; cursor:pointer"
+                    @click.stop="ShowHidden"
+                  >我要接单</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px;"
+                    v-if="lastPage==1"
+                    @click="GetSubView(lastPage-1)"
+                  >上一条</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px; cursor: pointer;"
+                    @click="GetSubView(lastPage+1)"
+                  >下一条</span>
+                </div>
+              </div>
+              <div class="orderReceiving" ref="orderReceiving" style="display:none">
+                <div class="triangle"></div>
+                <div>
+                  <div>
+                    <span>请确认联系方式</span>
+                    <span style="float:right">
+                      <i class="el-icon-edit" @click.stop="ShowHidden"></i>
+                    </span>
+                  </div>
+                  <div>
+                    <div>
+                      <span>
+                        <span>手机号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('phone')">
+                          <input
+                            type="text"
+                            value
+                            v-model="phone"
+                            disabled="true"
+                            ref="phone"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('phone')"
+                        >确定</span>
+                        <span class="ac active" @click.stop="firstChoice('phone')">首选</span>
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        <span>微信号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('WXnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="WXnum"
+                            disabled="true"
+                            ref="WXnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('WXnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('WXnum')">首选</span>
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        <span>QQ号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('QQnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="QQnum"
+                            disabled="true"
+                            ref="QQnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('QQnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('QQnum')">首选</span>
+                      </span>
+                    </div>
+                  </div>
+                  <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
+                </div>
+              </div>
+            </div> -->
+            <div v-for="(item,index) in shichuang" :key="index">
+              <div class="fengbaoName">
+                <span>
+                  项目名称：
+                  <span>{{item.name}}</span>
+                </span>
+                <span>
+                  酬金：
+                  <span style="color:#ff0000">￥100000</span>
+                </span>
+                <span>
+                  预计时间：
+                  <span>{{item.created_at}}</span>
+                </span>
+              </div>
+              <div>
+                <div>功能需求：</div>
+                <div v-html="item.con"></div>
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
@@ -153,7 +271,7 @@
                       </span>
                     </div>
                   </div>
-                  <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
+                  <button class="confirmBtn" @click="jiedan(item.id)">确定，我要接单联系我吧！</button>
                 </div>
               </div>
             </div>

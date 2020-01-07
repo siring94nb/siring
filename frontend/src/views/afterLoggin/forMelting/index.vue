@@ -197,7 +197,7 @@ export default {
         start_time:startTime,
         end_time:endTime,
       }
-      consoleList(params).then(res=>{
+      consoleList().then(res=>{
         let {data,code} = res;
         if(code == 1){
           this.tableData = data.data;

@@ -234,7 +234,7 @@ export default {
         console.log(res);
         if (code == 1) {
           this.list = data.data;
-          this.total = total;
+          this.total = data.total;
           console.log(data.data);
         }
       });

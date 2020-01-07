@@ -423,7 +423,8 @@ export default {
     },
     // 上传成功回调
      handleAvatarSuccess1(res, file) {
-      // console.log(res)
+      console.log(file)
+      console.log(res);
       this.resume = res.id
     },
     SetMeal() {

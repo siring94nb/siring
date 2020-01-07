@@ -544,6 +544,30 @@ export const manuscriptList = data => {
     return axios.post(`${base_url}api/promotion/manuscript_list`,  qs.stringify(data)).then(res => res.data);
 }
 /**
+ * ai推广运营订单详情（参数 order_id→订单id）
+ */
+export const promotionDetails = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_details`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai推广运营订单修改
+ */
+export const promotionUpd = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_upd`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 确认状态
+ */
+export const promotionStatus = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_status`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai修改稿件
+ */
+export const manuscriptsUpd = data => {
+    return axios.post(`${base_url}api/Promotion/manuscripts_upd`,  qs.stringify(data)).then(res => res.data);
+}
+/**
  * 我的投融列表
  */
 export const consoleList = data => {
