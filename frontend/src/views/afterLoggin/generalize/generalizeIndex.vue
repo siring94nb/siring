@@ -160,6 +160,7 @@ export default {
   methods: {
     // 获取列表数据
     xuanze(e){
+      console.log(e)
       let xuanze = e.target.innerText
       if(xuanze == "全部"){
         this.xuanzeValue = ""
@@ -170,6 +171,7 @@ export default {
       }
     },
     userMessage(){
+      console.log(this.selectValue);
       if(this.value1 != ""){
         var startTime = this.value1[0].getTime() || ""
         var endTime = this.value1[1].getTime() || ""
@@ -181,7 +183,7 @@ export default {
         start_time:startTime,
         end_time:endTime,
       }
-      manuscriptList(params).then(res=>{
+      manuscriptList().then(res=>{
         let {data,code} = res;
         console.log(res)
         console.log(data)

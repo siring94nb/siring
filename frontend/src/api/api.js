@@ -555,4 +555,16 @@ export const consoleList = data => {
 export const collectX = data => {
     return axios.post(`${base_url}api/user/collect`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 小程序SaaS套餐列表（参数type→分类id title→模糊搜索名 page→分页参数，默认第一页）
+ */
+export const saasList = data => {
+    return axios.post(`${base_url}api/Saas/saas_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS套餐列表取消订单（参数 order_id→订单id）
+ */
+export const saasCancel = data => {
+    return axios.post(`${base_url}api/Saas/saas_cancel`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload
