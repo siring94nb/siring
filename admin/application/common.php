@@ -168,6 +168,7 @@ function sendMessage($content,$mobile)
     $data = curl_exec($curl);
     // 关闭连接
     curl_close($curl);
+
     return $data;
 }
 
