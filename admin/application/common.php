@@ -149,42 +149,65 @@ function returnArray($data){
  * @param string $mobile   手机号
  * @return 成功时返回，其他抛异常
  */
-
 function sendMessage($content,$mobile)
 {
-    // $content = '【智慧茶仓】短信内容';//带签名的短息内容
-    // $mobile = '18309224319';//手机号
-    $url = "http://117.48.217.182:8860/sendSms";//请求URL
     $api_code = "240001";//对接协议中的API代码
     $api_secret = "4SFE6PW1GL";//对接协议中的API密码
-    $sign = md5($content.$api_secret);//md加密后短信内容+API密码 获得签名
-    $bodys = [
-        'cust_code'=>$api_code,
-        'content' => $content,
-        'destMobiles' => $mobile,
-        'sign' => $sign,
-    ];
-    $data_string = json_encode($bodys);
-    if (!function_exists('curl_init'))
-    {
-        return '';
-    }
-    //设置url
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    $extno = 1069012345;
+    $con = urlencode($content);
+    $sign = md5($api_secret.$extno.$con.$mobile);//md加密后短信内容+API密码
 
-    curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: text/html'));// 文本提交方式，必须声明请求头
-    $data = curl_exec($ch);
-    if($data === false){
-        var_dump(curl_error($ch));
-    }else{
-        curl_close($ch);
-    }
+    $url = "http://host:port/sms?action=send&account=$api_code&password=$api_secret&mobile=$mobile&content=$con&extno=$extno&rt=json";//请求URL
+
+    $curl = curl_init();
+    // 设置url路径
+    curl_setopt($curl, CURLOPT_URL, $url);
+    // 将 curl_exec()获取的信息以文件流的形式返回，而不是直接输出。
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true) ;
+    // 在启用 CURLOPT_RETURNTRANSFER 时候将获取数据返回
+    curl_setopt($curl, CURLOPT_BINARYTRANSFER, true) ;
+    // 执行
+    $data = curl_exec($curl);
+    // 关闭连接
+    curl_close($curl);
     return $data;
 }
+
+//function sendMessage($content,$mobile)
+//{
+//    // $content = '【智慧茶仓】短信内容';//带签名的短息内容
+//    // $mobile = '18309224319';//手机号
+//    $url = "http://117.48.217.182:8860/sendSms";//请求URL
+//    $api_code = "240001";//对接协议中的API代码
+//    $api_secret = "4SFE6PW1GL";//对接协议中的API密码
+//    $sign = md5($content.$api_secret);//md加密后短信内容+API密码 获得签名
+//    $bodys = [
+//        'cust_code'=>$api_code,
+//        'content' => $content,
+//        'destMobiles' => $mobile,
+//        'sign' => $sign,
+//    ];
+//    $data_string = json_encode($bodys);
+//    if (!function_exists('curl_init'))
+//    {
+//        return '';
+//    }
+//    //设置url
+//    $ch = curl_init();
+//    curl_setopt($ch, CURLOPT_URL, $url);
+//    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+//    curl_setopt($ch, CURLOPT_POST, 1);
+//    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+//
+//    curl_setopt($ch,CURLOPT_HTTPHEADER,array('Content-Type: text/html'));// 文本提交方式，必须声明请求头
+//    $data = curl_exec($ch);
+//    if($data === false){
+//        var_dump(curl_error($ch));
+//    }else{
+//        curl_close($ch);
+//    }
+//    return $data;
+//}
 
 
 /**
