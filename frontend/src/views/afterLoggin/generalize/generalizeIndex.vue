@@ -59,7 +59,7 @@
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
           <el-table-column prop="no" label="稿件编号" width="140" align="center"></el-table-column>
-          <el-table-column prop="title" label="标题" width="200" align="center"></el-table-column>
+          <el-table-column prop="name" label="标题" width="200" align="center"></el-table-column>
           <el-table-column prop="role_type" label="稿件类型" width="170" align="center">
             <template slot-scope="scope">
                 <div v-if="scope.row.role_type==1">委托代写</div>

@@ -59,31 +59,34 @@
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
           <el-table-column prop="no" label="序列号" width="73" align="center"></el-table-column>
-          <el-table-column prop="type" label="订单类型" width="80" align="center">
+          <el-table-column prop="model_type" label="订单类型" width="80" align="center">
             <template slot-scope="scope">
-                <div v-if="scope.row.type==1">融资</div>
-                <div v-if="scope.row.type!=1">投资</div>
+                <div v-if="scope.row.model_type==1">融资</div>
+                <div v-if="scope.row.model_type!=1">投资</div>
             </template>
           </el-table-column>
-          <el-table-column prop="title" label="项目名称" width="97" align="center"></el-table-column>
-          <el-table-column prop="name" label="行业领域" width="90" align="center"></el-table-column>
-          <el-table-column prop="bright" label="项目亮点" width="130" align="center"></el-table-column>
-          <el-table-column prop="bright" label="打赏金额" width="80" align="center"></el-table-column>
+          <el-table-column prop="name" label="项目名称" width="97" align="center"></el-table-column>
+          <el-table-column prop="industry_field" label="行业领域" width="90" align="center"></el-table-column>
+          <el-table-column prop="resume" label="项目亮点" width="130" align="center"></el-table-column>
+          <el-table-column prop="surplus" label="打赏金额" width="80" align="center"></el-table-column>
           <el-table-column prop="bright" label="平台顾问最新回复内容" width="160" align="center"></el-table-column>
-          <el-table-column prop="bright" label="回复时间" width="140" align="center"></el-table-column>
+          <el-table-column prop="created_at" label="回复时间" width="140" align="center"></el-table-column>
           <el-table-column prop="bright" label="投融人最新回复内容" width="150" align="center"></el-table-column>
-          <el-table-column prop="bright" label="回复时间" width="140" align="center"></el-table-column>
-          <el-table-column width="260" label="操作" align="center">
-            <template>
+          <el-table-column prop="created_at" label="回复时间" width="140" align="center"></el-table-column>
+          <el-table-column prop="need_status" width="260" label="操作" align="center">
+            <template slot-scope="scope">
               <div style="display:flex;align-items:center; justify-content: space-around;">
-                <div>
+                <!-- <div>
                   <span class="spanDefault"  style="background:rgb(22,155,213)" v-if="false">等待审核</span>
                   <span class="spanDefault"  style="background:rgb(102,153,0)"  v-if="true">通过预览</span>
                   <span class="spanDefault" style="background:rgb(161,161,161)"  v-if="false">审核不通过</span>
-                </div>
+                </div> -->
                 <div>
-                  <span class="spanDefault spanXuqiu" v-if="true">线上沟通...</span>
-                  <span class="spanDefault"  style="background:rgb(102,153,0)"  v-if="false">线下见面会...</span>
+                  <span class="spanDefault spanXuqiu" v-if="scope.row.type==1">线上沟通...</span>
+                  <span class="spanDefault"  style="background:rgb(102,153,0)"  v-if="scope.row.type==2">线下见面会...</span>
+                  <span class="spanDefault"  style="background:rgb(22,155,213)" v-if="scope.row.type==3">合同保管</span>
+                  <span class="spanDefault"  style="background:rgb(102,153,0)"  v-if="scope.row.type==4">委托监视</span>
+                  <span class="spanDefault" style="background:rgb(161,161,161)"  v-if="scope.row.type==5">已放弃</span>
                 </div>
                 <div>
                   <span style="color:#21a5fa">删除</span>
