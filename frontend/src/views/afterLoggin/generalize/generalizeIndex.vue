@@ -89,7 +89,7 @@
           <el-button type="button" style="margin-right:15px;">确定</el-button>
            <el-pagination
             background
-              @current-change="current_change"
+              @current-change="handleCurrentChange"
               :page-sizes="[10]"
               :page-size="pagesize"
               layout="total, sizes, prev, pager, next, jumper"
@@ -98,6 +98,7 @@
         </div>
       </div>
     </div>
+    <span @click="setorderId(1)">流程页</span>
   </div>
 </template>
 <script>
@@ -158,10 +159,16 @@ export default {
   },
 
   methods: {
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     // 获取列表数据
     xuanze(e){
       console.log(e)
-      let xuanze = e.target.innerText
+      let xuanze = e
       if(xuanze == "全部"){
         this.xuanzeValue = ""
         this.userMessage();
@@ -183,15 +190,40 @@ export default {
         start_time:startTime,
         end_time:endTime,
       }
-      manuscriptList().then(res=>{
-        let {data,code} = res;
+      manuscriptList(params).then(res=>{
+        let {data,code,msg} = res;
         console.log(res)
         console.log(data)
         if(code == 1){
           this.tableData =data.data
         }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
       })
-    }
+    },
+    // 路由传递id
+    setorderId(str){
+      this.$router.push({
+        name:`flowIndex`,
+        params:{
+          orderId:36,
+          strValue:str
+        }
+      })
+    },
+    handleCurrentChange(cpage) {
+      this.currpage = cpage;
+    },
+    handleSizeChange(psize) {
+      this.pagesize = psize;
+    },
   }
 };
 </script>

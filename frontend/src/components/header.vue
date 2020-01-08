@@ -341,6 +341,7 @@ export default {
     this.isLogin();
     this.ceshi();
     this.getGetProvince();
+    this.guoqi();
   },
   methods: {
     isLogin() {
@@ -457,6 +458,14 @@ export default {
         this.dialogVisible = true;
         this.isRegister = 1
         this.dataObj.invit = yqm;
+      }
+    },
+    //登录过期，弹出登录框
+    guoqi(){
+      let roPath = this.$route.params.isRegister;
+      if(roPath == 2){
+        this.dialogVisible = true;
+        this.isRegister = 2
       }
     },
     // 城市改变，获取相应的二级城市等

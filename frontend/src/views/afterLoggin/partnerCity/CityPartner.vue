@@ -347,12 +347,17 @@ export default {
       }
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(res);
-        console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
           this.list = data.data;
-          console.log(this.list);
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       });
     },
