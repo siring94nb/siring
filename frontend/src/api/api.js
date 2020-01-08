@@ -574,6 +574,18 @@ export const consoleList = data => {
     return axios.post(`${base_url}api/Investment/console_list`,  qs.stringify(data)).then(res => res.data);
 }
 /**
+ * 投融界（状态改变）
+ */
+export const investmentStatus = data => {
+    return axios.post(`${base_url}api/Investment/investment_status`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融界（会场介绍）
+ */
+export const Activities = data => {
+    return axios.post(`${base_url}api/Investment/activities`,  qs.stringify(data)).then(res => res.data);
+}
+/**
  * 收藏/关注接口（参数 ---- pid→产品id（int） type→1为软件定制商品收藏，2为投融界关注   user_id→用户id（int） 三个参数全为必须）
  */
 export const collectX = data => {
@@ -590,5 +602,17 @@ export const saasList = data => {
  */
 export const saasCancel = data => {
     return axios.post(`${base_url}api/Saas/saas_cancel`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户留言列表（参数 pid→产品id uid→用户id）
+ */
+export const msgList = data => {
+    return axios.post(`${base_url}api/Chat/msg_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户留言
+ */
+export const addMessage = data => {
+    return axios.post(`${base_url}api/Chat/add_message`,  qs.stringify(data)).then(res => res.data);
 }
 // https://manage.siring.com.cn/api/file/qn_upload

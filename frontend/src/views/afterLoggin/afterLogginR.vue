@@ -100,7 +100,7 @@ export default {
     },
     // 获取用户信息
     userMessage() {
-      console.log( "0106");
+      console.log("0106");
       const userId = sessionStorage.getItem("user_id");
       const params = {
         user_id: userId
@@ -136,40 +136,40 @@ export default {
       height: 123px;
     }
   }
-  .biaozhi{
+  .biaozhi {
     margin-left: 85px;
     margin-right: 20px;
-    i{
+    i {
       width: 80px;
       height: 23px;
-      color: rgb(252,193,45);
+      color: rgb(252, 193, 45);
       font-size: 20px;
     }
-    img{
-      width: 40px; 
+    img {
+      width: 40px;
       height: 40px;
-      padding: 10px 0 0 20px; 
+      padding: 10px 0 0 20px;
       padding-top: 10px;
     }
   }
-  .account{
+  .account {
     margin-right: 90px;
     width: 280px;
-    li{
+    li {
       padding-bottom: 20px;
-      >span{
+      > span {
         font-size: 20px;
-        &:nth-of-type(1){
+        &:nth-of-type(1) {
           display: inline-block;
           width: 120px;
           color: #949494;
           padding-right: 10px;
         }
       }
-      &:nth-of-type(2){
-        span{
-          &:nth-of-type(2){
-            background: rgb(204,235,253);
+      &:nth-of-type(2) {
+        span {
+          &:nth-of-type(2) {
+            background: rgb(204, 235, 253);
             color: #0766bc;
             padding: 5px 10px;
             border-radius: 5px;
@@ -177,9 +177,9 @@ export default {
           }
         }
       }
-      &:nth-of-type(3){
-        span{
-          &:nth-of-type(3){
+      &:nth-of-type(3) {
+        span {
+          &:nth-of-type(3) {
             font-size: 14px;
             color: #bcbcbc;
             font-weight: 700;
@@ -192,15 +192,15 @@ export default {
       }
     }
   }
-  .anquan{
-    >div{
+  .anquan {
+    > div {
       text-align: center;
-      span{
-        &:nth-of-type(1){
+      span {
+        &:nth-of-type(1) {
           font-size: 16px;
           color: #bcbcbc;
         }
-        &:nth-of-type(2){
+        &:nth-of-type(2) {
           font-size: 18px;
           color: #669900;
           font-weight: 700;
@@ -209,34 +209,34 @@ export default {
     }
   }
 }
-.yue{
-    padding: 50px;
-    margin: 10px 0 0 10px;
-    background: #ffffff;
-    display: flex;
-    div:nth-of-type(1){
-      margin-right: 45px;
-      width: 200px;
-    }
-    i{
-      font-size: 32px;
-      color:rgb(216,30,6);
-      padding-right: 10px;
-    }
-    span{
-      color:rgb(216,30,6);
-      font-size: 20px;
-    }
-    .tx{
-      color: #0889f5;
-      border:1px solid #0889f5;
-      padding: 8px 50px;
-      border-radius: 5px;
-      width: 40px;
-      font-weight: 700;
-    }
-    .yueBox{
-      padding-bottom: 50px;
-    }
+.yue {
+  padding: 50px;
+  margin: 10px 0 0 10px;
+  background: #ffffff;
+  display: flex;
+  div:nth-of-type(1) {
+    margin-right: 45px;
+    width: 200px;
+  }
+  i {
+    font-size: 32px;
+    color: rgb(216, 30, 6);
+    padding-right: 10px;
+  }
+  span {
+    color: rgb(216, 30, 6);
+    font-size: 20px;
+  }
+  .tx {
+    color: #0889f5;
+    border: 1px solid #0889f5;
+    padding: 8px 50px;
+    border-radius: 5px;
+    width: 40px;
+    font-weight: 700;
+  }
+  .yueBox {
+    padding-bottom: 50px;
+  }
 }
 </style>

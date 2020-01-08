@@ -114,6 +114,7 @@
         </div>
       </div>
     </div>
+    <div @click.stop="setorderId(1,40)">测试流程跳转</div>
   </div>
 </template>
 <script>
@@ -203,7 +204,17 @@ export default {
           this.tableData = data.data;
         }
       })
-    }
+    },
+    // 跳转流程
+    setorderId(str,id){
+      this.$router.push({
+        name:`flowIndex1`,
+        params:{
+          orderId:id,
+          strValue:str,
+        }
+      })
+    },
   }
 };
 </script>

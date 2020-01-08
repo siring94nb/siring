@@ -155,7 +155,7 @@ export default {
         leixing= rows[index].deshi
         id= rows[index].id
       }else{
-        leixing ="我要融资"
+        leixing =rows[index].deshi
         id = this.tableData[0].id
       }
       this.$router.push({

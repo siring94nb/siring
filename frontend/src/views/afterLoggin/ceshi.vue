@@ -9,15 +9,22 @@
   <el-button size="small" type="primary">点击上传</el-button>
   <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
 </el-upload>
+<div class="liuyanBox">
+  <liuyan :pid = pid :uid=uid></liuyan>
+</div>
+    
   </div>
 </template>
 <script>
 import VDistpicker from "v-distpicker";
+import liuyan from "../../components/liuyan/leaveAmessage"
 import { GetRoleCenter, CityTotal, CityPartner, Qnupload } from "@/api/api";
 export default {
   data() {
       return {
-        imageUrl: ''
+        imageUrl: '',
+        pid:67,
+        uid:sessionStorage.getItem("user_id")
       };
     },
     methods: {
@@ -36,10 +43,17 @@ export default {
         }
         return isJPG && isLt2M;
       }
+    },
+    components: {
+      liuyan
     }
 };
 </script>
 <style lang="scss" scoped>
+.liuyanBox{
+  width: 1000px;
+  margin-left: 50px;
+}
 .avatar-uploader .el-upload {
     border: 1px dashed #d9d9d9;
     border-radius: 6px;
