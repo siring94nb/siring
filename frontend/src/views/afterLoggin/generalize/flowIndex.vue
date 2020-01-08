@@ -24,7 +24,7 @@
       <div>
         <!-- 流程标签 -->
         <div class="liuchengBiaozhi">
-          <div class="liuchnegBox">
+          <div class="liuchnegBox" v-if="leixing==1">
             <div :class="{'hFagao':strValue !=1,'qFagao':strValue ==1}">我要发稿</div>
             <div :class="{'xuqiuH':strValue !=1,'xuqiu':strValue == 1}">
               <span v-if="strValue ==1">等待需求确认</span>
@@ -33,7 +33,7 @@
             </div>
             <img :src="jiantouImgUrl" alt v-if="strValue ==1" />
           </div>
-          <div class="henggang">
+          <div class="henggang" v-if="leixing==1">
             <div :class="{'success':strValue>=2,'default':strValue==1}"></div>
             <div :class="{'success':strValue>=4,'default':strValue<=3}"></div>
           </div>
@@ -149,21 +149,6 @@
                       class="el-upload__tip"
                     >最多一个上传一个文件，多个文件可使用压缩格式；支持txt、ppt、pptx、doc、docx、xls、xlsx、pdf、png、jpg、jpeg，RAR，ZIP附件大小不超过50M。</div>
                   </el-upload>
-                  <!-- <el-upload
-                      name="image"
-                      class="upload-demo"
-                      :action="aUrl"
-                      :on-success="handleAvatarSuccess"
-                      :before-upload="beforeAvatarUpload"
-                    >
-                      <el-button size="small" type="primary">点击上传</el-button>
-                    </el-upload> -->
-                  <!-- <div>
-                    <a :href="xieyiArr.url">
-                      <i class="iconfont icon-wenjian" style="font-size:36px;color:rgb(68,160,255)"></i>
-                    </a>
-                    <div style="margin-top:10px; color:#666666;font-size:13px;">最多一个上传一个文件，多个文件可使用压缩格式；支持txt、ppt、pptx、doc、docx、xls、xlsx、pdf、png、jpg、jpeg，RAR，ZIP附件大小不超过50M。</div>
-                  </div>-->
                 </div>
               </div>
             </div>
@@ -258,14 +243,7 @@
       </div>
       <!-- 平台交互，即客服 -->
       <div class="service">
-        <div class="boxTitle">平台顾问信息互动</div>
-        <div class="serviceContent">互动内容显示区域</div>
-        <!-- 信息发送按钮，输入框等 -->
-        <div class="btnValueBox">
-          <input v-model="xiaoxiContent" />
-          <i class="el-icon-circle-plus-outline"></i>
-          <button class="wuButton">发送</button>
-        </div>
+        <liuyan :pid = pid :uid=uid></liuyan>
       </div>
     </div>
     <div class="tijiaoBox">
@@ -274,7 +252,7 @@
         <button class="xiugai" @click.stop="xiugaigaojian">我要修改稿件</button>
         <div class="kongzhiBox">
           <div class="xiazai"><a :href="xieyiArr.url">下载</a></div>
-          <div class="shangchuan">上传</div>
+          <div class="shangchuan" @click.stop="setmanuscriptsUpd">上传</div>
         </div>
       </div>
 
@@ -285,6 +263,7 @@
 </template>
 <script>
 import { promotionDetails, promotionUpd, promotionStatus,manuscriptsUpd } from "@/api/api";
+import liuyan from "../../../components/liuyan/leaveAmessage"
 export default {
   data() {
     return {
@@ -312,6 +291,9 @@ export default {
       xieyiArr: [],
       dis:false,//修改稿件按钮显示隐藏
       url:"",//上传获取链接
+      leixing:"",//判断是自撰稿件还是代写稿件
+      pid:"",
+      uid:''
     };
   },
   mounted() {
@@ -321,6 +303,9 @@ export default {
   methods: {
     init() {
       this.strValue = this.$route.params.strValue;
+      this.leixing = this.$route.params.leixing;
+      this.pid = this.$route.params.orderId;
+      this.uid = sessionStorage.getItem("user_id")
     },
     showMsg(msg, code) {
       this.$message({
@@ -372,8 +357,9 @@ export default {
       };
       promotionStatus(params).then(res => {
         let { code, msg } = res;
-        if (code == 1) {
+        if (code == 1 && this.strValue<5) {
           this.showMsg(msg, code);
+          this.strValue = this.strValue+1;
         }
       });
     },
@@ -406,6 +392,9 @@ export default {
       console.log(res.data.filePath)
       this.url = res.data.filePath
     }
+  },
+  components: {
+      liuyan
   }
 };
 </script>

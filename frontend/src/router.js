@@ -339,6 +339,14 @@ export default new Router({
             component: () =>
                 import('@/views/afterLoggin/forMelting/index'),
         },
+        {   //投融界推广流程
+            path: "/flowIndex1",
+            name: "flowIndex1",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/forMelting/flowIndex1'),
+        },
         {//中止项目
             path: "/zhongzhi",
             name: "zhongzhi",

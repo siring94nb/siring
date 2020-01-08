@@ -59,7 +59,7 @@
         >
           <el-table-column type="selection" width="59" align="center"></el-table-column>
           <el-table-column prop="no" label="稿件编号" width="140" align="center"></el-table-column>
-          <el-table-column prop="title" label="标题" width="200" align="center"></el-table-column>
+          <el-table-column prop="name" label="标题" width="200" align="center"></el-table-column>
           <el-table-column prop="role_type" label="稿件类型" width="170" align="center">
             <template slot-scope="scope">
                 <div v-if="scope.row.role_type==1">委托代写</div>
@@ -70,9 +70,13 @@
           <el-table-column prop="money" label="稿件费用" width="180" align="center"></el-table-column>
           <el-table-column prop="money" label="总计费用" width="180" align="center"></el-table-column>
           <el-table-column prop="created_at" label="创建时间" width="180" align="center"></el-table-column>
-          <el-table-column width="150" label="操作" align="center">
-            <template>
-              <span class="spanDefault spanXuqiu">需求确认...</span>
+          <el-table-column prop="order_status" width="150" label="操作" align="center">
+            <template slot-scope="scope">
+              <span @click.stop="setorderId(scope.row.order_status,scope.row.id,scope.row.role_type)" class="spanDefault spanXuqiu" v-if="scope.row.order_status==1">需求确认...</span>
+              <span @click.stop="setorderId(scope.row.order_status,scope.row.id,scope.row.role_type)" class="spanDefault spanDaixie" v-if="scope.row.order_status==2">代写中...</span>
+              <span @click.stop="setorderId(scope.row.order_status,scope.row.id,scope.row.role_type)" class="spanDefault spanQuerengaojian" v-if="scope.row.order_status==3">确认稿件...</span>
+              <span @click.stop="setorderId(scope.row.order_status,scope.row.id,scope.row.role_type)" class="spanDefault spanZhitui" v-if="scope.row.order_status==4">智推中...</span>
+              <span @click.stop="setorderId(scope.row.order_status,scope.row.id,scope.row.role_type)" class="spanDefault spanWancheng" v-if="scope.row.order_status==5">智推完成...</span>
             </template>
           </el-table-column>
         </el-table>
@@ -98,7 +102,6 @@
         </div>
       </div>
     </div>
-    <span @click="setorderId(1)">流程页</span>
   </div>
 </template>
 <script>
@@ -196,6 +199,9 @@ export default {
         console.log(data)
         if(code == 1){
           this.tableData =data.data
+          this.currentPage = data.current_page
+          this.pagesize = data.per_page
+          this.total = data.total
         }
         // else if(code == 3){
         //   this.showMsg(msg,code);
@@ -209,12 +215,13 @@ export default {
       })
     },
     // 路由传递id
-    setorderId(str){
+    setorderId(str,id,leixing){
       this.$router.push({
         name:`flowIndex`,
         params:{
-          orderId:36,
-          strValue:str
+          orderId:id,
+          strValue:str,
+          leixing:leixing
         }
       })
     },
@@ -274,6 +281,18 @@ export default {
   }
   .spanXuqiu {
     background: #ff0000;
+  }
+  .spanDaixie{
+    background: rgb(102,153,0);
+  }
+  .spanQuerengaojian {
+    background: rgb(0,51,255);
+  }
+  .spanZhitui {
+    background: rgb(171,147,48);
+  }
+  .spanWancheng {
+    background: rgb(134,134,134);
   }
   // 分页表格分页部分
   .pagingTabBottom {
