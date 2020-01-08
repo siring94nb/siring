@@ -992,6 +992,46 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
+    //订单列表 - 推广运营订单
+    Route::group('Promotion', [
+        'index' => [
+            'admin/Promotion/index',
+            ['method' => 'get']
+        ],
+        'detail'   => [
+            'admin/Promotion/detail',
+            ['method' => 'post']
+        ],//详情
+        'promotion_status'   => [
+            'admin/Promotion/promotion_status',
+            ['method' => 'post']
+        ],//确认状态
+        'promotion_upd'   => [
+            'admin/Promotion/promotion_upd',
+            ['method' => 'post']
+        ],//上传稿件
+    ], ['after_behavior' => $afterBehavior]);
+
+    //订单列表 - 投融界订单
+    Route::group('Investment', [
+        'index' => [
+            'admin/Investment/index',
+            ['method' => 'get']
+        ],
+        'detail'   => [
+            'admin/Investment/detail',
+            ['method' => 'post']
+        ],//详情
+        'upd'   => [
+            'admin/Investment/upd',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Investment/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
 });
 
 //<!--
