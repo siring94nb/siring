@@ -52,7 +52,7 @@ class User extends Base
         $output = sendMessage($content,$mobile);
         $data = json_decode($output,true);
 
-        return $data['status'] == 0  ? returnJson(1,'发送成功',$data) : returnJson(0,'发送失败');
+        return $data['status'] == 0  ? returnJson(1,'发送成功') : returnJson(0,'发送失败');
     }
 
     /**

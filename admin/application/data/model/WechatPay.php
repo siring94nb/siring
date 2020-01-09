@@ -65,4 +65,44 @@ class WechatPay extends Model
         }
 
     }
+
+
+    /**
+     * 微信消息推送
+     * @param $first
+     * @param $openId
+     * @param $keyword1
+     * @param $keyword2
+     * @param $keyword3
+     * @param $keyword4
+     * @return bool
+     */
+    public function push_message($first,$openId,$keyword1,$keyword2,$keyword3,$keyword4){
+
+        //初始化SDK相关配置
+        $options = config('wechat');
+
+        $app = new Application($options);
+        $notice = $app->notice;
+
+        $templateId = 'aJ5KLgWbB68Nz8A0XLdC8u3BnJ5tp7xdz_ALcbaTutQ';
+        $url = 'http://fy.anhuivision.com/api.php/Wx/wx_accredit'; // 点击到达的页面url
+        $data = array(
+            "first"  => $first,
+            "keyword1"   => $keyword1,
+            "keyword2"  => $keyword2,
+            "keyword3"  => $keyword3,
+            "keyword4"  => $keyword4,
+            "remark" => "具体内容请前往PC端查看！感谢你的使用",
+        );
+
+        $result = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openId)->send();
+        $result_arr = json_decode($result);
+
+        if(!empty($result_arr) && $result_arr->errmsg == "ok"){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
