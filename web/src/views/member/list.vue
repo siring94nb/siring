@@ -401,6 +401,7 @@
             }
         },
         mounted () {
+            let vm = this;
             // this.UploadAction = config.front_url+'api/upload';
             // this.uploadList = this.$refs.upload.fileList;
             this.UploadAction = config.front_url+'file/qn_upload';
