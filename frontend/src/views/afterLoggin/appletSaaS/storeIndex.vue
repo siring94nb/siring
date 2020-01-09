@@ -61,7 +61,7 @@
             <div>
               <el-table
                 ref="multipleTable"
-                :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                :data="list"
                 tooltip-effect="dark"
                 border
                 style="width: 98.3%"
@@ -86,11 +86,11 @@
                 <el-table-column prop="end_time" label="套餐到期时间" width="200" align="center"></el-table-column>
                 <el-table-column prop="payment" label="操作" width="165" align="center">
                   <template slot-scope="scope">
-                    <span v-if="scope.row.payment == 1" @click="dialogVisible = true,str='汇款未到账',orderId = scope.row.id ">未到账</span>
-                    <span v-if="scope.row.payment == 2" @click="dialogVisible = true,str='待付款',orderId = scope.row.id ">已到账</span>
-                    <span v-if="scope.row.payment == 3" @click="dialogVisible = true,str='汇款待审核'">汇款待审核</span>
-                    <span v-if="scope.row.payment == 4" @click="dialogVisible = true,str='汇款未到账'">汇款未到账</span>
-                    <span v-if="scope.row.payment == 4" @click="dialogVisible = true,str='待付款',orderId = scope.row.id ">汇款已到账</span>
+                    <span class="default" v-if="scope.row.payment == 1" @click="dialogVisible = true,str='汇款未到账',orderId = scope.row.id ">未到账</span>
+                    <span class="default" style="background:rgb(102,153,0)" v-if="scope.row.payment == 2" @click="dialogVisible = true,str='待付款',orderId = scope.row.id ">已到账</span>
+                    <span class="default" v-if="scope.row.payment == 3" @click="dialogVisible = true,str='汇款待审核'">汇款待审核</span>
+                    <span class="default" v-if="scope.row.payment == 4" @click="dialogVisible = true,str='汇款未到账'">汇款未到账</span>
+                    <span class="default" v-if="scope.row.payment == 4" @click="dialogVisible = true,str='待付款',orderId = scope.row.id ">汇款已到账</span>
                     <span
                       class="default"
                       style="background:rgb(204,0,204)"
@@ -154,13 +154,13 @@
         <div v-if="str == '汇款未到账'">
           <div  style="color:#363636;font-size:30px;font-weight: 700;margin-bottom:150px;">温馨提示：</div>
           <div style="color:#666;font-size:22px;margin-bottom:150px;">款项未到帐，请自检确认，如需帮助请联系客服</div>
-          <div><button style="font-size:15px;color:#ffffff;background:rgb(201,201,201);border:1px solid rgb(201,201,201);padding:10px 80px;">取消订单</button><button style="font-size:15px;color:#ffffff;background:rgb(230,45,49);border:1px solid rgb230,45,49);padding:10px 80px;">订单再次支付</button></div>
+          <div><button style="font-size:15px;color:#ffffff;background:rgb(201,201,201);border:1px solid rgb(201,201,201);padding:10px 80px;" @click.stop="setsaasCancel">取消订单</button><button style="font-size:15px;color:#ffffff;background:rgb(230,45,49);border:1px solid rgb(230,45,49);padding:10px 80px;">订单再次支付</button></div>
         </div>
         <!-- 汇款到账审核通过，待付款 -->
         <div v-if="str == '待付款'">
           <div  style="color:#363636;font-size:30px;font-weight: 700;margin-bottom:150px;">温馨提示：</div>
           <div style="color:#666;font-size:22px;margin-bottom:150px;">请核对订单详情后，再次付款</div>
-          <div><button style="font-size:15px;color:#ffffff;background:rgb(201,201,201);border:1px solid rgb(201,201,201);padding:10px 80px;">取消订单</button><button style="font-size:15px;color:#ffffff;background:rgb(230,45,49);border:1px solid rgb230,45,49);padding:10px 80px;">订单再次支付</button></div>
+          <div><button style="font-size:15px;color:#ffffff;background:rgb(201,201,201);border:1px solid rgb(201,201,201);padding:10px 80px;" @click.stop="setsaasCancel">取消订单</button><button style="font-size:15px;color:#ffffff;background:rgb(230,45,49);border:1px solid rgb(230,45,49);padding:10px 80px;">订单再次支付</button></div>
         </div>
         <!-- 付款成功，店铺待开通 -->
         <div v-if="str == '待开通'">
@@ -200,7 +200,9 @@ export default {
         { id: 5, name: "线上已到账" }
       ],
       // 时间范围，返回值会是一个数组，两个值，初始时间与结束时间，获取通过.getTime()转时间戳
-      timeValue: "",
+      timeValue: undefined,
+      startTime:"",
+      endTime:'',
       list: [], //分页表格数据
       pagesize: 10,
       currpage: 1,
@@ -226,16 +228,39 @@ export default {
     // 分页表格切换
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.getsaasList();
     },
     // 列表数据
     getsaasList() {
-      saasList().then(res => {
+       if (this.timeValue != undefined && this.timeValue != null) {
+        // console.log(this.value);
+        this.startTime = this.timeValue[0].getTime();
+        this.endTime = this.timeValue[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+      let params = {
+        type:"",
+        title:this.nameId,
+        page:this.currpage
+      }
+      saasList(params).then(res => {
         let { data, code, msg } = res;
         console.log(res);
         if (code == 1) {
           this.list = data.data;
           this.total = data.total;
+          this.pagesize=data.per_page
           console.log(data.data);
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       });
     },

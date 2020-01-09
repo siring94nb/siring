@@ -56,7 +56,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" v-model="suoyin" />
-                  <button @click="gb();GetCityPartner()">搜索</button>
+                  <button @click="GetCityPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
@@ -71,7 +71,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -104,10 +104,10 @@
                     <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
                     <el-pagination
                       @current-change="handleCurrentChange"
-                      :current-page="DirectlyTo"
+                      :current-page="currpage"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
+                      :total="ltotal"
                     ></el-pagination>
                   </div>
                 </div>
@@ -118,7 +118,7 @@
             <div>
               <el-table
                 ref="multipleTable"
-                :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                :data="list1"
                 tooltip-effect="dark"
                 border
                 style="width: 98.3%"
@@ -149,10 +149,10 @@
                 <div>
                   <el-pagination
                     @current-change="handleCurrentChange"
-                    :current-page="DirectlyTo"
+                    :current-page="currpage"
                     :page-sizes="[pagesize]"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="list1.length"
+                    :total="total"
                   ></el-pagination>
                 </div>
               </div>
@@ -172,7 +172,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list2.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list2"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -193,6 +193,15 @@
                   </el-table-column>
                   <el-table-column prop="user_id" label="操作" width="160" align="center"></el-table-column>
                 </el-table>
+              </div>
+              <div style="display:flex;justify-content: center">
+                <el-pagination
+                  @current-change="handleCurrentChange"
+                  :current-page="currpage"
+                  :page-sizes="[pagesize]"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="total"
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
@@ -234,16 +243,20 @@ export default {
       ],
       // numArr:[],//与topList
       activeName: "first",
-      value: "",
+      value: undefined,
       // 邀请分页表格
       list: [],
       list1: [],
       list2: [],
       pagesize: 10,
       currpage: 1,
-      DirectlyTo: 1,
+      currpage: 1,
       dis: true,
-      suoyin: ""
+      suoyin: "",
+      startTime: "",
+      endTime: "",
+      type:1,
+      total:0
     };
   },
   components: {
@@ -254,36 +267,31 @@ export default {
     this.GetCityTotal();
     // 城市合伙人等列表数据
     this.GetCityPartner();
-    this.GetCityPartner1();
-    this.GetCityPartner2();
+    // this.GetCityPartner1();
+    // this.GetCityPartner2();
   },
   methods: {
-    gb() {
-      // 修改状态判断是否有索引条件
-      if (this.suoyin == "" && this.value == "") {
-        this.dis = true;
-      } else if (this.value == null && this.suoyin == "") {
-        this.dis = true;
-        this.value = "";
-      } else {
-        this.dis = false;
-      }
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
+    // gb() {
+    //   // 修改状态判断是否有索引条件
+    //   if (this.suoyin == "" && this.value == "") {
+    //     this.dis = true;
+    //   } else if (this.value == null && this.suoyin == "") {
+    //     this.dis = true;
+    //     this.value = "";
+    //   } else {
+    //     this.dis = false;
+    //   }
+    // },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.GetCityTotal;
     },
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
     // 获取城市数据及有效期数据
     RoleCenter() {
-      console.log(1227)
+      console.log(1227);
       const params = {
         type: 1
       };
@@ -295,13 +303,24 @@ export default {
         }
       });
     },
+    gbTime() {
+      console.log(this.value)
+      if (this.value != undefined && this.value != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+    },
     //获取城市合伙人数据
     GetCityTotal() {
       CityTotal().then(res => {
         let { data, msg } = res;
         if (data.code == 1) {
           const newArr = this.topList.map(item => {
-            item.num = data.data[item.num]; 
+            item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;
@@ -314,42 +333,33 @@ export default {
      *YbWylo
      */
     GetCityPartner() {
-      let params = {};
-      let times = this.value;
-      if (this.dis) {
-        params = {
-          type: 2
-        };
-      } else {
-        if (this.value == "") {
-          params = {
-            type: 2,
-            title: this.suoyin
-          };
-        } else if (this.suoyin == "" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            title: this.suoyin,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        }
-      }
+      this.gbTime();
+      let params = {
+        type: this.type,
+        title: this.suoyin,
+        start_time: this.startTime,
+        endTime: this.endTime,
+        page: this.currpage
+      };
+      console.log(params);
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
         if (code === 1) {
-          this.list = data.data;
+          if (this.activeName == "first") {
+            this.list = data.data;
+            console.log("first");
+          } else if ((this.activeName = "second")) {
+            this.list1 = data.data;
+            console.log("second");
+          } else {
+            this.list2 = data.data;
+            console.log(3333);
+          }
+          // this.list = data.data;
+          this.total = data.total;
+          this.pagesize = data.per_page;
+          this.currpage = data.current_page;
         }else if(code == 3){
           this.showMsg(msg,code);
           this.$router.push({
@@ -361,34 +371,34 @@ export default {
         }
       });
     },
-    GetCityPartner1() {
-      const params = {
-        type: 2
-      };
-      CityPartner(params).then(res => {
-        let { data, msg, code } = res;
-        console.log(data);
-        // this.showMsg(msg, code);
-        if (code === 1) {
-          this.list1 = data.data;
-          console.log(this.list1);
-        }
-      });
-    },
-    GetCityPartner2() {
-      const params = {
-        type: 3
-      };
-      CityPartner(params).then(res => {
-        let { data, msg, code } = res;
-        console.log(data);
-        // this.showMsg(msg, code);
-        if (code === 1) {
-          this.list2 = data.data;
-          console.log(this.list2);
-        }
-      });
-    },
+    // GetCityPartner1() {
+    //   const params = {
+    //     type: 2
+    //   };
+    //   CityPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     console.log(data);
+    //     // this.showMsg(msg, code);
+    //     if (code === 1) {
+    //       this.list1 = data.data;
+    //       console.log(this.list1);
+    //     }
+    //   });
+    // },
+    // GetCityPartner2() {
+    //   const params = {
+    //     type: 3
+    //   };
+    //   CityPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     console.log(data);
+    //     // this.showMsg(msg, code);
+    //     if (code === 1) {
+    //       this.list2 = data.data;
+    //       console.log(this.list2);
+    //     }
+    //   });
+    // },
     // 返回
     showMsg(msg, code) {
       this.$message({
@@ -402,10 +412,22 @@ export default {
       //监听切换状态-计划单
       if (val === "first") {
         this.title = "城市累积会员明细";
+        this.type = 1;
+        this.GetCityPartner();
       } else if (val === "second") {
         this.title = "我邀请的会员明细";
+        this.type = 2;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetCityPartner();
       } else {
         this.title = "合伙人入驻订单";
+        this.type = 3;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetCityPartner();
       }
     }
   }

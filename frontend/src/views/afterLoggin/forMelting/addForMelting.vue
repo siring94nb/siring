@@ -6,13 +6,24 @@
         <div style="margin-right:30px; width: 100px; padding:10px 0px; ">行业领域：</div>
         <div style="flexGrow: 1">
           <span :class="{'active': cid==''}" @click="gbBiaozhi('全部')">全部</span>
-          <span :class="{'active': cid==item.id}" v-for="(item,index) in IndustryField" :key="index+1" :id="item.id" @click="gbBiaozhi(item.id)">{{item.title}}</span>
+          <span
+            :class="{'active': cid==item.id}"
+            v-for="(item,index) in IndustryField"
+            :key="index+1"
+            :id="item.id"
+            @click="gbBiaozhi(item.id)"
+          >{{item.title}}</span>
           <span style="float: right;">更多&gt;&gt;</span>
         </div>
       </div>
       <div class="shaixuanBox">
         <div style="margin-left:250px">
-          <el-select @change="getindustryList" v-model="value" placeholder="请选择" style="width:120px; margin-right:30px;">
+          <el-select
+            @change="getindustryList"
+            v-model="value"
+            placeholder="请选择"
+            style="width:120px; margin-right:30px;"
+          >
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -39,7 +50,10 @@
         </div>
       </div>
       <div>
-        <el-table :data="tableData" style="width: 100%">
+        <el-table
+          :data="tableData"
+          style="width: 100%"
+        >
           <el-table-column prop="id" label="邀请码" width="200" align="center"></el-table-column>
           <el-table-column prop="name" label="项目名称" width="200" align="center"></el-table-column>
           <el-table-column prop="resume" label="行业领域" width="200" align="center"></el-table-column>
@@ -49,19 +63,34 @@
               <div class="caozuoBox">
                 <div @click="tiaozhuan(scope.$index, tableData)">{{scope.row.deshi}}</div>
                 <div class="guanzhu" @click="setcollectX(tableData,scope.$index)">
-                  <i class="iconfont icon-guanzhu1 iActive zhuanhuan"></i>
+                  <i class="iconfont icon-guanzhu1 zhuanhuan" v-if="scope.row.follow==0"></i>
+                  <i class="iconfont icon-guanzhu1 iActive zhuanhuan" v-if="scope.row.follow==1"></i>
+                  <!-- <i class="iconfont icon-guanzhu1 iActive   zhuanhuan" v-if="scope.row.follow==''">请登录</i> -->
                 </div>
               </div>
             </template>
           </el-table-column>
         </el-table>
       </div>
+      <div class="fenye">
+        <el-pagination
+          background
+          @current-change="currentChange"
+          :page-sizes="[10]"
+          :page-size="pagesize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+         
+        ></el-pagination>
+        <!--  @prev-click="prevClick"
+          @next-click="nextClick" -->
+      </div>
     </div>
   </div>
 </template>
 <script>
 import Myheader from "@/components/header";
-import { industryField, industryList,collectX} from "@/api/api";
+import { industryField, industryList, collectX } from "@/api/api";
 export default {
   data() {
     return {
@@ -82,7 +111,7 @@ export default {
       ],
       value: "1",
       suoyin: "",
-      cid:"",
+      cid: "",
       // 表格
       tableData: [
         {
@@ -125,7 +154,10 @@ export default {
           industry_field: "数字资产",
           deshi: "我要融资"
         }
-      ]
+      ],
+      total: 6,
+      pagesize: 10,
+      currentPage: 1
     };
   },
   components: {
@@ -137,6 +169,29 @@ export default {
     this.getindustryList();
   },
   methods: {
+     // 获取表格信息
+    getindustryList() {
+      // console.log(this.cid);
+      let parmas = {
+        type: this.value,
+        cid: parseInt(this.cid),
+        title: this.suoyin,
+        page:this.currentPage
+        // page: 4
+      };
+      industryList(parmas).then(res => {
+        let { data, code, msg } = res;
+        // console.log(res);
+        if (code == 1) {
+          // this.showMsg(msg,code)
+          this.tableData = data.data;
+          this.total = data.total;
+          this.pagesize = data.per_page;
+          this.currentPage = data.current_page;
+          // console.log(this.tableData)
+        }
+      });
+    },
     getIndustryField() {
       industryField().then(res => {
         let { data, msg } = res;
@@ -148,15 +203,15 @@ export default {
     // 投资，融资跳转传参
     tiaozhuan(index, rows) {
       let leixing = "";
-      let id = ""
+      let id = "";
       console.log(index);
       console.log(rows);
-      if(index != "" && rows != ""){
-        leixing= rows[index].deshi
-        id= rows[index].id
-      }else{
-        leixing =rows[index].deshi
-        id = this.tableData[0].id
+      if (index != "" && rows != "") {
+        leixing = rows[index].deshi;
+        id = rows[index].id;
+      } else {
+        leixing = rows[index].deshi;
+        id = this.tableData[0].id;
       }
       this.$router.push({
         name: `newInvestment`,
@@ -167,20 +222,17 @@ export default {
         }
       });
     },
-    // 获取表格信息
-    getindustryList() {
-      let parmas = {
-        type:this.value,
-        cid:this.cid,
-        title:this.suoyin,
-      };
-      industryList(parmas).then(res => {
-        let { data, code, msg } = res;
-        // console.log(res);
-        if (code == 1) {
-          // this.tableData = data.data
-        }
-      });
+    // prevClick(){
+    //   this.currentPage = this.currentPage-1;
+    //   this.getindustryList();
+    // },
+    // nextClick(){
+    //   this.currentPage = this.currentPage+1;
+    //   this.getindustryList();
+    // },
+    currentChange(currentPage){
+      this.currentPage = currentPage;
+      this.getindustryList();
     },
     // 控制屏幕过大，两侧留白
     changeSize() {
@@ -195,14 +247,15 @@ export default {
       })();
     },
     // 获取标识
-    gbBiaozhi(str){
-      // console.log(str);
-      if(str == "全部"){
-        this.cid = ""
-        this.getindustryList()
-      }else{
+    gbBiaozhi(str) {
+      console.log(str);
+      this.suoyin = "";
+      if (str == "全部") {
+        this.cid = "";
+        this.getindustryList();
+      } else {
         this.cid = parseInt(str);
-        this.getindustryList()
+        this.getindustryList();
       }
     },
     showMsg(msg, code) {
@@ -212,31 +265,31 @@ export default {
       });
     },
     // 关注操作
-    setcollectX(item,index){
-      let zhuanhuanArr = document.getElementsByClassName("zhuanhuan")
+    setcollectX(item, index) {
+      let zhuanhuanArr = document.getElementsByClassName("zhuanhuan");
       let classListA = zhuanhuanArr[index].classList;
       let params = {
-        pid :parseInt(item[index].id),
-        type:1,
-        user_id : parseInt(sessionStorage.getItem("user_id")) 
-      }
+        pid: parseInt(item[index].id),
+        type: 1,
+        user_id: parseInt(sessionStorage.getItem("user_id"))
+      };
       // console.log(params)
-      if(classListA.toString().indexOf("iActive") != -1){
-        zhuanhuanArr[index].classList.remove("iActive")
-        collectX(params).then(res=>{
-          let {code} = res
-          if(code){
-            this.showMsg("关注成功",code)
+      if (classListA.toString().indexOf("iActive") != -1) {
+        zhuanhuanArr[index].classList.remove("iActive");
+        collectX(params).then(res => {
+          let { code, msg } = res;
+          if (code == 1) {
+            this.showMsg(msg, code);
           }
-        })
-      }else{
-        zhuanhuanArr[index].classList.add("iActive")
-        collectX(params).then(res=>{
-          let {code} = res
-          if(code){
-            this.showMsg("取消关注",code)
+        });
+      } else {
+        zhuanhuanArr[index].classList.add("iActive");
+        collectX(params).then(res => {
+          let { code, msg } = res;
+          if (code == 1) {
+            this.showMsg(msg, code);
           }
-        })
+        });
       }
     }
   }
@@ -267,11 +320,11 @@ export default {
     }
     .active {
       background-image: url("~@/assets/images/arrow-top.png");
-      background-position: 100% 0; 
+      background-position: 100% 0;
       background-repeat: no-repeat;
       color: #ff0000;
-      border: 1px solid rgb(230,45,49);
-      background-size:10px;
+      border: 1px solid rgb(230, 45, 49);
+      background-size: 10px;
       border-radius: 3px;
     }
   }
@@ -331,6 +384,11 @@ export default {
         border-radius: 5px;
       }
     }
+  }
+  .fenye{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
   }
 }
 </style>
