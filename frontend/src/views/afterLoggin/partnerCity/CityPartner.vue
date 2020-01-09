@@ -360,16 +360,15 @@ export default {
           this.total = data.total;
           this.pagesize = data.per_page;
           this.currpage = data.current_page;
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
-        // else if(code == 3){
-        //   this.showMsg(msg,code);
-        //   this.$router.push({
-        //     name:`index`,
-        //     params:{
-        //       isRegister:'2'
-        //     }
-        //   })
-        // }
       });
     },
     // GetCityPartner1() {

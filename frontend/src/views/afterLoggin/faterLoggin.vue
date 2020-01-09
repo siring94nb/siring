@@ -185,8 +185,8 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
-          this.arr[2].con[0].rou = "/CityPartner";
-          // this.arr[2].con[0].rou = "/partnerCityX";
+          // this.arr[2].con[0].rou = "/CityPartner";
+          this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
         }
       });
