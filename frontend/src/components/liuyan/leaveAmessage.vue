@@ -5,10 +5,10 @@
       <span>新消息（{{newxiaoxi}}）</span>
     </div>
     <div class="contentBox">
-      <div v-for="(item,index) in data" :key="index">
+      <div v-for="(item,index) in msgListArr" :key="index">
         <!-- <div v-for="(item1,index1) in ceshiList" :key="index1">
           <span>{{index}}</span>
-        </div> -->
+        </div>-->
         <div v-if="item.inside==1" class="guanfang">
           <div class="touxiangbox">
             <div>
@@ -43,8 +43,19 @@
     </div>
     <div class="btnValueBox">
       <input class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" />
-      <i class="el-icon-circle-plus-outline"></i>
-      <button :class="{'yButton':dis,'wuButton':!dis}" @click.stop="dis == true?setaddMessage():''">发送</button>
+      <el-upload
+        name="image"
+        action="https://manage.siring.com.cn/api/file/qn_upload"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+        :show-file-list="qb"
+      >
+        <i class="el-icon-circle-plus-outline"></i>
+      </el-upload>
+      <button
+        :class="{'yButton':dis,'wuButton':!dis}"
+        @click.stop="dis == true?setaddMessage():''"
+      >发送</button>
     </div>
   </div>
 </template>
@@ -54,6 +65,7 @@ export default {
   name: "liuyan",
   data() {
     return {
+      qb: false,
       // pid:"",//产品id
       // uid:"",//用户id
       xiaoxiContent: "", //
@@ -256,7 +268,11 @@ export default {
         }
       ],
       msgListArr: [],
-      ceshiList: []
+      ceshiList: [],
+      pdfile: false, //判读文件是图片还是其他文件，默认为文件
+      url: "",
+      userName: "",
+      touxiangImg: ""
     };
   },
   props: {
@@ -293,14 +309,12 @@ export default {
           if (this.msgListArr.type == 0) {
             this.newxiaoxi = this.newxiaoxi + 1;
           }
-          // for(let i=0;i<this.msgListArr.length;i++){
-          //   if(i>0){
-          //     let nowTiem = new Date(this.msgListArr[i].create_time).getTime;
-          //     let end  = new Date(this.msgListArr[i-1].create_time).getTime;
-          //     nowTiem - end >180000
-          //     this.ceshiList.push(end);
-          //   }
-          // }
+          for (let i = 0; i < this.msgListArr.length; i++) {
+            if (i > 0 && this.msgListArr[i].inside == 0) {
+              this.userName = this.msgListArr[i].name;
+              this.touxiangImg = this.msgListArr[i].img;
+            }
+          }
         }
       });
     },
@@ -323,43 +337,98 @@ export default {
         pid: parseInt(this.pid),
         uid: parseInt(this.uid),
         rid: 1,
-        content: this.xiaoxiContent
+        content: this.xiaoxiContent,
+        url: this.url
       };
       addMessage(params).then(res => {
         let { code, msg } = res;
-        console.log(1212123,res)
+        console.log(1212123, res);
         if (code == 1) {
-          this.showMsg(msg, code);
-          this.getmsgList();
-          // this.data.push({
-          //   id: 5,
-          //   pid: this.pid,
-          //   uid: this.uid,
-          //   rid: this.rid,
-          //   content: this.xiaoxiContent,
-          //   inside: 0,
-          //   create_time: "2020-01-06 14:19:41",
-          //   name: ,
-          //   img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-          // })
+          // this.showMsg(msg, code);
+          // this.getmsgList();
+          this.msgListArr.push({
+            id: 5,
+            pid: this.pid,
+            uid: this.uid,
+            rid: this.rid,
+            content: this.xiaoxiContent,
+            inside: 0,
+            create_time: this.formatDate(new Date),
+            name: this.userName,
+            img: this.touxiangImg
+          });
+          this.xiaoxiContent = "";
+          document.getElementsByClassName("xiaoxiC")[0].focus();
         }
       });
     },
+    //
+    handleAvatarSuccess(res, file) {
+      console.log(res.data.filePath);
+      this.url = res.data.filePath;
+      this.$message({
+        message: "文件上传成功",
+        type: "success"
+      });
+      // if(!this.pdfile){
+
+      // }
+    },
+    beforeAvatarUpload(file) {
+      console.log(file.type);
+      const isJPG = file.type === "image/jpeg";
+      const isJPG2 = file.type === "image/png";
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      // if (!isJPG || !isJPG2) {
+      //   // this.$message.error("上传头像图片只能是 JPG 格式或者 PNG格式");
+      //   this.pdfile = false;
+      // }else{
+      //   this.pdfile = true
+      // }
+      // if (!isLt2M) {
+      //   this.$message.error("上传头像图片大小不能超过 2MB!");
+      // }
+      // return isJPG && isLt2M;
+    },
+    //
     ceshi() {
       for (let i = 0; i < this.data.length; i++) {
         if (i > 0) {
           let nowTiem = new Date(this.data[i].create_time).getTime();
           let end = new Date(this.data[i - 1].create_time).getTime();
-          if( nowTiem - end > 180000){
-             this.ceshiList.push({
-               create_time:this.data[i-1].create_time,
-               inside:this.data[i-1].inside,
-               i:i
-             });
+          if (nowTiem - end > 180000) {
+            this.ceshiList.push({
+              create_time: this.data[i - 1].create_time,
+              inside: this.data[i - 1].inside,
+              i: i
+            });
           }
         }
       }
       console.log(this.ceshiList);
+    },
+    // 时间格式转换
+    formatDate(now) {
+      var year = now.getFullYear(); //取得4位数的年份
+      var month = now.getMonth() + 1; //取得日期中的月份，其中0表示1月，11表示12月
+      var date = now.getDate(); //返回日期月份中的天数（1到31）
+      var hour = now.getHours(); //返回日期中的小时数（0到23）
+      var minute = now.getMinutes(); //返回日期中的分钟数（0到59）
+      var second = now.getSeconds(); //返回日期中的秒数（0到59）
+      return (
+        year +
+        "-" +
+        month +
+        "-" +
+        date +
+        " " +
+        hour +
+        ":" +
+        minute +
+        ":" +
+        second
+      );
     }
   }
 };
@@ -439,6 +508,7 @@ img {
   display: flex;
   align-items: center;
   background: rgb(255, 255, 255);
+  line-height: 22px;
 }
 .out1,
 .in1 {

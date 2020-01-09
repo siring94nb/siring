@@ -71,7 +71,7 @@
         <!-- 内容/合同/协议/确认文书 -->
         <div class="content">
           <div class="boxTitle">内容/合同/协议/确认文书</div>
-          <div class="bigcontentBox" :style="strValue==1?blockValue:noneValue">
+          <div class="bigcontentBox" >
             <div class="touziBox" v-if="strValue==1">
               <div class="tishi">
                 <div>
@@ -174,11 +174,27 @@
               </div>
             </div>
             <!-- 会场介绍 -->
-            <div>
-              <div>双方预约投融介线下见面会</div>
-              <div>
+            <div :style="strValue==2?blockValue:noneValue">
+              <div class="huichangTitle">双方预约投融介线下见面会</div>
+              <div class="yuyue">
                 <i class="el-icon-warning-outline"></i>
                 <span>请双方彼此都预约选定好时间场次，需要融资的项目人还需要提前准备好您的BP，届时会给每个人20分钟介绍各自项目，您的项目也有可能被其他投资人所青睐哟</span>
+              </div>
+              <div v-for="(item,index) in dataArr" :key="index">
+                <div class="lefthuichang">
+                  <div><i></i><span>主题：</span><span>{{item.title}}</span></div>
+                  <div><i></i><span>地址：</span><span>{{item.region}}</span></div>
+                  <div><i></i><span>时间：</span><span>{{item.add_time}}<span>到</span><span>{{item.end_time}}</span></span></div>
+                  <div><i></i><span>上线人数：</span><span>{{item.upper_num}}</span></div>
+                  <div><img v-for="(item1,index1) in item.map_img" :key="index1" :src="item1" alt=""></div>
+                  <div><i></i><span>已报名项目：</span></div>
+                </div>
+                <div class="righthuichang">
+                  <div><span>会务环境一览</span><span>{{nowTiem >( new Date(item.end_time))?"活动回顾":"为开始"}}</span></div>
+                  <div>
+                    <img :src="item.field_img" alt="">
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -186,37 +202,80 @@
       </div>
       <!-- 平台交互，即客服 -->
       <div class="service">
-        <liuyan :pid = pid :uid=uid></liuyan>
+        <liuyan :pid="pid" :uid="uid"></liuyan>
       </div>
     </div>
     <div class="tijiaoBox">
       <!-- 提交 -->
       <div class="tjBox">
-        <button class="xiugai" :style="strValue<3?blockValue:noneValue" @click.stop="openShadow">中止，本人放弃该项目</button>
+        <button
+          class="xiugai"
+          :style="strValue<3?blockValue:noneValue"
+          @click.stop="openShadow"
+        >中止，本人放弃该项目</button>
         <button class="xiugai" :style="strValue==3?blockValue:noneValue">上传双方合同扫描件</button>
         <div :style="strValue==3?blockValue:noneValue">作为双方留底备案</div>
       </div>
-      <div :style="strValue!=3?blockValue:noneValue"></div>
-      <button v-if="strValue==1 ||strValue ==3" class="tijiao" @click.stop="setinvestmentStatus">确定，本人有意向可执行下一步</button>
+      <div :style="strValue==2?blockValue:noneValue">
+        <div class="zhifuBox">
+          <div class="leftsmBox">
+            <div>
+              <div class="leftsmBox">
+                <div style="font-size:18px;color:#000000">会务费：</div>
+                <div class="redColor redColorB">￥1111</div>
+                <div style="font-size:20px;color:#000000;margin:0 10px;">×</div>
+              </div>
+              <div style="margin-left:-300px"><span class="redColor">*</span><span>含食宿（不低于4星）不含交通费，来往交通预定也可联系官方顾问支撑</span></div>
+            </div>
 
+            <div>
+              <div class="redColor redColorB">98%</div>
+              <div>
+                <span class="redColor">*</span>
+                <span>代理折扣</span>
+                <i class="el-icon-question redColor"></i>
+              </div>
+            </div>
+          </div>
+          <div style="font-size:20px;color:#000000;margin:0 10px;">=</div>
+          <div class="rightsmBox">
+            <div class="redColor redColorB" style="padding:14px 10px;margin-right:10px;">￥1212321123</div>
+            <button>立即支付</button>
+          </div>
+        </div>
+        <div>
+          <el-radio v-model="radio" label="1">我已确认与对方同期见面会时间，支付后执行下一流程</el-radio>
+        </div>
+      </div>
+      <button
+        v-if="strValue==1 ||strValue ==3"
+        class="tijiao"
+        @click.stop="setinvestmentStatus"
+      >确定，本人有意向可执行下一步</button>
     </div>
     <!-- 点击中止项目，弹窗 -->
     <el-dialog
       :visible.sync="dialogVisible"
       width="600px;"
       style="margin-top:100px"
-　　　　:append-to-body="true"
-　　　　:before-close="handleClose"
-      :close-on-click-modal="false">
+      　　　　:append-to-body="true"
+      　　　　:before-close="handleClose"
+      :close-on-click-modal="false"
+    >
       <div>
         <div style="font-size:36px;text-align: center;margin:80px 0 60px 0">温馨提示：</div>
-        <div style="font-size:16px;text-align: center;margin-bottom:30px;">
-          1、项目中止，如想找回，请在”删除的项目“栏目中找回；
-        </div>
+        <div
+          style="font-size:16px;text-align: center;margin-bottom:30px;"
+        >1、项目中止，如想找回，请在”删除的项目“栏目中找回；</div>
         <div style="font-size:16px;text-align: center;margin-bottom:80px;">2、项目合同签署后，将不再删除。</div>
         <div style="font-size:16px;text-align: center;margin-bottom:80px;" class="btnBox">
-          <button @click.stop="closeShadow" style=" padding: 10px 60px;font-size: 13px;background: rgb(201,201,201);color: #ffffff;border: 1px solid rgb(201,201,201);margin-right:50px;">返回</button>
-          <button style=" padding: 10px 60px;font-size: 13px;background: rgb(230,45,49);color: #ffffff;border: 1px solid rgb(230,45,49);">确定</button>
+          <button
+            @click.stop="closeShadow"
+            style=" padding: 10px 60px;font-size: 13px;background: rgb(201,201,201);color: #ffffff;border: 1px solid rgb(201,201,201);margin-right:50px;"
+          >返回</button>
+          <button
+            style=" padding: 10px 60px;font-size: 13px;background: rgb(230,45,49);color: #ffffff;border: 1px solid rgb(230,45,49);"
+          >确定</button>
         </div>
       </div>
     </el-dialog>
@@ -232,12 +291,13 @@ import {
   investmentStatus,
   Activities
 } from "@/api/api";
-import liuyan from "../../../components/liuyan/leaveAmessage"
+import liuyan from "../../../components/liuyan/leaveAmessage";
 export default {
   data() {
     return {
-      dialogVisible:false,
-      dataBox:[],
+      radio:1,
+      dialogVisible: false,
+      dataBox: [],
       blockValue: { display: "block" },
       noneValue: { display: "none" },
       flexValue: { display: "flex" },
@@ -263,9 +323,10 @@ export default {
       dis: false, //修改稿件按钮显示隐藏
       url: "", //上传获取链接
       orderId: 0,
-      dataArr:[],//会场介绍
-      pid:0,
-      uid:0
+      dataArr: [], //会场介绍
+      pid: 0,
+      uid: 0,
+      nowTiem:0,
     };
   },
   mounted() {
@@ -276,19 +337,22 @@ export default {
       this.strValue = this.$route.params.strValue;
       this.orderId = this.$route.params.orderId;
       this.pid = this.$route.params.orderId;
-      this.uid = sessionStorage.getItem("user_id")
+      this.uid = sessionStorage.getItem("user_id");
       this.getprojectDetails();
       this.getActivities();
+      this.nowTiem = new Date().getTime()
+      let date = "2019-11-26 00:00:00"
+      console.log(this.nowTiem)
     },
     // 弹窗遮罩
-    openShadow(){
-      this.dialogVisible=true;
+    openShadow() {
+      this.dialogVisible = true;
     },
-    closeShadow(){
-      this.dialogVisible=false;
+    closeShadow() {
+      this.dialogVisible = false;
     },
     handleClose(done) {
-      this.$confirm('确认关闭？')
+      this.$confirm("确认关闭？")
         .then(_ => {
           done();
         })
@@ -301,42 +365,42 @@ export default {
       });
     },
     // 获取项目内容
-    getprojectDetails(){
-      const params = {id:parseInt(this.orderId)}
-      projectDetails(params).then(res=>{
-        let {data,code,msg} = res
-        if(code == 1) {
-          this.dataBox = data
+    getprojectDetails() {
+      const params = { id: parseInt(this.orderId) };
+      projectDetails(params).then(res => {
+        let { data, code, msg } = res;
+        if (code == 1) {
+          this.dataBox = data;
         }
-      })
+      });
     },
     // 状态改变
-    setinvestmentStatus(){
+    setinvestmentStatus() {
       let params = {
-        order_id:parseInt(this.orderId),
-        status:parseInt(this.strValue)
-      }
-      investmentStatus(params).then(res=>{
-        let {code,msg} = res;
-        if(code==1){
-          this.showMsg(msg,code);
-          this.strValue = this.strValue+1;
+        order_id: parseInt(this.orderId),
+        status: parseInt(this.strValue)
+      };
+      investmentStatus(params).then(res => {
+        let { code, msg } = res;
+        if (code == 1) {
+          this.showMsg(msg, code);
+          this.strValue = this.strValue + 1;
         }
-      })
+      });
     },
     // 会场介绍
-    getActivities(){
-      Activities().then(res=>{
-        let {code , data, msg} = res;
-        if(code == 1){
+    getActivities() {
+      Activities().then(res => {
+        let { code, data, msg } = res;
+        if (code == 1) {
           console.log(data);
           this.dataArr = data;
         }
-      })
+      });
     }
   },
   components: {
-      liuyan
+    liuyan
   }
 };
 </script>
@@ -720,10 +784,54 @@ export default {
     padding-left: 30px;
     line-height: 20px;
   }
-  .btnBox{
-    button{
-      padding: 20px;font-size: 13px;background: rgb(201,201,201);color: #ffffff;border: 1px solid rgb(201,201,201);
+  .btnBox {
+    button {
+      padding: 20px;
+      font-size: 13px;
+      background: rgb(201, 201, 201);
+      color: #ffffff;
+      border: 1px solid rgb(201, 201, 201);
     }
+  }
+}
+.zhifuBox,.leftsmBox,.rightsmBox{
+  display: flex;
+  align-items: center;
+  font-size: 13px; 
+  color: #797979;
+  button{
+    color: #ffffff;
+    border: 1px solid rgb(230,45,49);
+    background: rgb(230,45,49);
+    border-radius: 3px;
+    padding: 10px 20px;
+    margin-right: 40px;
+  }
+}
+.redColor{
+  color: #ff0000;
+  font-size: 18px;
+  
+}
+.redColorB{
+  border: 1px solid #797979;;
+  padding: 5px 10px;
+}
+.huichangTitle{
+  font-size: 24px;
+  color: #000000;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.yuyue{
+  text-align: center;
+  color: #ff0000;
+  margin-bottom: 10px;
+  i{
+    font-weight: 700;
+    font-size: 18px;
+    padding-right: 5px;
   }
 }
 </style>

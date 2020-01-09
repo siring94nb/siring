@@ -466,6 +466,7 @@ export default {
       if(roPath == 2){
         this.dialogVisible = true;
         this.isRegister = 2
+        this.onLogout();
       }
     },
     // 城市改变，获取相应的二级城市等
