@@ -15,15 +15,17 @@
     <div class="xiangqing">
       <div class="shaixuan">
         <span>时间：</span>
+
         <el-date-picker
           v-model="value1"
-          type="monthrange"
+          type="daterange"
           align="right"
           unlink-panels
           range-separator="至"
           start-placeholder="开始月份"
-          end-placeholder="结束月份"
-        ></el-date-picker>
+          end-placeholder="结束月份">
+        </el-date-picker>
+
         <span>消费类型</span>
         <el-select v-model="value" placeholder="请选择" style="width:120px;">
           <el-option
@@ -42,11 +44,11 @@
             :value="item.value"
           ></el-option>
         </el-select>
-        <el-button type="danger" style="float: right;" @click="gb();Register()">确定</el-button>
+        <el-button type="danger" style="float: right;" @click="Register()">确定</el-button>
       </div>
       <div>
         <el-table
-          :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
+          :data="tableData"
           border
           style="width: 100%; font-size:13px;color:#797979"
           :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }"
@@ -99,15 +101,17 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination
+        <div style="display:flex;justify-content: center">
+          <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
           :current-page.sync="currentPage"
           :page-size="pageSize"
-          　　　　
           layout="total, prev, pager, next,jumper"
-          :total="tableData.length"
+          :total="total"
         ></el-pagination>
+        </div>
+        
       </div>
     </div>
   </div>
@@ -119,7 +123,7 @@ export default {
   data() {
     return {
       dis: true,
-      value1: "",
+      value1: undefined,
       // select1
       options: [
         {
@@ -160,8 +164,11 @@ export default {
       tableData: [],
       pageSize: 3,
       currentPage: 1,
+      total:0,
       img1: require("../../../assets/images/youhuiquan1.png"),
-      img2: require("../../../assets/images/youhuiquan2.png")
+      img2: require("../../../assets/images/youhuiquan2.png"),
+      startTime:"",
+      endTime:""
     };
   },
   components: {
@@ -172,72 +179,101 @@ export default {
   },
   methods: {
     handleSizeChange: function() {},
-    handleCurrentChange: function() {},
-    gb() {
-      // 修改状态判断是否有索引条件
-      if (this.value == "全部" && this.value2 == "全部" && this.value1 == "") {
-        this.dis = true;
-      } else if (
-        this.value1 == null &&
-        this.value == "全部" &&
-        this.value2 == "全部"
-      ) {
-        this.dis = true;
-        this.value1 = "";
-      } else {
-        this.dis = false;
-      }
+    handleCurrentChange: function(currentPage) {
+      this.currentPage =currentPage
     },
+    // gb() {
+    //   // 修改状态判断是否有索引条件
+    //   // if (this.value == "全部" && this.value2 == "全部" && this.value1 == "") {
+    //   //   this.dis = true;
+    //   // } else if (
+    //   //   this.value1 == null &&
+    //   //   this.value == "全部" &&
+    //   //   this.value2 == "全部"
+    //   // ) {
+    //   //   this.dis = true;
+    //   //   this.value1 = "";
+    //   // } else {
+    //   //   this.dis = false;
+    //   // }
+    //   if(this.value2 == "全部"){
+    //     this.value2 = ""
+    //   }
+    // },
     Register() {
-      let params = {};
-      let times = this.value1;
-      if (this.dis) {
-        getRegister().then(res => {
-          let { data, msg, code } = res;
-          if (code == 1) {
-            this.tableData = data.data;
-            this.pageSize = data.per_page
-          }
-        });
+      let value2 = 0
+      if(this.value2 == "全部"){
+        value2 = ""
+      }else{
+        value2 =parseInt(this.value2)
+      }
+      // this.gb();
+      console.log(value2)
+      if (this.value1 != undefined && this.value1 != null) {
+        // console.log(this.value);
+        this.startTime = this.value1[0].getTime();
+        this.endTime = this.value1[1].getTime();
       } else {
-        if (times == "") {
-          console.log(this.value2);
-          params = {
-            status: this.value2
-          };
-          this.dis = true;
-        } else if (this.value2 == "全部" && times != null) {
-          let start_time = times[0];
-          let end_time = times[1];
-          params = {
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-          this.dis;
-        } else {
-          let start_time = times[0];
-          let end_time = ttimes[1];
-          params = {
-            status: this.value2,
-            start_time: times[0].getTime(),
-            end_time: times[1].getTime()
-          };
-          this.dis = true;
-        }
+        this.startTime = "";
+        this.endTime = "";
+      }
+      let params = {
+        status:value2,
+        page:this.currentPage,
+        start_time:this.startTime,
+        end_time:this.endTime
+      };
+      // let times = this.value1;
+      // if (this.dis) {
+      //   getRegister().then(res => {
+      //     let { data, msg, code } = res;
+      //     if (code == 1) {
+      //       this.tableData = data.data;
+      //       this.pageSize = data.per_page
+      //     }
+      //   });
+      // } else {
+      //   if (times == "") {
+      //     console.log(this.value2);
+      //     params = {
+      //       status: this.value2
+      //     };
+      //     this.dis = true;
+      //   } else if (this.value2 == "全部" && times != null) {
+      //     let start_time = times[0];
+      //     let end_time = times[1];
+      //     params = {
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //     this.dis;
+      //   } else {
+      //     let start_time = times[0];
+      //     let end_time = ttimes[1];
+      //     params = {
+      //       status: this.value2,
+      //       start_time: times[0].getTime(),
+      //       end_time: times[1].getTime()
+      //     };
+      //     this.dis = true;
+      //   }
         getRegister(params).then(res => {
           let { data, msg, code } = res;
           if (code == 1) {
+            console.log(data.data)
             this.tableData = data.data;
-            console.log(res.per_page)
+            this.total=data.total;
+            this.pageSize=data.per_page;
           }
         });
       }
     }
-  }
+  // }
 };
 </script>
 <style lang="scss" scoped>
-.noYhq {
+.noYhq {  
+  
   background: #ffffff;
   margin: 10px 0 0 20px;
   padding: 260px 0 260px 0;

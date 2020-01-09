@@ -200,7 +200,9 @@ export default {
         { id: 5, name: "线上已到账" }
       ],
       // 时间范围，返回值会是一个数组，两个值，初始时间与结束时间，获取通过.getTime()转时间戳
-      timeValue: "",
+      timeValue: undefined,
+      startTime:"",
+      endTime:'',
       list: [], //分页表格数据
       pagesize: 10,
       currpage: 1,
@@ -230,14 +232,13 @@ export default {
     },
     // 列表数据
     getsaasList() {
-      var startTime
-      var endTime
-      if(this.value1 != ""){
-         startTime = this.value1[0].getTime()
-         endTime = this.value1[1].getTime()
-      }else if(this.value1 = null){
-         startTime = ""
-         endTime = ""
+       if (this.timeValue != undefined && this.timeValue != null) {
+        // console.log(this.value);
+        this.startTime = this.timeValue[0].getTime();
+        this.endTime = this.timeValue[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
       }
       let params = {
         type:"",
@@ -252,6 +253,14 @@ export default {
           this.total = data.total;
           this.pagesize=data.per_page
           console.log(data.data);
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       });
     },

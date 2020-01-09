@@ -191,11 +191,17 @@ export default {
         this.getconsoleList();
       }
     },
+     showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     getconsoleList(){
       if (this.value1 != undefined && this.value1 != null) {
         // console.log(this.value);
-        this.startTime = this.value[0].getTime();
-        this.endTime = this.value[1].getTime();
+        this.startTime = this.value1[0].getTime();
+        this.endTime = this.value1[1].getTime();
       } else {
         this.startTime = "";
         this.endTime = "";
@@ -216,6 +222,14 @@ export default {
           this.total = data.total;
           this.pagesize = data.per_page;
           this.currentPage = data.last_page
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       })
     },
