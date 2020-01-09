@@ -1032,6 +1032,25 @@ Route::group('admin', function () use ($afterBehavior) {
         ],
     ], ['after_behavior' => $afterBehavior]);
 
+    //核心成员
+    Route::group('Member', [
+        'index' => [
+            'admin/Member/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Member/add',
+            ['method' => 'post']
+        ],
+        'edit'   => [
+            'admin/Member/upd',
+            ['method' => 'edit']
+        ],
+        'del'   => [
+            'admin/Member/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
 });
 
 //<!--
