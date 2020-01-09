@@ -6,6 +6,9 @@
     </div>
     <div class="contentBox">
       <div v-for="(item,index) in data" :key="index">
+        <!-- <div v-for="(item1,index1) in ceshiList" :key="index1">
+          <span>{{index}}</span>
+        </div> -->
         <div v-if="item.inside==1" class="guanfang">
           <div class="touxiangbox">
             <div>
@@ -311,6 +314,11 @@ export default {
     },
     // 用户留言
     setaddMessage() {
+      // 处理用户快速发送消息的情况
+      // clearTimeout(timeOut);
+      // let timeOut =  setTimeout(()=>{
+      //   console.log("一分钟已经到了")
+      // },60000)
       let params = {
         pid: parseInt(this.pid),
         uid: parseInt(this.uid),
@@ -362,7 +370,6 @@ export default {
   border-bottom: 2px solid rgb(240, 248, 250);
   border-right: 2px solid rgb(240, 248, 250);
   margin-bottom: 10px;
-  margin-left: 30px;
   width: 100%; //之后解开，调用时给他外部包裹div设置宽度
   // width: 800px;
 }
