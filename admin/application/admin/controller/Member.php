@@ -79,6 +79,7 @@ class Member extends Base
      * @return mixed
      */
     public function edit(){
+
         $request = Request::instance();
         $param = $request->param();
         $rules = [
@@ -95,7 +96,6 @@ class Member extends Base
             'img.require'=>'请上传图片',
             'con.require'=>'内容不能为空',
         ];
-
         $validate = new Validate($rules,$message);
         if(!$validate->check($param)){
             return $this->buildFailed(0,$validate->getError());

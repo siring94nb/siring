@@ -1043,8 +1043,8 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
         'edit'   => [
-            'admin/Member/upd',
-            ['method' => 'edit']
+            'admin/Member/edit',
+            ['method' => 'post']
         ],
         'del'   => [
             'admin/Member/del',
