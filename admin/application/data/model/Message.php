@@ -66,4 +66,18 @@ class Message extends Model
         return $res;
     }
 
+    /**
+     * 获取双方消息
+     * @param $pid
+     * @param $side
+     * @return array|false|string|Model
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public static function OfficialNews($pid,$side)
+    {
+        return self::where(['pid'=>$pid,'inside'=>$side])->order("id desc")->find();
+    }
+
 }

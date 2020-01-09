@@ -635,6 +635,15 @@ export const appRouter = [
                 title: '联系我们',
                 component: () => import('@/views/contact/index.vue')
 
+            },
+            {
+                path: 'member',
+                icon: 'ios-person-add',
+                name: 'member',
+                access: 'admin/Member/index',
+                title: '核心成员',
+                component: () => import('@/views/member/list.vue')
+
             }
 
         ]

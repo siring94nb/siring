@@ -151,14 +151,12 @@ function returnArray($data){
  */
 function sendMessage($content,$mobile)
 {
-    $api_code = "240001";//对接协议中的API代码
-    $api_secret = "4SFE6PW1GL";//对接协议中的API密码
+    $api_code = "922001";//对接协议中的账号
+    $api_secret = "7EbH6z";//对接协议中的密码
     $extno = 1069012345;
     $con = urlencode($content);
-    $sign = md5($api_secret.$extno.$con.$mobile);//md加密后短信内容+API密码
-
-    $url = "http://host:port/sms?action=send&account=$api_code&password=$api_secret&mobile=$mobile&content=$con&extno=$extno&rt=json";//请求URL
-
+    //$sign = md5($api_secret.$extno.$con.$mobile);//md加密后短信内容+API密码
+    $url = "http://117.48.217.182:7862/sms?action=send&account=".$api_code."&password=".$api_secret."&mobile=".$mobile."&content=".$con."&extno=".$extno."&rt=json";//请求URL
     $curl = curl_init();
     // 设置url路径
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -170,6 +168,7 @@ function sendMessage($content,$mobile)
     $data = curl_exec($curl);
     // 关闭连接
     curl_close($curl);
+
     return $data;
 }
 
