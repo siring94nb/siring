@@ -153,8 +153,8 @@
           <div class="ai-inner">
             <div class="ai-img">
               <!-- <img :src="require('@/assets/images/u207.png')"  /> -->
-              <video width="667" height="510" autoplay="autoplay" style="background-color:#000;"  preload muted loop>
-                <source :src="require('@/assets/video/zui.mp4')" type="video/mp4">
+              <video width="667" height="512" autoplay="autoplay" style="background-color:#000;"  preload muted loop>
+                <source src="http://zhihuichacang.com/6.mp4" type="video/mp4">
                 您的浏览器不支持video标签
               </video>
             </div>
