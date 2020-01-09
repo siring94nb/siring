@@ -239,7 +239,7 @@ export default {
           this.pagesize = data.per_page;
           this.total = data.total;
         }else if(code == 3){
-          this.showMsg(msg,code);
+          // this.showMsg(msg,code);
           this.$router.push({
             name:`index`,
             params:{

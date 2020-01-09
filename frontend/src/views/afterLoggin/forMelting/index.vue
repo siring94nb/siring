@@ -117,7 +117,7 @@
         </div>
       </div>
     </div>
-    <div @click.stop="setorderId(1,40)">测试流程跳转</div>
+    <div @click.stop="setorderId(2,40)">测试流程跳转</div>
   </div>
 </template>
 <script>
@@ -215,22 +215,23 @@ export default {
         
       }
       consoleList(params).then(res=>{
-        let {data,code} = res;
+        let {data,code,msg} = res;
         console.log(data)
         if(code == 1){
           this.tableData = data.data;
           this.total = data.total;
           this.pagesize = data.per_page;
           this.currentPage = data.last_page
-        }else if(code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
       })
     },
     // 跳转流程
