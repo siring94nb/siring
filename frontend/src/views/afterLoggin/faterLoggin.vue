@@ -144,15 +144,19 @@ export default {
   },
   components: {},
   mounted() {
-    this.cityHehuorenX(),
+    this.init()
+  },
+  methods: {
+    init(){
+      console.log("0109-a")
+      this.cityHehuorenX(),
       this.classHuiyuanX(),
       this.fenbaoshangX(),
       this.withdrawX();
-    this.zhankai();
-    this.gb();
-    this.userMessage();
-  },
-  methods: {
+      this.zhankai();
+      this.gb();
+      this.userMessage();
+    },
     // 保持侧边栏对应路由展开状态
     zhankai() {
       let arr = this.arr;

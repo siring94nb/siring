@@ -466,6 +466,16 @@ export default {
       if(roPath == 2){
         this.dialogVisible = true;
         this.isRegister = 2
+        Logout().then(res => {
+        let { data, msg, code } = res.data;
+        if (code === 1) {
+          this.$message.error('登录过期')
+          this.$store.commit("logout");
+          this.ifLogin = false;
+          // this.reload();
+          this.$router.push('/');
+        }
+      });
       }
     },
     // 城市改变，获取相应的二级城市等

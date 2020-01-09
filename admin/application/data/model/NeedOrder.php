@@ -90,19 +90,19 @@ class NeedOrder extends Model
      * @throws \think\Exception
      * @throws \think\exception\DbException
      */
-        public function need_detail($id)
-        {
-            $need_detail = self::get($id)->toArray();
-            $terminal= json_decode( $need_detail['dev'] , true );
-            if(!empty($terminal)){
-                $res = join('/',$terminal);
-                $need_detail['terminal'] = $res;
-            }else{
-                $need_detail['terminal'] = "无";
-            }
-
-            return $need_detail;
+    public function need_detail($id)
+    {
+        $need_detail = self::get($id)->toArray();
+        $terminal= json_decode( $need_detail['dev'] , true );
+        if(!empty($terminal)){
+            $res = join('/',$terminal);
+            $need_detail['terminal'] = $res;
+        }else{
+            $need_detail['terminal'] = "无";
         }
+
+        return $need_detail;
+    }
 
     /**
      * 支付流程

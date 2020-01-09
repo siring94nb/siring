@@ -57,13 +57,13 @@ export default {
             leftBox.clientWidth +
             "px";
             document.body.style.width = "100%";
-            console.log( rightBox.style.marginLeft,11111)
+            // console.log( rightBox.style.marginLeft,11111)
         } else {
           // leftBox.style.marginLeft = "0px";
           // console.log(1111)
           rightBox.style.marginLeft = leftBox.clientWidth+ 20  + "px";
           document.body.style.width = leftBox.clientWidth + rightBox.clientWidth +"px";
-          console.log( rightBox.style.marginLeft,2222)
+          // console.log( rightBox.style.marginLeft,2222)
         }
       })();
       // }, 1000);

@@ -66,6 +66,10 @@ class Member extends Base
             return $this->buildFailed(0,$validate->getError());
         }
         $param['created_at'] = time();
+        $count = (new MemberAll())->count();
+        if($count > 9){
+            return $this->buildFailed(0,'添加成员不能超过10个');exit();
+        }
         $result = (new MemberAll())->insert($param);
         if($result){
             return $this->buildSuccess([]);
@@ -131,12 +135,12 @@ class Member extends Base
             return $this->buildFailed(0,$validate->getError());
         }
 
-        $info = (new MemberAll())->find($param['id']);
+        $info = MemberAll::get($param['id']);
         if(empty($info)){
             return $this->buildFailed(0,'数据不存在');
         }
 
-        $result = (new MemberAll())->where('id',$param['id'])->delete();
+        $result = MemberAll::destroy($param['id']);
         if($result){
             return $this->buildSuccess([]);
         }else{
