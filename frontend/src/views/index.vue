@@ -151,6 +151,13 @@
         <h2 class="title">AI人工智能推广引擎平台</h2>
         <div class="ai-cont">
           <div class="ai-inner">
+            <div class="ai-img">
+              <!-- <img :src="require('@/assets/images/u207.png')"  /> -->
+              <video width="667" height="510" autoplay="autoplay" style="background-color:#000;"  preload muted loop>
+                <source :src="require('@/assets/video/zui.mp4')" type="video/mp4">
+                您的浏览器不支持video标签
+              </video>
+            </div>
             <div class="ai-tabs">
               <el-tabs type="border-card">
                 <el-tab-pane v-for="item in packageList" :label="item.name" :key="item.id">
@@ -165,9 +172,7 @@
                 </el-tab-pane>
               </el-tabs>
             </div>
-            <div class="ai-img">
-              <img :src="require('@/assets/images/u207.png')" width="667" height="550" />
-            </div>
+            
           </div>
         </div>
       </div>
