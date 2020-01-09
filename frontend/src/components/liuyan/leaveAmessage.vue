@@ -42,7 +42,8 @@
       </div>
     </div>
     <div class="btnValueBox">
-      <input class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" />
+      <!-- <inout @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" /> -->
+      <textarea rows="1" @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" ></textarea>
       <el-upload
         name="image"
         action="https://manage.siring.com.cn/api/file/qn_upload"
@@ -358,6 +359,7 @@ export default {
             img: this.touxiangImg
           });
           this.xiaoxiContent = "";
+          this.dis = false;
           document.getElementsByClassName("xiaoxiC")[0].focus();
         }
       });
@@ -429,6 +431,16 @@ export default {
         ":" +
         second
       );
+    },
+    // 绑定回车事件
+    huiche(event){
+      if(event.which == 13 && this.dis){
+        this.setaddMessage();
+      }
+      // else if(event.ctrlKey && event.keyCode == 13){
+      //   // ctrl+回车换行
+      //   this.xiaoxiContent = this.xiaoxiContent +"123123123123123"
+      // }
     }
   }
 };
@@ -464,7 +476,7 @@ img {
 }
 // 带箭头div
 .demo {
-  width: 300px;
+  max-width: 300px;
   // min-height: 52px;
   border: 1px solid rgb(188, 188, 188);
   position: relative;
@@ -498,7 +510,7 @@ img {
   left: -20px;
 }
 .demo1 {
-  width: 300px;
+  max-width: 300px;
   // min-height: 52px;
   border: 1px solid rgb(188, 188, 188);
   position: relative;
@@ -547,13 +559,19 @@ img {
   padding: 20px 50px;
   display: flex;
   align-items: center;
-  input {
+  textarea {
     height: 45px;
     border-radius: 5px;
     border: 0.5px solid rgb(247, 247, 247);
     width: 80%;
     margin-right: 30px;
-    padding: 0 20px;
+    overflow:hidden;
+    resize:none;
+    box-sizing: border-box;
+    padding:10px 20px 0 20px;
+    // padding-top: 10px;
+    font-size: 18px;
+    line-height: 22px;
   }
   i {
     font-size: 36px;
