@@ -79,4 +79,15 @@ class Website extends Base
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }
 
+    /**
+     * 核心成员
+     * @throws \think\exception\DbException
+     */
+    public function member()
+    {
+        $data = (new \app\data\model\Member())->all();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
 }

@@ -182,7 +182,7 @@
                     {
                         title: '名称',
                         align: 'center',
-                        key: 'title'
+                        key: 'name'
                     },
                     {
                         title: '职位',
@@ -312,7 +312,7 @@
                 });
             },
             cancel () {
-                this.formItem = {title:'',img:'',id: 0};
+                this.formItem = {name:'',img:'',id: 0};
                 this.formItem.con = "";
                 this.editor.txt.html("");
                 // 移除图片
