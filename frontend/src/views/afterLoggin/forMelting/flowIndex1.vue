@@ -186,14 +186,7 @@
       </div>
       <!-- 平台交互，即客服 -->
       <div class="service">
-        <div class="boxTitle">平台顾问信息互动</div>
-        <div class="serviceContent">互动内容显示区域</div>
-        <!-- 信息发送按钮，输入框等 -->
-        <div class="btnValueBox">
-          <input v-model="xiaoxiContent" />
-          <i class="el-icon-circle-plus-outline"></i>
-          <button class="wuButton">发送</button>
-        </div>
+        <liuyan :pid = pid :uid=uid></liuyan>
       </div>
     </div>
     <div class="tijiaoBox">
@@ -204,7 +197,8 @@
         <div :style="strValue==3?blockValue:noneValue">作为双方留底备案</div>
       </div>
       <div :style="strValue!=3?blockValue:noneValue"></div>
-      <button class="tijiao" @click.stop="setinvestmentStatus">确定，本人有意向可执行下一步</button>
+      <button v-if="strValue==1 ||strValue ==3" class="tijiao" @click.stop="setinvestmentStatus">确定，本人有意向可执行下一步</button>
+
     </div>
     <!-- 点击中止项目，弹窗 -->
     <el-dialog
@@ -238,6 +232,7 @@ import {
   investmentStatus,
   Activities
 } from "@/api/api";
+import liuyan from "../../../components/liuyan/leaveAmessage"
 export default {
   data() {
     return {
@@ -269,6 +264,8 @@ export default {
       url: "", //上传获取链接
       orderId: 0,
       dataArr:[],//会场介绍
+      pid:0,
+      uid:0
     };
   },
   mounted() {
@@ -278,6 +275,8 @@ export default {
     init() {
       this.strValue = this.$route.params.strValue;
       this.orderId = this.$route.params.orderId;
+      this.pid = this.$route.params.orderId;
+      this.uid = sessionStorage.getItem("user_id")
       this.getprojectDetails();
       this.getActivities();
     },
@@ -335,6 +334,9 @@ export default {
         }
       })
     }
+  },
+  components: {
+      liuyan
   }
 };
 </script>

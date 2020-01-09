@@ -129,7 +129,7 @@ export default {
       title:"",//订单/编号
       value: "",
       // 时间选择
-      value1: "",
+      value1: undefined,
       // 下拉列表
       options: [
         {
@@ -166,7 +166,9 @@ export default {
       total: 6,
       pagesize: 10,
       currentPage: 1,
-      xuanzeValue:""
+      xuanzeValue:"",
+      startTime:"",
+      endTime:''
     };
   },
   components: {
@@ -190,21 +192,30 @@ export default {
       }
     },
     getconsoleList(){
-      if(this.value1 != ""){
-        var startTime = this.value1[0].getTime() || ""
-        var endTime = this.value1[1].getTime() || ""
+      if (this.value1 != undefined && this.value1 != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
       }
       let params = {
         process : parseInt(this.xuanzeValue),
         title :this.title,
-        role_type:this.selectValue == 0 ? "" : parseInt(this.selectValue),
-        start_time:startTime,
-        end_time:endTime,
+        type:this.selectValue == 0 ? "" : parseInt(this.selectValue),
+        start_time:parseInt(this.startTime),
+        end_time:parseInt(this.endTime),
+        
       }
-      consoleList().then(res=>{
+      consoleList(params).then(res=>{
         let {data,code} = res;
+        console.log(data)
         if(code == 1){
           this.tableData = data.data;
+          this.total = data.total;
+          this.pagesize = data.per_page;
+          this.currentPage = data.last_page
         }
       })
     },
@@ -272,6 +283,7 @@ export default {
     align-items: center;
     border: 1px solid rgb(235, 238, 245);
     padding: 15px;
+    justify-content: center;
   }
 }
 </style>
