@@ -17,7 +17,7 @@ class WxThree extends Base
     
     public function __construct(){
         ///获取component_ticket
-        $this->component_ticket=Db::table('wx_threeopen')->where('id',1)->value('component_verify_ticket');
+        $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
     }
 
     /**
@@ -107,13 +107,8 @@ class WxThree extends Base
          */
         public function callback(){
             // 每个授权小程序的appid，在第三方平台的消息与事件接收URL中设置了 $APPID$ 
-            // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
-            $pp['msg']='111';
-            Db::table('test')->insert($pp);
-            $pp11['msg']=$postStr;
-            Db::table('test')->insert($pp11);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -133,86 +128,82 @@ class WxThree extends Base
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
                 $p12['msg']=$errCode;
                 Db::table('test')->insert($p12);
-                $p['msg']=$errCode.'错误码';
-                Db::table('test')->insert($p);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
                    // 第三方平台全网发布检测普通文本消息测试 
                     // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                    //     $toUsername = trim($msgObj->ToUserName);
-                    //     if ($toUsername == 'gh_3c884a361561') { 
-                    //         $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                    //         $pp8['msg']=$content2;
-                    //         Db::table('test')->insert($pp8);
-                    //         echo $this->responseText($msgObj, $content2);
-                    //     }
+                        $toUsername = trim($msgObj->ToUserName);
+                        if ($toUsername == 'gh_3c884a361561') { 
+                            $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                            $pp8['msg']=$content2;
+                            Db::table('test')->insert($pp8);
+                            echo $this->responseText($msgObj, $content2);
+                        }
                     // }
-                    $p11['msg']=$content.'001';
-                    Db::table('test')->insert($p11);
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
-                        if ($toUsername == 'gh_8dad206e9538') { 
+                        if ($toUsername == 'gh_3c884a361561') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
-                            $pp5['msg']=$query_auth_code;
+                            $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
-                            $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
-                            $pp6['msg']=$authorizer_access_token;
+                            $pp6['msg']=$params.'1111';
                             Db::table('test')->insert($pp6);
+                            $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
                         }
                     }
                 }
             }
-                //获取回调的信息
-                $data2=input();
-                if(!is_array($data2)){
-                    $ppp['msg']=$data2;
-                    Db::table('test')->insert($ppp);
-                }
-                $auth_code=$data2['auth_code'];     //授权码
-                //根据授权码，获取用户信息
-                $auth_info=$this->getAuthInfo($auth_code);
-                //获取授权方的基本信息 
-                $public_info= $this->getPublicInfo ( $auth_info ['authorization_info']['authorizer_appid'] );
-                $data['wename'] = $public_info ['authorizer_info'] ['nick_name'];   //小程序名称
-                // $data['wechat'] = $public_info ['authorizer_info'] ['alias'];       //别名
-                //转换帐号类型 
-                if($public_info ['authorizer_info'] ['service_type_info'] ['id'] == 2) { // 服务号 
-                $data['service_type_info'] = 2; 
-                }else { // 订阅号 
-                $data['service_type_info'] = 0; 
-                } 
-                if($public_info ['authorizer_info'] ['verify_type_info'] ['id'] != - 1) { // 已认证 
-                $data['service_type_info'] = 1; 
-                } 
-                $data['appid'] = $public_info ['authorization_info'] ['authorizer_appid'];   //appid
-                $data['auth_time'] = time();                     //时间
-                $data['authorizer_refresh_token'] = $auth_info ['authorization_info']['authorizer_refresh_token'];    //授权token
-                $data['access_token'] = $auth_info ['authorization_info']['authorizer_access_token']; 
-                $data['head_img'] = $public_info ['authorizer_info'] ['head_img'];     //头像
-                $data['principal_name']=$public_info['authorizer_info']['principal_name'];  //公司名称 
-                $data['store_id']=Session::get('store_id');//当前店铺的id
-                $store_type=$public_info['authorizer_info']['MiniProgramInfo']['categories'][0]['first'].'-'.$public_info['authorizer_info']['MiniProgramInfo']['categories'][0]['second'];  //公司名称 
-                $data['store_type']=$store_type;//当前店铺的经营类型
-                //获取小程序的二维码
-                $appsecret=Db::table('applet')->where('id',$data['store_id'])->value('appSecret');
-                // $head_pic=$this->getHeadpic($public_info ['authorization_info'] ['authorizer_appid'],$appsecret);   //小程序菊花码
-                // $data['qrcode_url'] = $head_pic;     //二维码地址
-                //记录授权信息
-                $res=Db::table('miniprogram')->insert($data);
-                //设置域名---修改服务器
-                $set_service=$this->setServerDomain($data['access_token']);
-                $set_yewu_service=$this->setBusinessDomain($data['access_token']);
-                if($res){
-                    $this->success('授权成功',url('admin/Upload/auth_detail'));
-                }else{
-                    $this->error('用户未授权或授权错误，请重新授权',url('admin/Upload/auth_pre'));
+                // //获取回调的信息
+                // $data2=input();
+                // if(!is_array($data2)){
+                //     $ppp['msg']=$data2;
+                //     Db::table('test')->insert($ppp);
+                // }
+                // $auth_code=$data2['auth_code'];     //授权码
+                // //根据授权码，获取用户信息
+                // $auth_info=$this->getAuthInfo($auth_code);
+                // //获取授权方的基本信息 
+                // $public_info= $this->getPublicInfo ( $auth_info ['authorization_info']['authorizer_appid'] );
+                // $data['wename'] = $public_info ['authorizer_info'] ['nick_name'];   //小程序名称
+                // // $data['wechat'] = $public_info ['authorizer_info'] ['alias'];       //别名
+                // //转换帐号类型 
+                // if($public_info ['authorizer_info'] ['service_type_info'] ['id'] == 2) { // 服务号 
+                // $data['service_type_info'] = 2; 
+                // }else { // 订阅号 
+                // $data['service_type_info'] = 0; 
+                // } 
+                // if($public_info ['authorizer_info'] ['verify_type_info'] ['id'] != - 1) { // 已认证 
+                // $data['service_type_info'] = 1; 
+                // } 
+                // $data['appid'] = $public_info ['authorization_info'] ['authorizer_appid'];   //appid
+                // $data['auth_time'] = time();                     //时间
+                // $data['authorizer_refresh_token'] = $auth_info ['authorization_info']['authorizer_refresh_token'];    //授权token
+                // $data['access_token'] = $auth_info ['authorization_info']['authorizer_access_token']; 
+                // $data['head_img'] = $public_info ['authorizer_info'] ['head_img'];     //头像
+                // $data['principal_name']=$public_info['authorizer_info']['principal_name'];  //公司名称 
+                // $data['store_id']=Session::get('store_id');//当前店铺的id
+                // $store_type=$public_info['authorizer_info']['MiniProgramInfo']['categories'][0]['first'].'-'.$public_info['authorizer_info']['MiniProgramInfo']['categories'][0]['second'];  //公司名称 
+                // $data['store_type']=$store_type;//当前店铺的经营类型
+                // //获取小程序的二维码
+                // $appsecret=Db::table('applet')->where('id',$data['store_id'])->value('appSecret');
+                // // $head_pic=$this->getHeadpic($public_info ['authorization_info'] ['authorizer_appid'],$appsecret);   //小程序菊花码
+                // // $data['qrcode_url'] = $head_pic;     //二维码地址
+                // //记录授权信息
+                // $res=Db::table('miniprogram')->insert($data);
+                // //设置域名---修改服务器
+                // $set_service=$this->setServerDomain($data['access_token']);
+                // $set_yewu_service=$this->setBusinessDomain($data['access_token']);
+                // if($res){
+                //     $this->success('授权成功',url('admin/Upload/auth_detail'));
+                // }else{
+                //     $this->error('用户未授权或授权错误，请重新授权',url('admin/Upload/auth_pre'));
     
-                }
+                // }
         }
          /*
      * 设置小程序服务器地址，无需加https前缀，但域名必须可以通过https访问
