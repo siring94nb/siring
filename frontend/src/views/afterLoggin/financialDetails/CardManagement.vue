@@ -8,7 +8,7 @@
     </logginHeader>
     <div class="bottomBox">
       <!-- <input type="checkbox" name="name" id="1"> -->
-      <div class="card" v-for="(item,index) in cardImage" :key="index">
+      <div ref="card" class="card" v-for="(item,index) in cardImage" :key="index">
         <div>
           <el-checkbox v-model="checked[index]" @change="xuanzhogn(index)">设为默认</el-checkbox>
         </div>
@@ -161,6 +161,7 @@ export default {
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
+      // let aDiv = this.$refs.card
       if(aDiv.length != 0){
         if (this.checked[num] === true) {
           aDiv[num].classList.add("active");

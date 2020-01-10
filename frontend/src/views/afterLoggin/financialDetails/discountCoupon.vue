@@ -53,7 +53,7 @@
           style="width: 100%; font-size:13px;color:#797979"
           :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontSize:'14px',fontWeight:700 }"
         >
-          <el-table-column prop="created_at" label="获得时间" width="240" align="center"></el-table-column>
+          <el-table-column prop="add_time" label="获得时间" width="240" align="center"></el-table-column>
           <el-table-column prop="end_time" label="到期时间" width="240" align="center"></el-table-column>
           <el-table-column prop="coupon_status" label="优惠券状态" align="center" width="240">
             <template slot-scope="scope">

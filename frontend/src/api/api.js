@@ -615,4 +615,10 @@ export const msgList = data => {
 export const addMessage = data => {
     return axios.post(`${base_url}api/Chat/add_message`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 用户留言
+ */
+export const Member = data => {
+    return axios.post(`${base_url}api/Website/member`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload
