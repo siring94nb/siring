@@ -11,13 +11,13 @@ class WxThree extends Base
 {
     private $appid = 'wxc8257b29680254a5';            //第三方平台应用appid
     private $appsecret = '9d0a62193caab918ed7eb80b9aa2d530';     //第三方平台应用appsecret
-    private $token = 'manage.siring.com.cn';           //第三方平台应用token（消息校验Token）
+    private $token = 'siringcomcn';           //第三方平台应用token（消息校验Token）
     private $encodingAesKey = 'a5a22f38cb60228cb32ab61d9e4c414bueu73jddj87';      //第三方平台应用Key（消息加解密Key）
     // private $component_ticket= 'ticket@@@mMQLlMnPx_y9E5HWGdfJKeKJadwSFBhcrzA8eJrMSmfIZInb_8ck42Y9eitnPWnkZXlNkgR33-P3otpQ1c00-A';   //微信后台推送的ticket,用于获取第三方平台接口调用凭据
     
     public function __construct(){
         ///获取component_ticket
-        $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
+        $this->component_ticket=Db::table('wx_threeopen')->where('id',1)->value('component_verify_ticket');
     }
 
     /**
@@ -110,6 +110,10 @@ class WxThree extends Base
             // $authorizer_appid = input('param.appid/s'); 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
+            $pp['msg']='111';
+            Db::table('test')->insert($pp);
+            $pp11['msg']=$postStr;
+            Db::table('test')->insert($pp11);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -129,6 +133,8 @@ class WxThree extends Base
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
                 $p12['msg']=$errCode;
                 Db::table('test')->insert($p12);
+                $p['msg']=$errCode.'错误码';
+                Db::table('test')->insert($p);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
@@ -142,22 +148,19 @@ class WxThree extends Base
                     //         echo $this->responseText($msgObj, $content2);
                     //     }
                     // }
-                    $p11['msg']=$content.'11';
+                    $p11['msg']=$content.'001';
                     Db::table('test')->insert($p11);
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
-                        $p2['msg']=$toUsername.'222';
-                        Db::table('test')->insert($p2);
-                        if ($toUsername == 'gh_3c884a361561') { 
-                        // if ($toUsername == 'gh_8dad206e9538') { 
+                        if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
-                            $pp5['msg']=$query_auth_code.'112233';
+                            $pp5['msg']=$query_auth_code;
                             Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
-                            $pp6['msg']=$params.'1111';
-                            Db::table('test')->insert($pp6);
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
+                            $pp6['msg']=$authorizer_access_token;
+                            Db::table('test')->insert($pp6);
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
                         }
