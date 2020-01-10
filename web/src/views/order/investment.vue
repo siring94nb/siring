@@ -1,5 +1,4 @@
 <style lang="less" scoped>
-
 </style>
 <template>
     <div>
@@ -41,7 +40,7 @@
             <p slot="header" style="color:#2d8cf0;">
                 <Icon type="md-information-circle"></Icon>
                 <span>{{formItem.id ? '审核' : '新增'}}</span>
-            </p>
+            </p>	              show-total
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
                 <FormItem label="审核状态" prop="status">
                     <Select v-model="formItem.status" style="width:200px">
@@ -59,6 +58,7 @@
         </Modal>
     </div>
 </template>
+
 <script>
     import axios from 'axios';
     import config from '../../../build/config';
@@ -75,7 +75,7 @@
                     vm.formItem.id = currentRow.id;
                     vm.formItem.status = currentRow.status;
                     //console.log(vm.formItem.cash_mode);
-                    //图片
+                    //图片	            name: "goods_add",
                     vm.modalSetting.show = true;
                     vm.modalSetting.index = index;
                 }
@@ -96,68 +96,50 @@
                         key: 'id'
                     },
                     {
-                        title: '用户账号',
-                        align: 'center',
-                        key: 'phone'
-                    },
-                    {
-                        title: '订单号',
+                        title: '项目编号',
                         align: 'center',
                         key: 'no',
                         width: 190,
                     },
                     {
-                        title: '支付方式',
+                        title: '用户名',
                         align: 'center',
-                        key: 'pay_type',
-                        render: ( h , param ) => {
-                            if(param.row.pay_type == '1'){
-                                return h('div','支付宝');
-                            }else if(param.row.pay_type == '2'){
-                                return h('div','微信');
-                            }else if(param.row.pay_type == '3'){
-                                return h('div','汇款');
-                            }else{
-                                return h('div','暂无付款');
-                            }
-                        }
+                        key: 'realname'
                     },
                     {
-                        title: '支付金额',
+                        title: '用户账号',
                         align: 'center',
-                        key: 'money'
+                        key: 'phone'
                     },
                     {
-                        title: '支付时间',
+                        title: '投融类型',
                         align: 'center',
-                        key: 'created_at'
+                        key: 'model_type'
                     },
                     {
-                        title: '申请技能',
+                        title: '项目名称',
                         align: 'center',
-                        key: 'dev_name'
+                        key: 'name'
                     },
                     {
-                        title: '状态',
+                        title: '行业领域',
                         align: 'center',
-                        key: 'status',
-                        render: ( h , param ) => {
-                            if(param.row.status == '1'){
-                                return h('div','未审核');
-                            }else if(param.row.status == '2'){
-                                return h('div','已审核');
-                            }else if(param.row.status == '3'){
-                                return h('div','驳回');
-                            }else{
-                                return h('div','关闭');
-                            }
-                        }
+                        key: 'title'
                     },
-
                     {
-                        title: '处理时间',
+                        title: '赏金',
                         align: 'center',
-                        key: 'updated_at'
+                        key: 'surplus'
+                    },
+                    {
+                        title: '双方最新消息',
+                        align: 'center',
+                        key: 'user_msg'
+                    },
+                    {
+                        title: '平台最新消息',
+                        align: 'center',
+                        key: 'admin_msg'
                     },
                     {
                         title: '操作',
@@ -198,6 +180,7 @@
         created () {
             this.init();
             this.getList();
+            key: "plate_form"
         },
         methods: {
             init () {
@@ -225,9 +208,9 @@
                         self.modalSetting.loading = true;
                         let target = '';
                         if (this.formItem.id === 0) {
-                            target = 'JoinOrder/add';
+                            target = 'Investment/add';
                         } else {
-                            target = 'JoinOrder/upd';
+                            target = 'Investment/upd';
                         }
                         axios.post(target, this.formItem).then(function (response) {
                             if (response.data.code === 1) {
@@ -253,7 +236,6 @@
                 // }
                 // this.iconList = [];
                 this.getList();
-
             },
             changePage (page) {
                 this.tableShow.currentPage = page;
@@ -269,7 +251,7 @@
             },
             getList () {
                 let vm = this;
-                axios.get('JoinOrder/merchant', {
+                axios.get('Investment/index', {
                     params: {
                         page: vm.tableShow.currentPage,
                         size: vm.tableShow.pageSize,
@@ -304,8 +286,6 @@
                 }
             },
             // 图片上传
-
-
         },
         mounted () {
             //照片
@@ -313,4 +293,5 @@
         },
     };
 </script>
+
 

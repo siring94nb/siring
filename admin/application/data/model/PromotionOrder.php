@@ -9,7 +9,8 @@ class PromotionOrder extends Model
 {
     protected $table = "order";
     protected $resultSetType = 'collection';
-
+    protected $createTime = 'created_at';
+    protected $updateTime = 'updated_at';
 
     public function order_add($role_type,$uid,$title,$object,$num,$yid,$tid,$ask,$money,$grade,$con,$resume,$url)
     {
