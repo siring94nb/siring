@@ -103,7 +103,8 @@
                     {
                         title: '订单号',
                         align: 'center',
-                        key: 'no'
+                        key: 'no',
+                        width: 190,
                     },
                     {
                         title: '支付方式',
@@ -117,7 +118,7 @@
                             }else if(param.row.pay_type == '3'){
                                 return h('div','汇款');
                             }else{
-                                return h('div','');
+                                return h('div','暂无付款');
                             }
                         }
                     },

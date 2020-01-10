@@ -444,7 +444,7 @@ export const appRouter = [
                         name: 'promotion_order',
                         access: 'admin/Promotion/index',
                         title: '套餐订单',
-                        component: () => import('@/views/order/model_order.vue')
+                        component: () => import('@/views/order/promotion.vue')
                     },
                 ]
             },
@@ -461,7 +461,7 @@ export const appRouter = [
                         name: 'investment_order',
                         access: 'admin/Investment/index',
                         title: '套餐订单',
-                        component: () => import('@/views/order/model_order.vue')
+                        component: () => import('@/views/order/investment.vue')
                     },
                 ]
             },

@@ -62,7 +62,7 @@ class Investment extends Base
             $param['size'] = 6;
         }
 
-        $field = 'a.id,a.model_type,a.name,a.user_id,a.sid,a.resume,a.surplus,a.created_at,a.need_status,b.title,c.realname,c.phone';
+        $field = 'a.id,a.no,a.model_type,a.name,a.user_id,a.sid,a.resume,a.surplus,a.created_at,a.need_status,b.title,c.realname,c.phone';
         $order = 'a.id desc';
 
         $list = (new InvestmentProject())
