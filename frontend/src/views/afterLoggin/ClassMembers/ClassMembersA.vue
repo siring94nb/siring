@@ -57,7 +57,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" v-model="suoyin" />
-                  <button @click="gb();GetMemberPartner()">搜索</button>
+                  <button @click="GetMemberPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
@@ -72,7 +72,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="alist.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="alist"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -82,7 +82,9 @@
                   <el-table-column prop="created_at" label="日期" width="230" align="center"></el-table-column>
                   <el-table-column prop="phone" label="邀请人账号" width="225" align="center">
                     <template slot-scope="scope">
-                      <div v-if="scope.row.phone != ''">{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
+                      <div
+                        v-if="scope.row.phone != ''"
+                      >{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
                   <el-table-column prop="ot_yqm" label="邀请人邀请码" width="200" align="center"></el-table-column>
@@ -105,7 +107,7 @@
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="alist.length"
+                      :total="total"
                     ></el-pagination>
                   </div>
                 </div>
@@ -126,7 +128,7 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="blist1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="blist1"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -155,7 +157,7 @@
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="blist1.length"
+                      :total="total"
                     ></el-pagination>
                   </div>
                 </div>
@@ -189,7 +191,7 @@ export default {
         }
       ],
       activeName: "first",
-      value: "",
+      value: undefined,
       // 邀请分页表格
       alist: [],
       blist1: [],
@@ -198,30 +200,38 @@ export default {
       total: 100,
       DirectlyTo: 1,
       suoyin: "",
-      dis: true
+      dis: true,
+      startTime: "",
+      endTime: "",
     };
   },
   components: {
     logginHeader
   },
   mounted() {
-    this.RoleCenter();
-    this.GetMemberTotal();
-    this.GetMemberPartner();
-    this.GetMemberPartner1();
+    // this.RoleCenter();
+    // this.GetMemberTotal();
+    // this.GetMemberPartner();
+    // this.GetMemberPartner1();
+    this.init();
   },
   methods: {
-    gb() {
-      // 修改状态判断是否有索引条件
-      if (this.suoyin == "" && this.value == "") {
-        this.dis = true;
-      } else if (this.value == null && this.suoyin == "") {
-        this.dis = true;
-        this.value = "";
-      } else {
-        this.dis = false;
-      }
+    init() {
+      this.GetMemberPartner();
+      this.RoleCenter();
+      this.GetMemberTotal();
     },
+    // gb() {
+    //   // 修改状态判断是否有索引条件
+    //   if (this.suoyin == "" && this.value == "") {
+    //     this.dis = true;
+    //   } else if (this.value == null && this.suoyin == "") {
+    //     this.dis = true;
+    //     this.value = "";
+    //   } else {
+    //     this.dis = false;
+    //   }
+    // },
     handleEdit(index, row) {
       console.log(index, row);
     },
@@ -247,63 +257,62 @@ export default {
         }
       });
     },
+    gbTime() {
+      console.log(this.value);
+      if (this.value != undefined && this.value != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+    },
     // 获取等级会员列表数据
     GetMemberPartner() {
-      let params = {};
-      let times = this.value;
-      if (this.dis) {
-        params = {
-          type: 2
-        };
-      } else {
-        if (this.value == "") {
-          params = {
-            type: 2,
-            title: this.suoyin
-          };
-        } else if (this.suoyin == "" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            title: this.suoyin,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        }
-      }
-      MemberPartner(params).then(res => {
-        let { data, msg, code } = res;
-        console.log(222)
-        console.log(data);
-        if (code === 1) {
-          this.alist = data.data;
-          console.log(this.alist);
-        }
-      });
-    },
-    GetMemberPartner1() {
-      const params = {
-        type: 1
+      this.gbTime();
+      let params = {
+        type: this.type,
+        title: this.suoyin,
+        start_time: this.startTime,
+        endTime: this.endTime,
+        page: this.currpage
       };
+      console.log(params);
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(1111)
-        console.log(res);
+        // this.showMsg(msg, code);
         if (code === 1) {
-          this.blist1 =data.data;
-          console.log(this.blist1)
+          if (this.activeName == "first") {
+            this.list = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
+            console.log("first");
+          } else {
+            this.blist = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
+            console.log("second");
+          }
         }
       });
     },
+    // GetMemberPartner1() {
+    //   const params = {
+    //     type: 1
+    //   };
+    //   MemberPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     console.log(1111)
+    //     console.log(res);
+    //     if (code === 1) {
+    //       this.blist1 =data.data;
+    //       console.log(this.blist1)
+    //     }
+    //   });
+    // },
     // 获取我邀请的会员总数，佣金总数，get方式
     GetMemberTotal() {
       MemberTotal().then(res => {
@@ -325,8 +334,15 @@ export default {
       //监听切换状态-计划单
       if (val === "first") {
         this.title = "我邀请的会员明细";
+        this.type = 1;
+        this.GetMemberPartner();
       } else {
         this.title = "等级会员订单";
+        this.type = 2;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetMemberPartner();
       }
     }
   }

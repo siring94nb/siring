@@ -26,7 +26,7 @@
       <div class="inputContent">
         <span class="xg" style="margin-right:25px">上级邀请码：</span>
         <div>
-          <input type="text" placeholder="合适的时机再填写吧，确认上级之后不可修改" value="" id="yaoqm" :disabled="otherCode==''?false:true"/>
+          <input type="text" placeholder="合适的时机再填写吧，确认上级之后不可修改" :value="otherCode" id="yaoqm" :disabled="otherCode==''?false:true"/>
           <div>*可选项</div>
         </div>
       </div>
@@ -275,8 +275,10 @@ export default {
           this.sfzId=data.id_card,
           this.dizhi=data.address,
           this.radioVal=data.sex===1?"男":"女",
+          // this.enterpriseName = data
           this.identityCardZImg=data.id_card_just||this.identityCardZImg,
           this.identityCardFImg=data.id_card_back||this.identityCardFImg
+          console.log(data.img)
         }
       });
     },
@@ -291,6 +293,7 @@ export default {
         id_card_back: this.identityCardFImg,
         province: this.province,
         city: this.city,
+        enterprise_id:this.enterpriseName,
         area: this.area,
         address: this.dizhi,
         enterprise_id: this.enterpriseName,

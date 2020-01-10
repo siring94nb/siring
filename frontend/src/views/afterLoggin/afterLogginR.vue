@@ -58,7 +58,7 @@
               <span style="font-size:13px;">元</span>
               <i class="el-icon-arrow-right"></i>
             </div>
-            <div class="tx">提现</div>
+            <div class="tx"><router-link to="withdrawX" style="color:#0889f5">提现</router-link></div>
           </div>
         </div>
       </div>
@@ -100,7 +100,6 @@ export default {
     },
     // 获取用户信息
     userMessage() {
-      console.log("0106");
       const userId = sessionStorage.getItem("user_id");
       const params = {
         user_id: userId

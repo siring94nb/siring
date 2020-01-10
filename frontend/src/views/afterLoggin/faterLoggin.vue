@@ -2,46 +2,49 @@
   <div>
     <!--<myheader />-->
     <!-- 侧边导航栏菜单 -->
-    <el-row class="tac">
-      <el-col :span="12">
-        <el-menu
-          :default-active="ru"
-          class="el-menu-vertical-demo"
-          @open="handleOpen"
-          @close="handleClose"
-          background-color="#7fadcc"
-          active-background-color="#000000"
-          text-color="#fff"
-          :default-openeds="[num]"
-          :router="true"
-          :unique-opened="true"
-        >
-          <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
-            <!-- 控制中心 -->
-            <template slot="title">
-              <div>
-                <div v-if="index==0" class="imgBox">
-                  <div>
-                    <img :src="imgUrl" alt />
+    <div class="box" ref="box" :style="wstyle">
+      <el-row class="tac">
+        <el-col :span="12">
+          <el-menu
+            :default-active="ru"
+            class="el-menu-vertical-demo"
+            @close="handleClose"
+            background-color="#7fadcc"
+            active-background-color="#000000"
+            text-color="#fff"
+            :default-openeds="[num]"
+            :router="true"
+            :unique-opened="true"
+          >
+            <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
+              <!-- 控制中心 -->
+              <template slot="title">
+                <div ref="elSubmenu">
+                  <div v-if="index==0" class="imgBox">
+                    <div>
+                      <img :src="imgUrl" alt />
+                    </div>
+                    <div class="name">{{name}}</div>
                   </div>
-                  <div class="name">{{name}}</div>
+                  <div>
+                    <i :class="item.classN" style="padding-right:15px;"></i>
+                    <span>{{item.title}}</span>
+                  </div>
                 </div>
-                <div>
-                  <i :class="item.classN" style="padding-right:15px;"></i>
-                  <span>{{item.title}}</span>
-                </div>
-              </div>
-            </template>
-            <el-menu-item
-              v-for="(con,index1) in item.con"
-              :key="index1+''"
-              :index="con.rou"
-              style="color:#000"
-            >{{con.name}}</el-menu-item>
-          </el-submenu>
-        </el-menu>
-      </el-col>
-    </el-row>
+              </template>
+              <el-menu-item
+                v-for="(con,index1) in item.con"
+                :key="index1+''"
+                :index="con.rou"
+                style="color:#000"
+              >
+                <div ref="con">{{con.name}}</div>
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-row>
+    </div>
   </div>
 </template>
 
@@ -139,16 +142,21 @@ export default {
       ],
       routerValue: this.$route.path,
       imgUrl: require("../../assets/images/u158.png"), //用户头像
-      name: "未设置" //用户姓名
+      name: "未设置", //用户姓名
+      dis: true,
+      wstyle: " "
     };
   },
   components: {},
   mounted() {
-    this.init()
+    this.init();
+    //  window.onresize = () => {
+    //   console.log(13212313)
+    // };
   },
   methods: {
-    init(){
-      console.log("0109-a")
+    init() {
+      console.log("0109-a");
       this.cityHehuorenX(),
       this.classHuiyuanX(),
       this.fenbaoshangX(),
@@ -156,6 +164,7 @@ export default {
       this.zhankai();
       this.gb();
       this.userMessage();
+      this.chaxun()
     },
     // 保持侧边栏对应路由展开状态
     zhankai() {
@@ -189,8 +198,8 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
-          // this.arr[2].con[0].rou = "/CityPartner";
-          this.arr[2].con[0].rou = "/partnerCityX";
+          this.arr[2].con[0].rou = "/CityPartner";
+          // this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
         }
       });
@@ -202,7 +211,7 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
         } else {
-          this.arr[2].con[1].rou = "/ClassMembersX";
+          // this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
         }
@@ -215,8 +224,8 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
         } else {
-          this.arr[2].con[2].rou = "/subContractorIndex";
-          // this.arr[2].con[2].rou = "/subContractorSm1";
+          // this.arr[2].con[2].rou = "/subContractorIndex";
+          this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
         }
       });
@@ -231,8 +240,22 @@ export default {
         // console.log(2222)
       }
     },
-    handleOpen(key, keyPath) {
-      //   console.log(key, keyPath);
+    chaxun() {
+      let sum = 0;
+      for (let i = 0; i < this.$refs.elSubmenu.length; i++) {
+        sum +=
+          this.$refs.elSubmenu[i].offsetHeight + this.$refs.con[i].offsetHeight;
+      }
+      // console.log(window.innerHeight)
+      // console.log(sum)
+      if (window.innerHeight < sum+100 ||window.innerHeight == sum+100) {
+        this.wstyle="overflow-y:scroll;height:"+(window.innerHeight-20)+"px";
+        // console.log(1111)
+      } else {
+        this.wstyle=""
+        // console.log(2222)
+      }
+      // }, 1000);
     },
     handleClose(key, keyPath) {
       //   console.log(key, keyPath);
@@ -255,11 +278,21 @@ export default {
     gb() {
       let sArr = document.getElementsByClassName("el-submenu__title");
       sArr[0].style.height = "200px";
-    }
+    },
   }
 };
 </script>
 <style lang="scss" scoped>
+.box {
+  // height: 300px;
+  position: relative;
+  z-index: 555;
+  width: 149px;
+  // overflow-y:scroll;
+}
+.box::-webkit-scrollbar {
+  display: none;
+}
 .tac {
   margin-top: 100px;
   width: 300px;

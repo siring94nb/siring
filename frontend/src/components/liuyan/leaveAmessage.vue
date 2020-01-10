@@ -98,174 +98,6 @@ export default {
           create_time: "2020-01-06 11:43:35",
           name: "平台顾问",
           img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 1,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言",
-          type: 0,
-          inside: 1,
-          create_time: "2020-01-06 11:43:35",
-          name: "平台顾问",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 1,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言",
-          type: 0,
-          inside: 1,
-          create_time: "2020-01-06 11:43:35",
-          name: "平台顾问",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 1,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言",
-          type: 0,
-          inside: 1,
-          create_time: "2020-01-06 11:43:35",
-          name: "平台顾问",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 5,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言2",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 14:19:41",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
-        },
-        {
-          id: 2,
-          pid: 9,
-          uid: 4,
-          rid: 1,
-          content: "测试留言",
-          type: 0,
-          inside: 0,
-          create_time: "2020-01-06 11:43:35",
-          name: "刘德华",
-          img: "http://qiniu.siring.com.cn/0c429202001021830547871.jpg"
         }
       ],
       msgListArr: [],
@@ -287,7 +119,7 @@ export default {
     init() {
       document.getElementsByClassName("xiaoxiC")[0].focus();
       this.getmsgList();
-      this.ceshi();
+      // this.ceshi();
     },
     showMsg(msg, code) {
       this.$message({
@@ -334,6 +166,8 @@ export default {
       // let timeOut =  setTimeout(()=>{
       //   console.log("一分钟已经到了")
       // },60000)
+       console.log(this.uid);
+      console.log(this.pid);
       let params = {
         pid: parseInt(this.pid),
         uid: parseInt(this.uid),
@@ -433,7 +267,7 @@ export default {
       );
     },
     // 绑定回车事件
-    huiche(event){
+    huiche(event){ 
       if(event.which == 13 && this.dis){
         this.setaddMessage();
       }

@@ -154,7 +154,7 @@
                   <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
                 </div>
               </div>
-            </div> -->
+            </div>-->
             <div v-for="(item,index) in shichuang" :key="index">
               <div class="fengbaoName">
                 <span>
@@ -183,7 +183,7 @@
                   >我要接单</span>
                   <span
                     style="color: #169BD5; padding-right:10px;"
-                    v-if="lastPage==1"
+                    v-if="lastPage > 1"
                     @click="GetSubView(lastPage-1)"
                   >上一条</span>
                   <span
@@ -298,13 +298,13 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" v-model="suoyin" />
-                  <button @click="gb();GetSubcontractPartner()">搜索</button>
+                  <button @click="GetSubcontractPartner()">搜索</button>
                 </div>
               </div>
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="slist.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="slist"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -343,7 +343,7 @@
                       :current-page="DirectlyTo"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="slist.length"
+                      :total="total"
                     ></el-pagination>
                   </div>
                 </div>
@@ -354,7 +354,7 @@
             <div>
               <div style="padding-bottom:20px;">
                 <el-table
-                  :data="slist1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="slist1"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
@@ -407,7 +407,7 @@ export default {
         }
       ],
       activeName: "first",
-      value: "",
+      value: undefined,
       // 邀请分页表格
       slist: [],
       slist1: [],
@@ -417,29 +417,45 @@ export default {
       total: 100,
       DirectlyTo: 1,
       suoyin: "",
-      fbxm: "flex" //控制分包项目位置显示隐藏
+      fbxm: "flex", //控制分包项目位置显示隐藏
+      startTime: "",
+      endTime: ""
     };
   },
   components: {
     logginHeader
   },
   mounted() {
-    this.RoleCenter();
-    this.GetSubcontractTotal();
-    this.GetSubcontractPartner();
-    this.GetSubcontractPartner1();
-    this.GetSubView(1);
+    this.init();
   },
   methods: {
-    gb() {
-      // 修改状态判断是否有索引条件
-      if (this.suoyin == "" && this.value == "") {
-        this.dis = true;
-      } else if (this.value == null && this.suoyin == "") {
-        this.dis = true;
-        this.value = "";
+    init() {
+      this.RoleCenter();
+      this.GetSubcontractTotal();
+      this.GetSubcontractPartner();
+      // this.GetSubcontractPartner1();
+      this.GetSubView(1);
+    },
+    // gb() {
+    //   // 修改状态判断是否有索引条件
+    //   if (this.suoyin == "" && this.value == "") {
+    //     this.dis = true;
+    //   } else if (this.value == null && this.suoyin == "") {
+    //     this.dis = true;
+    //     this.value = "";
+    //   } else {
+    //     this.dis = false;
+    //   }
+    // },
+    gbTime() {
+      console.log(this.value);
+      if (this.value != undefined && this.value != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
       } else {
-        this.dis = false;
+        this.startTime = "";
+        this.endTime = "";
       }
     },
     handleCurrentChange(cpage) {
@@ -501,62 +517,91 @@ export default {
     },
     // 项目明细，申请订单（需要传递参数type类型为int（1为项目明细数据申请，2为申请订单数据申请））
     GetSubcontractPartner() {
-      let params = {};
-      let times = this.value;
-      if (this.dis) {
-        params = {
-          type: 1
-        };
-      } else {
-        if (this.value == "") {
-          params = {
-            type: 1,
-            title: this.suoyin
-          };
-        } else if (this.suoyin == "" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 1,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 1,
-            title: this.suoyin,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        }
-      }
-      // const params = {
-      //   type: 1
-      // };
-      SubcontractPartner(params).then(res => {
-        let { data, msg, code } = res;
-        // this.showMsg(msg, code);
-        console.log(data);
-        if (code === 1) {
-          this.slist = data.data;
-        }
-      });
-    },
-    GetSubcontractPartner1() {
-      const params = {
-        type: 2
+      // let params = {};
+      // let times = this.value;
+      // if (this.dis) {
+      //   params = {
+      //     type: 1
+      //   };
+      // } else {
+      //   if (this.value == "") {
+      //     params = {
+      //       type: 1,
+      //       title: this.suoyin
+      //     };
+      //   } else if (this.suoyin == "" && this.value != null) {
+      //     let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       type: 1,
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //   } else {
+      //     let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       type: 1,
+      //       title: this.suoyin,
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //   }
+      // }
+      // // const params = {
+      // //   type: 1
+      // // };
+      // SubcontractPartner(params).then(res => {
+      //   let { data, msg, code } = res;
+      //   // this.showMsg(msg, code);
+      //   console.log(data);
+      //   if (code === 1) {
+      //     this.slist = data.data;
+      //   }
+      // });
+
+      this.gbTime();
+      let params = {
+        type: this.type,
+        title: this.suoyin,
+        start_time: this.startTime,
+        endTime: this.endTime,
+        page: this.currpage
       };
+      console.log(params);
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
-        console.log(data);
         if (code === 1) {
-          this.slist1 = data.data;
+          if (this.activeName == "first") {
+            this.slist = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
+            console.log("first");
+          } else {
+            this.slist1 = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
+            console.log("second");
+          }
         }
       });
     },
+    // GetSubcontractPartner1() {
+    //   const params = {
+    //     type: 2
+    //   };
+    //   SubcontractPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     // this.showMsg(msg, code);
+    //     console.log(data);
+    //     if (code === 1) {
+    //       this.slist1 = data.data;
+    //     }
+    //   });
+    // },
     // 分包商视窗数据
     GetSubView(num) {
       let params = {
@@ -567,7 +612,7 @@ export default {
         // this.showMsg(msg,code);
         console.log(data);
         if (data.code === 1) {
-          this.lastPage = data.data.last_page;
+          this.lastPage = data.current_page;
           this.shichuang = data.data.data;
         }
       });
@@ -657,10 +702,17 @@ export default {
       if (val === "first") {
         this.title = "我承接的项目明细";
         this.fbxm = "flex";
+        this.type = 1;
+        this.GetSubcontractPartner();
         // console.log(this.fbxm)
       } else if (val === "second") {
         this.title = "分包商申请订单";
         this.fbxm = "none";
+        this.type = 2;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetSubcontractPartner();
         //  console.log(this.fbxm)
       }
     }
