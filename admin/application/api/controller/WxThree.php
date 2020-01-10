@@ -144,7 +144,6 @@ class WxThree extends Base
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
-                        if ($toUsername == 'gh_3c884a361561') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
                             $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
@@ -154,7 +153,6 @@ class WxThree extends Base
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
-                        }
                     }
                 }
             }
