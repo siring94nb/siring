@@ -17,7 +17,7 @@ class WxThree extends Base
     
     public function __construct(){
         ///获取component_ticket
-        $this->component_ticket=db('wx_threeopen')->where('id',1)->value('component_verify_ticket');
+        $this->component_ticket=Db::table('wx_threeopen')->where('id',1)->value('component_verify_ticket');
     }
 
     /**
@@ -111,7 +111,9 @@ class WxThree extends Base
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
             $pp['msg']='111';
-            db('test')->insert($pp);
+            Db::table('test')->insert($pp);
+            $pp11['msg']=$postStr;
+            Db::table('test')->insert($pp11);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -154,11 +156,11 @@ class WxThree extends Base
                         if ($toUsername == 'gh_8dad206e9538') { 
                             $query_auth_code = str_replace('QUERY_AUTH_CODE:', '', $content);
                             $pp5['msg']=$query_auth_code;
-                            db('test')->insert($pp5);
+                            Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $pp6['msg']=$authorizer_access_token;
-                            db('test')->insert($pp6);
+                            Db::table('test')->insert($pp6);
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
                         }
