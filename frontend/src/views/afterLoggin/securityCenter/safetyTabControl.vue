@@ -1,10 +1,10 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-huiyuan"></i>
       <span>会员中心</span>
       <span>&gt;</span>
-      <span>安全中心</span>
+      <router-link to="/securityCenterIndex" style="color:lightBlue">安全中心</router-link>
       <span>&gt;</span>
       <span>{{title}}</span>
     </logginHeader>
@@ -158,8 +158,8 @@ export default {
         if (code === 1) {
           this.handleClose();
           // 修改成功，返回上一层
-          this.$router.go(-1)
-          // this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
+          // this.$router.go(-1)
+          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
         }
       });
     },
@@ -244,6 +244,18 @@ export default {
         }
       }, 1000);
     },
+  },
+  watch: {
+    activeName: function(val) {
+      //监听切换状态-计划单
+      if (val === "first") {
+        this.title = "绑定手机";
+      } else if (val === "second") {
+        this.title = "登录密码";
+      } else {
+        this.title = "资金密码";
+      }
+    }
   }
 };
 </script>
@@ -253,6 +265,7 @@ export default {
   margin: 10px 0 0 20px;
   padding: 20px;
   font-size: 13px;
+  min-height: 78.5vh;
   .el-tab-pane{
     margin-left: 200px;
     margin-top: 20px;

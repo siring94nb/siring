@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-jiaose"></i>
       <span>角色中心</span>
       <span>&gt;</span>
       <span>分包商</span>
@@ -37,11 +37,11 @@
           <!-- 分包项目视窗 -->
           <div class="fengbaoshang" :style="{'display':fbxm}">
             <div>分包项目</div>
-            <div>
+            <!-- <div>
               <div class="fengbaoName">
                 <span>
                   项目名称：
-                  <span>{{shichuang.name}}</span>
+                  <span>{{shichuang[0].name}}</span>
                 </span>
                 <span>
                   酬金：
@@ -49,12 +49,130 @@
                 </span>
                 <span>
                   预计时间：
-                  <span>{{shichuang.created_at}}</span>
+                  <span>{{shichuang[0].created_at}}</span>
                 </span>
               </div>
               <div>
                 <div>功能需求：</div>
-                <!-- <div>{{shichuang.con}}</div> -->
+                <div v-html="shichuang[0].con"></div>
+              </div>
+              <div style="display: flex; justify-content:space-between">
+                <div style="color: #FF9900;">详情</div>
+                <div>
+                  <span
+                    style="padding-right:30px;color: #66CC00; cursor:pointer"
+                    @click.stop="ShowHidden"
+                  >我要接单</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px;"
+                    v-if="lastPage==1"
+                    @click="GetSubView(lastPage-1)"
+                  >上一条</span>
+                  <span
+                    style="color: #169BD5; padding-right:10px; cursor: pointer;"
+                    @click="GetSubView(lastPage+1)"
+                  >下一条</span>
+                </div>
+              </div>
+              <div class="orderReceiving" ref="orderReceiving" style="display:none">
+                <div class="triangle"></div>
+                <div>
+                  <div>
+                    <span>请确认联系方式</span>
+                    <span style="float:right">
+                      <i class="el-icon-edit" @click.stop="ShowHidden"></i>
+                    </span>
+                  </div>
+                  <div>
+                    <div>
+                      <span>
+                        <span>手机号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('phone')">
+                          <input
+                            type="text"
+                            value
+                            v-model="phone"
+                            disabled="true"
+                            ref="phone"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('phone')"
+                        >确定</span>
+                        <span class="ac active" @click.stop="firstChoice('phone')">首选</span>
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        <span>微信号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('WXnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="WXnum"
+                            disabled="true"
+                            ref="WXnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('WXnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('WXnum')">首选</span>
+                      </span>
+                    </div>
+                    <div>
+                      <span>
+                        <span>QQ号：</span>
+                        <span title="点击可修改" @click.stop="xiugai('QQnum')">
+                          <input
+                            type="text"
+                            value
+                            v-model="QQnum"
+                            disabled="true"
+                            ref="QQnum"
+                            maxlength="11"
+                          />
+                        </span>
+                        <span
+                          class="confirm"
+                          ref="confirm"
+                          style="display:none"
+                          @click.stop="affirmBtn('QQnum')"
+                        >确定</span>
+                        <span class="ac" @click.stop="firstChoice('QQnum')">首选</span>
+                      </span>
+                    </div>
+                  </div>
+                  <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
+                </div>
+              </div>
+            </div> -->
+            <div v-for="(item,index) in shichuang" :key="index">
+              <div class="fengbaoName">
+                <span>
+                  项目名称：
+                  <span>{{item.name}}</span>
+                </span>
+                <span>
+                  酬金：
+                  <span style="color:#ff0000">￥100000</span>
+                </span>
+                <span>
+                  预计时间：
+                  <span>{{item.created_at}}</span>
+                </span>
+              </div>
+              <div>
+                <div>功能需求：</div>
+                <div v-html="item.con"></div>
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
@@ -153,7 +271,7 @@
                       </span>
                     </div>
                   </div>
-                  <button class="confirmBtn" @click="jiedan(shichuang.id)">确定，我要接单联系我吧！</button>
+                  <button class="confirmBtn" @click="jiedan(item.id)">确定，我要接单联系我吧！</button>
                 </div>
               </div>
             </div>
@@ -194,28 +312,21 @@
                   @selection-change="handleSelectionChange"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="date" label="项目订单编号" width="130" align="center"></el-table-column>
-                  <el-table-column prop="InviterAccount" label="订单名称" width="130" align="center"></el-table-column>
-                  <el-table-column
-                    prop="InviterInvitationCode"
-                    label="承接时间"
-                    width="170"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column prop="InviterLevel" label="要求完成时间" width="160" align="center"></el-table-column>
-                  <el-table-column prop="amount" label="项目开发文档" width="160" align="center"></el-table-column>
-                  <el-table-column
-                    prop="MinimumCommissions"
-                    label="延期扣款"
-                    width="125"
-                    align="center"
-                  ></el-table-column>
-                  <el-table-column
-                    prop="StandardCommission"
-                    label="佣金金额（元）"
-                    width="125"
-                    align="center"
-                  ></el-table-column>
+                  <el-table-column prop="id" label="项目订单编号" width="200" align="center"></el-table-column>
+                  <el-table-column prop="entry_name" label="订单名称" width="205" align="center"></el-table-column>
+                  <el-table-column prop="created_at" label="承接时间" width="170" align="center"></el-table-column>
+                  <el-table-column prop="InviterLevel" label="要求完成时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="amount" label="项目开发文档" width="220" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="延期扣款" width="180" align="center">
+                    <template slot-scope="scope">
+                      <div>{{scope.row.reach_money==null?"0":scope.row.reach_money}}</div>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="money" label="佣金金额（元）" width="180" align="center">
+                    <template slot-scope="scope">
+                      <div>{{scope.row.money==null?"0":scope.row.money}}</div>
+                    </template>
+                  </el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -249,11 +360,11 @@
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="id" label="申请专业技能" width="200" align="center"></el-table-column>
-                  <el-table-column prop="dev" label="技能语言" width="220" align="center"></el-table-column>
-                  <el-table-column prop="created_at" label="申请时间" width="220" align="center"></el-table-column>
-                  <el-table-column prop="money	" label="技能押金" width="200" align="center"></el-table-column>
-                  <el-table-column prop="role_type" label="支付方式" width="200" align="center"></el-table-column>
+                  <el-table-column prop="id" label="申请专业技能" width="295" align="center"></el-table-column>
+                  <el-table-column prop="dev" label="技能语言" width="280" align="center"></el-table-column>
+                  <el-table-column prop="created_at" label="申请时间" width="280" align="center"></el-table-column>
+                  <el-table-column prop="money	" label="技能押金" width="280" align="center"></el-table-column>
+                  <el-table-column prop="role_type" label="支付方式" width="280" align="center"></el-table-column>
                 </el-table>
               </div>
             </div>
@@ -261,7 +372,6 @@
         </el-tabs>
       </div>
     </div>
-    <div class="aba"></div>
   </div>
 </template>
 <script>
@@ -377,10 +487,10 @@ export default {
     // 获取分包商佣金，押金等
     GetSubcontractTotal() {
       SubcontractTotal().then(res => {
-        let { data, msg, code } = res;
+        let { data, msg } = res;
         // this.showMsg(msg,code);
         console.log(data);
-        if (code === 1) {
+        if (data.code === 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
             return item;
@@ -422,12 +532,15 @@ export default {
           };
         }
       }
+      // const params = {
+      //   type: 1
+      // };
       SubcontractPartner(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.slist = data;
+          this.slist = data.data;
         }
       });
     },
@@ -440,7 +553,7 @@ export default {
         // this.showMsg(msg, code);
         console.log(data);
         if (code === 1) {
-          this.slist1 = data;
+          this.slist1 = data.data;
         }
       });
     },
@@ -453,8 +566,8 @@ export default {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
         console.log(data);
-        if (code === 1) {
-          this.lastPage = data.last_page;
+        if (data.code === 1) {
+          this.lastPage = data.data.last_page;
           this.shichuang = data.data.data;
         }
       });
@@ -559,6 +672,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  min-height: 81vh;
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;
@@ -615,6 +729,7 @@ export default {
         position: relative;
         font-size: 13px;
         color: #5e5e5e;
+        margin-left: 10px;
         > div {
           &:nth-of-type(1) {
             background: rgba(102, 204, 255, 1);

@@ -11,7 +11,7 @@ use think\Model;
  */
 class InvestmentProject extends Model
 {
-    protected $table = "investment_project";
+    protected $table = "order";
     protected $resultSetType = 'collection';
     protected $autoWriteTimestamp = true;
     protected $createTime = 'created_at';
@@ -27,19 +27,20 @@ class InvestmentProject extends Model
         //pp($param);die;
         $data = new InvestmentProject;
         $data->save([
-            'title' => $param['title'],
-            'uid' => $param['uid'],
-            'cid' => $param['cid'],
+            'type' => 6,
+            'name' => $param['title'],
+            'user_id' => $param['uid'],
+            'sid' => $param['cid'],
             'no' => $this->get_sn(),
-            'reward' => $param['reward'],
-            'location' =>$param['location'],
-            'bright' => $param['bright'],
-            'revenue' => $param['revenue'],
-            'user_data' => $param['user_data'],
-            'valuation' => $param['valuation'],
-            'background' =>$param['background'],
+            'surplus' => $param['reward'],
+            'con' =>$param['location'],
+            'resume' => $param['bright'],
+            'other' => $param['revenue'],
+            'proposal' => $param['user_data'],
+            'examine_opinion' => $param['valuation'],
+            'user_clause' =>$param['background'],
             'advantage' => $param['advantage'],
-            'bp_url' => $param['bp_url'],
+            'url' => $param['bp_url'],
 
         ]);
 
@@ -51,7 +52,7 @@ class InvestmentProject extends Model
      * @return string
      */
     function get_sn() {
-        return 'TR'.date('YmdHi').rand(100000, 999999);
+        return 'TR'.date('YmdHis').rand(100000, 999999);
     }
 
     /**
@@ -85,12 +86,12 @@ class InvestmentProject extends Model
 
             }
         }
-        if(!empty($param['cid'])){
-            $where['cid'] = $param['cid'];
+        if(!empty($param['sid'])){
+            $where['sid'] = $param['sid'];
         }
 
         if(!empty($param['title'])){
-            $where['title'] = ['like','%'.$param['title'].'%'];
+            $where['name'] = ['like','%'.$param['title'].'%'];
         }
 
         if(empty($param['page'])){
@@ -99,7 +100,7 @@ class InvestmentProject extends Model
         if(empty($param['size'])){
             $param['size'] = 10;
         }
-        $field = 'id,title,cid,bright';
+        $field = 'id,name,sid,resume';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -143,12 +144,12 @@ class InvestmentProject extends Model
 
             }
         }
-        if(!empty($param['cid'])){
-            $where['cid'] = $param['cid'];
+        if(!empty($param['sid'])){
+            $where['sid'] = $param['sid'];
         }
 
         if(!empty($param['title'])){
-            $where['title'] = ['like','%'.$param['title'].'%'];
+            $where['name'] = ['like','%'.$param['title'].'%'];
         }
 
         if(empty($param['page'])){
@@ -157,7 +158,7 @@ class InvestmentProject extends Model
         if(empty($param['size'])){
             $param['size'] = 12;
         }
-        $field = 'id,title,cid,bright';
+        $field = 'id,name,sid,resume';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
@@ -184,10 +185,11 @@ class InvestmentProject extends Model
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
      */
-    public function details($param)
+    public function details($id)
     {
-        $data = InvestmentProject::with('InvestmentClass') ->where('id',$param['id'])
-            -> field('id,title,cid,reward,location,bright,revenue,user_data,valuation,background,advantage,bp_url')
+
+        $data = InvestmentProject::with('InvestmentClass') ->where('id',$id)
+            -> field('id,name,sid,surplus,con,resume,other,proposal,examine_opinion,user_clause,advantage,url')
             -> find()->toArray();
 
         $data['industry_field'] = $data['investment_class']['title'];
@@ -203,7 +205,7 @@ class InvestmentProject extends Model
      */
     public function InvestmentClass()
     {
-        return $this->belongsTo('InvestmentClass', 'cid', 'id');
+        return $this->belongsTo('InvestmentClass', 'sid', 'id');
     }
 
     /**
@@ -215,14 +217,14 @@ class InvestmentProject extends Model
     public function investment_project_list($param,$uid)
     {
 
-        $where = array();
-        $where['uid'] = $uid;
+        $where['type'] = 6;
+        $where['user_id'] = $uid;
         if(!empty($param['process'])){
-            $where['process'] = $param['process'];
+            $where['need_status'] = $param['process'];
 
         }
         if(!empty($param['title'])){
-            $where['title|no'] = ['like','%'.$param['title'].'%'];
+            $where['name|no'] = ['like','%'.$param['title'].'%'];
         }
 
         if(!empty($param['type'])){
@@ -248,7 +250,7 @@ class InvestmentProject extends Model
             $param['size'] = 6;
         }
 
-        $field = 'id,no,title,cid,bright,reward,created_at';
+        $field = 'id,model_type,name,user_id,sid,resume,surplus,created_at,need_status';
         $order = 'id desc';
 
         $list = InvestmentProject::with('InvestmentClass') -> field( $field ) -> where( $where ) -> order( $order )
@@ -261,6 +263,42 @@ class InvestmentProject extends Model
         }
 
         return $list;
+    }
+
+    /**
+     * 修改
+     * @param $param
+     * @return false|int
+     */
+    public function upd($param)
+    {
+        //必填字段验证
+        $validate = new Validate([
+            ['id', 'require', '订单id不能为空'],
+            ['name', 'require', '标题不能为空'],
+            ['resume', 'require', '推广对象不能为空'],
+            ['grade', 'require', '高手等级不能不好空'],
+            ['url', 'require', '参考不能不好空'],
+            ['need_status', 'require', '内容类型必须'],
+            ['num', 'require', '字数必须'],
+        ]);
+        if (!$validate->check($param)) {
+            returnJson(0, $validate->getError());exit();
+        }
+
+        return $this->allowField(true)->save($param,['id'=>$param['id']]);
+
+    }
+
+    /**
+     * 1：为需求确认，2：为代写中, 3:为确认稿件，4：为智推中，5为：智推完成
+     * @param $id
+     * @param $process
+     * @return false|int
+     */
+    public function status($id,$process)
+    {
+        return self::save(['need_status'=>$process],['id'=>$id]);
     }
 
 }

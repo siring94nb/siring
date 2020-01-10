@@ -28,7 +28,7 @@
           </div>
         </div>
 
-        <div class="invite">
+        <!-- <div class="invite">
           <el-checkbox v-model="checked">
             使用邀请码
             <span class="hui">（填写推荐邀请码，优惠30元）</span>
@@ -36,7 +36,7 @@
           <div class="invite-code">
             <el-input placeholder="请填写邀请人的会员绑定手机号或邀请码" style="font-size:12px;"></el-input>
           </div>
-        </div>
+        </div>-->
       </div>
       <div class="payment">
         选择一下方式支付：
@@ -52,7 +52,7 @@
             <div style="text-align:center;">
               <el-radio v-model="radio" label="1">在线支付</el-radio>
               <el-radio v-model="radio" label="3">银行转账</el-radio>
-              <el-radio v-model="radio" label="4">余额支付</el-radio>
+              <el-radio v-model="radio" label="4" @change="payPassword">余额支付</el-radio>
             </div>
           </el-col>
         </el-row>
@@ -143,17 +143,17 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="0">
+                  <el-radio v-model="paymentAccount" label="1">
                     <div></div>
                   </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
                 <div class="pay-accout">
-                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '1'}">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '2'}">
                     <img src="../../assets/images/u1956.png" alt />
                   </div>
-                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '1'}">
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '2'}">
                     <p>账户名：吴雪</p>
                     <p>开户银行：中国工商银行深圳深圳湾支行</p>
                     <p>账号：6212264000061706160</p>
@@ -165,17 +165,17 @@
             <el-row>
               <el-col :span="3">
                 <div style="margin: 60px 0 0 10px;">
-                  <el-radio v-model="paymentAccount" label="1">
+                  <el-radio v-model="paymentAccount" label="2">
                     <div></div>
                   </el-radio>
                 </div>
               </el-col>
               <el-col :span="20">
                 <div class="pay-accout">
-                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '0'}">
+                  <div class="bank-name" :class="{'bank-nosel': paymentAccount == '1'}">
                     <img src="../../assets/images/u1956.png" alt />
                   </div>
-                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '0'}">
+                  <div class="bank-main" :class="{'bank-nosel': paymentAccount == '1'}">
                     <p>户 名：深圳市思锐信息技术有限公司</p>
                     <p>账 号:4000040209200016204</p>
                     <p>开户银行:工行深圳深东支行</p>
@@ -195,17 +195,17 @@
             使用账户余额支付：
             <span class="money">
               ￥
-              <span class="red">0.00</span>
+              <span class="red">{{balance}}</span>
             </span>
             <span class="blue">充值</span>
           </div>
           <div class="password" style="display:flex;">
             <div class="pass-title">支付密码：</div>
-            <el-input placeholder="请输入密码" style="font-size:12px;width:330px;"></el-input>
+            <el-input placeholder="请输入密码" v-model="password" style="font-size:12px;width:330px;"></el-input>
           </div>
           <div class="blue forgot-pass">忘记支付密码</div>
           <div class="pay-btn">
-            <el-button type="danger" style="width:250px;">确定</el-button>
+            <el-button type="danger" style="width:250px;" @click="bankPay">确定</el-button>
           </div>
         </div>
         <!-- 余额支付 -->
@@ -246,7 +246,14 @@
 
 <script>
 import Myheader from "@/components/header";
-import { templatePay, addBank, subBankPay, codeGetPay } from "@/api/api";
+import {
+  templatePay,
+  addBank,
+  subBankPay,
+  codeGetPay,
+  getCoupou,
+  getBalance
+} from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
 export default {
@@ -268,16 +275,7 @@ export default {
       isSubmit: false,
       checked: [],
       radio: "3",
-      options: [
-        {
-          value: "1",
-          label: "黄金糕"
-        },
-        {
-          value: "2",
-          label: "双皮奶"
-        }
-      ],
+      options: [], //优惠券
       codeType: "1", //支付宝或微信
       value: "",
       valuee: "",
@@ -302,7 +300,7 @@ export default {
         city: "",
         user_id: 0
       },
-
+      balance: "0.00", //余额
       paymentAccount: "0", //选择收款账号
       payAccount: [
         "工商银行-6212264000061706160",
@@ -325,12 +323,16 @@ export default {
           { required: true, message: "请输入支行名", trigger: "blur" }
         ],
         card_number: [{ validator: validatePass, trigger: "blur" }]
-      }
+      },
+      ispassword: "",
+      password: "" //支付密码
     };
   },
   mounted() {
     this.init();
     // console.log(this.$route.params)
+    this.GetCoupou();
+    this.GetBalance();
   },
   methods: {
     init() {
@@ -349,40 +351,91 @@ export default {
           });
         }
       });
+      // vm.GetBalance();
     },
-    //下单生成二维码
+    //支付宝微信支付
     codePay() {
       //支付类型
       let vm = this;
       if (this.radio != "1") vm.params.pay_type = this.radio;
       else vm.params.pay_type = this.codeType;
-      // vm.params.order_amount = this.real_money; //实付金额
-      // let res = vm.payOrder(vm.params);
       let params = {
-        id:vm.params.id,
-        pay_type:vm.params.pay_type,
+        order_id: vm.params.id,
+        pay_type: vm.params.pay_type,
         money: vm.real_money,
-        type: vm.params.order_type
-      }
+        type: vm.params.order_type,
+        password: "",
+        unionpay: ""
+      };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
         this.$message(msg);
-        if (code === 1) {
-          this.imgData = imgData;
-          this.isShow = !this.isShow;
-          this.isDisabl = !this.isDisabl;
-        }
-      })
+        // if (vm.params.pay_type == 1) {
+        //   const { href } = this.$router.resolve({
+        //     path: "alipay",
+        //     query: {
+        //       pdf: res
+        //     }
+        //   });
+        //   window.open(href, "_blank");
+        //   this.isShow = !this.isShow;
+        //   this.isDisabl = !this.isDisabl;
+        // } else {
+          if (code === 1) {
+            this.imgData = imgData;
+            this.isShow = !this.isShow;
+            this.isDisabl = !this.isDisabl;
+          }
+        // }
+      });
     },
+    //银行支付&余额支付
+    bankPay() {
+      let vm = this,
+        pay_detail;
+      if (vm.radio == 3) {
+        pay_detail = {
+          account_number: vm.paymentAccount,
+          bank_name: vm.bankCards[vm.value].bank_name,
+          bank_number: vm.bankCards[vm.value].card_number,
+          pay_time: vm.pay_time,
+          comment: vm.comment,
+          pay_type: vm.radio,
+          pay_money: vm.real_money,
+          type: 2
+        };
+        pay_detail = JSON.stringify(pay_detail);
+      }
+      let params = {
+        order_id: vm.params.id,
+        pay_type: vm.radio,
+        money: vm.real_money,
+        type: vm.params.order_type,
+        password: vm.password,
+        unionpay: pay_detail || ""
+      };
+      codeGetPay(params).then(res => {
+        let { code, imgData, msg } = res;
+        if (code === 1) {
+          vm.$message.success(msg);
+          vm.$router.push({
+            name:'demand_order'
+          })
+        } else {
+          vm.$message.error(msg);
+        }
+      });
+    },
+    
+    
     //添加银行卡
     submitForm(formName) {
       let vm = this;
       vm.isSubmit = !vm.isSubmit;
       let params = vm.form;
       addBank(params).then(res => {
-        console.log(res);
         let { code, data, msg } = res;
-        vm.$message(msg);
+        vm.$message.success(msg);
         if (code == "1") {
           this.init();
           this.resetForm();
@@ -404,39 +457,62 @@ export default {
       this.isSubmit = !this.isSubmit;
       // this.$refs[formName].resetFields();
     },
-    //银行支付
-    bankPay() {
-      let vm = this,
-        pay_detail = this.params;
-      pay_detail.account_number = vm.payAccount[vm.paymentAccount];
-      pay_detail.bank_name = vm.bankCards[vm.value].bank_name;
-      pay_detail.bank_number = vm.bankCards[vm.value].card_number;
-      pay_detail.pay_time = vm.pay_time;
-      pay_detail.comment = vm.comment;
-      pay_detail.pay_type = vm.radio;
-      // pay_detail = JSON.stringify(pay_detail);
-      // pay_detail = JSON.parse(pay_detail);
-      // console.log(pay_detail)
-      let res = vm.payOrder(pay_detail);
-      console.log(res);
-      let { code, imgData, msg } = res;
-      vm.$message(msg);
-      if (code === 1) {
-        // this.imgData = imgData;
-        // this.isShow = !this.isShow;
-        // this.isDisabl = !this.isDisabl;
-      }
-    },
+
     regionChange(data) {
       if (data.province) this.form.province = data.province.value;
       if (data.city) this.form.city = data.city.value;
     },
     //下单
-    payOrder(params) {
-      templatePay(params).then(res => {
-        console.log(res);
-        return res;
+    // payOrder(params) {
+    //   templatePay(params).then(res => {
+    //     console.log(res);
+    //     return res;
+    //   });
+    // },
+    //获取优惠券
+    GetCoupou() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
+      getCoupou(params).then(res => {
+        if (res.code == 1) {
+          vm.options = res.data;
+        }
       });
+    },
+    //获取余额
+    GetBalance() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
+      getBalance(params).then(res => {
+        if (res.code == 1) {
+          vm.balance = res.data.money;
+          vm.ispassword = res.data.pay_password;
+        }
+      });
+    },
+    payPassword(e) {
+      if (this.ispassword == null || this.ispassword == "") {
+        this.$confirm("您未设置支付密码，是否前往设置？", "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+          center: true
+        })
+          .then(() => {
+            this.$router.push({
+              name: "safetyTabControl",
+              params: {
+                canshu: "third",
+                title: "信息修改"
+              }
+            });
+          })
+          .catch(() => {});
+      }
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
@@ -489,6 +565,7 @@ export default {
       }
       .payable {
         display: flex;
+        margin-bottom: 50px;
         .price {
           font-size: 23px;
         }

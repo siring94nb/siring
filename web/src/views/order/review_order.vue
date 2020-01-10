@@ -139,13 +139,13 @@ export default {
         {
           title: "合同编号",
           align: "center",
-          key: "need_order",
+          key: "no",
           width: 200
         },
         {
           title: "项目名称",
           align: "center",
-          key: "need_name"
+          key: "name"
         },
         {
           title: "订单类型",
@@ -155,7 +155,7 @@ export default {
         {
           title: "终端类型",
           align: "center",
-          key: "need_terminal",
+          key: "dev",
           render: (h, param) => {
             //   param.row.need_terminal = JSON.parse(param.row.need_terminal);
             //   param.row.need_terminal = JSON.stringify(param.row.need_terminal);
@@ -165,23 +165,23 @@ export default {
         {
           title: "用户账号",
           align: "center",
-          key: "need_phone",
+          key: "phone",
           width: 120
         },
         {
           title: "合同金额",
           align: "center",
-          key: "need_money"
+          key: "order_amount"
         },
         {
           title: "付款金额",
           align: "center",
-          key: "need_order_money"
+          key: "money"
         },
         {
           title: "付款账号",
           align: "center",
-          key: "need_pay_account",
+          key: "pay_type",
           width: 250,
           render: (h, param) => {
             let bankNumber, pay_detail;
@@ -198,23 +198,23 @@ export default {
         {
           title: "下单时间",
           align: "center",
-          key: "create_time",
+          key: "created_at",
           width: 120
         },
         {
           title: "剩余款",
           align: "center",
-          key: "need_surplus"
+          key: "surplus"
         },
         {
           title: "剩余天数",
           align: "center",
-          key: "meal_end_time"
+          key: "end_time"
         },
         {
           title: "用户最新消息",
           align: "center",
-          key: "need_new_info"
+          key: "need_info_c"
         },
         {
           title: "操作",

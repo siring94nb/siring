@@ -1,379 +1,334 @@
 <template>
-  <div class="investment">
-    <myheader />
-    <myaside />
-    <div class="middle">
-      <div class="mall-box">
-        <div class="search-section">
-          <div class="search-type">
-            <div class="search-title">软件/定制类型</div>
-            <div class="search-cont">
-              <div :class="{'search-items': true, 'autoHeight': typeListShowMore}">
-                <div
-                  :class="{'search-item': true, 'curr': -1==typeCurrIndex}"
-                  @click="searchType(-1, 0)"
-                >
-                  <span>全部</span>
-                </div>
-                <div
-                  v-for="(item, index) in typeList"
-                  :key="item.id"
-                  :class="{'search-item': true, 'curr': index==typeCurrIndex}"
-                  @click="searchType(index, item.id)"
-                >
-                  <span>{{ item.category_name }}</span>
-                </div>
-              </div>
-              <div class="search-more" @click="showMore">
-                更多
-                <i :class="[typeListShowMore ? 'el-icon-arrow-up': 'el-icon-arrow-down']"></i>
-              </div>
-            </div>
-          </div>
-          <div class="sort-section">
-            <div class="sort-type">
-              <div
-                v-for="(item, index) in sortDataList"
-                :key="index"
-                :class="['sort-type-item', sortCurIndex==index && up?'desc':'asce', {'sort-on':sortCurIndex==index}]"
-                @click="sortEvent(index)"
-              >
-                {{item}}
-                <span v-if="index>0">
-                  <i class="el-icon-caret-top caret-top"></i>
-                  <i class="el-icon-caret-bottom caret-bot"></i>
-                </span>
-              </div>
-            </div>
-            <div class="search-box">
-              <el-input v-model="searchCont" prefix-icon="el-icon-search" placeholder="请输入内容"></el-input>
-              <el-button type="danger">搜索</el-button>
-            </div>
-            <div class="collect-order">
-              <div>
-                <i class="el-icon-star-off"></i>
-                <span>我的收藏</span>
-              </div>
-              <div>
-                <i class="el-icon-tickets"></i>
-                <span>我的订单</span>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="project-list">
-          <el-table :data="tableData" style="width: 100%">
-            <template v-for="item in cols">
-              <el-table-column
-                v-if="item.prop!='option'"
-                :prop="item.prop"
-                :label="item.label"
-                :key="item.id"
-                align="center"
-              ></el-table-column>
-              <el-table-column v-else :label="item.label" :key="item.id" align="center">
-                <template slot-scope="scope">
-                  <el-button
-                    type="primary"
-                    @click="handleClick(scope.$index, scope.row)"
-                  >我要投资</el-button>
-                  <i :class="scope.row.like?'el-icon-star-on':'el-icon-star-off'"></i>
-                </template>
-              </el-table-column>
-            </template>
-          </el-table>
+  <div style="background:rgb(246,246,246);min-height:100vh">
+    <Myheader />
+    <div class="box" ref="box">
+      <div class="topBox">
+        <div style="margin-right:30px; width: 100px; padding:10px 0px; ">行业领域：</div>
+        <div style="flexGrow: 1">
+          <span :class="{'active': cid==''}" @click="gbBiaozhi('全部')">全部</span>
+          <span :class="{'active': cid==item.id}" v-for="(item,index) in IndustryField" :key="index+1" :id="item.id" @click="gbBiaozhi(item.id)">{{item.title}}</span>
+          <span style="float: right;">更多&gt;&gt;</span>
         </div>
       </div>
+      <div class="shaixuanBox">
+        <div style="margin-left:250px">
+          <el-select @change="getindustryList" v-model="value" placeholder="请选择" style="width:120px; margin-right:30px;">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+        </div>
+        <div class="searchBox">
+          <el-input v-model="suoyin" placeholder="请输入名称" prefix-icon="el-icon-search"></el-input>
+          <el-button style="background:#ff0000;color:#ffffff" @click="getindustryList">搜索</el-button>
+        </div>
+        <div class="iBox" @click="tiaozhuan('','')">
+          <i class="el-icon-s-promotion"></i>
+          <div>
+            创业者发布
+            <br />Entrepreneur
+          </div>
+        </div>
+        <div class="guanzhu">
+          <i class="iconfont icon-guanzhu Idefault" v-if="false"></i>
+          <i class="iconfont icon-guanzhu1 iActive"></i>
+          <span>我的关注</span>
+        </div>
+      </div>
+      <div>
+        <el-table :data="tableData" style="width: 100%">
+          <el-table-column prop="id" label="邀请码" width="200" align="center"></el-table-column>
+          <el-table-column prop="name" label="项目名称" width="200" align="center"></el-table-column>
+          <el-table-column prop="resume" label="行业领域" width="200" align="center"></el-table-column>
+          <el-table-column prop="resume" label="项目亮点" width="400" align="center"></el-table-column>
+          <el-table-column prop="deshi" label="操作" align="center">
+            <template slot-scope="scope">
+              <div class="caozuoBox">
+                <div @click="tiaozhuan(scope.$index, tableData)">{{scope.row.deshi}}</div>
+                <div class="guanzhu" @click="setcollectX(tableData,scope.$index)">
+                  <i class="iconfont icon-guanzhu1 iActive zhuanhuan"></i>
+                </div>
+              </div>
+            </template>
+          </el-table-column>
+        </el-table>
+      </div>
     </div>
-    <jsjm />
-    <jdyh />
-    <myfooter />
   </div>
 </template>
-
 <script>
 import Myheader from "@/components/header";
-import Myfooter from "@/components/footer";
-import Myaside from "@/components/aside";
-import Jsjm from "@/components/jsjm";
-import Jdyh from "@/components/jdyh";
-import { GetDevlopType } from "@/api/api";
+import { industryField, industryList,collectX } from "@/api/api";
 export default {
-  components: {
-    Myheader,
-    Myfooter,
-    Myaside,
-    Jsjm,
-    Jdyh
-  },
   data() {
     return {
-      searchCont: "", //搜索内容
-      typeList: [],
-      typeCurrIndex: -1,
-      typeListShowMore: false,
-      sortCurIndex: 0,
-      sortDataList: ["全部排序", "按打赏数量"],
-      sortId: 1, // 商品按照按打赏数量升降序ID 1：全部，2：按打赏数量序，3：按打赏数量升序
-      typeId: 0, // 商品、软件定制类型ID
-      up: false, //控制箭头上下亮
-      tableData: [
+      IndustryField: [], //添加投融，行业领域数据
+      options: [
         {
-          code: "MU3838",
-          name: "物联网摇摇车",
-          field: "医疗健康",
-          highlight: "非常好的项目",
-          like: true,
+          value: "1",
+          label: "全部"
         },
         {
-          code: "MU3838",
-          name: "物联网摇摇车",
-          field: "医疗健康",
-          highlight: "非常好的项目",
-          like: false,
+          value: "2",
+          label: "按打赏数量最高"
+        },
+        {
+          value: "3",
+          label: "按打赏数量最低"
         }
       ],
-      cols: [
-        { label: "会员邀请码", id: 1, prop: "code" },
-        { label: "项目名称", id: 2, prop: "name" },
-        { label: "行业领域", id: 3, prop: "field" },
-        { label: "项目亮点", id: 4, prop: "highlight" },
-        { label: "操作", id: 5, prop: "option" }
+      value: "1",
+      suoyin: "",
+      cid:"",
+      // 表格
+      tableData: [
+        {
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
+        },
+        {
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
+        },
+        {
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要投资"
+        },
+        {
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要融资"
+        },
+        {
+          id: 29,
+          name: "测试项目名称",
+          sid: 2,
+          resume: "测试项目亮点",
+          industry_field: "数字资产",
+          deshi: "我要融资"
+        }
       ]
     };
   },
+  components: {
+    Myheader
+  },
   mounted() {
-    this.init();
+    this.getIndustryField();
+    this.changeSize();
+    this.getindustryList();
   },
   methods: {
-    init() {
-      this.getDevlopType();
-    },
-    getDevlopType() {
-      GetDevlopType().then(res => {
-        let { code, data, msg } = res.data;
-        if (code === 1) {
-          this.typeList = data;
+    getIndustryField() {
+      industryField().then(res => {
+        let { data, msg } = res;
+        if (data.code == 1) {
+          this.IndustryField = data.data;
         }
       });
     },
-    showMore() {
-      this.typeListShowMore = !this.typeListShowMore;
-    },
-    searchType(index, id) {
-      this.typeCurrIndex = index;
-      this.typeId = id;
-    },
-    sortEvent(index) {
-      if (this.sortCurIndex === 0 && this.sortCurIndex === index) {
-        return;
+    // 投资，融资跳转传参
+    tiaozhuan(index, rows) {
+      let leixing = "";
+      let id = ""
+      console.log(index);
+      console.log(rows);
+      if(index != "" && rows != ""){
+        leixing= rows[index].deshi
+        id= rows[index].id
+      }else{
+        leixing ="我要融资"
+        id = this.tableData[0].id
       }
-      this.sortCurIndex = index;
-      this.up = !this.up;
-      switch (index) {
-        case 0:
-          this.sortId = 1;
-          break;
-        case 1:
-          this.sortId = this.up ? 2 : 3;
-          break;
-        case 2:
-          this.sortId = this.up ? 4 : 5;
-          break;
+      this.$router.push({
+        name: `newInvestment`,
+        params: {
+          leixing: leixing,
+          id: id
+          // code: '8989'
+        }
+      });
+    },
+    // 获取表格信息
+    getindustryList() {
+      let parmas = {
+        type:this.value,
+        cid:this.cid,
+        title:this.suoyin,
+      };
+      industryList(parmas).then(res => {
+        let { data, code, msg } = res;
+        // console.log(res);
+        if (code == 1) {
+          // this.tableData = data.data
+        }
+      });
+    },
+    // 控制屏幕过大，两侧留白
+    changeSize() {
+      return (() => {
+        let screenWidth = document.body.clientWidth;
+        let Box = this.$refs.box;
+        if (screenWidth > 1260) {
+          Box.style.marginLeft = (screenWidth - Box.clientWidth) / 2 + "px";
+        } else {
+          Box.style.marginLeft = "0px";
+        }
+      })();
+    },
+    // 获取标识
+    gbBiaozhi(str){
+      // console.log(str);
+      if(str == "全部"){
+        this.cid = ""
+        this.getindustryList()
+      }else{
+        this.cid = parseInt(str);
+        this.getindustryList()
+      }
+    },
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
+    // 关注操作
+    setcollectX(item,index){
+      let zhuanhuanArr = document.getElementsByClassName("zhuanhuan")
+      let classListA = zhuanhuanArr[index].classList;
+      let params = {
+        pid :parseInt(item[index].id),
+        type:1,
+        user_id : parseInt(sessionStorage.getItem("user_id")) 
+      }
+      // console.log(params)
+      if(classListA.toString().indexOf("iActive") != -1){
+        zhuanhuanArr[index].classList.remove("iActive")
+        collectX(params).then(res=>{
+          let {code} = res
+          if(code){
+            this.showMsg("关注成功",code)
+          }
+        })
+      }else{
+        zhuanhuanArr[index].classList.add("iActive")
+        collectX(params).then(res=>{
+          let {code} = res
+          if(code){
+            this.showMsg("取消关注",code)
+          }
+        })
       }
     }
   }
 };
 </script>
-
-
-<style lang="css" scoped>
-.search-box >>> input {
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  width: 300px;
-}
-.search-box >>> button {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
-  height: 30px;
-  line-height: 6px;
-}
-.search-box >>> .el-input__inner {
-  height: 30px;
-}
-.search-box >>> .el-icon-search {
-  line-height: 30px;
-}
-.pagi-box >>> .el-pager .number {
-  background-color: rgb(238, 238, 238);
-}
-</style>
-<style scoped lang='scss'>
-.middle {
-  margin-top: 100px;
-  min-height: 1000px;
-  background-color: rgb(246, 246, 246);
-  .mall-box {
-    width: 1200px;
-    margin: 0 auto;
-    padding-top: 20px;
-    .search-section {
-      background-color: #ffffff;
-      padding: 15px 10px;
-      .search-type {
-        position: relative;
-        display: table;
-        font-size: 14px;
-        color: #333;
-        margin-bottom: 10px;
-        .search-title {
-          float: left;
-          padding: 4px 14px;
-        }
-        .search-cont {
-          width: 1030px;
-          float: left;
-          .search-items {
-            float: left;
-            width: 90%;
-            height: 35px;
-            overflow: hidden;
-            &.autoHeight {
-              height: auto;
-            }
-            .search-item {
-              display: inline-block;
-              font-size: 14px;
-              color: #333;
-              margin-right: 5px;
-              margin-bottom: 10px;
-              cursor: pointer;
-              span {
-                display: inline-block;
-                padding: 4px 14px;
-                box-sizing: border-box;
-                border: 1px solid transparent;
-                border-radius: 3px;
-              }
-              &.curr {
-                span {
-                  position: relative;
-                  border-color: #e62d31;
-                  color: #e62d31;
-                  &::before {
-                    content: "";
-                    position: absolute;
-                    top: 0;
-                    right: 0;
-                    background: url("~@/assets/images/arrow-top.png") no-repeat;
-                    width: 14px;
-                    height: 14px;
-                  }
-                }
-              }
-            }
-          }
-          .search-more {
-            float: right;
-            padding: 4px 14px;
-            border: 1px solid transparent;
-            cursor: pointer;
-          }
-        }
-      }
-      .sort-section {
-        display: flex;
-        align-items: center;
-        margin-left: 105px;
-        .sort-type {
-          display: flex;
-          .sort-type-item {
-            font-size: 14px;
-            height: 30px;
-            padding: 4px 14px;
-            background-color: #f2f2f2;
-            margin-left: 10px;
-            box-sizing: border-box;
-            line-height: 22px;
-            cursor: pointer;
-            user-select: none;
-            &.asce {
-              .caret-bot {
-                color: #9f0010;
-              }
-            }
-            &.desc {
-              .caret-top {
-                color: #9f0010;
-              }
-            }
-            span {
-              display: inline-block;
-              position: relative;
-              width: 16px;
-              height: 100%;
-              vertical-align: bottom;
-              line-height: 1;
-              color: #fbb;
-              .caret-top {
-                position: absolute;
-                right: 0;
-                top: 0;
-                font-size: 14px;
-              }
-              .caret-bot {
-                position: absolute;
-                right: 0;
-                bottom: 0;
-                font-size: 14px;
-              }
-            }
-            &.sort-on {
-              background-color: #ff0000;
-              color: #ffffff;
-            }
-          }
-        }
-        .search-box {
-          position: relative;
-          display: flex;
-          align-items: center;
-          margin-left: 30px;
-        }
-        .collect-order {
-          & > div {
-            display: inline-block;
-            color: #333;
-            font-size: 12px;
-            text-align: center;
-            margin-left: 30px;
-            i {
-              display: block;
-              font-size: 30px;
-            }
-          }
-        }
+<style lang="scss" scoped>
+.box {
+  background: rgb(246, 246, 246);
+  // margin-top: 110px;
+  width: 1260px;
+  margin: 100px auto;
+  .topBox {
+    display: flex;
+    background: #ffffff;
+    font-size: 13px;
+    padding: 20px 20px 0px 20px;
+    // margin-top: 20px;
+    // overflow: hidden;
+    span {
+      font-size: 13px;
+      display: inline-block;
+      padding: 5px 12px;
+      margin-bottom: 20px;
+      margin-right: 30px;
+      // width: 92px;
+      text-align: left;
+      text-align: center;
+    }
+    .active {
+      background-image: url("~@/assets/images/arrow-top.png");
+      background-position: 100% 0; 
+      background-repeat: no-repeat;
+      color: #ff0000;
+      border: 1px solid rgb(230,45,49);
+      background-size:10px;
+      border-radius: 3px;
+    }
+  }
+  // 头部筛选
+  .shaixuanBox {
+    position: relative;
+    display: flex;
+    background: #ffffff;
+    padding-left: 135px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    .searchBox {
+      display: flex;
+    }
+    > button {
+      background: #ff0000;
+      border: 1px solid #ff0000;
+      color: #ffffff;
+      width: 90px;
+      height: 40px;
+      margin-right: 150px;
+    }
+    .iBox {
+      display: flex;
+      font-size: 14px;
+      align-items: center;
+      padding-left: 20px;
+      i {
+        font-size: 32px;
+        color: rgb(91, 156, 254);
       }
     }
-    .project-list {
-      background-color: #ffffff;
-      margin-top: 20px;
-      .el-icon-star-off{
-        color: rgb(212,212,212);
-      }
-      .el-icon-star-on{
-        color: rgb(244,234,42);
-      }
-      .el-icon-star-off,
-      .el-icon-star-on{
-        font-size: 24px;
-        cursor: pointer;
-        margin-left: 10px;
+    .guanzhu {
+      display: flex;
+      align-items: center;
+      margin-left: 200px;
+    }
+  }
+  .Idefault {
+    background: white;
+    color: #cccccc;
+    font-size: 26px;
+  }
+  .iActive {
+    color: rgb(244, 234, 42);
+    font-size: 20px;
+  }
+  .caozuoBox {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 50px;
+    > div {
+      &:nth-of-type(1) {
+        padding: 10px 20px;
+        border: 1px solid #ff0000;
+        border-radius: 5px;
       }
     }
   }

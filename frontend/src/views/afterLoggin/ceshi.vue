@@ -1,168 +1,94 @@
 <template>
   <div>
-    <el-table :data="tableData" style="width: 100%">
-      <el-table-column label="日期" width="180">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span style="margin-left: 10px">{{ scope.row.date }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="姓名" width="180">
-        <template slot-scope="scope">
-          <el-popover trigger="hover" placement="top">
-            <p>姓名: {{ scope.row.name }}</p>
-            <p>住址: {{ scope.row.address }}</p>
-            <div slot="reference" class="name-wrapper">
-              <el-tag size="medium">{{ scope.row.name }}</el-tag>
-            </div>
-          </el-popover>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <el-date-picker
-      v-model="value1"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-    ></el-date-picker>
-    <button @click="ceshi" style="width:200px;">测试时间数据获取</button>
+    <el-upload
+    name="file"
+  class="upload-demo"
+  action="https://manage.siring.com.cn/api/file/qn_upload"
+  multiple
+  :limit="3">
+  <el-button size="small" type="primary">点击上传</el-button>
+  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+</el-upload>
+<div class="liuyanBox">
+  <liuyan :pid = pid :uid=uid></liuyan>
+</div>
+  <button @click="ceshi">获取</button>  
   </div>
 </template>
 <script>
 import VDistpicker from "v-distpicker";
+import liuyan from "../../components/liuyan/leaveAmessage"
 import { GetRoleCenter, CityTotal, CityPartner, Qnupload } from "@/api/api";
 export default {
   data() {
-    return {
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
-      value1: ""
-    };
-  },
-  components: {},
-  mounted() {},
-  methods: {
-    ceshi() {
-      console.log(this.value1 == "");
+      return {
+        imageUrl: '',
+        pid:67,
+        uid:sessionStorage.getItem("user_id")
+      };
     },
-    handleEdit(index, row) {
-      console.log(row.date);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
+    methods: {
+      ceshi(){
 
-    getCapitalDetailed() {
-      let params = {};
-      let times = this.value;
-      // let start_time = this.value[0];
-      // let end_time = this.value[1];
-      if (this.dis) {
-        CapitalDetailed().then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.pagesize = data.per_page;
-            this.tableData = data.data;
+          function formatDate(now) { 
+          var year=now.getFullYear();  //取得4位数的年份
+          var month=now.getMonth()+1;  //取得日期中的月份，其中0表示1月，11表示12月
+          var date=now.getDate();      //返回日期月份中的天数（1到31）
+          var hour=now.getHours();     //返回日期中的小时数（0到23）
+          var minute=now.getMinutes(); //返回日期中的分钟数（0到59）
+          var second=now.getSeconds(); //返回日期中的秒数（0到59）
+          return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
           }
-        });
-      } else {
-        if (this.value == "") {
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2
-          };
-          this.dis = true;
-        } else if (this.selected1 == "0" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            role_type: this.selected2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-          this.dis;
-        } else {
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2,
-            start_time: this.value[0].getTime(),
-            end_time: this.value[1].getTime()
-          };
-          this.dis = true;
+        let date = new Date()
+        console.log(formatDate(new Date()));
+      },
+      handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
         }
-        CapitalDetailed(params).then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.tableData = data.data;
-          }
-        });
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
       }
     },
-
-
-  }
+    components: {
+      liuyan
+    }
 };
 </script>
 <style lang="scss" scoped>
-.box {
-  margin-left: 200px;
-}
-.avatar-uploader {
-  width: 300px;
-  background: black;
+.liuyanBox{
+  width: 1000px;
+  margin-left: 50px;
 }
 .avatar-uploader .el-upload {
-  border: 1px dashed #d9d9d9;
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-.avatar-uploader .el-upload:hover {
-  border-color: #409eff;
-}
-.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 72px;
-  height: 72px;
-  line-height: 72px;
-  text-align: center;
-}
-.avatar {
-  width: 70px;
-  height: 70px;
-  display: block;
-  border-radius: 6px;
-}
-// div.el-upload.el-upload--picture-card{
-// width: 300px !important   ;
-// }
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

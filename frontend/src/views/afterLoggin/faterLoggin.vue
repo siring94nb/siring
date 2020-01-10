@@ -1,4 +1,4 @@
-<template>
+  <template>
   <div>
     <!--<myheader />-->
     <!-- 侧边导航栏菜单 -->
@@ -19,8 +19,18 @@
           <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
             <!-- 控制中心 -->
             <template slot="title">
-              <i :class="item.classN"></i>
-              <span>{{item.title}}</span>
+              <div>
+                <div v-if="index==0" class="imgBox">
+                  <div>
+                    <img :src="imgUrl" alt />
+                  </div>
+                  <div class="name">{{name}}</div>
+                </div>
+                <div>
+                  <i :class="item.classN" style="padding-right:15px;"></i>
+                  <span>{{item.title}}</span>
+                </div>
+              </div>
             </template>
             <el-menu-item
               v-for="(con,index1) in item.con"
@@ -37,7 +47,12 @@
 
 <script>
 // import Myheader from "@/components/header";
-import { CityTotal, MemberTotal, SubcontractTotal } from "@/api/api";
+import {
+  CityTotal,
+  MemberTotal,
+  SubcontractTotal,
+  GetUserMassage
+} from "@/api/api";
 export default {
   // name: "fater-loggin",
   data() {
@@ -51,12 +66,12 @@ export default {
       arr: [
         {
           title: "控制中心",
-          classN: "el-icon-s-platform",
+          classN: "iconfont icon-kongzhitai",
           con: [{ name: "控制台", rou: "/afterLogginR" }]
         },
         {
           title: "会员中心",
-          classN: "el-icon-user-solid",
+          classN: "iconfont icon-huiyuan",
           con: [
             // "会员信息", "安全中心", "邀请好友"
             { name: "会员信息", rou: "/memberInformation" },
@@ -66,7 +81,7 @@ export default {
         },
         {
           title: "角色中心",
-          classN: "el-icon-postcard",
+          classN: "iconfont icon-jiaose",
           con: [
             // "城市合伙人", "等级会员", "分包商"
             { name: "城市合伙人", rou: "/CityPartner" },
@@ -76,7 +91,7 @@ export default {
         },
         {
           title: "资金管理",
-          classN: "el-icon-s-finance",
+          classN: "iconfont icon--zijinguanli",
           con: [
             // "资金明细", "充值", "提现", "银行卡管理", "优惠券"
             { name: "资金明细", rou: "/financialDetailsI" },
@@ -88,7 +103,7 @@ export default {
         },
         {
           title: "软件/定制",
-          classN: "el-icon-edit-outline",
+          classN: "iconfont icon-dingzhi",
           con: [
             // "定制需求订单", "定制类似订单"
             { name: "定制需求订单", rou: "/demand_order" },
@@ -97,43 +112,51 @@ export default {
         },
         {
           title: "小程序SaaS",
-          classN: "el-icon-magic-stick",
+          classN: "iconfont icon-SaaS",
           con: [
             // "SaaS店铺订单", "增值服务订单"
-            { name: "SaaS店铺订单", rou: "/ceshi" },
-            { name: "增值服务订单", rou: "/ceshi" }
+            { name: "SaaS店铺订单", rou: "/storeIndex" },
+            { name: "增值服务订单", rou: "/appreciationIndex" }
           ]
         },
         {
           title: "AI推广运营",
-          classN: "el-icon-s-promotion",
+          classN: "iconfont icon-tuiguang",
           con: [
             // "推广订单"
-            { name: "推广订单", rou: "/ceshi" }
+            { name: "推广订单", rou: "/generalizeIndex" }
           ]
         },
         {
           title: "投融介",
-          classN: "el-icon-bank-card",
+          classN: "iconfont icon-tourongziqingkuang  ",
           con: [
             // "我的投融", "中止项目"
-            { name: "我的投融", rou: "/ceshi" },
-            { name: "我的投融", rou: "/ceshi" }
+            { name: "我的投融", rou: "/forMelting" },
+            { name: "中止项目", rou: "/zhongzhi" }
           ]
         }
       ],
-      routerValue: this.$route.path
+      routerValue: this.$route.path,
+      imgUrl: require("../../assets/images/u158.png"), //用户头像
+      name: "未设置" //用户姓名
     };
   },
   components: {},
   mounted() {
-    this.cityHehuorenX(),
+    this.init()
+  },
+  methods: {
+    init(){
+      console.log("0109-a")
+      this.cityHehuorenX(),
       this.classHuiyuanX(),
       this.fenbaoshangX(),
       this.withdrawX();
-    this.zhankai();
-  },
-  methods: {
+      this.zhankai();
+      this.gb();
+      this.userMessage();
+    },
     // 保持侧边栏对应路由展开状态
     zhankai() {
       let arr = this.arr;
@@ -151,7 +174,7 @@ export default {
             // }
           } else if (val == "/addEnterprise" || val == "/enterpriseList") {
             if (arr[i].con[j].rou.indexOf("/memberInformation") != -1) {
-              console.log(i);
+              // console.log(i);
             }
           }
         }
@@ -162,12 +185,12 @@ export default {
     cityHehuorenX() {
       // 因为前期想法错误，当前修改较麻烦
       CityTotal().then(res => {
-        let { data, msg, code } = res;
-        if (code === 1) {
+        let { data, msg } = res;
+        if (data.code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
-          this.arr[2].con[0].rou = "/CityPartner";
-          // this.arr[2].con[0].rou = "/partnerCityX";
+          // this.arr[2].con[0].rou = "/CityPartner";
+          this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
         }
       });
@@ -175,12 +198,12 @@ export default {
     // 等级会员
     classHuiyuanX() {
       MemberTotal().then(res => {
-        let { data, msg, code } = res;
-        if (code === 1) {
+        let { data, msg } = res;
+        if (data.code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
         } else {
-          // this.arr[2].con[1].rou = "/ClassMembersX";
-          this.arr[2].con[1].rou = "/ClassMembersA";
+          this.arr[2].con[1].rou = "/ClassMembersX";
+          // this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
         }
       });
@@ -189,11 +212,11 @@ export default {
     fenbaoshangX() {
       SubcontractTotal().then(res => {
         let { data, msg, code } = res;
-        if (code === 1) {
+        if (data.code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
         } else {
-          // this.arr[2].con[2].rou = "/subContractorIndex";
-          this.arr[2].con[2].rou = "/subContractorSm1";
+          this.arr[2].con[2].rou = "/subContractorIndex";
+          // this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
         }
       });
@@ -213,6 +236,25 @@ export default {
     },
     handleClose(key, keyPath) {
       //   console.log(key, keyPath);
+    },
+    // 获取用户信息
+    userMessage() {
+      const userId = sessionStorage.getItem("user_id");
+      const params = {
+        user_id: userId
+      };
+      GetUserMassage(params).then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+          this.imgUrl = data.img || this.imgUrl;
+          this.name = data.realname || this.name;
+        }
+      });
+    },
+    // 控制第一个控件的大小
+    gb() {
+      let sArr = document.getElementsByClassName("el-submenu__title");
+      sArr[0].style.height = "200px";
     }
   }
 };
@@ -236,8 +278,8 @@ export default {
   }
   .el-menu-item.is-active {
     font-size: 16px;
-    font-weight: 700;
-    color: #409eff !important;
+    // font-weight: 700;
+    color: #7fadcc !important;
   }
   li {
     width: 100%;
@@ -245,4 +287,24 @@ export default {
     box-sizing: border-box;
   }
 }
+.imgBox {
+  text-align: center;
+  padding-top: 30px;
+  height: 110px;
+  border-bottom: 3px solid #ffffff;
+  .name {
+    margin-top: -10px;
+  }
+  img {
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+  }
+}
+</style>
+<style>
+/* .el-submenu__title{
+    height: 200px;
+} */
 </style>

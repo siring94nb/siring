@@ -7,6 +7,7 @@
  */
 namespace app\api\controller;
 use app\data\model\Alipay;
+use app\data\model\Payoff;
 use app\data\model\Category;
 use app\data\model\Good;
 use app\data\model\SoftOrder;
@@ -142,143 +143,78 @@ class Software extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        if(!$param['pay_type'])returnJson(0,'类型不能为空');
-        $type = $param['pay_type'];
-        switch ($type){
+        $user_id = Session::get("uid");
+        if($user_id){
+            $param["user_id"] = Session::get("uid");
+        }else{
+            $param["user_id"] = $param["user_id"];
+        }
+        $validate = new Validate([
+            ['user_id', 'require', '用户id不能为空'],
+            ['goods_id', 'require', '商品id不能为空'],
+            ['sid','require','规格id不能为空'],
+            ['yid','require','优惠券id必须'],
+            ['price','require','支付价格必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        //判断邀请码
+        if(empty($param['invitation'])){
+            $param['invitation'] = '';
+        }else{
+            $user = new \app\data\model\User();
+            $user->invitation($param['invitation']);
+        }
 
-            case 4://银行卡支付
-                $validate = new Validate([
-                    ['goods_id', 'require', '商品id不能为空'],
-                    ['sid','require','规格id不能为空'],
-                    ['yid','require','优惠券id必须'],
-                    ['balance','require','余额必须'],
-                    ['money','require','原价必须'],
-                    ['price','require','支付价格必须'],
-                    ['bank_card','require','银行卡必须'],
-                    ['bank_pay_time','require','银行卡支付时间必须'],
-                ]);
-                if(!$validate->check($param)){
-                    returnJson (0,$validate->getError());exit();
-                }
-                $user_id = Session::get("uid");
-                if($user_id){
-                    $user_id = Session::get("uid");
-                }else{
-                    $user_id = $param["user_id"];
-                }
-                //判断邀请码
-                if(empty($param['invitation'])){
-                    $param['invitation'] = '';
-                }else{
-                    $user = new \app\data\model\User();
-                    $user->invitation($param['invitation']);
-                }
-                if(empty($param['con'])){
-                    $param['con'] = '';
-                }
-                //开启事务
-                Db::startTrans();
-                try{
-                    $city = new SoftOrder();
+        //开启事务
+        Db::startTrans();
+        try{
 
-                    $data = $city->order_add($type,$user_id,$param['sid'],$param['yid'],$param['goods_id'],$param['price'],
-                        $param['balance'],$param['money'],$param['invitation'],$param['bank_card'],$param['bank_pay_time'], $param['con']);
-                    $order_id = $data->id;
+            $data = (new SoftOrder())->order_add($param);
 
-                    Db::commit();
+            Db::commit();
 
-                    return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
+            return $data ? returnJson(1,'提交成功',$data['id']) : returnJson(0,'提交失败',$data['id']);
 
-                } catch (\Exception $e) {
-                    // 回滚事务
-                    Db::rollback();
-                    return false;
-                }
-                    break;
-            default://其他支付
-                $validate = new Validate([
-                    ['goods_id', 'require', '商品id不能为空'],
-                    ['sid','require','规格id不能为空'],
-                    ['yid','require','优惠券id必须'],
-                    ['balance','require','余额必须'],
-                    ['money','require','原价必须'],
-                    ['price','require','支付价格必须'],
-                ]);
-                if(!$validate->check($param)){
-                    returnJson (0,$validate->getError());exit();
-                }
-                $user_id = Session::get("uid");
-                if($user_id){
-                    $user_id = Session::get("uid");
-                }else{
-                    $user_id = $param["user_id"];
-                }
-                //判断邀请码
-                if(empty($param['invitation'])){
-                    $param['invitation'] = '';
-                }else{
-                    $user = new \app\data\model\User();
-                    $user->invitation($param['invitation']);
-                }
-                //开启事务
-                Db::startTrans();
-                try{
-                    $city = new SoftOrder();
-
-                    $data = $city->order_add($type,$user_id,$param['sid'],$param['yid'],$param['goods_id'],$param['price'],
-                        $param['balance'],$param['money'],$param['invitation'],'','','');
-                    $order_id = $data->id;
-
-                    Db::commit();
-
-                    return $data ? returnJson(1,'提交成功',$order_id) : returnJson(0,'提交失败',$order_id);
-
-                } catch (\Exception $e) {
-                    // 回滚事务
-                    Db::rollback();
-                    return false;
-                }
-
-                break;
+        } catch (\Exception $e) {
+            // 回滚事务
+            Db::rollback();
+            return false;
         }
 
     }
 
     /**
      * 支付订单
-     * @author fyk
-     * @return array|string|\think\response\Json
+     * @author
+     * @return array|mixed|string|\think\response\Json
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     * @throws \think\exception\PDOException
      */
     public function get_pay()
     {
         $request = Request::instance();
         $param = $request->param();
-        $type = $param['type']; //1微信,2支付宝,3余额
-        $id = $param['order_id'];
-        switch($type) {
-            case 1:
-                // 查询订单信息
-                $url = 'https://manage.siring.com.cn/api/Software/app_notice';
-                $order = db('soft_order')->getById($id);
+        $validate = new Validate([
+            ['type', 'require', '支付分类不能为空'],
+            ['order_id', 'require', '商品id不能为空'],
+            ['money','require','支付金额不能为空'],
+            ['pay_type','require','支付方式必须'],
+            ['password','require','余额密码必须'],
+            ['unionpay','require','银行卡支付参数必须'],
+        ]);
+        if(!$validate->check($param)){
+            returnJson (0,$validate->getError());exit();
+        }
+        switch ($param['type']) {
+            case 1://软件定制
+                $ratio = 1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
-                $pay = 1;//先测试1分钱
-                if (!$order)returnJson(0, '当前订单不存在');
-                //        if($order['status'] = 2)returnJson(0,'当前订单已支付');
-                $title = '软件/定制商品';
-                $wechatpay = new WechatPay();
-                $res = $wechatpay->pay($title,$order['no'], $pay, $url);
+                return $data;
 
-                return $res;exit();
-                break;   // 跳出循环
-            case 2:
-                $alipay = new Alipay();
-                $res = $alipay->index();
-
-                return $res;
-//                pp($res);die;
-//                returnJson(0, '暂未支付宝开通');
-
-                break; // 跳出循环
         }
     }
 

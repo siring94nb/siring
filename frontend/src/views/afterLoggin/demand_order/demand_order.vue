@@ -65,16 +65,16 @@
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55" align="center"></el-table-column>
-          <el-table-column prop="need_order" label="订单编号" align="center" width="200"></el-table-column>
-          <el-table-column prop="need_name" label="订单名称" align="center"></el-table-column>
+          <el-table-column prop="no" label="订单编号" align="center" width="200"></el-table-column>
+          <el-table-column prop="name" label="订单名称" align="center"></el-table-column>
           <el-table-column prop="need_category" label="订单类型" align="center"></el-table-column>
-          <el-table-column prop="need_terminal" label="终端类型" align="center"></el-table-column>
-          <el-table-column prop="need_money" label="合同金额" align="center"></el-table-column>
-          <el-table-column prop="need_order_money" label="订单金额" align="center"></el-table-column>
+          <el-table-column prop="terminal" label="终端类型" align="center"></el-table-column>
+          <el-table-column prop="order_amount" label="合同金额" align="center"></el-table-column>
+          <el-table-column prop="money" label="订单金额" align="center"></el-table-column>
           <el-table-column prop="need_pay_account" label="付款方式" align="center"></el-table-column>
-          <el-table-column prop="need_phone" label="付款账号" align="center" width="110"></el-table-column>
-          <el-table-column prop="create_time" label="下单时间" align="center" width="110"></el-table-column>
-          <el-table-column prop="need_surplus" label="剩余款" align="center"></el-table-column>
+          <el-table-column prop="phone" label="付款账号" align="center" width="110"></el-table-column>
+          <el-table-column prop="created_at" label="下单时间" align="center" width="110"></el-table-column>
+          <el-table-column prop="surplus" label="剩余款" align="center"></el-table-column>
           <el-table-column prop="meal_end_time" label="剩余时间" align="center"></el-table-column>
           <el-table-column prop="need_new_info" label="官方最新消息" width="150" align="center"></el-table-column>
           <el-table-column label="操作" align="center">

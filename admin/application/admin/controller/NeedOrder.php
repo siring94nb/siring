@@ -44,7 +44,7 @@ class NeedOrder extends Base
     }
 
     /**
-     * lilu
+     * fyk
      * 获取定制需求内容
      * id
      * status
@@ -55,10 +55,9 @@ class NeedOrder extends Base
         $postData=$request->param();
         if($postData){
             //获取详情
-            $need_detail=Need::get($postData['id'])->toArray();
-            return  $this->buildSuccess([
-                'data'=>$need_detail,
-            ]);
+            $need_detail= (new Need())->need_detail($postData['id']);
+
+            return  $this->buildSuccess(['data'=>$need_detail]);
         }else{
             return $this->buildFailed(ReturnCode::DB_READ_ERROR,'操作失败');
         }
@@ -85,8 +84,9 @@ class NeedOrder extends Base
         if (!$validate->check($postData)) {
             returnJson(0, $validate->getError());exit();
         }
-
-        switch ($postData['type']){
+        $need_type = $postData['type'];
+        unset($postData['type']);
+        switch ($need_type){
             case 1://平台报价
                 $validate = new Validate([
                   //  ['id', 'require', '主键id不能为空'],
@@ -160,25 +160,7 @@ class NeedOrder extends Base
 
                 break;
             case 6:
-                $validate = new Validate([
-                    ['id', 'require', '主键id不能为空'],
-                    ['proposal', 'require', '报价单不能为空'],
-                    ['work_day', 'require', '工作日不能为空'],
-                    ['need_money', 'require', '合同金额不能为空'],
-                ]);
-                if (!$validate->check($postData)) {
-                    returnJson(0, $validate->getError());exit();
-                }
-                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
-                if($res !== false){
-                    //修改需求订单的状态
-                    $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
-
-                    return $re !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
-
-                }else{
-                    return $this->buildFailed(ReturnCode::DB_READ_ERROR,'提交失败');
-                }
+               echo '暂无';
 
                 break;
         }

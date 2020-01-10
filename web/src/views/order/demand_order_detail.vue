@@ -5,34 +5,34 @@
       <table>
         <tr>
           <td class="td-one">用户账号：</td>
-          <td>{{information.need_phone}}</td>
+          <td>{{information.phone}}</td>
           <td class="td-one">订单号：</td>
-          <td>{{information.need_order}}</td>
+          <td>{{information.no}}</td>
         </tr>
         <tr>
           <td class="td-one">商品名称：</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.name}}</td>
           <td class="td-one">订单类型：</td>
           <td>{{information.need_category}}</td>
         </tr>
         <tr>
           <td class="td-one">下单时间：</td>
-          <td>{{information.create_time}}</td>
+          <td>{{information.created_at}}</td>
           <td class="td-one">订单金额：</td>
-          <td>{{information.need_order_money}}</td>
+          <td>{{information.order_amount}}</td>
         </tr>
         <tr>
           <td class="td-one">终端版本：</td>
-          <td>{{information.need_terminal}}</td>
+          <td>{{information.terminal}}</td>
           <td class="td-one">合同金额：</td>
-          <td>{{information.need_money}}</td>
+          <td>{{information.money}}</td>
         </tr>
 
         <tr>
           <td class="td-one">项目剩余金额</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.surplus}}</td>
           <td class="td-one">项目剩余时间</td>
-          <td>{{information.need_name}}</td>
+          <td>{{information.end_time}}</td>
         </tr>
       </table>
     </div>
@@ -45,10 +45,10 @@
       <div class="dzxq-main" v-if="status == 1">
         <Form :label-width="80">
           <FormItem label="需求名称：">
-            <Input placeholder="请输入" v-model="information.need_name" style="width: 450px;" />
+            <Input placeholder="请输入" v-model="information.name" style="width: 450px;" />
           </FormItem>
           <FormItem label="需求类型：">
-            <Select style="width: 450px;" :v-model="(information.need_category).toString()">
+            <Select style="width: 450px;" :v-model="information.need_category">
               <Option value="1">智能硬件</Option>
               <Option value="2">电子商务</Option>
               <Option value="3">生活娱乐</Option>
@@ -63,7 +63,7 @@
             <Input placeholder="请输入" v-model="information.need_budget_up" style="width: 200px;" />元
           </FormItem>
           <FormItem label="开发终端：">
-            <CheckboxGroup v-model="information.need_terminal">
+            <CheckboxGroup v-model="information.dev">
               <Checkbox label="原型UI">
                 <Icon type="ios-snow-outline" size="23" />原型UI
               </Checkbox>
@@ -85,7 +85,7 @@
               <Checkbox label="小程序">
                 <Icon type="ios-code" size="23" />小程序
               </Checkbox>
-              <Checkbox label="H5">
+              <Checkbox label="移动H5">
                 <Icon type="logo-html5" size="23" />H5
               </Checkbox>
               <!-- <Checkbox label="其他"></Checkbox>
@@ -94,19 +94,19 @@
           </FormItem>
           <FormItem label>
             <span>手机号</span>
-            <Input placeholder="手机号" v-model="information.need_phone" style="width: 250px;" />
+            <Input placeholder="手机号" v-model="information.phone" style="width: 250px;" />
             <span style="margin-left:120px;">其他联系方式</span>
-            <Input placeholder="XXX-XXXXXXX" style="width: 250px;" />
+            <Input placeholder="XXX-XXXXXXX" v-model="information.other" style="width: 250px;" />
           </FormItem>
           <FormItem label>
             <span>微信号</span>
-            <Input placeholder v-model="information.need_wx" style="width: 250px;" />
+            <Input placeholder v-model="information.wx" style="width: 250px;" />
           </FormItem>
           <FormItem label="需求描述：">
             <Input
               type="textarea"
               :autosize="{minRows: 4,maxRows: 8}"
-              v-model="information.need_desc"
+              v-model="information.con"
               style="width:500px;"
             />
           </FormItem>
@@ -248,19 +248,21 @@
           name="image"
           :action="UploadAction"
           style="display: inline-block;width: auto;"
+          v-if="status == 2"
         >
           <Button
             class="upload-btn"
-            :class="information.proposal != '' ? 'upload-btn-dis': ''"
-            :disabled="information.proposal != ''"
+            :class="information.proposal != null ? 'upload-btn-dis': ''"
+            :disabled="information.proposal != null"
           >上传报价单</Button>
         </Upload>
-        <div class="audit" v-if="information.proposal != ''">
-          <div class="arrow left-arrow"></div>
-          <div class="arrow-pole"></div>
-          <div class="audit-status">等待审核</div>
-          <div class="arrow-pole"></div>
-          <div class="arrow right-arrow"></div>
+        <div class="audit" v-if="information.proposal != null && status == 2">
+          <div class="arrow left-arrow" :class="information.examine > 1 ? 'left-arrow-dis':''"></div>
+          <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
+          <div class="audit-status" v-if="information.examine == 1">等待审核</div>
+          <div class="audit-status audit-true" else>{{information.examine == 2 ? '审核通过':'审核不通过'}}</div>
+          <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
+          <div class="arrow right-arrow" :class="information.examine > 1 ? 'right-arrow-dis':''"></div>
         </div>
         <div class="project" v-if="status == 2">
           <div>
@@ -272,7 +274,7 @@
               v-model="information.work_day"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
-              :disabled="information.work_day != ''"
+              :disabled="isWork_day"
             />
             工作日
           </div>
@@ -282,14 +284,18 @@
               type="number"
               name="money"
               min="0"
-              v-model="information.need_money"
+              v-model="information.money"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
-              :disabled="information.need_money != ''"
+              :disabled="isNeed_money"
             />
             元
           </div>
         </div>
+
+        <div style="flex:1;" v-if="status == 3"></div>
+        <Button class="upload-btn" v-if="status == 3" @click="changeXy">用户要求修改协议</Button>
+        <div style="flex:1;" v-if="status == 3"></div>
         <div class="project" v-if="status == 3">
           <div>
             1期：
@@ -351,27 +357,33 @@
         斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
       <div class="audit" v-if="qualification == 1">
-        <textarea name="audit" v-model="information.examine_opinion" style="width:100%;" rows="10" placeholder="审核意见"></textarea>
+        <textarea
+          name="audit"
+          v-model="information.examine_opinion"
+          style="width:100%;"
+          rows="10"
+          placeholder="审核意见"
+        ></textarea>
         <div class="sel">
           <RadioGroup v-model="information.examine">
-            <Radio label="3"><span>不通过</span></Radio>
-            <Radio label="2"><span style="color:red;">通过</span></Radio>
+            <Radio label="3">
+              <span>不通过</span>
+            </Radio>
+            <Radio label="2">
+              <span style="color:red;">通过</span>
+            </Radio>
           </RadioGroup>
         </div>
       </div>
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine > 1 && qualification == 0"
+        v-if="information.examine == null && qualification == 0"
       >
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="submitObj">确认</Button>
       </div>
-      <div
-        class="pt-bj-btn"
-        style="text-align:center;"
-        v-if=" qualification == 1"
-      >
+      <div class="pt-bj-btn" style="text-align:center;" v-if="  qualification == 1">
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="auditObj">确认</Button>
       </div>
@@ -444,14 +456,15 @@ export default {
         need_phone: "",
         need_order: "",
         need_name: "",
-        need_category: "",
+        need_category: "1",
         create_time: "",
         need_order_money: "",
         work_day: 0,
-        need_money: 0,
+        money: 0,
         proposal: "",
-        examine_opinion:'',
-        examine:''
+        examine_opinion: "",
+        examine: "",
+        other:""
       },
       percent: {
         one: 70,
@@ -467,7 +480,9 @@ export default {
       iconList: [],
       // 图片
       // examine:"2",
-      // examine_opinion:''
+      // examine_opinion:'',
+      isWork_day: false,
+      isNeed_money: false
     };
   },
   created() {
@@ -477,7 +492,7 @@ export default {
     init() {
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
-      this.qualification = this.$route.params.qualification;
+      this.qualification = this.$route.params.qualification || 0;
       console.log(this.$route.params);
       if (typeof WebSocket === "undefined") {
         alert("您的浏览器不支持socket");
@@ -531,6 +546,13 @@ export default {
         if (code == 1) {
           // data.data.need_category = (data.data.need_category).toString();
           vm.information = data.data;
+          vm.information.dev = data.data.terminal.split('/');
+          if (data.data.money) {
+            vm.isNeed_money = true;
+          }
+          if (data.data.work_day) {
+            vm.isWork_day = true;
+          }
         }
       });
     },
@@ -598,30 +620,48 @@ export default {
         id: vm.id,
         type: type,
         work_day: vm.information.work_day,
-        need_money: vm.information.need_money,
+        money: vm.information.money,
         proposal: vm.information.proposal
       };
       apiPost("NeedOrder/offer_sure", params).then(res => {
         let { code, data, msg } = res;
+        if (code == 1) {
+          vm.isWork_day = true;
+          vm.isNeed_money = true;
+        }
         this.$Message.success(msg);
       });
     },
     //订单审核
     auditObj() {
-      let vm = this,type,
+      let vm = this,
+        type,
         params;
-        if (vm.status == 2) type = 1;
+      if (vm.status == 2) type = 1;
       else if (vm.status == 3) type = 2;
+      if (vm.information.examine < 2) {
+        this.$Message.error("请选择通过或不通过");
+        return false;
+      }
       params = {
         id: vm.id,
-        examine_type:type,
+        examine_type: type,
         examine: vm.information.examine,
-        examine_opinion: vm.information.examine_opinion,
+        examine_opinion: vm.information.examine_opinion
       };
       apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
         let { code, data, msg } = res;
         this.$Message.success(msg);
+        if (code == 1) {
+          vm.$router.push({
+            name: "review_order"
+          });
+        }
       });
+    },
+    //用户修改协议
+    changeXy(){
+      
     },
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
@@ -652,7 +692,9 @@ export default {
   },
   mounted() {
     this.UploadAction = config.front_url + "file/qn_upload";
-    this.uploadList = this.$refs.upload.fileList;
+    if(this.status == 2) {
+      this.uploadList = this.$refs.upload.fileList;
+    }
   }
 };
 </script>
@@ -969,9 +1011,9 @@ export default {
         font-weight: 700;
       }
     }
-    .audit{
+    .audit {
       position: relative;
-      .sel{
+      .sel {
         position: absolute;
         bottom: 10px;
         right: 0;

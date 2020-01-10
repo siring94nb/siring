@@ -1,16 +1,16 @@
 <template>
   <div class="index">
     <myheader />
-    <div class="steps" >
+    <div class="steps">
       <div class="lines"></div>
       <div class="label">
-        <div class="label-r label-l" >
-          <img src="../../assets/images/u3086.png" alt="">
+        <div class="label-r label-l">
+          <img src="../../assets/images/u3086.png" alt />
           <div>选择行业模板</div>
           <span class="label-number">1</span>
         </div>
         <div class="label-r">
-          <img src="../../assets/images/u3086.png" alt="">
+          <img src="../../assets/images/u3086.png" alt />
           <div>选择套餐</div>
           <span class="label-number">2</span>
         </div>
@@ -27,14 +27,21 @@
         v-for="(item, index) in versionData"
         @mouseenter="selectEvent(index)"
         :class="selectClassName[index === selectFlag && index]"
-        :key="item.id">
+        :key="item.id"
+      >
         <div class="honour-top" :class="selectClassName_1[index === selectFlag && index]">
-          <div class="top-title" :class="selectClassName_2[index === selectFlag && index]">{{comboName[index]}}</div>
+          <div
+            class="top-title"
+            :class="selectClassName_2[index === selectFlag && index]"
+          >{{comboName[index]}}</div>
           <div v-if="index == 0">适合小微团队开店、个人或三个人以下运营的团队开店，满足本行业内的基础经营需求</div>
           <div v-if="index == 1">适合成长型团队或企业，满足推广获客、成交转化、客户留存、复购增购、分享裂变等核心经营需求</div>
           <div v-if="index == 2">适合规模化扩张，有多个经营场景需求的成熟商家，满足创新营销玩法等深度经营需求</div>
           <div class="lines" :class="selectClassName_3[index === selectFlag && index]"></div>
-          <div class="top-price" :class="selectClassName_3[index === selectFlag && index]">￥{{item.model_meal_price}}/年</div>
+          <div
+            class="top-price"
+            :class="selectClassName_3[index === selectFlag && index]"
+          >￥{{item.model_meal_price}}/年</div>
         </div>
         <div class="honour-bot">
           <div class="rights-title">尊享功能</div>
@@ -52,7 +59,11 @@
           </ul>
         </div>
         <div class="selectTemp">
-          <div class="sel" :class="selectClassName_4[index === selectFlag && index]" @click="selCombo">选择标准月套餐>></div>
+          <div
+            class="sel"
+            :class="selectClassName_4[index === selectFlag && index]"
+            @click="selCombo"
+          >选择标准月套餐>></div>
           <div>
             <span class="red">*</span>最低低至
             <span class="sel-price" :class="index === selectFlag?'red':''">399</span>元/月
@@ -60,14 +71,16 @@
         </div>
       </div>
     </div>
-    
+
     <!-- 结算 -->
     <div :class="{payment: true, show: showPaymentFlag}">
       <div class="payment-inner">
         <div>费用：</div>
         <div>
           <div class="bgw">￥{{price}}</div>
-          <p class="tip"><span class="red">*</span>金额</p>
+          <p class="tip">
+            <span class="red">*</span>金额
+          </p>
         </div>
         <div class="symbol">×</div>
         <div>
@@ -79,17 +92,17 @@
         </div>
         <div class="symbol">×</div>
         <div>
-        <el-input-number
-          v-model="years"
-          controls-position="right"
-          @change="numChange"
-          :min="1"
-          :max="10"
-        ></el-input-number>
-        <p class="tip">
+          <el-input-number
+            v-model="years"
+            controls-position="right"
+            @change="numChange"
+            :min="1"
+            :max="10"
+          ></el-input-number>
+          <p class="tip">
             <span class="red">*</span> 年限
           </p>
-          </div>
+        </div>
         <div class="symbol">=</div>
         <div>
           <div class="bgw">￥{{total}}</div>
@@ -104,7 +117,7 @@
 
 <script>
 import Myheader from "@/components/header";
-import {GetTempList, templatePay } from "@/api/api";
+import { GetTempList, templatePay } from "@/api/api";
 
 export default {
   name: "selectCombo",
@@ -113,81 +126,95 @@ export default {
   },
   data() {
     return {
-      versionData:[],
-      comboName:['标准年套餐','精装套餐','豪华套餐'],
-      selectClassName: ['bz-border', 'jz-border', 'hh-border'], //边框
-      selectClassName_1: ['honour-top-bz', 'honour-top-jz', 'honour-top-hh'], //头部背景色
-      selectClassName_2: ['top-title-bz', 'top-title-jz', 'top-title-hh'], //套餐名背景颜色
-      selectClassName_3: ['top-price-bz', 'top-price-jz', 'top-price-hh'], //线条/年费背景色
-      selectClassName_4: ['sel-bz', 'sel-jz', 'sel-hh'], //选择套餐颜色
-      selectFlag:0, //mouseenter 给div[index]添加颜色
+      versionData: [],
+      comboName: ["标准年套餐", "精装套餐", "豪华套餐"],
+      selectClassName: ["bz-border", "jz-border", "hh-border"], //边框
+      selectClassName_1: ["honour-top-bz", "honour-top-jz", "honour-top-hh"], //头部背景色
+      selectClassName_2: ["top-title-bz", "top-title-jz", "top-title-hh"], //套餐名背景颜色
+      selectClassName_3: ["top-price-bz", "top-price-jz", "top-price-hh"], //线条/年费背景色
+      selectClassName_4: ["sel-bz", "sel-jz", "sel-hh"], //选择套餐颜色
+      selectFlag: 0, //mouseenter 给div[index]添加颜色
       showPaymentFlag: false,
-      price:0,
+      price: 0,
       percent: 100,
-      total:0,
-      radio:'',
+      total: 0,
+      radio: "",
       model_meal_category: 2,
       model_grade: 1,
       years: 1,
-      model_meal_type: '',
-      model_type:'',
-      user_id:0
+      model_meal_type: "",
+      model_type: "",
+      user_id: 0
     };
   },
   mounted() {
     this.init();
-    console.log(this.$route.params)
+    console.log(this.$route.params);
   },
   methods: {
     init() {
       this.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.getTempList();
       this.model_meal_category = this.$route.params.model_meal_category;
-      if(this.model_meal_category == 1) this.model_type = 'diy';
-      else this.model_type = '固定样式';
+      if (this.model_meal_category == 1) this.model_type = "diy";
+      else this.model_type = "固定样式";
     },
     //获取模板信息
     getTempList() {
-      GetTempList({ model_meal_category: this.model_meal_category }).then(res => {
-         this.versionData = res;
-      });
+      GetTempList({ model_meal_category: this.model_meal_category }).then(
+        res => {
+          this.versionData = res;
+        }
+      );
     },
-    selectEvent(index){
+    selectEvent(index) {
       this.selectFlag = index;
-      this.price=this.versionData[index].model_meal_price;
-      this.model_grade=this.versionData[index].model_grade;
+      this.price = this.versionData[index].model_meal_price;
+      this.model_grade = this.versionData[index].model_grade;
       this.model_meal_type = this.comboName[index];
-      this.total = Number(this.price)*Number(this.years)*Number(this.percent) / 100;
+      this.total =
+        (Number(this.price) * Number(this.years) * Number(this.percent)) / 100;
     },
     //选择套餐
-    selCombo(){
-      this.showPaymentFlag=true;
+    selCombo() {
+      this.showPaymentFlag = true;
     },
     //改变年数
-    numChange(val){
+    numChange(val) {
       this.years = val;
-      this.total = Number(this.price)*Number(this.percent)*Number(val) / 100;
+      this.total =
+        (Number(this.price) * Number(this.percent) * Number(val)) / 100;
     },
     //结算
-    pay(){
-      if(this.radio) {
+    pay() {
+      let vm = this;
+      if (vm.radio) {
         var params = {
-          user_id: this.user_id,
-          model_type: this.model_type,
-          model_meal_type: this.model_meal_type,
-          order_amount: this.total,
-          meal_end_time: this.years,
-          model_id: this.$route.params.arr,
-          applet_name: this.$route.params.prog_name,
-          applet_logo: this.$route.params.imageUrl
-        }
-        this.$router.push({
-          name: "comboPay",
-          params: params
+          user_id: vm.user_id,
+          model_type: vm.model_type,
+          model_meal_type: vm.model_meal_type,
+          price: vm.total,
+          num: vm.years,
+          tid: vm.$route.params.arr,
+          applet_name: vm.$route.params.prog_name,
+          applet_logo: vm.$route.params.imageUrl
+        };
+        //下单
+        templatePay(params).then(res => {
+          if(res.code == 1) {
+            vm.$router.push({
+              name: "comboPay",
+              params: {
+                'order_amount':vm.total,
+                'user_id': vm.user_id,
+                'id': res.data,
+                'order_type': 1
+              }
+            });
+          }
         });
-        
       } else {
-         this.$message.error("请确认");
+        this.$message.error("请确认");
       }
     }
   }
@@ -200,18 +227,39 @@ export default {
   margin-top: 150px;
   width: 1200px;
   .steps {
-    display:flex;position: relative;margin:70px auto;width:250px;
-    .lines{width:250px;border-bottom:2px solid rgb(26,188,156);}
-    .label{
-       display:flex;position:absolute;top:-30px;left:-30px;
-       .label-r{position: relative;
-       text-align: center;
-       div{width: 100px;font-weight: 700;font-size: 14px;color: rgb(26,188,156);}
-       .label-number{color:#fff;font-size:30px;position:absolute;top:15px;left:41px;}
-       }
-       .label-l{margin-right:150px;
-        
-       }
+    display: flex;
+    position: relative;
+    margin: 70px auto;
+    width: 250px;
+    .lines {
+      width: 250px;
+      border-bottom: 2px solid rgb(26, 188, 156);
+    }
+    .label {
+      display: flex;
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      .label-r {
+        position: relative;
+        text-align: center;
+        div {
+          width: 100px;
+          font-weight: 700;
+          font-size: 14px;
+          color: rgb(26, 188, 156);
+        }
+        .label-number {
+          color: #fff;
+          font-size: 30px;
+          position: absolute;
+          top: 15px;
+          left: 41px;
+        }
+      }
+      .label-l {
+        margin-right: 150px;
+      }
     }
   }
   .line {
@@ -267,14 +315,32 @@ export default {
           );
         }
         /*套餐名背景色 */
-        .top-title-bz{
-              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(0, 204, 204, 1) 44%, rgba(0, 204, 204, 1) 100%);
+        .top-title-bz {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(0, 204, 204, 1) 44%,
+            rgba(0, 204, 204, 1) 100%
+          );
         }
-        .top-title-jz{
-              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(255, 153, 0, 1) 44%, rgba(255, 153, 0, 1) 100%);
+        .top-title-jz {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 153, 0, 1) 44%,
+            rgba(255, 153, 0, 1) 100%
+          );
         }
-        .top-title-hh{
-              background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 0%, rgba(170, 151, 19, 1) 44%, rgba(170, 151, 19, 1) 100%);
+        .top-title-hh {
+          background: linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(255, 255, 255, 1) 0%,
+            rgba(170, 151, 19, 1) 44%,
+            rgba(170, 151, 19, 1) 100%
+          );
         }
         /*套餐名背景色 */
         .top-price {
@@ -288,15 +354,27 @@ export default {
           background-color: rgb(201, 201, 201);
         }
         /*线条/年费背景色 */
-        .top-price-bz{background-color: rgb(0,204,204);}
-        .top-price-jz{background-color: rgb(255,167,38);}
-        .top-price-hh{background-color: rgb(170,151,19);}
+        .top-price-bz {
+          background-color: rgb(0, 204, 204);
+        }
+        .top-price-jz {
+          background-color: rgb(255, 167, 38);
+        }
+        .top-price-hh {
+          background-color: rgb(170, 151, 19);
+        }
         /*线条/年费背景色 */
       }
       /*头部背景色 */
-      .honour-top-bz{background-color:rgb(234,255,255);}
-      .honour-top-jz{background-color:rgb(255,248,238);}
-      .honour-top-hh{background-color:rgb(252,249,224);}
+      .honour-top-bz {
+        background-color: rgb(234, 255, 255);
+      }
+      .honour-top-jz {
+        background-color: rgb(255, 248, 238);
+      }
+      .honour-top-hh {
+        background-color: rgb(252, 249, 224);
+      }
       /*头部背景色 */
       .honour-bot {
         padding: 0 20px;
@@ -345,10 +423,19 @@ export default {
       margin-top: 60px;
       line-height: 26px;
       color: rgb(134, 134, 134);
-      .sel:hover{font-weight: 700;cursor: pointer;}
-      .sel-bz {color: rgb(0,204,204);}
-      .sel-jz {color: rgb(255, 167, 38);}
-      .sel-hh {color: rgb(170, 151, 19);}
+      .sel:hover {
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .sel-bz {
+        color: rgb(0, 204, 204);
+      }
+      .sel-jz {
+        color: rgb(255, 167, 38);
+      }
+      .sel-hh {
+        color: rgb(170, 151, 19);
+      }
       .red {
         color: red;
       }
@@ -395,7 +482,9 @@ export default {
         color: #999999;
         text-align: center;
         margin-top: 5px;
-        .red{color: red;}
+        .red {
+          color: red;
+        }
         .ques {
           display: inline-block;
           width: 20px;

@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-huiyuan"></i>
       <span>会员中心</span>
       <span>&gt;</span>
       <span>邀请好友</span>
@@ -50,32 +50,32 @@
         <el-tab-pane label="邀请记录" name="second" :key="'second'">
           <div class="bottomBoxTab">
             <el-table :data="tableData" border style="width: 100%" :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}">
-              <el-table-column prop="HerID" label="你邀请的用户ID（会员/邀请码）" width="126">
+              <el-table-column prop="HerID" label="你邀请的用户ID（会员/邀请码）" width="230" align="center">
                 <template slot-scope="scope">
                   <div>{{scope.row.HerID}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="HerPhone" label="用户账号（手机号）" width="108">
+              <el-table-column prop="HerPhone" label="用户账号（手机号）" width="230" align="center">
                 <template slot-scope="scope">
                   <div>{{scope.row.HerPhone.replace(scope.row.HerPhone.substring(3,7),"****")}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="HerImg" label="头像" width="120">
+              <el-table-column prop="HerImg" label="头像" width="180" align="center">
                 <template slot-scope="scope">
                   <img :src="scope.row.HerImg" width="100" height="100" class="herImg" />
                 </template>
               </el-table-column>
-              <el-table-column prop="acquisitionTime" label="获得时间" width="190">
+              <el-table-column prop="acquisitionTime" label="获得时间" width="230" align="center">
                 <template slot-scope="scope">
                   <div>{{scope.row.acquisitionTime}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="useTime" label="使用时间" width="199">
+              <el-table-column prop="useTime" label="使用时间" width="230" align="center">
                 <template slot-scope="scope">
                   <div>{{scope.row.useTime}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="discountCoupon" label="获得优惠券" width="316">
+              <el-table-column prop="discountCoupon" label="获得优惠券" width="339" align="center">
                 <template slot-scope="scope">
                   <div class="yhqBox">
                     <img :src="scope.row.discountCoupon" width="300" height="100" />
@@ -180,6 +180,16 @@ export default {
         type: "error"
       });
     }
+  },
+  watch: {
+    activeName: function(val) {
+      //监听切换状态-计划单
+      if (val === "first") {
+        this.title = "邀请方法";
+      } else {
+        this.title = "邀请记录";
+      }
+    }
   }
 };
 </script>
@@ -189,6 +199,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 10px;
+  min-height: 81vh;
   .smBox {
     margin-bottom: 20px;
     div {
@@ -248,7 +259,7 @@ export default {
         > div:nth-of-type(1) {
           position: absolute;
           top: 0;
-          left: 15px;
+          left: 25px;
           display: flex;
           > div {
             &:nth-of-type(1) {

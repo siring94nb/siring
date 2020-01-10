@@ -4,7 +4,7 @@
       <i class="el-icon-edit"></i>
       <span>会员中心</span>
       <span>&gt;</span>
-      <span>会员信息</span>
+      <router-link to="/memberInformation" style="color:lightBlue">会员信息</router-link>
       <span>&gt;</span>
       <span>添加企业身份</span>
     </logginHeader>
@@ -82,8 +82,8 @@
           </div>
         </div>
       </div>
-      <button class="btn" @click="ceshi">确定</button>
-      <!-- <button class="btn" @click="GetEnterpriseAdd">确定</button> -->
+      <!-- <button class="btn" >确定</button> -->
+      <button class="btn" @click="GetEnterpriseAdd">确定</button>
     </div>
   </div>
 </template>
@@ -204,6 +204,7 @@ export default {
 .boxBottom {
   background: #fff;
   margin: 0 0 0 20px;
+  min-height: 83.5vh;
   .inputContent {
     background: #fff;
     padding: 10px 30px;

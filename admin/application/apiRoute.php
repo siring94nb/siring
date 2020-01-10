@@ -50,6 +50,7 @@ Route::group('api', function () {
         Route::any('contact','api/Website/contact'); //联系我们
         Route::any('seo','api/Website/seo'); //SEO
         Route::any('custom_case','api/Website/custom_case'); //软件定制案例
+        Route::any('member','api/Website/member'); //核心成员
     });
 
     //角色加盟 fyk
@@ -144,6 +145,9 @@ Route::group('api', function () {
         Route::any('project_details','api/Investment/project_details'); //项目详情
 
         Route::any('console_list','api/Investment/console_list'); //控制台-我的投融列表
+        Route::any('investment_details','api/Investment/investment_details'); //控制台-我的投融详情
+        Route::any('investment_status','api/Investment/investment_status'); //控制台-我的投融修改状态
+        Route::any('activities','api/Investment/activities'); //控制台-我的投融见面会
     });
 
     //定制需求
@@ -166,6 +170,10 @@ Route::group('api', function () {
     //控制台-AI推广套餐 fyk
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
+        Route::any('promotion_details','api/Promotion/promotion_details'); //订单详情
+        Route::any('promotion_upd','api/Promotion/promotion_upd'); //订单修改
+        Route::any('promotion_status','api/Promotion/promotion_status'); //订单状态确认
+        Route::any('manuscripts_upd','api/Promotion/manuscripts_upd'); //修改稿件
     });
 
     //控制台-角色中心 fyk
@@ -196,12 +204,46 @@ Route::group('api', function () {
         Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
+    //控制台-资金管理
+    Route::group('Saas',function(){
+        Route::any('saas_list','api/Saas/saas_list'); //订单列表
+        Route::any('saas_cancel','api/Saas/saas_cancel'); //订单取消
+    });
+
     //支付页面参数
     Route::group('Payment',function(){
         Route::any('coupou','api/Payment/coupou'); //优惠卷列表
         Route::any('balance','api/Payment/balance'); //用户余额
-        Route::any('my_invoice','api/Payment/my_invoice'); //开票
+        Route::any('discount','api/Payment/discount'); //用户折扣
+        Route::any('get_pay','api/Payment/get_pay'); //支付接口
+        Route::any('pay_status','api/Payment/pay_status'); //支付订单状态
     });
+
+    //支付回调
+    Route::group('Callback',function(){
+        Route::any('software_return','api/Callback/software_return'); //软件定制同步回调-支付宝
+        Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调-支付宝
+        Route::any('app_notice','api/Callback/app_notice'); //异步回调-微信
+
+    });
+
+    //消息留言
+    Route::group('Chat',function (){
+        Route::post('msg_add','api/Chat/add_message');//新增留言
+        Route::post('msg_list','api/Chat/msg_list');//留言列表
+        Route::post('msg_read','api/Chat/msg_read');//读取消息
+
+    });
+
+    //微信二维码
+    Route::group('WxQrcode',function (){
+        Route::any('code_add','api/WxQrcode/code_add');//生成带参数二维码
+        Route::any('serve','api/WxQrcode/serve');//服务器返回
+        Route::any('wx_accredit','api/WxQrcode/wx_accredit');//生成带参数二维码
+        Route::any('wx_code','api/WxQrcode/wx_code');//服务器返回
+
+    });
+
 
 });
 

@@ -48,7 +48,6 @@ class Manuscript extends Base
                 } else {
                     $user_id = $param["user_id"];
                 }
-
                 //判断优惠券
                 if(empty($param['yid'])){
                     $param['yid'] = '';
@@ -72,7 +71,7 @@ class Manuscript extends Base
                     return false;
                 }
                 break;
-            default://其他支付
+            default://自有稿件
                 $validate = new Validate([
                     ['title', 'require', '标题不能为空'],
                     ['object', 'require', '对象必须'],

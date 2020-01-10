@@ -50,8 +50,9 @@ class User extends Base
         }
         $content = "【Siring思锐】验证码:{$mobileCode}，(一站式移动互联网开发·运营·推广·赋能平台)十分钟内有效";
         $output = sendMessage($content,$mobile);
+        $data = json_decode($output,true);
 
-        return $output  ? returnJson(1,'发送成功') : returnJson(0,'发送失败');
+        return $data['status'] == 0  ? returnJson(1,'发送成功') : returnJson(0,'发送失败');
     }
 
     /**
@@ -69,7 +70,9 @@ class User extends Base
         $rules = [
             'phone' => 'require|regex:\d{11}|unique:user',
             'password'=>'require|alphaNum|confirm|length:6,16',
-//            'code'=>'require',
+            'code'=>'require',
+            'pid'=>'require',
+            'cid'=>'require',
         ];
         $message = [
             'phone.require' => '请输入手机号',
@@ -78,7 +81,9 @@ class User extends Base
             'password.require'=>'密码不能为空',
             'password.length' => '密码长度必须在6~16位之间',
             'password.confirm' => '两次密码输入不一致',
-//            'code.require'=>'验证码不能为空',
+            'code.require'=>'验证码不能为空',
+            'pid.require' => '省份ID不能为空',
+            'cid.require' => '城市ID不能为空',
         ];
         //验证
         $validate = new Validate($rules,$message);
@@ -86,9 +91,9 @@ class User extends Base
             return json(['code' => 0,'msg' => $validate->getError()]);
         }
 
-//        if (Session::get('mobileCode') != $param['code']) {
-//            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
-//        }
+        if (Session::get('mobileCode') != $param['code']) {
+            return json(['code'=>0,'msg'=>$param['code']."验证码不正确"]);
+        }
         //判断邀请码
         if(empty($param['invitation'])){
             $param['invitation'] = '';

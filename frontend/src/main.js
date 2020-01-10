@@ -7,6 +7,7 @@ import store from './store';
 import '@/assets/style/index.scss';
 import { Seo } from '@/api/api';
 import './assets/iconfont/iconfont.css';
+import './assets/iconfont1/iconfont.css';
 import qs from 'qs';
 Vue.prototype.$qs = qs;
 import VueClipboard from 'vue-clipboard2'
@@ -17,6 +18,10 @@ import vRegion from 'v-region';
 Vue.use(vRegion);
 
 router.beforeEach((to, from, next) => {
+    let that = this;
+    // function open4() {
+    //     that .$message.error('错了哦，这是一条错误消息');
+    //   }
     Seo().then(res => {
         const data = res.data;
         if (data.code === 1) {
@@ -29,24 +34,22 @@ router.beforeEach((to, from, next) => {
             meta2.name = 'keywords';
             meta2.content = data.data.tag;
             head[0].appendChild(meta)
-            head[0].appendChild(meta2)
-            // 全局路由守卫，当前不完善，需要修改，当前仅能拦截控制台路由
-            // to.meta.requireAut路由守卫开启标识
-            if (to.meta.requireAuth == true) {
-                let userId = sessionStorage.getItem("user_id");
-                if (userId == null) {
-                    next("/");
-                    // 路由守卫，登录提示处理延时出现，否则先行执行alert阻断页面跳转
-                    setTimeout(function(){
-                        alert("请先行登录")
-                    },500)
-                } else {
-                    next()
-                }
-            }
+            head[0].appendChild(meta2) 
         }
     })
-    next()
+    // 全局路由守卫，当前不完善，需要修改，当前仅能拦截控制台路由
+    // to.meta.requireAut路由守卫开启标识 
+
+    if (to.meta.requireAuth == true && sessionStorage.getItem("user_id") == null) {
+        let rou = from.path;
+        next(rou);
+        // 修改弹出窗口样式
+        alert("请先行登录");
+        // open4();
+        // console.log(that)
+    } else {
+        next()
+    }
 })
 
 router.afterEach((to, from, next) => {

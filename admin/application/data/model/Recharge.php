@@ -37,7 +37,7 @@ class Recharge extends Model
     //生成订单号
     function get_sn()
     {
-        return 'CZ' . date('YmdHi') . rand(100000, 999999);
+        return 'CZ' . date('YmdHis') . rand(100000, 999999);
     }
 
 

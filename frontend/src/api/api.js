@@ -210,6 +210,12 @@ export const CashDetails = params => {
     return axios.post(`${base_url}api/Capital/cash_details`, qs.stringify(params)).then(res => res.data);
 }
 /*
+*安全中心，资金密码显示
+*/
+export const GetBalance = params => {
+    return axios.post(`${base_url}api/Payment/balance`, qs.stringify(params)).then(res => res.data);
+}
+/*
 *银行卡管理（银行卡详情）
 */
 export const BankcardList = params => {
@@ -402,7 +408,13 @@ export const GetSetMeal = params => {
 export const GetCustomCase = params => {
     return axios.get(`${base_url}api/Website/custom_case`, { params: params });
 }
-
+/*
+*ai推广引擎
+demand_add
+ */
+export const demandAdd = params =>{
+    return axios.post(`${base_url}api/Manuscript/demand_add`, params).then(res => res.data);
+}
 /**
  * 小程序SaaS 模板列表
  */
@@ -472,9 +484,135 @@ export const confirmNeedOrder = data => {
     return axios.post(`${base_url}api/NeedOrder/confirm_need_order`,  qs.stringify(data)).then(res => res.data);
 }
 /**
- * 定制需求订单修改内容
+ * 订单支付
  */
 export const codeGetPay = data => {
-    return axios.post(`${base_url}api/NeedOrder/get_pay`,  qs.stringify(data)).then(res => res.data);
+    return axios.post(`${base_url}api/Payment/get_pay`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 优惠券
+ */
+export const getCoupou = data => {
+    return axios.post(`${base_url}api/Payment/coupou`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户余额
+ */
+export const getBalance = data => {
+    return axios.post(`${base_url}api/Payment/balance`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融介（行业领域数据）
+ */
+export const industryField = params => {
+    return axios.get(`${base_url}api/Investment/industry_field`, { params: params });
+}
+/**
+ * 投融介（新发稿页表格）
+ */
+export const industryList = data => {
+    return axios.post(`${base_url}api/Investment/industry_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融介（新发稿，我要融资部分）
+ */
+export const financeAdd = data => {
+    return axios.post(`${base_url}api/Investment/finance_add`,  qs.stringify(data)).then(res => res.data);
+}
+/*
+*投融介（新发稿处项目详细内容）
+*/
+export const projectDetails = data => {
+    return axios.post(`${base_url}api/Investment/project_details`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 订单会员折扣
+ */
+export const getDiscount = data => {
+    return axios.post(`${base_url}api/Payment/discount`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 充值下单 
+ */
+export const Recharge = data => {
+    return axios.post(`${base_url}api/Capital/recharge`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai推广运营列表
+ */
+export const manuscriptList = data => {
+    return axios.post(`${base_url}api/promotion/manuscript_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai推广运营订单详情（参数 order_id→订单id）
+ */
+export const promotionDetails = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_details`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai推广运营订单修改
+ */
+export const promotionUpd = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_upd`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 确认状态
+ */
+export const promotionStatus = data => {
+    return axios.post(`${base_url}api/Promotion/promotion_status`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * ai修改稿件
+ */
+export const manuscriptsUpd = data => {
+    return axios.post(`${base_url}api/Promotion/manuscripts_upd`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 我的投融列表
+ */
+export const consoleList = data => {
+    return axios.post(`${base_url}api/Investment/console_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融界（状态改变）
+ */
+export const investmentStatus = data => {
+    return axios.post(`${base_url}api/Investment/investment_status`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 投融界（会场介绍）
+ */
+export const Activities = data => {
+    return axios.post(`${base_url}api/Investment/activities`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 收藏/关注接口（参数 ---- pid→产品id（int） type→1为软件定制商品收藏，2为投融界关注   user_id→用户id（int） 三个参数全为必须）
+ */
+export const collectX = data => {
+    return axios.post(`${base_url}api/user/collect`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS套餐列表（参数type→分类id title→模糊搜索名 page→分页参数，默认第一页）
+ */
+export const saasList = data => {
+    return axios.post(`${base_url}api/Saas/saas_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 小程序SaaS套餐列表取消订单（参数 order_id→订单id）
+ */
+export const saasCancel = data => {
+    return axios.post(`${base_url}api/Saas/saas_cancel`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户留言列表（参数 pid→产品id uid→用户id）
+ */
+export const msgList = data => {
+    return axios.post(`${base_url}api/Chat/msg_list`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 用户留言
+ */
+export const addMessage = data => {
+    return axios.post(`${base_url}api/Chat/add_message`,  qs.stringify(data)).then(res => res.data);
 }
 // https://manage.siring.com.cn/api/file/qn_upload

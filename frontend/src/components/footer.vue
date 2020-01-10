@@ -470,6 +470,8 @@ export default {
       .bottom-showy {
         background-color: #f00;
         text-align: center;
+        border-radius: 3px;
+        padding: 2px 0;
       }
     }
   }

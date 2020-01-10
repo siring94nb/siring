@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon--zijinguanli"></i>
       <span>资金管理</span>
       <span>&gt;</span>
       <span>资金明细</span>
@@ -45,19 +45,20 @@
           </select>
         </div>
         <div>
-          <button @click="gb();getCapitalDetailed();">查询</button>
+          <button @click="getCapitalDetailed();">查询</button>
         </div>
-      </div>
+      </div>        
       <div>
         <div class="invoice">
           <span>剩余可开票金额：</span>
           <span>{{surplusMoney}}元</span>
           <button @click.stop="kaipiaoye">申请开票</button>
           <!-- 点击开票，弹出，发票样单 -->
-          <div class="popupBox" style="display:none;">
+          <el-dialog :visible.sync="dialogVisible" width="830px">
+             <div class="popupBox">
             <div>
               <span>我要开票</span>
-              <i class="el-icon-edit" @click.stop="kaipiaoye"></i>
+              <i class="el-icon-edit"></i>
             </div>
             <div>
               <span>开票金额：</span>
@@ -113,7 +114,7 @@
             <div>
               <span>发票类型：</span>
               <label v-for="(item, index) in radioData1" :key="index">
-                <input type="radio" v-model="radioVal1" :value="item.value" />
+                <input type="radio" @click="ceshi(item.id)" v-model="radioVal1" :value="item.value" />
                 {{ item.value }}
               </label>
             </div>
@@ -122,7 +123,7 @@
               <div>
                 <div>
                   <span>合计：</span>
-                  <span>￥30.00</span>
+                  <span>￥{{parseInt(this.price)+30.00}}</span>
                 </div>
                 <div>
                   <span>税费：</span>
@@ -137,29 +138,30 @@
               </div>
             </div>
           </div>
+          </el-dialog>
           <!-- 分页表格 -->
           <div style="margin-top:15px;">
             <el-table
               ref="multipleTable"
-              :data="tableData.slice((currpage-1)*pagesize,currpage*pagesize)"
+              :data="tableData"
               tooltip-effect="dark"
               border
-              style="width: 100%;font-size: 12px"
+              style="width: 100%;font-size: 14px"
               :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
-              <el-table-column prop="created_at" label="日期" width="180" align="center">
+              <el-table-column prop="created_at" label="日期" width="240" align="center">
                 <template slot-scope="scope">
-                  <div>{{scope.row.created_at==null?"未知":scope.row.created_at}}</div>
+                  <div>{{scope.row.created_at==null?"未知":(new Date(parseInt(scope.row.created_at) * 1000).toLocaleString().replace(/:\d{1,2}$/,' '))}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="income" label="收入（元）" align="center" width="160">
+              <el-table-column prop="income" label="收入（元）" align="center" width="240">
                 <template slot-scope="scope">
                   <div>{{scope.row.income==null?0:scope.row.income}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="phone" align="center" width="180" label="收入账号"></el-table-column>
-              <el-table-column prop="money" label="支出（元）" align="center" width="180">
+              <el-table-column prop="phone" align="center" width="240" label="收入账号"></el-table-column>
+              <el-table-column prop="money" label="支出（元）" align="center" width="240">
                 <template slot-scope="scope">
                   <div>{{scope.row.money==null?0:scope.row.income}}</div>
                 </template>
@@ -180,7 +182,7 @@
                   :current-page="DirectlyTo"
                   :page-sizes="[pagesize]"
                   layout="total, sizes, prev, pager, next, jumper"
-                  :total="tableData.length"
+                  :total="total"
                 ></el-pagination>
               </div>
             </div>
@@ -201,6 +203,7 @@ import {
 export default {
   data() {
     return {
+      dialogVisible :false,
       dis: true,
       // 分页表格参数
       pagesize: 10,
@@ -212,29 +215,36 @@ export default {
       selected2: "0",
       items: [], //企业列表
       selected3: "",
-      value: "", //时间选择
+      value: undefined, //时间选择
+      startTime:"",
+      endTime:"",
       // 单选框
       radioData: [{ value: "企业" }, { value: "个人" }],
       radioVal: "企业",
       //发票种类
       radioData1: [
         {
+          id:0,
           value: "普通发票（电子发票）"
         },
         {
+          id:1,
           value: "普通发票（纸质发票）"
         },
         {
+          id:2,
           value: "专用发票"
         },
         {
+          id:3,
           value: "收购发票（电子票）"
         },
         {
+          id:4,
           value: "收购发票（纸质发票）"
         }
       ],
-      radioVal1: "普通发票(电子票)",
+      radioVal1: "普通发票（电子发票）",
       fpys: "纸质",
       disabledX: true, //地址输入框禁用
       surplusMoney: "",
@@ -254,6 +264,11 @@ export default {
     this.getCapitalDetailed();
   },
   methods: {
+    // 发票类型
+    gbfplx(num){
+      // console.log(num)
+      this.radioVal1 = parseInt(num)
+    },
     gb() {
       // 修改状态判断是否有索引条件
       if (this.selected1 == "0" && this.selected2 == "0" && this.value == "") {
@@ -273,52 +288,74 @@ export default {
     },
     // 获取资金明细数据
     getCapitalDetailed() {
-      let params = {};
-      let times = this.value;
+      if (this.value != undefined && this.value != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+      let params = {
+        budget_type:this.selected1==0?'':parseInt(this.selected1),
+        role_type:this.selected2==0?'':parseInt(this.selected2),
+        page:parseInt(this.currpage),
+        start_time:parseInt(this.startTime),
+        end_time:parseInt(this.endTime)
+      };
+       CapitalDetailed(params).then(res => {
+          let { data, msg, code } = res;
+          if (code === 1) {
+            this.tableData = data.data;
+            this.pagesize = data.per_page;
+            this.total = data.total;
+          }
+        });
+      // let times = this.value;
       // let start_time = this.value[0];
       // let end_time = this.value[1];
-      if (this.dis) {
-        CapitalDetailed().then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.pagesize = data.per_page;
-            this.tableData = data.data;
-          }
-        });
-      } else {
-        if (this.value == "") {
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2
-          };
-          this.dis = true;
-        } else if (this.selected1 == "0" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            role_type: this.selected2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-          this.dis;
-        } else {
-           let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            budget_type: this.selected1,
-            role_type: this.selected2,
-            start_time: this.value[0].getTime(),
-            end_time: this.value[1].getTime()
-          };
-          this.dis = true;
-        }
-        CapitalDetailed(params).then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.tableData = data.data;
-          }
-        });
-      }
+      // if (this.dis) {
+      //   CapitalDetailed().then(res => {
+      //     let { data, msg, code } = res;
+      //     if (code === 1) {
+      //       this.pagesize = data.per_page;
+      //       this.tableData = data.data;
+      //     }
+      //   });
+      // } else {
+      //   if (this.value == "") {
+      //     params = {
+      //       budget_type: this.selected1,
+      //       role_type: this.selected2
+      //     };
+      //     this.dis = true;
+      //   } else if (this.selected1 == "0" && this.value != null) {
+      //     let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       role_type: this.selected2,
+      //       start_time: start_time.getTime(),
+      //       end_time: end_time.getTime()
+      //     };
+      //     this.dis;
+      //   } else {
+      //      let start_time = this.value[0];
+      //     let end_time = this.value[1];
+      //     params = {
+      //       budget_type: this.selected1,
+      //       role_type: this.selected2,
+      //       start_time: this.value[0].getTime(),
+      //       end_time: this.value[1].getTime()
+      //     };
+      //     this.dis = true;
+      //   }
+      //   CapitalDetailed(params).then(res => {
+      //     let { data, msg, code } = res;
+      //     if (code === 1) {
+      //       this.tableData = data.data;
+      //     }
+      //   });
+      // }
     },
     // 剩余开票金额
     getInvoiceAmount() {
@@ -339,7 +376,7 @@ export default {
         type: this.radioVal == "企业" ? 1 : 2,
         status: 2,
         rise: this.selected3,
-        invoiceLine: "",
+        invoiceLine: parseInt(this.radioVal1),
         address: this.address
       };
       MyInvoice(params).then(res => {
@@ -368,12 +405,13 @@ export default {
     },
     // 控制开票页显隐
     kaipiaoye() {
-      let gb = document.getElementsByClassName("popupBox")[0];
-      if (gb.style.display === "none") {
-        gb.style.display = "block";
-      } else {
-        gb.style.display = "none";
-      }
+      // let gb = document.getElementsByClassName("popupBox")[0];
+      // if (gb.style.display === "none") {
+      //   gb.style.display = "block";
+      // } else {
+      //   gb.style.display = "none";
+      // }
+      this.dialogVisible = true
     },
     // 企业列表信息
     selectFn(e) {
@@ -398,6 +436,7 @@ export default {
   background: #ffffff;
   padding: 10px;
   margin: 10px 0 0 20px;
+  min-height: 80vh;
   .screenX {
     display: flex;
     background: #f3f3f3;
@@ -419,7 +458,7 @@ export default {
         }
       }
       &:nth-of-type(3) {
-        margin-right: 160px;
+        margin-right: 520px;
         span {
           padding-right: 10px;
         }
@@ -459,16 +498,16 @@ export default {
       border-radius: 3px;
     }
     .popupBox {
-      z-index: 5;
+      // z-index: 5;
       font-size: 18px;
       color: #a1a1a1;
-      position: absolute;
+      // position: absolute;
       background: #ffffff;
-      padding: 35px;
+      // padding: 35px;
       border-radius: 10px;
-      width: 614px;
-      top: 50px;
-      left: 180px;
+      width: 790px;
+      // top: 50px;
+      // left: 180px; 
       > div {
         margin-bottom: 25px;
         &:nth-of-type(1) {
@@ -540,14 +579,11 @@ export default {
         }
         &:nth-of-type(8) {
           label {
-            &:nth-of-type(1) {
-              padding-right: 70px;
+            &:nth-of-type(1), &:nth-of-type(2),&:nth-of-type(3)  {
+              padding-right: 50px;
             }
-            &:nth-of-type(3) {
-              padding: 0 178px 0 110px;
-            }
-            &:nth-of-type(5) {
-              padding-left: 110px;
+            &:nth-of-type(4) {
+              padding:0 68px 0 110px;
             }
           }
         }
@@ -597,6 +633,13 @@ export default {
         }
       }
     }
+  }
+}
+</style>
+<style lang="scss">
+.popupBox{ 
+  .el-dialog__body{
+    width: 100px !important;
   }
 }
 </style>

@@ -7,6 +7,7 @@
  */
 namespace app\data\model;
 use think\Model;
+use think\Session;
 class User extends Model
 {
     /**
@@ -45,6 +46,8 @@ class User extends Model
             'salt' => $param['salt'],
             'ip' => $param['ip'],
             'province' => $param['region'],
+            'province_id' => $param['pid'],
+            'city_id' => $param['cid'],
             'created_at' => time(),
         ]);
         return $user  !== false ? $user : false;
@@ -94,7 +97,7 @@ class User extends Model
     public function edit($param)
     {
         $user = new User;
-        $user->save([
+        $user ->save([
             'realname'=>$param['name'],
             'id_card'=>$param['id_card'],
             'id_card_just'=>$param['id_card_just'],
@@ -109,6 +112,16 @@ class User extends Model
             'other_code'=>$param['invitation'],
             'updated_at'=>time()
         ],['id' =>$param["uid"]]);
+
         return $user  !== false ? $user : false;
+    }
+
+    //更新openid
+    public function upd($open_id,$msg)
+    {
+        $user = new User;
+        $data = $user ->save(['open_id'=>$open_id,],['id' =>$msg]);
+
+        return $data  !== false ? $data : false;
     }
 }

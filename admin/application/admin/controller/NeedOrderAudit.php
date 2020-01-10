@@ -28,11 +28,11 @@ class NeedOrderAudit extends Base
         $request = Request::instance();
         $param = $request->param();
 
-        $where =[];
+        $where['type'] = 7;
         $where['examine'] = ['in','1,2'];
         $where['examine_type'] = ['in','1,2'];
         if(!empty($param['title'])){
-            $where['need_order|need_phone'] = $param['title'];
+            $where['no|phone'] = $param['title'];
         }
         if(!empty($param['start_time'])){
             $param['start_time'] = date('Y-m-d H:i:s',strtotime($param['start_time']));
@@ -52,7 +52,7 @@ class NeedOrderAudit extends Base
             $param['size'] = 10;
         }
 
-        $field = 'id,need_order,need_name,need_category,need_terminal,need_money,need_order_money,create_time,need_status,examine,examine_type,need_surplus,work_day,status,need_info_c';
+        $field = 'id,no,name,need_category,dev,money,order_amount,created_at,need_status,examine,examine_type,surplus,grade,oeder_status,need_info_c';
         $order = 'id desc';
 
         $list = (new NeedOrder())->field($field) -> where( $where ) -> order( $order )

@@ -5,6 +5,7 @@ namespace app\api\controller;
 use app\data\model\InvestmentClass;
 use app\data\model\InvestmentProject;
 use app\data\model\InvestmentSet;
+use app\data\model\Meeting;
 use think\Controller;
 use think\Request;
 use think\Validate;
@@ -141,7 +142,7 @@ class Investment extends Base
 
         $project = new InvestmentProject();
 
-        $data = $project->details($param);
+        $data = $project->details($param['id']);
 
         return $data ? returnJson(1,'获取成功',$data) :  returnJson(0,'获取失败',$data);
     }
@@ -167,7 +168,90 @@ class Investment extends Base
             return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
         }
 
-        return  returnJson(0,'请登录');
+        return  returnJson(3,'请登录');
+    }
+
+
+    /**
+     * 控制台-我的投融订单详情
+     * @param $order_id
+     * @throws \think\Exception
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @throws \think\exception\DbException
+     */
+    public function investment_details($order_id)
+    {
+        $uid = Session::get("uid");
+        if($uid){
+
+            $data = (new InvestmentProject())->details($order_id);
+
+
+            return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+        }
+
+        return  returnJson(3,'请登录');
+    }
+
+    /**
+     * 控制台-我的投融修改
+     */
+    public function investment_upd()
+    {
+        $user_id = Session::get("uid");
+
+        if ($user_id) {
+            //获取参数
+            $request = Request::instance();
+            $param = $request->param();
+
+            $data = (new InvestmentProject()) ->upd($param);
+
+            return $data !== false ? returnJson(1,'操作成功') : returnJson(0,'操作失败');
+        } else {
+
+            return  returnJson(3,'请登录');
+        }
+
+    }
+
+    /**
+     * 控制台-我的投融确认状态
+     * @param $order_id
+     * @param $status 1：为线上沟通，2：为线下见面, 3:为合同保管，4：为委托监视，5为：已放弃
+     */
+    public function investment_status($order_id,$status)
+    {
+        $user_id = Session::get("uid");
+
+        if ($user_id) {
+
+            $data = (new InvestmentProject()) ->status($order_id,$status);
+
+            return $data !== false ? returnJson(1,'操作成功') : returnJson(0,'操作失败');
+        } else {
+
+            return  returnJson(3,'请登录');
+        }
+    }
+
+    /**
+     * 见面会
+     */
+    public function activities()
+    {
+        $user_id = Session::get("uid");
+
+        if ($user_id) {
+
+            $data = (new Meeting()) ->meeting_list();
+
+            return $data ? returnJson(1,'操作成功',$data) : returnJson(0,'操作失败',$data);
+        } else {
+
+            return  returnJson(3,'请登录');
+        }
     }
 
 

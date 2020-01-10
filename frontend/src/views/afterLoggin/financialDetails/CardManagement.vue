@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon--zijinguanli"></i>
       <span>资金管理</span>
       <span>&gt;</span>
       <span>银行卡管理</span>
@@ -30,9 +30,10 @@
         <i class="el-icon-bank-card"></i>
         <span>添加银行卡</span>
       </div>
-      <div class="addCardList" :style="{display:kzCanshu}">
+      <el-dialog :visible.sync="dialogVisible" width="700px">
+        <div class="addCardList" >
         <div>
-          <i class="el-icon-circle-close" @click.stop="dk"></i>
+          <!-- <i class="el-icon-circle-close" @click.stop="dk"></i> -->
         </div>
         <div>添加银行卡</div>
         <div>
@@ -71,6 +72,8 @@
           >确定</el-button>
         </div>
       </div>
+      </el-dialog>
+      
     </div>
   </div>
 </template>
@@ -80,6 +83,7 @@ import {BankcardList,BankcardAdd,BankcardDel} from "@/api/api";
 export default {
   data() {
     return {
+      dialogVisible :false,
       moren: 0,
       // 测试卡号
       // cardId: "4567712345666666",
@@ -113,17 +117,18 @@ export default {
     logginHeader
   },
   mounted() {
-    this.xuanzhogn(this.moren);
+    this.xuanzhogn(0);
     this.getBankcardList();
   },
   methods: {
     // 银行卡信息
     getBankcardList(){
       BankcardList().then(res=>{
-        let { data, msg, code } = res;
-         this.showMsg(msg, code);
-          if (code === 1) {
-           this.cardImage = data
+        let { data, msg } = res;
+        console.log(data);
+        //  this.showMsg(msg, code);
+          if (data.code === 1) {
+            this.cardImage = data.data;
           }
       })
     },
@@ -147,12 +152,19 @@ export default {
           }
       })
     },
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     // 默认选中银行卡
     xuanzhogn(num) {
       let aDiv = document.getElementsByClassName("card");
       if(aDiv.length != 0){
         if (this.checked[num] === true) {
           aDiv[num].classList.add("active");
+          // console.log(classList);
           for (let i = 0; i < this.checked.length; i++) {
             if (i !== num) {
               this.checked[i] = false;
@@ -174,11 +186,7 @@ export default {
     },
     // 打开添加银行卡面板
     dk() {
-      if (this.kzCanshu === "none") {
-        this.kzCanshu = "block";
-      } else {
-        this.kzCanshu = "none";
-      }
+      this.dialogVisible = true;
     },
     // 删除，后继加接口，目前暂时将样式删除
     deleteList(num) {
@@ -208,10 +216,6 @@ export default {
       //     });
       //   });
     },
-    // 回车键测试
-    ceshi() {
-      console.log(12123153131);
-    }
   },
   created(){
     // 键盘事件直接绑定到document中，否则，需要光标选中控件才能触发键盘事件
@@ -232,6 +236,7 @@ export default {
   margin: 10px 0 0 20px;
   display: flex;
   flex-wrap: wrap;
+  min-height: 77vh;
   > div {
     margin-right: 20px;
   }
@@ -240,6 +245,7 @@ export default {
     border: 1px solid rgba(202, 149, 142, 1);
     border-radius: 5px;
     padding: 5px 10px;
+    height: 120px;
     margin-bottom: 15px;
     > div {
       span {
@@ -295,16 +301,16 @@ export default {
     }
   }
   .addCardList {
-    border-radius: 5px;
-    position: absolute;
-    background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 5px;
-    z-index: 50;
-    width: 695px;
-    left: 50%;
-    margin-left: -347px;
-    top: 260px;
+    // border-radius: 5px;
+    // position: absolute;
+    // background: #ffffff;
+    // border: 1px solid rgba(0, 0, 0, 0.1);
+    // padding: 5px;
+    // z-index: 50;
+    // width: 695px;
+    // left: 50%;
+    // margin-left: -347px;
+    // top: 260px;
     > div {
       margin-bottom: 20px;
       > span {

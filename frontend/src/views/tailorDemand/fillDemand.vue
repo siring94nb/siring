@@ -2,9 +2,9 @@
   <div class="quickval">
     <myheader />
     <div class="quick-main">
-      <h3 class="title">快捷估价</h3>
+      <h3 class="title">定制需求</h3>
       <div class="quick-cont clearfix">
-        <quickaside />
+        <quickaside :type="1"/>
         <div class="types-right">
           <h4 class="title">填写需求（*为必填）</h4>
           <div class="form-box">
@@ -17,7 +17,7 @@
                   placeholder="请输入你的项目名，不超过10个字"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="需求类型" required>
+            <el-form-item label="需求类型" required>
                 <el-select v-model="form.need_category" placeholder="请选择">
                   <el-option label="智能硬件" value="1"></el-option>
                   <el-option label="电子商务" value="2"></el-option>
@@ -252,6 +252,7 @@ export default {
       background-color: #ffffff;
       height: 50px;
       line-height: 50px;
+      padding-left: 15px;
       margin-bottom: 10px;
     }
     .quick-cont {
@@ -259,7 +260,7 @@ export default {
       .types-right {
         float: left;
         width: 975px;
-        height: 804px;
+        height: 814px;
         background-color: #ffffff;
         .title {
           font-size: 14px;

@@ -3,7 +3,7 @@
     <myheader />
     <div class="index">
       <div class="title-top">
-        <img src="../assets/images/un123.jpg" alt />
+        <img src="../assets/images/aboutUs.jpg" alt />
       </div>
       <div class="h-title">核心团队</div>
       <div class="core-team">
@@ -45,7 +45,7 @@
       </div>
       <div class="h-title">各项荣誉及证书</div>
       <div class="sweep-box">
-        <el-carousel :interval="4000" type="card" height="500px" arrow="always">
+        <el-carousel :interval="4000" type="card" height="450px" arrow="always">
           <el-carousel-item v-for="(item, index) in honorImage" :key="index">
             <div class="sweep-main">
               <img :src="item.url" alt />
@@ -85,14 +85,20 @@
           :model="ruleForm"
           style="width:90%;margin:auto;"
         >
-          <el-form-item label="留言主题">
-            <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+          <div class="float-title">
+            <i class="el-icon-phone" />联系方式：
+          </div>
+          <el-form-item>
+              <el-input style="margin-bottom:10px;" type="text" placeholder="您的联系方式" v-model.number="ruleForm.desc"></el-input>
           </el-form-item>
-          <el-form-item label="留言内容">
-            <el-input type="textarea" v-model="ruleForm.desc1" class="texts"></el-input>
+          <div class="float-title">
+            <i class="el-icon-edit" />留言反馈：
+          </div>
+          <el-form-item>
+            <el-input  type="textarea" placeholder="您的需求或反馈，我们将在48个小时内，联系您" v-model="ruleForm.desc1" class="texts"></el-input>
           </el-form-item>
           <el-form-item style="float:right;">
-            <el-button type="primary">发送</el-button>
+            <el-button type="danger" style="background-color: #b83733;border-color:#b83733; margin-top:10px;">发送</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -243,12 +249,16 @@ export default {
           name: "安全联盟信誉企业"
         },
         {
-          url: require("../assets/images/image536147.jpeg"),
+          url: require("../assets/images/image536147.jpg"),
           name: "深圳市福田区人民政府英才证"
         },
         {
           url: require("../assets/images/image536148.jpeg"),
           name: "中国科技创新优秀企业"
+        },
+        {
+          url: require("../assets/images/qkl.jpg"),
+          name: "中国最具价值区块链企业"
         }
       ],
       courseTitle: [
@@ -276,7 +286,7 @@ export default {
 };
 </script>
 <style>
-.sweep-box{
+.sweep-box {
   width: 80%;
   margin: auto;
 }
@@ -286,7 +296,7 @@ export default {
   margin: auto;
 }
 .sweep-main img {
-  height: 400px;
+  height: 350px;
   width: 100%;
 }
 .texts textarea {
@@ -401,6 +411,7 @@ export default {
         width: 80px;
         margin-left: 5%;
         img {
+          margin-left: 1px;
           width: 80px;
           height: 80px;
         }
@@ -442,10 +453,22 @@ export default {
       border-top-right-radius: 5px;
       border-bottom-right-radius: 5px;
       width: 500px;
+      height: 625px;
       .message-title {
         font-size: 18px;
         text-align: center;
         margin: 50px 0;
+      }
+      .float-title {
+        font-size: 16px;
+        color: #b83733;
+        margin-bottom: 10px;
+        font-weight: 700;
+        line-height: 22px;
+        i{
+          font-size: 22px;
+          margin-right: 5px;
+        }
       }
       .contact-btn {
         width: 90%;

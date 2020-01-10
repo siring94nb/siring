@@ -1,7 +1,7 @@
 <template>
   <div>
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-jiaose"></i>
       <span>角色中心</span>
       <span>&gt;</span>
       <span>城市合伙人</span>
@@ -56,7 +56,7 @@
                 <div>
                   <span>输入搜索：</span>
                   <input type="text" v-model="suoyin" />
-                  <button @click="gb();GetCityPartner()">搜索</button>
+                  <button @click="GetCityPartner()">搜索</button>
                 </div>
               </div>
               <div class="lijifenxiang">
@@ -71,24 +71,24 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
                   <el-table-column type="selection" width="40" align="center"></el-table-column>
-                  <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
-                  <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
+                  <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+                  <el-table-column prop="phone" label="邀请人账号" width="180" align="center">
                     <template slot-scope="scope">
                       <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                     </template>
                   </el-table-column>
-                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
-                  <el-table-column prop="id" label="邀请人购买会员等级" width="150" align="center"></el-table-column>
-                  <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                  <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
-                  <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
+                  <el-table-column prop="ot_yqm" label="邀请人邀请码" width="175" align="center"></el-table-column>
+                  <el-table-column prop="id" label="邀请人购买会员等级" width="180" align="center"></el-table-column>
+                  <el-table-column prop="money" label="邀请人购买金额（元）" width="220" align="center"></el-table-column>
+                  <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="220" align="center"></el-table-column>
+                  <el-table-column prop="reach_money" label="达标佣金金额（元）" width="220" align="center"></el-table-column>
                 </el-table>
                 <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                   <div>
@@ -104,10 +104,10 @@
                     <!-- <el-pagination background layout="prev, pager, next,jumper"  @current-change="handleCurrentChange" :total="list.length+1" :current-page.sync="DirectlyTo" :page-size="pagesize"></el-pagination> -->
                     <el-pagination
                       @current-change="handleCurrentChange"
-                      :current-page="DirectlyTo"
+                      :current-page="currpage"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="list.length"
+                      :total="ltotal"
                     ></el-pagination>
                   </div>
                 </div>
@@ -118,24 +118,24 @@
             <div>
               <el-table
                 ref="multipleTable"
-                :data="list1.slice((currpage-1)*pagesize,currpage*pagesize)"
+                :data="list1"
                 tooltip-effect="dark"
                 border
                 style="width: 98.3%"
                 :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
               >
                 <el-table-column type="selection" width="40" align="center"></el-table-column>
-                <el-table-column prop="created_at" label="日期" width="120" align="center"></el-table-column>
-                <el-table-column prop="phone" label="邀请人账号" width="120" align="center">
+                <el-table-column prop="created_at" label="日期" width="180" align="center"></el-table-column>
+                <el-table-column prop="phone" label="邀请人账号" width="180" align="center">
                   <template slot-scope="scope">
                     <div>{{scope.row.phone.replace(scope.row.phone.substring(3,7),"****")}}</div>
                   </template>
                 </el-table-column>
-                <el-table-column prop="ot_yqm" label="邀请人邀请码" width="120" align="center"></el-table-column>
-                <el-table-column prop="id" label="邀请人订单项目" width="150" align="center"></el-table-column>
-                <el-table-column prop="money" label="邀请人购买金额（元）" width="170" align="center"></el-table-column>
-                <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="160" align="center"></el-table-column>
-                <el-table-column prop="reach_money" label="达标佣金金额（元）" width="160" align="center"></el-table-column>
+                <el-table-column prop="ot_yqm" label="邀请人邀请码" width="175" align="center"></el-table-column>
+                <el-table-column prop="id" label="邀请人订单项目" width="180" align="center"></el-table-column>
+                <el-table-column prop="money" label="邀请人购买金额（元）" width="220" align="center"></el-table-column>
+                <el-table-column prop="bottom_money" label="保底佣金金额（元）" width="220" align="center"></el-table-column>
+                <el-table-column prop="reach_money" label="达标佣金金额（元）" width="220" align="center"></el-table-column>
               </el-table>
               <div style="text-align: center;margin-top: 30px;" class="sjTiShiBox">
                 <div>
@@ -149,10 +149,10 @@
                 <div>
                   <el-pagination
                     @current-change="handleCurrentChange"
-                    :current-page="DirectlyTo"
+                    :current-page="currpage"
                     :page-sizes="[pagesize]"
                     layout="total, sizes, prev, pager, next, jumper"
-                    :total="list1.length"
+                    :total="total"
                   ></el-pagination>
                 </div>
               </div>
@@ -172,18 +172,18 @@
               <div>
                 <el-table
                   ref="multipleTable"
-                  :data="list2.slice((currpage-1)*pagesize,currpage*pagesize)"
+                  :data="list2"
                   tooltip-effect="dark"
                   border
                   style="width: 98.3%"
                   :header-cell-style="{background:'rgb(249,250,252)',color:'#666666',fontWeight: '700'}"
                 >
-                  <el-table-column prop="city_name" label="城市选择" width="120" align="center"></el-table-column>
-                  <el-table-column prop="money" label="金额" width="120" align="center"></el-table-column>
-                  <el-table-column prop="add_time" label="生效时间" width="120" align="center"></el-table-column>
-                  <el-table-column prop="end_time" label="到期时间" width="180" align="center"></el-table-column>
-                  <el-table-column prop="grade_title" label="合伙人政策" width="180" align="center"></el-table-column>
-                  <el-table-column prop="pay_type" label="支付方式" width="160" align="center">
+                  <el-table-column prop="city_name" label="城市选择" width="180" align="center"></el-table-column>
+                  <el-table-column prop="money" label="金额" width="180" align="center"></el-table-column>
+                  <el-table-column prop="add_time" label="生效时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="end_time" label="到期时间" width="220" align="center"></el-table-column>
+                  <el-table-column prop="grade_title" label="合伙人政策" width="220" align="center"></el-table-column>
+                  <el-table-column prop="pay_type" label="支付方式" width="235" align="center">
                     <template slot-scope="scope">
                       <div v-if="scope.row.pay_type==1">支付宝</div>
                       <div v-if="scope.row.pay_type==2">微信</div>
@@ -193,6 +193,15 @@
                   </el-table-column>
                   <el-table-column prop="user_id" label="操作" width="160" align="center"></el-table-column>
                 </el-table>
+              </div>
+              <div style="display:flex;justify-content: center">
+                <el-pagination
+                  @current-change="handleCurrentChange"
+                  :current-page="currpage"
+                  :page-sizes="[pagesize]"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="total"
+                ></el-pagination>
               </div>
             </div>
           </el-tab-pane>
@@ -234,17 +243,20 @@ export default {
       ],
       // numArr:[],//与topList
       activeName: "first",
-      value: "",
+      value: undefined,
       // 邀请分页表格
       list: [],
       list1: [],
       list2: [],
       pagesize: 10,
       currpage: 1,
-      total: 100,
-      DirectlyTo: 1,
+      currpage: 1,
       dis: true,
-      suoyin: ""
+      suoyin: "",
+      startTime: "",
+      endTime: "",
+      type:1,
+      total:0
     };
   },
   components: {
@@ -255,35 +267,31 @@ export default {
     this.GetCityTotal();
     // 城市合伙人等列表数据
     this.GetCityPartner();
-    this.GetCityPartner1();
-    this.GetCityPartner2();
+    // this.GetCityPartner1();
+    // this.GetCityPartner2();
   },
   methods: {
-    gb() {
-      // 修改状态判断是否有索引条件
-      if (this.suoyin == "" && this.value == "") {
-        this.dis = true;
-      } else if (this.value == null && this.suoyin == "") {
-        this.dis = true;
-        this.value = "";
-      } else {
-        this.dis = false;
-      }
-    },
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
+    // gb() {
+    //   // 修改状态判断是否有索引条件
+    //   if (this.suoyin == "" && this.value == "") {
+    //     this.dis = true;
+    //   } else if (this.value == null && this.suoyin == "") {
+    //     this.dis = true;
+    //     this.value = "";
+    //   } else {
+    //     this.dis = false;
+    //   }
+    // },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.GetCityTotal;
     },
     handleSizeChange(psize) {
       this.pagesize = psize;
     },
     // 获取城市数据及有效期数据
     RoleCenter() {
+      console.log(1227);
       const params = {
         type: 1
       };
@@ -295,18 +303,27 @@ export default {
         }
       });
     },
+    gbTime() {
+      console.log(this.value)
+      if (this.value != undefined && this.value != null) {
+        // console.log(this.value);
+        this.startTime = this.value[0].getTime();
+        this.endTime = this.value[1].getTime();
+      } else {
+        this.startTime = "";
+        this.endTime = "";
+      }
+    },
     //获取城市合伙人数据
     GetCityTotal() {
       CityTotal().then(res => {
-        let { data, msg, code } = res;
-        console.log(data.data);
-        if (code == 1) {
+        let { data, msg } = res;
+        if (data.code == 1) {
           const newArr = this.topList.map(item => {
             item.num = data.data[item.num];
             return item;
           });
           this.topList = newArr;
-          console.log(this.topList);
         }
       });
     },
@@ -316,76 +333,72 @@ export default {
      *YbWylo
      */
     GetCityPartner() {
-      let params = {};
-      let times = this.value;
-      if (this.dis) {
-        params = {
-          type: 2
-        };
-      } else {
-        if (this.value == "") {
-          params = {
-            type: 2,
-            title: this.suoyin
-          };
-        } else if (this.suoyin == "" && this.value != null) {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        } else {
-          let start_time = this.value[0];
-          let end_time = this.value[1];
-          params = {
-            type: 2,
-            title: this.suoyin,
-            start_time: start_time.getTime(),
-            end_time: end_time.getTime()
-          };
-        }
-      }
-      CityPartner(params).then(res => {
-        let { data, msg, code } = res;
-        console.log(res);
-        console.log(data);
-        // this.showMsg(msg, code);
-        if (code === 1) {
-          this.list = data.data;
-          console.log(this.list);
-        }
-      });
-    },
-    GetCityPartner1() {
-      const params = {
-        type: 2
+      this.gbTime();
+      let params = {
+        type: this.type,
+        title: this.suoyin,
+        start_time: this.startTime,
+        endTime: this.endTime,
+        page: this.currpage
       };
+      console.log(params);
       CityPartner(params).then(res => {
         let { data, msg, code } = res;
-        console.log(data);
         // this.showMsg(msg, code);
         if (code === 1) {
-          this.list1 = data.data;
-          console.log(this.list);
+          if (this.activeName == "first") {
+            this.list = data.data;
+            console.log("first");
+          } else if ((this.activeName = "second")) {
+            this.list1 = data.data;
+            console.log("second");
+          } else {
+            this.list2 = data.data;
+            console.log(3333);
+          }
+          // this.list = data.data;
+          this.total = data.total;
+          this.pagesize = data.per_page;
+          this.currpage = data.current_page;
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       });
     },
-    GetCityPartner2() {
-      const params = {
-        type: 3
-      };
-      CityPartner(params).then(res => {
-        let { data, msg, code } = res;
-        console.log(data);
-        // this.showMsg(msg, code);
-        if (code === 1) {
-          this.list2 = data.data;
-          console.log(this.list);
-        }
-      });
-    },
+    // GetCityPartner1() {
+    //   const params = {
+    //     type: 2
+    //   };
+    //   CityPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     console.log(data);
+    //     // this.showMsg(msg, code);
+    //     if (code === 1) {
+    //       this.list1 = data.data;
+    //       console.log(this.list1);
+    //     }
+    //   });
+    // },
+    // GetCityPartner2() {
+    //   const params = {
+    //     type: 3
+    //   };
+    //   CityPartner(params).then(res => {
+    //     let { data, msg, code } = res;
+    //     console.log(data);
+    //     // this.showMsg(msg, code);
+    //     if (code === 1) {
+    //       this.list2 = data.data;
+    //       console.log(this.list2);
+    //     }
+    //   });
+    // },
     // 返回
     showMsg(msg, code) {
       this.$message({
@@ -399,10 +412,22 @@ export default {
       //监听切换状态-计划单
       if (val === "first") {
         this.title = "城市累积会员明细";
+        this.type = 1;
+        this.GetCityPartner();
       } else if (val === "second") {
         this.title = "我邀请的会员明细";
+        this.type = 2;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetCityPartner();
       } else {
         this.title = "合伙人入驻订单";
+        this.type = 3;
+        this.value = undefined;
+        this.suoyin = "";
+        this.currpage = 1;
+        this.GetCityPartner();
       }
     }
   }
@@ -413,6 +438,7 @@ export default {
   background: #ffffff;
   margin: 5px 0 0 20px;
   padding: 20px 0 0 20px;
+  min-height: 81vh;
   .smBox1 {
     border-bottom: 1px solid #cccccc;
     padding-bottom: 10px;

@@ -3,9 +3,12 @@
     <div class="quick-desc">
       <div class="desc-title">
         <i class="iconfont icon-jisuanqi"></i>
-        <span>快捷估价</span>
+        <span>{{type == 1? '定制需求':'快捷估价'}}</span>
       </div>
-      <div class="desc-dit">很多朋友对开发费用多少没有大致概念，往往被不良开发商所蒙蔽，在这里我们为您提供便捷的快捷估价服务，让您放心开发！</div>
+      <div class="desc-dit">
+        {{type == 1?'请详细填写右边需求信息，提交需求后，系统将根据信息需求情况，及时走公司需求的梳理分析，以及报价、合同、设计等流程；为您提供完美的用户体验！':
+        '很多朋友对开发费用多少没有大致概念，往往被不良开发商所蒙蔽，在这里我们为您提供便捷的快捷估价服务，让您放心开发！'}}
+      </div>
     </div>
     <div class="recomment-cont">
       <div class="recomment-title">
@@ -25,6 +28,7 @@
 <script>
 import { GetCustomCase } from "@/api/api";
 export default {
+  props: ["type"],
   data() {
     return {
       recommentList: []
@@ -55,7 +59,7 @@ export default {
   width: 225px;
   height: 100%;
   .quick-desc {
-    height: 220px;
+    height: 230px;
     background: url("~@/assets/images/u2173.png") no-repeat;
     background-size: 100% 100%;
     padding: 15px 0 0 15px;
@@ -64,6 +68,7 @@ export default {
       .icon-jisuanqi {
         font-size: 36px;
         color: #666666;
+        margin-left: -5px;
         vertical-align: middle;
       }
       span {

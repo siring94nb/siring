@@ -431,6 +431,40 @@ export const appRouter = [
                     },
                 ]
             },
+            {
+                path: 'promotion',
+                icon: 'ios-pint',
+                name: 'promotion',
+                title: '推广运营订单',
+                component: () => import('@/views/order/order.vue'),
+                children: [
+                    {
+                        path: 'promotion_order',
+                        icon: 'ios-clipboard',
+                        name: 'promotion_order',
+                        access: 'admin/Promotion/index',
+                        title: '套餐订单',
+                        component: () => import('@/views/order/model_order.vue')
+                    },
+                ]
+            },
+            {
+                path: 'investment',
+                icon: 'ios-pint',
+                name: 'investment',
+                title: '投融介订单',
+                component: () => import('@/views/order/order.vue'),
+                children: [
+                    {
+                        path: 'investment_order',
+                        icon: 'ios-clipboard',
+                        name: 'investment_order',
+                        access: 'admin/Investment/index',
+                        title: '套餐订单',
+                        component: () => import('@/views/order/model_order.vue')
+                    },
+                ]
+            },
 
         ]
     },
@@ -475,6 +509,14 @@ export const appRouter = [
                 access: 'admin/Capital/index',
                 title: '资金明细',
                 component: () => import('@/views/capital/detailed.vue')
+            },
+            {
+                path: 'fundsAudit',
+                icon: 'ios-bookmarks',
+                name: 'fundsAudit',
+                access: 'admin/CapitalCard/index',
+                title: '线下支付审核',
+                component: () => import('@/views/capital/fundsAudit.vue')
             },
             {
                 path: 'Cash',
@@ -626,6 +668,15 @@ export const appRouter = [
                 access: 'admin/Contact/signInfo',
                 title: '联系我们',
                 component: () => import('@/views/contact/index.vue')
+
+            },
+            {
+                path: 'member',
+                icon: 'ios-person-add',
+                name: 'member',
+                access: 'admin/Member/index',
+                title: '核心成员',
+                component: () => import('@/views/member/list.vue')
 
             }
 

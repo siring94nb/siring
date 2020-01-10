@@ -300,21 +300,115 @@ export default new Router({
                 import('@/views/afterLoggin/financialDetails/discountCoupon'),
         },
         {
+            path: "/generalizeIndex",
+            name: "generalizeIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/generalize/generalizeIndex'),
+        },
+        {   //小程序SaaS（小程序管理）
+            path: "/storeIndex",
+            name: "storeIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/appletSaaS/storeIndex'),
+        },
+        {   //小程序SaaS（增值服务订单）
+            path: "/appreciationIndex",
+            name: "appreciationIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/appletSaaS/appreciationIndex'),
+        },
+        {   //ai推广流程
+            path: "/flowIndex",
+            name: "flowIndex",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/generalize/flowIndex'),
+        },
+        {   //投融介
+            path: "/forMelting",
+            name: "forMelting",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/forMelting/index'),
+        },
+        {   //投融界推广流程
+            path: "/flowIndex1",
+            name: "flowIndex1",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/forMelting/flowIndex1'),
+        },
+        {//中止项目
+            path: "/zhongzhi",
+            name: "zhongzhi",
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
+            component: () =>
+                import('@/views/afterLoggin/forMelting/zhongzhi'),
+        }
+        ,
+        {//中止项目
             path: "/ceshi",
             name: "ceshi",
-            // meta:{requireAuth:true},//路由守卫开启标识
-            // props: true,
+            meta:{requireAuth:true},//路由守卫开启标识
+            props: true,
             component: () =>
                 import('@/views/afterLoggin/ceshi'),
         }
         ]
     },
     {
+        //备用支付页
         path: "/order",
         name: "order",
         meta:{requireAuth:true},//路由守卫开启标识
         props: true,
         component: () =>
             import('@/views/order'),
-    }]
+    },
+    {
+        // 添加投融项目路由
+        path:"/addForMelting",
+        name:"addForMelting",
+        meta:{requireAuth:true},
+        props:true,
+        component:() => 
+            import('@/views/afterLoggin/forMelting/addForMelting')
+    },
+    {
+        path: "/alipay",
+        name: "alipay",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/alipay'),
+    },
+    // 添加新稿件
+    {
+        path: "/newManuscript",
+        name: "newManuscript",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/newManuscript/index'),
+    },
+    // 新投资，新融资
+    {
+        path: "/newInvestment",
+        name: "newInvestment",
+        meta:{requireAuth:true},//路由守卫开启标识
+        props: true,
+        component: () =>
+            import('@/views/newManuscript/investment'),
+    }
+]
 })
