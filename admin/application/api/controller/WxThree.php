@@ -133,13 +133,13 @@ class WxThree extends Base
                     $content = trim($msgObj->Content);
                    // 第三方平台全网发布检测普通文本消息测试 
                     // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                        $toUsername = trim($msgObj->ToUserName);
-                        if ($toUsername == 'gh_3c884a361561') { 
-                            $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                            $pp8['msg']=$content2;
-                            Db::table('test')->insert($pp8);
-                            echo $this->responseText($msgObj, $content2);
-                        }
+                        // $toUsername = trim($msgObj->ToUserName);
+                        // if ($toUsername == 'gh_3c884a361561') { 
+                        //     $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                        //     $pp8['msg']=$content2;
+                        //     Db::table('test')->insert($pp8);
+                        //     echo $this->responseText($msgObj, $content2);
+                        // }
                     // }
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
