@@ -11,7 +11,7 @@ class WxThree extends Base
 {
     private $appid = 'wxc8257b29680254a5';            //第三方平台应用appid
     private $appsecret = '9d0a62193caab918ed7eb80b9aa2d530';     //第三方平台应用appsecret
-    private $token = 'manage.siring.com.cn';           //第三方平台应用token（消息校验Token）
+    private $token = 'www.siring.com.cn';           //第三方平台应用token（消息校验Token）
     private $encodingAesKey = 'a5a22f38cb60228cb32ab61d9e4c414bueu73jddj87';      //第三方平台应用Key（消息加解密Key）
     // private $component_ticket= 'ticket@@@mMQLlMnPx_y9E5HWGdfJKeKJadwSFBhcrzA8eJrMSmfIZInb_8ck42Y9eitnPWnkZXlNkgR33-P3otpQ1c00-A';   //微信后台推送的ticket,用于获取第三方平台接口调用凭据
     
