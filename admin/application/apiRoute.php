@@ -164,7 +164,7 @@ Route::group('api', function () {
     //微信第三方路由
     Route::group('WxThree',function(){
         Route::any('receive_ticket','api/WxThree/receive_ticket'); //获取ticket
-        Route::any('callback/:appid','api/WxThree/callback'); //回调信息获取
+        Route::any('callback','api/WxThree/callback'); //回调信息获取
     });
 
     //控制台-AI推广套餐 fyk
