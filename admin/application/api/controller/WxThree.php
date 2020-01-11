@@ -134,7 +134,7 @@ class WxThree extends Base
                     $p112['msg']=$content;
                     Db::table('test')->insert($p112);
                    // 第三方平台全网发布检测普通文本消息测试 
-                    if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
+                    // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
                         $toUsername = trim($msgObj->ToUserName);
                         if ($toUsername == 'gh_3c884a361561') { 
                             $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
@@ -142,7 +142,7 @@ class WxThree extends Base
                             Db::table('test')->insert($pp8);
                             echo $this->responseText($msgObj, $content2);
                         }
-                    }
+                    // }
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
