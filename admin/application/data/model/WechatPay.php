@@ -92,7 +92,7 @@ class WechatPay extends Model
             "消息内容"  => $keyword2,
             "keyword3"  => $keyword3,
             "keyword4"  => date("Y-m-d H:i:s", time()),
-            "remark" => "具体内容请前往PC端查看！感谢你的使用",
+            "remark" => "具体内容请前往PC端查看！感谢你的使用！",
         );
 
         $result = $notice->uses($templateId)->withUrl($url)->andData($data)->andReceiver($openId)->send();
