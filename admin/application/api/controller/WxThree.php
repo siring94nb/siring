@@ -109,6 +109,8 @@ class WxThree extends Base
             // 每个授权小程序的appid，在第三方平台的消息与事件接收URL中设置了 $APPID$ 
             // 每个授权小程序传来的加密消息
             $postStr = file_get_contents("php://input");
+            $pp['msg']=$postStr;
+            Db::table('test')->insert($pp);
             if (!empty($postStr)){
                 $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
                 $toUserName = trim($postObj->AppId);
@@ -126,21 +128,21 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-                $p12['msg']=$errCode;
-                Db::table('test')->insert($p12);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
+                    $p112['msg']=$content;
+                    Db::table('test')->insert($p112);
                    // 第三方平台全网发布检测普通文本消息测试 
-                    // if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
-                        // $toUsername = trim($msgObj->ToUserName);
-                        // if ($toUsername == 'gh_3c884a361561') { 
-                        //     $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                        //     $pp8['msg']=$content2;
-                        //     Db::table('test')->insert($pp8);
-                        //     echo $this->responseText($msgObj, $content2);
-                        // }
-                    // }
+                    if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
+                        $toUsername = trim($msgObj->ToUserName);
+                        if ($toUsername == 'gh_3c884a361561') { 
+                            $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
+                            $pp8['msg']=$content2.'普通文本消息测试';
+                            Db::table('test')->insert($pp8);
+                            echo $this->responseText($msgObj, $content2);
+                        }
+                    }
                     //第三方平台全网发布检测返回api文本消息测试 
                     if (strpos($content, 'QUERY_AUTH_CODE') !== false) { 
                         $toUsername = trim($msgObj->ToUserName);
@@ -148,8 +150,6 @@ class WxThree extends Base
                             $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
-                            $pp6['msg']=$params.'1111';
-                            Db::table('test')->insert($pp6);
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
