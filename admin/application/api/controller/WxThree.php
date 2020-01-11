@@ -485,7 +485,7 @@ public function responseText($object = '', $content = '')
     }
 
     $xmlTpl =   "<xml>
-                    <Appid><![CDATA[%s]]></Appid>
+                    <ToUserName><![CDATA[%s]]></ToUserName>
                     <FromUserName><![CDATA[%s]]></FromUserName>
                     <CreateTime>%s</CreateTime>
                     <MsgType><![CDATA[text]]></MsgType>
