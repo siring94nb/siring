@@ -128,17 +128,19 @@ class WxThree extends Base
                 $appid = $this->appid;
                 $pc = new \WXBizMsgCrypt($token, $encodingAesKey, $appid);
                 $errCode = $pc->decryptMsg($msg_sign, $timeStamp, $nonce, $from_xml, $msg);
-                $p12['msg']=$errCode;
-                Db::table('test')->insert($p12);
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
+                    $p12['msg']=$msgObj;
+                    Db::table('test')->insert($p12);
+                    $p112['msg']=$content;
+                    Db::table('test')->insert($p112);
                    // 第三方平台全网发布检测普通文本消息测试 
                     if (strtolower($msgObj->MsgType) == 'text' && $content == 'TESTCOMPONENT_MSG_TYPE_TEXT') {
                         $toUsername = trim($msgObj->ToUserName);
                         if ($toUsername == 'gh_3c884a361561') { 
                             $content2 = 'TESTCOMPONENT_MSG_TYPE_TEXT_callback'; 
-                            $pp8['msg']=$content2;
+                            $pp8['msg']=$content2.'普通文本消息测试';
                             Db::table('test')->insert($pp8);
                             echo $this->responseText($msgObj, $content2);
                         }
