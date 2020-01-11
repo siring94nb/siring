@@ -131,8 +131,6 @@ class WxThree extends Base
                 if ($errCode == 0) {
                     $msgObj = simplexml_load_string($msg, 'SimpleXMLElement', LIBXML_NOCDATA);
                     $content = trim($msgObj->Content);
-                    $p12['msg']=$msgObj;
-                    Db::table('test')->insert($p12);
                     $p112['msg']=$content;
                     Db::table('test')->insert($p112);
                    // 第三方平台全网发布检测普通文本消息测试 
@@ -152,8 +150,6 @@ class WxThree extends Base
                             $pp5['msg']=$query_auth_code.'112233';
                             Db::table('test')->insert($pp5);
                             $params = $this->getAuthInfo($query_auth_code);
-                            $pp6['msg']=$params.'1111';
-                            Db::table('test')->insert($pp6);
                             $authorizer_access_token = $params['authorization_info']['authorizer_access_token']; 
                             $content = "{$query_auth_code}_from_api"; 
                             $this->sendServiceText($msgObj, $content, $authorizer_access_token);
