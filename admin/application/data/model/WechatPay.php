@@ -89,7 +89,7 @@ class WechatPay extends Model
         $data = array(
             "first"  => $first,
             "keyword1"   => $keyword1,
-            "keyword2"  => $keyword2,
+            "消息内容"  => $keyword2,
             "keyword3"  => $keyword3,
             "keyword4"  => date("Y-m-d H:i:s", time()),
             "remark" => "具体内容请前往PC端查看！感谢你的使用",
