@@ -29,7 +29,7 @@ class Chat extends Base
 
         $data = (new Message())->add($param);
         if($data){
-            $user = (new User())->user_detail($param['uid']);
+            $user = (new User())->user_detail($param['rid']);
 
             $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
         }
