@@ -46,7 +46,7 @@
               ></el-date-picker>
             </div>
             <div>
-              <el-button type="primary" icon="el-icon-search" @click="dialogVisible = true,str='已开通'">搜索</el-button>
+              <el-button type="primary" icon="el-icon-search" @click="getsaasList">搜索</el-button>
             </div>
           </div>
           <!-- 分页表格 -->
@@ -86,7 +86,7 @@
                 <el-table-column prop="end_time" label="套餐到期时间" width="200" align="center"></el-table-column>
                 <el-table-column prop="payment" label="操作" width="165" align="center">
                   <template slot-scope="scope">
-                    <span class="default" v-if="scope.row.payment == 1" @click="dialogVisible = true,str='汇款未到账',orderId = scope.row.id ">未到账</span>
+                    <span class="default" style="background:rgb(161,161,161)" v-if="scope.row.payment == 1" @click="dialogVisible = true,str='汇款未到账',orderId = scope.row.id ">未到账</span>
                     <span class="default" style="background:rgb(102,153,0)" v-if="scope.row.payment == 2" @click="dialogVisible = true,str='待付款',orderId = scope.row.id ">已到账</span>
                     <span class="default" v-if="scope.row.payment == 3" @click="dialogVisible = true,str='汇款待审核'">汇款待审核</span>
                     <span class="default" v-if="scope.row.payment == 4" @click="dialogVisible = true,str='汇款未到账'">汇款未到账</span>
@@ -232,15 +232,17 @@ export default {
     },
     // 列表数据
     getsaasList() {
+      let params={}
        if (this.timeValue != undefined && this.timeValue != null) {
         // console.log(this.value);
         this.startTime = this.timeValue[0].getTime();
         this.endTime = this.timeValue[1].getTime();
+
       } else {
         this.startTime = "";
         this.endTime = "";
       }
-      let params = {
+      params = {
         type:"",
         title:this.nameId,
         page:this.currpage

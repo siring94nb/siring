@@ -15,27 +15,28 @@
             :class="{'team-member-sel': selOne === index}"
             @click="mouseSel(index)"
           >
-            <img :src="item.images" alt />
-            <div class="eg-name">{{item.egName}}</div>
-            <div>{{item.name}}</div>
+            <img :src="item.img" alt />
+            <div class="eg-name">{{item.name}}</div>
+            <div>{{item.position}}</div>
           </div>
         </div>
         <div class="personal-profile">
           <div class="personal-top">
-            <img :src="personal.images" alt />
+            <img :src="personal.img" alt />
             <!-- <div class="name">{{personal.position}}：{{personal.name}}</div> -->
-            <div class="name">{{personal.name}}</div>
-            <div class="egname">{{personal.egName}}</div>
+            <div class="name">{{personal.position}}</div>
+            <div class="egname">{{personal.name}}</div>
           </div>
           <div class="personal-bottom">
             <div>
-              <span>个人简历：</span>
-              {{personal.introduce}}
+              <!-- <span>个人简历：</span> -->
+              <!-- {{personal.introduce}} -->
+              <div v-html="personal.con"></div>
             </div>
-            <div>
+            <!-- <div>
               <span>专长领域：</span>
               {{personal.field}}
-            </div>
+            </div> -->
             <!-- <div>
               <span>服务过的品牌：</span>
               {{personal.brand}}
@@ -115,6 +116,7 @@ import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
+import {Member} from "@/api/api"
 export default {
   name: "index",
   components: {
@@ -274,13 +276,26 @@ export default {
       ]
     };
   },
-  created() {
-    this.personal = this.teamList[0];
+  // created() {
+  //   this.personal = this.teamList[0];
+  // },
+  mounted(){
+    this.getMember();
   },
   methods: {
     mouseSel(index) {
       this.selOne = index;
       this.personal = this.teamList[index];
+    },
+    // 获取核心成员列表
+    getMember(){
+      Member().then(res=>{
+        let {data,code,msg} = res;
+        if(code == 1){
+          this.teamList = data;
+          this.mouseSel(0);
+        }
+      })
     }
   }
 };
@@ -364,6 +379,8 @@ export default {
       background-color: rgb(99, 99, 99);
       color: #fff;
       line-height: 26px;
+      height: 600px;
+      overflow-y:scroll;
       .personal-top {
         text-align: center;
         margin-top: 20px;
@@ -384,6 +401,9 @@ export default {
         padding: 0 30px;
       }
     }
+    .personal-profile::-webkit-scrollbar{
+	display:none
+}
   }
   .contact {
     display: flex;

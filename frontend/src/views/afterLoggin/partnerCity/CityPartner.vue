@@ -107,7 +107,7 @@
                       :current-page="currpage"
                       :page-sizes="[pagesize]"
                       layout="total, sizes, prev, pager, next, jumper"
-                      :total="ltotal"
+                      :total="total"
                     ></el-pagination>
                   </div>
                 </div>
@@ -348,27 +348,34 @@ export default {
         if (code === 1) {
           if (this.activeName == "first") {
             this.list = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
             console.log("first");
-          } else if ((this.activeName = "second")) {
+          } else if ((this.activeName == "second")) {
             this.list1 = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
             console.log("second");
           } else {
             this.list2 = data.data;
+            this.total = data.total;
+            this.pagesize = data.per_page;
+            this.currpage = data.current_page;
             console.log(3333);
           }
           // this.list = data.data;
-          this.total = data.total;
-          this.pagesize = data.per_page;
-          this.currpage = data.current_page;
-        }else if(code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
       });
     },
     // GetCityPartner1() {

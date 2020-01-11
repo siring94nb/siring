@@ -77,7 +77,7 @@
           background
           @current-change="currentChange"
           :page-sizes="[10]"
-          :page-size="pagesize"
+          :page-size="[pagesize]"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
          
@@ -111,7 +111,7 @@ export default {
       ],
       value: "1",
       suoyin: "",
-      cid: "",
+      cid: 0,
       // 表格
       tableData: [
         {
@@ -173,12 +173,23 @@ export default {
     getindustryList() {
       // console.log(this.cid);
       let parmas = {
-        type: this.value,
-        cid: parseInt(this.cid),
-        title: this.suoyin,
-        page:this.currentPage
-        // page: 4
       };
+      if(this.cid == 0){
+        parmas = {
+          type: this.value,
+          title: this.suoyin,
+          page:this.currentPage
+          // page: 4
+        };
+      }else{
+        parmas = {
+          type: this.value,
+          cid:parseInt(this.cid),
+          title: this.suoyin,
+          page:this.currentPage
+          // page: 4
+        };
+      }
       industryList(parmas).then(res => {
         let { data, code, msg } = res;
         // console.log(res);
@@ -279,7 +290,7 @@ export default {
         collectX(params).then(res => {
           let { code, msg } = res;
           if (code == 1) {
-            this.showMsg(msg, code);
+            this.showMsg("取消关注", code);
           }
         });
       } else {
@@ -287,7 +298,7 @@ export default {
         collectX(params).then(res => {
           let { code, msg } = res;
           if (code == 1) {
-            this.showMsg(msg, code);
+            this.showMsg("关注成功", code);
           }
         });
       }

@@ -34,12 +34,12 @@
       </div>
       <div class="skipScreen">
         <div>
-          <div @click="xuanze('全部')" value ="" style="background:rgb(204,255,255)">全部</div>
-          <div @click="xuanze(1)" value ="1"  style="background:red">线上沟通...</div>
-          <div @click="xuanze(2)" style="background:rgb(102,153,0)">线下见面会...</div>
-          <div @click="xuanze(3)" style="background:rgb(0,51,255)">合同保管</div>
-          <div @click="xuanze(4)" style="background:rgb(171,147,48)">委托检视</div>
-          <div @click="xuanze(5)" style="background:rgb(134,134,134)">已放弃</div>
+          <div @click="xuanze('全部')" value ="" style="background:rgb(204,255,255);cursor: pointer;">全部</div>
+          <div @click="xuanze(1)" value ="1"  style="background:red;cursor: pointer;">线上沟通...</div>
+          <div @click="xuanze(2)" style="background:rgb(102,153,0);cursor: pointer;">线下见面会...</div>
+          <div @click="xuanze(3)" style="background:rgb(0,51,255);cursor: pointer;">合同保管</div>
+          <div @click="xuanze(4)" style="background:rgb(171,147,48);cursor: pointer;">委托检视</div>
+          <div @click="xuanze(5)" style="background:rgb(134,134,134);cursor: pointer;">已放弃</div>
         </div>
         <div>
           <router-link to="/addForMelting" style="color:#0099ff;border:1px solid #0099ff">
@@ -118,6 +118,7 @@
       </div>
     </div>
     <div @click.stop="setorderId(2,40)">测试流程跳转</div>
+    <div @click.stop="getconsoleList1">测试获取结果</div>
   </div>
 </template>
 <script>
@@ -166,9 +167,9 @@ export default {
       total: 6,
       pagesize: 10,
       currentPage: 1,
-      xuanzeValue:"",
-      startTime:"",
-      endTime:''
+      xuanzeValue:0,
+      startTime:0,
+      endTime:0
     };
   },
   components: {
@@ -198,21 +199,21 @@ export default {
       });
     },
     getconsoleList(){
+      let params = {}
       if (this.value1 != undefined && this.value1 != null) {
         // console.log(this.value);
         this.startTime = this.value1[0].getTime();
         this.endTime = this.value1[1].getTime();
       } else {
-        this.startTime = "";
-        this.endTime = "";
+        this.startTime = 0;
+        this.endTime = 0;
       }
-      let params = {
-        process : parseInt(this.xuanzeValue),
+      params = {
+        process :this.xuanzeValue == 0 ? "" : parseInt(this.xuanzeValue),
         title :this.title,
         type:this.selectValue == 0 ? "" : parseInt(this.selectValue),
-        start_time:parseInt(this.startTime),
-        end_time:parseInt(this.endTime),
-        
+        start_time:this.startTime == 0 ? "" :parseInt(this.startTime),
+        end_time:this.endTime == 0 ? "" :parseInt(this.endTime), 
       }
       consoleList(params).then(res=>{
         let {data,code,msg} = res;
@@ -241,6 +242,21 @@ export default {
         params:{
           orderId:id,
           strValue:str,
+        }
+      })
+    },
+    // 
+
+
+     getconsoleList1(){
+      consoleList().then(res=>{
+        let {data,code,msg} = res;
+        console.log(data)
+        if(code == 1){
+          this.tableData = data.data;
+          this.total = data.total;
+          this.pagesize = data.per_page;
+          this.currentPage = data.last_page
         }
       })
     },
