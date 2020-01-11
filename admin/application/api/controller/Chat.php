@@ -7,6 +7,8 @@
  */
 namespace app\api\controller;
 use app\data\model\Message;
+use app\data\model\WechatPay;
+use app\data\model\User;
 use think\Request;
 
 /**
@@ -26,6 +28,11 @@ class Chat extends Base
         $param = $request->param();
 
         $data = (new Message())->add($param);
+        if($data){
+            $user = (new User())->user_detail($param['uid']);
+
+            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
+        }
 
         return $data ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
 
