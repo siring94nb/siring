@@ -71,7 +71,7 @@
         <!-- 内容/合同/协议/确认文书 -->
         <div class="content">
           <div class="boxTitle">内容/合同/协议/确认文书</div>
-          <div class="bigcontentBox" >
+          <div class="bigcontentBox">
             <div class="touziBox" v-if="strValue==1">
               <div class="tishi">
                 <div>
@@ -180,19 +180,66 @@
                 <i class="el-icon-warning-outline"></i>
                 <span>请双方彼此都预约选定好时间场次，需要融资的项目人还需要提前准备好您的BP，届时会给每个人20分钟介绍各自项目，您的项目也有可能被其他投资人所青睐哟</span>
               </div>
-              <div v-for="(item,index) in dataArr" :key="index">
+              <div class="contentBoxA" v-for="(item,index) in dataArr" :key="index">
                 <div class="lefthuichang">
-                  <div><i></i><span>主题：</span><span>{{item.title}}</span></div>
-                  <div><i></i><span>地址：</span><span>{{item.region}}</span></div>
-                  <div><i></i><span>时间：</span><span>{{item.add_time}}<span>到</span><span>{{item.end_time}}</span></span></div>
-                  <div><i></i><span>上线人数：</span><span>{{item.upper_num}}</span></div>
-                  <div><img v-for="(item1,index1) in item.map_img" :key="index1" :src="item1" alt=""></div>
-                  <div><i></i><span>已报名项目：</span></div>
+                  <div>
+                    <span class="lBlue">
+                      <i class="iconfont icon-zhuti"></i>
+                      <span>主题：</span>
+                    </span>
+                    <span>{{item.title}}</span>
+                  </div>
+                  <div>
+                    <span class="lBlue">
+                      <i class="iconfont icon-dizhi"></i>
+                      <span>地址：</span>
+                    </span>
+                    <span>{{item.region}}</span>
+                  </div>
+                  <div>
+                    <span class="lBlue">
+                      <i class="iconfont icon-shijian"></i>
+                      <span>时间：</span>
+                    </span>
+
+                    <span>
+                      {{item.add_time}}
+                      <span class="lBlue" style="padding:0 20px">到</span>
+                      <span>{{item.end_time}}</span>
+                    </span>
+                  </div>
+                  <div>
+                    <span class="lBlue">
+                      <i class="iconfont icon-renshu"></i>
+                      <span>上限人数：</span>
+                    </span>
+                    <span>{{item.upper_num}}人</span>
+                    <span class="lBlue" style="padding-left:30px;">
+                      <span>已报名人数：</span>
+                    </span>
+                    <span>30人</span>
+                  </div>
+                  <div>
+                    <img v-for="(item1,index1) in item.map_img" :key="index1" :src="item1" alt />
+                  </div>
+                  <div>
+                    <span class="lBlue">
+                      <i class="iconfont icon-guanli"></i>
+                      <span>已报名项目：</span>
+                    </span>
+                    <span>
+                      <span style="color:#ff0000">10</span>
+                      <span>项</span>
+                    </span>
+                  </div>
                 </div>
                 <div class="righthuichang">
-                  <div><span>会务环境一览</span><span>{{nowTiem >( new Date(item.end_time))?"活动回顾":"为开始"}}</span></div>
+                  <div class="huanjinBox">
+                    <span class="lBlue">会务环境一览</span>
+                    <span class="lBlue">{{nowTiem >( new Date(item.end_time))?"活动回顾>":"未开始>"}}</span>
+                  </div>
                   <div>
-                    <img :src="item.field_img" alt="">
+                    <img :src="item.field_img" alt />
                   </div>
                 </div>
               </div>
@@ -225,7 +272,10 @@
                 <div class="redColor redColorB">￥1111</div>
                 <div style="font-size:20px;color:#000000;margin:0 10px;">×</div>
               </div>
-              <div style="margin-left:-300px"><span class="redColor">*</span><span>含食宿（不低于4星）不含交通费，来往交通预定也可联系官方顾问支撑</span></div>
+              <div style="margin-left:-300px">
+                <span class="redColor">*</span>
+                <span>含食宿（不低于4星）不含交通费，来往交通预定也可联系官方顾问支撑</span>
+              </div>
             </div>
 
             <div>
@@ -295,7 +345,7 @@ import liuyan from "../../../components/liuyan/leaveAmessage";
 export default {
   data() {
     return {
-      radio:1,
+      radio: 1,
       dialogVisible: false,
       dataBox: [],
       blockValue: { display: "block" },
@@ -323,10 +373,71 @@ export default {
       dis: false, //修改稿件按钮显示隐藏
       url: "", //上传获取链接
       orderId: 0,
-      dataArr: [], //会场介绍
+      dataArr: [
+        {
+          id: 4,
+          title: "3254235",
+          region: "天津市,市辖区,和平区",
+          address: "3242342",
+          add_time: "2019-11-26 00:00:00",
+          end_time: "2019-11-30 00:00:00",
+          upper_num: 1,
+          cost: "1.00",
+          field_img: "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+          map_img: [
+            "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+            "http://qiniu.siring.com.cn/79cf3201911271150115253.png"
+          ]
+        },
+        {
+          id: 4,
+          title: "3254235",
+          region: "天津市,市辖区,和平区",
+          address: "3242342",
+          add_time: "2019-11-26 00:00:00",
+          end_time: "2019-11-30 00:00:00",
+          upper_num: 1,
+          cost: "1.00",
+          field_img: "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+          map_img: [
+            "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+            "http://qiniu.siring.com.cn/79cf3201911271150115253.png"
+          ]
+        },
+        {
+          id: 4,
+          title: "3254235",
+          region: "天津市,市辖区,和平区",
+          address: "3242342",
+          add_time: "2019-11-26 00:00:00",
+          end_time: "2019-11-30 00:00:00",
+          upper_num: 1,
+          cost: "1.00",
+          field_img: "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+          map_img: [
+            "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+            "http://qiniu.siring.com.cn/79cf3201911271150115253.png"
+          ]
+        },
+        {
+          id: 4,
+          title: "3254235",
+          region: "天津市,市辖区,和平区",
+          address: "3242342",
+          add_time: "2019-11-26 00:00:00",
+          end_time: "2019-11-30 00:00:00",
+          upper_num: 1,
+          cost: "1.00",
+          field_img: "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+          map_img: [
+            "http://qiniu.siring.com.cn/ce37120191127115011466.jpg",
+            "http://qiniu.siring.com.cn/79cf3201911271150115253.png"
+          ]
+        }
+      ], //会场介绍
       pid: 0,
       uid: 0,
-      nowTiem:0,
+      nowTiem: 0
     };
   },
   mounted() {
@@ -340,9 +451,9 @@ export default {
       this.uid = sessionStorage.getItem("user_id");
       this.getprojectDetails();
       this.getActivities();
-      this.nowTiem = new Date().getTime()
-      let date = "2019-11-26 00:00:00"
-      console.log(this.nowTiem)
+      this.nowTiem = new Date().getTime();
+      let date = "2019-11-26 00:00:00";
+      console.log(this.nowTiem);
     },
     // 弹窗遮罩
     openShadow() {
@@ -794,44 +905,85 @@ export default {
     }
   }
 }
-.zhifuBox,.leftsmBox,.rightsmBox{
+.zhifuBox,
+.leftsmBox,
+.rightsmBox {
   display: flex;
   align-items: center;
-  font-size: 13px; 
+  font-size: 13px;
   color: #797979;
-  button{
+  button {
     color: #ffffff;
-    border: 1px solid rgb(230,45,49);
-    background: rgb(230,45,49);
+    border: 1px solid rgb(230, 45, 49);
+    background: rgb(230, 45, 49);
     border-radius: 3px;
     padding: 10px 20px;
     margin-right: 40px;
   }
 }
-.redColor{
+.lefthuichang {
+  width: 60%;
+  margin-right: 10%;
+  img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    padding-right: 10px;
+  }
+  > div {
+    margin-bottom: 10px;
+  }
+  i{
+    padding-right: 10px;
+  }
+}
+.righthuichang {
+  img {
+    display: inline-block;
+    width: 274px;
+    height: 213px;
+  }
+}
+.redColor {
   color: #ff0000;
   font-size: 18px;
-  
 }
-.redColorB{
-  border: 1px solid #797979;;
+.redColorB {
+  border: 1px solid #797979;
   padding: 5px 10px;
 }
-.huichangTitle{
+.huichangTitle {
   font-size: 24px;
   color: #000000;
   font-weight: 700;
   text-align: center;
   margin-bottom: 10px;
 }
-.yuyue{
+.yuyue {
   text-align: center;
   color: #ff0000;
   margin-bottom: 10px;
-  i{
+  i {
     font-weight: 700;
     font-size: 18px;
     padding-right: 5px;
   }
+}
+.lBlue {
+  color: #169bd5;
+}
+.contentBoxA {
+  margin: 20px auto;
+  display: flex;
+  padding: 10px 10px;
+  width: 1200px;
+  border: 1px dashed;
+  justify-content: space-between;
+}
+.huanjinBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
 }
 </style>

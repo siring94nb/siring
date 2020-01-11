@@ -21,20 +21,20 @@ Route::group('api', function () {
     //用户接口接口 fyk
     Route::group('User', function () {//'User' => 控制器
         Route::any('phone_code','api/User/code'); //('index =>方法','api/User/index' =>文件夹/控制器/方法)
-        Route::any('register','api/User/register');//注册
-        Route::any('login','api/User/login');//登录
-        Route::any('forget','api/User/forget');//忘记密码
-        Route::any('upd_phone','api/User/edit_phone');//修改手机号
-        Route::any('balance_password','api/User/balance_password');//用户修改余额密码
-        Route::any('share_code','api/User/share_code');//用户分享邀请码
-        Route::any('lnvitation_record','api/User/lnvitation_record');//用户分享邀请记录
+        Route::post('register','api/User/register');//注册
+        Route::post('login','api/User/login');//登录
+        Route::post('forget','api/User/forget');//忘记密码
+        Route::post('upd_phone','api/User/edit_phone');//修改手机号
+        Route::post('balance_password','api/User/balance_password');//用户修改余额密码
+        Route::post('share_code','api/User/share_code');//用户分享邀请码
+        Route::post('lnvitation_record','api/User/lnvitation_record');//用户分享邀请记录
         Route::any('logout','api/User/logout');//用户退出
-        Route::any('user_updating','api/User/user_updating');//用户资料更新
-        Route::any('enterprise_add','api/User/enterprise_add');//添加企业身份
+        Route::post('user_updating','api/User/user_updating');//用户资料更新
+        Route::post('enterprise_add','api/User/enterprise_add');//添加企业身份
         Route::any('enterprise_list','api/User/enterprise_list');//企业身份列表
-        Route::any('enterprise_edit','api/User/enterprise_edit');//企业身份编辑
-        Route::any('enterprise_del','api/User/enterprise_del');//企业身份删除
-        Route::any('collect','api/User/collect');//用户关注、收藏
+        Route::post('enterprise_edit','api/User/enterprise_edit');//企业身份编辑
+        Route::post('enterprise_del','api/User/enterprise_del');//企业身份删除
+        Route::post('collect','api/User/collect');//用户关注、收藏
     });
 
     //轮播接口接口 fyk
@@ -67,10 +67,10 @@ Route::group('api', function () {
 
     //角色加盟订单 fyk
     Route::group('JoinOrder',function (){
-        Route::any('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
-        Route::any('member_order_add','api/JoinOrder/member_order_add'); //会员订单
-        Route::any('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
-        Route::any('get_pay','api/JoinOrder/get_pay'); //支付
+        Route::post('city_order_add','api/JoinOrder/city_order_add'); //城市合伙人订单
+        Route::post('member_order_add','api/JoinOrder/member_order_add'); //会员订单
+        Route::post('join_order_add','api/JoinOrder/join_order_add'); //加盟商订单
+        Route::post('get_pay','api/JoinOrder/get_pay'); //支付
         Route::any('app_notice','api/JoinOrder/app_notice'); //支付回调
     });
 
@@ -90,13 +90,13 @@ Route::group('api', function () {
     });
     //行业模板订单
     Route::group('MealOrder',function(){
-        Route::any('meal_order_add','api/MealOrder/meal_order_add'); //下单
-        Route::any('meal_order_pay','api/MealOrder/meal_order_pay'); //下单
+        Route::post('meal_order_add','api/MealOrder/meal_order_add'); //下单
+        Route::post('meal_order_pay','api/MealOrder/meal_order_pay'); //下单
     });
 
     //添加用户银行卡
     Route::group('UserCard',function(){
-        Route::any('user_card_add','api/UserCard/user_card_add');  //添加/编辑银行卡
+        Route::post('user_card_add','api/UserCard/user_card_add');  //添加/编辑银行卡
         Route::any('user_card_list','api/UserCard/user_card_list');  //银行卡列表
     });
 
@@ -105,12 +105,12 @@ Route::group('api', function () {
     Route::group('Software',function (){
         Route::any('soft_type','api/Software/soft_type'); //软件定制分类
         Route::any('soft_list','api/Software/soft_list'); //商品列表
-        Route::any('soft_detail','api/Software/soft_detail'); //商品详情
+        Route::post('soft_detail','api/Software/soft_detail'); //商品详情
         Route::any('soft_reviews','api/Software/soft_reviews'); //商品评论
-        Route::any('soft_push','api/Software/soft_push'); //推荐商品
-        Route::any('soft_demo','api/Software/soft_demo'); //商品演示
-        Route::any('soft_order_add','api/Software/soft_order_add'); //软件定制订单
-        Route::any('get_pay','api/Software/get_pay'); //软件定制订单支付
+        Route::post('soft_push','api/Software/soft_push'); //推荐商品
+        Route::post('soft_demo','api/Software/soft_demo'); //商品演示
+        Route::post('soft_order_add','api/Software/soft_order_add'); //软件定制订单
+        Route::post('get_pay','api/Software/get_pay'); //软件定制订单支付
         Route::any('app_notice','api/Software/app_notice'); //支付回调
     });
     //用户优惠券 fyk
@@ -130,50 +130,50 @@ Route::group('api', function () {
 
     //AI推广引擎 fyk
     Route::group('Manuscript',function(){
-        Route::any('demand_add','api/Manuscript/demand_add'); //用户信息
-        Route::any('get_pay','api/Manuscript/get_pay'); //支付
+        Route::post('demand_add','api/Manuscript/demand_add'); //用户信息
+        Route::post('get_pay','api/Manuscript/get_pay'); //支付
         Route::any('app_notice','api/Manuscript/app_notice'); //支付回调
         Route::any('set_meal','api/Manuscript/set_meal'); //套餐列表
     });
 
     //投融界 fyk
     Route::group('Investment',function(){
-        Route::any('finance_add','api/Investment/finance_add'); //我要融资
+        Route::post('finance_add','api/Investment/finance_add'); //我要融资
         Route::any('industry_field','api/Investment/industry_field'); //行业领域
         Route::any('industry_cost','api/Investment/industry_cost'); //行业领域分类费用
         Route::any('industry_list','api/Investment/industry_list'); //列表
-        Route::any('project_details','api/Investment/project_details'); //项目详情
+        Route::post('project_details','api/Investment/project_details'); //项目详情
 
         Route::any('console_list','api/Investment/console_list'); //控制台-我的投融列表
-        Route::any('investment_details','api/Investment/investment_details'); //控制台-我的投融详情
-        Route::any('investment_status','api/Investment/investment_status'); //控制台-我的投融修改状态
+        Route::post('investment_details','api/Investment/investment_details'); //控制台-我的投融详情
+        Route::post('investment_status','api/Investment/investment_status'); //控制台-我的投融修改状态
         Route::any('activities','api/Investment/activities'); //控制台-我的投融见面会
     });
 
     //定制需求
     Route::group('NeedOrder',function(){
-        Route::any('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
+        Route::post('need_order_add','api/NeedOrder/need_order_add'); //定制需求下单
         Route::any('need_order_list','api/NeedOrder/need_order_list'); //定制需求列表
-        Route::any('change_status','api/NeedOrder/change_status'); //中止需求或确定需求
-        Route::any('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
-        Route::any('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
-        Route::any('need_comment','api/NeedOrder/need_comment'); //评价
-        Route::any('get_pay','api/NeedOrder/get_pay'); //支付
+        Route::post('change_status','api/NeedOrder/change_status'); //中止需求或确定需求
+        Route::post('confirm_need_order','api/NeedOrder/confirm_need_order'); //需求确认修改
+        Route::post('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
+        Route::post('need_comment','api/NeedOrder/need_comment'); //评价
+        Route::post('get_pay','api/NeedOrder/get_pay'); //支付
     });
 
     //微信第三方路由
     Route::group('WxThree',function(){
         Route::any('receive_ticket','api/WxThree/receive_ticket'); //获取ticket
-        Route::any('callback/:appid','api/WxThree/callback'); //回调信息获取
+        Route::any('callback','api/WxThree/callback'); //回调信息获取
     });
 
     //控制台-AI推广套餐 fyk
     Route::group('Promotion',function(){
         Route::any('manuscript_list','api/Promotion/manuscript_list'); //订单列表
-        Route::any('promotion_details','api/Promotion/promotion_details'); //订单详情
-        Route::any('promotion_upd','api/Promotion/promotion_upd'); //订单修改
-        Route::any('promotion_status','api/Promotion/promotion_status'); //订单状态确认
-        Route::any('manuscripts_upd','api/Promotion/manuscripts_upd'); //修改稿件
+        Route::post('promotion_details','api/Promotion/promotion_details'); //订单详情
+        Route::post('promotion_upd','api/Promotion/promotion_upd'); //订单修改
+        Route::post('promotion_status','api/Promotion/promotion_status'); //订单状态确认
+        Route::post('manuscripts_upd','api/Promotion/manuscripts_upd'); //修改稿件
     });
 
     //控制台-角色中心 fyk
@@ -191,32 +191,32 @@ Route::group('api', function () {
 
     //控制台-资金管理
     Route::group('Capital',function(){
-        Route::any('capital_detailed','api/Capital/capital_detailed'); //资金明细
-        Route::any('invoice_amount','api/Capital/invoice_amount'); //剩余开票金额
-        Route::any('my_invoice','api/Capital/my_invoice'); //开票
-        Route::any('recharge','api/Capital/recharge'); //充值
-        Route::any('get_pay','api/Capital/get_pay'); //支付
-        Route::any('cash_with','api/Capital/cash_with'); //提现
-        Route::any('cash_details','api/Capital/cash_details'); //提现页面详情
+        Route::post('capital_detailed','api/Capital/capital_detailed'); //资金明细
+        Route::post('invoice_amount','api/Capital/invoice_amount'); //剩余开票金额
+        Route::post('my_invoice','api/Capital/my_invoice'); //开票
+        Route::post('recharge','api/Capital/recharge'); //充值
+        Route::post('get_pay','api/Capital/get_pay'); //支付
+        Route::post('cash_with','api/Capital/cash_with'); //提现
+        Route::post('cash_details','api/Capital/cash_details'); //提现页面详情
         Route::any('bankcard_list','api/Capital/bankcard_list'); //银行卡列表
-        Route::any('bankcard_add','api/Capital/bankcard_add'); //银行卡新增
-        Route::any('bankcard_del','api/Capital/bankcard_del'); //银行卡删除
+        Route::post('bankcard_add','api/Capital/bankcard_add'); //银行卡新增
+        Route::post('bankcard_del','api/Capital/bankcard_del'); //银行卡删除
         Route::any('coupon','api/Capital/coupon'); //优惠券列表
     });
 
     //控制台-资金管理
     Route::group('Saas',function(){
         Route::any('saas_list','api/Saas/saas_list'); //订单列表
-        Route::any('saas_cancel','api/Saas/saas_cancel'); //订单取消
+        Route::post('saas_cancel','api/Saas/saas_cancel'); //订单取消
     });
 
     //支付页面参数
     Route::group('Payment',function(){
-        Route::any('coupou','api/Payment/coupou'); //优惠卷列表
-        Route::any('balance','api/Payment/balance'); //用户余额
-        Route::any('discount','api/Payment/discount'); //用户折扣
-        Route::any('get_pay','api/Payment/get_pay'); //支付接口
-        Route::any('pay_status','api/Payment/pay_status'); //支付订单状态
+        Route::post('coupou','api/Payment/coupou'); //优惠卷列表
+        Route::post('balance','api/Payment/balance'); //用户余额
+        Route::post('discount','api/Payment/discount'); //用户折扣
+        Route::post('get_pay','api/Payment/get_pay'); //支付接口
+        Route::post('pay_status','api/Payment/pay_status'); //支付订单状态
     });
 
     //支付回调
@@ -237,10 +237,10 @@ Route::group('api', function () {
 
     //微信二维码
     Route::group('WxQrcode',function (){
-        Route::any('code_add','api/WxQrcode/code_add');//生成带参数二维码
-        Route::any('serve','api/WxQrcode/serve');//服务器返回
-        Route::any('wx_accredit','api/WxQrcode/wx_accredit');//生成带参数二维码
-        Route::any('wx_code','api/WxQrcode/wx_code');//服务器返回
+        Route::post('code_add','api/WxQrcode/code_add');//生成带参数二维码
+        Route::post('serve','api/WxQrcode/serve');//服务器返回
+        Route::post('wx_accredit','api/WxQrcode/wx_accredit');//生成带参数二维码
+        Route::post('wx_code','api/WxQrcode/wx_code');//服务器返回
 
     });
 

@@ -34,6 +34,13 @@
       "unicode_decimal": 58932
     },
     {
+      "icon_id": "827678",
+      "name": "时间",
+      "font_class": "shijian",
+      "unicode": "e67b",
+      "unicode_decimal": 59003
+    },
+    {
       "icon_id": "887915",
       "name": "关注",
       "font_class": "guanzhu1",
@@ -41,11 +48,32 @@
       "unicode_decimal": 58910
     },
     {
+      "icon_id": "1106455",
+      "name": "主题",
+      "font_class": "zhuti",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "1186353",
+      "name": "人数",
+      "font_class": "renshu",
+      "unicode": "e6b7",
+      "unicode_decimal": 59063
+    },
+    {
       "icon_id": "1277548",
       "name": "文件",
       "font_class": "wenjian",
       "unicode": "e612",
       "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "1546895",
+      "name": "地址",
+      "font_class": "dizhi",
+      "unicode": "e734",
+      "unicode_decimal": 59188
     },
     {
       "icon_id": "1577787",
@@ -123,6 +151,13 @@
       "font_class": "shouye",
       "unicode": "e62c",
       "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "4406894",
+      "name": "项目",
+      "font_class": "xiangmu",
+      "unicode": "e651",
+      "unicode_decimal": 58961
     },
     {
       "icon_id": "4764483",

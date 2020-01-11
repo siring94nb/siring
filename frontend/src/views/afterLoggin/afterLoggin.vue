@@ -3,7 +3,7 @@
     <Myheader />
     <div class="afLogginBox clearfix">
       <div class="left" ref="leftBox">
-        <faterLoggin />
+        <faterLoggin ref="faterLoggin"/>
       </div>
       <div class="right" ref="rightBox">
         <router-view class="view"></router-view>
@@ -28,10 +28,10 @@ export default {
     afterLogginR
   },
   mounted() {
-    const that = this;
-    that.changeSize();
+    // const that = this;
+    this.init()
     window.onresize = () => {
-      that.changeSize();
+      this.changeSize();
     };
   },
   watch: {
@@ -45,7 +45,13 @@ export default {
     }
   },
   methods: {
+    init(){
+      this.changeSize();
+    },
     changeSize() {
+      console.log(12123)
+      // 触发子组件方法，屏幕大小改变同时，改变侧边栏高度
+      this.$refs.faterLoggin.chaxun()
       // setInterval(() => {
       let screenWidth = document.body.clientWidth;
       let leftBox = this.$refs.leftBox;
@@ -67,6 +73,14 @@ export default {
         }
       })();
       // }, 1000);
+    },
+    //防抖函数，控制函数触发次数
+    debounce(fn, wait) {    
+      var timeout = null;    
+      return function() {        
+          if(timeout !== null)   clearTimeout(timeout);        
+          timeout = setTimeout(fn, wait);    
+      }
     }
   }
 };
@@ -87,6 +101,7 @@ export default {
     z-index: 100;
     position: fixed;
     left: 0;
+    height: 30px;
   }
   .right {
     margin-left: 150px;
