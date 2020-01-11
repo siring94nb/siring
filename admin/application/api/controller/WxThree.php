@@ -475,26 +475,50 @@ public function getimageInfo($imageName = '') {
 }
 
 
-/**
- * 自动回复文本
- */
-public function responseText($object = '', $content = '')
-{
-    if (!isset($content) || empty($content)){
-        return "";
+// /**
+//  * 自动回复文本
+//  */
+// public function responseText($object = '', $content = '')
+// {
+//     if (!isset($content) || empty($content)){
+//         return "";
+//     }
+
+//     $xmlTpl =   "<xml>
+//                     <ToUserName><![CDATA[%s]]></ToUserName>
+//                     <FromUserName><![CDATA[%s]]></FromUserName>
+//                     <CreateTime>%s</CreateTime>
+//                     <MsgType><![CDATA[text]]></MsgType>
+//                     <Content><![CDATA[%s]]></Content>
+//                 </xml>";
+//     $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time(), $content);
+
+//     return $result;
+// }
+public function responseText($postObj,$content){
+    $template ="<xml>
+            <ToUserName><![CDATA[%s]]></ToUserName>
+            <FromUserName><![CDATA[%s]]></FromUserName>
+            <CreateTime>%s</CreateTime>
+            <MsgType><![CDATA[%s]]></MsgType>
+            <Content><![CDATA[%s]]></Content>
+            </xml>";
+    $fromUser = $postObj ->ToUserName;
+    $toUser   = $postObj ->FromUserName;
+    $time     = time();
+    $msgType  = 'text';
+    $res =sprintf($template,$toUser,$fromUser,$time,$msgType,$content);
+    $encodingAesKey = 'a5a22f38cb60228cb32ab61d9e4c414bueu73jddj87';
+    $token ='siringcomcn';
+    $appId = 'wxc8257b29680254a5';
+    $pc = new \WXBizMsgCrypt ($token, $encodingAesKey, $appId );
+    $encryptMsg = '';
+    $errCode =$pc->encryptMsg($res,$_GET ['timestamp'], $_GET ['nonce'], $encryptMsg);
+    if($errCode ==0){
+            $res = $encryptMsg;
     }
-
-    $xmlTpl =   "<xml>
-                    <ToUserName><![CDATA[%s]]></ToUserName>
-                    <FromUserName><![CDATA[%s]]></FromUserName>
-                    <CreateTime>%s</CreateTime>
-                    <MsgType><![CDATA[text]]></MsgType>
-                    <Content><![CDATA[%s]]></Content>
-                </xml>";
-    $result = sprintf($xmlTpl, $object->FromUserName, $object->ToUserName, time(), $content);
-
-    return $result;
-}
+    echo $res;
+    }
 
 /**
  * 发送文本消息
