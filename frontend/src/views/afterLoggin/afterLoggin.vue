@@ -59,7 +59,7 @@ export default {
       return (() => {
         if (screenWidth > 1500) {
           rightBox.style.marginLeft =
-            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 +10 +
+            (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 -10 +
             leftBox.clientWidth +
             "px";
             document.body.style.width = "100%";
@@ -95,7 +95,7 @@ export default {
   // max-width: 1260px;
   // width: 1480px;
   .left {
-    width: 123px;
+    width: 160px;
     // float: left;
     // position: relative;
     z-index: 100;
@@ -104,7 +104,7 @@ export default {
     height: 30px;
   }
   .right {
-    margin-left: 150px;
+    margin-left: 160px;
     // padding-left: 10px;
     margin-top: 100px;
     width: 1480px;

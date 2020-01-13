@@ -3,69 +3,48 @@
     <!--<myheader />-->
     <!-- 侧边导航栏菜单 -->
     <div class="box" ref="box" :style="wstyle">
-      <div class="imgBox">
-        <div style="height:140px;">
-          <div>
-            <img :src="imgBUrl" alt />
-            <img :src="imgUrl" alt />
-          </div>
-          <div class="name">{{name}}</div>
-        </div>
-        <div class="xxBox">
-          <div>
-            <span>￥0</span>
-            <span>余额充值</span>
-          </div>
-          <div>
-            <span>
-              专属客服
-              <i class="iconfont icon-icon"></i>
-            </span>
-            <span>立即联系</span>
-          </div>
-          <div>
-            <span>上次登录</span>
-            <span>2020-01-01</span>
-          </div>
-        </div>
-      </div>
-      <div class="navBoxa">
-        <el-row class="tac">
-          <el-col :span="24" >
-            <el-menu
-              :default-active="ru"
-              class="el-menu-vertical-demo"
-              @close="handleClose"
-              background-color="rgb(0,0,0)"
-              active-background-color="#000000"
-              text-color="#fff"
-              :default-openeds="[num]"
-              :router="true"
-              :unique-opened="true"
-            >
-              <el-submenu ref="ceshi" :index="index+''" v-for="(item,index) in arr" :key="index+''">
-                <!-- 控制中心 -->
-                <template slot="title">
-                  <div ref="elSubmenu">
+      <el-row class="tac">
+        <el-col :span="12">
+          <el-menu
+            :default-active="ru"
+            class="el-menu-vertical-demo"
+            @close="handleClose"
+            background-color="rgb(0,0,0)"
+            active-background-color="#000000"
+            text-color="#fff"
+            :default-openeds="[num]"
+            :router="true"
+            :unique-opened="true"
+            style="border-radius: 30px"
+          >
+            <el-submenu :index="index+''" v-for="(item,index) in arr" :key="index+''">
+              <!-- 控制中心 -->
+              <template slot="title">
+                <div ref="elSubmenu">
+                  <div v-if="index==0" class="imgBox">
                     <div>
-                      <i :class="item.classN" style="padding-right:15px;"></i>
-                      <span>{{item.title}}</span>
+                      <img :src="imgUrl" alt />
                     </div>
+                    <div class="name">{{name}}</div>
                   </div>
-                </template>
-                <el-menu-item
-                  v-for="(con,index1) in item.con"
-                  :key="index1+''"
-                  :index="con.rou"
-                  style="color:#000;"
-                >
-                  <div ref="con" class="con">{{con.name}}</div>
-                </el-menu-item>
-              </el-submenu>
-            </el-menu>
-          </el-col>
-        </el-row>
-      </div>
+                  <div>
+                    <i :class="item.classN" style="padding-right:15px;"></i>
+                    <span>{{item.title}}</span>
+                  </div>
+                </div>
+              </template>
+              <el-menu-item
+                v-for="(con,index1) in item.con"
+                :key="index1+''"
+                :index="con.rou"
+                style="color:#000"
+              >
+                <div ref="con">{{con.name}}</div>
+              </el-menu-item>
+            </el-submenu>
+          </el-menu>
+        </el-col>
+      </el-row>
     </div>
   </div>
 </template>
@@ -164,7 +143,6 @@ export default {
       ],
       routerValue: this.$route.path,
       imgUrl: require("../../assets/images/u158.png"), //用户头像
-      imgBUrl: require("../../assets/images/u5989.png"),
       name: "未设置", //用户姓名
       dis: true,
       wstyle: " "
@@ -181,13 +159,13 @@ export default {
     init() {
       console.log("0109-a");
       this.cityHehuorenX(),
-        this.classHuiyuanX(),
-        this.fenbaoshangX(),
-        this.withdrawX();
+      this.classHuiyuanX(),
+      this.fenbaoshangX(),
+      this.withdrawX();
       this.zhankai();
       this.gb();
       this.userMessage();
-      this.chaxun();
+      this.chaxun()
     },
     // 保持侧边栏对应路由展开状态
     zhankai() {
@@ -271,12 +249,11 @@ export default {
       }
       // console.log(window.innerHeight)
       // console.log(sum)
-      if (window.innerHeight < sum + 100 || window.innerHeight == sum + 100) {
-        this.wstyle =
-          "overflow-y:scroll;height:" + (window.innerHeight - 20) + "px";
+      if (window.innerHeight < sum+100 ||window.innerHeight == sum+100) {
+        this.wstyle="overflow-y:scroll;height:"+(window.innerHeight-20)+"px";
         // console.log(1111)
       } else {
-        this.wstyle = "";
+        this.wstyle=""
         // console.log(2222)
       }
       // }, 1000);
@@ -300,9 +277,9 @@ export default {
     },
     // 控制第一个控件的大小
     gb() {
-      // this.$refs.ceshi.$el.style.borderRadius = "15px"
-      //  console.log(this.$refs.ceshi.$el.style.borderRadius)
-    }
+      let sArr = document.getElementsByClassName("el-submenu__title");
+      sArr[0].style.height = "200px";
+    },
   }
 };
 </script>
@@ -311,15 +288,16 @@ export default {
   // height: 300px;
   position: relative;
   z-index: 555;
-  width: 160px;
-  margin-left: 1px;
+  width: 149px;
   // overflow-y:scroll;
+  
 }
 .box::-webkit-scrollbar {
   display: none;
 }
 .tac {
-  width: 160px;
+  margin-top: 100px;
+  width: 300px;
   height: 82px;
   el-menu-item {
     width: 123px;
@@ -327,10 +305,16 @@ export default {
   i {
     color: rgba($color: #ffffff, $alpha: 1);
   }
+  .el-submenu .el-menu-item {
+    min-width: 121px;
+    text-align: center;
+    background-color: #ffffff !important;
+    // color: black !important;
+  }
   .el-menu-item.is-active {
     font-size: 16px;
     // font-weight: 700;
-    color: #d79e94 !important;
+    color: #D79E94 !important;
   }
   li {
     width: 100%;
@@ -339,80 +323,23 @@ export default {
   }
 }
 .imgBox {
-  margin-top: 100px;
-  margin-bottom: 10px;
   text-align: center;
-  // height: 200px;
-  background: #000000;
-  color: #ffffff;
-  position: relative;
-  border-radius: 10px;
-  font-size: 13px;
+  padding-top: 30px;
+  height: 110px;
+  border-bottom: 3px solid #ffffff;
   .name {
-    position: absolute;
-    top: 115px;
-    left: 55px;
+    margin-top: -10px;
   }
   img {
-    position: absolute;
-    &:nth-of-type(1) {
-      display: inline-block;
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      top: 5px;
-      left: 20px;
-    }
-    &:nth-of-type(2) {
-      display: inline-block;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      top: 30px;
-      left: 45px;
-    }
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
   }
-}
-.xxBox {
-  > div {
-    display: flex;
-    justify-content: space-between;
-    align-content: center;
-    padding: 5px;
-    &:nth-of-type(1) {
-      > span:nth-last-child(1) {
-        padding: 5px;
-        background: rgb(238, 189, 101);
-        border-radius: 3px;
-      }
-    }
-    &:nth-of-type(2) {
-      > span:nth-last-child(1) {
-        padding: 5px;
-        background: rgb(114, 124, 164);
-        border-radius: 3px;
-      }
-    }
-    &:nth-last-child(1) {
-      font-size: 12px;
-      color: rgba(255, 255, 255, 0.64);
-    }
-  }
-}
-.con {
-  background: #ffffff;
-  width: 120px;
-  margin-left: 18px;
 }
 </style>
 <style>
 /* .el-submenu__title{
     height: 200px;
 } */
-.el-submenu .el-menu-item {
-  min-width: 121px;
-  text-align: center;
-  background-color: rgb(242, 247, 250) !important;
-}
-
 </style>

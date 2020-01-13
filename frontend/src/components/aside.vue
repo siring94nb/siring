@@ -58,7 +58,7 @@
     <div class="square" @click.self="showLevelMsg">
       <i class="el-icon-edit icon" @click.self="showLevelMsg" />
       <p @click.self="showLevelMsg">留言</p>
-      <div class="float-cont" v-show="levelMsgBool">
+      <div class="float-cont" v-show="levelMsgBool" style="width:300px">
         <div class="float-title">
           <i class="el-icon-phone" />联系方式：
         </div>
@@ -66,7 +66,7 @@
         <div class="float-title">
           <i class="el-icon-edit" />留言反馈：
         </div>
-        <textarea class="levelmsg" placeholder="您还可以留下您的联系方式，让我们联系您！"></textarea>
+        <textarea class="levelmsg" placeholder="您的需求或反馈，我们将在48个小时内，联系您" style="margin-bottom:10px;"></textarea>
         <button class="send-lm" @click="sendMsg">发送</button>
       </div>
     </div>

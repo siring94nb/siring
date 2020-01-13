@@ -38,7 +38,7 @@
             <div :class="{'xuqiuH':strValue >= 3,'xuqiu':strValue <=2}">
               <span v-if="strValue <=2">等待确认</span>
               <i class="iconfont icon-chayueyuanjuan" v-if="strValue >=2"></i>
-              <span v-if="strValue >=2">查阅</span>
+              <span v-if="strValue >2">查阅</span>
             </div>
             <img :src="jiantouImgUrl" alt v-if="strValue==2" />
           </div>
@@ -453,7 +453,7 @@ export default {
       this.getActivities();
       this.nowTiem = new Date().getTime();
       let date = "2019-11-26 00:00:00";
-      console.log(this.nowTiem);
+      // console.log(this.pid,sessionStorage.getItem("user_id")  );
     },
     // 弹窗遮罩
     openShadow() {

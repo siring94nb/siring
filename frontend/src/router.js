@@ -108,6 +108,12 @@ export default new Router({
             import('@/views/aboutUs')
     },
     {
+        path: '/platformIntroduction',
+        name: 'platformIntroduction',
+        component: () =>
+            import('@/views/platformIntroduction')
+    },
+    {
         path: '/programSaaS',
         name: 'programSaaS',
         component: () =>

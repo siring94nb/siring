@@ -166,26 +166,26 @@ export default {
           title: "订单类型",
           align: "center",
           key: "need_category",
-            render: ( h , param ) => {
-                if(param.row.need_category == '1'){
-                    return h('div','智能硬件');
-                }else if(param.row.need_category == '2'){
-                    return h('div','电子商务');
-                }else{
-                    return h('div','');
-                }
+          render: (h, param) => {
+            if (param.row.need_category == "1") {
+              return h("div", "智能硬件");
+            } else if (param.row.need_category == "2") {
+              return h("div", "电子商务");
+            } else {
+              return h("div", "");
             }
+          }
         },
         {
           title: "终端类型",
           align: "center",
           key: "terminal",
-            width: 200
+          width: 200
         },
         {
           title: "用户账号",
           align: "center",
-          key: "phone",
+          key: "phone"
         },
         {
           title: "合同金额",

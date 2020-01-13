@@ -460,7 +460,7 @@ export default {
       align-items: center;
       margin-left: 100px;
       .bottom-gt {
-        font-size: 48px;
+        font-size: 60px;
         color: #f00;
       }
       .bottom-year {
@@ -472,6 +472,7 @@ export default {
         text-align: center;
         border-radius: 3px;
         padding: 2px 0;
+        letter-spacing:2px;
       }
     }
   }

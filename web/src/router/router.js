@@ -93,6 +93,18 @@ export const otherRouter = {
             title: '定制需求订单详情',
             component: () => import('@/views/order/demand_order_detail.vue')
         },
+        {
+            path: 'promotionDetail/need_index/:id&:status',
+            name: 'promotion_detail',
+            title: '推广运营订单详情',
+            component: () => import('@/views/order/promotion_detail.vue')
+        },
+        {
+            path: 'investmentDetail/need_index/:id&:status',
+            name: 'investment_detail',
+            title: '投融介订单详情',
+            component: () => import('@/views/order/investment_detail.vue')
+        }
         // {
         //     path: 'OrderGoods/detail/:detail_id',
         //     name: 'order_detail',

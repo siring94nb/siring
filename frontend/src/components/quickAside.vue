@@ -3,7 +3,7 @@
     <div class="quick-desc">
       <div class="desc-title">
         <i class="iconfont icon-jisuanqi"></i>
-        <span>{{type == 1? '定制需求':'快捷估价'}}</span>
+        <span style="font-size:18px">{{type == 1? '定制需求':'快捷估价'}}</span>
       </div>
       <div class="desc-dit">
         {{type == 1?'请详细填写右边需求信息，提交需求后，系统将根据信息需求情况，及时走公司需求的梳理分析，以及报价、合同、设计等流程；为您提供完美的用户体验！':

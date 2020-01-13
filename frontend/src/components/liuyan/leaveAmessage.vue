@@ -139,10 +139,10 @@ export default {
         console.log(res);
         if (code == 1) {
           this.msgListArr = data.data;
-          if (this.msgListArr.type == 0) {
-            this.newxiaoxi = this.newxiaoxi + 1;
-          }
           for (let i = 0; i < this.msgListArr.length; i++) {
+             if (this.msgListArr.type == 0) {
+                this.newxiaoxi = this.newxiaoxi + 1;
+              }
             if (i > 0 && this.msgListArr[i].inside == 0) {
               this.userName = this.msgListArr[i].name;
               this.touxiangImg = this.msgListArr[i].img;

@@ -553,6 +553,7 @@ export default {
     min-width: 950px;
     padding: 15px;
     background: rgb(204, 235, 248);
+    box-shadow:0 -3px 3px rgba(0,0,0,0.2);
     .xiadan {
       display: flex;
       padding: 10px 0 40px 0;
@@ -563,10 +564,10 @@ export default {
       margin-right: 100px;
       .feiyong {
         font-size: 18px;
-        color: #ff0000;
+        color: rgb(230, 45, 49);
         display: inline-block;
         background: #ffffff;
-        padding: 2px 15px;
+        padding: 2px 20px;
       }
       .jianshu {
         text-align: center;
@@ -581,7 +582,7 @@ export default {
         font-size: 18px;
       }
       .biaozhi {
-        color: #ff0000;
+        color: rgb(230, 45, 49);
       }
       .kuohao {
         font-weight: 700;

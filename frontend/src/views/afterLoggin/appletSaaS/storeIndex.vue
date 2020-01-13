@@ -52,11 +52,15 @@
           <!-- 分页表格 -->
           <div class="tabBox">
             <div class="xuanxiangBox">
-              <span style="background:rgb(140,218,255)">全部</span>
-              <span style="background:rgb(204,51,102)">待付款</span>
-              <span style="background:rgb(204,0,204)">待开通</span>
-              <span style="background:rgb(102,153,0)">已完成</span>
-              <span style="background:rgb(161,161,161)">已关闭</span>
+              <span style="background:rgb(140,218,255)" @click.stop="nameId='',getsaasList()">全部</span>
+              <span style="background:rgb(161,161,161)" @click.stop="nameId=1,getsaasList()">未到账</span>
+              <span style="background:rgb(204,51,102)"  @click.stop="nameId=2,getsaasList()">已到账</span>
+              <span style="background:rgb(204,0,204)"   @click.stop="nameId=3,getsaasList()">为汇款待审核</span>
+              <span style="background:rgb(161,161,161)" @click.stop="nameId=4,getsaasList()">汇款未到账</span>
+              <span style="background:rgb(204,51,102)"  @click.stop="nameId=5,getsaasList()">汇款已到账</span>
+              <span style="background:rgb(204,0,204)"   @click.stop="nameId=6,getsaasList()">店铺待开通</span>
+              <span style="background:rgb(102,153,0)"   @click.stop="nameId=7,getsaasList()">店铺已开通</span>
+              <span style="background:rgb(161,161,161)" @click.stop="nameId=8,getsaasList()">已取消</span>
             </div>
             <div>
               <el-table
@@ -232,6 +236,7 @@ export default {
     },
     // 列表数据
     getsaasList() {
+      // console.log(this.nameId)
       let params={}
        if (this.timeValue != undefined && this.timeValue != null) {
         // console.log(this.value);
@@ -255,15 +260,16 @@ export default {
           this.total = data.total;
           this.pagesize=data.per_page
           console.log(data.data);
-        }else if(code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
       });
     },
     showMsg(msg, code) {

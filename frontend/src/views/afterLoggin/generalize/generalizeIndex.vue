@@ -238,15 +238,16 @@ export default {
           this.currentPage = data.current_page;
           this.pagesize = data.per_page;
           this.total = data.total;
-        }else if(code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
       });
     },
     // 路由传递id

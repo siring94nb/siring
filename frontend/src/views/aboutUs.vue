@@ -7,7 +7,8 @@
       </div>
       <div class="h-title">核心团队</div>
       <div class="core-team">
-        <div class="team-list">
+        <div>
+          <div class="team-list">
           <div
             class="team-member"
             v-for="(item, index) in teamList"
@@ -43,6 +44,8 @@
             </div>-->
           </div>
         </div>
+        </div>
+        
       </div>
       <div class="h-title">各项荣誉及证书</div>
       <div class="sweep-box">
@@ -341,14 +344,20 @@ export default {
     margin: 40px auto;
   }
   .core-team {
+    
     background-color: rgb(228, 228, 228);
     padding: 30px;
-    display: flex;
-    justify-content: center;
+    >div{
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 1600px;
+    }
     .team-list {
       display: flex;
       flex-wrap: wrap;
       background-color: rgb(232, 232, 232);
+      max-width: 884px;
       width: 60%;
       margin-right: 10px;
       box-shadow: 0 0 10px -5px;

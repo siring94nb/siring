@@ -3,9 +3,9 @@
     <!--推广运营首页  -->
     <logginHeader>
       <i class="iconfont icon-jiaose"></i>
-      <span>AI推广运营</span>
+      <span>投融介</span>
       <span>&gt;</span>
-      <span>稿件管理</span>
+      <span>订单管理</span>
     </logginHeader>
     <div class="bottomBox">
       <div class="suoyin">

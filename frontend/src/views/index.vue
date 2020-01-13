@@ -18,7 +18,8 @@
       <div class="rjdz">
         <h2 class="title">
           软件/定制开发平台
-          <i class="iconfont icon-remen fire"></i>
+          <!-- <i class="iconfont icon-remen fire"></i> -->
+          <img src="../assets/images/image561611.gif" class="fire" alt="">
         </h2>
         <div class="tips">
           <i class="iconfont icon-shengyin_shiti"></i>

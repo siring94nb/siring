@@ -123,6 +123,9 @@
                 <el-dropdown-item command="f">
                   <router-link to="/aboutUs" style="color: #333;">关于我们</router-link>
                 </el-dropdown-item>
+                 <el-dropdown-item command="e">
+                  <router-link to="/platformIntroduction" style="color: #333;">多平台介绍</router-link>
+                </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </a>
