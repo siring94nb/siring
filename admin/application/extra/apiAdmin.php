@@ -11,7 +11,7 @@
 
 return [
     'APP_VERSION' => 'v3.0',
-    'APP_NAME'    => 'ApiAdmin',
+    'APP_NAME'    => 'Siring',
 
     //鉴权相关
     'USER_ADMINISTRATOR' => [1],
@@ -20,10 +20,10 @@ return [
     'AUTH_KEY'           => 'I&TC{pft>L,C`wFQ>&#ROW>k{Kxlt1>ryW(>r<#R',
 
     //后台登录状态维持时间[目前只有登录和解锁会重置登录时间]
-    'ONLINE_TIME'  => 7200,
+    'ONLINE_TIME'  => 36000,//十分钟
     //AccessToken失效时间
-    'ACCESS_TOKEN_TIME_OUT'  => 7200,
-    'COMPANY_NAME' => 'ApiAdmin开发维护团队',
+    'ACCESS_TOKEN_TIME_OUT'  => 36000,
+    'COMPANY_NAME' => 'Siring开发维护团队',
 
     //跨域配置
     'CROSS_DOMAIN' => [
