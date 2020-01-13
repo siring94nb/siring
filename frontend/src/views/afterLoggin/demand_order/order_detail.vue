@@ -236,10 +236,11 @@
           </div>-->
         </div>
       </div>
-      <div class="line line-vice">平台顾问信息互动</div>
+      <!-- <div class="line line-vice">平台顾问信息互动</div> -->
       <!-- 聊天 -->
       <div class="speak_window">
-        <div class="speak_box">
+        <liuyan :pid="form.id" :uid="form.user_id"></liuyan>
+        <!-- <div class="speak_box">
           <div class="answer">
             <div class="heard_img left">
               <img src="../../../assets/images/u3830.png" />
@@ -263,7 +264,7 @@
         <div class="input-box">
           <Input v-model="value" placeholder="请输入信息(100字以内)..." style="width: 90%;" />
           <button class="lt-btn">发送</button>
-        </div>
+        </div>-->
       </div>
       <div class="obj-btn">
         <div class="btns-all stop-obj" @click="obj_btn(8)" v-if="status < 4">中止，本人放弃该项目</div>
@@ -308,10 +309,12 @@ import {
   getOrderDetail,
   changeStatus,
   confirmNeedOrder,
-  getDiscount
+  getDiscount,
+  msgList
 } from "@/api/api";
 import PaymentBar from "@/components/join/paymentBar";
 import orderProcess from "@/components/order/orderProcess";
+import liuyan from "@/components/liuyan/leaveAmessage";
 export default {
   data() {
     return {
@@ -416,7 +419,7 @@ export default {
       showPaymentFlag: false,
       needCodeDialog: true, //需要显示扫码弹窗
       price: 50000, //合同金额
-      percent: 100,//会员折扣
+      percent: 100, //会员折扣
       scale: 70, //支付比例
       order: 2, //支付第几期
       payway: {
@@ -702,15 +705,16 @@ export default {
         }
       });
     },
-    GetDiscount(){
-      let vm = this, params= {
-        uid : vm.form.user_id
-      }
+    GetDiscount() {
+      let vm = this,
+        params = {
+          uid: vm.form.user_id
+        };
       getDiscount(params).then(res => {
-        if(res.code == 1) {
+        if (res.code == 1) {
           vm.percent = res.data;
         }
-      })
+      });
     },
     need_submit() {
       let vm = this;
@@ -729,7 +733,8 @@ export default {
   components: {
     logginHeader,
     PaymentBar,
-    orderProcess
+    orderProcess,
+    liuyan
   }
 };
 </script>

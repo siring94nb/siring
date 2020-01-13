@@ -640,6 +640,7 @@ export default {
         font-weight: 700;
         font-size: 18px;
         line-height: 24px;
+        padding-bottom: 2px;
       }
       span {
         font-size: 13px;
