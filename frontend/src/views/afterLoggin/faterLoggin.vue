@@ -414,5 +414,15 @@ export default {
   text-align: center;
   background-color: rgb(242, 247, 250) !important;
 }
-
+.tac ul{
+  border-radius: 10px !important;
+}
+.tac ul li:nth-of-type(1)>div{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+.tac ul li:nth-last-of-type(1)>div{
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 </style>

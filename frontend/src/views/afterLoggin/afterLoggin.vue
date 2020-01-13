@@ -102,6 +102,7 @@ export default {
     position: fixed;
     left: 0;
     height: 30px;
+    
   }
   .right {
     margin-left: 160px;
