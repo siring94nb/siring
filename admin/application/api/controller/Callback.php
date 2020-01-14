@@ -191,7 +191,7 @@ class Callback extends Base
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
                 $res1 =  Order::where('id',$data['id'])->update([
-                    //  'need_status'=>4,
+                    'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
@@ -245,7 +245,7 @@ class Callback extends Base
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
                     $res1 =  Order::where('id',$data['id'])->update([
-                        //  'need_status'=>4,
+                        'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),
@@ -314,7 +314,7 @@ class Callback extends Base
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
                 $res1 =  Order::where('id',$data['id'])->update([
-                    //  'need_status'=>4,
+                    'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
@@ -369,7 +369,7 @@ class Callback extends Base
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
                     $res1 =  Order::where('id',$data['id'])->update([
-                        //  'need_status'=>4,
+                        'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),
@@ -437,7 +437,7 @@ class Callback extends Base
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
                 $res1 =  Order::where('id',$data['id'])->update([
-                    //  'need_status'=>4,
+                    'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
@@ -489,7 +489,7 @@ class Callback extends Base
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
                     $res1 =  Order::where('id',$data['id'])->update([
-                        //  'need_status'=>4,
+                        'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),

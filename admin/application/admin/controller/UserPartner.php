@@ -24,6 +24,13 @@ class UserPartner extends Base
 
         $data = $partner->user_list($param);
 
+        foreach ($data['data'] as $k => $v){
+
+            $city_name = Provinces::province_query($v['agent_city']);
+
+            $data['data'][$k]['city_title'] = $city_name['name'];
+            $data['data'][$k]['city_type'] = $city_name['type'];
+        }
 
         return $this -> buildSuccess( array(
             'list' => $data['data'],

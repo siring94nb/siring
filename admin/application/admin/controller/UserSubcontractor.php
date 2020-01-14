@@ -14,12 +14,12 @@ use think\Db;
 use think\Validate;
 use app\data\model\UserGrade;
 class UserSubcontractor extends Base{
-/**
+
+    /**
      * 分包商列表
      * @return array
+     * @throws \think\Exception
      * @throws \think\exception\DbException
-     * @author fyk
-     * @time 2019/10/10
      */
     public function index(){
 
@@ -30,7 +30,24 @@ class UserSubcontractor extends Base{
         $partner = new \app\model\User();
 
         $data = $partner->user_list($param);
+        foreach ($data['data'] as $k => $v){
+            $order = (new \app\data\model\JoinOrder())->join_order_desc($v['sub_id']);
+            //查询技能
+            $stocks= json_decode( $order['dev'] , true );
 
+            if(!empty($stocks)){
+                $name = [];//外层循环为空
+                foreach ($stocks as $key => $val){
+                    $name[] = implode(",", $val);
+                }
+                $res = join('/',$name);
+                $data['data'][$k]['dev_name'] = $res;
+            }else{
+                $data['data'][$k]['dev_name'] = "无";
+            }
+
+
+        }
         return $this -> buildSuccess( array(
             'list' => $data['data'],
             'count' => $data['total'],

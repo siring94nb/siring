@@ -214,15 +214,9 @@
 
                     },
                     {
-                        title: '专业技能',
+                        title: '专业技能/开发语言',
                         align: 'center',
-                        key: '',
-
-                    },
-                    {
-                        title: '开发语言',
-                        align: 'center',
-                        key: '',
+                        key: 'dev_name',
 
                     },
                     {
@@ -248,6 +242,15 @@
                         title: '状态',
                         align: 'center',
                         key: 'status',
+                        render: ( h , param ) => {
+                            if(param.row.status == 1){
+                                return h('div','开启');
+                            }else if(param.row.status == 2){
+                                return h('div','关闭');
+                            }else{
+                                return h('div','无');
+                            }
+                        }
 
                     },
                     {
