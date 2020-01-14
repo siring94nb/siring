@@ -154,7 +154,7 @@ export default {
       fileList: [],
       typeList: [
         {
-          className: "iconfont icon-gongyinglian",
+          className: "iconfont icon-yuanxingtu",
           name: "原型UI",
           id: 1
         },

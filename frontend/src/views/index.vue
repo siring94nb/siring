@@ -3,9 +3,9 @@
     <myheader />
     <myaside />
     <div class="index">
-      <!-- <div style="width:100%;text-align:center"> -->
+      <div >
         <myswiper />
-      <!-- </div> -->
+      </div>
       <div class="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">

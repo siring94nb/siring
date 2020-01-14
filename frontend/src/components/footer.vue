@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="footer_info">
-      <div style="background-color: rgb(81, 81, 81);">
+      <div style="background-color: rgb(81, 81, 81);padding:0 0 0 30px">
         <div class="footer_ul footer_info_inner">
           <ul class="ft-ul">
             <li>
@@ -305,6 +305,7 @@ export default {
   width: 100%;
   background-color: #fff;
   .footer_info_inner {
+    padding: 0 60px 0 0;
     width: 1200px;
     margin: 0 auto;
     .ft-ul {

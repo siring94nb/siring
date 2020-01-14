@@ -117,7 +117,10 @@
             推荐产品
           </div>
           <div class="recommend-list">
-            <div class="recommend-item" v-for="item in recommendList" :key="item.id">
+            <div class="recommend-item" v-for="item in recommendList" :key="item.id" @click.stop="tiaozhuan(item.id)">
+               <!-- <router-link
+                :to="{name: 'goods-detail', params: {id: item.id}}"
+              > -->
               <div class="recommend-img">
                 <img :src="item.img" alt />
               </div>
@@ -129,6 +132,8 @@
                 </div>
                 <div class="desc single-dot">{{ item.category_name }}</div>
               </div>
+              <!-- </router-link> -->
+
             </div>
           </div>
           <div class="more">
@@ -177,6 +182,16 @@ export default {
       this.getGoodsDetail();
       this.getRecommend();
       this.getComment();
+    },
+    tiaozhuan(id){
+      this.$router.push({
+        name:"goods-detail",
+        params:{
+          id:id
+        }
+      })
+      this.goodsId = this.$route.params.id;
+      this.getGoodsDetail();
     },
     getGoodsDetail() {
       GetGoodsDetail({

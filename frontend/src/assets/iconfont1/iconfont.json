@@ -118,6 +118,13 @@
       "unicode_decimal": 59328
     },
     {
+      "icon_id": "1808810",
+      "name": "创业者",
+      "font_class": "chuangyezhe",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
       "icon_id": "2180832",
       "name": "删除",
       "font_class": "shanchu_",
@@ -272,11 +279,39 @@
       "unicode_decimal": 58931
     },
     {
+      "icon_id": "7804403",
+      "name": "创业导师",
+      "font_class": "chuangyedaoshi",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "8375937",
+      "name": "需求报送",
+      "font_class": "xuqiubaosong",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "8412557",
+      "name": "玩法介绍1 copy 3",
+      "font_class": "wanfajieshaocopy",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
       "icon_id": "9642703",
       "name": "合伙人",
       "font_class": "huaban_fuzhi",
       "unicode": "e622",
       "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "9777232",
+      "name": "手指2",
+      "font_class": "shouzhi",
+      "unicode": "e631",
+      "unicode_decimal": 58929
     },
     {
       "icon_id": "10056799",

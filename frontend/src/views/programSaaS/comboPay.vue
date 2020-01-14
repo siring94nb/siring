@@ -289,6 +289,7 @@ export default {
       bankCards: [], //银行卡号
       params: {}, //总信息
       comment: "", //留言
+      type:0,//订单类型
       //添加银行卡
       form: {
         id: 0,
@@ -341,6 +342,7 @@ export default {
       vm.real_money = vm.$route.params.order_amount;
       vm.form.user_id = vm.$route.params.user_id;
       vm.params = this.$route.params;
+      // vm.type = this.$route.type;
       //获取银行卡号
       subBankPay({ user_id: vm.$route.params.user_id }).then(res => {
         let { code, data, msg } = res;

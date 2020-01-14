@@ -1,5 +1,5 @@
 <template>
-  <div style="width:1300px;">
+  <div style="width:1480px;">
     <logginHeader>
       <i class="el-icon-edit"></i>
       <span>软件/定制</span>
