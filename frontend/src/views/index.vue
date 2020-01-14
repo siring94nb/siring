@@ -3,9 +3,7 @@
     <myheader />
     <myaside />
     <div class="index">
-      <div >
-        <myswiper />
-      </div>
+      <myswiper/>
       <div class="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">
@@ -406,6 +404,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .index {
+  min-width: 1200px;
   .about {
     min-width: 1200px;
     .about-cont {
