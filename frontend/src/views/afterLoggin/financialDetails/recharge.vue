@@ -139,12 +139,13 @@ export default {
       Recharge(params).then(res=>{
         let {data,code} = res;
         if(code == 1){
+          console.log(data);
           this.$router.push({
                 name: "comboPay",
                 params: {
+                  id: data,
                   order_amount:this.sum,
                   user_id: sessionStorage.getItem("user_id"),
-                  id: data,
                   order_type: 1
                 }
               });
