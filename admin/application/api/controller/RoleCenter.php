@@ -34,8 +34,8 @@ class RoleCenter extends Base
                     if($user_data['type'] = 2){
 
                             $order = new JoinOrder();
-                            $data = $order ->where(['user_id'=>$user_data['id'],'type'=>2]) -> field('id,grade,end_time') ->find();
-                            $city = Provinces::province_query($data['grade']);
+                            $data = $order ->where(['user_id'=>$user_data['id'],'type'=>2]) -> field('id,city_id,end_time') ->find();
+                            $city = Provinces::province_query($data['city_id']);
                             $data['name'] = $city['name'];
 
                         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);

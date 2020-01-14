@@ -513,4 +513,120 @@ class Callback extends Base
         // 将响应输出
         return $response;
     }
+
+
+    /**
+     * 余额支付回调
+     */
+    public function balance_return()
+    {
+        $request = Request::instance();
+        $pay = new Pay($this->config);
+
+        if($pay->driver('alipay')->gateway()->verify($request->param())){
+            $url = 'https://www.siring.com.cn/#/afterLoggin';
+
+            header('Location:'.$url);
+        };
+    }
+
+    /**
+     *余额支付宝异步回调
+     */
+    public function balance_notify()
+    {
+        $request = Request::instance();
+        $pay = new Pay($this->config);
+
+        if ($pay->driver('alipay')->gateway()->verify($request->param())) {
+            // 请自行对 trade_status 进行判断及其它逻辑进行判断，在支付宝的业务通知中，只有交易通知状态为 TRADE_SUCCESS 或 TRADE_FINISHED 时，支付宝才会认定为买家付款成功。
+            // 1、商户需要验证该通知数据中的out_trade_no是否为商户系统中创建的订单号；
+            // 2、判断total_amount是否确实为该订单的实际金额（即商户订单创建时的金额）；
+            // 3、校验通知中的seller_id（或者seller_email) 是否为out_trade_no这笔单据的对应的操作方（有的时候，一个商户可能有多个seller_id/seller_email）；
+            // 4、验证app_id是否为该商户本身。
+            // 5、其它业务逻辑情况
+            file_put_contents('notify.txt', "收到来自支付宝的异步通知\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单号：' . $request->param('out_trade_no') . "\r\n", FILE_APPEND);
+            file_put_contents('notify.txt', '订单金额：' . $request->param('total_amount') . "\r\n\r\n", FILE_APPEND);
+
+            $no['order_no'] = $request->param('out_trade_no');
+            $no['money'] = $request->param('total_amount');
+            //事务
+            Db::transaction( function() use ( $no ){
+                //查询订单
+                $data =  Order::get(['no'=>$no['order_no']]);
+                $res1 =  Order::where('id',$data['id'])->update([
+                    'status'=>2,
+                    'payment'=>2,
+                    'pay_type'=>1,
+                    'pay_time'=>time(),
+                ]);
+                //用户余额表
+                $res2 = (new UserFund())->where('user_id',$data['user_id'])->setInc('money', $no['money']);
+                //订单统计表添加
+                $budget_type = 1;
+                $income = '';//收入金额
+                $res3 = (new AllOrder())->allorder_add($budget_type,$data,$no['money'],$income);
+
+                return $res1 && $res2 && $res3  ? true : false;
+            });
+
+
+        } else {
+            file_put_contents('notify.txt', "收到异步通知\r\n", FILE_APPEND);
+        }
+
+        echo "success";
+    }
+
+    /**
+     * 余额微信支付回调
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws \EasyWeChat\Core\Exceptions\FaultException
+     */
+    public function balance_notice()
+    {
+        //初始化微信sdk
+        $wxConf = config('wechat');
+
+        $app = new Application($wxConf);
+        $response = $app->payment->handleNotify(function($notify, $successful){
+            // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
+            $rstArr = json_decode($notify,true);
+            $data =  Order::get(['no'=>$rstArr['out_trade_no']]);
+
+            if (empty($data)) {
+                return true; // 告诉微信，我已经处理完了，订单没找到，别再通知我了
+            }
+            if ($data['payment'] == 2) {
+                return true;  // 已经支付成功了就不再更新了
+            }
+            // 用户是否支付成功
+            if ($successful) {
+                // 不是已经支付状态则修改为已经支付状态
+                Db::transaction(function()use ( $data){
+                    $res1 =  Order::where('id',$data['id'])->update([
+                        'status'=>2,
+                        'payment'=>2,
+                        'pay_type'=>2,
+                        'pay_time'=>time(),
+                    ]);
+
+                    //用户余额表
+                    $res2 = (new UserFund())->where('user_id',$data['user_id'])->setInc('money', $data['money']);
+                    //订单统计表添加
+                    $budget_type = 1;
+                    $income = '';//收入金额
+                    $res3 = (new AllOrder())->allorder_add($budget_type,$data,$data['money'],$income);
+
+                    return $res1 && $res2 && $res3  ? true : false;
+
+                });
+            }
+            return true;
+
+        });
+        // 将响应输出
+        return $response;
+    }
 }

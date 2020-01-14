@@ -233,6 +233,10 @@ Route::group('api', function () {
         Route::any('sub_notify','api/Callback/sub_notify'); //分包商异步回调-支付宝
         Route::any('sub_notice','api/Callback/sub_notice'); //分包商异步回调-微信
 
+        Route::any('balance_return','api/Callback/balance_return'); //余额同步回调-支付宝
+        Route::any('balance_notify','api/Callback/balance_notify'); //余额异步回调-支付宝
+        Route::any('balance_notice','api/Callback/balance_notice'); //余额异步回调-微信
+
         Route::any('grade_return','api/Callback/grade_return'); //等级会员同步回调-支付宝
         Route::any('grade_notify','api/Callback/grade_notify'); //等级会员异步回调-支付宝
         Route::any('grade_notice','api/Callback/grade_notice'); //等级会员异步回调-微信
