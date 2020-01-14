@@ -137,9 +137,13 @@ class NeedOrder extends Model
                 $pay = 0.01 ;//先测试1分钱
                 //$title = '软件定制' ;
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['no'],$pay,$title);
+                //生成支付码
+                $imgData = 'http://qr.topscan.com/api.php?text='. $res;
 
-                self::save(['alipay' => $res],['id' => $id]);
-                return $res; exit();
+                self::save(['alipay' => $imgData],['id' => $id]);
+
+                return json(['code'=>1,'msg'=>'发起支付成功','imgData'=>$imgData]);exit();
+
                 break;
             case 2://微信支付
 

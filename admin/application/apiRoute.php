@@ -225,6 +225,18 @@ Route::group('api', function () {
         Route::any('software_notify','api/Callback/software_notify'); //软件定制异步回调-支付宝
         Route::any('app_notice','api/Callback/app_notice'); //异步回调-微信
 
+        Route::any('partner_return','api/Callback/partner_return'); //合伙人同步回调-支付宝
+        Route::any('partner_notify','api/Callback/partner_notify'); //合伙人异步回调-支付宝
+        Route::any('partner_notice','api/Callback/partner_notice'); //合伙人异步回调-微信
+
+        Route::any('sub_return','api/Callback/sub_return'); //分包商同步回调-支付宝
+        Route::any('sub_notify','api/Callback/sub_notify'); //分包商异步回调-支付宝
+        Route::any('sub_notice','api/Callback/sub_notice'); //分包商异步回调-微信
+
+        Route::any('grade_return','api/Callback/grade_return'); //等级会员同步回调-支付宝
+        Route::any('grade_notify','api/Callback/grade_notify'); //等级会员异步回调-支付宝
+        Route::any('grade_notice','api/Callback/grade_notice'); //等级会员异步回调-微信
+
     });
 
     //消息留言

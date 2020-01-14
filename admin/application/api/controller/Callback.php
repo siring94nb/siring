@@ -200,6 +200,7 @@ class Callback extends Base
                 $res2 = (new \app\data\model\User())->where('id',$data['id'])->update([
                     'type'=>2,
                     'is_city'=>1,
+                    'agent_city'=>$data['city_id']
                 ]);
                 //订单统计表添加
                 $budget_type = 1;
