@@ -223,7 +223,7 @@
       <div class="bottom">
         <p class="copyright">{{copyright}}</p>
         <div class="bottom-right">
-          <div>
+          <div style="display:flex;align-items: center">
             <span class="bottom-gt">&gt;</span>
             <span class="bottom-year">20</span>
           </div>
@@ -276,9 +276,15 @@ export default {
     };
   },
   mounted() {
+    // window.onresize = () => {
+       this.init();
+    // };
     this.getSeo();
   },
   methods: {
+    init(){
+      document.getElementsByClassName("footer")[0].style.width = document.documentElement.scrollWidth+"px";
+    },
     hoverclass(index) {
       this.curr = index;
     },
@@ -460,7 +466,7 @@ export default {
       align-items: center;
       margin-left: 100px;
       .bottom-gt {
-        font-size: 60px;
+        font-size: 80px;
         color: #f00;
       }
       .bottom-year {

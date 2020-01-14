@@ -226,7 +226,7 @@ export default {
     },
     pay() {
       MemberOrderAdd({
-        user_id: 1,
+        user_id: parseInt(sessionStorage.getItem("user_id")),
         grade: this.gradeId,
         num: this.num,
         price: this.total
@@ -234,9 +234,15 @@ export default {
         let { code, data, msg } = res;
         console.log(data);
         if (code === 1) {
-          this.showPayWayFlag = true; //显示扫码弹窗
-          this.$refs.paymentbar.getOrderId(data);
-          this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+         this.$router.push({
+                name: "comboPay",
+                params: {
+                  order_amount: this.total,
+                  user_id:parseInt(sessionStorage.getItem("user_id")),
+                  id: data,
+                  order_type: 1
+                }
+              });
         } else {
           this.$message.error(msg);
         }

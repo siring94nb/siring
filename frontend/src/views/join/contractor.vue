@@ -251,7 +251,7 @@ export default {
       this.$refs["ruleForm"].validate(valid => {
         if (valid) {
           JoinOrderAdd({
-            user_id: 1,
+            user_id: parseInt(sessionStorage.getItem("user_id")),
             skill: this.ruleForm.selectSkills,
             price: this.total,
             con: this.ruleForm.textarea,
@@ -261,8 +261,16 @@ export default {
             let { code, data, msg } = res;
             console.log(data);
             if (code === 1) {
-              this.$refs.paymentbar.getOrderId(data);
-              this.$refs.paymentbar.selectway(); // 执行子组件 选择支付方法  传订单id
+              console.log(123123)
+              this.$router.push({
+                name: "comboPay",
+                params: {
+                  order_amount: this.total,
+                  user_id: parseInt(sessionStorage.getItem("user_id")),
+                  id: data,
+                  order_type: 1
+                }
+              });
             } else {
               this.$message.error(msg);
             }
@@ -347,17 +355,17 @@ export default {
           }
           &.step-on {
             .step-name-box {
-              border-color: rgb(0, 189, 189);
-              color: rgb(0, 189, 189);
+              border-color: rgb(25,158,216);
+              color: rgb(25,158,216);
               .step-num {
-                color: rgb(0, 189, 189);
+                color: rgb(25,158,216);
               }
             }
             .step-desc {
               display: table-cell;
               vertical-align: middle;
               color: #ffffff;
-              background-color: rgb(0, 189, 189);
+              background-color: rgb(25,158,216);
               font-size: 20px;
               padding: 0 15px;
             }

@@ -47,7 +47,7 @@
         <div>
           <button @click="getCapitalDetailed();">查询</button>
         </div>
-      </div>        
+      </div>
       <div>
         <div class="invoice">
           <span>剩余可开票金额：</span>
@@ -55,89 +55,94 @@
           <button @click.stop="kaipiaoye">申请开票</button>
           <!-- 点击开票，弹出，发票样单 -->
           <el-dialog :visible.sync="dialogVisible" width="830px">
-             <div class="popupBox">
-            <div>
-              <span>我要开票</span>
-              <i class="el-icon-edit"></i>
-            </div>
-            <div>
-              <span>开票金额：</span>
-              <input v-model="price" type="text" placeholder="请填写要开票的金额" />
-              <span style="color:#000000">元</span>
-            </div>
-            <div>
-              <span>发票类型：</span>
-              <label v-for="(item, index) in radioData" :key="index">
-                <input type="radio" v-model="radioVal" :value="item.value" />
-                {{ item.value }}
-              </label>
-            </div>
-            <div>
-              <span>发票样式：</span>
-              <label>
-                <input type="radio" value="纸质" checked />
-                纸质
-              </label>
-            </div>
-            <div>
-              <span>发票抬头：</span>
-              <select v-model="selected3" @change="selectFn($event)">
-                <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
-              </select>
+            <div class="popupBox">
               <div>
-                <router-link to="addEnterprise">
-                  <i class="el-icon-plus"></i>
-                  <span>添加企业身份</span>
-                </router-link>
+                <span>我要开票</span>
+                <i class="el-icon-edit"></i>
               </div>
-            </div>
-            <div>
-              <span>发票税号：</span>
-              <input type="text" placeholder="请填写企业税号/个人无需提供税号" />
-            </div>
-            <div>
-              <span>邮寄详情：</span>
-              <div @click="xiugai">
-                <textarea
-                  cols="58"
-                  rows="2"
-                  ref="textXiugai"
-                  :disabled="disabledX"
-                  title="点击可修改，回车确认修改"
-                  @keydown.stop="keyup_submit"
-                  v-model="address"
-                ></textarea>
-              </div>
-              <!-- <input type="text" title="点击可修改" value="广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"> -->
-              <!-- <div @click="xiugai"><textarea cols="58" rows="2" ref="textXiugai" :disabled="disabledX" :title="disabledX">广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025</textarea></div> -->
-            </div>
-            <div>
-              <span>发票类型：</span>
-              <label v-for="(item, index) in radioData1" :key="index">
-                <input type="radio" @click="ceshi(item.id)" v-model="radioVal1" :value="item.value" />
-                {{ item.value }}
-              </label>
-            </div>
-            <div>温馨提示：请确认好开票信息，发票一经开出，不再重开！</div>
-            <div>
               <div>
+                <span>开票金额：</span>
+                <input v-model="price" type="text" placeholder="请填写要开票的金额" />
+                <span style="color:#000000">元</span>
+              </div>
+              <div>
+                <span>发票类型：</span>
+                <label v-for="(item, index) in radioData" :key="index">
+                  <input type="radio" v-model="radioVal" :value="item.value" />
+                  {{ item.value }}
+                </label>
+              </div>
+              <div>
+                <span>发票样式：</span>
+                <label>
+                  <input type="radio" value="纸质" checked />
+                  纸质
+                </label>
+              </div>
+              <div>
+                <span>发票抬头：</span>
+                <select v-model="selected3" @change="selectFn($event)">
+                  <option v-for="(item,index) in items" :value="item.id" :key="index">{{item.name}}</option>
+                </select>
                 <div>
-                  <span>合计：</span>
-                  <span>￥{{parseInt(this.price)+30.00}}</span>
-                </div>
-                <div>
-                  <span>税费：</span>
-                  <span>￥20.00</span>
-                  <span>+</span>
-                  <span>快递费：</span>
-                  <span>￥10.00</span>
+                  <router-link to="addEnterprise">
+                    <i class="el-icon-plus"></i>
+                    <span>添加企业身份</span>
+                  </router-link>
                 </div>
               </div>
               <div>
-                <button>确认</button>
+                <span>发票税号：</span>
+                <input type="text" placeholder="请填写企业税号/个人无需提供税号" />
+              </div>
+              <div>
+                <span>邮寄详情：</span>
+                <div @click="xiugai">
+                  <textarea
+                    cols="58"
+                    rows="2"
+                    ref="textXiugai"
+                    :disabled="disabledX"
+                    title="点击可修改，回车确认修改"
+                    @keydown.stop="keyup_submit"
+                    v-model="address"
+                  ></textarea>
+                </div>
+                <!-- <input type="text" title="点击可修改" value="广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025"> -->
+                <!-- <div @click="xiugai"><textarea cols="58" rows="2" ref="textXiugai" :disabled="disabledX" :title="disabledX">广东省 广州市 天河区 珠吉街道 珠吉路58号津安创意园  (李三  收)    18451401025</textarea></div> -->
+              </div>
+              <div>
+                <span>发票类型：</span>
+                <label v-for="(item, index) in radioData1" :key="index">
+                  <input
+                    type="radio"
+                    @click="ceshi(item.id)"
+                    v-model="radioVal1"
+                    :value="item.value"
+                  />
+                  {{ item.value }}
+                </label>
+              </div>
+              <div>温馨提示：请确认好开票信息，发票一经开出，不再重开！</div>
+              <div>
+                <div>
+                  <div>
+                    <span>合计：</span>
+                    <span>￥{{parseInt(this.price)+30.00}}</span>
+                  </div>
+                  <div>
+                    <span>税费：</span>
+                    <span>￥20.00</span>
+                    <span>+</span>
+                    <span>快递费：</span>
+                    <span>￥10.00</span>
+                  </div>
+                </div>
+                <div>
+                  <button>确认</button>
+                </div>
               </div>
             </div>
-          </div>
           </el-dialog>
           <!-- 分页表格 -->
           <div style="margin-top:15px;">
@@ -203,7 +208,7 @@ import {
 export default {
   data() {
     return {
-      dialogVisible :false,
+      dialogVisible: false,
       dis: true,
       // 分页表格参数
       pagesize: 10,
@@ -216,31 +221,31 @@ export default {
       items: [], //企业列表
       selected3: "",
       value: undefined, //时间选择
-      startTime:"",
-      endTime:"",
+      startTime: "",
+      endTime: "",
       // 单选框
       radioData: [{ value: "企业" }, { value: "个人" }],
       radioVal: "企业",
       //发票种类
       radioData1: [
         {
-          id:0,
+          id: 0,
           value: "普通发票（电子发票）"
         },
         {
-          id:1,
+          id: 1,
           value: "普通发票（纸质发票）"
         },
         {
-          id:2,
+          id: 2,
           value: "专用发票"
         },
         {
-          id:3,
+          id: 3,
           value: "收购发票（电子票）"
         },
         {
-          id:4,
+          id: 4,
           value: "收购发票（纸质发票）"
         }
       ],
@@ -265,18 +270,22 @@ export default {
   },
   methods: {
     // 发票类型
-    gbfplx(num){
+    gbfplx(num) {
       // console.log(num)
-      this.radioVal1 = parseInt(num)
+      this.radioVal1 = parseInt(num);
     },
     gb() {
       // 修改状态判断是否有索引条件
       if (this.selected1 == "0" && this.selected2 == "0" && this.value == "") {
         this.dis = true;
-      }else if(this.value == null && this.selected1 == "0" && this.selected2 == "0"){
+      } else if (
+        this.value == null &&
+        this.selected1 == "0" &&
+        this.selected2 == "0"
+      ) {
         this.dis = true;
         this.value = "";
-      }else {
+      } else {
         this.dis = false;
       }
     },
@@ -288,29 +297,40 @@ export default {
     },
     // 获取资金明细数据
     getCapitalDetailed() {
+      let params = {};
       if (this.value != undefined && this.value != null) {
         // console.log(this.value);
         this.startTime = this.value[0].getTime();
         this.endTime = this.value[1].getTime();
+        params = {
+          budget_type: this.selected1 == 0 ? "" : parseInt(this.selected1),
+          role_type: this.selected2 == 0 ? "" : parseInt(this.selected2),
+          page: parseInt(this.currpage),
+          start_time: parseInt(this.startTime),
+          end_time: parseInt(this.endTime)
+        };
       } else {
-        this.startTime = "";
-        this.endTime = "";
+        params = {
+          budget_type: this.selected1 == 0 ? "" : parseInt(this.selected1),
+          role_type: this.selected2 == 0 ? "" : parseInt(this.selected2),
+          page: parseInt(this.currpage)
+        };
       }
-      let params = {
-        budget_type:this.selected1==0?'':parseInt(this.selected1),
-        role_type:this.selected2==0?'':parseInt(this.selected2),
-        page:parseInt(this.currpage),
-        start_time:parseInt(this.startTime),
-        end_time:parseInt(this.endTime)
+      params = {
+        budget_type: this.selected1 == 0 ? "" : parseInt(this.selected1),
+        role_type: this.selected2 == 0 ? "" : parseInt(this.selected2),
+        page: parseInt(this.currpage),
+        start_time: parseInt(this.startTime),
+        end_time: parseInt(this.endTime)
       };
-       CapitalDetailed(params).then(res => {
-          let { data, msg, code } = res;
-          if (code === 1) {
-            this.tableData = data.data;
-            this.pagesize = data.per_page;
-            this.total = data.total;
-          }
-        });
+      CapitalDetailed(params).then(res => {
+        let { data, msg, code } = res;
+        if (code === 1) {
+          this.tableData = data.data;
+          this.pagesize = data.per_page;
+          this.total = data.total;
+        }
+      });
       // let times = this.value;
       // let start_time = this.value[0];
       // let end_time = this.value[1];
@@ -411,7 +431,7 @@ export default {
       // } else {
       //   gb.style.display = "none";
       // }
-      this.dialogVisible = true
+      this.dialogVisible = true;
     },
     // 企业列表信息
     selectFn(e) {
@@ -507,7 +527,7 @@ export default {
       border-radius: 10px;
       width: 790px;
       // top: 50px;
-      // left: 180px; 
+      // left: 180px;
       > div {
         margin-bottom: 25px;
         &:nth-of-type(1) {
@@ -579,11 +599,13 @@ export default {
         }
         &:nth-of-type(8) {
           label {
-            &:nth-of-type(1), &:nth-of-type(2),&:nth-of-type(3)  {
+            &:nth-of-type(1),
+            &:nth-of-type(2),
+            &:nth-of-type(3) {
               padding-right: 50px;
             }
             &:nth-of-type(4) {
-              padding:0 68px 0 110px;
+              padding: 0 68px 0 110px;
             }
           }
         }
@@ -637,8 +659,8 @@ export default {
 }
 </style>
 <style lang="scss">
-.popupBox{ 
-  .el-dialog__body{
+.popupBox {
+  .el-dialog__body {
     width: 100px !important;
   }
 }

@@ -31,6 +31,7 @@
       </div>
       <div class="navBoxa">
         <el-row class="tac">
+          <!-- :default-openeds="[num]" -->
           <el-col :span="24" >
             <el-menu
               :default-active="ru"
@@ -39,9 +40,9 @@
               background-color="rgb(0,0,0)"
               active-background-color="#000000"
               text-color="#fff"
-              :default-openeds="[num]"
-              :router="true"
               :unique-opened="true"
+              :router="true"
+              :default-openeds="[num]"
             >
               <el-submenu ref="ceshi" :index="index+''" v-for="(item,index) in arr" :key="index+''">
                 <!-- 控制中心 -->
@@ -84,7 +85,7 @@ export default {
     return {
       ru:
         this.$route.path == "/afterLoggin" ? "/afterLogginR" : this.$route.path, //确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
-      num: "0",
+      num: "",
       classHuiyuan: 1,
       fenbaoshang: 1,
       tixian: 1,
@@ -184,7 +185,7 @@ export default {
         this.classHuiyuanX(),
         this.fenbaoshangX(),
         this.withdrawX();
-      this.zhankai();
+      // this.zhankai();
       this.gb();
       this.userMessage();
       this.chaxun();
@@ -328,7 +329,7 @@ export default {
     color: rgba($color: #ffffff, $alpha: 1);
   }
   .el-menu-item.is-active {
-    font-size: 16px;
+    // font-size: 16px;
     // font-weight: 700;
     color: #d79e94 !important;
   }
@@ -412,7 +413,7 @@ export default {
 .el-submenu .el-menu-item {
   min-width: 121px;
   text-align: center;
-  background-color: rgb(242, 247, 250) !important;
+  background-color: rgb(255,255,255) !important;
 }
 .tac ul{
   border-radius: 10px !important;

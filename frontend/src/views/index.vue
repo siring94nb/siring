@@ -3,7 +3,9 @@
     <myheader />
     <myaside />
     <div class="index">
-      <myswiper />
+      <!-- <div style="width:100%;text-align:center"> -->
+        <myswiper />
+      <!-- </div> -->
       <div class="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">
@@ -139,7 +141,7 @@
                       </div>
                     </div>
                     <div class="ljsq">
-                      <a href="javascript:;">&gt;&gt;立即申请</a>
+                      <router-link to="/programSaaS" >&gt;&gt;立即申请</router-link>
                     </div>
                   </div>
                 </div>
