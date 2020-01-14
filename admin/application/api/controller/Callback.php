@@ -190,11 +190,14 @@ class Callback extends Base
             Db::transaction( function() use ( $no ){
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
+                $year = $data['num'];
                 $res1 =  Order::where('id',$data['id'])->update([
                     'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
+                    'add_time'=>time(),
+                    'end_time'=>strtotime("+$year  year")//结束时间
                 ]);
                 //用户表
                 $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
@@ -244,11 +247,14 @@ class Callback extends Base
             if ($successful) {
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
+                    $year = $data['num'];
                     $res1 =  Order::where('id',$data['id'])->update([
                         'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),
+                        'add_time'=>time(),
+                        'end_time'=>strtotime("+$year  year")//结束时间
                     ]);
 
                     //用户表
@@ -313,11 +319,14 @@ class Callback extends Base
             Db::transaction( function() use ( $no ){
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
+                $year = $data['num'];
                 $res1 =  Order::where('id',$data['id'])->update([
                     'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
+                    'add_time'=>time(),
+                    'end_time'=>strtotime("+$year  year")//结束时间
                 ]);
 
                 //用户表
@@ -368,11 +377,14 @@ class Callback extends Base
             if ($successful) {
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
+                    $year = $data['num'];
                     $res1 =  Order::where('id',$data['id'])->update([
                         'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),
+                        'add_time'=>time(),
+                        'end_time'=>strtotime("+$year  year")//结束时间
                     ]);
                     //用户表
                     $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
@@ -436,11 +448,14 @@ class Callback extends Base
             Db::transaction( function() use ( $no ){
                 //查询订单
                 $data =  Order::get(['no'=>$no['order_no']]);
+                $year = $data['num'];
                 $res1 =  Order::where('id',$data['id'])->update([
                     'status'=>2,
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
+                    'add_time'=>time(),
+                    'end_time'=>strtotime("+$year  year")//结束时间
                 ]);
                 //用户表
                 $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update(['type'=>2, 'grade'=>1]);
@@ -488,11 +503,14 @@ class Callback extends Base
             if ($successful) {
                 // 不是已经支付状态则修改为已经支付状态
                 Db::transaction(function()use ( $data){
+                    $year = $data['num'];
                     $res1 =  Order::where('id',$data['id'])->update([
                         'status'=>2,
                         'payment'=>2,
                         'pay_type'=>2,
                         'pay_time'=>time(),
+                        'add_time'=>time(),
+                        'end_time'=>strtotime("+$year  year")//结束时间
                     ]);
                     //用户表
                     $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update(['type'=>2, 'grade'=>1]);
@@ -562,11 +580,11 @@ class Callback extends Base
                     'pay_time'=>time(),
                 ]);
                 //用户余额表
-                $res2 = (new UserFund())->where('user_id',$data['user_id'])->setInc('money', $no['money']);
+                $res2 = (new UserFund())->where('user_id',$data['user_id'])->setInc('money', $data['money']);
                 //订单统计表添加
                 $budget_type = 1;
                 $income = '';//收入金额
-                $res3 = (new AllOrder())->allorder_add($budget_type,$data,$no['money'],$income);
+                $res3 = (new AllOrder())->allorder_add($budget_type,$data,$data['money'],$income);
 
                 return $res1 && $res2 && $res3  ? true : false;
             });
