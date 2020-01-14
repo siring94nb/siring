@@ -7,7 +7,8 @@
         <div style="height:140px;">
           <div>
             <img :src="imgBUrl" alt />
-            <img :src="imgUrl" alt />
+            <img :src="imgUrl" alt v-if="imgUrl!=''"/>
+            <i style="font-size:60px;" class="iconfont icon-touxiang1" v-if="imgUrl==''"></i>
           </div>
           <div class="name">{{name}}</div>
         </div>
@@ -296,7 +297,7 @@ export default {
         let { data, msg, code } = res;
         if (code === 1) {
           this.yue = data.money
-          this.imgUrl = data.img || this.imgUrl;
+          this.imgUrl = data.img;
           this.name = data.realname || this.name;
         }
       });

@@ -419,7 +419,8 @@ export default {
       suoyin: "",
       fbxm: "flex", //控制分包项目位置显示隐藏
       startTime: "",
-      endTime: ""
+      endTime: "",
+      type:1
     };
   },
   components: {

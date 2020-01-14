@@ -203,6 +203,7 @@ export default {
       dis: true,
       startTime: "",
       endTime: "",
+      type:1
     };
   },
   components: {
@@ -263,6 +264,7 @@ export default {
         // console.log(this.value);
         this.startTime = this.value[0].getTime();
         this.endTime = this.value[1].getTime();
+
       } else {
         this.startTime = "";
         this.endTime = "";
