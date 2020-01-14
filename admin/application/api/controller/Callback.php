@@ -197,7 +197,7 @@ class Callback extends Base
                     'pay_time'=>time(),
                 ]);
                 //用户表
-                $res2 = (new \app\data\model\User())->where('id',$data['id'])->update([
+                $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
                     'type'=>2,
                     'is_city'=>1,
                     'agent_city'=>$data['city_id']
@@ -252,9 +252,10 @@ class Callback extends Base
                     ]);
 
                     //用户表
-                    $res2 = (new \app\data\model\User())->where('id',$data['id'])->update([
+                    $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
                         'type'=>2,
                         'is_city'=>1,
+                        'agent_city'=>$data['city_id']
                     ]);
                     //订单统计表添加
                     $budget_type = 1;
@@ -320,9 +321,10 @@ class Callback extends Base
                 ]);
 
                 //用户表
-                $res2 = (new \app\data\model\User())->where('id',$data['id'])->update([
+                $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
                     'type'=>2,
                     'is_subpackage'=>1,
+                    'sub_id'=>$data['id']
                 ]);
                 //订单统计表添加
                 $budget_type = 1;
@@ -373,9 +375,10 @@ class Callback extends Base
                         'pay_time'=>time(),
                     ]);
                     //用户表
-                    $res2 = (new \app\data\model\User())->where('id',$data['id'])->update([
+                    $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update([
                         'type'=>2,
                         'is_subpackage'=>1,
+                        'sub_id'=>$data['id']
                     ]);
                     //订单统计表添加
                     $budget_type = 1;
@@ -440,9 +443,9 @@ class Callback extends Base
                     'pay_time'=>time(),
                 ]);
                 //用户表
-                $res2 = (new \app\data\model\User())->where('id',$data['id'])->update(['type'=>2, 'grade'=>1]);
+                $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update(['type'=>2, 'grade'=>1]);
                 //用户等级表
-                $res3 = (new UserGrade())->where('user_id',$data['id'])->update(['grade'=>1]);
+                $res3 = (new UserGrade())->where('user_id',$data['user_id'])->update(['grade'=>1]);
                 //订单统计表添加
                 $budget_type = 1;
                 $income = '';//收入金额
@@ -492,9 +495,9 @@ class Callback extends Base
                         'pay_time'=>time(),
                     ]);
                     //用户表
-                    $res2 = (new \app\data\model\User())->where('id',$data['id'])->update(['type'=>2, 'grade'=>1]);
+                    $res2 = (new \app\data\model\User())->where('id',$data['user_id'])->update(['type'=>2, 'grade'=>1]);
                     //用户等级表
-                    $res3 = (new UserGrade())->where('user_id',$data['id'])->update(['grade'=>1]);
+                    $res3 = (new UserGrade())->where('user_id',$data['user_id'])->update(['grade'=>1]);
                     //订单统计表添加
                     $budget_type = 1;
                     $income = '';//收入金额
