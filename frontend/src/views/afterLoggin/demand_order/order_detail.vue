@@ -451,6 +451,7 @@ export default {
   methods: {
     init() {
       this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
+      console.log(this.form.user_id)
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
       if (this.status == 3) {
