@@ -43,28 +43,31 @@ class Payoff extends Model
         //算出金额
         $pay_money = $data['money'] * ($grade['discount']/100) * $ratio;
         //比较
-        if($money != $pay_money) returnJson(0,'系统有误');
+        // if($money != $pay_money) returnJson(0,'系统有误');
 
         switch ($pay_type){
             case 1://支付宝支付
 
                 $pay = 0.01 ;//先测试1分钱
-                $title = '软件定制' ;
-                $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; // 异步通知 url，*强烈建议加上本参数*
-                $return_url = 'https://manage.siring.com.cn/api/Callback/software_return'; // 同步通知 url，*强烈建议加上本参数*
+                $title = '余额充值' ;
+                $notify_url = 'https://manage.siring.com.cn/api/Callback/balance_notify'; // 异步通知 url，*强烈建议加上本参数*
+                $return_url = 'https://manage.siring.com.cn/api/Callback/balance_return'; // 同步通知 url，*强烈建议加上本参数*
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['no'],$pay,$title);
+                //生成支付码
+                $imgData = 'http://qr.topscan.com/api.php?text='. $res['qr_code'];
 
-                self::save(['alipay' => $res],['id' => $id]);
-                return $res; exit();
+                self::save(['alipay' => $imgData],['id' => $id]);
+
+                return json(['code'=>1,'msg'=>'发起支付成功','imgData'=>$imgData]);exit();
                 break;
             case 2://微信支付
 
                 // 回调地址
-                $url = 'https://manage.siring.com.cn/api/Callback/app_notice';
+                $url = 'https://manage.siring.com.cn/api/Callback/balance_notice';
 
                 $pay = 1;//先测试1分钱
 
-                $title = '软件定制';
+                $title = '余额充值';
                 $res = (new WechatPay())->pay($title,$data['no'], $pay, $url);
 
                 return $res; exit();

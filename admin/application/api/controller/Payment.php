@@ -154,7 +154,7 @@ class Payment extends Base
             returnJson (0,$validate->getError());exit();
         }
         switch ($param['type']) {
-            case 1://正常订单
+            case 1://余额充值
                 $ratio = 1;
                 $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
 
