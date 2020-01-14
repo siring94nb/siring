@@ -222,13 +222,20 @@
                     {
                         title: '城市等级',
                         align: 'center',
-                        key: '',
-
-                    },
-                    {
-                        title: '优势说明',
-                        align: 'center',
-                        key: 'phone',
+                        key: 'city_type',
+                        render: ( h , param ) => {
+                            if(param.row.city_type == 0){
+                                return h('div','特级');
+                            }else if(param.row.city_type == 1){
+                                return h('div','一级');
+                            }else if(param.row.city_type == 2){
+                                return h('div','二级');
+                            }else if(param.row.city_type == 3){
+                                return h('div','三级');
+                            }else{
+                                return h('div','暂无');
+                            }
+                        }
 
                     },
 
@@ -249,6 +256,15 @@
                         title: '状态',
                         align: 'center',
                         key: 'status',
+                        render: ( h , param ) => {
+                            if(param.row.status == 1){
+                                return h('div','开启');
+                            }else if(param.row.status == 2){
+                                return h('div','关闭');
+                            }else{
+                                return h('div','无');
+                            }
+                        }
 
                     },
                     {

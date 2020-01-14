@@ -24,7 +24,7 @@ class JoinOrder extends Base {
         foreach ($data['data'] as $k => $v){
             $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
             //查询等级
-            $grade_name = JoinRole::grade_type($v['grade']);
+            $grade_name = JoinRole::grade_type($v['city_id']);
 
             $data['data'][$k]['grade_title'] = $grade_name['title'];
         }
@@ -75,7 +75,7 @@ class JoinOrder extends Base {
         foreach ($data['data'] as $k => $v){
             $data['data'][$k]['pay_time'] = $v['pay_time'] == null ? '未付款' : date('Y-m-d H:i:s',$v['pay_time']);
             //查询城市
-            $city_name = Provinces::province_query($v['grade']);
+            $city_name = Provinces::province_query($v['city_id']);
             $data['data'][$k]['city_title'] = $city_name['name'];
         }
         return $this -> buildSuccess( array(

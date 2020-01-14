@@ -73,6 +73,19 @@ class JoinOrder extends Model
 
     }
 
+    /**
+     * 获取数据数据
+     * @param $id
+     * @return array
+     * @throws \think\Exception
+     * @throws \think\exception\DbException
+     */
+    public function join_order_desc($id)
+    {
+
+        return self::get(['id'=>$id])->toArray();
+
+    }
 
     /**
      * 加盟角色订单列表分类
@@ -110,7 +123,7 @@ class JoinOrder extends Model
             $param['size'] = 10;
         }
         $field = 'a.id,a.type,a.user_id,a.pay_type,a.pay_time,a.created_at,
-        a.no,a.money,a.payment,a.status,a.grade,a.dev,a.updated_at,b.phone';
+        a.no,a.money,a.payment,a.status,a.grade,a.city_id,a.dev,a.con,a.updated_at,b.phone';
         $order = 'a.id desc';
 
         $list =  JoinOrder::where( $where )

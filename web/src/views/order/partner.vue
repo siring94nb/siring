@@ -140,6 +140,12 @@
                         key: 'city_title'
                     },
                     {
+                        title: '优势说明',
+                        align: 'center',
+                        key: 'con',
+
+                    },
+                    {
                         title: '状态',
                         align: 'center',
                         key: 'status',
