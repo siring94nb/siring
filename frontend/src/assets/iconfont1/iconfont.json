@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "95240",
+      "name": "热线电话",
+      "font_class": "rexiandianhua",
+      "unicode": "e6a8",
+      "unicode_decimal": 59048
+    },
+    {
       "icon_id": "339500",
       "name": "会员",
       "font_class": "huiyuan21",
@@ -74,6 +81,13 @@
       "font_class": "wenjian",
       "unicode": "e612",
       "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "1382584",
+      "name": "微信 (1)",
+      "font_class": "weixin",
+      "unicode": "e659",
+      "unicode_decimal": 58969
     },
     {
       "icon_id": "1546895",

@@ -5,7 +5,7 @@
       <p>热线</p>
       <div class="float-cont">
         <div class="float-title">
-          <i class="icon iconfont icon-dianhua" />热线电话：
+          <i class="icon iconfont icon-rexiandianhua" />热线电话：
         </div>
         <p class="contact-number">0755-36609873</p>
       </div>
@@ -37,7 +37,7 @@
       <p>客服</p>
       <div class="float-cont">
         <div class="float-title">
-          <i class="icon iconfont icon-qq" />QQ客服：
+          <i class="iconfont icon-icon" />QQ客服：
         </div>
         <p class="contact-number interactive-bg">
           <a
@@ -55,18 +55,21 @@
         </p>
       </div>
     </div>
-    <div class="square" @click.self="showLevelMsg">
-      <i class="el-icon-edit icon" @click.self="showLevelMsg" />
-      <p @click.self="showLevelMsg">留言</p>
+    <div class="square" >
+      <div @mouseover="showLevelMsg" @mouseout="showLevelMsg">
+         <i class="el-icon-edit icon" />
+        <p @click.self="showLevelMsg">留言</p>
+      </div>
+     
       <div class="float-cont" v-show="levelMsgBool" style="width:300px">
-        <div class="float-title">
-          <i class="el-icon-phone" />联系方式：
+        <div class="float-title" style="float: left;"> 
+          <i class="el-icon-phone"/>联系方式：
         </div>
-        <input class="levelmsg levelmsg-input" type="text" placeholder="您的联系方式" />
-        <div class="float-title">
+        <input v-model="lianxi" class="levelmsg levelmsg-input" type="text" placeholder="您的联系方式" />
+        <div class="float-title" style="float: left;">
           <i class="el-icon-edit" />留言反馈：
         </div>
-        <textarea class="levelmsg" placeholder="您的需求或反馈，我们将在48个小时内，联系您" style="margin-bottom:10px;"></textarea>
+        <textarea v-model="liuyan" class="levelmsg" placeholder="您的需求或反馈，我们将在48个小时内，联系您" style="margin-bottom:10px;"></textarea>
         <button class="send-lm" @click="sendMsg">发送</button>
       </div>
     </div>
@@ -81,7 +84,9 @@ export default {
   data() {
     return {
       levelMsgBool: false,
-      showBtnTop: false
+      showBtnTop: false,
+      lianxi:"",
+      liuyan:''
     };
   },
   mounted() {
@@ -89,7 +94,14 @@ export default {
   },
   methods: {
     showLevelMsg() {
-      this.levelMsgBool = !this.levelMsgBool;
+      if(this.levelMsgBool){
+        // setTimeout(()=>{
+          this.levelMsgBool = false
+        // },1000)
+      }else{
+        // console.log(1023123)
+        this.levelMsgBool = true
+      }
     },
     sendMsg() {
       this.showLevelMsg();
@@ -160,9 +172,10 @@ export default {
         font-size: 16px;
         color: #b83733;
         margin: 10px 0;
-        float: left;
+        // float: left;
         i{
-          font-size: 20px;
+          font-size: 30px;
+          padding-right: 5px;
         }
         .aside-text {
           font-size: 12px;

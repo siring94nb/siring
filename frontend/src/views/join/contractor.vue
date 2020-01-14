@@ -347,17 +347,17 @@ export default {
           }
           &.step-on {
             .step-name-box {
-              border-color: rgb(0, 189, 189);
-              color: rgb(0, 189, 189);
+              border-color: rgb(25,158,216);
+              color: rgb(25,158,216);
               .step-num {
-                color: rgb(0, 189, 189);
+                color: rgb(25,158,216);
               }
             }
             .step-desc {
               display: table-cell;
               vertical-align: middle;
               color: #ffffff;
-              background-color: rgb(0, 189, 189);
+              background-color: rgb(25,158,216);
               font-size: 20px;
               padding: 0 15px;
             }

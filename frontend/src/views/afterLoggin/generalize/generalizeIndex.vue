@@ -214,21 +214,42 @@ export default {
       }
     },
     userMessage() {
+      let params = {};
       if (this.value1 != undefined && this.value1 != null) {
         // console.log(this.value);
         this.startTime = this.value[0].getTime();
         this.endTime = this.value[1].getTime();
+        if (this.xuanze == "") {
+          params = {
+            title: this.title,
+            role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
+            start_time: this.startTime,
+            end_time: this.endTime
+          };
+        } else {
+          params = {
+            process: parseInt(this.xuanzeValue),
+            title: this.title,
+            role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
+            start_time: this.startTime,
+            end_time: this.endTime
+          };
+        }
       } else {
-        this.startTime = "";
-        this.endTime = "";
+        if (this.xuanze == "") {
+          process: parseInt(this.xuanzeValue),
+            (params = {
+              title: this.title,
+              role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue)
+            });
+        } else {
+          params = {
+            process: parseInt(this.xuanzeValue),
+            title: this.title,
+            role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue)
+          };
+        }
       }
-      let params = {
-        process: parseInt(this.xuanzeValue),
-        title: this.title,
-        role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
-        start_time: this.startTime,
-        end_time: this.endTime
-      };
       manuscriptList(params).then(res => {
         let { data, code, msg } = res;
         console.log(res);
