@@ -55,8 +55,8 @@
         </p>
       </div>
     </div>
-    <div class="square" >
-      <div @mouseover="showLevelMsg" @mouseout="showLevelMsg">
+    <div class="square"  @mouseover="showLevelMsg" @mouseout="showLevelMsg">
+      <div>
          <i class="el-icon-edit icon" />
         <p @click.self="showLevelMsg">留言</p>
       </div>
@@ -96,6 +96,7 @@ export default {
     showLevelMsg() {
       if(this.levelMsgBool){
         // setTimeout(()=>{
+          // square
           this.levelMsgBool = false
         // },1000)
       }else{

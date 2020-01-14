@@ -64,6 +64,10 @@
 import { msgList, addMessage } from "@/api/api";
 export default {
   name: "liuyan",
+   props: [
+    'uid',
+    'pid'
+  ],
   data() {
     return {
       qb: false,
@@ -105,20 +109,26 @@ export default {
       pdfile: false, //判读文件是图片还是其他文件，默认为文件
       url: "",
       userName: "",
-      touxiangImg: ""
+      touxiangImg: "",
+      Uid:0,
+      Pid:0,
     };
-  },
-  props: {
-    uid: 0,
-    pid: 0
-  },
+  }, 
   mounted() {
     this.init();
+  },
+  computed: {
+  },
+  watch:{
+        pid:function (newVal,oldVal) {
+          this.Pid=newVal;//newVal就是获取的动态新数据，赋值给newdata)
+          this.getmsgList()
+        }
   },
   methods: {
     init() {
       document.getElementsByClassName("xiaoxiC")[0].focus();
-      this.getmsgList();
+      // this.getmsgList();
       // this.ceshi();
     },
     showMsg(msg, code) {
@@ -128,11 +138,13 @@ export default {
       });
     },
     getmsgList() {
+      // let uid = this.uid;
+      // let pid = this.pid;
       console.log(this.uid);
-      console.log(this.pid);
+      console.log(this.Pid);
       let params = {
-        pid: parseInt(this.uid),
-        uid: parseInt(this.uid)
+        pid: parseInt(this.pid),
+        uid: parseInt(sessionStorage.getItem("user_id"))
       };
       msgList(params).then(res => {
         let { code, data, msg } = res;
@@ -166,11 +178,11 @@ export default {
       // let timeOut =  setTimeout(()=>{
       //   console.log("一分钟已经到了")
       // },60000)
-       console.log(this.uid);
+      console.log(this.uid);
       console.log(this.pid);
       let params = {
         pid: parseInt(this.pid),
-        uid: parseInt(this.uid),
+        uid: parseInt(sessionStorage.getItem("user_id")),
         rid: 1,
         content: this.xiaoxiContent,
         url: this.url
@@ -180,21 +192,21 @@ export default {
         console.log(1212123, res);
         if (code == 1) {
           // this.showMsg(msg, code);
-          // this.getmsgList();
-          this.msgListArr.push({
-            id: 5,
-            pid: this.pid,
-            uid: this.uid,
-            rid: this.rid,
-            content: this.xiaoxiContent,
-            inside: 0,
-            create_time: this.formatDate(new Date),
-            name: this.userName,
-            img: this.touxiangImg
-          });
-          this.xiaoxiContent = "";
-          this.dis = false;
-          document.getElementsByClassName("xiaoxiC")[0].focus();
+          this.getmsgList();
+          // this.msgListArr.push({
+          //   id: 5,
+          //   pid: this.pid,
+          //   uid: this.uid,
+          //   rid: this.rid,
+          //   content: this.xiaoxiContent,
+          //   inside: 0,
+          //   create_time: this.formatDate(new Date),
+          //   name: this.userName,
+          //   img: this.touxiangImg
+          // });
+          // this.xiaoxiContent = "";
+          // this.dis = false;
+          // document.getElementsByClassName("xiaoxiC")[0].focus();
         }
       });
     },
