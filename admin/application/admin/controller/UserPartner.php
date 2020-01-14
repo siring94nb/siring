@@ -18,19 +18,12 @@ class UserPartner extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        $param['type'] = 2 ;
+        $param['is_city'] = 1 ;
 
         $partner = new \app\model\User();
 
         $data = $partner->user_list($param);
-        pp($data);die;
-        foreach ($data['data'] as $k =>$v){
 
-            $city_name = Provinces::province_query($v['grade']);
-            pp($city_name);die;
-            $data['data'][$k]['city_title'] = $city_name['name'];
-
-        }
 
         return $this -> buildSuccess( array(
             'list' => $data['data'],

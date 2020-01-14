@@ -21,12 +21,11 @@ class UserSubcontractor extends Base{
      * @author fyk
      * @time 2019/10/10
      */
-
     public function index(){
 
         $request = Request::instance();
         $param = $request->param();
-        $param['type'] = 3 ;
+        $param['is_subpackage'] = 1 ;
 
         $partner = new \app\model\User();
 
