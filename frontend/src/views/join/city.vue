@@ -315,7 +315,7 @@ export default {
                   order_amount: vm.total,
                   user_id: vm.user_id,
                   id: data,
-                  order_type: 1
+                  order_type: 7
                 }
               });
             } else {

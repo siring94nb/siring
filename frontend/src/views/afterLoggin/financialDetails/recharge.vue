@@ -143,6 +143,7 @@ export default {
           this.$router.push({
                 name: "comboPay",
                 params: {
+                  type:1,
                   id: data,
                   order_amount:this.sum,
                   user_id: sessionStorage.getItem("user_id"),

@@ -240,7 +240,7 @@ export default {
                   order_amount: this.total,
                   user_id:parseInt(sessionStorage.getItem("user_id")),
                   id: data,
-                  order_type: 1
+                  order_type: 8
                 }
               });
         } else {

@@ -316,13 +316,6 @@ export default {
           page: parseInt(this.currpage)
         };
       }
-      params = {
-        budget_type: this.selected1 == 0 ? "" : parseInt(this.selected1),
-        role_type: this.selected2 == 0 ? "" : parseInt(this.selected2),
-        page: parseInt(this.currpage),
-        start_time: parseInt(this.startTime),
-        end_time: parseInt(this.endTime)
-      };
       CapitalDetailed(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {

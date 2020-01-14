@@ -2,7 +2,7 @@
   <div class="recomment-left">
     <div class="quick-desc">
       <div class="desc-title">
-        <i class="iconfont icon-jisuanqi"></i>
+        <i class="iconfont icon-xuqiubaosong"></i>
         <span style="font-size:18px">{{type == 1? '定制需求':'快捷估价'}}</span>
       </div>
       <div class="desc-dit">
@@ -65,10 +65,10 @@ export default {
     padding: 15px 0 0 15px;
     box-sizing: border-box;
     .desc-title {
-      .icon-jisuanqi {
+      i {
         font-size: 36px;
         color: #666666;
-        margin-left: -5px;
+        margin-right: 10px;
         vertical-align: middle;
       }
       span {

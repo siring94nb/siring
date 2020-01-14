@@ -13,8 +13,8 @@
         </div>
         <div class="xxBox">
           <div>
-            <span>￥0</span>
-            <span>余额充值</span>
+            <span>￥{{yue}}</span>
+            <span style="">余额充值</span>
           </div>
           <div>
             <span>
@@ -83,6 +83,7 @@ export default {
   // name: "fater-loggin",
   data() {
     return {
+      yue:0,
       ru:
         this.$route.path == "/afterLoggin" ? "/afterLogginR" : this.$route.path, //确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
       num: "",
@@ -294,6 +295,7 @@ export default {
       GetUserMassage(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
+          this.yue = data.money
           this.imgUrl = data.img || this.imgUrl;
           this.name = data.realname || this.name;
         }
@@ -309,6 +311,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
+  
   // height: 300px;
   position: relative;
   z-index: 555;
