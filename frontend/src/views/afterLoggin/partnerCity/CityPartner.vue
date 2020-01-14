@@ -284,7 +284,7 @@ export default {
     // },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
-      this.GetCityTotal;
+      this.GetCityPartner();
     },
     handleSizeChange(psize) {
       this.pagesize = psize;

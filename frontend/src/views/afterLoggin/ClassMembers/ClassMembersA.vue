@@ -241,6 +241,7 @@ export default {
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.GetMemberPartner();
     },
     handleSizeChange(psize) {
       this.pagesize = psize;

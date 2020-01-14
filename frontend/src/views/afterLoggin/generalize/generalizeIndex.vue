@@ -284,6 +284,7 @@ export default {
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.userMessage();
     },
     handleSizeChange(psize) {
       this.pagesize = psize;
