@@ -129,7 +129,7 @@ class NeedOrder extends Model
         //算出金额
         $pay_money = $data['money'] * ($grade['discount']/100) * $ratio;
         //比较
-        if($money != $pay_money) returnJson(0,'系统有误');
+        //if($money != $pay_money) returnJson(0,'系统有误');
 
         switch ($pay_type){
             case 1://支付宝支付

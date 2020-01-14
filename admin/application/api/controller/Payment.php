@@ -165,9 +165,9 @@ class Payment extends Base
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
                 $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
-
+                $title = '签订合同';
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
-                        $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                        $param['unionpay'], $ratio,$title,$notify_url,$return_url,$wx_url);
 
                 return $data;
                 break;
@@ -177,9 +177,9 @@ class Payment extends Base
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
                 $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
-
+                $title = '项目上线';
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
-                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                    $param['unionpay'], $ratio,$title,$notify_url,$return_url,$wx_url);
 
                 return $data;
                 break;
@@ -189,9 +189,9 @@ class Payment extends Base
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
                 $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
-
+                $title = '项目验收支付';
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
-                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                    $param['unionpay'], $ratio,$title,$notify_url,$return_url,$wx_url);
                 return $data;
                 break;
             case 5://原型确认
@@ -200,9 +200,9 @@ class Payment extends Base
                 $notify_url = 'https://manage.siring.com.cn/api/Callback/software_notify'; //支付宝
                 $return_url = 'https://manage.siring.com.cn/api/Callback/software_return';//支付宝
                 $wx_url = 'https://manage.siring.com.cn/api/Callback/app_notice';//微信
-
+                $title = '原型确认支付';
                 $data =(new NeedOrder())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'],
-                    $param['unionpay'], $ratio,$notify_url,$return_url,$wx_url);
+                    $param['unionpay'], $ratio,$title,$notify_url,$return_url,$wx_url);
                 return $data;
                 break;
             case 6://项目年服务
