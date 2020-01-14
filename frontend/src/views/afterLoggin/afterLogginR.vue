@@ -11,7 +11,8 @@
         <div class="boxM">
           <div style=" display: flex">
             <div class="defaultImg">
-              <img :src="imgTou" alt="用户头像" />
+              <img :src="imgTou" alt="用户头像" v-if="imgTou!=''"/>
+              <i class="iconfont icon-touxiang1" v-if="imgTou==''"></i>
             </div>
             <div class="biaozhi">
               <i class="iconfont icon-huaban_fuzhi"></i>
@@ -110,7 +111,8 @@ export default {
         // this.showMsg(msg,code);
         if (code === 1) {
           this.userMessage1 = data;
-          this.imgTou = data.img || this.defaultImg;
+          this.imgTou = data.img
+          // this.imgTou = data.img || this.defaultImg;
           // console.log(this.userMessage1);
         }
       });
@@ -133,6 +135,10 @@ export default {
     img {
       width: 120px;
       height: 123px;
+      border-radius: 50%;
+    }
+    i{
+      font-size: 120px;
     }
   }
   .biaozhi {

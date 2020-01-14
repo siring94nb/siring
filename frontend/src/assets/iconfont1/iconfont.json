@@ -300,6 +300,13 @@
       "unicode_decimal": 58903
     },
     {
+      "icon_id": "9397485",
+      "name": "头像",
+      "font_class": "touxiang1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
       "icon_id": "9642703",
       "name": "合伙人",
       "font_class": "huaban_fuzhi",

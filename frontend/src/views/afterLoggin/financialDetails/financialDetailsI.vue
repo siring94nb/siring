@@ -157,10 +157,10 @@
               <el-table-column type="selection" width="40" align="center"></el-table-column>
               <el-table-column prop="created_at" label="日期" width="240" align="center">
                 <template slot-scope="scope">
-                  <div>{{scope.row.created_at==null?"未知":(new Date(parseInt(scope.row.created_at) * 1000).toLocaleString().replace(/:\d{1,2}$/,' '))}}</div>
+                  <div>{{scope.row.created_at}}</div>
                 </template>
               </el-table-column>
-              <el-table-column prop="income" label="收入（元）" align="center" width="240">
+              <el-table-column prop="money" label="收入（元）" align="center" width="240">
                 <template slot-scope="scope">
                   <div>{{scope.row.income==null?0:scope.row.income}}</div>
                 </template>
