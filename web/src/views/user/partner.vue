@@ -216,7 +216,7 @@
                     {
                         title: '代理城市',
                         align: 'center',
-                        key: '',
+                        key: 'city_title',
 
                     },
                     {

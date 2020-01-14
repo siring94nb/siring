@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-
+use app\data\model\Provinces;
 use think\Request;
 use think\Db;
 use think\Validate;
@@ -23,6 +23,14 @@ class UserPartner extends Base
         $partner = new \app\model\User();
 
         $data = $partner->user_list($param);
+        pp($data);die;
+        foreach ($data['data'] as $k =>$v){
+
+            $city_name = Provinces::province_query($v['grade']);
+            pp($city_name);die;
+            $data['data'][$k]['city_title'] = $city_name['name'];
+
+        }
 
         return $this -> buildSuccess( array(
             'list' => $data['data'],

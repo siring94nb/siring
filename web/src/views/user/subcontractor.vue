@@ -214,13 +214,13 @@
 
                     },
                     {
-                        title: '代理城市',
+                        title: '专业技能',
                         align: 'center',
                         key: '',
 
                     },
                     {
-                        title: '城市等级',
+                        title: '开发语言',
                         align: 'center',
                         key: '',
 

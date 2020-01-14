@@ -8,6 +8,8 @@ class AllOrder extends Model
 {
     protected $table = "all_order";
     protected $resultSetType = 'collection';
+    protected $createTime = 'created_at';
+    protected $updateTime = 'updated_at';
 
     /**
      * 城市合伙人

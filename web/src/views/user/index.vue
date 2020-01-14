@@ -334,7 +334,7 @@ export default {
         {
           title: "地址",
           align: "center",
-          key: ""
+          key: "address"
         },
         {
           title: "会员等级",
