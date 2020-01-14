@@ -16,6 +16,8 @@ class User extends Model
      */
     protected $table = "user";
     protected $resultSetType = 'collection';
+    protected $createTime = 'created_at';
+    protected $updateTime = 'updated_at';
 
 //    public function getGradeAttr($val)
 //    {
@@ -34,6 +36,7 @@ class User extends Model
 //                break;
 //        }
 //    }
+
     //新增
     public function add($param)
     {

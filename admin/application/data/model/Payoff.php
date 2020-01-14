@@ -22,7 +22,7 @@ class Payoff extends Model
      * @author fyk
      * @param $id
      * @param $money
-     * @param $pay_type
+     * @param $pay_type 1支付宝支付，2微信支付，3银联卡支付，4余额支付
      * @param $password
      * @param $unionpay
      * @return array|mixed|string|\think\response\Json

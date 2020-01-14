@@ -59,7 +59,7 @@ class UserManage extends Base{
             $where['created_at'] = ['between',[$param['start_time'],$param['end_time']]];
         }
 
-        $field = 'id,invitation,other_code,sex,status,realname,phone,grade,img,remark,vest,created_at,end_time';
+        $field = 'id,invitation,other_code,sex,status,realname,phone,grade,img,remark,vest,created_at,address,end_time';
         $order = 'id desc';
 
         $user = new User();

@@ -174,8 +174,11 @@ class User extends Base
         if (password_verify($data['password'] ,$user['password'])) {
             //更新openID
             if(!empty($data['open_id'])){
-                db('user') ->where('id',$user['id']) ->update(['openid'=>$data['open_id']]);
+                (new UserAll())->upd($data['open_id'],$user['id']);
             }
+                //更新登录时间
+                db('user') ->where('id',$user['id']) ->update(['updated_at'=>time()]);
+
                 Session::set('uid',$user['id']);
                 Session::set('user_salt',$user['salt']);
 

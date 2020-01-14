@@ -1,7 +1,7 @@
 <?php
 
 namespace app\admin\controller;
-
+use app\data\model\Provinces;
 use think\Request;
 use think\Db;
 use think\Validate;
@@ -18,11 +18,12 @@ class UserPartner extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        $param['type'] = 2 ;
+        $param['is_city'] = 1 ;
 
         $partner = new \app\model\User();
 
         $data = $partner->user_list($param);
+
 
         return $this -> buildSuccess( array(
             'list' => $data['data'],

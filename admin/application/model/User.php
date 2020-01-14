@@ -36,8 +36,12 @@ class User extends  Base{
     {
 
         $where = array();
-        $where['type'] = $param['type'];
-
+        if(!empty($param['is_city'])){
+            $where['is_city'] = $param['is_city'];
+        }
+        if(!empty($param['is_subpackage'])){
+            $where['is_subpackage'] = $param['is_subpackage'];
+        }
         if(!empty($param['title'])){
             $where['phone|realname'] = ['like','%'.$param['title'].'%'];
         }
