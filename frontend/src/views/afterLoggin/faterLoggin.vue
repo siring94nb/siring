@@ -15,14 +15,18 @@
         <div class="xxBox">
           <div>
             <span>￥{{yue}}</span>
-            <span style=""><router-link to="/recharge">余额充值</router-link></span>
+            <span><router-link to="/recharge">余额充值</router-link></span>
           </div>
           <div>
             <span>
               专属客服
               <i class="iconfont icon-icon"></i>
             </span>
-            <span>立即联系</span>
+            <span> <a
+            id="qq"
+            target="_blank"
+            href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
+          >立即联系</a></span>
           </div>
           <div>
             <div style="font-size:12px;width:50px">上次登录</div>
@@ -183,6 +187,12 @@ export default {
     // };
   },
   methods: {
+    showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     init() {
       console.log("0109-a");
       this.cityHehuorenX(),
@@ -221,12 +231,25 @@ export default {
     // 城市合伙人
     cityHehuorenX() {
       // 因为前期想法错误，当前修改较麻烦
-      GetRoleCenter().then(res => {
+      const params = {
+        type: 1
+      };
+      GetRoleCenter(params).then(res => {
         let { data, msg,code } = res;
         console.log(res);
         if (code == 1) {  
           this.arr[2].con[0].rou = "/CityPartner";
-        } else {
+        }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ) {
           // this.arr[2].con[0].rou = "/CityPartner";
           this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
@@ -235,11 +258,24 @@ export default {
     },
     // 等级会员
     classHuiyuanX() {
-      GetRoleCenter().then(res => {
+      const params = {
+        type: 2
+      };
+      GetRoleCenter(params).then(res => {
         let { data, msg,code} = res;
         if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
-        } else {
+        } 
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ){
           this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
@@ -248,11 +284,24 @@ export default {
     },
     // 分包商
     fenbaoshangX() {
-      GetRoleCenter().then(res => {
+      const params = {
+        type: 3
+      };
+      GetRoleCenter(params).then(res => {
         let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
-        } else {
+        } 
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ){
           this.arr[2].con[2].rou = "/subContractorIndex";
           // this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
@@ -403,6 +452,9 @@ export default {
         background: rgb(114, 124, 164);
         border-radius: 3px;
       }
+      a{
+          color: #ffffff;
+        }
     }
     &:nth-of-type(3) {
       color: rgba(255, 255, 255, 0.64);

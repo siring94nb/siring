@@ -2,23 +2,19 @@
 /**
  * Created by PhpStorm.
  * User: fyk
- * Date: 2020/1/6
- * Time: 10:14
+ * Date: 2020/1/15
+ * Time: 16:55
  */
-namespace app\api\controller;
+namespace app\admin\controller;
+use think\Validate;
 use app\data\model\Message;
 use app\data\model\WechatPay;
 use app\data\model\User;
 use think\Request;
 use think\Db;
-/**
- * 消息留言
- * Class Chat
- * @package app\api\controller
- */
+
 class Chat extends Base
 {
-
     /**
      * 消息留言
      */
@@ -26,15 +22,15 @@ class Chat extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-//        $result = Db::transaction(function()use ( $param ){
-            $data = (new Message())->add($param);
+        $result = Db::transaction(function()use ( $param ){
+        $data = (new Message())->add($param);
 
-//            $user = (new User())->user_detail($param['rid']);
-//            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
+            $user = (new User())->user_detail($param['rid']);
+            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
 
-//            return $data && $msg ? true : false;
-//        });
-        return $data ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
+            return $data && $msg ? true : false;
+        });
+        return $result ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
 
     }
 
@@ -52,6 +48,7 @@ class Chat extends Base
         return $data ? returnJson(1,'获取成功',$data): returnJson(0,'获取失败',$data);
 
     }
+
 
     /**
      * 读取消息

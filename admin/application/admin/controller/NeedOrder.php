@@ -15,6 +15,7 @@ use app\util\ReturnCode;
  * lilu
  * 后端-定制需求订单
  */
+
 class NeedOrder extends Base
 {
 
@@ -82,7 +83,7 @@ class NeedOrder extends Base
         ]);
 
         if (!$validate->check($postData)) {
-            returnJson(0, $validate->getError());exit();
+            return $this->buildFailed(0,$validate->getError());
         }
         $need_type = $postData['type'];
         unset($postData['type']);
@@ -95,9 +96,14 @@ class NeedOrder extends Base
                     ['need_money', 'require', '合同金额不能为空'],
                 ]);
                 if (!$validate->check($postData)) {
-                    returnJson(0, $validate->getError());exit();
+                    return $this->buildFailed(0,$validate->getError());
                 }
-                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+                $res = Need::where('id',$postData['id'])->strict(false)->update(
+                    [   'proposal'=>$postData['proposal'],
+                        'grade'=>$postData['work_day'],
+                        'money'=>$postData['need_money'],
+                        'order_amount'=>$postData['need_money'],
+                    ]);
                 if($res !== false){
                     //修改需求订单的状态
                     $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
@@ -129,7 +135,7 @@ class NeedOrder extends Base
                     ['prototype_url', 'require', '原型地址不能为空'],
                 ]);
                 if (!$validate->check($postData)) {
-                    returnJson(0, $validate->getError());exit();
+                    return $this->buildFailed(0,$validate->getError());
                 }
                 $postData['need_status'] = 4;
                 $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
@@ -142,7 +148,7 @@ class NeedOrder extends Base
                     ['project_url', 'require', '项目地址不能为空'],
                 ]);
                 if (!$validate->check($postData)) {
-                    returnJson(0, $validate->getError());exit();
+                    return $this->buildFailed(0,$validate->getError());
                 }
                 $postData['need_status'] = 5;
                 $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
@@ -185,10 +191,10 @@ class NeedOrder extends Base
         ]);
 
         if (!$validate->check($param)) {
-            returnJson(0, $validate->getError());exit();
+            return $this->buildFailed(0,$validate->getError());
         }
         $order = NeedScore::get(['order_id'=>$param['order_id']]);
-        if(!$order)returnJson(0,'订单有误');
+        //if(!$order)returnJson(0,'订单有误');
         $order['total'] = $order['satisfied'] + $order['satisfy'] + $order['reliable'] + $order['easy']
             + $order['beautiful'] + $order['serve'] + $order['knowledge'] + $order['response'] + $order['complaint'] + $order['sale'];
 

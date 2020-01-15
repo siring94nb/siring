@@ -43,7 +43,13 @@
     </div>
     <div class="btnValueBox">
       <!-- <inout @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" /> -->
-      <textarea rows="1" @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" ></textarea>
+      <textarea
+        rows="1"
+        @keydown="huiche($event)"
+        class="xiaoxiC"
+        v-model="xiaoxiContent"
+        @input="gbDis"
+      ></textarea>
       <el-upload
         name="image"
         action="https://manage.siring.com.cn/api/file/qn_upload"
@@ -61,13 +67,10 @@
   </div>
 </template>
 <script>
-import { msgList, addMessage } from "@/api/api";
+import { msgList, addMessage,codeAdd } from "@/api/api";
 export default {
   name: "liuyan",
-   props: [
-    'uid',
-    'pid'
-  ],
+  props: ["uid", "pid"],
   data() {
     return {
       qb: false,
@@ -110,20 +113,19 @@ export default {
       url: "",
       userName: "",
       touxiangImg: "",
-      Uid:0,
-      Pid:0,
+      Uid: 0,
+      Pid: 0
     };
-  }, 
+  },
   mounted() {
     this.init();
   },
-  computed: {
-  },
-  watch:{
-        pid:function (newVal,oldVal) {
-          this.Pid=newVal;//newVal就是获取的动态新数据，赋值给newdata)
-          this.getmsgList()
-        }
+  computed: {},
+  watch: {
+    pid: function(newVal, oldVal) {
+      this.Pid = newVal; //newVal就是获取的动态新数据，赋值给newdata)
+      this.getmsgList();
+    }
   },
   // 13260676780
   methods: {
@@ -131,6 +133,7 @@ export default {
       document.getElementsByClassName("xiaoxiC")[0].focus();
       // this.getmsgList();
       // this.ceshi();
+      this.getcodeAdd()
     },
     showMsg(msg, code) {
       this.$message({
@@ -150,12 +153,15 @@ export default {
       msgList(params).then(res => {
         let { code, data, msg } = res;
         console.log(res);
-        if (code == 1) {
+        console.log(data.data.length);
+        if (code == 1 && data.data.length > 0) {
+          console.log(this.msgListArr);
+          //   if(data.data.length != 0){
           this.msgListArr = data.data;
           for (let i = 0; i < this.msgListArr.length; i++) {
-             if (this.msgListArr.type == 0) {
-                this.newxiaoxi = this.newxiaoxi + 1;
-              }
+            if (this.msgListArr.type == 0) {
+              this.newxiaoxi = this.newxiaoxi + 1;
+            }
             if (i > 0 && this.msgListArr[i].inside == 0) {
               this.userName = this.msgListArr[i].name;
               this.touxiangImg = this.msgListArr[i].img;
@@ -186,7 +192,8 @@ export default {
         uid: parseInt(sessionStorage.getItem("user_id")),
         rid: 1,
         content: this.xiaoxiContent,
-        url: this.url
+        url: this.url,
+        inside: 0
       };
       addMessage(params).then(res => {
         let { code, msg } = res;
@@ -205,7 +212,7 @@ export default {
           //   name: this.userName,
           //   img: this.touxiangImg
           // });
-          // this.xiaoxiContent = "";
+          this.xiaoxiContent = "";
           // this.dis = false;
           // document.getElementsByClassName("xiaoxiC")[0].focus();
         }
@@ -240,23 +247,7 @@ export default {
       // }
       // return isJPG && isLt2M;
     },
-    //
-    ceshi() {
-      for (let i = 0; i < this.data.length; i++) {
-        if (i > 0) {
-          let nowTiem = new Date(this.data[i].create_time).getTime();
-          let end = new Date(this.data[i - 1].create_time).getTime();
-          if (nowTiem - end > 180000) {
-            this.ceshiList.push({
-              create_time: this.data[i - 1].create_time,
-              inside: this.data[i - 1].inside,
-              i: i
-            });
-          }
-        }
-      }
-      console.log(this.ceshiList);
-    },
+
     // 时间格式转换
     formatDate(now) {
       var year = now.getFullYear(); //取得4位数的年份
@@ -280,14 +271,20 @@ export default {
       );
     },
     // 绑定回车事件
-    huiche(event){ 
-      if(event.which == 13 && this.dis){
+    huiche(event) {
+      if (event.which == 13 && this.dis) {
         this.setaddMessage();
       }
       // else if(event.ctrlKey && event.keyCode == 13){
       //   // ctrl+回车换行
       //   this.xiaoxiContent = this.xiaoxiContent +"123123123123123"
       // }
+    },
+    // 获取关注二维码
+    getcodeAdd(){
+      codeAdd().then(res=>{
+        console.log(res)
+      })
     }
   }
 };
@@ -412,10 +409,10 @@ img {
     border: 0.5px solid rgb(247, 247, 247);
     width: 80%;
     margin-right: 30px;
-    overflow:hidden;
-    resize:none;
+    overflow: hidden;
+    resize: none;
     box-sizing: border-box;
-    padding:10px 20px 0 20px;
+    padding: 10px 20px 0 20px;
     // padding-top: 10px;
     font-size: 18px;
     line-height: 22px;

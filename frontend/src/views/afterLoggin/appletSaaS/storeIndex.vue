@@ -248,8 +248,8 @@ export default {
         this.endTime = "";
       }
       params = {
-        type:"",
-        title:this.nameId,
+        type:parseInt(this.nameId),
+        title:"",
         page:this.currpage
       }
       saasList(params).then(res => {

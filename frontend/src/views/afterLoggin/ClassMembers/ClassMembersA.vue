@@ -281,6 +281,7 @@ export default {
         endTime: this.endTime,
         page: this.currpage
       };
+      console.log("0115")
       console.log(params);
       MemberPartner(params).then(res => {
         let { data, msg, code } = res;
