@@ -35,7 +35,7 @@
           <el-form ref="form" :model="form" label-width="110px">
             <el-form-item label="需求名称" required>
               <el-input
-                v-model="form.need_name"
+                v-model="form.name"
                 maxlength="10"
                 show-word-limit
                 placeholder="请输入你的项目名，不超过10个字"
@@ -63,7 +63,7 @@
               <el-col class="unit" :span="1">元</el-col>
             </el-form-item>
             <el-form-item label="开发终端">
-              <el-checkbox-group v-model="form.need_terminal">
+              <el-checkbox-group v-model="form.dev">
                 <el-checkbox v-for="item in typeList" :key="item.id" :label="item.name" name="type">
                   <div class="terminal">
                     <i :class="item.className"></i>
@@ -76,30 +76,30 @@
               <el-row style="margin-bottom: 10px;">
                 <el-col :span="12">
                   <el-form-item label="手机号" required>
-                    <el-input type="text" v-model.number="form.need_phone"></el-input>
+                    <el-input type="text" v-model.number="form.phone"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
                   <el-form-item label="QQ号">
-                    <el-input type="text" v-model.number="form.need_qq"></el-input>
+                    <el-input type="text" v-model.number="form.qq"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-row>
                 <el-col :span="12">
                   <el-form-item label="微信号">
-                    <el-input type="text" v-model.number="form.need_wx"></el-input>
+                    <el-input type="text" v-model.number="form.wx"></el-input>
                   </el-form-item>
                 </el-col>
                 <el-col :span="12">
                   <el-form-item label="其他联系方式">
-                    <el-input type="text" v-model.number="form.need_other"></el-input>
+                    <el-input type="text" v-model.number="form.other"></el-input>
                   </el-form-item>
                 </el-col>
               </el-row>
             </el-form-item>
             <el-form-item label="需求描述" required>
-              <el-input type="textarea" :rows="4" v-model="form.need_desc"></el-input>
+              <el-input type="textarea" :rows="4" v-model="form.con"></el-input>
             </el-form-item>
             <el-form-item label="添加附件" required>
               <el-upload
@@ -363,17 +363,18 @@ export default {
       ],
       form: {
         id: 0,
-        need_name: "",
+        name: "",
         need_category: "",
         need_budget_down: "",
         need_budget_up: "",
-        need_terminal: [],
-        need_phone: "",
-        need_qq: "",
-        need_wx: "",
-        need_other: "",
-        need_desc: "",
-        need_file: "",
+        terminal: [],
+        dev:[],
+        phone: "",
+        qq: "",
+        wx: "",
+        other: "",
+        con: "",
+        url: "",
         user_id: ""
       },
       typeList: [
@@ -451,7 +452,7 @@ export default {
   methods: {
     init() {
       this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
-      console.log(this.form.user_id)
+      console.log(this.form.user_id);
       this.status = this.$route.params.status;
       this.id = this.$route.params.id;
       if (this.status == 3) {
@@ -506,10 +507,10 @@ export default {
       console.log("socket已经关闭");
     },
     handleSuccess(response, file, fileList) {
-      this.form.need_file = response.data.filePath;
+      this.form.url = response.data.filePath;
     },
     handleRemove(file, fileList) {
-      this.form.need_file = "";
+      this.form.url = "";
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -684,23 +685,30 @@ export default {
         params = {
           id: vm.id,
           status: vm.status
-        };
+        },
+        terminal,
+        element = new Array();
       getOrderDetail(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
-          (vm.form.id = data.id),
-            (vm.form.need_name = data.need_name),
+          terminal = data.terminal.split("/");
+          for (let i = 0; i < terminal.length; i++) {
+            element.push(terminal[i]);
+          }
+          (vm.form.dev = element),
+            (vm.form.id = data.id),
+            (vm.form.name = data.name),
             (vm.form.need_category = data.need_category),
             (vm.form.need_budget_down = data.need_budget_down),
             (vm.form.need_budget_up = data.need_budget_up),
-            (vm.form.need_terminal = data.need_terminal),
-            (vm.form.need_phone = data.need_phone),
-            (vm.form.need_qq = data.need_qq),
-            (vm.form.need_wx = data.need_wx),
-            (vm.form.need_other = data.need_other),
-            (vm.form.need_desc = data.need_desc),
-            (vm.form.need_file = data.need_file);
-          vm.fileList = [{ name: "需求文件", url: data.need_file }];
+            (vm.form.terminal = data.terminal),
+            (vm.form.phone = data.phone),
+            (vm.form.qq = data.qq),
+            (vm.form.wx = data.wx),
+            (vm.form.other = data.other),
+            (vm.form.con = data.con),
+            (vm.form.url = data.url);
+          vm.fileList = [{ name: "需求文件", url: data.url }];
           vm.price = Number(data.need_money);
           vm.listData = data;
         }
