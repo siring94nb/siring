@@ -48,6 +48,15 @@ class  NeedOrder  extends  Base
         } else {
             $uid = $param["user_id"];
         }
+        if(empty($param['need_qq'])){
+            $param['need_qq'] = '';
+        }
+        if(empty($param['need_wx'])){
+            $param['need_wx'] = '';
+        }
+        if(empty($param['need_other'])){
+            $param['need_other'] = '';
+        }
         $need = [
             'user_id'=>$uid,
             'name'=>$param["need_name"],
@@ -60,6 +69,9 @@ class  NeedOrder  extends  Base
             'dev'=>json_encode($param['need_terminal']),
             'created_at'=>time(),
             'type'=>7,
+            'qq'=>$param['need_qq'],
+            'wx'=>$param['need_wx'],
+            'other'=>$param['need_other'],
 
         ];
         //开启事务
