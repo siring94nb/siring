@@ -104,7 +104,7 @@ class RoleCenter extends Base
             $param['cid'] = $user_data['city_id'];
             $param['invitation'] = $user_data['invitation'];
             $param['user_id'] = $user_data['id'];
-            if($user_data['type'] = 2){
+            if($user_data['is_city'] = 1){
 
                 $order = new AllOrder();
                 $data = $order->order_list($param);
@@ -158,14 +158,14 @@ class RoleCenter extends Base
             $param['invitation'] = $user_data['invitation'];
             $param['user_id'] = $user_data['id'];
             $param['grade'] = $user_data['grade'];
-            if($user_data['type'] = 2){
+            if($user_data['grade'] != 0){
 
                 $order = new AllOrder();
                 $data = $order->rank_member($param);
 
                 return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
             }else{
-                returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
+                returnJson(0,'亲，您暂时还不是等级会员，赶紧去申请吧！');
             }
         }else{
             returnJson(3,'请登录');
@@ -183,7 +183,7 @@ class RoleCenter extends Base
         $uid = Session::get("uid");
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
-            if($user_data['is_city'] === 2){
+            if($user_data['grade'] === 0){
                 returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
             }
             $data['invite_user_total'] = User::where('other_code',$user_data['invitation']) ->count();//我邀请的会员总数
@@ -209,14 +209,14 @@ class RoleCenter extends Base
             $user_data = User::where('id',$uid)->find()->toarray();
             $param['user_id'] = $user_data['id'];
             $param['invitation'] = $user_data['other_code'];
-            if($user_data['type'] = 2){
+            if($user_data['is_subpackage'] = 1){
 
                 $order = new AllOrder();
                 $data = $order->subcontract($param);
 
                 return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
             }else{
-                returnJson(0,'亲，您暂时还不是城市合伙人，赶紧去申请吧！');
+                returnJson(0,'亲，您暂时还不是分包商，赶紧去申请吧！');
             }
         }else{
             returnJson(3,'请登录');
@@ -234,8 +234,8 @@ class RoleCenter extends Base
         $uid = Session::get("uid");
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
-            if($user_data['is_city'] === 2){
-                returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
+            if($user_data['is_subpackage'] === 1){
+                returnJson(0,'亲，您暂时还不是分包商，赶紧去申请吧！');exit();
             }
             $data['invite_user_total'] = User::where('other_code',$user_data['invitation']) ->count();//佣金总数
             $data['reach_user_total'] = (new JoinOrder())::where('user_id',$user_data['id']) ->sum('money');//押金总数
@@ -258,8 +258,8 @@ class RoleCenter extends Base
         $uid = Session::get("uid");
         if($uid){
             $user_data = User::where('id',$uid)->find()->toarray();
-            if($user_data['is_city'] === 2){
-                returnJson(0,'亲，您暂时还不是身份会员，赶紧去申请吧！');exit();
+            if($user_data['is_subpackage'] === 1){
+                returnJson(0,'亲，您暂时还不是分包商，赶紧去申请吧！');exit();
             }
             if (empty($param['page'])) {
                 $param['page'] = 1;
