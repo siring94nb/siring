@@ -346,7 +346,7 @@
         </div>
       </div>
       <div></div>
-      <div class="audit-opinion" v-if="information.examine == 3">
+      <div class="audit-opinion" v-if="information.examine == 3 || information.contract == 3">
         <span>审核意见：</span>
         斯卡哈会计师哈克喝啥酒看时间按实际卡不卡时间啊包括把上课吧
       </div>
