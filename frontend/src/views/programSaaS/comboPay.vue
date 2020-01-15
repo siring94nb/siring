@@ -252,7 +252,8 @@ import {
   subBankPay,
   codeGetPay,
   getCoupou,
-  getBalance
+  getBalance,
+  payStatus
 } from "@/api/api";
 import { bankCardAttribution } from "@/api/bank";
 
@@ -325,7 +326,8 @@ export default {
         card_number: [{ validator: validatePass, trigger: "blur" }]
       },
       ispassword: "",
-      password: "" //支付密码
+      password: "", //支付密码
+      isStatus: false
     };
   },
   mounted() {
@@ -513,6 +515,17 @@ export default {
           })
           .catch(() => {});
       }
+    },
+    PayStatus(){
+      let vm = this,
+        params = {
+          order_id: vm.form.id
+        };
+      payStatus(params).then(res => {
+        if (res.code == 1) {
+          vm.isStatus = true;
+        }
+      });
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);

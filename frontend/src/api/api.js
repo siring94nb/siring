@@ -621,4 +621,10 @@ export const addMessage = data => {
 export const Member = data => {
     return axios.post(`${base_url}api/Website/member`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 支付回调
+ */
+export const payStatus = data => {
+    return axios.post(`${base_url}api/Payment/pay_status`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload
