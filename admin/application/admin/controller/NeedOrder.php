@@ -102,6 +102,7 @@ class NeedOrder extends Base
                     [   'proposal'=>$postData['proposal'],
                         'grade'=>$postData['work_day'],
                         'money'=>$postData['need_money'],
+                        'order_amount'=>$postData['need_money'],
                     ]);
                 if($res !== false){
                     //修改需求订单的状态
