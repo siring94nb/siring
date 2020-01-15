@@ -98,7 +98,11 @@ class NeedOrder extends Base
                 if (!$validate->check($postData)) {
                     return $this->buildFailed(0,$validate->getError());
                 }
-                $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+                $res = Need::where('id',$postData['id'])->strict(false)->update(
+                    [   'proposal'=>$postData['proposal'],
+                        'grade'=>$postData['work_day'],
+                        'money'=>$postData['need_money'],
+                    ]);
                 if($res !== false){
                     //修改需求订单的状态
                     $re = Need::where('id',$postData['id'])->update(['examine_type'=>1,'examine'=>1]);
