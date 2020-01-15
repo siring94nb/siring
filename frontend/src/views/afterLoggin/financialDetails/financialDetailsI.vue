@@ -156,9 +156,6 @@
             >
               <el-table-column type="selection" width="40" align="center"></el-table-column>
               <el-table-column prop="created_at" label="日期" width="240" align="center">
-                <template slot-scope="scope">
-                  <div>{{scope.row.created_at}}</div>
-                </template>
               </el-table-column>
               <el-table-column prop="money" label="收入（元）" align="center" width="240">
                 <template slot-scope="scope">
@@ -167,9 +164,6 @@
               </el-table-column>
               <el-table-column prop="phone" align="center" width="240" label="收入账号"></el-table-column>
               <el-table-column prop="money" label="支出（元）" align="center" width="240">
-                <template slot-scope="scope">
-                  <div>{{scope.row.money}}</div>
-                </template>
               </el-table-column>
               <el-table-column prop="pay_type" align="center" label="支付类型">
                 <template slot-scope="scope">

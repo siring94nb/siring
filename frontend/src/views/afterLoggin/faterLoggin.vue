@@ -25,8 +25,8 @@
             <span>立即联系</span>
           </div>
           <div>
-            <span>上次登录</span>
-            <span>2020-01-01</span>
+            <div style="font-size:12px;width:50px">上次登录</div>
+            <div style="font-size:12px;width:100px">{{updated_at}}</div>
           </div>
         </div>
       </div>
@@ -171,7 +171,8 @@ export default {
       imgBUrl: require("../../assets/images/u5989.png"),
       name: "未设置", //用户姓名
       dis: true,
-      wstyle: " "
+      wstyle: "",
+      updated_at :''
     };
   },
   components: {},
@@ -223,7 +224,7 @@ export default {
       GetRoleCenter().then(res => {
         let { data, msg,code } = res;
         console.log(res);
-        if (code == 1) {
+        if (code == 1) {  
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
           // this.arr[2].con[0].rou = "/CityPartner";
@@ -301,6 +302,7 @@ export default {
           this.yue = data.money
           this.imgUrl = data.img;
           this.name = data.realname || this.name;
+          this.updated_at =data.updated_at
         }
       });
     },
@@ -314,7 +316,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .box {
-  
   // height: 300px;
   position: relative;
   z-index: 555;
@@ -391,6 +392,9 @@ export default {
         padding: 5px;
         background: rgb(238, 189, 101);
         border-radius: 3px;
+        a{
+          color: #ffffff;
+        }
       }
     }
     &:nth-of-type(2) {
@@ -400,9 +404,10 @@ export default {
         border-radius: 3px;
       }
     }
-    &:nth-last-child(1) {
-      font-size: 12px;
+    &:nth-of-type(3) {
       color: rgba(255, 255, 255, 0.64);
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

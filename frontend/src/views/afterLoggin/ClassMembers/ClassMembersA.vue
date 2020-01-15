@@ -299,6 +299,14 @@ export default {
             this.currpage = data.current_page;
             console.log("second");
           }
+        }else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
         }
       });
     },
