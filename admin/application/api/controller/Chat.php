@@ -26,15 +26,15 @@ class Chat extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        $result = Db::transaction(function()use ( $param ){
+//        $result = Db::transaction(function()use ( $param ){
             $data = (new Message())->add($param);
 
-            $user = (new User())->user_detail($param['rid']);
-            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
+//            $user = (new User())->user_detail($param['rid']);
+//            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
 
-            return $data && $msg ? true : false;
-        });
-        return $result ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
+//            return $data && $msg ? true : false;
+//        });
+        return $data ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
 
     }
 
