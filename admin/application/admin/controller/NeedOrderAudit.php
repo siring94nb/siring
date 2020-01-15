@@ -52,12 +52,21 @@ class NeedOrderAudit extends Base
             $param['size'] = 10;
         }
 
-        $field = 'id,no,name,need_category,dev,money,order_amount,created_at,need_status,examine,examine_type,surplus,grade,order_status,need_info_c';
+        $field = 'id,no,name,need_category,dev,money,order_amount,created_at,need_status,examine,examine_type,surplus,grade,order_status,need_info_c,contract';
         $order = 'id desc';
 
         $list = (new NeedOrder())->field($field) -> where( $where ) -> order( $order )
             -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
+        foreach ($list['data'] as $k =>$v){
 
+            $terminal= json_decode( $v['dev'] , true );
+            if(!empty($terminal)){
+                $res = join('/',$terminal);
+                $list['data'][$k]['terminal'] = $res;
+            }else{
+                $list['data'][$k]['terminal'] = "无";
+            }
+        }
         return $this->buildSuccess([
             'list' => $list['data'],
             'count' => $list['total'],
@@ -98,6 +107,12 @@ class NeedOrderAudit extends Base
         ]);
         if (!$validate->check($postData)) {
             return $this->buildFailed(0,$validate->getError());
+        }
+        if(!empty($postData['contract'])){
+
+            $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+            return $res !== false ? $this->buildSuccess(1,'提交成功') : $this->buildFailed(0,'提交失败');
         }
         $res = NeedOrder::where('id',$postData['id'])->strict(false)->update($postData);
         if($res !== false){
