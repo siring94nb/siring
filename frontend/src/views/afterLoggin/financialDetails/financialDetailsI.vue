@@ -313,6 +313,7 @@ export default {
       CapitalDetailed(params).then(res => {
         let { data, msg, code } = res;
         if (code === 1) {
+          console.log(this.tableData);
           this.tableData = data.data;
           this.pagesize = data.per_page;
           this.total = data.total;
