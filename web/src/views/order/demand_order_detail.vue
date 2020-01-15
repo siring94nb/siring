@@ -13,7 +13,7 @@
           <td class="td-one">商品名称：</td>
           <td>{{information.name}}</td>
           <td class="td-one">订单类型：</td>
-          <td>{{information.need_category}}</td>
+          <td>{{need_category[information.need_category - 1].name}}</td>
         </tr>
         <tr>
           <td class="td-one">下单时间：</td>
@@ -48,14 +48,8 @@
             <Input placeholder="请输入" v-model="information.name" style="width: 450px;" />
           </FormItem>
           <FormItem label="需求类型：">
-            <Select style="width: 450px;" :v-model="information.need_category">
-              <Option value="1">智能硬件</Option>
-              <Option value="2">电子商务</Option>
-              <Option value="3">生活娱乐</Option>
-              <Option value="4">金融</Option>
-              <Option value="5">媒体</Option>
-              <Option value="6">企业服务</Option>
-              <Option value="7">政府服务</Option>
+            <Select style="width: 450px;" v-model="information.need_category">
+              <Option v-for="(item, index) in need_category" :key="index" :value="index + 1">{{item.name}}</Option>
             </Select>
           </FormItem>
           <FormItem label="需求预算：">
@@ -256,11 +250,11 @@
             :disabled="information.proposal != null"
           >上传报价单</Button>
         </Upload>
-        <div class="audit" v-if="information.proposal != null && status == 2">
+        <div class="audit" v-if="information.proposal != null && information.examine != null && status == 2">
           <div class="arrow left-arrow" :class="information.examine > 1 ? 'left-arrow-dis':''"></div>
           <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
           <div class="audit-status" v-if="information.examine == 1">等待审核</div>
-          <div class="audit-status audit-true" else>{{information.examine == 2 ? '审核通过':'审核不通过'}}</div>
+          <div class="audit-status audit-true" v-else>{{information.examine == 2 ? '审核通过':'审核不通过'}}</div>
           <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
           <div class="arrow right-arrow" :class="information.examine > 1 ? 'right-arrow-dis':''"></div>
         </div>
@@ -378,10 +372,10 @@
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine == null && qualification == 0"
+        v-if="information.examine == null && qualification == 0 && status > 1"
       >
         <Button style="margin-right:30px;">返回</Button>
-        <Button type="primary" @click="submitObj">确认</Button>
+        <Button type="primary" @click="submitObj">确认1</Button>
       </div>
       <div class="pt-bj-btn" style="text-align:center;" v-if="  qualification == 1">
         <Button style="margin-right:30px;">返回</Button>
@@ -456,15 +450,15 @@ export default {
         need_phone: "",
         need_order: "",
         need_name: "",
-        need_category: "1",
+        need_category: 1,
         create_time: "",
         need_order_money: "",
         work_day: 0,
         money: 0,
         proposal: "",
         examine_opinion: "",
-        examine: "",
-        other:""
+        examine: 1,
+        other: ""
       },
       percent: {
         one: 70,
@@ -482,7 +476,16 @@ export default {
       // examine:"2",
       // examine_opinion:'',
       isWork_day: false,
-      isNeed_money: false
+      isNeed_money: false,
+      need_category: [
+        { name: "智能硬件" },
+        { name: "电子商务" },
+        { name: "生活娱乐" },
+        { name: "金融" },
+        { name: "媒体" },
+        { name: "企业服务" },
+        { name: "政府服务" }
+      ]
     };
   },
   created() {
@@ -546,7 +549,7 @@ export default {
         if (code == 1) {
           // data.data.need_category = (data.data.need_category).toString();
           vm.information = data.data;
-          vm.information.dev = data.data.terminal.split('/');
+          vm.information.dev = data.data.terminal.split("/");
           if (data.data.money) {
             vm.isNeed_money = true;
           }
@@ -620,7 +623,7 @@ export default {
         id: vm.id,
         type: type,
         work_day: vm.information.work_day,
-        money: vm.information.money,
+        need_money: vm.information.money,
         proposal: vm.information.proposal
       };
       apiPost("NeedOrder/offer_sure", params).then(res => {
@@ -628,6 +631,9 @@ export default {
         if (code == 1) {
           vm.isWork_day = true;
           vm.isNeed_money = true;
+          vm.$router.push({
+            name: "need_order"
+          });
         }
         this.$Message.success(msg);
       });
@@ -660,9 +666,7 @@ export default {
       });
     },
     //用户修改协议
-    changeXy(){
-      
-    },
+    changeXy() {},
     handleRemove(file) {
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
@@ -692,7 +696,7 @@ export default {
   },
   mounted() {
     this.UploadAction = config.front_url + "file/qn_upload";
-    if(this.status == 2) {
+    if (this.status == 2) {
       this.uploadList = this.$refs.upload.fileList;
     }
   }

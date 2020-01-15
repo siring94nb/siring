@@ -327,7 +327,8 @@ export default {
       },
       ispassword: "",
       password: "", //支付密码
-      isStatus: false
+      isStatus: true,
+      isPayTime: false
     };
   },
   mounted() {
@@ -335,6 +336,9 @@ export default {
     // console.log(this.$route.params)
     this.GetCoupou();
     this.GetBalance();
+    // if(this.isStatus && this.isPayTime) {
+      this.PayStatus();
+    // }
   },
   methods: {
     init() {
@@ -383,11 +387,12 @@ export default {
         //   this.isShow = !this.isShow;
         //   this.isDisabl = !this.isDisabl;
         // } else {
-          if (code === 1) {
-            this.imgData = imgData;
-            this.isShow = !this.isShow;
-            this.isDisabl = !this.isDisabl;
-          }
+        if (code === 1) {
+          this.imgData = imgData;
+          this.isShow = !this.isShow;
+          this.isDisabl = !this.isDisabl;
+          this.isPayTime = true;
+        }
         // }
       });
     },
@@ -421,15 +426,14 @@ export default {
         if (code === 1) {
           vm.$message.success(msg);
           vm.$router.push({
-            name:'demand_order'
-          })
+            name: "demand_order"
+          });
         } else {
           vm.$message.error(msg);
         }
       });
     },
-    
-    
+
     //添加银行卡
     submitForm(formName) {
       let vm = this;
@@ -516,16 +520,20 @@ export default {
           .catch(() => {});
       }
     },
-    PayStatus(){
+    PayStatus() {
       let vm = this,
         params = {
           order_id: vm.form.id
         };
-      payStatus(params).then(res => {
-        if (res.code == 1) {
-          vm.isStatus = true;
-        }
-      });
+      window.setInterval(() => {
+        setTimeout(() => {
+          payStatus(params).then(res => {
+            if (res.code == 1) {
+              vm.isStatus = false;
+            }
+          });
+        }, 0);
+      }, 5000);
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
