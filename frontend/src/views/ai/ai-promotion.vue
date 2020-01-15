@@ -84,13 +84,14 @@
               </template>
               <el-form-item label="提供尽可能多的相关素材" class="lh20" required>
                 <el-upload
-                name="image"
+                  name="image"
                   class="upload-demo"
                   action="https://manage.siring.com.cn/api/file/qn_upload"
                   :on-remove="handleRemove"
                   :before-upload="beforeUpload"
                   :limit="1"
                   :on-exceed="handleExceed"
+                  :on-success="handleAvatarSuccess1"
                   :file-list="fileList"
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
@@ -141,7 +142,7 @@
         </div>
         <div class="symbol">=</div>
         <div class="bgw">￥{{total}}</div>
-        <el-button type="danger" @click="pay">立即支付</el-button>
+        <el-button type="danger" @click="setdemandAdd">立即支付</el-button>
       </div>
       <div class="payment-bot">
         <el-checkbox v-model="checked">本人已确认，支付后执行下一流程</el-checkbox>
@@ -157,7 +158,7 @@
               <span class="through-price">￥{{item.money}}</span>
               <span class="sale-price">￥{{item.price}}</span>
             </div>
-            <div class="choose" @click="choosePackage(item.price)">&gt;&gt;选择套餐</div>
+            <div class="choose" @click="choosePackage(item)">&gt;&gt;选择套餐</div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -170,7 +171,7 @@ import TinymceEditor from "@/components/tinymce";
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
-import { GetSetMeal } from "@/api/api";
+import { GetSetMeal,demandAdd } from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -272,7 +273,9 @@ export default {
       writingCost: 0,
       percent: 100,
       dialogVisible: false,
-      packageList: []
+      packageList: [],
+      resume:"",
+      tid:0
     };
   },
   mounted() {
@@ -280,10 +283,16 @@ export default {
   },
   computed: {
     total() {
-      return (this.packagePrice + this.writingCost) * this.percent;
+      return (this.packagePrice + this.writingCost) * this.percent /100;
     }
   },
   methods: {
+     handleAvatarSuccess1(res, file) {
+       console.log(res);
+       console.log(file)
+       console.log(res.data.filePath);
+       this.resume = res.data.filePath;
+    },
     changeMaterial(value) {
       this.mater = value == 1 ? true : false;
     },
@@ -305,9 +314,6 @@ export default {
       }
       return size;
     },
-    pay() {
-      console.log(this.form)
-    },
     getSetMeal() {
       GetSetMeal().then(res => {
         console.log(res);
@@ -317,9 +323,50 @@ export default {
         }
       });
     },
-    choosePackage(price) {
+    choosePackage(item) {
       this.dialogVisible = false;
-      this.packagePrice = price;
+      this.packagePrice =item.price;
+      this.tid = item.id
+    },
+    // 上传，付款
+    // 数据上传
+    setdemandAdd(){
+      let con = ""
+      if(this.radio == 1){
+        con = ""
+      }else{
+        con = "232323"
+      }
+      let params = {
+        role_type:parseInt(this.form.material),
+        title :this.form.title,
+        object:this.form.name,
+        tid:this.tid,
+        num:parseInt(this.form.wordcount),
+        ask:parseInt(this.form.claim),
+        price:this.total,
+        grade:parseInt(this.isSelected),
+        url:this.form.link,
+        resume:this.resume,
+        con	:""
+      }
+      demandAdd(params).then(res=>{
+        let {code,msg,data} = res
+        if(code == 1) {
+          // this.showMsg(msg,code);
+          this.$router.push({
+                name: "comboPay",
+                params: {
+                  type:10,
+                  id: data,
+                  order_amount:this.sumMoney,
+                  user_id: sessionStorage.getItem("user_id"),
+                  order_type: 1
+                }
+              });
+          // console.log(res)
+        }
+      })
     }
   }
 };
