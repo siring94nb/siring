@@ -520,7 +520,9 @@ export default {
             avatar: data.user_img
           });
           this.ifLogin = true;
-          this.$router.push({ name: "afterLoggin" });
+          this.handleClose()
+          // this.dialogVisible = false;
+          // this.$router.push({ name: "afterLoggin" });
           // this.reload();
           // this.handleClose();
         }
