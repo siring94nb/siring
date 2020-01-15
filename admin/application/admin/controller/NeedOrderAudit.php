@@ -99,6 +99,12 @@ class NeedOrderAudit extends Base
         if (!$validate->check($postData)) {
             return $this->buildFailed(0,$validate->getError());
         }
+        if(!empty($postData['contract'])){
+
+            $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
+
+            return $res !== false ? $this->buildSuccess(1,'提交成功') : $this->buildFailed(0,'提交失败');
+        }
         $res = NeedOrder::where('id',$postData['id'])->strict(false)->update($postData);
         if($res !== false){
             //修改需求订单的状态
