@@ -616,6 +616,12 @@ export const addMessage = data => {
     return axios.post(`${base_url}api/Chat/msg_add`,  qs.stringify(data)).then(res => res.data);
 }
 /**
+ * 用户留言关注公众号二维码
+ */
+export const codeAdd = data => {
+    return axios.post(`${base_url}api/WxQrcode/code_add`,  qs.stringify(data)).then(res => res.data);
+}
+/**
  * 用户留言
  */
 export const Member = data => {
