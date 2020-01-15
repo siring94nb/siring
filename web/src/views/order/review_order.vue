@@ -229,10 +229,10 @@ export default {
             } else if (param.row.examine == 1 && param.row.examine_type == 2) {
               status = "合同审核";
               color = "rgb(102, 51, 204)";
-            } else if (param.row.examine == 2) {
+            } else if (param.row.examine == 2 || param.row.contract == 2) {
               status = "审核通过";
               color = "rgb(102, 153, 0)";
-            } else if (param.row.examine == 3) {
+            } else if (param.row.examine == 3 || param.row.contract == 3) {
               status = "审核不通过";
               color = "rgb(148, 148, 148)";
             }
@@ -248,7 +248,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    if (param.row.examine < 2) {
+                    if (param.row.examine < 2 || param.row.contract < 2) {
                       this.$router.push({
                         name: "demand_order_detail",
                         params: {

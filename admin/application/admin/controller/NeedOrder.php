@@ -118,13 +118,16 @@ class NeedOrder extends Base
             case 2://签订合同
 
                 if(!empty($postData['clause'])){
-
+                    $postData['examine_type'] =2;
+                    $postData['contract'] =1;
                     $postData['need_status'] =3;
                     $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
 
                     return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
                 }
                 $postData['need_status'] =3;
+                $postData['examine_type'] =2;
+                $postData['contract'] =1;
                 $res = Need::where('id',$postData['id'])->strict(false)->update($postData);
 
                 return $res !== false ? $this->buildSuccess(1,'状态提交成功') : $this->buildFailed(0,'状态提交失败');
