@@ -84,6 +84,7 @@
               </template>
               <el-form-item label="提供尽可能多的相关素材" class="lh20" required>
                 <el-upload
+                name="image"
                   class="upload-demo"
                   action="https://manage.siring.com.cn/api/file/qn_upload"
                   :on-remove="handleRemove"
@@ -393,6 +394,7 @@ export default {
     }
   }
   .payment {
+    box-shadow: 0px -2px 3px rgba(0,0,0,0.1);
     position: fixed;
     bottom: 0;
     left: 0;
