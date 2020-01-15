@@ -31,7 +31,7 @@ class RoleCenter extends Base
                 if($uid){
                     $user_data = User::where('id',$uid)->find()->toarray();
 
-                    if($user_data['type'] = 2){
+                    if($user_data['is_city'] = 1){
 
                             $order = new JoinOrder();
                             $data = $order ->where(['user_id'=>$user_data['id'],'type'=>2]) -> field('id,city_id,end_time') ->find();
@@ -54,7 +54,7 @@ class RoleCenter extends Base
                 if($uid){
                     $user_data = User::where('id',$uid)->find()->toarray();
 
-                    if($user_data['type'] != 0){
+                    if($user_data['grade'] != 0){
 
                         $order = new JoinOrder();
                         $data = $order ->where(['user_id'=>$user_data['id'],'type'=>1]) -> field('id,grade,end_time') ->find();
@@ -75,7 +75,7 @@ class RoleCenter extends Base
                 if($uid){
                     $user_data = User::where('id',$uid)->find()->toarray();
 
-                    if($user_data['type'] = 2){
+                    if($user_data['is_subpackage'] = 1){
 
                         $order = new JoinOrder();
                         $data = $order ->where(['user_id'=>$user_data['id'],'type'=>3]) -> field('id,dev,end_time') ->find();
