@@ -222,6 +222,7 @@ export default {
       // 因为前期想法错误，当前修改较麻烦
       GetRoleCenter().then(res => {
         let { data, msg,code } = res;
+        console.log(res);
         if (code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
