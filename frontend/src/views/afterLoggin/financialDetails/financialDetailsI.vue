@@ -168,7 +168,7 @@
               <el-table-column prop="phone" align="center" width="240" label="收入账号"></el-table-column>
               <el-table-column prop="money" label="支出（元）" align="center" width="240">
                 <template slot-scope="scope">
-                  <div>{{scope.row.money==null?0:scope.row.income}}</div>
+                  <div>{{scope.row.money}}</div>
                 </template>
               </el-table-column>
               <el-table-column prop="pay_type" align="center" label="支付类型">

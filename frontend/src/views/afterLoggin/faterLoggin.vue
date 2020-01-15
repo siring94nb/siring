@@ -15,7 +15,7 @@
         <div class="xxBox">
           <div>
             <span>￥{{yue}}</span>
-            <span style="">余额充值</span>
+            <span style=""><router-link to="/recharge">余额充值</router-link></span>
           </div>
           <div>
             <span>
@@ -78,7 +78,8 @@ import {
   CityTotal,
   MemberTotal,
   SubcontractTotal,
-  GetUserMassage
+  GetUserMassage,
+  GetRoleCenter
 } from "@/api/api";
 export default {
   // name: "fater-loggin",
@@ -219,9 +220,9 @@ export default {
     // 城市合伙人
     cityHehuorenX() {
       // 因为前期想法错误，当前修改较麻烦
-      CityTotal().then(res => {
-        let { data, msg } = res;
-        if (data.code == 1) {
+      GetRoleCenter().then(res => {
+        let { data, msg,code } = res;
+        if (code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         } else {
           // this.arr[2].con[0].rou = "/CityPartner";
@@ -232,9 +233,9 @@ export default {
     },
     // 等级会员
     classHuiyuanX() {
-      MemberTotal().then(res => {
-        let { data, msg } = res;
-        if (data.code == 1) {
+      GetRoleCenter().then(res => {
+        let { data, msg,code} = res;
+        if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
         } else {
           this.arr[2].con[1].rou = "/ClassMembersX";
@@ -245,9 +246,9 @@ export default {
     },
     // 分包商
     fenbaoshangX() {
-      SubcontractTotal().then(res => {
+      GetRoleCenter().then(res => {
         let { data, msg, code } = res;
-        if (data.code == 1) {
+        if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
         } else {
           this.arr[2].con[2].rou = "/subContractorIndex";

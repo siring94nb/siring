@@ -68,26 +68,19 @@
                 <el-option v-for="item in prov" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
               <el-select
-                v-model="ruleForm.levelVal"
-                style="width: 217px;"
-                placeholder="请选择"
-                @change="levelChange"
-              >
-                <el-option
-                  v-for="item in level"
-                  :key="item.sort"
-                  :label="item.title"
-                  :value="item.sort"
-                ></el-option>
-              </el-select>
-              <el-select
                 v-model="ruleForm.cityVal"
                 style="width: 217px;"
                 placeholder="请选择"
-                @change="cityChange"
+                @change="cityChange($event)"
               >
-                <el-option v-for="item in city" :key="item.id" :label="item.name" :value="item.id"></el-option>
+                <el-option
+                  v-for="(item,index) in city"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.id"
+                ></el-option>
               </el-select>
+              <el-input style="width: 217px;" v-model="level" placeholder="请等待" :disabled="true" value=""></el-input>
             </el-form-item>
             <el-form-item label="我的优势：" prop="textarea">
               <el-input
@@ -182,7 +175,7 @@ export default {
       centerDialogVisible: false,
       tableData: [],
       prov: [],
-      level: [],
+      level: '',
       city: [],
       rule: {
         textarea: [
@@ -232,13 +225,14 @@ export default {
     init() {
       this.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.getProvince();
-      this.getLevelList();
-      this.getdiscount();
-      this.getProfit();
+      // this.getLevelList();
+      // this.getdiscount();
+      // this.getProfit();
     },
     stepMouseEnter(index) {
       this.stepFlag = index;
     },
+    // 获取省
     getProvince() {
       GetProvince().then(res => {
         let { code, data, msg } = res;
@@ -247,52 +241,84 @@ export default {
         }
       });
     },
-    getLevelList() {
-      GetLevelList().then(res => {
-        let { code, data, msg } = res;
-        if (code === 1) {
-          this.level = data;
-        }
-      });
-    },
-    levelChange(name) {
-      if (this.ruleForm.provVal) {
-        this.getCityList();
-        // 更新价格
-        this.price = this.level[this.ruleForm.levelVal].money;
-        // 清空县市 隐藏结算框
-        this.ruleForm.cityVal = "";
-        this.showPaymentFlag = false;
-      } else {
-        this.$message({
-          message: "请选择加盟城市！",
-          type: "warning"
-        });
-      }
-    },
+    // 改变省，获取市区
     provChange() {
       // 清空县市 隐藏结算框
       this.ruleForm.cityVal = "";
+      this.ruleForm.levelVal = "";
+      this.level ="";
       this.showPaymentFlag = false;
-      if (this.ruleForm.levelVal) {
-        this.getCityList();
-      }
+      // if (this.ruleForm.levelVal) {
+      this.getCityList();
+      // }
     },
-    cityChange() {
-      this.showPaymentFlag = true;
-    },
-    numChange(value) {},
+    // 市区
     getCityList() {
       GetCityList({
-        pid: this.ruleForm.provVal,
-        type: this.ruleForm.levelVal
+        pid: this.ruleForm.provVal
+        // type: this.ruleForm.levelVal
       }).then(res => {
         let { code, data, msg } = res;
+        console.log(res);
         if (code === 1) {
           this.city = data;
+          console.log(this.level);
         }
       });
     },
+
+    getLevelList(num) {
+      GetLevelList().then(res => {
+        let { code, data, msg } = res;
+        if (code === 1) {
+          this.showPaymentFlag = true;
+          switch (num) {
+            case 0:
+              this.price = data[3].money
+              break;
+            case 1:
+              this.price = data[0].money
+              break;
+            case 2:
+              this.price = data[1].money
+              break;
+            default:
+             this.price = data[2].money
+          }
+        }
+        this.level = this.ruleForm.levelVal==0?'特级城市':this.ruleForm.levelVal==1?'一级城市':this.ruleForm.levelVal==2?'二级城市':this.ruleForm.levelVal==''?'':'三级城市'
+      });
+    },
+    // levelChange(name) {
+    //   // if (this.ruleForm.provVal) {
+    //   //   this.getCityList();
+    //     // 更新价格
+    //     // this.price = this.level[this.ruleForm.levelVal].money;
+    //     // 清空县市 隐藏结算框
+    //   //   this.ruleForm.cityVal = "";
+    //   //   this.showPaymentFlag = false;
+    //   // } else {
+    //   //   this.$message({
+    //   //     message: "请选择加盟城市！",
+    //   //     type: "warning"
+    //   //   });
+    //   // }
+    //   console.log(this.level)
+    // },
+
+    cityChange(obj) {
+      this.showPaymentFlag = false;
+      for (let i = 0; i < this.city.length; i++) {
+        if ((obj = this.city[i].id)) {
+          this.ruleForm.levelVal = this.city[i].type;
+        }
+      }
+      // console.log(this.ruleForm.levelVal);
+      this.getLevelList(this.ruleForm.levelVal);
+      //  this.levelChange();
+    },
+    numChange(value) {},
+
     pay() {
       let vm = this;
       this.$refs["ruleForm"].validate(valid => {
