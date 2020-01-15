@@ -15,14 +15,18 @@
         <div class="xxBox">
           <div>
             <span>￥{{yue}}</span>
-            <span style=""><router-link to="/recharge">余额充值</router-link></span>
+            <span><router-link to="/recharge">余额充值</router-link></span>
           </div>
           <div>
             <span>
               专属客服
               <i class="iconfont icon-icon"></i>
             </span>
-            <span>立即联系</span>
+            <span> <a
+            id="qq"
+            target="_blank"
+            href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
+          >立即联系</a></span>
           </div>
           <div>
             <div style="font-size:12px;width:50px">上次登录</div>
@@ -235,15 +239,17 @@ export default {
         console.log(res);
         if (code == 1) {  
           this.arr[2].con[0].rou = "/CityPartner";
-        }else if(code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }else {
+        }
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ) {
           // this.arr[2].con[0].rou = "/CityPartner";
           this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
@@ -259,15 +265,17 @@ export default {
         let { data, msg,code} = res;
         if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
-        } else if(code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }else {
+        } 
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ){
           this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
@@ -283,15 +291,17 @@ export default {
         let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
-        } else if(code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }else {
+        } 
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if(code == 0 ){
           this.arr[2].con[2].rou = "/subContractorIndex";
           // this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
@@ -442,6 +452,9 @@ export default {
         background: rgb(114, 124, 164);
         border-radius: 3px;
       }
+      a{
+          color: #ffffff;
+        }
     }
     &:nth-of-type(3) {
       color: rgba(255, 255, 255, 0.64);

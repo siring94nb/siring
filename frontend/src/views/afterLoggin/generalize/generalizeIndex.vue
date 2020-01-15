@@ -217,9 +217,9 @@ export default {
       let params = {};
       if (this.value1 != undefined && this.value1 != null) {
         // console.log(this.value);
-        this.startTime = this.value[0].getTime();
-        this.endTime = this.value[1].getTime();
-        if (this.xuanze == "") {
+        this.startTime = this.value1[0].getTime();
+        this.endTime = this.value1[1].getTime();
+        if (this.xuanzeValue == "") {
           params = {
             title: this.title,
             role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
@@ -227,6 +227,7 @@ export default {
             end_time: this.endTime
           };
         } else {
+          console.log(1 + this.xuanzeValue)
           params = {
             process: parseInt(this.xuanzeValue),
             title: this.title,
@@ -235,14 +236,15 @@ export default {
             end_time: this.endTime
           };
         }
-      } else {
-        if (this.xuanze == "") {
-          process: parseInt(this.xuanzeValue),
-            (params = {
+      }
+       else {
+        if (this.xuanzeValue == "") {
+            params = {
               title: this.title,
               role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue)
-            });
+            };
         } else {
+          console.log(2 + this.xuanzeValue)
           params = {
             process: parseInt(this.xuanzeValue),
             title: this.title,

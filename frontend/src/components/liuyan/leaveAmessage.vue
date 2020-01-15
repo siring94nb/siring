@@ -151,16 +151,18 @@ export default {
         let { code, data, msg } = res;
         console.log(res);
         if (code == 1) {
-          this.msgListArr = data.data;
+          this.msgListArr =data.data;
+          // if(this.msgListArr.length > 0){
           for (let i = 0; i < this.msgListArr.length; i++) {
-             if (this.msgListArr.type == 0) {
-                this.newxiaoxi = this.newxiaoxi + 1;
-              }
-            if (i > 0 && this.msgListArr[i].inside == 0) {
-              this.userName = this.msgListArr[i].name;
-              this.touxiangImg = this.msgListArr[i].img;
-            }
-          }
+                      if (this.msgListArr.type == 0) {
+                          this.newxiaoxi = this.newxiaoxi + 1;
+                        }
+                      if (i > 0 && this.msgListArr[i].inside == 0) {
+                        this.userName = this.msgListArr[i].name;
+                        this.touxiangImg = this.msgListArr[i].img;
+                      }
+                    }
+          // }
         }
       });
     },
@@ -186,7 +188,8 @@ export default {
         uid: parseInt(sessionStorage.getItem("user_id")),
         rid: 1,
         content: this.xiaoxiContent,
-        url: this.url
+        url: this.url,
+        inside:0
       };
       addMessage(params).then(res => {
         let { code, msg } = res;

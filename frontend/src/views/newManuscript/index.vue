@@ -10,7 +10,7 @@
           <div class="left">
             <div class="jianjie">
               <div>
-                <i class="el-icon-s-claim"></i>
+                <i class="iconfont icon-xuqiubaosong"></i>
                 <span>提交稿件</span>
               </div>
               <div>本平台针对您提交的需求，从数万家媒介中AI智能筛选推广，做到搜索引擎收录高，媒介覆盖精准，从而达到“少花钱宣传广的效果”！如需帮助，我们还有专业写手为您撰写稿件，扫除您的撰写烧脑之忧！</div>

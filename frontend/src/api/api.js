@@ -613,7 +613,7 @@ export const msgList = data => {
  * 用户留言
  */
 export const addMessage = data => {
-    return axios.post(`${base_url}api/Chat/add_message`,  qs.stringify(data)).then(res => res.data);
+    return axios.post(`${base_url}api/Chat/msg_add`,  qs.stringify(data)).then(res => res.data);
 }
 /**
  * 用户留言
