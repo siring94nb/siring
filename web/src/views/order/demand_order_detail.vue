@@ -380,7 +380,7 @@
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine == null && information.contract == null && qualification == 0 && status > 1"
+        v-if="information.examine == null || information.contract == null && qualification == 0 && status > 1"
       >
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="submitObj">确认</Button>
