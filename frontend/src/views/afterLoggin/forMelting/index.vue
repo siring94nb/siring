@@ -181,6 +181,7 @@ export default {
   methods: {
     current_change: function(currentPage) {
       this.currentPage = currentPage;
+      this.getconsoleList();
     },
     // 获取我的投融列表数据
     xuanze(str){

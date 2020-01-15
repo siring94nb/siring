@@ -11,7 +11,7 @@ use think\Model;
 
 class Recharge extends Model
 {
-    protected $table = "recharge_order";
+    protected $table = "order";
     protected $resultSetType = 'collection';
     protected $createTime = 'created_at';
 
@@ -21,11 +21,12 @@ class Recharge extends Model
 
         $data = new Recharge;
         $data->save([
-            'type' => $type,
+            'type' => 9,
+            'need_category'=>$type,
             'user_id' => $uid,
             'no' => $this->get_sn(),
             'money' => $money,
-            'coupon' => $coupon,
+            'yid' => $coupon,
             'status' => 1,
             'created_at' => time(),
 

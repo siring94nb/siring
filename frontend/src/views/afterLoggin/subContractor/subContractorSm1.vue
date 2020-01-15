@@ -461,6 +461,7 @@ export default {
     },
     handleCurrentChange(cpage) {
       this.currpage = cpage;
+      this.GetSubcontractPartner();
     },
     handleSizeChange(psize) {
       this.pagesize = psize;
