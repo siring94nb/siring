@@ -124,6 +124,7 @@ export default {
 
 <style scoped lang='scss'>
 .payment {
+  box-shadow: 0px -2px 3px rgba(0,0,0,0.5);
   display: none;
   position: fixed;
   bottom: 0;

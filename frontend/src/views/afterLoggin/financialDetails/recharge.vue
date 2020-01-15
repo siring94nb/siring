@@ -223,7 +223,9 @@ export default {
   }
 }
 .feiyongSum {
+   box-shadow: 0px -2px 3px rgba(0,0,0,0.5);
   width: 100%;
+  margin-left: -10px;
   position: fixed;
   bottom: 0;
   left: 5px;
@@ -310,7 +312,7 @@ export default {
         &:nth-of-type(5) {
           background: #ffffff;
           box-sizing: border-box;
-          padding: 15px 10px;
+          padding: 15px 25px;
           color: #ff0000;
           margin-right: 15px;
         }
