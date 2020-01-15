@@ -97,7 +97,7 @@ class NeedOrderAudit extends Base
             ['examine_opinion', 'require', '审核意见不能为空'],
         ]);
         if (!$validate->check($postData)) {
-            returnJson(0, $validate->getError());exit();
+            return $this->buildFailed(0,$validate->getError());
         }
         $res = NeedOrder::where('id',$postData['id'])->strict(false)->update($postData);
         if($res !== false){
