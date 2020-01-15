@@ -244,6 +244,12 @@ class Payment extends Base
                     $param['unionpay'], $ratio,$title,$notify_url,$return_url,$wx_url);
                 return $data;
                 break;
+            case 10://AI推广支付
+                $ratio = 1;
+                $data =(new Payoff())->pay($param['order_id'], $param['money'], $param['pay_type'], $param['password'], $param['unionpay'], $ratio);
+
+                return $data;
+                break;
             default:
                 returnJson(0,'参数有误');
 
