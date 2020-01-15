@@ -10,7 +10,7 @@ use app\data\model\Message;
 use app\data\model\WechatPay;
 use app\data\model\User;
 use think\Request;
-
+use think\Db;
 /**
  * 消息留言
  * Class Chat
