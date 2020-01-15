@@ -265,7 +265,7 @@
               type="number"
               name="day"
               min="0"
-              v-model="information.work_day"
+              v-model="information.grade"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
               :disabled="isWork_day"
@@ -278,7 +278,7 @@
               type="number"
               name="money"
               min="0"
-              v-model="information.money"
+              v-model="information.order_amount"
               placeholder="请填写"
               style="width:60px;line-height:30px;color:red;"
               :disabled="isNeed_money"
@@ -359,7 +359,15 @@
           placeholder="审核意见"
         ></textarea>
         <div class="sel">
-          <RadioGroup v-model="information.examine">
+          <RadioGroup v-model="information.examine" v-if="information.examine_type == 1">
+            <Radio label="3">
+              <span>不通过</span>
+            </Radio>
+            <Radio label="2">
+              <span style="color:red;">通过</span>
+            </Radio>
+          </RadioGroup>
+          <RadioGroup v-model="information.contract" v-else>
             <Radio label="3">
               <span>不通过</span>
             </Radio>
@@ -372,12 +380,12 @@
       <div
         class="pt-bj-btn"
         style="text-align:center;"
-        v-if="information.examine == null && qualification == 0 && status > 1"
+        v-if="information.examine == null && information.contract == null && qualification == 0 && status > 1"
       >
         <Button style="margin-right:30px;">返回</Button>
-        <Button type="primary" @click="submitObj">确认1</Button>
+        <Button type="primary" @click="submitObj">确认</Button>
       </div>
-      <div class="pt-bj-btn" style="text-align:center;" v-if="  qualification == 1">
+      <div class="pt-bj-btn" style="text-align:center;" v-if="qualification == 1">
         <Button style="margin-right:30px;">返回</Button>
         <Button type="primary" @click="auditObj">确认</Button>
       </div>
@@ -453,12 +461,14 @@ export default {
         need_category: 1,
         create_time: "",
         need_order_money: "",
-        work_day: 0,
+        grade: 0,
         money: 0,
         proposal: "",
         examine_opinion: "",
-        examine: 1,
-        other: ""
+        examine: null,
+        contract: null,
+        other: "",
+        order_amount:0
       },
       percent: {
         one: 70,
@@ -550,10 +560,10 @@ export default {
           // data.data.need_category = (data.data.need_category).toString();
           vm.information = data.data;
           vm.information.dev = data.data.terminal.split("/");
-          if (data.data.money) {
+          if (data.data.order_amount) {
             vm.isNeed_money = true;
           }
-          if (data.data.work_day) {
+          if (data.data.grade) {
             vm.isWork_day = true;
           }
         }
@@ -622,8 +632,8 @@ export default {
       params = {
         id: vm.id,
         type: type,
-        work_day: vm.information.work_day,
-        need_money: vm.information.money,
+        work_day: vm.information.grade,
+        need_money: vm.information.order_amount,
         proposal: vm.information.proposal
       };
       apiPost("NeedOrder/offer_sure", params).then(res => {
@@ -655,6 +665,9 @@ export default {
         examine: vm.information.examine,
         examine_opinion: vm.information.examine_opinion
       };
+      if(vm.information.examine_type == 2) {
+        params.contract = vm.information.contract
+      }
       apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
         let { code, data, msg } = res;
         this.$Message.success(msg);
