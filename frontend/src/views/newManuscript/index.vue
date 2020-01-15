@@ -175,7 +175,7 @@
                       <el-upload
                         name="image"
                         class="upload-demo"
-                        action="https://jsonplaceholder.typicode.com/posts/"
+                        action="https://manage.siring.com.cn/api/file/qn_upload"
                         :before-remove="beforeRemove"
                         multiple
                         :limit="1"
@@ -215,9 +215,10 @@
                   </div>
                   <div>
                     <el-upload
+                      name="image"
                       class="upload-demo"
                       drag
-                      action="https://jsonplaceholder.typicode.com/posts/"
+                      action="https://manage.siring.com.cn/api/file/qn_upload"
                       multiple
                     >
                       <i class="el-icon-upload"></i>
@@ -424,8 +425,8 @@ export default {
     // 上传成功回调
      handleAvatarSuccess1(res, file) {
       console.log(file)
-      console.log(res);
-      this.resume = res.id
+      console.log(res.data.filePath);
+      this.resume = res.data.filePath
     },
     SetMeal() {
       // ai推广套餐
@@ -457,6 +458,7 @@ export default {
       this.price = arr.price;
       this.sumMoney = (this.price + this.Remuneration) * zekou / 100
       this.dialogVisible = false;
+      this.tid = arr.id
     },
     // 单选框切换，显示自由稿件已经代写稿件
     qiehuan(){
@@ -493,17 +495,27 @@ export default {
         tid:this.tid,
         num:parseInt(this.radio3),
         ask:parseInt(this.radio1),
-        price:this.price,
+        price:this.sumMoney,
         grade:parseInt(this.radio2),
-        url:this.sumMoney,
+        url:this.linkValue,
         resume:this.resume,
         con	:""
       }
       demandAdd(params).then(res=>{
-        let {code,msg} = res
+        let {code,msg,data} = res
         if(code == 1) {
-          this.showMsg(msg,code);
-          console.log(res)
+          // this.showMsg(msg,code);
+          this.$router.push({
+                name: "comboPay",
+                params: {
+                  type:10,
+                  id: data,
+                  order_amount:this.sumMoney,
+                  user_id: sessionStorage.getItem("user_id"),
+                  order_type: 1
+                }
+              });
+          // console.log(res)
         }
       })
     }
