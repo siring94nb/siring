@@ -221,7 +221,7 @@ export default {
         this.endTime = this.value1[1].getTime();
         if (this.xuanzeValue == "") {
           params = {
-            title: this.title,
+            title: this.titleValue,
             role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
             start_time: this.startTime,
             end_time: this.endTime
@@ -230,7 +230,7 @@ export default {
           console.log(1 + this.xuanzeValue)
           params = {
             process: parseInt(this.xuanzeValue),
-            title: this.title,
+            title: this.titleValue,
             role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue),
             start_time: this.startTime,
             end_time: this.endTime
@@ -239,15 +239,16 @@ export default {
       }
        else {
         if (this.xuanzeValue == "") {
+          console.log(11231313)
             params = {
-              title: this.title,
+              title: this.titleValue,
               role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue)
             };
         } else {
           console.log(2 + this.xuanzeValue)
           params = {
             process: parseInt(this.xuanzeValue),
-            title: this.title,
+            title: this.titleValue,
             role_type: this.selectValue == 0 ? "" : parseInt(this.selectValue)
           };
         }
