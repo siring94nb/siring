@@ -52,7 +52,7 @@ class Message extends Model
      */
     public static function get_list($pid,$uid)
     {
-        $res = self::where(['pid'=>$pid,'uid'=>$uid])->order('create_time','desc')->paginate()->toArray();
+        $res = self::where(['pid'=>$pid,'uid'=>$uid])->order('create_time','asc')->paginate()->toArray();
             foreach ($res['data'] as $k =>$v){
                 if($v['inside']==0){
                     $user = (new User()) ->user_detail($v['uid']);//查询个人信息

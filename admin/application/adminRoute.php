@@ -1051,6 +1051,22 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
+
+    //聊天留言
+    Route::group('Chat', [
+        'msg_list' => [
+            'admin/Chat/msg_list',
+            ['method' => 'get']
+        ],
+        'add_message'   => [
+            'admin/Chat/add_message',
+            ['method' => 'post']
+        ],
+        'msg_read'   => [
+            'admin/Chat/msg_read',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
 });
 
 //<!--
