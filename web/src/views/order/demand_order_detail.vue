@@ -49,7 +49,11 @@
           </FormItem>
           <FormItem label="需求类型：">
             <Select style="width: 450px;" v-model="information.need_category">
-              <Option v-for="(item, index) in need_category" :key="index" :value="index + 1">{{item.name}}</Option>
+              <Option
+                v-for="(item, index) in need_category"
+                :key="index"
+                :value="index + 1"
+              >{{item.name}}</Option>
             </Select>
           </FormItem>
           <FormItem label="需求预算：">
@@ -146,29 +150,31 @@
         <p>五、分期付款方式：甲方向乙方支付总开发费用实行分期付款方式。本项目分四期付款，第一期为总合同款的70%，第二期为总合同款的20%，第三期为总合同款10%,第四期为总合同款10%。</p>
         <p class="retract">
           5.1在本合同签订后的3工作日内，第一期甲方支付乙方项目预付款即合同总价的70%，小写：¥__
-          <span class="focus">{{price*0.7}}</span>__（大写：人民币：__
-          <span class="focus">{{convertToChinaNum(price*0.7)}}</span>__元整）。
+          <span
+            class="focus"
+          >{{(price*0.7).toFixed(2)}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum((price*0.7).toFixed(2))}}</span>__元整）。
         </p>
         <p class="retract">
           5.2甲方在和乙方对完整套项目原型及UI时，经甲方签署原型确认单后，3个工作日内需向乙方支付第二期费用即合同总价的10%，小写：¥__
           <span
             class="focus"
-          >{{price*0.1}}</span>（大写：人民币：__
-          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+          >{{(price*0.1).toFixed(2)}}</span>（大写：人民币：__
+          <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
         </p>
         <p class="retract">
           5.3乙方完成项目DEMO版：即可运行90%功能的版本（不排除存在BUG），经甲方确认版本功能无误后，3个工作日内需向乙方支付第三期费用即合同总价的10%，小写：¥__
           <span
             class="focus"
-          >{{price*0.1}}</span>__（大写：人民币：__
-          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+          >{{(price*0.1).toFixed(2)}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
         </p>
         <p class="retract">
           5.4甲方应于收到乙方交付的最终定稿的产品安装包，之日起3个工作日内向乙方支付本合同第四期费用即合同总价的10%，小写：¥__
           <span
             class="focus"
-          >{{price*0.1}}</span>__（大写：人民币：__
-          <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+          >{{(price*0.1).toFixed(2)}}</span>__（大写：人民币：__
+          <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
         </p>
         <p>六、项目全自动流程：整体项目开发通过线上自动流程确认完成，并系统化管理方式，每个环节均可在我的软件/定制板块订单中跟进完成所有交易流程和步骤。</p>
         <p>七、工期计算方式：甲方确认设计原型并付款之日，为项目开发工期的起始日期，乙方完成项目DEMO版之日，为项目完工日期。</p>
@@ -250,7 +256,10 @@
             :disabled="information.proposal != null"
           >上传报价单</Button>
         </Upload>
-        <div class="audit" v-if="information.proposal != null && information.examine != null && status == 2">
+        <div
+          class="audit"
+          v-if="information.proposal != null && information.examine != null && status == 2"
+        >
           <div class="arrow left-arrow" :class="information.examine > 1 ? 'left-arrow-dis':''"></div>
           <div class="arrow-pole" :class="information.examine > 1 ? 'audit-true':''"></div>
           <div class="audit-status" v-if="information.examine == 1">等待审核</div>
@@ -468,7 +477,7 @@ export default {
         examine: null,
         contract: null,
         other: "",
-        order_amount:0
+        order_amount: 0
       },
       percent: {
         one: 70,
@@ -561,6 +570,7 @@ export default {
           vm.information = data.data;
           vm.information.dev = data.data.terminal.split("/");
           if (data.data.order_amount) {
+            vm.price = Number(data.data.order_amount);
             vm.isNeed_money = true;
           }
           if (data.data.grade) {
@@ -569,59 +579,24 @@ export default {
         }
       });
     },
-    //数字转汉字
-    convertToChinaNum(num) {
-      var arr1 = new Array(
-        "零",
-        "一",
-        "二",
-        "三",
-        "四",
-        "五",
-        "六",
-        "七",
-        "八",
-        "九"
-      );
-      var arr2 = new Array(
-        "",
-        "十",
-        "百",
-        "千",
-        "万",
-        "十",
-        "百",
-        "千",
-        "亿",
-        "十",
-        "百",
-        "千",
-        "万",
-        "十",
-        "百",
-        "千",
-        "亿"
-      ); //可继续追加更高位转换值
-      if (!num || isNaN(num)) {
-        return "零";
-      }
-      var english = num.toString().split("");
-      var result = "";
-      for (var i = 0; i < english.length; i++) {
-        var des_i = english.length - 1 - i; //倒序排列设值
-        result = arr2[i] + result;
-        var arr1_index = english[des_i];
-        result = arr1[arr1_index] + result;
-      } //将【零千、零百】换成【零】 【十零】换成【十】
-      result = result.replace(/零(千|百|十)/g, "零").replace(/十零/g, "十"); //合并中间多个零为一个零
-      result = result.replace(/零+/g, "零"); //将【零亿】换成【亿】【零万】换成【万】
-      result = result.replace(/零亿/g, "亿").replace(/零万/g, "万"); //将【亿万】换成【亿】
-      result = result.replace(/亿万/g, "亿"); //移除末尾的零
-      result = result.replace(/零+$/, ""); //将【零一十】换成【零十】 //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十 //将【一十】换成【十】
-      result = result.replace(/^一十/g, "十");
-      return result;
+    convertToChinaNum(n) {
+      if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
+      var unit = "千百拾亿千百拾万千百拾元角分",
+        str = "";
+      n += "00";
+      var p = n.indexOf(".");
+      if (p >= 0) n = n.substring(0, p) + n.substr(p + 1, 2);
+      unit = unit.substr(unit.length - n.length);
+      for (var i = 0; i < n.length; i++)
+        str += "零壹贰叁肆伍陆柒捌玖".charAt(n.charAt(i)) + unit.charAt(i);
+      return str
+        .replace(/零(千|百|拾|角)/g, "零")
+        .replace(/(零)+/g, "零")
+        .replace(/零(万|亿|元)/g, "$1")
+        .replace(/(亿)万|壹(拾)/g, "$1$2")
+        .replace(/^元零?|零分/g, "")
+        .replace(/元$/g, "");
     },
-
     //提交
     submitObj() {
       let vm = this,
@@ -665,8 +640,8 @@ export default {
         examine: vm.information.examine,
         examine_opinion: vm.information.examine_opinion
       };
-      if(vm.information.examine_type == 2) {
-        params.contract = vm.information.contract
+      if (vm.information.examine_type == 2) {
+        params.contract = vm.information.contract;
       }
       apiPost("NeedOrderAudit/orderAudit_upd", params).then(res => {
         let { code, data, msg } = res;

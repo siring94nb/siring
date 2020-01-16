@@ -164,29 +164,31 @@
           <p>五、分期付款方式：甲方向乙方支付总开发费用实行分期付款方式。本项目分四期付款，第一期为总合同款的70%，第二期为总合同款的10%，第三期为总合同款10%,第四期为总合同款10%。</p>
           <p class="retract">
             5.1在本合同签订后的3工作日内，第一期甲方支付乙方项目预付款即合同总价的70%，小写：¥__
-            <span class="focus">{{price*0.7}}</span>__（大写：人民币：__
-            <span class="focus">{{convertToChinaNum(price*0.7)}}</span>__元整）。
+            <span
+              class="focus"
+            >{{(price*0.7).toFixed(2)}}</span>__（大写：人民币：__
+            <span class="focus">{{convertToChinaNum((price*0.7).toFixed(2))}}</span>__元整）。
           </p>
           <p class="retract">
             5.2甲方在和乙方对完整套项目原型及UI时，经甲方签署原型确认单后，3个工作日内需向乙方支付第二期费用即合同总价的10%，小写：¥__
             <span
               class="focus"
-            >{{price*0.1}}</span>（大写：人民币：__
-            <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+            >{{(price*0.1).toFixed(2)}}</span>（大写：人民币：__
+            <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
           </p>
           <p class="retract">
             5.3乙方完成项目DEMO版：即可运行90%功能的版本（不排除存在BUG），经甲方确认版本功能无误后，3个工作日内需向乙方支付第三期费用即合同总价的10%，小写：¥__
             <span
               class="focus"
-            >{{price*0.1}}</span>__（大写：人民币：__
-            <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+            >{{(price*0.1).toFixed(2)}}</span>__（大写：人民币：__
+            <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
           </p>
           <p class="retract">
             5.4甲方应于收到乙方交付的最终定稿的产品安装包，之日起3个工作日内向乙方支付本合同第四期费用即合同总价的10%，小写：¥__
             <span
               class="focus"
-            >{{price*0.1}}</span>__（大写：人民币：__
-            <span class="focus">{{convertToChinaNum(price*0.1)}}</span>__元整）。
+            >{{(price*0.1).toFixed(2)}}</span>__（大写：人民币：__
+            <span class="focus">{{convertToChinaNum((price*0.1).toFixed(2))}}</span>__元整）。
           </p>
           <p>六、项目全自动流程：整体项目开发通过线上自动流程确认完成，并系统化管理方式，每个环节均可在我的软件/定制板块订单中跟进完成所有交易流程和步骤。</p>
           <p>七、工期计算方式：甲方确认设计原型并付款之日，为项目开发工期的起始日期，乙方完成项目DEMO版之日，为项目完工日期。</p>
@@ -240,31 +242,7 @@
       <!-- 聊天 -->
       <div class="speak_window">
         <liuyan :pid="form.id" :uid="form.user_id"></liuyan>
-        <!-- <div class="speak_box">
-          <div class="answer">
-            <div class="heard_img left">
-              <img src="../../../assets/images/u3830.png" />
-              <div>平台顾问</div>
-            </div>
-            <div class="answer_text">
-              <p>fdgfdgfdg</p>
-              <i></i>
-            </div>
-          </div>
-          <div class="question">
-            <div class="heard_img right">
-              <img src="../../../assets/images/u3830.png" />
-            </div>
-            <div class="question_text clear">
-              <p>dgfdgdfgdfg</p>
-              <i></i>
-            </div>
-          </div>
-        </div>
-        <div class="input-box">
-          <Input v-model="value" placeholder="请输入信息(100字以内)..." style="width: 90%;" />
-          <button class="lt-btn">发送</button>
-        </div>-->
+        
       </div>
       <div class="obj-btn">
         <div class="btns-all stop-obj" @click="obj_btn(8)" v-if="status < 4">中止，本人放弃该项目</div>
@@ -319,7 +297,6 @@ export default {
   data() {
     return {
       // userId: "",
-      path: "ws://127.0.0.1:3000",
       status: 1,
       // id:0,
       socket: "",
@@ -368,7 +345,7 @@ export default {
         need_budget_down: "",
         need_budget_up: "",
         terminal: [],
-        dev:[],
+        dev: [],
         phone: "",
         qq: "",
         wx: "",
@@ -446,7 +423,7 @@ export default {
   },
   computed: {
     total() {
-      return this.price * (this.percent / 100) * (this.scale / 100);
+      return (this.price * (this.percent / 100) * (this.scale / 100)).toFixed(2);
     }
   },
   methods: {
@@ -463,49 +440,16 @@ export default {
         this.order = 3;
       } else if (this.status == 5) {
         this.scale = 10;
-        this.order = 3;
+        this.order = 4;
       } else if (this.status == 6) {
         this.scale = 10;
-        this.order = 3;
+        this.order = 5;
+      } else if(this.status == 7) {
+        this.order = 6;
       }
-      if (typeof WebSocket === "undefined") {
-        alert("您的浏览器不支持socket");
-      } else {
-        // 实例化socket
-        this.socket = new WebSocket(this.path);
-        // 监听socket连接
-        this.socket.onopen = this.open;
-        // 监听socket错误信息
-        this.socket.onerror = this.error;
-        // 监听socket消息
-        this.socket.onmessage = this.getMessage;
-      }
-
-      var x = 3;
-      var y = 1;
-      this.rand = parseInt(Math.random() * (x - y + 1) + y);
+     
     },
-    open() {
-      console.log("socket连接成功");
-      var login_data = this.rand + ":我的蝴蝶花";
-      ws.send(JSON.stringify(login_data));
-    },
-    error() {
-      console.log("连接错误");
-    },
-    getMessage(msg) {
-      console.log(msg.data);
-      var d = JSON.parse(msg.data);
-      if (d.type == "msg") {
-      }
-    },
-    send() {
-      var login_data = this.rand + ":我的蝴蝶花2";
-      this.socket.send(login_data);
-    },
-    close() {
-      console.log("socket已经关闭");
-    },
+    
     handleSuccess(response, file, fileList) {
       this.form.url = response.data.filePath;
     },
@@ -582,56 +526,24 @@ export default {
       });
     },
     //数字转汉字
-    convertToChinaNum(num) {
-      var arr1 = new Array(
-        "零",
-        "一",
-        "二",
-        "三",
-        "四",
-        "五",
-        "六",
-        "七",
-        "八",
-        "九"
-      );
-      var arr2 = new Array(
-        "",
-        "十",
-        "百",
-        "千",
-        "万",
-        "十",
-        "百",
-        "千",
-        "亿",
-        "十",
-        "百",
-        "千",
-        "万",
-        "十",
-        "百",
-        "千",
-        "亿"
-      ); //可继续追加更高位转换值
-      if (!num || isNaN(num)) {
-        return "零";
-      }
-      var english = num.toString().split("");
-      var result = "";
-      for (var i = 0; i < english.length; i++) {
-        var des_i = english.length - 1 - i; //倒序排列设值
-        result = arr2[i] + result;
-        var arr1_index = english[des_i];
-        result = arr1[arr1_index] + result;
-      } //将【零千、零百】换成【零】 【十零】换成【十】
-      result = result.replace(/零(千|百|十)/g, "零").replace(/十零/g, "十"); //合并中间多个零为一个零
-      result = result.replace(/零+/g, "零"); //将【零亿】换成【亿】【零万】换成【万】
-      result = result.replace(/零亿/g, "亿").replace(/零万/g, "万"); //将【亿万】换成【亿】
-      result = result.replace(/亿万/g, "亿"); //移除末尾的零
-      result = result.replace(/零+$/, ""); //将【零一十】换成【零十】 //result = result.replace(/零一十/g, '零十');//貌似正规读法是零一十 //将【一十】换成【十】
-      result = result.replace(/^一十/g, "十");
-      return result;
+ 
+    convertToChinaNum(n) {
+      if (!/^(0|[1-9]\d*)(\.\d+)?$/.test(n)) return "数据非法";
+      var unit = "千百拾亿千百拾万千百拾元角分",
+        str = "";
+      n += "00";
+      var p = n.indexOf(".");
+      if (p >= 0) n = n.substring(0, p) + n.substr(p + 1, 2);
+      unit = unit.substr(unit.length - n.length);
+      for (var i = 0; i < n.length; i++)
+        str += "零壹贰叁肆伍陆柒捌玖".charAt(n.charAt(i)) + unit.charAt(i);
+      return str
+        .replace(/零(千|百|拾|角)/g, "零")
+        .replace(/(零)+/g, "零")
+        .replace(/零(万|亿|元)/g, "$1")
+        .replace(/(亿)万|壹(拾)/g, "$1$2")
+        .replace(/^元零?|零分/g, "")
+        .replace(/元$/g, "");
     },
     getNum(value) {
       this.num = value;
@@ -709,7 +621,7 @@ export default {
             (vm.form.con = data.con),
             (vm.form.url = data.url);
           vm.fileList = [{ name: "需求文件", url: data.url }];
-          vm.price = Number(data.need_money);
+          vm.price = Number(data.order_amount);
           vm.listData = data;
         }
       });
@@ -908,139 +820,6 @@ export default {
     }
   }
   //流程
-
-  //聊天框
-
-  .speak_window {
-    overflow-y: scroll;
-    height: 100%;
-    width: 100%;
-    background-color: rgb(242, 242, 242);
-  }
-  .speak_box {
-    margin-bottom: 70px;
-    padding: 10px;
-  }
-  .question,
-  .answer {
-    margin-bottom: 1rem;
-  }
-  .question {
-    text-align: right;
-  }
-  .question > div {
-    display: inline-block;
-  }
-  .left {
-    float: left;
-  }
-  .right {
-    float: right;
-  }
-  .clear {
-    clear: both;
-  }
-  .heard_img {
-    height: 60px;
-    width: 60px;
-    border-radius: 5px;
-    // overflow: hidden;
-    background: #ddd;
-    div {
-      text-align: center;
-    }
-  }
-  .heard_img img {
-    width: 100%;
-    height: 100%;
-  }
-  .question_text,
-  .answer_text {
-    box-sizing: border-box;
-    position: relative;
-    display: table-cell;
-    min-height: 60px;
-  }
-  .question_text {
-    padding-right: 20px;
-  }
-  .answer_text {
-    padding-left: 20px;
-  }
-  .question_text p,
-  .answer_text p {
-    border-radius: 10px;
-    padding: 0.5rem;
-    margin: 0;
-    font-size: 14px;
-    line-height: 28px;
-    box-sizing: border-box;
-    vertical-align: middle;
-    display: table-cell;
-    height: 30px;
-    word-wrap: break-word;
-  }
-  .answer_text p {
-    background: #fff;
-    color: #000;
-  }
-  .question_text p {
-    // background: #42929d;
-    background: rgb(102, 255, 0);
-    color: #000;
-    text-align: left;
-  }
-  .question_text i,
-  .answer_text i {
-    width: 0;
-    height: 0;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-    position: absolute;
-    top: 25px;
-  }
-  .answer_text i {
-    border-right: 10px solid #fff;
-    left: 10px;
-  }
-  .question_text i {
-    border-left: 10px solid rgb(102, 255, 0);
-    right: 10px;
-  }
-  .answer_text p a {
-    color: #42929d;
-    display: inline-block;
-  }
-  .write_list {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    background: #fff;
-    border-top: solid 1px #ddd;
-    padding: 5px;
-    line-height: 30px;
-  }
-  .input-box {
-    background-color: rgb(247, 247, 247);
-    height: 80px;
-    line-height: 80px;
-    padding: 0 1%;
-  }
-  .lt-btn {
-    line-height: 28px;
-    border: 1px solid rgb(102, 204, 0);
-    color: rgb(102, 204, 0);
-    background-color: #fff;
-    width: 8%;
-    margin-left: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .lt-btn:hover {
-    background-color: rgb(102, 204, 0);
-    color: #fff;
-  }
-  //聊天框 -- zhong
 
   .obj-btn {
     display: flex;
