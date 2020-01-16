@@ -45,7 +45,7 @@
       <!-- <inout @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" /> -->
       <el-popover ref="popover4" placement="top" width="30" trigger="click">
         <div style="width:100%;text-align:center;">
-          <img :src="getcodeAdd" style="width:80px;height:80px;margin:auto;" />
+          <img :src="imageUrl" style="width:80px;height:80px;margin:auto;" />
         </div>
       </el-popover>
       <el-button v-popover:popover4 style="width:130px;margin-right:10px;">获取消息二维码</el-button>
@@ -120,7 +120,8 @@ export default {
       userName: "",
       touxiangImg: "",
       Uid: 0,
-      Pid: 0
+      Pid: 0,
+      imageUrl:''
     };
   },
   mounted() {
@@ -288,8 +289,12 @@ export default {
     },
     // 获取关注二维码
     getcodeAdd() {
+      let vm = this;
       codeAdd().then(res => {
         console.log(res);
+        if(res.code == 1) {
+          vm.imageUrl = res.data;
+        }
       });
     }
   }
