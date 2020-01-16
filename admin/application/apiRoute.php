@@ -159,6 +159,18 @@ Route::group('api', function () {
         Route::post('need_order_detail','api/NeedOrder/need_order_detail'); //需求订单详情
         Route::post('need_comment','api/NeedOrder/need_comment'); //评价
         Route::post('get_pay','api/NeedOrder/get_pay'); //支付
+
+        Route::any('qd_notify','api/NeedOrder/qd_notify'); //签订合同异步回调-支付宝
+        Route::any('qd_notice','api/NeedOrder/qd_notice'); //签订合同异步回调-微信
+
+        Route::any('yx_notify','api/NeedOrder/yx_notify'); //原型确认异步回调-支付宝
+        Route::any('yx_notice','api/NeedOrder/yx_notice'); //原型确认异步回调-微信
+
+        Route::any('sx_notify','api/NeedOrder/sx_notify'); //项目上线异步回调-支付宝
+        Route::any('sx_notice','api/NeedOrder/sx_notice'); //项目上线异步回调-微信
+
+        Route::any('ys_notify','api/NeedOrder/ys_notify'); //项目验收异步回调-支付宝
+        Route::any('ys_notice','api/NeedOrder/ys_notice'); //项目验收异步回调-微信
     });
 
     //微信第三方路由
