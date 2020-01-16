@@ -295,6 +295,7 @@ class  NeedOrder  extends  Base
                     'payment'=>2,
                     'pay_type'=>1,
                     'pay_time'=>time(),
+                    'no'=>'DZ' . date('Ymdhis') . mt_rand('111111', '999999'),
                 ]);
 
                 //订单统计表添加
@@ -329,7 +330,7 @@ class  NeedOrder  extends  Base
         $response = $app->payment->handleNotify(function($notify, $successful){
             // 使用通知里的 "微信支付订单号transaction_id" 或者 "商户订单号out_trade_no"
             $rstArr = json_decode($notify,true);
-            file_put_contents('wxpay.txt', '订单：' . $rstArr . "\r\n", FILE_APPEND);
+//            file_put_contents('wxpay.txt', '订单：' . $rstArr . "\r\n", FILE_APPEND);
             $data =  Order::get(['no'=>$rstArr['out_trade_no']]);
 
             if (empty($data)) {
