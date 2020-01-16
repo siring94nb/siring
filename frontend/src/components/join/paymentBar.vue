@@ -94,7 +94,7 @@ export default {
   },
   computed: {
     total() {
-      return this.price * (this.percent / 100) * (this.order == 1? this.scale/100 : this.num);
+      return (this.price * (this.percent / 100) * (this.order > 0? this.scale/100 : this.num)).toFixed(2);
     }
   },
   methods: {
