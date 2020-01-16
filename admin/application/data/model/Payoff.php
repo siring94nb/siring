@@ -30,7 +30,7 @@ class Payoff extends Model
      * @throws \think\exception\DbException
      * @throws \think\exception\PDOException
      */
-    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio)
+    public function pay($id,$money,$pay_type,$password,$unionpay,$ratio,$title,$notify_url,$return_url,$wx_url)
     {
         $data = self::get($id);
         if(!$data) returnJson(0,'订单有误');
@@ -49,9 +49,7 @@ class Payoff extends Model
             case 1://支付宝支付
 
                 $pay = 0.01 ;//先测试1分钱
-                $title = '余额充值' ;
-                $notify_url = 'https://manage.siring.com.cn/api/Callback/balance_notify'; // 异步通知 url，*强烈建议加上本参数*
-                $return_url = 'https://manage.siring.com.cn/api/Callback/balance_return'; // 同步通知 url，*强烈建议加上本参数*
+
                 $res = ( new Alipay()) ->get_alipay($notify_url,$return_url,$data['no'],$pay,$title);
                 //生成支付码
                 $imgData = 'http://qr.topscan.com/api.php?text='. $res['qr_code'];
@@ -62,13 +60,9 @@ class Payoff extends Model
                 break;
             case 2://微信支付
 
-                // 回调地址
-                $url = 'https://manage.siring.com.cn/api/Callback/balance_notice';
-
                 $pay = 1;//先测试1分钱
 
-                $title = '余额充值';
-                $res = (new WechatPay())->pay($title,$data['no'], $pay, $url);
+                $res = (new WechatPay())->pay($title,$data['no'], $pay, $wx_url);
 
                 return $res; exit();
 
