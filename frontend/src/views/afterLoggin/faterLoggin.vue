@@ -257,7 +257,7 @@ export default {
       const params = {
         type: 1
       };
-      GetRoleCenter(params).then(res => {
+      CityTotal(params).then(res => {
         let { data, msg, code } = res;
         console.log(res);
         if (code == 1) {
@@ -284,7 +284,7 @@ export default {
       const params = {
         type: 2
       };
-      GetRoleCenter(params).then(res => {
+      MemberTotal(params).then(res => {
         let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
@@ -310,7 +310,7 @@ export default {
       const params = {
         type: 3
       };
-      GetRoleCenter(params).then(res => {
+      SubcontractTotal(params).then(res => {
         let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";

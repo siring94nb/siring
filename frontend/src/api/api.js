@@ -636,7 +636,7 @@ export const Honor = data => {
 /**
  * 关于我们，发展历程
  */
-export const Course = data => {
+export const GetRoleCenterGetRoleCenter = data => {
     return axios.post(`${base_url}api/Website/course`,  qs.stringify(data)).then(res => res.data);
 }
 /**
