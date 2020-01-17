@@ -51,6 +51,8 @@ Route::group('api', function () {
         Route::any('seo','api/Website/seo'); //SEO
         Route::any('custom_case','api/Website/custom_case'); //软件定制案例
         Route::any('member','api/Website/member'); //核心成员
+        Route::any('honor','api/Website/honor'); //荣誉证书
+        Route::any('course','api/Website/course'); //发展历程
     });
 
     //角色加盟 fyk
