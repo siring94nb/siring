@@ -72,14 +72,16 @@ class Chat extends Base
     public function MessageFeedback()
     {
         $request = Request::instance();
-        $param = $request->param();
+        $phone = $request->param('phone','','htmlspecialchars,strip_tags,strtolower,addslashes');
+        $msg = $request->param('msg','','htmlspecialchars,strip_tags,strtolower,addslashes');
         $uid = Session::get("uid");
         if($uid){
             $data = [
                     'user_id' =>$uid,
-                    'tel' =>htmlspecialchars($param['phone']),
-                    'con'=>htmlspecialchars($param['msg']),
-                    'is_accept'=>2
+                    'tel' =>$phone,
+                    'con'=>$msg,
+                    'is_accept'=>2,
+                    'created_at'=>time()
                 ];
 
             $res  = (new Suggest())->insert($data);

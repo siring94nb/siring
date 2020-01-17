@@ -132,6 +132,11 @@
                         key: 'name'
                     },
                     {
+                        title: '联系方式',
+                        align: 'center',
+                        key: 'tel'
+                    },
+                    {
                         title: '留言内容',
                         align: 'center',
                         key: 'con'
