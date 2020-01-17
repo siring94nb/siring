@@ -12,6 +12,7 @@ use app\data\model\WechatPay;
 use app\data\model\User;
 use think\Request;
 use think\Db;
+use think\Session;
 /**
  * 消息留言
  * Class Chat
@@ -83,7 +84,7 @@ class Chat extends Base
 
             $res  = (new Suggest())->insert($data);
 
-            return $res ? returnJson(1,'留言成功'):returnJson(0,'留言失败');
+            return $res ? returnJson(1,'留言成功',$data):returnJson(0,'留言失败',$data);
 
         }else{
             returnJson(3,'请登录');
