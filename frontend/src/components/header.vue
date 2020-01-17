@@ -32,7 +32,9 @@
     <el-col :span="24" class="nav">
       <div class="nav-cont">
         <div class="logo-box">
+          <router-link to="/">
           <img :src="require('@/assets/images/logo.png')" width="100" alt />
+          </router-link>
         </div>
         <div class="comp-feature">
           <h2>一站式移动互联网</h2>
@@ -581,6 +583,7 @@ export default {
   width: 100%;
   z-index: 999;
   border-bottom: 2px solid #ffffff;
+  box-shadow: 0px 3px 4px rgba(0,0,0,.2);
   .bg-black {
     height: 40px;
     background-color: #000000;

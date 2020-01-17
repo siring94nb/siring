@@ -52,8 +52,8 @@
         <el-carousel :interval="4000" type="card" height="450px" arrow="always">
           <el-carousel-item v-for="(item, index) in honorImage" :key="index">
             <div class="sweep-main">
-              <img :src="item.url" alt />
-              <div style="text-align:center;line-height:90px;background-color: #fff;">{{item.name}}</div>
+              <img :src="item.img" alt />
+              <div style="text-align:center;line-height:90px;background-color: #fff;">{{item.title}}</div>
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -77,7 +77,7 @@
           <div class="title-box" v-for="(item, index) in courseTitle" :key="index">
             <img src="../assets/images/u5726.png" alt />
             <div class="line"></div>
-            <div class="title-text">{{item}}</div>
+            <div class="title-text">{{item.name}}</div>
           </div>
         </div>
       </div>
@@ -90,13 +90,13 @@
           style="width:90%;margin:auto;"
         >
           <div class="float-title">
-            <i class="el-icon-phone" />联系方式：
+            <i class="iconfont icon-lianxifangshi" />联系方式：
           </div>
           <el-form-item>
               <el-input style="margin-bottom:10px;" type="text" placeholder="您的联系方式" v-model.number="ruleForm.desc"></el-input>
           </el-form-item>
           <div class="float-title">
-            <i class="el-icon-edit" />留言反馈：
+            <i class="iconfont icon-liuyan" />留言反馈：
           </div>
           <el-form-item>
             <el-input  type="textarea" placeholder="您的需求或反馈，我们将在48个小时内，联系您" v-model="ruleForm.desc1" class="texts"></el-input>
@@ -119,7 +119,7 @@ import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
-import {Member} from "@/api/api"
+import {Member,Honor,Course} from "@/api/api"
 export default {
   name: "index",
   components: {
@@ -128,7 +128,7 @@ export default {
     Jsjm,
     Jdyh,
     Myfooter,
-    Myswiper
+    Myswiper,
   },
   data() {
     return {
@@ -283,9 +283,14 @@ export default {
   //   this.personal = this.teamList[0];
   // },
   mounted(){
-    this.getMember();
+    this.init()
   },
   methods: {
+    init(){
+      this.getMember();
+      this.getHonor();
+      this.getCourse()
+    },
     mouseSel(index) {
       this.selOne = index;
       this.personal = this.teamList[index];
@@ -297,6 +302,26 @@ export default {
         if(code == 1){
           this.teamList = data;
           this.mouseSel(0);
+        }
+      })
+    },
+    // 各项荣誉及证书
+    getHonor(){
+      Honor().then(res=>{
+        let {data,code,msg} = res;
+        console.log(data);
+        if(code == 1){
+          this.honorImage = data
+        }
+      })
+    },
+    // 发展历程
+    getCourse(){
+      Course().then(res=>{
+         let {data,code,msg} = res;
+        console.log(data)
+        if(code == 1){
+          this.courseTitle = data.reverse()
         }
       })
     }
@@ -433,6 +458,8 @@ export default {
     // }
     .development-course {
       width: 800px;
+      height: 627px;
+      overflow-y: scroll;
       background-color: rgb(242, 242, 242);
       position: relative;
       .course-main {
@@ -476,6 +503,9 @@ export default {
           }
         }
       }
+    }
+    .development-course::-webkit-scrollbar{
+      display: none
     }
     .contact-message {
       border: 1px solid rgb(228, 228, 228);

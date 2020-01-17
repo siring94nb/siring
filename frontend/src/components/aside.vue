@@ -63,11 +63,11 @@
      
       <div class="float-cont" v-show="levelMsgBool" style="width:300px">
         <div class="float-title" style="float: left;"> 
-          <i class="el-icon-phone"/>联系方式：
+          <i class="iconfont icon-lianxifangshi"/>联系方式：
         </div>
         <input v-model="lianxi" class="levelmsg levelmsg-input" type="text" placeholder="您的联系方式" />
         <div class="float-title" style="float: left;">
-          <i class="el-icon-edit" />留言反馈：
+          <i class="iconfont icon-liuyan" />留言反馈：
         </div>
         <textarea v-model="liuyan" class="levelmsg" placeholder="您的需求或反馈，我们将在48个小时内，联系您" style="margin-bottom:10px;"></textarea>
         <button class="send-lm" @click="sendMsg">发送</button>
@@ -164,7 +164,7 @@ export default {
       top: 0;
       right: 60px;
       border: 1px solid #e5e5e5;
-      padding: 15px 10px;
+      padding: 0px 10px 10px 10px;
       width: 184px;
       box-sizing: border-box;
       background-color: #fff;

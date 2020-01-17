@@ -628,6 +628,18 @@ export const Member = data => {
     return axios.post(`${base_url}api/Website/member`,  qs.stringify(data)).then(res => res.data);
 }
 /**
+ * 关于我们，荣誉证书
+ */
+export const Honor = data => {
+    return axios.post(`${base_url}api/Website/honor`,  qs.stringify(data)).then(res => res.data);
+}
+/**
+ * 关于我们，发展历程
+ */
+export const Course = data => {
+    return axios.post(`${base_url}api/Website/course`,  qs.stringify(data)).then(res => res.data);
+}
+/**
  * 支付回调
  */
 export const payStatus = data => {

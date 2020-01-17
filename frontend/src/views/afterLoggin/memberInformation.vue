@@ -296,8 +296,6 @@ export default {
         enterprise_id:this.enterpriseName,
         area: this.area,
         address: this.dizhi,
-        enterprise_id: this.enterpriseName,
-        radioVal: this.sex,
         img: this.imageUrl,
         sex:this.radioVal==="男"?"1":"2",
         invitation:document.getElementById("yaoqm").value

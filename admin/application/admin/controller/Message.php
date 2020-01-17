@@ -29,7 +29,7 @@ class Message extends Base
             $param['size'] = 10;
         }
 
-        $field = 'a.id,a.user_id,a.con,a.imgs,a.is_accept,a.created_at,a.updated_at,b.realname as name';
+        $field = 'a.id,a.user_id,a.tel,a.con,a.imgs,a.is_accept,a.created_at,a.updated_at,b.realname as name';
         $order = 'a.id desc';
 
         $list = (new Suggest())

@@ -29,7 +29,7 @@
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
-        <el-button class="wh-sty" v-popover:popover2>？</el-button>
+        <el-button class="wh-sty" v-popover:popover2><i class="el-icon-question"></i></el-button>
         <div style="flex:1"></div>
         <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
       </div>
@@ -419,15 +419,16 @@ export default {
       cursor: pointer;
     }
     .wh-sty {
-      background-color: red;
+      background-color: #fff;
       border-radius: 50%;
-      color: #fff;
+      color: red;
       border: 0;
       width: 30px;
       height: 30px;
       padding: 0;
       text-align: center;
       margin: 5px 0 0 10px;
+      font-size: 32px;
     }
     .appreciation {
       background-color: rgb(255, 153, 0);

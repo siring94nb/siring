@@ -174,11 +174,25 @@
       "unicode_decimal": 58994
     },
     {
+      "icon_id": "4112894",
+      "name": "留言",
+      "font_class": "liuyan",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
       "icon_id": "4237369",
       "name": "首页",
       "font_class": "shouye",
       "unicode": "e62c",
       "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "4292378",
+      "name": "计算器",
+      "font_class": "jisuanqi",
+      "unicode": "e753",
+      "unicode_decimal": 59219
     },
     {
       "icon_id": "4406894",
@@ -207,6 +221,13 @@
       "font_class": "fenxiang",
       "unicode": "e60e",
       "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "4953562",
+      "name": "联系方式",
+      "font_class": "lianxifangshi",
+      "unicode": "e636",
+      "unicode_decimal": 58934
     },
     {
       "icon_id": "5139588",

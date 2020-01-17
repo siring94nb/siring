@@ -22,18 +22,17 @@ class Chat extends Base
     {
         $request = Request::instance();
         $param = $request->param();
-        $result = Db::transaction(function()use ( $param ){
+
         $data = (new Message())->add($param);
 
-            $user = (new User())->user_detail($param['rid']);
-            if($user['open_id'] === null){
-              return  $this->buildFailed(0,'通知失败');exit();
-            }
-            $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
+        $user = (new User())->user_detail($param['rid']);
+        //pp($user);die;
+        if($user['open_id'] == null){
+          return  $this->buildFailed(0,'用户没有关注公众号，微信通知失败');exit();
+        }
+        WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
 
-            return $data && $msg ? true : false;
-        });
-        return $result  ? $this->buildSuccess(1,'留言成功') : $this->buildFailed(0,'留言失败');
+        return $data  ? $this->buildSuccess(1,'留言成功') : $this->buildFailed(0,'留言失败');
 
     }
 

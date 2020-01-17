@@ -2,7 +2,7 @@
   <div class="recomment-left">
     <div class="quick-desc">
       <div class="desc-title">
-        <i class="iconfont icon-xuqiubaosong"></i>
+        <i :class="{'iconfont':true,'icon-jisuanqi':rou=='quickValuation','i1':rou=='quickValuation','icon-xuqiubaosong':rou=='fillDemand'}"></i>
         <span style="font-size:18px">{{type == 1? '定制需求':'快捷估价'}}</span>
       </div>
       <div class="desc-dit">
@@ -31,13 +31,19 @@ export default {
   props: ["type"],
   data() {
     return {
-      recommentList: []
+      recommentList: [],
+      rou:""
     };
   },
   mounted() {
     this.getCustomCase();
+    this.init();
   },
   methods: {
+    init(){
+      this.rou = this.$route.name
+      console.log(this.rou)
+    },
     getCustomCase() {
       GetCustomCase().then(res => {
         console.log(res);
@@ -70,6 +76,14 @@ export default {
         color: #666666;
         margin-right: 10px;
         vertical-align: middle;
+        // margin-left: -5px;
+      }
+      .i1{
+        font-size: 36px;
+        color: #666666;
+        margin-right: 10px;
+        vertical-align: middle;
+        margin-left: -5px;
       }
       span {
         font-size: 20px;
