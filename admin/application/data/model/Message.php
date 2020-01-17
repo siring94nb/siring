@@ -51,9 +51,9 @@ class Message extends Model
      * @return \think\Paginator
      * @throws \think\exception\DbException
      */
-    public static function get_list($pid,$uid)
+    public static function get_list($pid,$status)
     {
-        $res = self::where(['pid'=>$pid,'uid'=>$uid])->order('create_time','asc')->paginate()->toArray();
+        $res = self::where(['pid'=>$pid,'status'=>$status])->order('create_time','asc')->paginate()->toArray();
             foreach ($res['data'] as $k =>$v){
                 if($v['inside']==0){
                     $user = (new User()) ->user_detail($v['uid']);//查询个人信息
