@@ -9,7 +9,7 @@
         <!-- <div v-for="(item1,index1) in ceshiList" :key="index1">
           <span>{{index}}</span>
         </div>-->
-        <div v-if="item.inside==1" class="guanfang">
+        <div v-if="item.inside==0" class="guanfang">
           <div class="touxiangbox">
             <div class="imgs">
               <img :src="item.img" :alt="item.name" />
@@ -26,7 +26,7 @@
         <!-- <div >{{(new Date(data[index].create_time).getTime())-(new Date(data[index-1>0?index:0].create_time).getTime())}}</div> -->
         <!-- <div>{{new Date(data[index].create_time).getTime()}}</div>
         <div>{{new Date(data[index-1>0?index:0].create_time).getTime()}}</div>-->
-        <div v-if="item.inside==0" class="guanfang" style="justify-content:flex-end">
+        <div v-if="item.inside==1" class="guanfang" style="justify-content:flex-end">
           <div class="demo1">
             {{item.content}}
             <div class="out1"></div>
@@ -159,8 +159,7 @@ export default {
       axios
         .get("Chat/msg_list", {
           params: {
-            pid: parseInt(vm.pid),
-            uid: 1
+            pid: parseInt(vm.pid)
           }
         })
         .then(function(response) {
