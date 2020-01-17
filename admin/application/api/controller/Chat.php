@@ -84,7 +84,7 @@ class Chat extends Base
 
             $res  = (new Suggest())->insert($data);
 
-            return $res ? returnJson(1,'留言成功',$data):returnJson(0,'留言失败',$data);
+            return $res ? returnJson(1,'留言成功'):returnJson(0,'留言失败');
 
         }else{
             returnJson(3,'请登录');
