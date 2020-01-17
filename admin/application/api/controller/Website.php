@@ -4,6 +4,7 @@ namespace app\api\controller;
 
 use app\data\model\About;
 use app\data\model\Contact;
+use app\data\model\Course;
 use app\data\model\Seo;
 use think\Request;
 
@@ -86,6 +87,30 @@ class Website extends Base
     public function member()
     {
         $data = (new \app\data\model\Member())->all();
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     * 荣誉证书
+     * @throws \think\exception\DbException
+     */
+    public function honor()
+    {
+        $banner = new \app\data\model\Banner();
+        $type = 2;
+        $data = $banner->banner_list($type);
+
+        return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
+    }
+
+    /**
+     * 发展历程
+     * @throws \think\exception\DbException
+     */
+    public function course()
+    {
+        $data = ( new Course())->all();
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }

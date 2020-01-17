@@ -16,7 +16,7 @@
               <span class="red">{{money}}</span>
             </span>
           </div>
-          <div style="margin-left:100px;">
+          <div>
             <el-select v-model="valuee" placeholder="请选择优惠券">
               <el-option
                 v-for="item in options"
@@ -328,7 +328,7 @@ export default {
       ispassword: "",
       password: "", //支付密码
       isStatus: true,
-      isPayTime: false
+      timer: null
     };
   },
   mounted() {
@@ -336,13 +336,19 @@ export default {
     // console.log(this.$route.params)
     this.GetCoupou();
     this.GetBalance();
-    // if(this.isStatus && this.isPayTime) {
-      this.PayStatus();
+
+    // if (this.isStatus && this.isPayTime) {
+    //   window.setInterval(() => {
+    //     setTimeout(() => {
+    //       this.PayStatus();
+    //     }, 0);
+    //   }, 5000);
     // }
   },
   methods: {
     init() {
       let vm = this;
+      console.log(vm.$route.params);
       vm.money = vm.$route.params.order_amount;
       vm.real_money = vm.$route.params.order_amount;
       vm.form.user_id = vm.$route.params.user_id;
@@ -375,7 +381,7 @@ export default {
       };
       codeGetPay(params).then(res => {
         let { code, imgData, msg } = res;
-        this.$message(msg);
+        vm.$message(msg);
         // if (vm.params.pay_type == 1) {
         //   const { href } = this.$router.resolve({
         //     path: "alipay",
@@ -388,10 +394,16 @@ export default {
         //   this.isDisabl = !this.isDisabl;
         // } else {
         if (code === 1) {
-          this.imgData = imgData;
-          this.isShow = !this.isShow;
-          this.isDisabl = !this.isDisabl;
-          this.isPayTime = true;
+          vm.imgData = imgData;
+          vm.isShow = !vm.isShow;
+          vm.isDisabl = !vm.isDisabl;
+          if (vm.isStatus) {
+            vm.timer = setInterval(() => {
+              setTimeout(() => {
+                vm.PayStatus();
+              }, 0);
+            }, 5000);
+          }
         }
         // }
       });
@@ -523,17 +535,20 @@ export default {
     PayStatus() {
       let vm = this,
         params = {
-          order_id: vm.form.id
+          order_id: vm.params.id
         };
-      window.setInterval(() => {
-        setTimeout(() => {
-          payStatus(params).then(res => {
-            if (res.code == 1) {
-              vm.isStatus = false;
-            }
-          });
-        }, 0);
-      }, 5000);
+      payStatus(params).then(res => {
+        if (res.code == 1) {
+          vm.isStatus = false;
+          vm.$message.success("支付成功");
+          clearInterval(this.timer); //清除定时器
+          setTimeout(() => {
+            vm.$router.push({
+              name: "demand_order"
+            });
+          }, 1500);
+        }
+      });
     }
     // getBank(val) {
     //   let bank = bankCardAttribution(val);
@@ -541,7 +556,8 @@ export default {
     //   if (bank) this.form.bank_name = bank.bankName;
     //   else this.$message.error("银行卡号格式有误！");
     // }
-  }
+  },
+ 
 };
 </script>
 
@@ -587,6 +603,8 @@ export default {
       .payable {
         display: flex;
         margin-bottom: 50px;
+        align-items: center;
+        justify-content: space-around;
         .price {
           font-size: 23px;
         }

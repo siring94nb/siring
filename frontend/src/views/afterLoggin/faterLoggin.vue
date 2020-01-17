@@ -47,7 +47,7 @@
           </div>
           <div>
             <div style="font-size:12px;width:60px">上次登录</div>
-            <div style="font-size:12px;width:100px">{{updated_at}}</div>
+            <div style="font-size:12px;width:100px;text-align:right">{{updated_at}}</div>
           </div>
         </div>
       </div>

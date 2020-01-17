@@ -39,7 +39,7 @@ class WxQrcode extends Base
 
             $imgData = 'http://qr.topscan.com/api.php?text='. $url;
 
-            echo "<img src='".$imgData."'>";
+            returnJson(1,'成功',$imgData);
         }else{
             return  returnJson(3,'请登录');
         }

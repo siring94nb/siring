@@ -136,7 +136,7 @@
           <p class="bgw">{{percent}}%</p>
           <p class="require-star tip">
             会员折扣
-            <span class="ques">？</span>
+            <span class="ques"><i class="el-icon-question"></i></span>
           </p>
           <p></p>
         </div>
@@ -382,6 +382,7 @@ export default {
 <style scoped lang='scss'>
 .quickval {
   background-color: rgb(246, 246, 246);
+  margin-bottom: 80px;
   .quick-main {
     width: 1200px;
     margin: 100px auto 0;
@@ -473,8 +474,8 @@ export default {
         margin-top: -5px;
       }
       .bgw {
-        color: #ff0000;
-        padding: 4px 10px;
+        color: rgb(245,108,108);
+        padding: 4px 20px;
         border: 1px solid rgb(201, 201, 201);
         background-color: #ffffff;
         margin: 0 5px;
@@ -497,12 +498,13 @@ export default {
         display: inline-block;
         width: 20px;
         height: 20px;
-        line-height: 20px;
+        // line-height: 20px;
         text-align: center;
         border-radius: 50%;
-        background-color: #ff0000;
-        color: #ffffff;
+        background-color: #ffffff;
+        color: rgb(245,108,108);
         cursor: pointer;
+        font-size: 22px ;
       }
     }
     .payment-bot {
