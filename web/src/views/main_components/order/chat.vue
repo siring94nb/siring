@@ -154,10 +154,6 @@ export default {
       });
     },
     getmsgList() {
-      // let uid = this.uid;
-      // let pid = this.pid;
-      console.log(this.pid);
-      console.log(this.rid);
       let vm = this,
         params;
       axios
@@ -171,11 +167,11 @@ export default {
           let res = response.data;
           console.log(res);
           let { code, data, msg } = res;
-          console.log(data.data.length);
-          if (code == 1 && data.data.length > 0) {
+          console.log(data.data.data);
+          if (code == 1 && data.data.data.length > 0) {
             console.log(vm.msgListArr);
             //   if(data.data.length != 0){
-            vm.msgListArr = data.data;
+            vm.msgListArr = data.data.data;
             for (let i = 0; i < vm.msgListArr.length; i++) {
               if (vm.msgListArr.type == 0) {
                 vm.newxiaoxi = vm.newxiaoxi + 1;
@@ -187,25 +183,6 @@ export default {
             }
           }
         });
-      //   apiPost("Chat/msg_list", params).then(res => {
-      //     let { code, data, msg } = res;
-      //     console.log(res);
-      //     console.log(data.data.length);
-      //     if (code == 1 && data.data.length > 0) {
-      //       console.log(this.msgListArr);
-      //       //   if(data.data.length != 0){
-      //       this.msgListArr = data.data;
-      //       for (let i = 0; i < this.msgListArr.length; i++) {
-      //         if (this.msgListArr.type == 0) {
-      //           this.newxiaoxi = this.newxiaoxi + 1;
-      //         }
-      //         if (i > 0 && this.msgListArr[i].inside == 0) {
-      //           this.userName = this.msgListArr[i].name;
-      //           this.touxiangImg = this.msgListArr[i].img;
-      //         }
-      //       }
-      //     }
-      //   });
     },
     // 控制发送按钮样式
     gbDis() {
