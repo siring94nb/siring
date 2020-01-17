@@ -79,7 +79,8 @@ class Chat extends Base
                     'user_id' =>$uid,
                     'tel' =>htmlspecialchars($param['phone']),
                     'con'=>htmlspecialchars($param['msg']),
-                    'is_accept'=>2
+                    'is_accept'=>2,
+                    'created_at'=>time()
                 ];
 
             $res  = (new Suggest())->insert($data);
