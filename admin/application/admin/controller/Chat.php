@@ -26,11 +26,14 @@ class Chat extends Base
         $data = (new Message())->add($param);
 
             $user = (new User())->user_detail($param['rid']);
+            if($user['open_id'] === null){
+              return  $this->buildFailed(0,'通知失败');exit();
+            }
             $msg = WechatPay::push_message('Siring消息推送',$user['open_id'],'123456','123','待确认');
 
             return $data && $msg ? true : false;
         });
-        return $result ? returnJson(1,'留言成功'): returnJson(0,'提交失败');
+        return $result  ? $this->buildSuccess(1,'留言成功') : $this->buildFailed(0,'留言失败');
 
     }
 
@@ -45,9 +48,10 @@ class Chat extends Base
 
         $data = Message::get_list($pid,$uid);
 
-        return $data ? returnJson(1,'获取成功',$data): returnJson(0,'获取失败',$data);
+        return $data  ? $this->buildSuccess(['data' => $data,]):$this->buildFailed(0,'留言失败');
 
     }
+
 
 
     /**

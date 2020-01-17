@@ -262,7 +262,7 @@ Route::group('api', function () {
         Route::post('msg_add','api/Chat/add_message');//新增留言
         Route::post('msg_list','api/Chat/msg_list');//留言列表
         Route::post('msg_read','api/Chat/msg_read');//读取消息
-
+        Route::post('MessageFeedback','api/Chat/MessageFeedback');//反馈留言
     });
 
     //微信二维码
