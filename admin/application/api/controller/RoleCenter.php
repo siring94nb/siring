@@ -209,6 +209,7 @@ class RoleCenter extends Base
             $user_data = User::where('id',$uid)->find()->toarray();
             $param['user_id'] = $user_data['id'];
             $param['invitation'] = $user_data['other_code'];
+            $param['type'] = 3;
             if($user_data['is_subpackage'] = 1){
 
                 $order = new AllOrder();
