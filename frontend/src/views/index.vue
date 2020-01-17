@@ -1,5 +1,5 @@
 <template>
-  <div class="index">
+  <div class="index" style="min-width:1288px;">
     <myheader />
     <myaside />
     <div class="index">

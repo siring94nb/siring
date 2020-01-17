@@ -11,8 +11,19 @@
         <div class="boxM">
           <div style=" display: flex">
             <div class="defaultImg">
-              <img :src="imgTou" alt="用户头像" v-if="imgTou!=''"/>
-              <i class="iconfont icon-touxiang1" v-if="imgTou==''"></i>
+              <el-upload
+                name="image"
+                class="avatar-uploader"
+                action="https://manage.siring.com.cn/api/file/qn_upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+              >
+                <!-- <img :src="imgBUrl" alt /> -->
+                <img :src="imgTou" alt="用户头像" v-if="imgTou!=''" />
+                <!-- <div style="margin-top:25px;margin-left:-10px"><i style="font-size:70px;" class="iconfont icon-touxiang1" v-if="imgUrl == null"></i></div> -->
+              </el-upload>
+              <!-- <img :src="imgTou" alt="用户头像" v-if="imgTou!=''"/>
+              <i class="iconfont icon-touxiang1" v-if="imgTou==''"></i>-->
             </div>
             <div class="biaozhi">
               <i class="iconfont icon-huaban_fuzhi"></i>
@@ -59,7 +70,9 @@
               <span style="font-size:13px;">元</span>
               <i class="el-icon-arrow-right"></i>
             </div>
-            <div class="tx"><router-link to="withdrawX" style="color:#0889f5">提现</router-link></div>
+            <div class="tx">
+              <router-link to="withdrawX" style="color:#0889f5">提现</router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -78,14 +91,14 @@ import logginHeader from "@/components/logginHeader";
 import gnmk from "@/components/gnmk";
 import gnmk1 from "@/components/gnmk1";
 import dingDan from "@/components/dingDan";
-import { GetUserMassage, GetSumIndent } from "@/api/api";
+import { GetUserMassage, GetSumIndent,UserUpdating } from "@/api/api";
 export default {
   name: "afer-logginR",
   data() {
     return {
       userMessage1: {},
       arr: [1, 2],
-      imgTou: "",
+      imgTou: require("../../assets/images/头像 (2).png"),
       defaultImg: require("../../assets/images/u158.png")
     };
   },
@@ -111,9 +124,41 @@ export default {
         // this.showMsg(msg,code);
         if (code === 1) {
           this.userMessage1 = data;
-          this.imgTou = data.img
+          this.imgTou =
+            data.img == null
+              ? require("../../assets/images/头像 (2).png")
+              : data.img;
           // this.imgTou = data.img || this.defaultImg;
           // console.log(this.userMessage1);
+        }
+      });
+    },
+    handleAvatarSuccess(res, file) {
+      this.imgTou= res.data.filePath;
+      this.setUserUpdating();
+      // this.$router.push("/afterLoggin")
+      this.$router.go(0)
+    },
+    setUserUpdating() {
+      const params = {
+        user_id: this.userMessage1.id,
+        name: this.userMessage1.realname,
+        id_card: this.userMessage1.id_card,
+        id_card_just: this.userMessage1.id_card_just,
+        id_card_back: this.userMessage1.id_card_back,
+        province: this.userMessage1.add_province,
+        city: this.userMessage1.add_city,
+        enterprise_id: this.userMessage1.enterprise_id,
+        area: this.userMessage1.add_area,
+        address: this.userMessage1.address,
+        img: this.imgTou, //12312313
+        sex: this.userMessage1.sex
+      };
+      UserUpdating(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(res);
+        if (code === 1) {
+          this.showMsg(msg, msg);
         }
       });
     }
@@ -137,7 +182,7 @@ export default {
       height: 123px;
       border-radius: 50%;
     }
-    i{
+    i {
       font-size: 120px;
     }
   }

@@ -117,8 +117,8 @@
         </div>
       </div>
     </div>
-    <!-- <div @click.stop="setorderId(2,40)">测试流程跳转</div>
-    <div @click.stop="getconsoleList1">测试获取结果</div> -->
+    <div @click.stop="setorderId(2,40)">测试流程跳转</div>
+    <div @click.stop="getconsoleList1">测试获取结果</div>
   </div>
 </template>
 <script>

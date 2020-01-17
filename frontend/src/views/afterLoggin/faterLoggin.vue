@@ -5,31 +5,48 @@
     <div class="box" ref="box" :style="wstyle">
       <div class="imgBox">
         <div style="height:140px;">
-          <div>
+          <!-- <div>
             <img :src="imgBUrl" alt />
             <img :src="imgUrl" alt v-if="imgUrl!=''"/>
             <i style="font-size:60px;" class="iconfont icon-touxiang1" v-if="imgUrl==''"></i>
+          </div>-->
+          <div>
+            <el-upload
+              name="image"
+              class="avatar-uploader"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              :show-file-list="false"
+              :on-success="handleAvatarSuccess"
+            >
+              <img :src="imgBUrl" alt />
+              <img :src="imgUrl" alt />
+              <!-- <div style="margin-top:25px;margin-left:-10px"><i style="font-size:70px;" class="iconfont icon-touxiang1" v-if="imgUrl == null"></i></div> -->
+            </el-upload>
           </div>
           <div class="name">{{name}}</div>
         </div>
         <div class="xxBox">
           <div>
             <span>￥{{yue}}</span>
-            <span><router-link to="/recharge">余额充值</router-link></span>
+            <span>
+              <router-link to="/recharge">余额充值</router-link>
+            </span>
           </div>
           <div>
             <span>
               专属客服
               <i class="iconfont icon-icon"></i>
             </span>
-            <span> <a
-            id="qq"
-            target="_blank"
-            href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
-          >立即联系</a></span>
+            <span>
+              <a
+                id="qq"
+                target="_blank"
+                href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
+              >立即联系</a>
+            </span>
           </div>
           <div>
-            <div style="font-size:12px;width:50px">上次登录</div>
+            <div style="font-size:12px;width:60px">上次登录</div>
             <div style="font-size:12px;width:100px">{{updated_at}}</div>
           </div>
         </div>
@@ -37,7 +54,7 @@
       <div class="navBoxa">
         <el-row class="tac">
           <!-- :default-openeds="[num]" -->
-          <el-col :span="24" >
+          <el-col :span="24">
             <el-menu
               :default-active="ru"
               class="el-menu-vertical-demo"
@@ -83,13 +100,14 @@ import {
   MemberTotal,
   SubcontractTotal,
   GetUserMassage,
-  GetRoleCenter
+  GetRoleCenter,
+  UserUpdating
 } from "@/api/api";
 export default {
   // name: "fater-loggin",
   data() {
     return {
-      yue:0,
+      yue: 0,
       ru:
         this.$route.path == "/afterLoggin" ? "/afterLogginR" : this.$route.path, //确保页面刷新，导航栏选中状态不被清除,刷新就获取一次
       num: "",
@@ -171,12 +189,13 @@ export default {
         }
       ],
       routerValue: this.$route.path,
-      imgUrl: require("../../assets/images/u158.png"), //用户头像
+      imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
       imgBUrl: require("../../assets/images/u5989.png"),
       name: "未设置", //用户姓名
       dis: true,
       wstyle: "",
-      updated_at :''
+      updated_at: "",
+      shujuData: []
     };
   },
   components: {},
@@ -187,6 +206,11 @@ export default {
     // };
   },
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imgUrl = res.data.filePath;
+      this.setUserUpdating();
+      this.$router.go(0)
+    },
     showMsg(msg, code) {
       this.$message({
         message: msg,
@@ -200,7 +224,6 @@ export default {
         this.fenbaoshangX(),
         this.withdrawX();
       // this.zhankai();
-      this.gb();
       this.userMessage();
       this.chaxun();
     },
@@ -235,21 +258,21 @@ export default {
         type: 1
       };
       GetRoleCenter(params).then(res => {
-        let { data, msg,code } = res;
+        let { data, msg, code } = res;
         console.log(res);
-        if (code == 1) {  
+        if (code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         }
-        else if(code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }
-        else if(code == 0 ) {
+        // else if(code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if (code == 0) {
           // this.arr[2].con[0].rou = "/CityPartner";
           this.arr[2].con[0].rou = "/partnerCityX";
           // 13260676780
@@ -262,20 +285,20 @@ export default {
         type: 2
       };
       GetRoleCenter(params).then(res => {
-        let { data, msg,code} = res;
+        let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
-        } 
-        else if(code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
-        else if(code == 0 ){
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if (code == 0) {
           this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
           // 13260676780
@@ -291,17 +314,17 @@ export default {
         let { data, msg, code } = res;
         if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
-        } 
-        else if(code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
         }
-        else if(code == 0 ){
+        // else if(code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
+        else if (code == 0) {
           this.arr[2].con[2].rou = "/subContractorIndex";
           // this.arr[2].con[2].rou = "/subContractorSm1";
           // 13260676780
@@ -347,18 +370,42 @@ export default {
       };
       GetUserMassage(params).then(res => {
         let { data, msg, code } = res;
+        console.log(data);
         if (code === 1) {
-          this.yue = data.money
-          this.imgUrl = data.img;
+          this.yue = data.money;
+          this.imgUrl =
+            data.img == null
+              ? require("../../assets/images/头像 (2).png")
+              : data.img;
           this.name = data.realname || this.name;
-          this.updated_at =data.updated_at
+          this.updated_at = data.updated_at;
+          this.shujuData = data;
         }
       });
     },
-    // 控制第一个控件的大小
-    gb() {
-      // this.$refs.ceshi.$el.style.borderRadius = "15px"
-      //  console.log(this.$refs.ceshi.$el.style.borderRadius)
+    // 更换头像
+    setUserUpdating() {
+      const params = {
+        user_id: this.shujuData.id,
+        name: this.shujuData.realname,
+        id_card: this.shujuData.id_card,
+        id_card_just: this.shujuData.id_card_just,
+        id_card_back: this.shujuData.id_card_back,
+        province: this.shujuData.add_province,
+        city: this.shujuData.add_city,
+        enterprise_id: this.shujuData.enterprise_id,
+        area: this.shujuData.add_area,
+        address: this.shujuData.address,
+        img: this.imgUrl, //12312313
+        sex: this.shujuData.sex
+      };
+      UserUpdating(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(res);
+        if (code === 1) {
+          this.showMsg(msg, msg);
+        }
+      });
     }
   }
 };
@@ -422,11 +469,11 @@ export default {
     }
     &:nth-of-type(2) {
       display: inline-block;
-      width: 60px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
-      top: 30px;
-      left: 45px;
+      top: 25px;
+      left: 40px;
     }
   }
 }
@@ -441,7 +488,7 @@ export default {
         padding: 5px;
         background: rgb(238, 189, 101);
         border-radius: 3px;
-        a{
+        a {
           color: #ffffff;
         }
       }
@@ -452,9 +499,9 @@ export default {
         background: rgb(114, 124, 164);
         border-radius: 3px;
       }
-      a{
-          color: #ffffff;
-        }
+      a {
+        color: #ffffff;
+      }
     }
     &:nth-of-type(3) {
       color: rgba(255, 255, 255, 0.64);
@@ -476,16 +523,16 @@ export default {
 .el-submenu .el-menu-item {
   min-width: 121px;
   text-align: center;
-  background-color: rgb(255,255,255) !important;
+  background-color: rgb(255, 255, 255) !important;
 }
-.tac ul{
+.tac ul {
   border-radius: 10px !important;
 }
-.tac ul li:nth-of-type(1)>div{
+.tac ul li:nth-of-type(1) > div {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.tac ul li:nth-last-of-type(1)>div{
+.tac ul li:nth-last-of-type(1) > div {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
