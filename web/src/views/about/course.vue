@@ -168,7 +168,7 @@
                 },
                 ruleValidate: {
                     name: [
-                        {required: true, message: '品牌不能为空', trigger: 'blur'}
+                        {required: true, message: '历程不能为空', trigger: 'blur'}
                     ],
                 },
             };
