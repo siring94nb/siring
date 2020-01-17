@@ -37,6 +37,7 @@ class Message extends Model
         ]);
         if(!$validate->check($param)){
             returnJson (0,$validate->getError());exit();
+           // $this->buildFailed(0,$validate->getError());exit();
         }
 
         return $this->allowField(true)->save($param);
