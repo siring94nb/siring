@@ -17,8 +17,8 @@ class Banner extends Model
      * 查询全部轮播图
      * @throws \think\exception\DbException
      */
-    public function banner_list()
+    public function banner_list($type)
     {
-        return self::all() ? self::all()->toArray() : returnJson(0,'数据有误');
+        return self::all(['type'=>$type]) ? self::all(['type'=>$type])->toArray() : returnJson(0,'数据有误');
     }
 }

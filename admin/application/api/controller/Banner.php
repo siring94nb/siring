@@ -8,15 +8,15 @@ use \tp5er\Backup;
 class Banner extends Base
 {
     /**
-     * 显示资源列表
-     * @time 2019/10/10
-     * @return \think\Response
+     * banner列表
+     * @throws \think\exception\DbException
      */
     public function index()
     {
 
         $banner = new \app\data\model\Banner();
-        $data = $banner->banner_list();
+        $type = 1;
+        $data = $banner->banner_list($type);
 
         return $data ? returnJson(1,'获取成功',$data) : returnJson(0,'获取失败',$data);
     }

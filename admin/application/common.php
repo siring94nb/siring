@@ -131,7 +131,7 @@ function    returnJson($code,$msg,$data = null,$page = null){
         'code' => $code,
         'msg' => $msg,
     );
-    if($data)$json['data'] = $data;
+    $json['data'] = $data??'';
     if($page)$json['page'] = $page;
     echo json_encode($json);exit;
 }

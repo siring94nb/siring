@@ -690,6 +690,33 @@ export const appRouter = [
                 title: '核心成员',
                 component: () => import('@/views/member/list.vue')
 
+            },
+            {
+                path: 'honor',
+                icon: 'md-trophy',
+                name: 'honor',
+                access: 'admin/Honor/index',
+                title: '荣誉/证书',
+                component: () => import('@/views/about/honor.vue')
+
+            },
+            {
+                path: 'course',
+                icon: 'ios-calendar',
+                name: 'course',
+                access: 'admin/Course/index',
+                title: '发展历程',
+                component: () => import('@/views/about/course.vue')
+
+            },
+            {
+                path: 'suggest',
+                icon: 'ios-chatbubbles',
+                name: 'suggest',
+                access: 'admin/Message/index',
+                title: '留言管理',
+                component: () => import('@/views/about/suggest.vue')
+
             }
 
         ]

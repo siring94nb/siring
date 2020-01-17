@@ -1067,6 +1067,66 @@ Route::group('admin', function () use ($afterBehavior) {
             ['method' => 'post']
         ],
     ], ['after_behavior' => $afterBehavior]);
+
+    //荣誉、证书
+    Route::group('Honor', [
+        'index' => [
+            'admin/Honor/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Honor/add',
+            ['method' => 'post']
+        ],
+        'edit'   => [
+            'admin/Honor/edit',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Honor/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //发展历程
+    Route::group('Course', [
+        'index' => [
+            'admin/Course/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Course/add',
+            ['method' => 'post']
+        ],
+        'edit'   => [
+            'admin/Course/edit',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Course/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
+
+    //留言管理
+    Route::group('Message', [
+        'index' => [
+            'admin/Message/index',
+            ['method' => 'get']
+        ],
+        'add'   => [
+            'admin/Message/add',
+            ['method' => 'post']
+        ],
+        'edit'   => [
+            'admin/Message/edit',
+            ['method' => 'post']
+        ],
+        'del'   => [
+            'admin/Message/del',
+            ['method' => 'post']
+        ],
+    ], ['after_behavior' => $afterBehavior]);
 });
 
 //<!--
