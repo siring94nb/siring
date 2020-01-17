@@ -11,7 +11,7 @@
         </div>-->
         <div v-if="item.inside==1" class="guanfang">
           <div class="touxiangbox">
-            <div>
+            <div class="imgs">
               <img :src="item.img" :alt="item.name" />
             </div>
             <div>{{item.name}}</div>
@@ -33,7 +33,7 @@
             <div class="in1"></div>
           </div>
           <div class="touxiangbox">
-            <div>
+            <div class="imgs">
               <img :src="item.img" :alt="item.name" />
             </div>
             <div>{{item.name}}</div>
@@ -43,12 +43,6 @@
     </div>
     <div class="btnValueBox">
       <!-- <inout @keydown="huiche($event)" class="xiaoxiC" v-model="xiaoxiContent" @input="gbDis" /> -->
-      <el-popover ref="popover4" placement="top" width="30" trigger="click">
-        <div style="width:100%;text-align:center;">
-          <img :src="imageUrl" style="width:80px;height:80px;margin:auto;border-radius:0;" />
-        </div>
-      </el-popover>
-      <el-button v-popover:popover4 style="width:130px;margin-right:10px;">获取消息二维码</el-button>
       <textarea
         rows="1"
         @keydown="huiche($event)"
@@ -56,7 +50,7 @@
         v-model="xiaoxiContent"
         @input="gbDis"
       ></textarea>
-      <el-upload
+      <!-- <el-upload
         name="image"
         action="https://manage.siring.com.cn/api/file/qn_upload"
         :on-success="handleAvatarSuccess"
@@ -64,7 +58,7 @@
         :show-file-list="qb"
       >
         <i class="el-icon-circle-plus-outline"></i>
-      </el-upload>
+      </el-upload>-->
       <button
         :class="{'yButton':dis,'wuButton':!dis}"
         @click.stop="dis == true?setaddMessage():''"
@@ -73,10 +67,16 @@
   </div>
 </template>
 <script>
-import { msgList, addMessage, codeAdd } from "@/api/api";
+import axios from "axios";
+import config from "../../../../build/config";
+// import { msgList, addMessage, codeAdd } from "@/api/api";
+import qs from "qs";
+const apiPost = (url, params) => {
+  return axios.post(url, qs.stringify(params)).then(res => res.data);
+};
 export default {
   name: "liuyan",
-  props: ["uid", "pid"],
+  props: ["rid", "pid"],
   data() {
     return {
       qb: false,
@@ -121,7 +121,8 @@ export default {
       touxiangImg: "",
       Uid: 0,
       Pid: 0,
-      imageUrl:''
+      Rid: 0,
+      imageUrl: ""
     };
   },
   mounted() {
@@ -132,6 +133,10 @@ export default {
     pid: function(newVal, oldVal) {
       this.Pid = newVal; //newVal就是获取的动态新数据，赋值给newdata)
       this.getmsgList();
+    },
+    rid: function(newVal, oldVal) {
+      this.Rid = newVal; //newVal就是获取的动态新数据，赋值给newdata)
+      this.getmsgList();
     }
   },
   // 13260676780
@@ -140,7 +145,7 @@ export default {
       document.getElementsByClassName("xiaoxiC")[0].focus();
       // this.getmsgList();
       // this.ceshi();
-      this.getcodeAdd();
+      //   this.getcodeAdd();
     },
     showMsg(msg, code) {
       this.$message({
@@ -151,31 +156,56 @@ export default {
     getmsgList() {
       // let uid = this.uid;
       // let pid = this.pid;
-      console.log(this.uid);
-      console.log(this.Pid);
-      let params = {
-        pid: parseInt(this.pid),
-        uid: parseInt(sessionStorage.getItem("user_id"))
-      };
-      msgList(params).then(res => {
-        let { code, data, msg } = res;
-        console.log(res);
-        console.log(data.data.length);
-        if (code == 1 && data.data.length > 0) {
-          console.log(this.msgListArr);
-          //   if(data.data.length != 0){
-          this.msgListArr = data.data;
-          for (let i = 0; i < this.msgListArr.length; i++) {
-            if (this.msgListArr.type == 0) {
-              this.newxiaoxi = this.newxiaoxi + 1;
-            }
-            if (i > 0 && this.msgListArr[i].inside == 0) {
-              this.userName = this.msgListArr[i].name;
-              this.touxiangImg = this.msgListArr[i].img;
+      console.log(this.pid);
+      console.log(this.rid);
+      let vm = this,
+        params;
+      axios
+        .get("Chat/msg_list", {
+          params: {
+            pid: parseInt(vm.pid),
+            uid: 1
+          }
+        })
+        .then(function(response) {
+          let res = response.data;
+          console.log(res);
+          let { code, data, msg } = res;
+          console.log(data.data.length);
+          if (code == 1 && data.data.length > 0) {
+            console.log(vm.msgListArr);
+            //   if(data.data.length != 0){
+            vm.msgListArr = data.data;
+            for (let i = 0; i < vm.msgListArr.length; i++) {
+              if (vm.msgListArr.type == 0) {
+                vm.newxiaoxi = vm.newxiaoxi + 1;
+              }
+              if (i > 0 && vm.msgListArr[i].inside == 0) {
+                vm.userName = vm.msgListArr[i].name;
+                vm.touxiangImg = vm.msgListArr[i].img;
+              }
             }
           }
-        }
-      });
+        });
+      //   apiPost("Chat/msg_list", params).then(res => {
+      //     let { code, data, msg } = res;
+      //     console.log(res);
+      //     console.log(data.data.length);
+      //     if (code == 1 && data.data.length > 0) {
+      //       console.log(this.msgListArr);
+      //       //   if(data.data.length != 0){
+      //       this.msgListArr = data.data;
+      //       for (let i = 0; i < this.msgListArr.length; i++) {
+      //         if (this.msgListArr.type == 0) {
+      //           this.newxiaoxi = this.newxiaoxi + 1;
+      //         }
+      //         if (i > 0 && this.msgListArr[i].inside == 0) {
+      //           this.userName = this.msgListArr[i].name;
+      //           this.touxiangImg = this.msgListArr[i].img;
+      //         }
+      //       }
+      //     }
+      //   });
     },
     // 控制发送按钮样式
     gbDis() {
@@ -192,17 +222,16 @@ export default {
       // let timeOut =  setTimeout(()=>{
       //   console.log("一分钟已经到了")
       // },60000)
-      console.log(this.uid);
-      console.log(this.pid);
       let params = {
         pid: parseInt(this.pid),
-        uid: parseInt(sessionStorage.getItem("user_id")),
-        rid: 1,
+        // uid: parseInt(sessionStorage.getItem("user_id")),
+        uid: 1,
+        rid: this.Rid,
         content: this.xiaoxiContent,
         url: this.url,
-        inside: 0
+        inside: 1
       };
-      addMessage(params).then(res => {
+      apiPost("Chat/add_message", params).then(res => {
         let { code, msg } = res;
         console.log(1212123, res);
         if (code == 1) {
@@ -290,9 +319,9 @@ export default {
     // 获取关注二维码
     getcodeAdd() {
       let vm = this;
-      codeAdd().then(res => {
+      apiPost("", "").then(res => {
         console.log(res);
-        if(res.code == 1) {
+        if (res.code == 1) {
           vm.imageUrl = res.data;
         }
       });
@@ -323,11 +352,13 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  margin-bottom: 5px;
+.imgs {
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 5px;
+  }
 }
 // 带箭头div
 .demo {

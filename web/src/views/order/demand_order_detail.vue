@@ -203,33 +203,9 @@
         </div>
       </div>
     </div>
-    <div class="line line-vice">平台顾问信息互动</div>
+    <!-- <div class="line line-vice">平台顾问信息互动</div> -->
     <div class="speak_window">
-      <div class="speak_box">
-        <div class="answer">
-          <div class="heard_img left">
-            <img src="../../images/u3830.png" />
-            <div>平台顾问</div>
-          </div>
-          <div class="answer_text">
-            <p>fdgfdgfdg</p>
-            <i></i>
-          </div>
-        </div>
-        <div class="question">
-          <div class="heard_img right">
-            <img src="../../images/u3830.png" />
-          </div>
-          <div class="question_text clear">
-            <p>dgfdgdfgdfg</p>
-            <i></i>
-          </div>
-        </div>
-      </div>
-      <div class="input-box">
-        <Input v-model="value" placeholder="请输入信息(100字以内)..." style="width: 90%;" />
-        <button class="lt-btn">发送</button>
-      </div>
+      <liuyan :pid="id" :rid="information.user_id"></liuyan>
     </div>
 
     <div class="foot-box">
@@ -406,6 +382,7 @@
 import axios from "axios";
 import config from "../../../build/config";
 import orderDetail from "../main_components/order/orderDetail.vue";
+import liuyan from "../main_components/order/chat.vue";
 import qs from "qs";
 const apiPost = (url, params) => {
   return axios.post(url, qs.stringify(params)).then(res => res.data);
@@ -413,7 +390,8 @@ const apiPost = (url, params) => {
 
 export default {
   components: {
-    orderDetail
+    orderDetail,
+    liuyan
   },
   data() {
     return {
