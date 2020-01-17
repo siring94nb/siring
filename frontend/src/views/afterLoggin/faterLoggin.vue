@@ -263,15 +263,15 @@ export default {
         if (code == 1) {
           this.arr[2].con[0].rou = "/CityPartner";
         }
-        // else if(code == 3){
-        //   this.showMsg(msg,code);
-        //   this.$router.push({
-        //     name:`index`,
-        //     params:{
-        //       isRegister:'2'
-        //     }
-        //   })
-        // }
+        else if(code == 3){
+          this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
+        }
         else if (code == 0) {
           // this.arr[2].con[0].rou = "/CityPartner";
           this.arr[2].con[0].rou = "/partnerCityX";
@@ -289,15 +289,15 @@ export default {
         if (code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
         }
-        // else if(code == 3){
-        //   // this.showMsg(msg,code);
-        //   this.$router.push({
-        //     name:`index`,
-        //     params:{
-        //       isRegister:'2'
-        //     }
-        //   })
-        // }
+        else if(code == 3){
+          // this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
+        }
         else if (code == 0) {
           this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
@@ -315,15 +315,15 @@ export default {
         if (code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
         }
-        // else if(code == 3){
-        //   // this.showMsg(msg,code);
-        //   this.$router.push({
-        //     name:`index`,
-        //     params:{
-        //       isRegister:'2'
-        //     }
-        //   })
-        // }
+        else if(code == 3){
+          // this.showMsg(msg,code);
+          this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
+        }
         else if (code == 0) {
           this.arr[2].con[2].rou = "/subContractorIndex";
           // this.arr[2].con[2].rou = "/subContractorSm1";
