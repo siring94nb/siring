@@ -77,8 +77,8 @@ class Chat extends Base
         if($uid){
             $data = [
                     'user_id' =>$uid,
-                    'tel' =>$param['phone'],
-                    'con'=>$param['msg'],
+                    'tel' =>htmlspecialchars($param['phone']),
+                    'con'=>htmlspecialchars($param['msg']),
                     'is_accept'=>2
                 ];
 
