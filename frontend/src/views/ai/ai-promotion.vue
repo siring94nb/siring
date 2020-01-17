@@ -351,6 +351,7 @@ export default {
         con	:""
       }
       demandAdd(params).then(res=>{
+        console.log(this.total)
         let {code,msg,data} = res
         if(code == 1) {
           // this.showMsg(msg,code);
@@ -359,7 +360,7 @@ export default {
                 params: {
                   type:10,
                   id: data,
-                  order_amount:this.sumMoney,
+                  order_amount:this.total,
                   user_id: sessionStorage.getItem("user_id"),
                   order_type: 1
                 }

@@ -42,10 +42,10 @@ class Chat extends Base
      * @param $uid
      * @throws \think\exception\DbException
      */
-    public function msg_list($pid,$uid)
+    public function msg_list($pid,$status=0)
     {
 
-        $data = Message::get_list($pid,$uid);
+        $data = Message::get_list($pid,$status);
 
         return $data  ? $this->buildSuccess(['data' => $data,]):$this->buildFailed(0,'留言失败');
 
