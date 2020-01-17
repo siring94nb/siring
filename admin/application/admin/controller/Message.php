@@ -29,55 +29,20 @@ class Message extends Base
             $param['size'] = 10;
         }
 
-        $field = 'id,user_id,con,img,is_accept,created_at,updated_at';
-        $order = 'id desc';
+        $field = 'a.id,a.user_id,a.con,a.imgs,a.is_accept,a.created_at,a.updated_at,b.realname as name';
+        $order = 'a.id desc';
 
-        $count = (new Suggest()) ->where($where)->count();
+        $list = (new Suggest())
+            ->alias('a')->join('user b','a.user_id=b.id','left')
+            -> field( $field ) -> where( $where ) -> order( $order )
+            -> paginate( $param['size'] , false , array( 'page' => $param['page'] ) ) -> toArray();
 
-        $list = (new Suggest()) ->where($where)->field($field)->order($order)->page($param['page'],$param['size'])->select();
-
-        return $this->buildSuccess([
-            'count'=>$count,
-            'list'=>$list,
-        ]);
+        return $this -> buildSuccess( array(
+            'list' => $list['data'],
+            'count' => $list['total'],
+        ) );
     }
 
-    /**
-     * 添加
-     * @return mixed
-     */
-    public function add(){
-        $request = Request::instance();
-        $param = $request->param();
-
-        $rules = [
-            'name'=>'require',
-            'position'=>'require',
-            'img'=>'require',
-            'con'=>'require',
-        ];
-        $message = [
-            'name.require'=>'名称不能为空',
-            'position.require'=>'职位不能为空',
-            'img.require'=>'请上传图片',
-            'con.require'=>'内容不能为空',
-        ];
-        $validate = new Validate($rules,$message);
-        if(!$validate->check($param)){
-            return $this->buildFailed(0,$validate->getError());
-        }
-        $param['created_at'] = time();
-        $count = (new Suggest())->count();
-        if($count > 9){
-            return $this->buildFailed(0,'添加成员不能超过10个');exit();
-        }
-        $result = (new Suggest())->insert($param);
-        if($result){
-            return $this->buildSuccess([]);
-        }else{
-            return $this->buildFailed(0,'操作失败');
-        }
-    }
 
     /**
      * 修改
@@ -89,17 +54,13 @@ class Message extends Base
         $param = $request->param();
         $rules = [
             'id'=>'require',
-            'name'=>'require',
-            'position'=>'require',
-            'img'=>'require',
-            'con'=>'require',
+            'is_accept'=>'require',
+
         ];
         $message = [
             'id.require'=>'请选择数据',
-            'name.require'=>'名称不能为空',
-            'position.require'=>'职位不能为空',
-            'img.require'=>'请上传图片',
-            'con.require'=>'内容不能为空',
+            'is_accept.require'=>'判断不能为空',
+
         ];
         $validate = new Validate($rules,$message);
         if(!$validate->check($param)){
