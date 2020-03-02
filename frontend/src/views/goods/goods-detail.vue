@@ -60,7 +60,8 @@
               </div>
               <div class="tips">
                 <i class="iconfont icon-shengyin_shiti"></i>
-                <el-carousel
+                <span style="padding-left:5px;padding-top:4px;overflow: hidden;text-overflow: ellipsis; white-space: nowrap;">如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】</span>
+                <!-- <el-carousel
                   height="20px"
                   indicator-position="none"
                   direction="vertical"
@@ -69,7 +70,7 @@
                   <el-carousel-item v-for="(item, index) in tipList" :key="index">
                     <h3 class="single-dot">{{ item }}</h3>
                   </el-carousel-item>
-                </el-carousel>
+                </el-carousel> -->
               </div>
             </div>
           </div>
@@ -161,11 +162,11 @@ export default {
   data() {
     return {
       goodsId: this.$route.params.id,
-      tipList: [
-        "11如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】1",
-        "如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】2",
-        "如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】3"
-      ],
+      // tipList: [
+      //   "11如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】1",
+      //   "如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】2",
+      //   "如与演示雷同，请直接点击【定制类似】，完全不同点击【定制需求】3"
+      // ],
       goodsDetail: {},
       ifLogin: false,
       recommendList: [],

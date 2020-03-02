@@ -4,7 +4,7 @@
     <div class="quick-main">
       <h3 class="title">定制需求</h3>
       <div class="quick-cont clearfix">
-        <quickaside :type="1"/>
+        <quickaside :type="1" />
         <div class="types-right">
           <h4 class="title">填写需求（*为必填）</h4>
           <div class="form-box">
@@ -17,7 +17,24 @@
                   placeholder="请输入你的项目名，不超过10个字"
                 ></el-input>
               </el-form-item>
-            <el-form-item label="需求类型" required>
+              <el-form-item label="案例图片" required >
+                <el-upload
+                name="image"
+                class="avatar-uploader"
+                action="https://manage.siring.com.cn/api/file/qn_upload"
+                :show-file-list="false"
+                :on-success="handleAvatarSuccess"
+                :limit="1"
+              >
+                <img :src="form.img" alt="案例图片" v-if="form.img!=''" />
+                <!-- <span v-else> -->
+                  <i v-else  class="el-icon-plus avatar-uploader-icon"></i>
+                   <!-- <span style="margin-left:-60px">添加图片</span>
+                </span> -->
+                 
+              </el-upload>
+              </el-form-item>
+              <el-form-item label="需求类型" required>
                 <el-select v-model="form.need_category" placeholder="请选择">
                   <el-option label="智能硬件" value="1"></el-option>
                   <el-option label="电子商务" value="2"></el-option>
@@ -57,7 +74,7 @@
                 <el-row style="margin-bottom: 10px;">
                   <el-col :span="12">
                     <el-form-item label="手机号" required>
-                      <el-input type="text" v-model.number="form.need_phone"></el-input>
+                      <el-input class="phone" type="text" v-model.number="form.need_phone"></el-input>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
@@ -93,6 +110,8 @@
                   :on-exceed="handleExceed"
                   :file-list="fileList"
                   name="image"
+                  :multiple="false"
+
                 >
                   <el-button size="small" type="primary">点击上传</el-button>
                   <div
@@ -139,7 +158,8 @@ export default {
         need_desc: "",
         need_file: "",
         user_id: "",
-        need_status:1
+        need_status: 1,
+        img:""
       },
       rules: {
         need_budget_down: [
@@ -196,6 +216,12 @@ export default {
     this.init();
   },
   methods: {
+     showMsg(msg, code) {
+      this.$message({
+        message: msg,
+        type: code === 1 ? "success" : "error"
+      });
+    },
     init() {
       let vm = this;
       this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
@@ -209,9 +235,10 @@ export default {
     },
     handleExceed(files, fileList) {
       this.$message.warning(
-        `当前限制选择 3 个文件，本次选择了 ${
-          files.length
-        } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+        // `当前限制选择 3 个文件，本次选择了 ${
+        //   files.length
+        // } 个文件，共选择了 ${files.length + fileList.length} 个文件`
+        `限制上传，仅支持上传一个文件`
       );
     },
     beforeUpload(file) {
@@ -221,25 +248,61 @@ export default {
       }
       return size;
     },
-
+    // 获取图片链接
+    handleAvatarSuccess(res, file) {
+      this.form.img= res.data.filePath;
+      // this.$router.push("/afterLoggin")
+    },
     need_submit() {
       let vm = this;
-      needOrderAdd(vm.form).then(res => {
-        let { code, data, msg } = res;
-        if (code === 1) {
-          this.$message.success(msg);
-          this.$router.push({
-            name: "home"
-          });
-
-          // this.packageList = data;
-        }
-      });
+      // 添加手机号码验证
+      if (!/^1[3456789]\d{9}$/.test(vm.form.need_phone)) {
+        // alert("手机号码有误，请重填");
+        // return false;
+        // console.log("错误错误");
+        this.showMsg("手机号码输入错误","0")
+        this.form.need_phone=""
+      } else {
+        needOrderAdd(vm.form).then(res => {
+          let { code, data, msg } = res;
+          if (code === 1) {
+            this.$message.success(msg);
+            this.$router.push({
+              name: "demand_order"
+            });
+            // this.packageList = data;
+          }
+        });
+      }
     }
   }
 };
 </script>
-
+<style>
+.form-box .avatar-uploader .el-upload {
+    border: 1px dashed rgb(64,179,255);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .form-box .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .form-box .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+   .form-box .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+</style>
 <style scoped lang='scss'>
 .quickval {
   background-color: rgb(246, 246, 246);

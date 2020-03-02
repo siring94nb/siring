@@ -2,7 +2,7 @@
   <div class="quickval">
     <myheader />
     <div class="quick-main">
-      <h3 class="title">发稿推广</h3>
+      <h3 class="title" style="padding-left:5px;">发稿推广</h3>
       <div class="quick-cont clearfix">
         <quickaside />
         <div class="types-right">
@@ -142,7 +142,7 @@
         </div>
         <div class="symbol">=</div>
         <div class="bgw">￥{{total}}</div>
-        <el-button type="danger" @click="setdemandAdd">立即支付</el-button>
+        <el-button style="background:rgb(230,45,49);padding:6.5px 15px" type="danger" @click="setdemandAdd">立即支付</el-button>
       </div>
       <div class="payment-bot">
         <el-checkbox v-model="checked">本人已确认，支付后执行下一流程</el-checkbox>
@@ -509,8 +509,12 @@ export default {
       }
     }
     .payment-bot {
+      position: relative;
+      z-index: 30px;
       width: 700px;
       text-align: right;
+      margin-top: -18px;
+      padding-left:320px;
     }
   }
   .packages {

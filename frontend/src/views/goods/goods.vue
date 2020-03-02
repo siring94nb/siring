@@ -55,8 +55,10 @@
                 <span>我的收藏</span>
               </div>
               <div>
-                <i class="el-icon-tickets"></i>
-                <span>我的订单</span>
+                <router-link to="/demand_order" style="color:#333">
+                  <i class="el-icon-tickets"></i>
+                  <span>我的订单</span>
+                </router-link>
               </div>
             </div>
           </div>

@@ -116,6 +116,8 @@ export default {
       border-right: 5px solid rgb(242, 247, 250);
       img {
         margin-right: 20px;
+        width: 100px;
+        height: 100px;
       }
       div {
         font-size: 16px;

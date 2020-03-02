@@ -35,7 +35,7 @@
     <div class="zhedie">
       <!-- v-model="activeName" 绑定为默认展开，数值是什么对应展开同一个name的面板-->
       <el-collapse accordion>
-        <el-collapse-item title="我要充值其他金额" name="1" style="color:red !important;">
+        <el-collapse-item title="我要充值其他金额" name="1">
           <div class="shuru">
             <input type="number" placeholder="请输入您要充值的金额" ref="shuruJe" />
             <button @click.stop="affirm">确定金额</button>
@@ -156,6 +156,13 @@ export default {
   }
 };
 </script>
+<style>
+.zhedie .el-collapse-item__header{
+  color: rgb(0,191,255);
+  font-size: 20px;
+  font-weight: 700
+}
+</style>
 <style lang="scss" scoped>
 .bottomBox {
   background: #ffffff;
