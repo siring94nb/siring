@@ -302,7 +302,7 @@ export default {
         user_id: 0
       },
       balance: "0.00", //余额
-      paymentAccount: "0", //选择收款账号
+      paymentAccount: "1", //选择收款账号
       payAccount: [
         "工商银行-6212264000061706160",
         "工商银行-4000040209200016204"
@@ -577,7 +577,8 @@ export default {
 }
 .index {
   margin: auto;
-  margin-top: 100px;
+  margin-top: 120px;
+  margin-bottom: 40px;
   width: 1200px;
   h1 {
     font-size: 33px;

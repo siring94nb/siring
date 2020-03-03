@@ -566,93 +566,9 @@ export const appRouter = [
         ]
     },
     {
-        path: '/General',
-        icon: 'md-cog',
-        title: '通用设置',
-        name: 'General',
-        component: Main,
-        children: [
-            {
-                path: 'BackupSql',
-                icon: 'md-construct',
-                name: 'BackupSql',
-                access: 'admin/BackupSql/index',
-                title: '数据库管理',
-                component: () => import('@/views/backup/index.vue')
-            },
-            {
-                path: 'seo',
-                icon: 'logo-windows',
-                name: 'seo',
-                access: 'admin/Seo/index',
-                title: 'SEO设置',
-                component: () => import('@/views/system/seo.vue')
-            },
-            {
-                path: 'Treaty',
-                icon: 'ios-globe-outline',
-                name: 'Treaty',
-                access: 'admin/Treaty/index',
-                title: '网站协议',
-                component: () => import('@/views/system/treaty.vue')
-            },
-            {
-                path: 'log',
-                icon: 'md-list-box',
-                name: 'log',
-                access: 'admin/Log/index',
-                title: '日志管理',
-                component: () => import('@/views/system/log.vue')
-            },
-            {
-                path: 'vip',
-                icon: 'ios-hammer',
-                name: 'vip',
-                title: '会员设置',
-                component: () => import('@/views/vipsetting/index.vue'),
-                // redirect: '/vip/vipLevel',
-                children: [
-                    {
-                        path: 'vipLevel',
-                        icon: 'ios-hammer',
-                        name: 'vipLevel',
-                        title: '会员等级',
-                        access: 'admin/RoleJoin/member_index',
-                        component: () => import('@/views/vipsetting/vipLevel.vue'),
-                    },
-                    {
-                        path: 'settingCity',
-                        icon: 'ios-hammer',
-                        name: 'settingCity',
-                        title: '城市等级',
-                        access: 'admin/RoleJoin/city_index',
-                        component: () => import('@/views/vipsetting/settingCity.vue'),
-                    },
-                    {
-                        path: 'cityPartner',
-                        icon: 'ios-hammer',
-                        name: 'cityPartner',
-                        title: '城市合伙人',
-                        access: 'admin/RoleJoin/partner_index',
-                        component: () => import('@/views/vipsetting/cityPartner.vue'),
-                    },
-                    {
-                        path: 'fbs',
-                        icon: 'ios-hammer',
-                        name: 'fbs',
-                        title: '分包商',
-                        access: 'admin/RoleJoin/subcontractor_index',
-                        component: () => import('@/views/vipsetting/fbs.vue'),
-                    },
-
-                ]
-            }
-        ]
-    },
-    {
         path: '/Setup',
         icon: 'md-build',
-        title: '系统管理',
+        title: '运营管理',
         name: 'Setup',
         component: Main,
         children: [
@@ -717,11 +633,95 @@ export const appRouter = [
                 title: '留言管理',
                 component: () => import('@/views/about/suggest.vue')
 
+            },
+            {
+                path: 'vip',
+                icon: 'ios-hammer',
+                name: 'vip',
+                title: '会员设置',
+                component: () => import('@/views/vipsetting/index.vue'),
+                // redirect: '/vip/vipLevel',
+                children: [
+                    {
+                        path: 'vipLevel',
+                        icon: 'ios-hammer',
+                        name: 'vipLevel',
+                        title: '会员等级',
+                        access: 'admin/RoleJoin/member_index',
+                        component: () => import('@/views/vipsetting/vipLevel.vue'),
+                    },
+                    {
+                        path: 'settingCity',
+                        icon: 'ios-hammer',
+                        name: 'settingCity',
+                        title: '城市等级',
+                        access: 'admin/RoleJoin/city_index',
+                        component: () => import('@/views/vipsetting/settingCity.vue'),
+                    },
+                    {
+                        path: 'cityPartner',
+                        icon: 'ios-hammer',
+                        name: 'cityPartner',
+                        title: '城市合伙人',
+                        access: 'admin/RoleJoin/partner_index',
+                        component: () => import('@/views/vipsetting/cityPartner.vue'),
+                    },
+                    {
+                        path: 'fbs',
+                        icon: 'ios-hammer',
+                        name: 'fbs',
+                        title: '分包商',
+                        access: 'admin/RoleJoin/subcontractor_index',
+                        component: () => import('@/views/vipsetting/fbs.vue'),
+                    },
+
+                ]
             }
 
         ]
     },
-
+    {
+        path: '/General',
+        icon: 'md-cog',
+        title: '通用设置',
+        name: 'General',
+        component: Main,
+        children: [
+            {
+                path: 'BackupSql',
+                icon: 'md-construct',
+                name: 'BackupSql',
+                access: 'admin/BackupSql/index',
+                title: '数据库管理',
+                component: () => import('@/views/backup/index.vue')
+            },
+            {
+                path: 'seo',
+                icon: 'logo-windows',
+                name: 'seo',
+                access: 'admin/Seo/index',
+                title: 'SEO设置',
+                component: () => import('@/views/system/seo.vue')
+            },
+            {
+                path: 'Treaty',
+                icon: 'ios-globe-outline',
+                name: 'Treaty',
+                access: 'admin/Treaty/index',
+                title: '网站协议',
+                component: () => import('@/views/system/treaty.vue')
+            },
+            {
+                path: 'log',
+                icon: 'md-list-box',
+                name: 'log',
+                access: 'admin/Log/index',
+                title: '日志管理',
+                component: () => import('@/views/system/log.vue')
+            },
+            
+        ]
+    },
 
 ];
 

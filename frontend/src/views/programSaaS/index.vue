@@ -31,7 +31,7 @@
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
         <el-button class="wh-sty" v-popover:popover2><i class="el-icon-question"></i></el-button>
         <div style="flex:1"></div>
-        <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
+        <el-button  type="warning" plain  class="appreciation"  v-popover:popover1>增值服务</el-button>
       </div>
       <el-popover ref="popover1" placement="bottom" width="450" trigger="click">
         <div style="display:flex;justify-content : space-around;">
@@ -152,6 +152,8 @@
           </el-radio-group>-->
         </div>
       </div>
+       <jsjm />
+        <jdyh />
     </div>
   </div>
 </template>
@@ -159,11 +161,15 @@
 <script>
 // @ is an alias to /src
 import Myheader from "@/components/header";
+import Jsjm from "@/components/jsjm";
+import Jdyh from "@/components/jdyh";
 import { GetTemplate } from "@/api/api";
 export default {
   name: "index",
   components: {
-    Myheader
+    Myheader,
+    Jsjm,
+    Jdyh
   },
   data() {
     return {
@@ -172,6 +178,7 @@ export default {
       diySel: false,
       guHui: false,
       guSel: true,
+      mous: false,
       tempList: [],
       showTemp: {},
       valData: {
@@ -285,7 +292,7 @@ export default {
     shelterHidden() {
       this.imgShow = false;
       this.imagesUrl = "";
-    }
+    },
   }
 };
 </script>
@@ -431,12 +438,13 @@ export default {
       font-size: 32px;
     }
     .appreciation {
-      background-color: rgb(255, 153, 0);
+      // background-color: rgb(174,174,174);
+      // color: #fff;
       font-weight: 700;
       font-size: 18px;
       height: 36px;
       line-height: 12px;
-      margin-right: 20px;
+      // margin-right: 20px;
       width: 150px;
       margin-top: 2px;
     }
@@ -533,7 +541,7 @@ export default {
       .input-box {
         margin-bottom: 40px;
         input {
-          width: 230px;
+          width: 265px;
           padding: 5px;
         }
       }
