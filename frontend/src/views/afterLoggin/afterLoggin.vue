@@ -19,7 +19,7 @@ import afterLogginR from "@/views/afterLoggin/afterLogginR";
 export default {
   data() {
     return {
-      rName: ""
+      rName: "",
     };
   },
   components: {
@@ -98,12 +98,19 @@ export default {
     width: 160px;
     // float: left;
     // position: relative;
+    top: 100px;
     z-index: 100;
     position: fixed;
     left: 0;
-    height: 30px;
-    
+    height: 815px;
+    // height: 100%;
+    overflow-y:scroll; 
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
   }
+  .left::-webkit-scrollbar{
+    display:none;
+}
   .right {
     margin-left: 160px;
     // padding-left: 10px;

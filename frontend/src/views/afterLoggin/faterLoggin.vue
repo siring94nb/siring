@@ -19,12 +19,13 @@
               :on-success="handleAvatarSuccess"
             >
               <img :src="imgBUrl" alt />
-              <img :src="imgUrl" alt />
+              <img :src="imgUrl" alt  v-if="imgUrl!=null"/>
               <!-- <div style="margin-top:25px;margin-left:-10px"><i style="font-size:70px;" class="iconfont icon-touxiang1" v-if="imgUrl == null"></i></div> -->
             </el-upload>
           </div>
           <div class="name">{{name}}</div>
         </div>
+        <div style="height: 2px; width: 160px;background: -webkit-linear-gradient(left,rgba(255, 255, 255, 0),rgb(197,150,142),rgba(255,255,255,0));background: linear-gradient(to right, rgba(255, 255, 255, 0),rgb(197,150,142),rgba(255,255,255,0));margin-bottom:6px"></div>
         <div class="xxBox">
           <div>
             <span>￥{{yue}}</span>
@@ -65,6 +66,7 @@
               :unique-opened="true"
               :router="true"
               :default-openeds="[num]"
+               @open="handleOpen"
             >
               <el-submenu ref="ceshi" :index="index+''" v-for="(item,index) in arr" :key="index+''">
                 <!-- 控制中心 -->
@@ -189,7 +191,8 @@ export default {
         }
       ],
       routerValue: this.$route.path,
-      imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
+      // imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
+      imgUrl:null,
       imgBUrl: require("../../assets/images/u5989.png"),
       name: "未设置", //用户姓名
       dis: true,
@@ -218,7 +221,7 @@ export default {
       });
     },
     init() {
-      console.log("0109-a");
+      console.log(document.getElementsByClassName("imgBox")[0].offsetHeight);
       this.cityHehuorenX(),
         this.classHuiyuanX(),
         this.fenbaoshangX(),
@@ -260,18 +263,18 @@ export default {
       CityTotal().then(res => {
         let { data, msg } = res;
         console.log(res);
-        if (data.code == 1) {
+        if (data.code == 1) { 
           this.arr[2].con[0].rou = "/CityPartner";
         }
-        else if(data.code == 3){
-          this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }
+        // else if(data.code == 3){
+        //   this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
         else if (data.code == 0) {
           // this.arr[2].con[0].rou = "/CityPartner";
           this.arr[2].con[0].rou = "/partnerCityX";
@@ -289,15 +292,15 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[1].rou = "/ClassMembersA";
         }
-        else if(data.code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }
+        // else if(data.code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
         else if (data.code == 0) {
           this.arr[2].con[1].rou = "/ClassMembersX";
           // this.arr[2].con[1].rou = "/ClassMembersA";
@@ -315,15 +318,15 @@ export default {
         if (data.code == 1) {
           this.arr[2].con[2].rou = "/subContractorSm1";
         }
-        else if(data.code == 3){
-          // this.showMsg(msg,code);
-          this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-        }
+        // else if(data.code == 3){
+        //   // this.showMsg(msg,code);
+        //   this.$router.push({
+        //     name:`index`,
+        //     params:{
+        //       isRegister:'2'
+        //     }
+        //   })
+        // }
         else if (data.code == 0) {
           this.arr[2].con[2].rou = "/subContractorIndex";
           // this.arr[2].con[2].rou = "/subContractorSm1";
@@ -359,8 +362,12 @@ export default {
       }
       // }, 1000);
     },
+    handleOpen(key, keyPath) {
+      console.log(20200302);
+      console.log(document.body.offsetHeight-102)
+    },
     handleClose(key, keyPath) {
-      //   console.log(key, keyPath);
+        console.log(2212);
     },
     // 获取用户信息
     userMessage() {
@@ -373,10 +380,10 @@ export default {
         console.log(data);
         if (code === 1) {
           this.yue = data.money;
-          this.imgUrl =
-            data.img == null
-              ? require("../../assets/images/头像 (2).png")
-              : data.img;
+          this.imgUrl =data.img
+            // data.img == null
+              // ? require("../../assets/images/头像 (2).png")
+              // : data.img;
           this.name = data.realname || this.name;
           this.updated_at = data.updated_at;
           this.shujuData = data;
@@ -443,7 +450,7 @@ export default {
   }
 }
 .imgBox {
-  margin-top: 100px;
+  margin-top:5px;
   margin-bottom: 10px;
   text-align: center;
   // height: 200px;

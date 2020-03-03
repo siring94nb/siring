@@ -9,9 +9,9 @@
         </div>
         <div class="login-box">
           <div v-if="!ifLogin">
-            <span @click="dialogVisible = true; isRegister = 1">注册</span>
+            <span class="yangshixiugai"  @click="dialogVisible = true; isRegister = 1" @mouseover="yangshixiugai(1)" @mouseout="yangshixiugai1">注册</span>
             <el-divider direction="vertical"></el-divider>
-            <span @click="dialogVisible = true; isRegister = 2">登录</span>
+            <span class="yangshixiugai" @click="dialogVisible = true; isRegister = 2" @mouseover="yangshixiugai(2)" @mouseout="yangshixiugai1">登录</span>
           </div>
           <div v-else class="after-login">
             <el-badge :value="200" :max="99" class="bell">
@@ -346,7 +346,7 @@ export default {
     this.isLogin();
     this.ceshi();
     this.getGetProvince();
-    this.guoqi();
+    // this.guoqi();
   },
   methods: {
     isLogin() {
@@ -455,6 +455,21 @@ export default {
         }
       })
     },
+    yangshixiugai(num){
+      let yangshiArr = document.getElementsByClassName("yangshixiugai");
+      if(num == 1){
+        // console.log(1111)
+        yangshiArr[0].style.color="red"
+      }else{
+        // console.log(2222)
+        yangshiArr[1].style.color="red"
+      }
+    },
+    yangshixiugai1(){
+      let yangshiArr = document.getElementsByClassName("yangshixiugai");
+      yangshiArr[0].style.color="#ffffff";
+      yangshiArr[1].style.color="#ffffff"
+    },
     // 测试通过他人邀请码过来
     ceshi(){
       let roPath = this.$route.query.isRegister;
@@ -466,23 +481,23 @@ export default {
       }
     },
     //登录过期，弹出登录框
-    guoqi(){
-      let roPath = this.$route.params.isRegister;
-      if(roPath == 2){
-        this.dialogVisible = true;
-        this.isRegister = 2
-        Logout().then(res => {
-        let { data, msg, code } = res.data;
-        if (code === 1) {
-          this.$message.error('登录过期')
-          this.$store.commit("logout");
-          this.ifLogin = false;
-          // this.reload();
-          this.$router.push('/');
-        }
-      });
-      }
-    },
+    // guoqi(){
+    //   let roPath = this.$route.params.isRegister;
+    //   if(roPath == 2){
+    //     this.dialogVisible = true;
+    //     this.isRegister = 2
+    //     Logout().then(res => {
+    //     let { data, msg, code } = res.data;
+    //     if (code === 1) {
+    //       this.$message.error('登录过期')
+    //       this.$store.commit("logout");
+    //       this.ifLogin = false;
+    //       // this.reload();
+    //       this.$router.push('/');
+    //     }
+    //   });
+    //   }
+    // },
     // 城市改变，获取相应的二级城市等
     selectFn() {
       let pid = this.selectItem;

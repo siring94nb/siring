@@ -119,7 +119,7 @@ import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
-import {Member,Honor,Course} from "@/api/api"
+import {Member,Honor,GetRoleCenterGetRoleCenter} from "@/api/api"
 export default {
   name: "index",
   components: {
@@ -317,7 +317,7 @@ export default {
     },
     // 发展历程
     getCourse(){
-      Course().then(res=>{
+      GetRoleCenterGetRoleCenter().then(res=>{
          let {data,code,msg} = res;
         console.log(data)
         if(code == 1){
@@ -463,7 +463,7 @@ export default {
       background-color: rgb(242, 242, 242);
       position: relative;
       .course-main {
-        height: 100%;
+        height: 96%;
         width: 80px;
         margin-left: 5%;
         img {
@@ -483,10 +483,14 @@ export default {
         position: absolute;
         left: 2.5%;
         top: 15%;
+        // margin-bottom: -30%;
         .title-box {
           display: flex;
           margin-left: 50px;
           margin-bottom: 40px;
+          &:last-of-type{
+            margin-bottom: 0;
+          }
           img {
             width: 20px;
             height: 20px;

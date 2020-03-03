@@ -2,23 +2,27 @@
   <div class="recomment-left">
     <div class="quick-desc">
       <div class="desc-title">
-        <i :class="{'iconfont':true,'icon-jisuanqi':rou=='quickValuation','i1':rou=='quickValuation','icon-xuqiubaosong':rou=='fillDemand'}"></i>
-        <span style="font-size:18px">{{type == 1? '定制需求':'快捷估价'}}</span>
+        <i :class="{'iconfont':true,'icon-jisuanqi':rou=='quickValuation','i1':rou=='quickValuation','icon-xuqiubaosong':rou=='fillDemand','icon-wenwangwenbanli':rou=='ai-promotion'}"></i>
+        <span style="font-size:18px">{{type == 1? '定制需求':rou=="ai-promotion"?'提交稿件':'快捷估价'}}</span>
       </div>
-      <div class="desc-dit">
-        {{type == 1?'请详细填写右边需求信息，提交需求后，系统将根据信息需求情况，及时走公司需求的梳理分析，以及报价、合同、设计等流程；为您提供完美的用户体验！':
+      <div :class=" {'desc-dit1':rou=='ai-promotion','desc-dit':rou!='ai-promotion'}">
+        {{type == 1?'请详细填写右边需求信息，提交需求后，系统将根据信息需求情况，及时走公司需求的梳理分析，以及报价、合同、设计等流程；为您提供完美的用户体验！':rou=="ai-promotion"?
+        '本平台针对您提交的需求，从数万家媒介中AI智能筛选推广，做到搜索引擎收录高，媒介覆盖精准，从而达到“少花钱宣传广的效果”！如需帮助，我们还有专业写手为您撰写稿件，扫除您的撰写烧脑之忧！':
         '很多朋友对开发费用多少没有大致概念，往往被不良开发商所蒙蔽，在这里我们为您提供便捷的快捷估价服务，让您放心开发！'}}
       </div>
     </div>
     <div class="recomment-cont">
       <div class="recomment-title">
-        <i class="iconfont icon-hua"></i>
+        <i class="iconfont icon-shouye"></i>
         <span>定制案例欣赏</span>
       </div>
       <div class="recomment-list">
         <div class="recomment-item" v-for="item in recommentList" :key="item.id">
           <el-image class="cover-img" :src="item.img"></el-image>
           <el-image :src="require('@/assets/images/u2337.png')"></el-image>
+          <div class="jianjie">
+            <span>{{item.goods_name}}</span>
+          </div>
         </div>
       </div>
     </div>
@@ -46,7 +50,7 @@ export default {
     },
     getCustomCase() {
       GetCustomCase().then(res => {
-        console.log(res);
+        console.log(res.data.data);
         let { code, msg, data } = res.data;
         if (code === 1) {
           this.recommentList = data;
@@ -98,6 +102,12 @@ export default {
       line-height: 2;
       width: 80%;
     }
+    .desc-dit1 {
+      font-size: 14px;
+      color: #6b6b6b;
+      line-height: 1.5;
+      width: 80%;
+    }
   }
   .recomment-cont {
     flex: 1;
@@ -111,7 +121,7 @@ export default {
       height: 34px;
       line-height: 34px;
       box-sizing: border-box;
-      .icon-hua {
+      .icon-shouye {
         font-size: 24px;
         color: rgb(216, 30, 6);
         vertical-align: middle;
@@ -136,6 +146,9 @@ export default {
         &:hover .cover-img {
           transform: rotateY(-90deg);
         }
+        &:hover .jianjie {
+          transform: rotateY(-90deg);
+        }
         .el-image {
           width: 160px;
           height: 160px;
@@ -155,5 +168,19 @@ export default {
       }
     }
   }
+}
+.jianjie{
+  position: absolute;
+  z-index: 30;
+  bottom: 0px;
+  width:100%;
+  padding: 8px 0;
+  background:rgba(0,0,0,0.8);
+  text-align: center;
+  span{
+    color: #ffffff;
+    font-size: 14px
+  }
+  
 }
 </style>

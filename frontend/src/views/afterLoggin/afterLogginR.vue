@@ -61,8 +61,13 @@
         </div>
         <div class="yue">
           <div>
-            <i class="iconfont icon--zijinguanli"></i>
+            <div>
+              <i class="iconfont icon--zijinguanli"></i>
             <span>余额</span>
+            </div>
+             <div class="tx">
+              <router-link to="withdrawX" style="color:#0889f5">余额提现</router-link>
+            </div>
           </div>
           <div>
             <div class="yueBox">
@@ -70,8 +75,8 @@
               <span style="font-size:13px;">元</span>
               <i class="el-icon-arrow-right"></i>
             </div>
-            <div class="tx">
-              <router-link to="withdrawX" style="color:#0889f5">提现</router-link>
+            <div class="chongzhi">
+              <router-link to="recharge" style="color:#ffffff">余额充值</router-link>
             </div>
           </div>
         </div>
@@ -196,17 +201,17 @@ export default {
       font-size: 20px;
     }
     img {
-      width: 40px;
-      height: 40px;
-      padding: 10px 0 0 20px;
-      padding-top: 10px;
+      width: 30x;
+      height: 30px;
+      padding: 30px 0 0 20px;
+      // padding-top: 10px;
     }
   }
   .account {
     margin-right: 90px;
     width: 280px;
     li {
-      padding-bottom: 20px;
+      padding-bottom: 35px;
       > span {
         font-size: 20px;
         &:nth-of-type(1) {
@@ -267,6 +272,7 @@ export default {
   div:nth-of-type(1) {
     margin-right: 45px;
     width: 200px;
+    position: relative;
   }
   i {
     font-size: 32px;
@@ -280,10 +286,23 @@ export default {
   .tx {
     color: #0889f5;
     border: 1px solid #0889f5;
-    padding: 8px 50px;
+    padding: 5px 10px;
     border-radius: 5px;
-    width: 40px;
-    font-weight: 700;
+    width: 66px;
+    // font-weight: 700;
+    position: absolute;
+    top: 92px
+  }
+  .chongzhi {
+    color: #ffffff;
+    border: 1px solid rgb(233,193,122);
+    background: rgb(233,193,122);
+    padding: 5px 10px;
+    border-radius: 5px;
+    width: 66px;
+    margin-top: 10px;
+    // font-weight: 700;
+
   }
   .yueBox {
     padding-bottom: 50px;

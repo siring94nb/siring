@@ -163,7 +163,7 @@ export default {
       position: absolute;
       top: 0;
       right: 60px;
-      border: 1px solid #e5e5e5;
+      border: 1px solid rgb(255,234,234);
       padding: 0px 10px 10px 10px;
       width: 184px;
       box-sizing: border-box;

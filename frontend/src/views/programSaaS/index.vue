@@ -340,8 +340,8 @@ export default {
   left: 0;
   .images-box {
     width: 24%;
-    height: 96%;
-    margin: 20px auto;
+    height: 80%;
+    margin: 10% auto;
     position: relative;
     .images-show {
       width: 83%;
@@ -488,7 +488,7 @@ export default {
       .abstract-show {
         position: relative;
         width: 260px;
-        height: 480px;
+        height: 490px;
         margin: auto;
         .show-img {
           position: absolute;

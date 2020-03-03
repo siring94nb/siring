@@ -81,7 +81,7 @@ export default {
       activeName: "",
       typeList: [
         {
-          className: "iconfont icon-gongyinglian",
+          className: "iconfont icon-yuanxingtu",
           name: "原型UI",
           id: 1,
           ifchoose: false
@@ -117,7 +117,7 @@ export default {
           ifchoose: false
         },
         {
-          className: "iconfont icon-weixinxiaochengxu",
+          className: "iconfont icon-xiaochengxu",
           name: "小程序",
           id: 7,
           ifchoose: false
