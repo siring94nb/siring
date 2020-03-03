@@ -500,7 +500,7 @@ export default {
       }
       .shelter {
         width: 230px;
-        height: 450px;
+        height: 460px;
         background-color: rgba(0, 0, 0, 0.6);
         margin: auto;
         position: absolute;

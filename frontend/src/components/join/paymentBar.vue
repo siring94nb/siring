@@ -148,6 +148,8 @@ export default {
       color: #ff0000;
       min-width: 120px;
       box-sizing: border-box;
+      font-weight: 700;
+      font-size: 19px;
     }
     .symbol {
       margin: 0 20px;

@@ -55,7 +55,8 @@ export default {
   .content-reply {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
+    // margin-top: 30px;
+    margin-top: 15px;
     .content-main {
       text-align: center;
       width: 122px;
@@ -128,7 +129,8 @@ export default {
     }
     .all-line {
       height: 3px;
-      width: 18px;
+      // width: 18px;
+      width: 50px;
       margin-top: 15px;
     }
     .g-line {
