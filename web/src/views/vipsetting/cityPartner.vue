@@ -41,6 +41,9 @@
         <FormItem label="费用标准（元/年）" prop="money">
           <Input v-model="formItem.money" placeholder="请输入费用标准" style="width: 300px;"></Input>
         </FormItem>
+        <FormItem label="申请最多人数" prop="money">
+          <Input v-model="formItem.money" placeholder="请输入" style="width: 300px;"></Input>人
+        </FormItem>
         <FormItem label="等级政策描述" prop="policy">
           <div id="wangeditor" v-model="formItem.policy"></div>
         </FormItem>

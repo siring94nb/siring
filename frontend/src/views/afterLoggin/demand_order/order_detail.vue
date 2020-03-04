@@ -624,6 +624,9 @@ export default {
           vm.fileList = [{ name: "需求文件", url: data.url }];
           vm.price = Number(data.order_amount);
           vm.listData = data;
+          if(vm.status == 3 && data.examine == 2) {
+            vm.showPaymentFlag = true;
+          }
         }
       });
     },
@@ -668,7 +671,7 @@ export default {
   padding: 15px;
   .line {
     font-weight: 700;
-    margin-top: 20px;
+    // margin-top: 20px;
     font-size: 16px;
   }
   .line-marst {

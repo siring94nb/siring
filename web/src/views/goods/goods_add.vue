@@ -19,6 +19,7 @@
       >
         <Input v-model="item.category_name" style="width: 300px;margin-right:20px;" />
         <Button type="primary" @click="editSort(index, item.id)">编辑</Button>
+        <!-- <Button type="error" @click="editSort(index, item.id)">删除</Button> -->
       </div>
       <p style="font-size:18px;margin:30px 0 0 15px;">分类添加</p>
       <Form ref="sortForm" :rules="ruleValidate" :model="sortMain" :label-width="80">
