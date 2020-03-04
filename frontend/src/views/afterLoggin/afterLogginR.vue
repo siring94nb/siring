@@ -180,7 +180,7 @@ export default {
 .boxM {
   background: #fff;
   margin: 10px 0 0 20px;
-  padding: 40px;
+  padding: 70px 40px 40px 40px ;
   .defaultImg {
     img {
       width: 120px;
@@ -265,7 +265,7 @@ export default {
   }
 }
 .yue {
-  padding: 50px;
+  padding: 70px 50px 50px 50px;
   margin: 10px 0 0 10px;
   background: #ffffff;
   display: flex;

@@ -17,13 +17,17 @@
         <span>定制案例欣赏</span>
       </div>
       <div class="recomment-list">
-        <div class="recomment-item" v-for="item in recommentList" :key="item.id">
-          <el-image class="cover-img" :src="item.img"></el-image>
+        <div class="recomment-item" v-for="(item,index) in recommentList" :key="item.id">
+          <div v-if="index<10">
+            <el-image class="cover-img" :src="item.img"></el-image>
           <el-image :src="require('@/assets/images/u2337.png')"></el-image>
           <div class="jianjie">
             <span>{{item.goods_name}}</span>
           </div>
+          </div>
+          
         </div>
+        <div class="ckgd" >查看更多</div>
       </div>
     </div>
   </div>
@@ -182,5 +186,11 @@ export default {
     font-size: 14px
   }
   
+}
+.ckgd{
+  text-align: center;
+  padding-bottom:15px;
+  font-size:13px;
+  color:#169BD5;
 }
 </style>

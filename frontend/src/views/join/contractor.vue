@@ -79,7 +79,7 @@
               <el-button @click.prevent="removeNewSkill(index)" v-if="index!==0">删除</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">新增技能</el-button>
+              <el-button style="margin-left:0px;border:1px solid rgb(14,144,210);color:rgb(14,144,210);width:455px;" @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">再添加一档（可选项，每人最多添加二档）</el-button>
             </el-form-item>
 
             <el-form-item

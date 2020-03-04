@@ -70,7 +70,8 @@
           <el-table-column prop="role_type" label="稿件类型" width="170" align="center">
             <template slot-scope="scope">
               <div v-if="scope.row.role_type==1">委托代写</div>
-              <div v-if="scope.row.role_type!=1">自有稿件</div>
+              <div v-if="scope.row.role_type==2">自有稿件</div>
+               <div v-if="scope.row.role_type==null">未知</div>
             </template>
           </el-table-column>
           <el-table-column prop="package_fee" label="套餐费用" width="200" align="center"></el-table-column>

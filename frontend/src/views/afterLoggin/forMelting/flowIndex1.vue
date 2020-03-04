@@ -261,7 +261,35 @@
           @click.stop="openShadow"
         >中止，本人放弃该项目</button>
         <button class="xiugai" :style="strValue==3?blockValue:noneValue">上传双方合同扫描件</button>
-        <div :style="strValue==3?blockValue:noneValue">作为双方留底备案</div>
+        <div :style="strValue==3?blockValue:noneValue" style="padding-right:35px;padding-top:10px;">作为双方留底备案</div>
+      </div>
+      <div v-if="strValue==3" style="display: flex;">
+        <div class="rongzijine">
+          <div style="font-size:18px; padding-top:10px;padding-right:10px;">融资金额：</div>
+          <div>
+            <div>
+              <el-input v-model="ronziSumM"></el-input>
+              <span style="padding-top:10px;padding-left:10px;font-size:18px;">元</span>
+            </div>
+            <div>
+              <span>*</span>
+              <span>合同金额</span>
+            </div>
+          </div>
+        </div>
+        <div class="rongzijine">
+          <div style="font-size:18px; padding-top:10px;padding-right:10px;">技术赋能：</div>
+          <div>
+            <div style="padding-top:13px;padding-bottom:10px;">
+              <el-radio v-model="rzRadio" label="1">是</el-radio>
+              <el-radio v-model="rzRadio" label="2">否</el-radio>
+            </div>
+            <div>
+              <span>*</span>
+              <span>是否“Siring思锐”提供技术赋能</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div :style="strValue==2?blockValue:noneValue">
         <div class="zhifuBox">
@@ -297,11 +325,17 @@
           <el-radio v-model="radio" label="1">我已确认与对方同期见面会时间，支付后执行下一流程</el-radio>
         </div>
       </div>
-      <button
+      <div>
+        <button
         v-if="strValue==1 ||strValue ==3"
         class="tijiao"
         @click.stop="setinvestmentStatus"
       >确定，本人有意向可执行下一步</button>
+      <div v-if="strValue==3" style="margin-top:10px;">
+        <el-radio v-model="radio1" :label="1" style="padding-right:35px;">我已将合同扫描件提供给平台顾问，请求上传保管</el-radio>
+      </div>
+      </div>
+      
     </div>
     <!-- 点击中止项目，弹窗 -->
     <el-dialog
@@ -345,7 +379,10 @@ import liuyan from "../../../components/liuyan/leaveAmessage";
 export default {
   data() {
     return {
+      rzRadio:"1",//融资赋能
+      ronziSumM:"",//融资金额
       radio: 1,
+      radio1:1,
       dialogVisible: false,
       dataBox: [],
       blockValue: { display: "block" },
@@ -985,5 +1022,31 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
+}
+.rongzijine{
+  display: flex;
+  margin-right: 40px;
+  >div{
+    &:nth-of-type(2){
+      div{
+        &:nth-of-type(1){
+          display: flex;
+        }
+        &:nth-of-type(2){
+          display: flex;
+          padding-top: 10px;
+          span{
+            font-size: 13px;
+            &:nth-of-type(1){
+              color: #ff0000;
+            }
+            &:nth-of-type(2){
+              color: #797979
+            }
+          }
+        }
+      }
+    }
+  }
 }
 </style>

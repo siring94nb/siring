@@ -26,7 +26,7 @@
                 :on-success="handleAvatarSuccess"
                 :limit="1"
               >
-                <img :src="form.img" alt="案例图片" v-if="form.img!=''" />
+                <img class="fimg"  :src="form.img" alt="案例图片" v-if="form.img!=''" />
                 <!-- <span v-else> -->
                   <i v-else  class="el-icon-plus avatar-uploader-icon"></i>
                    <!-- <span style="margin-left:-60px">添加图片</span>
@@ -97,7 +97,7 @@
                 </el-row>
               </el-form-item>
               <el-form-item label="需求描述" required>
-                <el-input type="textarea" :rows="4" v-model="form.need_desc"></el-input>
+                <el-input type="textarea" :rows="3" v-model="form.need_desc"></el-input>
               </el-form-item>
               <el-form-item label="添加附件" required>
                 <el-upload
@@ -301,6 +301,14 @@ export default {
     width: 178px;
     height: 178px;
     display: block;
+  }
+  .form-box .el-upload{
+    width: 36px;
+    height: 36px;
+  }
+  .form-box .fimg{
+    width: 36px;
+    height: 36px;
   }
 </style>
 <style scoped lang='scss'>

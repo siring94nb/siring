@@ -57,18 +57,20 @@ export default {
       let leftBox = this.$refs.leftBox;
       let rightBox = this.$refs.rightBox;
       return (() => {
-        if (screenWidth > 1500) {
+        if (screenWidth > 1625) {
           rightBox.style.marginLeft =
             (screenWidth - (leftBox.clientWidth + rightBox.clientWidth)) / 2 -10 +
             leftBox.clientWidth +
             "px";
             document.body.style.width = "100%";
+            console.log("大")
             // console.log( rightBox.style.marginLeft,11111)
         } else {
           // leftBox.style.marginLeft = "0px";
           // console.log(1111)
           rightBox.style.marginLeft = leftBox.clientWidth+ 20  + "px";
           document.body.style.width = leftBox.clientWidth + rightBox.clientWidth +"px";
+          console.log("小")
           // console.log( rightBox.style.marginLeft,2222)
         }
       })();
@@ -104,9 +106,9 @@ export default {
     left: 0;
     height: 815px;
     // height: 100%;
-    overflow-y:scroll; 
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
+    // overflow-y:scroll; 
+    // border-bottom-left-radius: 10px;
+    // border-bottom-right-radius: 10px;
   }
   .left::-webkit-scrollbar{
     display:none;

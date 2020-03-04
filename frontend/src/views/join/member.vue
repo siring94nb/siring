@@ -4,7 +4,8 @@
     <join-enter />
 
     <div class="join-cont">
-      <h2 class="title title-bot">等级会员</h2>
+      <h2 class="title ">等级会员</h2>
+      <div class="title-bot">（您还可以同时选择其他角色加盟，同时拥有多个角色）</div>
       <div class="join-step">
         <h3 class="step-title">升级会员流程</h3>
         <div class="step-list">
@@ -22,7 +23,44 @@
           </div>
         </div>
       </div>
-
+      <!-- 会员支持 -->
+      <div class="huiyuanzhichi">
+        <div style="text-align:center;font-size:28px;color:#333333;margin-bottom:15px">会员支持</div>
+        <div class="zhichi">
+          <div>
+            <div><img :src="require('../../assets/images/u5718.png')" alt=""></div>
+            <div>
+              <div>各项业务均可享受</div>
+              <div>不同等级折扣</div>
+            </div>
+          </div>
+          <div>+</div>
+          <div>
+            <div><img :src="require('../../assets/images/u5717.png')" alt=""></div>
+            <div>
+              <div>各项业务均可享受</div>
+              <div>不同等级折扣</div>
+            </div>
+          </div>
+          <div>+</div>
+          <div>
+            <div><img :src="require('../../assets/images/u5715.png')" alt=""></div>
+            <div>
+              <div>各项业务均可享受</div>
+              <div>不同等级折扣</div>
+            </div>
+          </div>
+          <div>=</div>
+          <div>
+            <div><img :src="require('../../assets/images/u5716.png')" alt=""></div>
+            <div>
+              <div>各项业务均可享受</div>
+              <div>不同等级折扣</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 新升级的等级会员 -->
       <div class="new-member">
         <h3 class="title">新升级的等级会员</h3>
         <div class="new-member-box">
@@ -32,8 +70,11 @@
           <div class="marquee">
             <ul class="marquee-list clearfix" style="width: 5000px">
               <li class="marquee-item" v-for="item in 6" :key="item">
+                <img style="width:43px;height:43px;" :src="require('@/assets/images/u1920.png')" alt="">
+                <span>
                 重庆会员（邀请码
                 <span class="code-color">JU4523</span>）升级为金牌会员
+                </span>
               </li>
             </ul>
           </div>
@@ -180,7 +221,7 @@ export default {
       price: 0,
       percent: 100,
       needCodeDialog: true,
-      gradeId: 0
+      gradeId: 0,
     };
   },
   mounted() {
@@ -203,6 +244,7 @@ export default {
         // console.log(res.data);
         let { msg, data, code } = res.data;
         if (code === 1) {
+          console.log(data)
           this.memberList = data;
         }
       });
@@ -265,13 +307,20 @@ export default {
       line-height: 100px;
       text-align: center;
       font-size: 34px;
-      margin-bottom: 30px;
-      &.title-bot {
-        border-bottom: 20px solid rgb(242, 242, 242);
-      }
+      margin: 30px 0 0 0;
     }
+    .title-bot {
+        border-bottom: 20px solid rgb(242, 242, 242);
+        // margin-bottom: 30px;
+        margin-top: -30px;
+        text-align: center;
+        padding-bottom: 20px;
+        font-size: 13px;
+      }
     .join-step {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
+      background: rgb(247,250,255);
+      padding: 30px 0;
       .step-title {
         text-align: center;
         font-size: 24px;
@@ -335,6 +384,7 @@ export default {
       }
     }
     .new-member {
+      background: rgb(247,250,255);
       .title {
         font-size: 28px;
         color: #333333;
@@ -348,12 +398,13 @@ export default {
           overflow: hidden;
           .marquee-list {
             .marquee-item {
+              display: flex;
               float: left;
               width: 220px;
               text-align: center;
               margin: 0 20px;
               color: #797979;
-              font-size: 22px;
+              font-size: 16px;
               line-height: 28px;
               .code-color {
                 color: #199ed8;
@@ -488,6 +539,33 @@ export default {
         cursor: pointer;
         &:hover {
           text-decoration: underline;
+        }
+      }
+    }
+    .huiyuanzhichi{
+      .zhichi{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 0 50px ;
+        >div{
+          &:nth-of-type(2n){
+            font-weight: 700;
+            font-size: 32px;
+            color: #333;
+            margin-top: -40px;
+
+          }
+          >div{
+            &:nth-of-type(2){
+              font-size: 14px;
+              color: #797979;
+              text-align: center;
+              >div{
+                margin-top: 10px;
+              }
+            }
+          }
         }
       }
     }

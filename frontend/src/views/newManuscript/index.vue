@@ -252,13 +252,16 @@
             <img src="../../assets/images/u2173.png" alt />
             <img src="../../assets/images/u2173.png" alt />
           </div>
-          <Myfooter />
+          <div>
+            <Myfooter />
+          </div>
+          
         </div>
       </div>
     </div>
     <div class="xiadanBox">
       <div class="xiadan">
-        <div class="kuohao">（</div>
+        <div class="kuohao" style="margin-top:-3px">（</div>
         <div>
           <span class="yongtu" @click.stop="addRoleHandle" style="color:#0099ff">体验套餐价：</span>
         </div>
@@ -280,8 +283,9 @@
             <span>稿费</span>
           </div>
         </div>
+        <div class="kuohao">）</div>
         <div>
-          <span class="kuohao">）</span>
+          
           <span style="font-size:26px; padding-right:10px">×</span>
         </div>
         <div>
@@ -289,7 +293,7 @@
           <div class="jianshu">
             <span class="biaozhi">*</span>
             <span style="color: #949494; font-size: 13px;">会员折扣</span>
-            <i class="el-icon-question"></i>
+            <i class="el-icon-question" style="color:rgb(230,45,49)"></i>
           </div>
         </div>
         <div style="font-size:26px; padding:0 10px">=</div>
@@ -376,7 +380,7 @@ export default {
       radio1: "1", //代写要求单选框
       radio2: "1", //等级单选框
       radio3: "1", //字数单选框
-      radioYonghu: "", //用户确认
+      radioYonghu: "1", //用户确认
       fileList: [], //文件上传
       resume:"",//上传后回馈
       title: "",
@@ -806,7 +810,7 @@ export default {
     // position: relative;
     // right: 0;
     float: right;
-    margin-right: 100px;
+    margin-right: 180px;
     .feiyong {
       font-size: 18px;
       color: #ff0000;
@@ -816,6 +820,7 @@ export default {
     }
     .jianshu {
       text-align: center;
+      margin-top: 5px;
       span {
         &:nth-last-child(1) {
           color: #949494;
@@ -832,9 +837,11 @@ export default {
     .kuohao {
       font-weight: 700;
       font-size: 20px;
+      margin-top: 0px;
     }
     .sumJia {
-      font-size: 20px;
+      font-size: 18px;
+      height: 20px;
       display: flex;
       align-items: center;
       margin-right: 20px;
@@ -843,14 +850,14 @@ export default {
       color: #ffffff;
       background: rgb(230, 45, 49);
       border: 1px solid rgb(230, 45, 49);
-      padding: 10px 25px;
+      padding: 2px 25px;
       border-radius: 3px;
     }
   }
   .queren {
     position: absolute;
-    right: 120px; 
-    top: 80px;
+    right: 65px; 
+    top: 55px;
     // margin-left: 1500px;
   }
 }

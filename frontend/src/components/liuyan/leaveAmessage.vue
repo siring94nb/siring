@@ -310,10 +310,11 @@ export default {
   // width: 800px;
 }
 .contentBox {
-  height: 350px;
+  height: 345px;
   overflow-y: scroll;
   background: rgb(242, 242, 242);
   padding: 15px 20px 15px 20px;
+  box-sizing: border-box;
 }
 .boxTitle {
   padding: 5px;

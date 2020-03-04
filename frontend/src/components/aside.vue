@@ -4,16 +4,20 @@
       <i class="icon iconfont icon-dianhua" />
       <p>热线</p>
       <div class="float-cont">
-        <div class="float-title">
+        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 10px 10px;">
+          <div class="float-title">
           <i class="icon iconfont icon-rexiandianhua" />热线电话：
         </div>
         <p class="contact-number">0755-36609873</p>
+        </div>
+        
       </div>
     </div>
     <div class="square">
       <i class="icon iconfont icon-erweima" />
       <p>顾问</p>
       <div class="float-cont">
+        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 10px 10px;">
         <div class="float-title">
           <i class="icon iconfont icon-weixin" />专家顾问：
           <p class="aside-text">扫一扫</p>
@@ -30,12 +34,14 @@
             <img :src="require('@/assets/images/u388.png')" width="150" height="150" alt />
           </span>
         </p>
+        </div>
       </div>
     </div>
     <div class="square">
       <i class="icon iconfont icon-kefu" />
       <p>客服</p>
       <div class="float-cont">
+        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 10px 10px;">
         <div class="float-title">
           <i class="iconfont icon-icon" />QQ客服：
         </div>
@@ -53,6 +59,7 @@
             href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
           >415364124</a>
         </p>
+        </div>
       </div>
     </div>
     <div class="square"  @mouseover="showLevelMsg" @mouseout="showLevelMsg">
@@ -62,6 +69,7 @@
       </div>
      
       <div class="float-cont" v-show="levelMsgBool" style="width:300px">
+        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 30px 10px;">
         <div class="float-title" style="float: left;"> 
           <i class="iconfont icon-lianxifangshi"/>联系方式：
         </div>
@@ -71,6 +79,7 @@
         </div>
         <textarea v-model="liuyan" class="levelmsg" placeholder="您的需求或反馈，我们将在48个小时内，联系您" style="margin-bottom:10px;"></textarea>
         <button class="send-lm" @click="sendMsg">发送</button>
+        </div>
       </div>
     </div>
     <div class="square" style="opacity: 0;" :class="{'topBtn': showBtnTop}" @click="backTop">
@@ -163,8 +172,8 @@ export default {
       position: absolute;
       top: 0;
       right: 60px;
-      border: 1px solid rgb(255,234,234);
-      padding: 0px 10px 10px 10px;
+      // border: 1px solid rgb(255,234,234);
+      // padding: 0px 10px 10px 10px;
       width: 184px;
       box-sizing: border-box;
       background-color: #fff;

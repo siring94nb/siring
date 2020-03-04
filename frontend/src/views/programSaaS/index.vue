@@ -29,7 +29,7 @@
       <div class="title">
         <div class="all" :class="{'hui':diyHui,'selected':diySel}" @click="diyGb">DIY样式</div>
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
-        <el-button class="wh-sty" v-popover:popover2><i class="el-icon-question"></i></el-button>
+        <el-button class="wh-sty" v-popover:popover2><router-link :to="'hints'" style="color:rgb(255,0,0)"><i class="el-icon-question"></i></router-link></el-button>
         <div style="flex:1"></div>
         <el-button type="warning" class="appreciation" v-popover:popover1>增值服务</el-button>
       </div>

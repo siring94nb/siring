@@ -8,7 +8,7 @@
           <Quickaside />
         </div>
         <div class="right">
-          <el-tabs v-model="activeName" style="background:#ffffff; padding:20px;">
+          <el-tabs v-model="activeName" style="background:#ffffff; padding:20px 20px 30px 20px;">
             <el-tab-pane label="我要投资" name="first" :key="'first'">
               <div class="touziBox">
                 <div class="tishi">
@@ -81,7 +81,7 @@
                     {{dataBox.proposal}}
                   </div>
                 </div>
-                <!-- 目前融资阶段，资金需求，估值 -->
+                <!-- 目前融资阶段，资金需求，估值 -->·
                 <div>
                   <div class="nameBox">
                     <span class="name">目前融资阶段，资金需求，估值：</span>
@@ -159,7 +159,7 @@
                     </div>
                     <div class="miaoshu">如不填写，默认要求打赏金10元，款项扣除20%交易费后，将打入您的余额中</div>
                     <div style="display:flex;align-items:center">
-                      <el-input v-model="shangjin" placeholder="不大于100" maxlength="20"></el-input>
+                      <el-input v-model="shangjin" style="width:430px" placeholder="不大于100" maxlength="20"></el-input>
                       <span style="color:#ff0000;font-size:18px;padding-left:10px;">元</span>
                     </div>
                   </div>
@@ -194,13 +194,61 @@
                   <el-input v-model="dquser" type="textarea"></el-input>
                 </div>
                 <!-- 目前融资阶段 -->
-                <div>
+                 <div style="display:flex">
+                  <div style="width:48%">
+                    <div class="titleBox">
+                      <span class="title">目前融资阶段：</span>
+                      <span class="biaozhi">*</span>
+                    </div>
+                    <div class="miaoshu">表明目前项目处于种子轮、天使轮、A轮、A+等轮次</div>
+                    <el-select style="width:350px" :value="rzjieduanItem" @change="selectFn($event)">
+                      <el-option v-for="(item,index) in rongzi" :value="item.id" :key="index">{{item.title}}</el-option>
+                    </el-select>
+                  </div>
+                  <div>
+                    <div class="titleBox">
+                      <span class="title">资金需求：</span>
+                      <span class="biaozhi">*</span>
+                    </div>
+                    <div class="miaoshu">期望融资金额</div>
+                    <div style="display:flex;align-items:center">
+                      <el-input v-model="rzje" style="width:410px;" maxlength="20"></el-input>
+                      <span style="color:#ff0000;font-size:18px;padding-left:10px;">万元</span>
+                    </div>
+                  </div>
+                </div>
+                <!-- <div>
                   <div class="titleBox">
                     <span class="title">目前融资阶段，资金需求，估值：</span>
                     <span class="biaozhi">*</span>
                   </div>
                   <div class="miaoshu">表明目前项目处于种子轮、天使轮、A轮、A+等轮次。例如：天使伦/200万/出让10%股权；</div>
                   <el-input v-model="rongzi" type="textarea"></el-input>
+                </div> -->
+                <!-- 股份出让及估值 -->
+                <div style="display:flex">
+                  <div style="width:48%">
+                    <div class="titleBox">
+                      <span class="title">出让股份：</span>
+                      <span class="biaozhi">*</span>
+                    </div>
+                    <div class="miaoshu">例如：10%股份</div>
+                   <div style="display:flex;align-items:center">
+                      <el-input v-model="gfzhuanrangItem"  style="width:350px;" ></el-input>
+                      <span style="color:#ff0000;font-size:18px;padding-left:10px;">%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="titleBox">
+                      <span class="title">估值：</span>
+                      <span class="biaozhi">*</span>
+                    </div>
+                    <div class="miaoshu">现阶段项目估值</div>
+                    <div style="display:flex;align-items:center">
+                      <el-input v-model="guzhi"  style="width:410px;" maxlength="20"></el-input>
+                      <span style="color:#ff0000;font-size:18px;padding-left:10px;">万元</span>
+                    </div>
+                  </div>
                 </div>
                 <!-- 创始人背景 -->
                 <div>
@@ -265,7 +313,7 @@
           </el-tabs>
         </div>
       </div>
-      <div class="anli">
+      <!-- <div class="anli">
         <div>成功案例</div>
         <div>
           <el-row :gutter="20">
@@ -289,8 +337,10 @@
             </el-col>
           </el-row>
         </div>
+      </div> -->
+      <div style="max-width:1260px" class="inveFooter">
+        <Myfooter />
       </div>
-      <Myfooter />
     </div>
     <!-- 结算 -->
     <div class="xiadanBox">
@@ -306,14 +356,14 @@
           </div>
         </div>
         <div>
-          <span style="font-size:26px; padding-right:10px">×</span>
+          <span style="font-size:26px; padding-right:10px;padding-left:10px">×</span>
         </div>
         <div>
           <div class="feiyong">￥1111</div>
           <div class="jianshu">
             <span class="biaozhi">*</span>
             <span style="color: #949494; font-size: 13px;">会员折扣</span>
-            <i class="el-icon-question"></i>
+            <i class="el-icon-question" style="color:rgb(230,45,49)"></i>
           </div>
         </div>
         <div style="font-size:26px; padding:0 10px">=</div>
@@ -348,13 +398,18 @@ export default {
       bpUrl:"",//文件上传成功回调
       price:0,
       shangjin:"10",//打赏金
-      radioYonghu:"0",
+      radioYonghu:"1",
       hangye:[],
       hangyeItem:"",
+      rongzi:[],
+      rzjieduanItem:"",//融资阶段
+      gfzhuanrangItem:"",//股份转让
       liangdian:"",//项目亮点
       youshi:"",//核心优势
       aUrl:"https://manage.siring.com.cn/api/file/qn_upload",
-      dataBox:[]
+      dataBox:[],
+      rzje:"",//期待融资金额
+      guzhi:"",//估值
     };
   },
   components: {
@@ -441,6 +496,11 @@ export default {
   }
 };
 </script>
+<style>
+  .inveFooter .footer_info{
+    max-width: 1262px;
+  }
+</style>
 <style lang="scss" scoped>
 .title {
   font-size: 28px;
@@ -450,7 +510,7 @@ export default {
   margin-left: 220px;
   min-width: 1040px;
   .touziBox {
-    padding: 20px 50px;
+    padding: 20px 50px 30px 50px;
     font-size: 13px;
     color: #333333;
     overflow-y: scroll;
@@ -561,7 +621,7 @@ export default {
       // position: relative;
       // right: 0;
       float: right;
-      margin-right: 100px;
+      margin-right: 180px;
       .feiyong {
         font-size: 18px;
         color: rgb(230, 45, 49);
@@ -571,6 +631,7 @@ export default {
       }
       .jianshu {
         text-align: center;
+        margin-top: 5px;
         span {
           &:nth-last-child(1) {
             color: #949494;
@@ -589,23 +650,24 @@ export default {
         font-size: 20px;
       }
       .sumJia {
-        font-size: 20px;
+        font-size:18px;
         display: flex;
         align-items: center;
         margin-right: 20px;
+        height: 18px;
       }
       .zhifuBtn {
         color: #ffffff;
         background: rgb(230, 45, 49);
         border: 1px solid rgb(230, 45, 49);
-        padding: 10px 25px;
+        padding: 2px 25px;
         border-radius: 3px;
       }
     }
     .queren {
       position: absolute;
-      right: 120px;
-      top: 80px;
+      right: 65px;
+      top: 55px;
       // margin-left: 1500px;
     }
   }
