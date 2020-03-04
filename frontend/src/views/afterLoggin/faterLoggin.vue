@@ -522,6 +522,15 @@ export default {
   width: 120px;
   margin-left: 18px;
 }
+.navBoxa{
+  height: 560px;
+  overflow-y: scroll;
+  border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+.navBoxa::-webkit-scrollbar{
+    display:none;
+}
 </style>
 <style>
 /* .el-submenu__title{

@@ -55,7 +55,7 @@
                   :to="{name: 'demonstration', params: {id: goodsId}}"
                   class="btn show-btn"
                 >演示</router-link>
-                <router-link to="/" class="btn made-like-btn">定制类似</router-link>
+                <router-link to="/hints" class="btn made-like-btn">定制类似</router-link>
                 <router-link to="/fillDemand" class="btn made-btn">定制需求</router-link>
               </div>
               <div class="tips">

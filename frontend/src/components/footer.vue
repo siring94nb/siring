@@ -283,7 +283,7 @@ export default {
   },
   methods: {
     init(){
-      document.getElementsByClassName("footer")[0].style.width = document.documentElement.scrollWidth+"px";
+      // document.getElementsByClassName("footer")[0].style.width = document.documentElement.scrollWidth+"px";
     },
     hoverclass(index) {
       this.curr = index;

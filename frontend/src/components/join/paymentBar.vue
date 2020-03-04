@@ -13,7 +13,7 @@
           <div class="bgw">{{percent}}%</div>
           <p class="tip">
             会员折扣
-            <span class="ques">？</span>
+            <span class="ques"> <router-link to="hints" style="color:#ffffff">？</router-link></span>
           </p>
         </div>
         <div class="symbol">×</div>

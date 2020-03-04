@@ -122,13 +122,13 @@
         </div>
         <div>
           <p class="bgw">￥{{packagePrice}}</p>
-          <p class="require-star tip">套餐费</p>
+          <p class="require-star tip" style="margin-top:5px;">套餐费</p>
         </div>
         <div class="symbol">+</div>
         <div>撰稿费用：</div>
         <div>
           <p class="bgw">￥{{writingCost}}</p>
-          <p class="require-star tip">稿费</p>
+          <p class="require-star tip" style="margin-top:5px;">稿费</p>
         </div>
         <i class="brackets">)</i>
         <div class="symbol">×</div>
@@ -136,7 +136,7 @@
           <p class="bgw">{{percent}}%</p>
           <p class="require-star tip">
             会员折扣
-            <span class="ques"><i class="el-icon-question"></i></span>
+            <span class="ques"><i class="el-icon-question" style="font-size:16px;"></i></span>
           </p>
           <p></p>
         </div>
@@ -145,7 +145,8 @@
         <el-button style="background:rgb(230,45,49);padding:6.5px 15px" type="danger" @click="setdemandAdd">立即支付</el-button>
       </div>
       <div class="payment-bot">
-        <el-checkbox v-model="checked">本人已确认，支付后执行下一流程</el-checkbox>
+        <!-- <el-checkbox v-model="checked">本人已确认，支付后执行下一流程</el-checkbox> -->
+        <el-radio v-model="radioYonghu" label="1">本人已确认，支付后执行下一流程</el-radio>
       </div>
     </div>
     <!-- pop -->
@@ -268,7 +269,7 @@ export default {
           id: 7
         }
       ],
-      checked: false,
+      radioYonghu: "1",
       packagePrice: 0,
       writingCost: 0,
       percent: 100,
@@ -497,12 +498,12 @@ export default {
       }
       .ques {
         display: inline-block;
-        width: 20px;
-        height: 20px;
+        width: 16px;
+        height: 16px;
         // line-height: 20px;
         text-align: center;
         border-radius: 50%;
-        background-color: #ffffff;
+        // background-color: #ffffff;
         color: rgb(245,108,108);
         cursor: pointer;
         font-size: 22px ;

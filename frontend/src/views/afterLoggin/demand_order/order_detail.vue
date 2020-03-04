@@ -10,7 +10,7 @@
       <div class="detail-top">
         <div class="warnings">
           <!-- <i class="el-icon-warning"></i> -->
-          <span style="border:1px solid red;color:red;border-radius:50%;">！</span>
+          <span style="color:red;"><i class="iconfont icon-gantanhao" style="font-size:20px;"></i></span>
         </div>
         <div class="process">
           <ul>
@@ -128,6 +128,7 @@
         <div class="ptbj-box" v-if="status == 2">
           <img :src="listData.proposal" width="100%" v-if="listData.proposal != ''" />
           <div class="wait-ptbj" v-else>
+            <img :src="require('../../../assets/images/u9830.png')" alt />
             <img src="../../../assets/images/u9830.png" alt />
             <div>请耐心等待平台报价！</div>
           </div>

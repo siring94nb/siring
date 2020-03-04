@@ -87,19 +87,19 @@ export default {
           ifchoose: false
         },
         {
-          className: "iconfont icon-shezhi-",
+          className: "iconfont icon-shezhi2",
           name: "后台",
           id: 2,
           ifchoose: false
         },
         {
-          className: "iconfont icon-diannao",
+          className: "iconfont icon-pc1",
           name: "PC",
           id: 3,
           ifchoose: false
         },
         {
-          className: "iconfont icon-h5",
+          className: "iconfont icon-h",
           name: "移动H5",
           id: 4,
           ifchoose: false
@@ -111,7 +111,7 @@ export default {
           ifchoose: false
         },
         {
-          className: "iconfont icon-anzhuologo",
+          className: "iconfont icon-anzhuo",
           name: "APP安卓",
           id: 6,
           ifchoose: false

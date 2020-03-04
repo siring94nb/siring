@@ -4,7 +4,7 @@
     <myaside />
     <div class="index">
       <myswiper/>
-      <div class="about">
+      <div class="about" id="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">
           <div class="cover">
@@ -15,7 +15,7 @@
           </div>
         </div>
       </div>
-      <div class="rjdz">
+      <div class="rjdz" id="rjdz">
         <h2 class="title">
           软件/定制开发平台
           <!-- <i class="iconfont icon-remen fire"></i> -->
@@ -78,7 +78,7 @@
           <router-link to="/goods" class="more">更多</router-link>
         </div>
       </div>
-      <div class="xcx">
+      <div class="xcx" id="xcx">
         <h2 class="title">小程序SaaS平台</h2>
         <div class="xcx-cont">
           <div class="cover">
@@ -148,7 +148,7 @@
           </div>
         </div>
       </div>
-      <div class="ai">
+      <div class="ai" id="ai">
         <h2 class="title">AI人工智能推广引擎平台</h2>
         <div class="ai-cont">
           <div class="ai-inner">
@@ -177,10 +177,227 @@
           </div>
         </div>
       </div>
-      <jsjm />
+      <div id="jiameng">
+        <jsjm />
+      </div>
+      <!-- 融资案例 -->
+      <div id="rongzi">
+        <div style="text-align: center;font-size:34px;margin-top:30px;margin-bottom:30px;">他们通过平台获得融资</div>
+        <div class="ptrzBox">
+          <div class="ptrzsmBox">
+            <!-- 上部分 -->
+            <div class="top">
+              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
+              <div>
+                <div>项目1</div>
+                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
+              </div>
+            </div>
+            <!-- 下部分 -->
+            <div class="bottom">
+              <div>
+                <div>
+                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                  <span>行业领域</span>
+                </div>
+                <span>医疗健康</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>融资需求</span>
+                 </div>
+                <span>3000万元</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资人邀请码</span>
+                 </div>
+                <span>医疗健康</span>
+              </div>
+              <div>
+                <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资时间</span>
+                </div>
+                <span>2019年12月30日</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>成功融资</span>
+                 </div>
+                <span>5000万元</span>
+              </div>
+            </div>
+          </div>
+           <div class="ptrzsmBox">
+            <!-- 上部分 -->
+            <div class="top">
+              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
+              <div>
+                <div>项目1</div>
+                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
+              </div>
+            </div>
+            <!-- 下部分 -->
+            <div class="bottom">
+              <div>
+                <div>
+                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                  <span>行业领域</span>
+                </div>
+                <span>医疗健康</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>融资需求</span>
+                 </div>
+                <span>3000万元</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资人邀请码</span>
+                 </div>
+                <span>医疗健康</span>
+              </div>
+              <div>
+                <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资时间</span>
+                </div>
+                <span>2019年12月30日</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>成功融资</span>
+                 </div>
+                <span>5000万元</span>
+              </div>
+            </div>
+          </div>
+           <div class="ptrzsmBox">
+            <!-- 上部分 -->
+            <div class="top">
+              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
+              <div>
+                <div>项目1</div>
+                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
+              </div>
+            </div>
+            <!-- 下部分 -->
+            <div class="bottom">
+              <div>
+                <div>
+                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                  <span>行业领域</span>
+                </div>
+                <span>医疗健康</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>融资需求</span>
+                 </div>
+                <span>3000万元</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资人邀请码</span>
+                 </div>
+                <span>医疗健康</span>
+              </div>
+              <div>
+                <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资时间</span>
+                </div>
+                <span>2019年12月30日</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>成功融资</span>
+                 </div>
+                <span>5000万元</span>
+              </div>
+            </div>
+          </div>
+           <div class="ptrzsmBox">
+            <!-- 上部分 -->
+            <div class="top">
+              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
+              <div>
+                <div>项目1</div>
+                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
+              </div>
+            </div>
+            <!-- 下部分 -->
+            <div class="bottom">
+              <div>
+                <div>
+                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                  <span>行业领域</span>
+                </div>
+                <span>医疗健康</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>融资需求</span>
+                 </div>
+                <span>3000万元</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资人邀请码</span>
+                 </div>
+                <span>医疗健康</span>
+              </div>
+              <div>
+                <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>投资时间</span>
+                </div>
+                <span>2019年12月30日</span>
+              </div>
+               <div>
+                 <div>
+                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
+                <span>成功融资</span>
+                 </div>
+                <span>5000万元</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gengduo">
+          <div>更多</div>
+        </div>
+      </div>
       <jdyh />
     </div>
     <myfooter />
+    <!-- 左侧悬浮 -->
+    <div class="leftXuanfu">
+      <div>
+        <img :src="biaozhi1" alt=""><img :src="biaozhi2" alt="">
+      </div>
+      <div>
+        <div @click.stop="getview(400)">Siring思锐</div>
+        <div @click.stop="getview(830)">软件定制</div>
+        <div @click.stop="getview(1650)">小程序SaaS</div>
+        <div @click.stop="getview(2250)">AI推广引擎</div>
+        <div @click.stop="getview(2900)">角色加盟</div>
+        <div @click.stop="getview(3300)">融资案例</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -363,7 +580,9 @@ export default {
       ],
       mgtop: 0,
       goodsList: [],
-      packageList: []
+      packageList: [],
+      biaozhi1:require("@/assets/images/u578.png"),
+      biaozhi2:require("@/assets/images/u577.png")
     };
   },
   mounted() {
@@ -399,6 +618,11 @@ export default {
         }
       })
     },
+    // 滚动
+    getview(num){
+      // document.getElementById(str).scrollIntoView();
+     document.documentElement.scrollTop=num
+    }
   }
 };
 </script>
@@ -769,5 +993,137 @@ export default {
       }
     }
   }
+  .ptrzBox{
+    background: rgb(242,242,242);
+    padding: 50px 100px 15px 100px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    .ptrzsmBox{
+      background: #ffffff;
+      width: 48.5%;
+      margin-bottom: 30px;
+      padding: 20px 20px 20px 20px;
+      box-sizing: border-box;
+      .bottom,.top{
+        display: flex
+      }
+      .top>div{
+        &:nth-of-type(1){
+          margin-right: 30px;
+          img{
+            width: 90px;
+            height: 90px;
+          }
+        }
+        &:nth-of-type(2){
+          >div{
+            &:nth-of-type(1){
+              color: #333333;
+              font-size: 18px;
+              font-weight: 700;
+              padding-top:10px; 
+              padding-bottom:10px; 
+            }
+             &:nth-of-type(2){
+               font-size: 13px;
+               color: #6b6b6b;
+             }
+          }
+        }
+      }
+      .bottom{
+        // margin-right: 81px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bottom>div{
+        display: flex;
+        margin-right: 30px;
+        margin-bottom: 10px;
+        align-items: center;
+        width: 36%;
+        &:nth-of-type(2){
+          margin-right: 81px;
+        }
+        &:nth-of-type(3){
+          >div{
+            margin-right: 30px;
+          }
+        } 
+        &:nth-of-type(4){
+            margin-right: 80px;
+        }
+        img{
+          width: 28px;
+          height: 28px;
+          margin-right: 10px;
+        }
+        >div{
+          display: flex;
+          align-items: center;
+          margin-right: 56px;
+          >span{
+            &:nth-of-type(1){
+              font-size: 13px;
+              color: #6b6b6b;
+            }
+          }
+        }
+      }
+    }
+  }
+  .gengduo{
+    background: rgb(242,242,242);
+    display: flex;
+    justify-content: center;
+    padding-bottom: 40px;
+    >div{
+      color: #b1120e;
+      border: 1px solid #b1120e;
+      width: 191px;
+      text-align: center;
+      padding: 15px 0;
+      border-radius: 5px;
+    }
+  }
+ 
+} 
+.leftXuanfu{
+    position: fixed;
+    z-index: 55;
+    top: 25%;
+    >div{
+      &:nth-of-type(1){
+        border-bottom: 3px solid rgb(241,2,20);
+        img{
+          &:nth-of-type(1){
+            width: 50px;
+            position: relative;
+            z-index: 40;
+            top: 12px;
+            left: 5px;
+          }
+          &:nth-of-type(2){
+            width: 40px;
+          }
+        }
+      }
+      &:nth-of-type(2){
+        margin-left: 10px;
+        margin-top: 10px;
+      }
+      >div{
+        background: rgb(165,163,161);
+        text-align: center;
+        padding: 10px 5px;
+        margin-bottom: 10px;
+        width: 50px;
+          color: #ffffff;
+          font-size: 14px;
+      }
+    }
 }
 </style>

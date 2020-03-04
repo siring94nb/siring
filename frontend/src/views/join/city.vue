@@ -54,8 +54,28 @@
         </div>
       </div>
 
+      <div class="new-member">
+        <h3 class="title">他们已申请成为城市合伙人</h3>
+        <div class="new-member-box">
+          <div class="img">
+            <img :src="require('@/assets/images/u4734.png')" alt />
+          </div>
+          <div class="marquee">
+            <ul class="marquee-list clearfix" style="width: 5000px">
+              <li class="marquee-item" v-for="item in 6" :key="item">
+                <img style="width:43px;height:43px;" :src="require('@/assets/images/u1920.png')" alt="">
+                <span>
+                重庆会员（邀请码
+                <span class="code-color">JU4523</span>）升级为金牌会员
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
       <div class="sel-city">
-        <h3 class="sel-title">城市合伙人支持</h3>
+        <h3 class="sel-title">请缴费申请等级城市</h3>
         <div class="sel-cont">
           <el-form ref="ruleForm" :model="ruleForm" :rules="rule" label-width="120px">
             <el-form-item label="选择加盟城市：">
@@ -96,6 +116,7 @@
           </el-form>
         </div>
       </div>
+      
     </div>
     <myfooter />
 
@@ -365,8 +386,8 @@ export default {
     getProfit() {
       GetProfit({ type: 2 }).then(res => {
         let { msg, code, data } = res;
+        console.log(res)
         if (code === 1) {
-          console.log(data);
           this.tableData = data;
         }
       });
@@ -391,13 +412,15 @@ export default {
     .title {
       height: 100px;
       line-height: 100px;
-      border-bottom: 20px solid rgb(242, 242, 242);
+      // border-bottom: 20px solid rgb(242, 242, 242);
       text-align: center;
       font-size: 34px;
-      margin-bottom: 30px;
+      // margin-bottom: 30px;
     }
     .join-step {
-      margin-bottom: 50px;
+      margin-bottom: 30px;
+      background: rgb(247,250,255);
+      padding: 20px 0;
       .step-title {
         text-align: center;
         font-size: 24px;
@@ -515,6 +538,39 @@ export default {
       }
     }
   }
+  .new-member {
+      background: rgb(247,250,255);
+      padding-bottom: 30px;
+      margin-bottom: 30px;
+      .title {
+        font-size: 28px;
+        color: #333333;
+      }
+      .new-member-box {
+        .img {
+          text-align: center;
+        }
+        .marquee {
+          margin: 0 75px;
+          overflow: hidden;
+          .marquee-list {
+            .marquee-item {
+              display: flex;
+              float: left;
+              width: 220px;
+              text-align: center;
+              margin: 0 20px;
+              color: #797979;
+              font-size: 16px;
+              line-height: 28px;
+              .code-color {
+                color: #199ed8;
+              }
+            }
+          }
+        }
+      }
+    }
   .payment {
     display: none;
     position: fixed;

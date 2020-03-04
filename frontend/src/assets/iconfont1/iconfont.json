@@ -6,6 +6,34 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1302201",
+      "name": "苹果",
+      "font_class": "pingguo",
+      "unicode": "e8a4",
+      "unicode_decimal": 59556
+    },
+    {
+      "icon_id": "7508096",
+      "name": "安卓",
+      "font_class": "anzhuo",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "8234350",
+      "name": "pc",
+      "font_class": "pc1",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "12428445",
+      "name": "h5",
+      "font_class": "h",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
       "icon_id": "6539110",
       "name": "商品",
       "font_class": "shangpin",

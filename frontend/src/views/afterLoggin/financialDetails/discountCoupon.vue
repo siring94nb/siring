@@ -83,14 +83,15 @@
                   </div>
                   <div>
                     <div>{{scope.row.coupon_name}}</div>
-                    <div v-if="scope.row.range == 0">全部</div>
-                    <div v-if="scope.row.range == 1">黄金会员</div>
-                    <div v-if="scope.row.range == 2">白金会员</div>
+                    <div>有效期：{{scope.row.end_time}}</div>
+                    <div v-if="scope.row.range == 0">适用范围：所有会员</div>
+                    <div v-if="scope.row.range == 1">适用范围：黄金会员</div>
+                    <div v-if="scope.row.range == 2">适用范围：白金会员</div>
                     <div>
                       <router-link
                         to="/goods"
                         v-if="scope.row.coupon_status==1"
-                        style="color:#00b5d2"
+                        style="color:#00b5d2;"
                       >立即使用&gt;&gt;</router-link>
                       <span v-if="scope.row.coupon_status==0" style="color:#949494">已使用</span>
                     </div>
@@ -346,7 +347,7 @@ export default {
         }
       }
       &:nth-of-type(2){
-        padding:10px 50px;
+        padding:10px 0px;
         >div{
           font-size: 13px;
           color: #949494;
@@ -354,6 +355,22 @@ export default {
             font-size: 16px; 
             color: #5e5e5e;
             font-weight: 700;
+            text-align: left;
+            margin-left: 10px;
+          }
+          &:nth-of-type(2){
+            text-align: left;
+            margin-left: 10px;
+            margin-top: -3px;
+          }
+           &:nth-of-type(3){
+            text-align: left;
+            margin-left: 10px;
+            margin-top: -5px;
+          }
+          &:nth-last-child(1){
+            padding-left: 110px;
+            // padding-top: 15px;
           }
         }
       }

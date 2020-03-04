@@ -10,7 +10,7 @@
       <div class="leftBox">
         <div>
           <span>账户余额：</span>
-          <span class="biaozhi">￥{{mList.money}}</span>
+          <span class="biaozhi">￥{{mList.money==undefined?0:mList.money}}</span>
         </div>
         <div>
           <span>账户名：</span>

@@ -257,7 +257,8 @@
       </div>
 
       <div :style="strValue!=3?blockValue:noneValue"></div>
-      <button class="tijiao" @click="strValue==1?setpromotionUpd:setpromotionStatus">确定，本人已确认该需求方案</button>
+      <!-- <button class="tijiao" @click="strValue==1?setpromotionUpd:setpromotionStatus">确定，本人已确认该需求方案</button> -->
+      <button class="tijiao" @click="setpromotionStatus">确定，本人已确认该需求方案</button>
     </div>
   </div>
 </template>
@@ -355,6 +356,7 @@ export default {
         order_id: orderId,
         strValue: this.strValue
       };
+      console.log(1231)
       promotionStatus(params).then(res => {
         let { code, msg } = res;
         if (code == 1 && this.strValue<5) {

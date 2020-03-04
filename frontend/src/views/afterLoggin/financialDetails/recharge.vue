@@ -61,8 +61,8 @@
             <div>
               <span>*</span>
               <span>会员折扣</span>
-              <router-link to>
-                <i class="el-icon-question"></i>
+              <router-link to="hints">
+                <i class="el-icon-question" style="font-size:14px"></i>
               </router-link>
             </div>
           </div>
@@ -252,6 +252,9 @@ export default {
       &:nth-of-type(2) {
         font-size: 13px;
         color: #333333;
+        // display: flex;
+        // text-align: right; 
+        margin: -30px  0 0 500px ;
       }
       > span {
         &:nth-of-type(1) {
@@ -318,17 +321,18 @@ export default {
         }
         &:nth-of-type(5) {
           background: #ffffff;
-          box-sizing: border-box;
-          padding: 15px 25px;
+          // box-sizing: border-box;
+          padding: 2px 25px;
           color: #ff0000;
           margin-right: 15px;
+          height: 18px;
         }
         &:nth-of-type(6) {
           button {
             background: rgb(230, 45, 49);
             border: 1px solid #ff0000;
             color: #ffffff;
-            padding: 15px 20px;
+            padding: 2px 20px;
             border-radius: 5px;
             outline: none;
           }
