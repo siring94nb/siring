@@ -28,7 +28,7 @@
         <div v-if="order > 0">
           <div class="bgw">{{scale}}%</div>
           <p class="tip">
-           <span style="color:red;">*</span> {{order}}期比例
+           <span style="color:red;">*</span> {{order-1}}期比例
           </p>
         </div>
         <div class="symbol">=</div>
