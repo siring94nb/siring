@@ -9,43 +9,42 @@
       <div class="core-team">
         <div>
           <div class="team-list">
-          <div
-            class="team-member"
-            v-for="(item, index) in teamList"
-            :key="index"
-            :class="{'team-member-sel': selOne === index}"
-            @click="mouseSel(index)"
-          >
-            <img :src="item.img" alt />
-            <div class="eg-name">{{item.name}}</div>
-            <div>{{item.position}}</div>
-          </div>
-        </div>
-        <div class="personal-profile">
-          <div class="personal-top">
-            <img :src="personal.img" alt />
-            <!-- <div class="name">{{personal.position}}：{{personal.name}}</div> -->
-            <div class="name">{{personal.position}}</div>
-            <div class="egname">{{personal.name}}</div>
-          </div>
-          <div class="personal-bottom">
-            <div>
-              <!-- <span>个人简历：</span> -->
-              <!-- {{personal.introduce}} -->
-              <div v-html="personal.con"></div>
+            <div
+              class="team-member"
+              v-for="(item, index) in teamList"
+              :key="index"
+              :class="{'team-member-sel': selOne === index}"
+              @click="mouseSel(index)"
+            >
+              <img :src="item.img" alt />
+              <div class="eg-name">{{item.name}}</div>
+              <div>{{item.position}}</div>
             </div>
-            <!-- <div>
+          </div>
+          <div class="personal-profile">
+            <div class="personal-top">
+              <img :src="personal.img" alt />
+              <!-- <div class="name">{{personal.position}}：{{personal.name}}</div> -->
+              <div class="name">{{personal.position}}</div>
+              <div class="egname">{{personal.name}}</div>
+            </div>
+            <div class="personal-bottom">
+              <div>
+                <!-- <span>个人简历：</span> -->
+                <!-- {{personal.introduce}} -->
+                <div v-html="personal.con"></div>
+              </div>
+              <!-- <div>
               <span>专长领域：</span>
               {{personal.field}}
-            </div> -->
-            <!-- <div>
+              </div>-->
+              <!-- <div>
               <span>服务过的品牌：</span>
               {{personal.brand}}
-            </div>-->
+              </div>-->
+            </div>
           </div>
         </div>
-        </div>
-        
       </div>
       <div class="h-title">各项荣誉及证书</div>
       <div class="sweep-box">
@@ -74,10 +73,16 @@
           <div class="course-line"></div>
         </div>
         <div class="course-title">
-          <div class="title-box" v-for="(item, index) in courseTitle" :key="index">
+          <div class="title-box" v-for="item in 9" :key="item">
             <img src="../assets/images/u5726.png" alt />
             <div class="line"></div>
-            <div class="title-text">{{item.name}}</div>
+            <div class="title-text"></div>
+            <!-- {{item.name}} -->
+          </div>
+          <div class="lichengConten">
+            <div v-for="(item,index) in courseTitle" :key="index">
+              <div>{{item.name}}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -93,16 +98,29 @@
             <i class="iconfont icon-lianxifangshi" />联系方式：
           </div>
           <el-form-item>
-              <el-input style="margin-bottom:10px;" type="text" placeholder="您的联系方式" v-model.number="ruleForm.desc"></el-input>
+            <el-input
+              style="margin-bottom:10px;"
+              type="text"
+              placeholder="您的联系方式"
+              v-model.number="ruleForm.desc"
+            ></el-input>
           </el-form-item>
           <div class="float-title">
             <i class="iconfont icon-liuyan" />留言反馈：
           </div>
           <el-form-item>
-            <el-input  type="textarea" placeholder="您的需求或反馈，我们将在48个小时内，联系您" v-model="ruleForm.desc1" class="texts"></el-input>
+            <el-input
+              type="textarea"
+              placeholder="您的需求或反馈，我们将在48个小时内，联系您"
+              v-model="ruleForm.desc1"
+              class="texts"
+            ></el-input>
           </el-form-item>
           <el-form-item style="float:right;">
-            <el-button type="danger" style="background-color: #b83733;border-color:#b83733; margin-top:10px;">发送</el-button>
+            <el-button
+              type="danger"
+              style="background-color: #b83733;border-color:#b83733; margin-top:10px;"
+            >发送</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -119,7 +137,7 @@ import Jsjm from "@/components/jsjm";
 import Jdyh from "@/components/jdyh";
 import Myfooter from "@/components/footer";
 import Myswiper from "@/components/mySwiper";
-import {Member,Honor,GetRoleCenterGetRoleCenter} from "@/api/api"
+import { Member, Honor, GetRoleCenterGetRoleCenter } from "@/api/api";
 export default {
   name: "index",
   components: {
@@ -128,7 +146,7 @@ export default {
     Jsjm,
     Jdyh,
     Myfooter,
-    Myswiper,
+    Myswiper
   },
   data() {
     return {
@@ -282,48 +300,48 @@ export default {
   // created() {
   //   this.personal = this.teamList[0];
   // },
-  mounted(){
-    this.init()
+  mounted() {
+    this.init();
   },
   methods: {
-    init(){
+    init() {
       this.getMember();
       this.getHonor();
-      this.getCourse()
+      this.getCourse();
     },
     mouseSel(index) {
       this.selOne = index;
       this.personal = this.teamList[index];
     },
     // 获取核心成员列表
-    getMember(){
-      Member().then(res=>{
-        let {data,code,msg} = res;
-        if(code == 1){
+    getMember() {
+      Member().then(res => {
+        let { data, code, msg } = res;
+        if (code == 1) {
           this.teamList = data;
           this.mouseSel(0);
         }
-      })
+      });
     },
     // 各项荣誉及证书
-    getHonor(){
-      Honor().then(res=>{
-        let {data,code,msg} = res;
+    getHonor() {
+      Honor().then(res => {
+        let { data, code, msg } = res;
         console.log(data);
-        if(code == 1){
-          this.honorImage = data
+        if (code == 1) {
+          this.honorImage = data;
         }
-      })
+      });
     },
     // 发展历程
-    getCourse(){
-      GetRoleCenterGetRoleCenter().then(res=>{
-         let {data,code,msg} = res;
-        console.log(data)
-        if(code == 1){
-          this.courseTitle = data.reverse()
+    getCourse() {
+      GetRoleCenterGetRoleCenter().then(res => {
+        let { data, code, msg } = res;
+        console.log(data);
+        if (code == 1) {
+          this.courseTitle = data.reverse();
         }
-      })
+      });
     }
   }
 };
@@ -369,10 +387,9 @@ export default {
     margin: 40px auto;
   }
   .core-team {
-    
     background-color: rgb(228, 228, 228);
     padding: 30px;
-    >div{
+    > div {
       display: flex;
       justify-content: center;
       margin: 0 auto;
@@ -414,7 +431,7 @@ export default {
       color: #fff;
       line-height: 26px;
       height: 600px;
-      overflow-y:scroll;
+      overflow-y: scroll;
       .personal-top {
         text-align: center;
         margin-top: 20px;
@@ -435,9 +452,9 @@ export default {
         padding: 0 30px;
       }
     }
-    .personal-profile::-webkit-scrollbar{
-	display:none
-}
+    .personal-profile::-webkit-scrollbar {
+      display: none;
+    }
   }
   .contact {
     display: flex;
@@ -488,7 +505,7 @@ export default {
           display: flex;
           margin-left: 50px;
           margin-bottom: 40px;
-          &:last-of-type{
+          &:last-of-type {
             margin-bottom: 0;
           }
           img {
@@ -506,10 +523,30 @@ export default {
             color: rgb(188, 199, 216);
           }
         }
+        .lichengConten {
+          width: 600px;
+          height: 520px;
+          font-size: 18px;
+          color: #bcc7d8;
+          position: absolute;
+          left: 130px;
+          top: 0;
+          overflow-y: scroll;
+          > div {
+            height: 50px;
+            margin-bottom: 10px;
+            &:nth-last-of-type(1) {
+              margin-bottom: 0;
+            }
+          }
+        }
+        .lichengConten::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
-    .development-course::-webkit-scrollbar{
-      display: none
+    .development-course::-webkit-scrollbar {
+      display: none;
     }
     .contact-message {
       border: 1px solid rgb(228, 228, 228);
@@ -528,7 +565,7 @@ export default {
         margin-bottom: 10px;
         font-weight: 700;
         line-height: 22px;
-        i{
+        i {
           font-size: 22px;
           margin-right: 5px;
         }

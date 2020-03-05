@@ -31,9 +31,10 @@
         <div class="all" :class="{'hui':guHui,'selected':guSel}" @click="diyGb">固定样式</div>
         <el-button class="wh-sty" v-popover:popover2><router-link :to="'hints'" style="color:rgb(255,0,0)"><i class="el-icon-question"></i></router-link></el-button>
         <div style="flex:1"></div>
+        <!-- <el-button  type="warning" plain  class="appreciation"  v-popover:popover1>增值服务</el-button> -->
         <el-button  type="warning" plain  class="appreciation"  v-popover:popover1>增值服务</el-button>
       </div>
-      <el-popover ref="popover1" placement="bottom" width="450" trigger="click">
+      <el-popover ref="popover1" placement="bottom" width="450" trigger="hover">
         <div style="display:flex;justify-content : space-around;">
           <div class="popover-box">
             <p>小程序办理开通</p>
@@ -54,7 +55,7 @@
         ref="popover2"
         placement="bottom"
         width="350"
-        trigger="click"
+        trigger="hover"
         content="DIY样式可对结构板块样式做适当修改，固定样式不能对样式做修改，但可对内容及各元素图文做替换"
       ></el-popover>
       <div class="abstract">

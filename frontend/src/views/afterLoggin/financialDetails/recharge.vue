@@ -230,7 +230,7 @@ export default {
   }
 }
 .feiyongSum {
-   box-shadow: 0px -2px 3px rgba(0,0,0,0.5);
+  box-shadow: 0px -2px 3px rgba(0,0,0,0.5);
   width: 100%;
   margin-left: -10px;
   position: fixed;
@@ -239,7 +239,7 @@ export default {
   background: rgba(204, 235, 248, 1);
   padding: 10px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   z-index: 100;
   > div {
     margin-right: 100px;
@@ -254,7 +254,7 @@ export default {
         color: #333333;
         // display: flex;
         // text-align: right; 
-        margin: -30px  0 0 500px ;
+        margin: -30px  0 0 460px ;
       }
       > span {
         &:nth-of-type(1) {

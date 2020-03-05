@@ -389,8 +389,8 @@
       <div>
         <img :src="biaozhi1" alt=""><img :src="biaozhi2" alt="">
       </div>
-      <div>
-        <div @click.stop="getview(400)">Siring思锐</div>
+      <div id="leftXuanfu">
+        <div @click.stop="getview(400)" style="background:#cb1623">Siring思锐</div>
         <div @click.stop="getview(830)">软件定制</div>
         <div @click.stop="getview(1650)">小程序SaaS</div>
         <div @click.stop="getview(2250)">AI推广引擎</div>
@@ -586,10 +586,33 @@ export default {
     };
   },
   mounted() {
-    this.getGoods();
-    this.getSetMeal();
+    this.init(); 
   },
   methods: {
+    init(){
+      this.getGoods();
+      this.getSetMeal();
+      this.xuanfu();
+      window.addEventListener("scroll",()=>{
+        this.xuanfu();
+        // switch(top){
+        //   case 400:xuanfu[0].style.background="#cb1623";
+        //   break;
+        //    case 830:xuanfu[0].style.background="#cb1623";
+        //   break;
+        //    case 1650:xuanfu[0].style.background="#cb1623";
+        //   break;
+        //    case 2250:xuanfu[0].style.background="#cb1623";
+        //   break;
+        //    case 2900:xuanfu[0].style.background="#cb1623";
+        //   break;
+        //   default:
+        //     console.log(xuanfu[0].style);
+        //     break;
+        // }
+        // console.log(xuanfu);
+      })
+    },
     xcxnavClick(index) {
       this.xcxnavon = index;
       this.mgtop = -(index * 325);
@@ -621,7 +644,47 @@ export default {
     // 滚动
     getview(num){
       // document.getElementById(str).scrollIntoView();
-     document.documentElement.scrollTop=num
+    //  document.documentElement.scrollTop=num
+    window.scrollTo({
+      top: num, 
+      behavior: "smooth" 
+    });
+    },
+    // 
+    xuanfu(){
+      let xuanfu = document.getElementById("leftXuanfu").getElementsByTagName("div")
+      let top = document.documentElement.scrollTop;
+        if(top<830){
+          xuanfu[0].style.background="#cb1623";
+          this.qingchuxuanfu(0)
+        }else if(top>=830&&top<1650){
+          xuanfu[1].style.background="#cb1623";
+          this.qingchuxuanfu(1)
+        }
+        else if(top>=1650&&top<2250){
+          xuanfu[2].style.background="#cb1623";
+          this.qingchuxuanfu(2)
+        }
+        else if(top>=2250&&top<2900){
+          xuanfu[3].style.background="#cb1623";
+          this.qingchuxuanfu(3)
+        }else if(top<3300){
+          xuanfu[4].style.background="#cb1623";
+          this.qingchuxuanfu(4)
+        }
+        else{
+          xuanfu[5].style.background="#cb1623";
+          this.qingchuxuanfu(5)
+        }
+    },
+    //
+    qingchuxuanfu(num){
+      let xuanfu = document.getElementById("leftXuanfu").getElementsByTagName("div")
+      for(let i=0;i<6;i++){
+        if(i!=num){
+          xuanfu[i].style.background="rgb(165,163,161)"
+        }
+      }
     }
   }
 };
@@ -1120,9 +1183,12 @@ export default {
         text-align: center;
         padding: 10px 5px;
         margin-bottom: 10px;
-        width: 50px;
+        width: 80px;
           color: #ffffff;
           font-size: 14px;
+      }
+      >div:hover{
+        background: #cb1623
       }
     }
 }

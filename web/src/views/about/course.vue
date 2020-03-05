@@ -41,7 +41,7 @@
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
                 <FormItem label="历程" prop="name">
-                    <Input v-model="formItem.name" placeholder="请输入历程" style="width: 300px;"></Input>
+                    <Input v-model="formItem.name" placeholder="请输入历程" style="width: 600px;"></Input>
                 </FormItem>
 
             </Form>

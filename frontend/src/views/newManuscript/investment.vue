@@ -614,14 +614,17 @@ export default {
     padding: 15px;
     background: rgb(204, 235, 248);
     box-shadow:0 -3px 3px rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: center;
     .xiadan {
       display: flex;
-      padding: 10px 0 40px 0;
+      justify-content: center;
+      padding: 10px 0 0 0;
       // margin-left: 950px;
       // position: relative;
       // right: 0;
-      float: right;
-      margin-right: 180px;
+      // float: right;
+      // margin-right: 180px;
       .feiyong {
         font-size: 18px;
         color: rgb(230, 45, 49);
@@ -666,9 +669,12 @@ export default {
     }
     .queren {
       position: absolute;
-      right: 65px;
+      left: 325px;
       top: 55px;
       // margin-left: 1500px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
     }
   }
 </style>

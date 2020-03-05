@@ -62,11 +62,11 @@
           </div>
           <div class="marquee">
             <ul class="marquee-list clearfix" style="width: 5000px">
-              <li class="marquee-item" v-for="item in 6" :key="item">
-                <img style="width:43px;height:43px;" :src="require('@/assets/images/u1920.png')" alt="">
+              <li class="marquee-item" v-for="(item,index) in ceshishuju" :key="index">
+                <img style="width:43px;height:43px;" :src="item.img" alt="">
                 <span>
-                重庆会员（邀请码
-                <span class="code-color">JU4523</span>）升级为金牌会员
+                {{item.huiyuan}}（邀请码
+                <span class="code-color">{{item.yaoqma}}</span>）升级为金牌会员
                 </span>
               </li>
             </ul>
@@ -231,7 +231,17 @@ export default {
         ]
       },
       payqrcode: "",
-      user_id: 0
+      user_id: 0,
+      ceshishuju:[
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员1",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员2",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员3",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员4",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员5",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员6",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员7",yaoqma:"JU4523"},
+        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员8",yaoqma:"JU4523"},
+      ],
     };
   },
   mounted() {
@@ -246,6 +256,7 @@ export default {
     init() {
       this.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       this.getProvince();
+      this.openhuadong();
       // this.getLevelList();
       // this.getdiscount();
       // this.getProfit();
@@ -287,7 +298,32 @@ export default {
         }
       });
     },
-
+    // 等级会员左右滑动
+    openhuadong(){
+      let huadongArr = document.getElementsByClassName("marquee-item");
+      let arrA = [];
+      let lh = this.ceshishuju.length;
+      let marqueeList = document.getElementsByClassName("marquee-list")[0];
+      let sum = 0;
+      for(let i=0; i<huadongArr.length; i++){
+          sum+=huadongArr[i].offsetWidth+40;
+      }
+      marqueeList.style.width = sum + "px";
+      let timeO = setInterval(() => {
+        // console.log(123123)
+        // marqueeList.scrollLeft += 200;
+        // console.log(this.ceshishuju.length)
+        arrA.push(this.ceshishuju.shift()) ;
+        if(this.ceshishuju.length < 4 || this.ceshishuju.length >lh){
+          // this.ceshishuju= arrA;
+          // this.ceshishuju.push(arrA);
+          // console.log(this.ceshishuju)
+          // arrA=[];
+          this.ceshishuju.push(arrA.shift()) ;
+        }
+        // console.log(arrA)
+      }, 2000);
+    },
     getLevelList(num) {
       GetLevelList().then(res => {
         let { code, data, msg } = res;
