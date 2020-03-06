@@ -66,7 +66,7 @@
                 <img style="width:43px;height:43px;" :src="item.img" alt="">
                 <span>
                 {{item.huiyuan}}（邀请码
-                <span class="code-color">{{item.yaoqma}}</span>）升级为金牌会员
+                <span class="code-color">{{item.yaoqma}}</span>）升级为城市合伙人
                 </span>
               </li>
             </ul>
@@ -597,7 +597,7 @@ export default {
               text-align: center;
               margin: 0 20px;
               color: #797979;
-              font-size: 16px;
+              font-size: 14px;
               line-height: 28px;
               .code-color {
                 color: #199ed8;

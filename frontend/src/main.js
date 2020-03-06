@@ -8,6 +8,11 @@ import '@/assets/style/index.scss';
 import { Seo } from '@/api/api';
 import './assets/iconfont/iconfont.css';
 import './assets/iconfont1/iconfont.css';
+import Echarts from 'echarts'
+Vue.prototype.$echarts = Echarts 
+// 需要引入china.json，这样中国地图才会出现，不然只会出现右下角的南海诸岛
+import china from 'echarts/map/json/china.json'
+Echarts.registerMap('china', china)
 import qs from 'qs';
 Vue.prototype.$qs = qs;
 import VueClipboard from 'vue-clipboard2'

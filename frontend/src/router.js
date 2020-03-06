@@ -55,6 +55,7 @@ export default new Router({
     {
         path: '/quickValuation',
         name: 'quickValuation',
+        meta:{requireAuth:true},//路由守卫开启标识
         component: () =>
             import('@/views/tailorMade/quickValuation')
     },
@@ -67,6 +68,7 @@ export default new Router({
     {
         path: '/fillDemand',
         name: 'fillDemand',
+        meta:{requireAuth:true},//路由守卫开启标识
         component: () =>
             import('@/views/tailorDemand/fillDemand')
 

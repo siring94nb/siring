@@ -140,7 +140,14 @@ export default {
         // console.log(res);
         if (code === 1) {
           this.handleClose();
-          this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
+          // this.$router.push({ name: 'securityCenterIndex', params: { user_id: sessionStorage.getItem("user_id") }})
+             this.showMsg("密码修改成功，请重新登录",code);
+              this.$router.push({
+                name:`index`,
+                params:{
+                  isRegister:'2'
+                }
+              })
         }
       });
     },

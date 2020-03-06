@@ -852,6 +852,7 @@ export default {
       border: 1px solid rgb(230, 45, 49);
       padding: 2px 25px;
       border-radius: 3px;
+      font-size: 14px;
     }
   }
   .queren {

@@ -87,6 +87,7 @@
       <ding-dan />
     </div>
     <gnmk1>角色收益</gnmk1>
+    <chinaditu/>
   </div>
 </template>
 <script>
@@ -95,6 +96,7 @@ import faterLoggin from "@/views/afterLoggin/faterLoggin";
 import logginHeader from "@/components/logginHeader";
 import gnmk from "@/components/gnmk";
 import gnmk1 from "@/components/gnmk1";
+import chinaditu from "@/components/chinaDitu";
 import dingDan from "@/components/dingDan";
 import { GetUserMassage, GetSumIndent,UserUpdating } from "@/api/api";
 export default {
@@ -172,7 +174,8 @@ export default {
     gnmk,
     gnmk1,
     dingDan,
-    logginHeader
+    logginHeader,
+    chinaditu
   }
 };
 </script>

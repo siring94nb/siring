@@ -345,7 +345,7 @@
     <!-- 结算 -->
     <div class="xiadanBox">
       <div class="xiadan">
-        <div>
+        <div style="padding-top:5px">
           <span class="yongtu">打赏详谈发布者：</span>
         </div>
         <div>
@@ -355,8 +355,8 @@
             <span>赏金</span>
           </div>
         </div>
-        <div>
-          <span style="font-size:26px; padding-right:10px;padding-left:10px">×</span>
+        <div style="padding-top:5px;">
+          <span style="font-size:20px;font-weight: 700; padding-right:10px;padding-left:10px"  >×</span>
         </div>
         <div>
           <div class="feiyong">￥1111</div>
@@ -366,7 +366,7 @@
             <i class="el-icon-question" style="color:rgb(230,45,49)"></i>
           </div>
         </div>
-        <div style="font-size:26px; padding:0 10px">=</div>
+        <div style="font-size:20px;font-weight: 700; padding:5px 10px">=</div>
         <div class="feiyong sumJia">￥3333333</div>
         <div>
           <button class="zhifuBtn">立即支付</button>
@@ -630,7 +630,8 @@ export default {
         color: rgb(230, 45, 49);
         display: inline-block;
         background: #ffffff;
-        padding: 2px 20px;
+        padding: 4px 20px;
+        border: 1px solid #c9c9c9;
       }
       .jianshu {
         text-align: center;
@@ -644,6 +645,7 @@ export default {
       }
       .yongtu {
         font-size: 18px;
+        // height: 100%;
       }
       .biaozhi {
         color: rgb(230, 45, 49);
@@ -665,6 +667,7 @@ export default {
         border: 1px solid rgb(230, 45, 49);
         padding: 2px 25px;
         border-radius: 3px;
+        font-size: 14px;
       }
     }
     .queren {

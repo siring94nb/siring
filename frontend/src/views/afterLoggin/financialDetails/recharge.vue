@@ -55,7 +55,7 @@
               <span>充值费用</span>
             </div>
           </div>
-          <div>x</div>
+          <div style="font-size:20px;font-weight: 700;">x</div>
           <div>
             <div>{{discount}}</div>
             <div>
@@ -66,17 +66,18 @@
               </router-link>
             </div>
           </div>
-          <div>=</div>
+          <div style="font-size:20px;font-weight: 700;">=</div>
           <div>￥{{sum}}</div>
           <div>
             <button class="zhifu" @click="getRecharge">立即支付</button>
           </div>
         </div>
         <div>
-          <label>
-            <input type="radio" value="  本人已确认，支付后执行下一流程" checked />
+          <!-- <label >
+            <input  type="radio" value="  本人已确认，支付后执行下一流程" checked />
             本人已确认，支付后执行下一流程
-          </label>
+          </label> -->
+          <el-radio v-model="radioYonghu" label="1">本人已确认，支付后执行下一流程</el-radio>
         </div>
       </div>
     </div>
@@ -91,7 +92,8 @@ export default {
       activeName: "1", //折叠面板默认打开数值
       chognzhi: "1000", //充值费用
       discount: "100%", //会员折扣
-      sum: "" //充值费用*会员折扣（若是会员的话） 
+      sum: "", //充值费用*会员折扣（若是会员的话） 
+      radioYonghu:"1"
     };
   },
   components: {
@@ -258,7 +260,8 @@ export default {
       }
       > span {
         &:nth-of-type(1) {
-          padding-right: 15px;
+          // padding-right: 15px;
+          padding-top: 5px;
         }
       }
       > div {
@@ -266,9 +269,11 @@ export default {
           div {
             &:nth-of-type(1) {
               background: #ffffff;
-              color: #ff0000;
+              color: #f56c6c;
               padding: 2px 20px;
               margin-right: 10px;
+              border: 1px solid #c9c9c9;
+              font-size: 18px;
             }
             &:nth-of-type(2) {
               text-align: center;
@@ -293,9 +298,11 @@ export default {
           div {
             &:nth-of-type(1) {
               background: #ffffff;
-              color: #ff0000;
+              color: #f56c6c;
               padding: 2px 20px;
               margin-right: 10px;
+              border: 1px solid #c9c9c9;
+              font-size: 18px;
             }
             &:nth-of-type(2) {
               text-align: center;
@@ -323,9 +330,11 @@ export default {
           background: #ffffff;
           // box-sizing: border-box;
           padding: 2px 25px;
-          color: #ff0000;
+          color: #f56c6c;
           margin-right: 15px;
           height: 18px;
+          border: 1px solid #c9c9c9;
+              font-size: 18px;
         }
         &:nth-of-type(6) {
           button {
@@ -342,7 +351,8 @@ export default {
   }
   .zhifu{
     a{
-      color: #ffffff;
+      color: #ffffff; 
+      // font-size: 14px;
     }
   }
 }

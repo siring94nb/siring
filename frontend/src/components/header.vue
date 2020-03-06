@@ -9,14 +9,45 @@
         </div>
         <div class="login-box">
           <div v-if="!ifLogin">
-            <span class="yangshixiugai"  @click="dialogVisible = true; isRegister = 1" @mouseover="yangshixiugai(1)" @mouseout="yangshixiugai1">注册</span>
+            <span
+              class="yangshixiugai"
+              @click="dialogVisible = true; isRegister = 1"
+              @mouseover="yangshixiugai(1)"
+              @mouseout="yangshixiugai1"
+            >注册</span>
             <el-divider direction="vertical"></el-divider>
-            <span class="yangshixiugai" @click="dialogVisible = true; isRegister = 2" @mouseover="yangshixiugai(2)" @mouseout="yangshixiugai1">登录</span>
+            <span
+              class="yangshixiugai"
+              @click="dialogVisible = true; isRegister = 2"
+              @mouseover="yangshixiugai(2)"
+              @mouseout="yangshixiugai1"
+            >登录</span>
           </div>
           <div v-else class="after-login">
             <el-badge :value="200" :max="99" class="bell">
-              <i class="el-icon-bell"></i>
+              <i class="el-icon-bell" v-popover:popover1></i>
             </el-badge>
+            <!-- 悬浮 -->
+            <el-popover ref="popover1" placement="bottom" width="280" trigger="hover">
+              <div>
+                <div class="popover-box">
+                  [订单] 您有
+                  <span style="color:#ff0000">24</span>个
+                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                </div>
+                <div class="popover-box">
+                  [订单] 您有
+                  <span style="color:#ff0000">24</span>个
+                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                </div>
+                <div class="popover-box">
+                  [售后] 您有
+                  <span style="color:#ff0000">24</span>个
+                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                </div>
+              </div>
+            </el-popover>
+
             <router-link to="afterLoggin" class="dh">
               <el-avatar
                 class="avatar"
@@ -24,7 +55,7 @@
               ></el-avatar>
               <span class="phone">{{phone}}</span>
             </router-link>
-            <span @click="onLogout">退出</span>
+            <span class="out" @click="onLogout">退出</span>
           </div>
         </div>
       </div>
@@ -33,7 +64,7 @@
       <div class="nav-cont">
         <div class="logo-box">
           <router-link to="/">
-          <img :src="require('@/assets/images/logo.png')" width="100" alt />
+            <img :src="require('@/assets/images/logo.png')" width="100" alt />
           </router-link>
         </div>
         <div class="comp-feature">
@@ -52,7 +83,7 @@
             <span>软件/定制</span>
             <p class="en-name">Software develop</p>
             <!-- <i class="iconfont icon-remen fire"></i> -->
-            <img src="../assets/images/image561611.gif" class="fire" alt="">
+            <img src="../assets/images/image561611.gif" class="fire" alt />
           </router-link>
           <el-divider direction="vertical"></el-divider>
           <router-link to="/programSaaS">
@@ -125,9 +156,9 @@
                 <el-dropdown-item command="f">
                   <router-link to="/aboutUs" style="color: #333;">关于我们</router-link>
                 </el-dropdown-item>
-                 <!-- <el-dropdown-item command="e">
+                <!-- <el-dropdown-item command="e">
                   <router-link to="/platformIntroduction" style="color: #333;">多平台介绍</router-link>
-                </el-dropdown-item> -->
+                </el-dropdown-item>-->
               </el-dropdown-menu>
             </el-dropdown>
           </a>
@@ -188,27 +219,39 @@
             <el-input v-model="dataObj.invit" placeholder="邀请码可不填"></el-input>
           </el-form-item>
           <div class="selectCity">
-              <!-- 注册页添加城市三级联动下拉列表 -->
-              <span><span style="color:#F56C6C">*</span>城市</span>
-           <el-select v-model="selectItem" @change="selectFn($event)" placeholder="请选择" style="width:157.5px;">
-            <!--选择项的value值默认选择项文本 可动态绑定选择项的value值 更改v-model指令绑定数据-->
+            <!-- 注册页添加城市三级联动下拉列表 -->
+            <span>
+              <span style="color:#F56C6C">*</span>城市
+            </span>
+            <el-select
+              v-model="selectItem"
+              @change="selectFn($event)"
+              placeholder="请选择"
+              style="width:157.5px;"
+            >
+              <!--选择项的value值默认选择项文本 可动态绑定选择项的value值 更改v-model指令绑定数据-->
               <!-- <el-option v-for="(item,index) in items" :value="item.id" :key="index" :id="item.id"></el-option> -->
-               <el-option
+              <el-option
                 v-for="(item,index) in items"
                 :key="index+item.name"
                 :label="item.name"
-                :value="item.id">
-              </el-option>
-          </el-select>
-          <el-select v-model="selectItem1" @change="selectFn1($event)" placeholder="请选择"  style="width:157.5px;">
+                :value="item.id"
+              ></el-option>
+            </el-select>
+            <el-select
+              v-model="selectItem1"
+              @change="selectFn1($event)"
+              placeholder="请选择"
+              style="width:157.5px;"
+            >
               <!-- <el-option v-for="(item,index) in items1" :value="item.id" :key="index">{{item.name}}</el-option> -->
-               <el-option
+              <el-option
                 v-for="(item,index) in items1"
                 :key="index+item.name"
                 :label="item.name"
-                :value="item.id">
-              </el-option>
-          </el-select>
+                :value="item.id"
+              ></el-option>
+            </el-select>
           </div>
           <div class="prot">
             <div>
@@ -290,6 +333,9 @@
           <el-form-item label="新密码" prop="password">
             <el-input v-model="dataObj.password" placeholder="请输入新密码"></el-input>
           </el-form-item>
+          <!-- <el-form-item label="确认新密码" prop="password">
+            <el-input v-model="dataObj.password" placeholder="请输入新密码"></el-input>
+          </el-form-item>-->
         </el-form>
       </template>
 
@@ -298,6 +344,7 @@
           type="danger"
           class="submit"
           @click="submit('form')"
+          style="background:#e62d31"
         >{{isRegister==1?'注册':isRegister==2?'登录':'确定'}}</el-button>
       </span>
     </el-dialog>
@@ -306,7 +353,15 @@
 
 <script>
 import validCode from "@/components/vaildcode";
-import { Login, Register, GetCode, ForgetPwd, Logout,GetProvince,GetCityList } from "@/api/api";
+import {
+  Login,
+  Register,
+  GetCode,
+  ForgetPwd,
+  Logout,
+  GetProvince,
+  GetCityList
+} from "@/api/api";
 export default {
   components: {
     validCode
@@ -333,8 +388,8 @@ export default {
       items: [],
       selectItem1: "请选择",
       items1: [],
-      pid:0,//省份id
-      cid:0//市id
+      pid: 0, //省份id
+      cid: 0 //市id
     };
   },
   computed: {
@@ -437,8 +492,8 @@ export default {
         password_confirm: this.dataObj.password,
         invitation: this.dataObj.invit,
         code: this.dataObj.code,
-        pid:this.pid,
-        cid:this.cid
+        pid: this.pid,
+        cid: this.cid
       };
       Register(params).then(res => {
         let { data, msg, code } = res;
@@ -447,36 +502,36 @@ export default {
       });
     },
     //获取省份
-    getGetProvince(){
-      GetProvince().then(res=>{
-        let{data,code,msg} = res;
-        if(code == 1){
+    getGetProvince() {
+      GetProvince().then(res => {
+        let { data, code, msg } = res;
+        if (code == 1) {
           this.items = data;
         }
-      })
+      });
     },
-    yangshixiugai(num){
+    yangshixiugai(num) {
       let yangshiArr = document.getElementsByClassName("yangshixiugai");
-      if(num == 1){
+      if (num == 1) {
         // console.log(1111)
-        yangshiArr[0].style.color="red"
-      }else{
+        yangshiArr[0].style.color = "red";
+      } else {
         // console.log(2222)
-        yangshiArr[1].style.color="red"
+        yangshiArr[1].style.color = "red";
       }
     },
-    yangshixiugai1(){
+    yangshixiugai1() {
       let yangshiArr = document.getElementsByClassName("yangshixiugai");
-      yangshiArr[0].style.color="#ffffff";
-      yangshiArr[1].style.color="#ffffff"
+      yangshiArr[0].style.color = "#ffffff";
+      yangshiArr[1].style.color = "#ffffff";
     },
     // 测试通过他人邀请码过来
-    ceshi(){
+    ceshi() {
       let roPath = this.$route.query.isRegister;
-      let yqm = this.$route.query.invitationCode
-      if(roPath == 1){
+      let yqm = this.$route.query.invitationCode;
+      if (roPath == 1) {
         this.dialogVisible = true;
-        this.isRegister = 1
+        this.isRegister = 1;
         this.dataObj.invit = yqm;
       }
     },
@@ -501,21 +556,21 @@ export default {
     // 城市改变，获取相应的二级城市等
     selectFn() {
       let pid = this.selectItem;
-      this.pid =parseInt(pid);
-      const params = {pid:pid}
-      GetCityList(params).then(res=>{
-        let {data,code,msg} = res;
-        if(code == 1) {
+      this.pid = parseInt(pid);
+      const params = { pid: pid };
+      GetCityList(params).then(res => {
+        let { data, code, msg } = res;
+        if (code == 1) {
           this.items1 = data;
           this.selectItem1 = data[0].id;
-          this.cid = data[0].id
+          this.cid = data[0].id;
         }
-      })
+      });
     },
     //pid,cid
     selectFn1() {
       this.cid = parseInt(this.selectItem1);
-      console.log(this.cid)
+      console.log(this.cid);
     },
     // 登录
     onLogin() {
@@ -537,7 +592,7 @@ export default {
             avatar: data.user_img
           });
           this.ifLogin = true;
-          this.handleClose()
+          this.handleClose();
           // this.dialogVisible = false;
           // this.$router.push({ name: "afterLoggin" });
           // this.reload();
@@ -570,7 +625,7 @@ export default {
           this.$store.commit("logout");
           this.ifLogin = false;
           // this.reload();
-          this.$router.push('/');
+          this.$router.push("/");
         }
       });
     }
@@ -589,6 +644,10 @@ export default {
 .el-dropdown-menu__item {
   text-align: center;
 }
+.popover-box {
+    text-align: center;
+    margin: 10px 0;
+  }
 </style>
 <style scoped lang='scss'>
 .header {
@@ -598,7 +657,7 @@ export default {
   width: 100%;
   z-index: 999;
   border-bottom: 2px solid #ffffff;
-  box-shadow: 0px 3px 4px rgba(0,0,0,.2);
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.2);
   .bg-black {
     height: 40px;
     background-color: #000000;
@@ -628,11 +687,20 @@ export default {
           .bell {
             font-size: 24px;
           }
-          .dh{
+          .dh {
             .phone {
               margin: 0 10px;
               color: #ffffff;
             }
+            .phone:hover {
+              color: #ff0000;
+            }
+          }
+          .out {
+            color: #ffffff;
+          }
+          .out:hover {
+            color: #ff0000;
           }
         }
         .avatar {
@@ -640,6 +708,7 @@ export default {
           height: 30px;
           vertical-align: middle;
           margin-left: 40px;
+          margin-top: -2px;
         }
       }
     }
@@ -709,9 +778,9 @@ export default {
           white-space: nowrap;
         }
         &:hover {
-          color: rgb(177,18,14);
+          color: rgb(177, 18, 14);
           .el-dropdown {
-            color: rgb(177,18,14);
+            color: rgb(177, 18, 14);
           }
           .en-name {
             opacity: 1;
@@ -786,17 +855,18 @@ export default {
       margin-bottom: 20px;
     }
   }
-  .selectCity{
+  .selectCity {
     display: flex;
     align-items: center;
     padding-bottom: 20px;
-    >span{
+    > span {
       width: 70px;
       padding-right: 12px;
-      box-sizing:border-box;
+      box-sizing: border-box;
       text-align: right;
     }
   }
+  
 }
 </style>
 
