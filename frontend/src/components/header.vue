@@ -164,8 +164,8 @@
           </a>
         </div>
         <div class="sp-bt">
-          <router-link to="/fillDemand">定制需求</router-link>
-          <router-link to="/quickValuation" class="kjgj">快捷估价</router-link>
+          <span @click="dinghzi('fillDemand')">定制需求</span>
+          <span @click="dinghzi('quickValuation')" class="kjgj">快捷估价</span>
         </div>
       </div>
     </el-col>
@@ -204,7 +204,7 @@
             ></el-input>
             <i
               class="iconfont icon-eye"
-              :class="showPwd?'icon-yanjing':'icon-yanjing_bi'"
+              :class="showPwd?'icon-xianshi':'icon-yincang'"
               @click="switchPwd"
             ></i>
           </el-form-item>
@@ -292,7 +292,7 @@
             ></el-input>
             <i
               class="iconfont icon-eye"
-              :class="showPwd?'icon-yanjing':'icon-yanjing_bi'"
+              :class="showPwd?'icon-xianshi':'icon-yincang'"
               @click="switchPwd"
             ></i>
           </el-form-item>
@@ -401,7 +401,7 @@ export default {
     this.isLogin();
     this.ceshi();
     this.getGetProvince();
-    // this.guoqi();
+    this.guoqi();
   },
   methods: {
     isLogin() {
@@ -457,6 +457,27 @@ export default {
           this.validateTime = time;
         }
       }, 1000);
+    },
+    // 定制需求等检测是否已经登录
+    dinghzi(str){
+      let num = sessionStorage.getItem("user_id");
+      let roPath = this.$route.name;
+      if(num == null && roPath != "index" ){
+        this.$router.push({
+            name:`index`,
+            params:{
+              isRegister:'2'
+            }
+          })
+      }else if(roPath == "index" && num == null){
+        console.log(123123)
+        this.dialogVisible = true;
+        this.isRegister = 2;
+        this.$message.error('请登录')
+      }
+      else{
+          this.$router.push({name:str})
+      }
     },
     submit(formName) {
       this.$refs[formName].validate(valid => {
@@ -536,23 +557,24 @@ export default {
       }
     },
     //登录过期，弹出登录框
-    // guoqi(){
-    //   let roPath = this.$route.params.isRegister;
-    //   if(roPath == 2){
-    //     this.dialogVisible = true;
-    //     this.isRegister = 2
-    //     Logout().then(res => {
-    //     let { data, msg, code } = res.data;
-    //     if (code === 1) {
-    //       this.$message.error('登录过期')
-    //       this.$store.commit("logout");
-    //       this.ifLogin = false;
-    //       // this.reload();
-    //       this.$router.push('/');
-    //     }
-    //   });
-    //   }
-    // },
+    guoqi(){
+      let roPath = this.$route.params.isRegister;
+      console.log("112132"+"测试测试"+roPath)
+      if(roPath == 2){
+        this.dialogVisible = true;
+        this.isRegister = 2
+        Logout().then(res => {
+        let { data, msg, code } = res.data;
+        if (code === 1) {
+          this.$message.error('请登录')
+          this.$store.commit("logout");
+          this.ifLogin = false;
+          // this.reload();
+          this.$router.push('/');
+        }
+      });
+      }
+    },
     // 城市改变，获取相应的二级城市等
     selectFn() {
       let pid = this.selectItem;
@@ -794,7 +816,7 @@ export default {
       }
     }
     .sp-bt {
-      a {
+      span {
         display: inline-block;
         color: #fff;
         text-decoration: none;
@@ -804,6 +826,7 @@ export default {
         font-size: 14px;
         text-align: center;
         margin-left: 5px;
+        cursor: pointer;
         &.kjgj {
           background-color: #ffffff;
           color: #ff0000;

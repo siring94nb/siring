@@ -396,6 +396,10 @@ export default {
               background-color: #ffffff;
               padding: 10px;
               font-size: 40px;
+              border-radius: 50%;
+              height: 40px;
+              width: 40px;
+              text-align: center;
             }
           }
           .step-desc {

@@ -139,14 +139,14 @@ export default {
       }
     },
     addData(item) {
-      this.minPrice += item.price_down;
-      this.maxPrice += item.price_up;
+      this.minPrice += item.price_down*item.work_hours;
+      this.maxPrice += item.price_up*item.work_hours;
       // this.date += item.work_hours;
       this.date = Number((this.date + item.work_hours).toFixed(1));
     },
     minusData(item) {
-      this.minPrice -= item.price_down;
-      this.maxPrice -= item.price_up;
+      this.minPrice -= item.price_down*item.work_hours;
+      this.maxPrice -= item.price_up*item.work_hours;
       // this.date -= item.work_hours;
       this.date = Number((this.date - item.work_hours).toFixed(1));
     },
@@ -175,31 +175,35 @@ export default {
           data.plate_form.forEach(v => {
             switch (v.plate_from_id) {
               case 1:
-                v.className = "iconfont icon-gongyinglian";
+                v.className = "iconfont icon-yuanxingtu";
                 break;
               case 2:
-                v.className = "iconfont icon-shezhi-";
+                v.className = "iconfont icon-shezhi2";
                 break;
               case 3:
-                v.className = "iconfont icon-diannao";
+                v.className = "iconfont icon-pc1";
                 break;
               case 4:
-                v.className = "iconfont icon-h5";
+                v.className = "iconfont icon-h";
                 break;
               case 5:
                 v.className = "iconfont icon-pingguo";
                 break;
               case 6:
-                v.className = "iconfont icon-anzhuologo";
+                v.className = "iconfont icon-anzhuo";
                 break;
               case 7:
-                v.className = "iconfont icon-weixinxiaochengxu";
+                v.className = "iconfont icon-xiaochengxu";
                 break;
             }
           });
           this.typeList = data.plate_form;
           this.dataList = data.model;
-          this.tableData = data.model[0];
+          // this.tableData = data.model[0];
+          for(let i=0;i<this.typeList.length;i++){
+            this.tableData.push(data.model[i])
+          }
+          console.log(this.tableData)
         }
       });
     }

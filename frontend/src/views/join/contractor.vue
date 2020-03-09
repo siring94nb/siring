@@ -55,7 +55,7 @@
         </div>
       </div>
 
-       <div class="new-member">
+      <div class="new-member">
         <h3 class="title">他们已申请成为分包商</h3>
         <div class="new-member-box">
           <div class="img">
@@ -64,10 +64,10 @@
           <div class="marquee">
             <ul class="marquee-list clearfix" style="width: 5000px">
               <li class="marquee-item" v-for="(item,index) in ceshishuju" :key="index">
-                <img style="width:43px;height:43px;" :src="item.img" alt="">
+                <img style="width:43px;height:43px;" :src="item.img" alt />
                 <span>
-                {{item.huiyuan}}（邀请码
-                <span class="code-color">{{item.yaoqma}}</span>）升级为金牌会员
+                  {{item.huiyuan}}（邀请码
+                  <span class="code-color">{{item.yaoqma}}</span>）升级为金牌会员
                 </span>
               </li>
             </ul>
@@ -99,20 +99,28 @@
               <el-button @click.prevent="removeNewSkill(index)" v-if="index!==0">删除</el-button>
             </el-form-item>
             <el-form-item>
-              <el-button style="margin-left:0px;border:1px solid rgb(14,144,210);color:rgb(14,144,210);width:455px;" @click="addNewSkill" v-if="ruleForm.selectSkills.length < 2">再添加一档（可选项，每人最多添加二档）</el-button>
+              <el-button
+                style="margin-left:0px;border:1px solid rgb(14,144,210);color:rgb(14,144,210);width:455px;"
+                @click="addNewSkill"
+                v-if="ruleForm.selectSkills.length < 2"
+              >再添加一档（可选项，每人最多添加二档）</el-button>
             </el-form-item>
-             <!-- 上传 -->
-             <!-- <el-form-item> -->
-              <el-upload
-                name="image"
-                class="upload-demo"
-                drag
-                :show-file-list=false
-                   action="https://manage.siring.com.cn/api/file/qn_upload"
-                multiple>
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">上传证明材料（如介绍等）<em>点击上传</em></div>
-              </el-upload>
+            <!-- 上传 -->
+            <!-- <el-form-item> -->
+            <el-upload
+              name="image"
+              class="upload-demo"
+              drag
+              :show-file-list="false"
+              action="https://manage.siring.com.cn/api/file/qn_upload"
+              multiple
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                上传证明材料（如介绍等）
+                <em>点击上传</em>
+              </div>
+            </el-upload>
             <!-- </el-form-item> -->
 
             <el-form-item
@@ -160,9 +168,7 @@
         <el-table :data="tableData" border style="width: 100%">
           <el-table-column prop="title" label="专业技能" align="center"></el-table-column>
           <el-table-column label="押金标准" align="center">
-            <template slot-scope="scope">
-              {{scope.row.money}}元/年
-            </template>
+            <template slot-scope="scope">{{scope.row.money}}元/年</template>
           </el-table-column>
           <el-table-column prop="policy" label="开发语言半角“,”隔开" align="center">
             <template slot-scope="scope">
@@ -227,16 +233,48 @@ export default {
       num: 1,
       percent: 100,
       needCodeDialog: true, //需要显示扫码弹窗
-      ceshishuju:[
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员1",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员2",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员3",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员4",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员5",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员6",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员7",yaoqma:"JU4523"},
-        {img:require('@/assets/images/u1920.png'),huiyuan:"重庆会员8",yaoqma:"JU4523"},
-      ],
+      ceshishuju: [
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员1",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员2",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员3",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员4",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员5",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员6",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员7",
+          yaoqma: "JU4523"
+        },
+        {
+          img: require("@/assets/images/u1920.png"),
+          huiyuan: "重庆会员8",
+          yaoqma: "JU4523"
+        }
+      ]
     };
   },
   mounted() {
@@ -251,27 +289,27 @@ export default {
   },
   methods: {
     // 等级会员左右滑动
-    openhuadong(){
+    openhuadong() {
       let huadongArr = document.getElementsByClassName("marquee-item");
       let arrA = [];
       let lh = this.ceshishuju.length;
       let marqueeList = document.getElementsByClassName("marquee-list")[0];
       let sum = 0;
-      for(let i=0; i<huadongArr.length; i++){
-          sum+=huadongArr[i].offsetWidth+40;
+      for (let i = 0; i < huadongArr.length; i++) {
+        sum += huadongArr[i].offsetWidth + 40;
       }
       marqueeList.style.width = sum + "px";
       let timeO = setInterval(() => {
         // console.log(123123)
         // marqueeList.scrollLeft += 200;
         // console.log(this.ceshishuju.length)
-        arrA.push(this.ceshishuju.shift()) ;
-        if(this.ceshishuju.length < 4 || this.ceshishuju.length >lh){
+        arrA.push(this.ceshishuju.shift());
+        if (this.ceshishuju.length < 4 || this.ceshishuju.length > lh) {
           // this.ceshishuju= arrA;
           // this.ceshishuju.push(arrA);
           // console.log(this.ceshishuju)
           // arrA=[];
-          this.ceshishuju.push(arrA.shift()) ;
+          this.ceshishuju.push(arrA.shift());
         }
         // console.log(arrA)
       }, 2000);
@@ -331,7 +369,7 @@ export default {
             let { code, data, msg } = res;
             console.log(data);
             if (code === 1) {
-              console.log(123123)
+              console.log(123123);
               this.$router.push({
                 name: "comboPay",
                 params: {
@@ -364,21 +402,22 @@ export default {
 };
 </script>
 <style>
-.join .upload-demo{
+.join .upload-demo {
   margin-top: -125px;
   margin-left: 700px;
   width: 200px;
   height: 100px;
   margin-bottom: 22px;
 }
-.join .el-upload,.join .el-upload-dragger{
+.join .el-upload,
+.join .el-upload-dragger {
   width: 200px;
   height: 100px;
 }
-.join .el-upload-dragger{
+.join .el-upload-dragger {
   font-size: 16px;
 }
-.join .el-upload-dragger i{
+.join .el-upload-dragger i {
   margin: 0;
   font-size: 32px;
 }
@@ -400,7 +439,10 @@ export default {
       }
     }
     .join-step {
+      margin-top: -30px;
       margin-bottom: 50px;
+       background: rgb(247,250,255);
+       padding: 30px 0;
       .step-title {
         text-align: center;
         font-size: 24px;
@@ -436,6 +478,10 @@ export default {
               background-color: #ffffff;
               padding: 10px;
               font-size: 40px;
+              border-radius: 50%;
+              height: 40px;
+              width: 40px;
+              text-align: center;
             }
           }
           .step-desc {
@@ -445,17 +491,17 @@ export default {
           }
           &.step-on {
             .step-name-box {
-              border-color: rgb(25,158,216);
-              color: rgb(25,158,216);
+              border-color: rgb(25, 158, 216);
+              color: rgb(25, 158, 216);
               .step-num {
-                color: rgb(25,158,216);
+                color: rgb(25, 158, 216);
               }
             }
             .step-desc {
               display: table-cell;
               vertical-align: middle;
               color: #ffffff;
-              background-color: rgb(25,158,216);
+              background-color: rgb(25, 158, 216);
               font-size: 20px;
               padding: 0 15px;
             }
@@ -520,8 +566,8 @@ export default {
         }
       }
     }
-     .new-member {
-      background: rgb(247,250,255);
+    .new-member {
+      background: rgb(247, 250, 255);
       padding-bottom: 30px;
       margin-bottom: 30px;
       .title {
@@ -554,7 +600,6 @@ export default {
         }
       }
     }
-  
   }
 }
 </style>

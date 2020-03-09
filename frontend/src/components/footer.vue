@@ -95,20 +95,20 @@
               </h2>
               <p>
                 座机:
-                <br />0755-36609873
+                <br />{{lianxi.tel}}
               </p>
               <p>
                 专家顾问直线:
-                <br />19925374651
+                <br />{{lianxi.phone}}
               </p>
               <p>
                 邮箱:
-                <br />zhq@siring.com.cn
+                <br />{{lianxi.email}}
               </p>
-              <p>
+              <p style="width:135px;line-height:1.5em">
                 地址:
-                <br />深圳市福田区新闻路1号
-                <br />中电信息大厦西座701
+                <br />{{lianxi.address}}
+                <!-- <br />中电信息大厦西座701 -->
               </p>
             </li>
             <li>
@@ -238,7 +238,7 @@
 </template>
 
 <script>
-import { Seo } from "@/api/api";
+import { Seo,Contact } from "@/api/api";
 export default {
   data() {
     return {
@@ -272,7 +272,8 @@ export default {
           name: "头条",
           url: require("@/assets/images/toutiao.jpg")
         }
-      ]
+      ],
+      lianxi:[]
     };
   },
   mounted() {
@@ -284,6 +285,12 @@ export default {
   methods: {
     init(){
       // document.getElementsByClassName("footer")[0].style.width = document.documentElement.scrollWidth+"px";
+      Contact().then(res =>{
+        let {data, code} = res;
+        if(code == 1){
+          this.lianxi = data
+        } 
+      })
     },
     hoverclass(index) {
       this.curr = index;

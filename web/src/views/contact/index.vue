@@ -23,16 +23,16 @@
             </p>
             <Form ref="myForm" :rules="ruleValidate" :model="formItem" :label-width="80">
                 <FormItem label="邮箱" prop="con_a">
-                    <Input v-model="formItem.con_a" placeholder="请输入签到积分"></Input>
+                    <Input v-model="formItem.con_a" placeholder="请输入邮箱"></Input>
                 </FormItem>
                 <FormItem label="地址" prop="con_b">
-                    <Input v-model="formItem.con_b" placeholder="请输入商品积分"></Input>
+                    <Input v-model="formItem.con_b" placeholder="请输入地址"></Input>
                 </FormItem>
                 <FormItem label="座机" prop="con_c">
-                    <Input v-model="formItem.con_c" placeholder="请输入签到积分"></Input>
+                    <Input v-model="formItem.con_c" placeholder="请输入座机号"></Input>
                 </FormItem>
                 <FormItem label="专家热线" prop="con_d">
-                    <Input v-model="formItem.con_d" placeholder="请输入商品积分"></Input>
+                    <Input v-model="formItem.con_d" placeholder="请输入热线号"></Input>
                 </FormItem>
             </Form>
             <div slot="footer">

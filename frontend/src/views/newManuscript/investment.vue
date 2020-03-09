@@ -305,9 +305,9 @@
                     </el-upload>
                   </div>
                 </div>
-                <div class="yulanBox">
+                <!-- <div class="yulanBox">
                   <button @click="setfinanceAdd">确定上传</button>
-                </div>
+                </div> -->
               </div>
             </el-tab-pane>
           </el-tabs>
@@ -343,7 +343,7 @@
       </div>
     </div>
     <!-- 结算 -->
-    <div class="xiadanBox">
+    <div class="xiadanBox" v-if="activeName == 'first'">
       <div class="xiadan">
         <div style="padding-top:5px">
           <span class="yongtu">打赏详谈发布者：</span>
@@ -370,6 +370,40 @@
         <div class="feiyong sumJia">￥3333333</div>
         <div>
           <button class="zhifuBtn">立即支付</button>
+        </div>
+      </div>
+      <div class="queren">
+        <el-radio v-model="radioYonghu" label="1">本人已确认，支付后执行下一流程</el-radio>
+      </div>
+    </div>
+    <!-- 结算2 -->
+    <div class="xiadanBox" v-if="activeName == 'second'">
+      <div class="xiadan">
+        <div style="padding-top:5px">
+          <span class="yongtu">发布费用：</span>
+        </div>
+        <div>
+          <div class="feiyong">￥{{price}}</div>
+          <div class="jianshu">
+            <span class="biaozhi">*</span>
+            <span>发布费用</span>
+          </div>
+        </div>
+        <div style="padding-top:5px;">
+          <span style="font-size:20px;font-weight: 700; padding-right:10px;padding-left:10px"  >×</span>
+        </div>
+        <div>
+          <div class="feiyong">￥1111</div>
+          <div class="jianshu">
+            <span class="biaozhi">*</span>
+            <span style="color: #949494; font-size: 13px;">会员折扣</span>
+            <i class="el-icon-question" style="color:rgb(230,45,49)"></i>
+          </div>
+        </div>
+        <div style="font-size:20px;font-weight: 700; padding:5px 10px">=</div>
+        <div class="feiyong sumJia">￥3333333</div>
+        <div>
+          <button class="zhifuBtn" @click="setfinanceAdd">立即支付</button>
         </div>
       </div>
       <div class="queren">
@@ -478,18 +512,28 @@ export default {
         let {data,code,msg} = res;
         // console.log(res)
         if(code == 1){
-          console.log("上传成功")
+          // console.log("上传成功")
+          this.$router.push({
+                name: "comboPay",
+                params: {
+                  type:1,
+                  id: data,
+                  order_amount:this.sum,
+                  user_id: sessionStorage.getItem("user_id"),
+                  order_type: 1
+                }
+              });
         }
       })
     },
     // 获取投资处项目详细内容,通过获取url传递过来的项目id
     getprojectDetails(){
-      console.log(this.id)
       const params = {id:parseInt(this.id)}
       projectDetails(params).then(res=>{
         let {data,code,msg} = res
         if(code == 1) {
           this.dataBox = data
+          this.price = data.surplus
         }
       })
     }

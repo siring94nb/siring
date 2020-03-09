@@ -35,8 +35,9 @@
             </el-row>
           </div>
           <!-- 分包项目视窗 -->
-          <div class="fengbaoshang" :style="{'display':fbxm}">
-            <div>分包项目</div>
+          <!-- <div class="fengbaoshang" :style="{'display':fbxm}"> -->
+             <div class="fengbaoshang" :style="{'display':fbxm}">
+            <div>分包项目视窗</div>
             <!-- <div>
               <div class="fengbaoName">
                 <span>
@@ -65,12 +66,12 @@
                   >我要接单</span>
                   <span
                     style="color: #169BD5; padding-right:10px;"
-                    v-if="lastPage==1"
-                    @click="GetSubView(lastPage-1)"
+                    v-if="lastpage==1"
+                    @click="GetSubView(lastpage-1)"
                   >上一条</span>
                   <span
                     style="color: #169BD5; padding-right:10px; cursor: pointer;"
-                    @click="GetSubView(lastPage+1)"
+                    @click="GetSubView(lastpage+1)"
                   >下一条</span>
                 </div>
               </div>
@@ -183,12 +184,12 @@
                   >我要接单</span>
                   <span
                     style="color: #169BD5; padding-right:10px;"
-                    v-if="lastPage > 1"
-                    @click="GetSubView(lastPage-1)"
+                    v-if="lastpage > 1"
+                    @click="GetSubView(lastpage-1)"
                   >上一条</span>
                   <span
                     style="color: #169BD5; padding-right:10px; cursor: pointer;"
-                    @click="GetSubView(lastPage+1)"
+                    @click="GetSubView(lastpage+1)"
                   >下一条</span>
                 </div>
               </div>
@@ -372,6 +373,8 @@
         </el-tabs>
       </div>
     </div>
+    <div @click="GetSubView(true)">测试测试+</div>
+    <div @click="GetSubView(false)">测试测试-</div>
   </div>
 </template>
 <script>
@@ -386,7 +389,7 @@ import {
 export default {
   data() {
     return {
-      lastPage: "", //当前页数
+      lastpage: 0, //当前页数
       dis: true,
       skillArr: {}, //技能以及过期时间
       multipleSelection: [],
@@ -435,7 +438,7 @@ export default {
       this.GetSubcontractTotal();
       this.GetSubcontractPartner();
       // this.GetSubcontractPartner1();
-      this.GetSubView(1);
+      this.GetSubView(true);
     },
     // gb() {
     //   // 修改状态判断是否有索引条件
@@ -606,15 +609,24 @@ export default {
     // },
     // 分包商视窗数据
     GetSubView(num) {
+      let page = 0;
+      if(num){
+        this.lastpage = this.lastpage +1
+        page = this.lastpage
+      }else{
+        this.lastpage = this.lastpage -1
+        page = this.lastpage
+      }
+      // console.log(page);
       let params = {
-        page: parseInt(num)
+        page: parseInt(page)
       };
       SubView(params).then(res => {
         let { data, msg, code } = res;
         // this.showMsg(msg,code);
         console.log(data);
         if (data.code === 1) {
-          this.lastPage = data.current_page;
+          // this.lastpage = data.current_page;
           this.shichuang = data.data.data;
         }
       });

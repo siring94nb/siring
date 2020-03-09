@@ -645,4 +645,10 @@ export const GetRoleCenterGetRoleCenter = data => {
 export const payStatus = data => {
     return axios.post(`${base_url}api/Payment/pay_status`,  qs.stringify(data)).then(res => res.data);
 }
+/**
+ * 支付回调
+ */
+export const Contact = data => {
+    return axios.post(`${base_url}api/Website/contact`,  qs.stringify(data)).then(res => res.data);
+}
 // https://manage.siring.com.cn/api/file/qn_upload

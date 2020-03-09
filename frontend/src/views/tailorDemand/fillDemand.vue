@@ -17,23 +17,7 @@
                   placeholder="请输入你的项目名，不超过10个字"
                 ></el-input>
               </el-form-item>
-              <el-form-item label="案例图片" required >
-                <el-upload
-                name="image"
-                class="avatar-uploader"
-                action="https://manage.siring.com.cn/api/file/qn_upload"
-                :show-file-list="false"
-                :on-success="handleAvatarSuccess"
-                :limit="1"
-              >
-                <img class="fimg"  :src="form.img" alt="案例图片" v-if="form.img!=''" />
-                <!-- <span v-else> -->
-                  <i v-else  class="el-icon-plus avatar-uploader-icon"></i>
-                   <!-- <span style="margin-left:-60px">添加图片</span>
-                </span> -->
-                 
-              </el-upload>
-              </el-form-item>
+          
               <el-form-item label="需求类型" required>
                 <el-select v-model="form.need_category" placeholder="请选择">
                   <el-option label="智能硬件" value="1"></el-option>
@@ -74,7 +58,9 @@
                 <el-row style="margin-bottom: 10px;">
                   <el-col :span="12">
                     <el-form-item label="手机号" required>
-                      <el-input class="phone" type="text" v-model.number="form.need_phone"></el-input>
+                      <el-tooltip class="item"  :disabled="disabled" effect="dark" content="手机号格式有误" placement="top-start">
+                        <el-input class="phone" type="text" v-model.number="form.need_phone" @input="checkPhone" ></el-input>
+                      </el-tooltip>
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
@@ -179,17 +165,17 @@ export default {
           id: 1
         },
         {
-          className: "iconfont icon-shezhi-",
+          className: "iconfont icon-shezhi2",
           name: "后台",
           id: 2
         },
         {
-          className: "iconfont icon-diannao",
+          className: "iconfont icon-pc1",
           name: "PC",
           id: 3
         },
         {
-          className: "iconfont icon-h5",
+          className: "iconfont icon-h",
           name: "移动H5",
           id: 4
         },
@@ -199,17 +185,18 @@ export default {
           id: 5
         },
         {
-          className: "iconfont icon-anzhuologo",
+          className: "iconfont icon-anzhuo",
           name: "APP安卓",
           id: 6
         },
         {
-          className: "iconfont icon-weixinxiaochengxu",
+          className: "iconfont icon-xiaochengxu",
           name: "小程序",
           id: 7
         }
       ],
-      UploadAction: ""
+      UploadAction: "",
+      disabled:true,//手机号悬浮提示
     };
   },
   mounted() {
@@ -253,16 +240,23 @@ export default {
       this.form.img= res.data.filePath;
       // this.$router.push("/afterLoggin")
     },
-    need_submit() {
-      let vm = this;
-      // 添加手机号码验证
-      if (!/^1[3456789]\d{9}$/.test(vm.form.need_phone)) {
+    checkPhone(){
+     
+      if (!/^1[3456789]\d{9}$/.test(this.form.need_phone)) {
         // alert("手机号码有误，请重填");
         // return false;
         // console.log("错误错误");
-        this.showMsg("手机号码输入错误","0")
-        this.form.need_phone=""
+        // this.showMsg("手机号码输入错误","0")
+        // this.form.need_phone=""
+        this.disabled = false;
       } else {
+        this.disabled = true;
+      }
+    },
+    need_submit() {
+      let vm = this;
+      // 添加手机号码验证
+      if(this.disabled){
         needOrderAdd(vm.form).then(res => {
           let { code, data, msg } = res;
           if (code === 1) {
@@ -273,7 +267,10 @@ export default {
             // this.packageList = data;
           }
         });
+      }else{
+        this.showMsg("手机号格式有误，请修正","0")
       }
+        
     }
   }
 };

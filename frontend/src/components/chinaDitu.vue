@@ -245,7 +245,7 @@ export default {
         min: 0,
         max: 2,
         inRange: {
-          color: ["#6FCF6A", "#FFFD64", "#FF5000"]
+          color: ["rgb(188,218,248)", "#FFFD64", "rgb(93,156,236)"]
         },
         textStyle: {
           color: "#7B93A7"

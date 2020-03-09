@@ -3,7 +3,7 @@
     <myheader />
     <myaside />
     <div class="index">
-      <myswiper/>
+      <myswiper />
       <div class="about" id="about">
         <h2 class="title">关于Siring思锐</h2>
         <div class="about-cont">
@@ -19,7 +19,7 @@
         <h2 class="title">
           软件/定制开发平台
           <!-- <i class="iconfont icon-remen fire"></i> -->
-          <img src="../assets/images/image561611.gif" class="fire" alt="">
+          <img src="../assets/images/image561611.gif" class="fire" alt />
         </h2>
         <div class="tips">
           <i class="iconfont icon-shengyin_shiti"></i>
@@ -139,7 +139,7 @@
                       </div>
                     </div>
                     <div class="ljsq">
-                      <router-link to="/programSaaS" >&gt;&gt;立即申请</router-link>
+                      <router-link to="/programSaaS">&gt;&gt;立即申请</router-link>
                     </div>
                   </div>
                 </div>
@@ -154,9 +154,16 @@
           <div class="ai-inner">
             <div class="ai-img">
               <!-- <img :src="require('@/assets/images/u207.png')"  /> -->
-              <video width="667" height="512" autoplay="autoplay" style="background-color:#000;"  preload muted loop>
-                <source src="http://zhihuichacang.com/6.mp4" type="video/mp4">
-                您的浏览器不支持video标签
+              <video
+                width="667"
+                height="512"
+                autoplay="autoplay"
+                style="background-color:#000;"
+                preload
+                muted
+                loop
+              >
+                <source src="http://zhihuichacang.com/6.mp4" type="video/mp4" />您的浏览器不支持video标签
               </video>
             </div>
             <div class="ai-tabs">
@@ -173,7 +180,6 @@
                 </el-tab-pane>
               </el-tabs>
             </div>
-            
           </div>
         </div>
       </div>
@@ -182,201 +188,71 @@
       </div>
       <!-- 融资案例 -->
       <div id="rongzi">
-        <div style="text-align: center;font-size:34px;margin-top:30px;margin-bottom:30px;">他们通过平台获得融资</div>
-        <div class="ptrzBox">
-          <div class="ptrzsmBox">
-            <!-- 上部分 -->
-            <div class="top">
-              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
-              <div>
-                <div>项目1</div>
-                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
-              </div>
-            </div>
-            <!-- 下部分 -->
-            <div class="bottom">
-              <div>
+        <div
+          style="text-align: center;font-size:34px;margin-top:30px;margin-bottom:30px;"
+        >他们通过平台获得融资</div>
+        <div style="background: rgb(242, 242, 242);display: flex;justify-content: center;">
+          <div class="ptrzBox">
+            <div class="ptrzsmBox" v-for="item in 4" :key="item">
+              <!-- 上部分 -->
+              <div class="top">
                 <div>
-                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                  <span>行业领域</span>
+                  <img style="border-radius:50%" :src="require('@/assets/images/rz.jpg')" alt />
                 </div>
-                <span>医疗健康</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>融资需求</span>
-                 </div>
-                <span>3000万元</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资人邀请码</span>
-                 </div>
-                <span>医疗健康</span>
-              </div>
-              <div>
                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资时间</span>
+                  <div>项目1</div>
+                  <div
+                    style="overflow : hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 2;
+-webkit-box-orient: vertical;
+line-height:1.5em"
+                  >项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
                 </div>
-                <span>2019年12月30日</span>
               </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>成功融资</span>
-                 </div>
-                <span>5000万元</span>
-              </div>
-            </div>
-          </div>
-           <div class="ptrzsmBox">
-            <!-- 上部分 -->
-            <div class="top">
-              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
-              <div>
-                <div>项目1</div>
-                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
-              </div>
-            </div>
-            <!-- 下部分 -->
-            <div class="bottom">
-              <div>
+              <!-- 下部分 -->
+              <div class="bottom">
                 <div>
-                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                  <span>行业领域</span>
+                  <div>
+                    <img :src="require('@/assets/images/rzhy.jpg')" alt />
+                    <span>行业领域</span>
+                  </div>
+                  <span>医疗健康</span>
                 </div>
-                <span>医疗健康</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>融资需求</span>
-                 </div>
-                <span>3000万元</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资人邀请码</span>
-                 </div>
-                <span>医疗健康</span>
-              </div>
-              <div>
                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资时间</span>
+                  <div>
+                    <img :src="require('@/assets/images/rzxq.jpg')" alt />
+                    <span>融资需求</span>
+                  </div>
+                  <span>3000万元</span>
                 </div>
-                <span>2019年12月30日</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>成功融资</span>
-                 </div>
-                <span>5000万元</span>
-              </div>
-            </div>
-          </div>
-           <div class="ptrzsmBox">
-            <!-- 上部分 -->
-            <div class="top">
-              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
-              <div>
-                <div>项目1</div>
-                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
-              </div>
-            </div>
-            <!-- 下部分 -->
-            <div class="bottom">
-              <div>
                 <div>
-                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                  <span>行业领域</span>
+                  <div>
+                    <img :src="require('@/assets/images/rztzr.jpg')" alt />
+                    <span>投资人邀请码</span>
+                  </div>
+                  <span>医疗健康</span>
                 </div>
-                <span>医疗健康</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>融资需求</span>
-                 </div>
-                <span>3000万元</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资人邀请码</span>
-                 </div>
-                <span>医疗健康</span>
-              </div>
-              <div>
                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资时间</span>
+                  <div>
+                    <img :src="require('@/assets/images/rztime.jpg')" alt />
+                    <span>投资时间</span>
+                  </div>
+                  <span>2019年12月30日</span>
                 </div>
-                <span>2019年12月30日</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>成功融资</span>
-                 </div>
-                <span>5000万元</span>
-              </div>
-            </div>
-          </div>
-           <div class="ptrzsmBox">
-            <!-- 上部分 -->
-            <div class="top">
-              <div><img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt=""></div>
-              <div>
-                <div>项目1</div>
-                <div>项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
-              </div>
-            </div>
-            <!-- 下部分 -->
-            <div class="bottom">
-              <div>
                 <div>
-                  <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                  <span>行业领域</span>
+                  <div>
+                    <img :src="require('@/assets/images/rzsu.jpg')" alt />
+                    <span>成功融资</span>
+                  </div>
+                  <span>5000万元</span>
                 </div>
-                <span>医疗健康</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>融资需求</span>
-                 </div>
-                <span>3000万元</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资人邀请码</span>
-                 </div>
-                <span>医疗健康</span>
-              </div>
-              <div>
-                <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>投资时间</span>
-                </div>
-                <span>2019年12月30日</span>
-              </div>
-               <div>
-                 <div>
-                <img src="http://localhost:8080/h5/img/1.b4bbae41.png" alt="">
-                <span>成功融资</span>
-                 </div>
-                <span>5000万元</span>
               </div>
             </div>
           </div>
         </div>
+
         <div class="gengduo">
           <div>更多</div>
         </div>
@@ -387,15 +263,21 @@
     <!-- 左侧悬浮 -->
     <div class="leftXuanfu">
       <div>
-        <img :src="biaozhi1" alt=""><img :src="biaozhi2" alt="">
+        <img :src="biaozhi1" alt />
+        <img :src="biaozhi2" alt />
       </div>
       <div id="leftXuanfu">
-        <div @click.stop="getview(400)" style="background:#cb1623">Siring思锐</div>
-        <div @click.stop="getview(830)">软件定制</div>
-        <div @click.stop="getview(1650)">小程序SaaS</div>
-        <div @click.stop="getview(2250)">AI推广引擎</div>
-        <div @click.stop="getview(2900)">角色加盟</div>
-        <div @click.stop="getview(3300)">融资案例</div>
+        <div
+          @click.stop="getview(400)"
+          @mouseover="gb(0)"
+          @mouseout="gb1(0)"
+          style="color:#cb1623"
+        >Siring思锐</div>
+        <div @click.stop="getview(830)" @mouseover="gb(1)" @mouseout="gb1(1)">软件定制</div>
+        <div @click.stop="getview(1650)" @mouseover="gb(2)" @mouseout="gb1(2)">小程序SaaS</div>
+        <div @click.stop="getview(2250)" @mouseover="gb(3)" @mouseout="gb1(3)">AI推广引擎</div>
+        <div @click.stop="getview(2900)" @mouseover="gb(4)" @mouseout="gb1(4)">角色加盟</div>
+        <div @click.stop="getview(3300)" @mouseover="gb(5)" @mouseout="gb1(5)">融资案例</div>
       </div>
     </div>
   </div>
@@ -581,19 +463,19 @@ export default {
       mgtop: 0,
       goodsList: [],
       packageList: [],
-      biaozhi1:require("@/assets/images/u578.png"),
-      biaozhi2:require("@/assets/images/u577.png")
+      biaozhi1: require("@/assets/images/u578.png"),
+      biaozhi2: require("@/assets/images/u577.png")
     };
   },
   mounted() {
-    this.init(); 
+    this.init();
   },
   methods: {
-    init(){
+    init() {
       this.getGoods();
       this.getSetMeal();
       this.xuanfu();
-      window.addEventListener("scroll",()=>{
+      window.addEventListener("scroll", () => {
         this.xuanfu();
         // switch(top){
         //   case 400:xuanfu[0].style.background="#cb1623";
@@ -611,7 +493,7 @@ export default {
         //     break;
         // }
         // console.log(xuanfu);
-      })
+      });
     },
     xcxnavClick(index) {
       this.xcxnavon = index;
@@ -632,59 +514,84 @@ export default {
         }
       });
     },
-    getSetMeal(){
+    getSetMeal() {
       GetSetMeal().then(res => {
-        console.log(res)
-        let {code, data, msg} = res.data;
-        if(code === 1){
+        console.log(res);
+        let { code, data, msg } = res.data;
+        if (code === 1) {
           this.packageList = data;
         }
-      })
+      });
     },
     // 滚动
-    getview(num){
+    getview(num) {
       // document.getElementById(str).scrollIntoView();
-    //  document.documentElement.scrollTop=num
-    window.scrollTo({
-      top: num, 
-      behavior: "smooth" 
-    });
+      //  document.documentElement.scrollTop=num
+
+      window.scrollTo({
+        top: num,
+        behavior: "smooth"
+      });
     },
-    // 
-    xuanfu(){
-      let xuanfu = document.getElementById("leftXuanfu").getElementsByTagName("div")
+
+    xuanfu() {
+      let xuanfu = document
+        .getElementById("leftXuanfu")
+        .getElementsByTagName("div");
       let top = document.documentElement.scrollTop;
-        if(top<830){
-          xuanfu[0].style.background="#cb1623";
-          this.qingchuxuanfu(0)
-        }else if(top>=830&&top<1650){
-          xuanfu[1].style.background="#cb1623";
-          this.qingchuxuanfu(1)
-        }
-        else if(top>=1650&&top<2250){
-          xuanfu[2].style.background="#cb1623";
-          this.qingchuxuanfu(2)
-        }
-        else if(top>=2250&&top<2900){
-          xuanfu[3].style.background="#cb1623";
-          this.qingchuxuanfu(3)
-        }else if(top<3300){
-          xuanfu[4].style.background="#cb1623";
-          this.qingchuxuanfu(4)
-        }
-        else{
-          xuanfu[5].style.background="#cb1623";
-          this.qingchuxuanfu(5)
-        }
+      if (top < 399) {
+        document.getElementsByClassName("leftXuanfu")[0].style.display = "none";
+      } else {
+        document.getElementsByClassName("leftXuanfu")[0].style.display =
+          "block";
+        console.log(123123);
+      }
+
+      if (top < 830 && top > 399) {
+        xuanfu[0].style.color = "#cb1623";
+        this.qingchuxuanfu(0);
+      } else if (top >= 830 && top < 1650) {
+        xuanfu[1].style.color = "#cb1623";
+        this.qingchuxuanfu(1);
+      } else if (top >= 1650 && top < 2250) {
+        xuanfu[2].style.color = "#cb1623";
+        this.qingchuxuanfu(2);
+      } else if (top >= 2250 && top < 2900) {
+        xuanfu[3].style.color = "#cb1623";
+        this.qingchuxuanfu(3);
+      } else if (top < 3300) {
+        xuanfu[4].style.color = "#cb1623";
+        this.qingchuxuanfu(4);
+      } else {
+        xuanfu[5].style.color = "#cb1623";
+        this.qingchuxuanfu(5);
+      }
     },
-    //
-    qingchuxuanfu(num){
-      let xuanfu = document.getElementById("leftXuanfu").getElementsByTagName("div")
-      for(let i=0;i<6;i++){
-        if(i!=num){
-          xuanfu[i].style.background="rgb(165,163,161)"
+
+    qingchuxuanfu(num) {
+      let xuanfu = document
+        .getElementById("leftXuanfu")
+        .getElementsByTagName("div");
+      for (let i = 0; i < 6; i++) {
+        xuanfu[i].style.background = "";
+        if (i != num) {
+          xuanfu[i].style.color = "#696969";
         }
       }
+    },
+    gb(num) {
+      let xuanfu = document
+        .getElementById("leftXuanfu")
+        .getElementsByTagName("div");
+      xuanfu[num].style.background = "#cb1623";
+      xuanfu[num].style.color = "#fff";
+    },
+    gb1(num) {
+      let xuanfu = document
+        .getElementById("leftXuanfu")
+        .getElementsByTagName("div");
+      xuanfu[num].style.background = "";
+      xuanfu[num].style.color = "#696969";
     }
   }
 };
@@ -1023,7 +930,7 @@ export default {
       padding-top: 20px;
       .ai-tabs {
         flex: 1;
-        .packages{
+        .packages {
           color: #333333;
           line-height: 33px;
         }
@@ -1056,94 +963,100 @@ export default {
       }
     }
   }
-  .ptrzBox{
-    background: rgb(242,242,242);
+  // .rongzi{
+  //    background: rgb(242, 242, 242);
+  //    width: 100%;
+  // }
+  .ptrzBox {
+    width: 1200px;
+    // background: rgb(242, 242, 242);
     padding: 50px 100px 15px 100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    .ptrzsmBox{
+    .ptrzsmBox {
       background: #ffffff;
       width: 48.5%;
       margin-bottom: 30px;
       padding: 20px 20px 20px 20px;
       box-sizing: border-box;
-      .bottom,.top{
-        display: flex
+      .bottom,
+      .top {
+        display: flex;
       }
-      .top>div{
-        &:nth-of-type(1){
+      .top > div {
+        &:nth-of-type(1) {
           margin-right: 30px;
-          img{
+          img {
             width: 90px;
             height: 90px;
           }
         }
-        &:nth-of-type(2){
-          >div{
-            &:nth-of-type(1){
+        &:nth-of-type(2) {
+          > div {
+            &:nth-of-type(1) {
               color: #333333;
               font-size: 18px;
               font-weight: 700;
-              padding-top:10px; 
-              padding-bottom:10px; 
+              padding-top: 10px;
+              padding-bottom: 10px;
             }
-             &:nth-of-type(2){
-               font-size: 13px;
-               color: #6b6b6b;
-             }
-          }
-        }
-      }
-      .bottom{
-        // margin-right: 81px;
-        margin-top: 10px;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .bottom>div{
-        display: flex;
-        margin-right: 30px;
-        margin-bottom: 10px;
-        align-items: center;
-        width: 36%;
-        &:nth-of-type(2){
-          margin-right: 81px;
-        }
-        &:nth-of-type(3){
-          >div{
-            margin-right: 30px;
-          }
-        } 
-        &:nth-of-type(4){
-            margin-right: 80px;
-        }
-        img{
-          width: 28px;
-          height: 28px;
-          margin-right: 10px;
-        }
-        >div{
-          display: flex;
-          align-items: center;
-          margin-right: 56px;
-          >span{
-            &:nth-of-type(1){
+            &:nth-of-type(2) {
               font-size: 13px;
               color: #6b6b6b;
             }
           }
         }
       }
+      .bottom {
+        // margin-right: 81px;
+        margin-top: 10px;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .bottom > div {
+        display: flex;
+        // margin-right: 30px;
+        margin-bottom: 10px;
+        align-items: center;
+        width: 48%;
+        &:last-of-type {
+          > span {
+            font-size: 20px;
+            color: #c41c24;
+            font-weight: 700;
+          }
+        }
+        > span {
+          width: 120px;
+        }
+        img {
+          width: 28px;
+          height: 28px;
+          margin-right: 10px;
+        }
+        > div {
+          display: flex;
+          align-items: center;
+          // margin-right: 30px;
+          > span {
+            &:nth-of-type(1) {
+              font-size: 13px;
+              color: #6b6b6b;
+              width: 95px;
+            }
+          }
+        }
+      }
     }
   }
-  .gengduo{
-    background: rgb(242,242,242);
+  .gengduo {
+    background: rgb(242, 242, 242);
     display: flex;
     justify-content: center;
     padding-bottom: 40px;
-    >div{
+    > div {
       color: #b1120e;
       border: 1px solid #b1120e;
       width: 191px;
@@ -1152,44 +1065,46 @@ export default {
       border-radius: 5px;
     }
   }
- 
-} 
-.leftXuanfu{
-    position: fixed;
-    z-index: 55;
-    top: 25%;
-    >div{
-      &:nth-of-type(1){
-        border-bottom: 3px solid rgb(241,2,20);
-        img{
-          &:nth-of-type(1){
-            width: 50px;
-            position: relative;
-            z-index: 40;
-            top: 12px;
-            left: 5px;
-          }
-          &:nth-of-type(2){
-            width: 40px;
-          }
+}
+.leftXuanfu {
+  position: fixed;
+  z-index: 55;
+  top: 30.5%;
+  // display: none;
+  > div {
+    &:nth-of-type(1) {
+      border-bottom: 3px solid rgb(241, 2, 20);
+      img {
+        &:nth-of-type(1) {
+          width: 50px;
+          position: relative;
+          z-index: 40;
+          top: 12px;
+          left: 5px;
+        }
+        &:nth-of-type(2) {
+          width: 40px;
         }
       }
-      &:nth-of-type(2){
-        margin-left: 10px;
-        margin-top: 10px;
-      }
-      >div{
-        background: rgb(165,163,161);
-        text-align: center;
-        padding: 10px 5px;
-        margin-bottom: 10px;
-        width: 80px;
-          color: #ffffff;
-          font-size: 14px;
-      }
-      >div:hover{
-        background: #cb1623
-      }
     }
+    &:nth-of-type(2) {
+      margin-left: 10px;
+      margin-top: 10px;
+    }
+    > div {
+      // background: rgb(243,242,242);
+      text-align: center;
+      padding: 10px 5px;
+      margin-bottom: 10px;
+      width: 80px;
+      color: #696969;
+      font-size: 14px;
+      border-bottom: 1px dotted #696969;
+    }
+    // > div:hover {
+    //   background: #cb1623;
+    //   color: #ffffff;
+    // }
+  }
 }
 </style>

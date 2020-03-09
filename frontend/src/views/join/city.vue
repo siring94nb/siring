@@ -490,8 +490,12 @@ export default {
               transform: translate(-50%, -50%);
               color: rgb(121, 121, 121);
               background-color: #ffffff;
+              border-radius: 50%;
               padding: 10px;
               font-size: 40px;
+              width: 40px;
+              height: 40px;
+              text-align: center;
             }
           }
           .step-desc {

@@ -1,7 +1,7 @@
 <template>
   <div style="width:1480px;">
     <logginHeader>
-      <i class="el-icon-edit"></i>
+      <i class="iconfont icon-dingzhi1"></i>
       <span>软件/定制</span>
       <span>&gt;</span>
       <span>我的订单</span>

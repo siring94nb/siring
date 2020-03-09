@@ -19,7 +19,7 @@
               :on-success="handleAvatarSuccess"
             >
               <img :src="imgBUrl" alt />
-              <img :src="imgUrl" alt  v-if="imgUrl!=null"/>
+              <img :src="imgUrl" alt />
               <!-- <div style="margin-top:25px;margin-left:-10px"><i style="font-size:70px;" class="iconfont icon-touxiang1" v-if="imgUrl == null"></i></div> -->
             </el-upload>
           </div>
@@ -192,7 +192,7 @@ export default {
       ],
       routerValue: this.$route.path,
       // imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
-      imgUrl:null,
+      imgUrl:"",
       imgBUrl: require("../../assets/images/u5989.png"),
       name: "未设置", //用户姓名
       dis: true,
