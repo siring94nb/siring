@@ -191,9 +191,9 @@ export default {
         }
       ],
       routerValue: this.$route.path,
-      // imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
-      imgUrl:"",
-      imgBUrl: require("../../assets/images/u5989.png"),
+      imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
+      // imgUrl:"",
+      imgBUrl: require("../../assets/images/image775877.jpeg"),
       name: "未设置", //用户姓名
       dis: true,
       wstyle: "",
@@ -468,11 +468,15 @@ export default {
     position: absolute;
     &:nth-of-type(1) {
       display: inline-block;
-      width: 110px;
-      height: 110px;
+      // width: 110px;
+      // height: 110px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
-      top: 5px;
-      left: 20px;
+      // top: 5px;
+      // left: 25px;
+      top: 10px;
+      left: 30px;
     }
     &:nth-of-type(2) {
       display: inline-block;
@@ -480,7 +484,7 @@ export default {
       height: 70px;
       border-radius: 50%;
       top: 25px;
-      left: 40px;
+      left: 45px;
     }
   }
 }

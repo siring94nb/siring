@@ -245,7 +245,7 @@ export default {
       copyright: '',
       curr: 0,
       loginway: [
-        "icon-weixinxiaochengxu miniapp",
+        "icon-xiaochengxu xiaochengxu",
         "icon-taobao taobao",
         "icon-weixin weixin",
         "icon-weibo sina",

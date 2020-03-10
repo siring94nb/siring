@@ -36,7 +36,7 @@
           </div>
           <!-- 分包项目视窗 -->
           <!-- <div class="fengbaoshang" :style="{'display':fbxm}"> -->
-             <div class="fengbaoshang" :style="{'display':fbxm}">
+          <div class="fengbaoshang" :style="{'display':fbxm}">
             <div>分包项目视窗</div>
             <!-- <div>
               <div class="fengbaoName">
@@ -172,8 +172,10 @@
                 </span>
               </div>
               <div>
-                <div>功能需求：</div>
-                <div v-html="item.con"></div>
+                <div>
+                  功能需求：
+                  <div v-html="item.con"></div>
+                </div>
               </div>
               <div style="display: flex; justify-content:space-between">
                 <div style="color: #FF9900;">详情</div>
@@ -185,16 +187,18 @@
                   <span
                     style="color: #169BD5; padding-right:10px;"
                     v-if="lastpage > 1"
-                    @click="GetSubView(lastpage-1)"
+                    @click="GetSubView(false)"
                   >上一条</span>
                   <span
                     style="color: #169BD5; padding-right:10px; cursor: pointer;"
-                    @click="GetSubView(lastpage+1)"
+                    @click="GetSubView(true)"
+                    v-if="lastpage <= la"
                   >下一条</span>
                 </div>
               </div>
               <!-- display: none; -->
-              <div class="orderReceiving" ref="orderReceiving" style="display:none">
+              <!-- <div class="orderReceiving" ref="orderReceiving" style="display:none"> -->
+              <div class="orderReceiving" ref="orderReceiving" v-if="orderReceiving">
                 <div class="triangle"></div>
                 <div>
                   <div>
@@ -373,8 +377,8 @@
         </el-tabs>
       </div>
     </div>
-    <div @click="GetSubView(true)">测试测试+</div>
-    <div @click="GetSubView(false)">测试测试-</div>
+    <div @click.stop="ShowHidden">测试测试+</div>
+    <div @click.stop="ShowHidden">测试测试-</div>
   </div>
 </template>
 <script>
@@ -389,6 +393,7 @@ import {
 export default {
   data() {
     return {
+      orderReceiving: true,
       lastpage: 0, //当前页数
       dis: true,
       skillArr: {}, //技能以及过期时间
@@ -423,7 +428,8 @@ export default {
       fbxm: "flex", //控制分包项目位置显示隐藏
       startTime: "",
       endTime: "",
-      type:1
+      type: 1,
+      la: ""
     };
   },
   components: {
@@ -610,12 +616,12 @@ export default {
     // 分包商视窗数据
     GetSubView(num) {
       let page = 0;
-      if(num){
-        this.lastpage = this.lastpage +1
-        page = this.lastpage
-      }else{
-        this.lastpage = this.lastpage -1
-        page = this.lastpage
+      if (num) {
+        this.lastpage = this.lastpage + 1;
+        page = this.lastpage;
+      } else {
+        this.lastpage = this.lastpage - 1;
+        page = this.lastpage;
       }
       // console.log(page);
       let params = {
@@ -628,6 +634,7 @@ export default {
         if (data.code === 1) {
           // this.lastpage = data.current_page;
           this.shichuang = data.data.data;
+          this.la = data.data.last_page;
         }
       });
     },
@@ -652,13 +659,22 @@ export default {
     },
     // 控制我要联系显示隐藏
     ShowHidden() {
-      let dp = this.$refs.orderReceiving.style;
-      // dp.display = "none"
-      if (dp.display === "" || dp.display === "none") {
-        dp.display = "block";
+      // console.log(this.orderReceiving)
+      if (this.orderReceiving) {
+        this.orderReceiving = false;
+        console.log(this.orderReceiving);
       } else {
-        dp.display = "none";
+        this.orderReceiving = true;
+        console.log(456456456 + this.orderReceiving);
       }
+      // console.log(this.$refs)
+      // let dp = this.$refs.orderReceiving.style;
+      // dp.display = "none"
+      // if (dp.display === "" || dp.display === "none") {
+      //   dp.display = "block";
+      // } else {
+      //   dp.display = "none";
+      // }
       //  this.$refs.orderReceiving.style.display = "none";
     },
     // 修改电话显示确认按钮显示隐藏
@@ -792,10 +808,12 @@ export default {
         }
       }
       .fengbaoshang {
+        width: 60%;
         position: relative;
         font-size: 13px;
         color: #5e5e5e;
         margin-left: 10px;
+        box-sizing: border-box;
         > div {
           &:nth-of-type(1) {
             background: rgba(102, 204, 255, 1);
@@ -804,10 +822,15 @@ export default {
             line-height: 26px;
             text-align: center;
             margin-right: 20px;
+            width: 40px;
+            padding-top: 15px;
           }
           &:nth-of-type(2) {
+            background: rgb(238, 250, 255);
+            height: 68px;
+
             > div {
-              margin-bottom: 10px;
+              // margin-bottom: 10px;
               &:nth-last-child(1) {
                 margin-bottom: 0;
               }
@@ -998,6 +1021,10 @@ export default {
         align-items: center;
       }
     }
+  }
+  .fengbaoName {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>

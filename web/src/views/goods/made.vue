@@ -44,6 +44,41 @@
         <FormItem label="需求名称" prop="project_name">
           <Input v-model="formValidate.project_name" placeholder="请输入" style="width: 450px;" />
         </FormItem>
+        <FormItem label="案例图片" prop="img">
+          <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
+            <template v-if="item.status === 'finished'">
+              <img :src="item.url" />
+              <div class="demo-upload-list-cover">
+                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+              </div>
+            </template>
+            <template v-else>
+              <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+            </template>
+          </div>
+          <Upload
+            multiple
+            ref="upload"
+            :show-upload-list="false"
+            :default-file-list="iconList"
+            :on-success="handleSuccess"
+            :format="['jpg','jpeg','png']"
+            :max-size="10240"
+            :on-format-error="handleFormatError"
+            :on-exceeded-size="handleMaxSize"
+            :before-upload="handleBeforeUpload"
+            type="drag"
+            name="image"
+            :action="UploadAction"
+            style="display: inline-block;width:58px;"
+          >
+            <div style="width: 58px;height:58px;line-height: 58px;">
+              <Icon type="ios-camera" size="20"></Icon>
+            </div>
+          </Upload>
+          <p>添加5张，建议尺寸：464*764像素，实现轮播效果</p>
+        </FormItem>
+
         <FormItem label="需求类型" prop="category_id">
           <Select v-model="formValidate.category_id" style="width: 450px;">
             <Option value="1">智能硬件</Option>
@@ -458,7 +493,7 @@ export default {
         this.$Message.error("只能上传五张品牌图");
       }
       return check;
-    }
+    },
   },
   mounted() {
     let vm = this;

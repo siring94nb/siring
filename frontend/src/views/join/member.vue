@@ -90,6 +90,7 @@
             v-for="(item, index) in memberList"
             :key="item.id"
             @mouseenter="onMouseenter(index)"
+            v-if="index>0"
           >
             <div class="bg-top">
               <div class="package-head">
@@ -211,7 +212,7 @@ export default {
         }
       ],
       stepFlag: 0,
-      classList: ["crown", "diamond", "gold"],
+      classList: ["","crown", "diamond", "gold"],
       activeClass: 0,
       checked: true,
       memberList: [],

@@ -163,7 +163,7 @@
           </div>
         </el-tab-pane>
       </el-tabs>
-    </el-dialog>
+    </el-dialog>       
   </div>
 </template>
 

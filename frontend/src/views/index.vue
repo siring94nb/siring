@@ -183,7 +183,7 @@
           </div>
         </div>
       </div>
-      <div id="jiameng">
+      <div id="jiameng" class="xcx-cont" style="height:400px">
         <jsjm />
       </div>
       <!-- 融资案例 -->
@@ -202,12 +202,7 @@
                 <div>
                   <div>项目1</div>
                   <div
-                    style="overflow : hidden;
-text-overflow: ellipsis;
-display: -webkit-box;
--webkit-line-clamp: 2;
--webkit-box-orient: vertical;
-line-height:1.5em"
+                    style="overflow : hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;line-height:1.5em"
                   >项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介项目1项目简介</div>
                 </div>
               </div>
@@ -474,26 +469,12 @@ export default {
     init() {
       this.getGoods();
       this.getSetMeal();
-      this.xuanfu();
-      window.addEventListener("scroll", () => {
+      if (this.$route.name == "index") {
         this.xuanfu();
-        // switch(top){
-        //   case 400:xuanfu[0].style.background="#cb1623";
-        //   break;
-        //    case 830:xuanfu[0].style.background="#cb1623";
-        //   break;
-        //    case 1650:xuanfu[0].style.background="#cb1623";
-        //   break;
-        //    case 2250:xuanfu[0].style.background="#cb1623";
-        //   break;
-        //    case 2900:xuanfu[0].style.background="#cb1623";
-        //   break;
-        //   default:
-        //     console.log(xuanfu[0].style);
-        //     break;
-        // }
-        // console.log(xuanfu);
-      });
+        window.addEventListener("scroll", () => {
+          this.xuanfu();
+        });
+      }
     },
     xcxnavClick(index) {
       this.xcxnavon = index;
@@ -516,7 +497,6 @@ export default {
     },
     getSetMeal() {
       GetSetMeal().then(res => {
-        console.log(res);
         let { code, data, msg } = res.data;
         if (code === 1) {
           this.packageList = data;
@@ -535,36 +515,39 @@ export default {
     },
 
     xuanfu() {
-      let xuanfu = document
-        .getElementById("leftXuanfu")
-        .getElementsByTagName("div");
-      let top = document.documentElement.scrollTop;
-      if (top < 399) {
-        document.getElementsByClassName("leftXuanfu")[0].style.display = "none";
-      } else {
-        document.getElementsByClassName("leftXuanfu")[0].style.display =
-          "block";
-        console.log(123123);
-      }
+      if (document.getElementById("leftXuanfu") != null) {
+        let xuanfu = document
+          .getElementById("leftXuanfu")
+          .getElementsByTagName("div");
 
-      if (top < 830 && top > 399) {
-        xuanfu[0].style.color = "#cb1623";
-        this.qingchuxuanfu(0);
-      } else if (top >= 830 && top < 1650) {
-        xuanfu[1].style.color = "#cb1623";
-        this.qingchuxuanfu(1);
-      } else if (top >= 1650 && top < 2250) {
-        xuanfu[2].style.color = "#cb1623";
-        this.qingchuxuanfu(2);
-      } else if (top >= 2250 && top < 2900) {
-        xuanfu[3].style.color = "#cb1623";
-        this.qingchuxuanfu(3);
-      } else if (top < 3300) {
-        xuanfu[4].style.color = "#cb1623";
-        this.qingchuxuanfu(4);
-      } else {
-        xuanfu[5].style.color = "#cb1623";
-        this.qingchuxuanfu(5);
+        let top = document.documentElement.scrollTop;
+        if (top < 399) {
+          document.getElementsByClassName("leftXuanfu")[0].style.display =
+            "none";
+        } else {
+          document.getElementsByClassName("leftXuanfu")[0].style.display =
+            "block";
+        }
+
+        if (top < 830 && top > 399) {
+          xuanfu[0].style.color = "#cb1623";
+          this.qingchuxuanfu(0);
+        } else if (top >= 830 && top < 1650) {
+          xuanfu[1].style.color = "#cb1623";
+          this.qingchuxuanfu(1);
+        } else if (top >= 1650 && top < 2250) {
+          xuanfu[2].style.color = "#cb1623";
+          this.qingchuxuanfu(2);
+        } else if (top >= 2250 && top < 2900) {
+          xuanfu[3].style.color = "#cb1623";
+          this.qingchuxuanfu(3);
+        } else if (top < 3300) {
+          xuanfu[4].style.color = "#cb1623";
+          this.qingchuxuanfu(4);
+        } else {
+          xuanfu[5].style.color = "#cb1623";
+          this.qingchuxuanfu(5);
+        }
       }
     },
 

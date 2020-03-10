@@ -2,7 +2,21 @@
   <div class="sjhy">
     <h2 class="title">角色加盟</h2>
     <div class="sjhy-cont">
-      <img :src="require('@/assets/images/u327.png')" width="1200" alt />
+      <!-- <img :src="require('@/assets/images/u327.png')" width="1200" alt /> -->
+      <!-- <img :src="require('@/assets/images/u266.png')" width="1200" alt /> -->
+      <div class="imgBox">
+        <img :src="require('@/assets/images/u395.png')" width="128" alt />
+        <span>
+          <span>我要成为城市合伙人</span>
+          <span>等级城市代理享有城市利润分红的权益</span>
+        </span>
+        <span>
+          <!-- <img :src="require('@/assets/images/u275.png')" width="100" alt />
+          <img :src="require('@/assets/images/u276.png')" width="85" alt /> -->
+          <router-link to="city"> GO</router-link>
+        </span>
+        
+      </div>
       <router-link to="/city" class="tocity"></router-link>
       <div class="upgrade-apply">
         <div class="upgrade-inner-box">
@@ -27,6 +41,11 @@ export default {};
 </script>
 
 <style scoped lang='scss'>
+.title{
+  background: #ffffff;
+  width: 100%;
+  padding-bottom: 30px;
+}
 .sjhy-cont {
   position: relative;
   width: 1200px;
@@ -41,10 +60,10 @@ export default {};
   }
   .upgrade-apply {
     position: relative;
-    border: 1px solid #3bafda;
+    // border: 1px solid #3bafda;
     border-top: 0;
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+    // border-bottom-left-radius: 5px;
+    // border-bottom-right-radius: 5px;
     margin-top: -4px;
     padding-top: 20px;
     .upgrade-inner-box {
@@ -68,6 +87,49 @@ export default {};
         }
       }
     }
+  }
+}
+.imgBox{
+  padding: 0 70px;
+  display: flex;
+  justify-content: space-between;
+  >span{
+    &:nth-of-type(1){
+      text-align: center;
+      color: #ffffff;
+      >span{
+        &:nth-of-type(1){
+          font-size: 40px;
+          font-weight: 700;
+          display: block;
+          padding: 30px 0 10px 0;
+        }
+        &:nth-of-type(2){
+          font-size: 24px;
+          font-weight: 700;
+        }
+      }
+    }
+    &:nth-of-type(2){ 
+      padding-top: 50px;
+      a{
+        color: #ffffff;
+        font-size: 45px;
+        font-weight: 700;
+      }
+    }
+    
+   
+    // img{
+    //   &:nth-of-type(1){
+    //     margin-top: 25px;
+    //   }
+    //  &:nth-of-type(2){
+    //    position: relative;
+    //    z-index: 5;
+    //    margin-left: -92px;
+    //  }
+    // }
   }
 }
 </style>

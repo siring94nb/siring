@@ -92,6 +92,7 @@ export default {
   },
   mounted() {
     this.getTableData();
+    // this.ceshi();
   },
   methods: {
     chooseType(index, id) {
@@ -139,14 +140,14 @@ export default {
       }
     },
     addData(item) {
-      this.minPrice += item.price_down*item.work_hours;
-      this.maxPrice += item.price_up*item.work_hours;
+      this.minPrice += item.price_down * item.work_hours;
+      this.maxPrice += item.price_up * item.work_hours;
       // this.date += item.work_hours;
       this.date = Number((this.date + item.work_hours).toFixed(1));
     },
     minusData(item) {
-      this.minPrice -= item.price_down*item.work_hours;
-      this.maxPrice -= item.price_up*item.work_hours;
+      this.minPrice -= item.price_down * item.work_hours;
+      this.maxPrice -= item.price_up * item.work_hours;
       // this.date -= item.work_hours;
       this.date = Number((this.date - item.work_hours).toFixed(1));
     },
@@ -200,12 +201,55 @@ export default {
           this.typeList = data.plate_form;
           this.dataList = data.model;
           // this.tableData = data.model[0];
-          for(let i=0;i<this.typeList.length;i++){
-            this.tableData.push(data.model[i])
+          // for (let i = 0; i < this.typeList.length; i++) {
+          //   this.tableData.push(data.model[i]);
+          // }
+          for (let i = 0; i < this.typeList.length; i++) {
+            for (let j = 0; j < data.model[i].length; j++) {
+              this.tableData.push(data.model[i][j])
+            }
           }
-          console.log(this.tableData)
+          // console.log(this.tableData)
         }
       });
+    },
+    ceshi() {
+      let arr = [];
+      let arr1 = [
+        [
+          { ceshi: 1 },
+          { ceshi: 1 },
+          { ceshi: 1 },
+          { ceshi: 1 },
+          { ceshi: 1 },
+          { ceshi: 1 },
+          { ceshi: 1 }
+        ],
+        [
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 2 }
+        ],
+        [
+          { ceshi: 2 },
+          { ceshi: 3 },
+          { ceshi: 3 },
+          { ceshi: 2 },
+          { ceshi: 2 },
+          { ceshi: 3 },
+          { ceshi: 3 }
+        ]
+      ];
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < arr1[i].length; j++) {
+          arr.push(arr1[i][j])
+        }
+      }
+      console.log(arr);
     }
   }
 };
