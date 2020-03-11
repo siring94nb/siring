@@ -290,6 +290,7 @@ export default {
     },
 
     submit() {
+      console.log(this.formItem)
       let self = this;
       this.$refs["myForm"].validate(valid => {
         if (valid) {
@@ -300,6 +301,7 @@ export default {
           } else {
             target = "Goods/edit";
           }
+          console.log(target)
           axios.post(target, this.formItem).then(function(response) {
             self.modalSetting.loading = false;
             // console.log(response);
