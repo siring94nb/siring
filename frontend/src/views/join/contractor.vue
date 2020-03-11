@@ -100,7 +100,7 @@
             </el-form-item>
             <el-form-item>
               <el-button
-                style="margin-left:0px;border:1px solid rgb(14,144,210);color:rgb(14,144,210);width:455px;"
+                style="margin-left:0px;border:1px solid rgb(14,144,210);color:rgb(14,144,210);width:455px; margin-bottom:30px;"
                 @click="addNewSkill"
                 v-if="ruleForm.selectSkills.length < 2"
               >再添加一档（可选项，每人最多添加二档）</el-button>
@@ -108,12 +108,15 @@
             <!-- 上传 -->
             <!-- <el-form-item> -->
             <el-upload
+              v-if="dis"
               name="image"
               class="upload-demo"
               drag
               :show-file-list="false"
               action="https://manage.siring.com.cn/api/file/qn_upload"
+              :on-success="handleAvatarSuccess"
               multiple
+              style="margin-top: -150px;margin-left: 700px"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
@@ -122,7 +125,18 @@
               </div>
             </el-upload>
             <!-- </el-form-item> -->
-
+            <div class="wenjian" v-if="!dis">
+              <span>
+                <!-- <img :src="require('../../assets/images/头像 (2).png')" alt=""> -->
+                <span><i class="iconfont icon-Upload"></i></span>
+                <!-- <br/> -->
+                <!-- <span>{{fileName}}</span> -->
+                <span>已上传</span>
+              </span>
+              <span>
+                <span @click.stop="dis=true">修改</span><span @click.stop="dis=true">删除</span>
+              </span>
+            </div>
             <el-form-item
               label="我的优势："
               :rules="{ required: true, message: '请说明自己的优势', trigger: 'blur'}"
@@ -131,7 +145,7 @@
               <el-input
                 type="textarea"
                 :rows="3"
-                style="width: 692px;"
+                style="width: 780px;"
                 maxlength="100"
                 show-word-limit
                 placeholder="说明下自己的优势"
@@ -274,7 +288,9 @@ export default {
           huiyuan: "重庆会员8",
           yaoqma: "JU4523"
         }
-      ]
+      ],
+      dis:true,//控制上传位置切换
+      fileName:""
     };
   },
   mounted() {
@@ -288,6 +304,14 @@ export default {
     }
   },
   methods: {
+    // 文件上传
+    handleAvatarSuccess(res, file) {
+      if(res.code == 1){
+        this.dis = false
+        this.fileName = res.data.fileName
+      }
+      console.log(res)
+    },
     // 等级会员左右滑动
     openhuadong() {
       let huadongArr = document.getElementsByClassName("marquee-item");
@@ -403,8 +427,11 @@ export default {
 </script>
 <style>
 .join .upload-demo {
-  margin-top: -125px;
-  margin-left: 700px;
+  /* margin-top: -150px;
+  margin-left: 700px; */
+  /* position: relative;
+  left: 700px;
+  top: -150px; */
   width: 200px;
   height: 100px;
   margin-bottom: 22px;
@@ -550,7 +577,7 @@ export default {
         margin-bottom: 30px;
       }
       .sel-cont {
-        width: 70%;
+        width: 78%;
         margin: 0 auto;
         .el-select {
           margin-right: 20px;
@@ -595,6 +622,67 @@ export default {
               .code-color {
                 color: #199ed8;
               }
+            }
+          }
+        }
+      }
+    }
+    .wenjian{
+      width: 200px;
+      height: 100px;
+      border: 1px dashed rgb(64,158,255);
+      border-radius: 5px;
+      margin-top: -150px;
+      margin-left: 700px;
+      margin-bottom: 22px;
+      padding:10px 20px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // img{
+      //   width: 50px;
+      //   height: 50px;
+      //   margin-right: 10px;
+      // }
+      >span{
+        &:nth-of-type(1){
+          span{
+            &:nth-of-type(1){
+              display: block;
+              width: 60px;
+              height: 50px;
+              i{
+                font-size: 60px;
+                color: rgb(64,158,255);
+              }
+            }
+            &:nth-last-of-type(1){
+              font-size: 14px;
+              text-align: center;
+              display: block;
+              width: 50px;
+              // overflow: hidden;
+              // text-overflow: ellipsis;
+              // white-space: nowrap; //文本不换行，这样超出一行的部分被截取，显示...
+            }
+           
+          }
+        }
+        &:last-of-type{
+          display: flex;
+          flex-direction: column ;
+          >span{
+            display: block;
+            padding: 5px 20px;
+            color: #ffffff;
+            border-radius: 5px;
+            &:nth-of-type(1){
+              background: rgb(64,158,255);
+            }
+            &:nth-of-type(2){
+              background: rgb(245,108,108);
+              margin-top: 10px;
             }
           }
         }

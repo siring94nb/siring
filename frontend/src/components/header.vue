@@ -24,35 +24,48 @@
             >登录</span>
           </div>
           <div v-else class="after-login">
-            <el-badge :value="200" :max="99" class="bell">
+            <el-badge :value="dingdanSum" :max="99" class="bell">
               <i class="el-icon-bell" v-popover:popover1></i>
             </el-badge>
             <!-- 悬浮 -->
-            <el-popover ref="popover1" placement="bottom" width="280" trigger="hover">
+            <el-popover ref="popover1" placement="bottom" width="320" trigger="hover">
               <div>
                 <div class="popover-box">
-                  [订单] 您有
+                  [订单>软件/定制] 您有
                   <span style="color:#ff0000">24</span>个
-                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                  <!-- <span style="color:#ff0000">软件/定制</span> -->
+                  订单流程需及时处理
                 </div>
                 <div class="popover-box">
-                  [订单] 您有
+                  [订单>小程序SaaS] 您有
                   <span style="color:#ff0000">24</span>个
-                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                  <!-- <span style="color:#ff0000">小程序SaaS</span> -->
+                  订单流程需及时处理
                 </div>
                 <div class="popover-box">
-                  [售后] 您有
+                  [订单>AI推广运营] 您有
                   <span style="color:#ff0000">24</span>个
-                  <span style="color:#ff0000">普通</span>订单流程需及时处理
+                  <!-- <span style="color:#ff0000">AI推广运营</span> -->
+                  订单流程需及时处理
+                </div>
+                <div class="popover-box">
+                  [订单>投融介] 您有
+                  <span style="color:#ff0000">24</span>个
+                  <!-- <span style="color:#ff0000">投融介</span> -->
+                  订单流程需及时处理
+                </div>
+                <div class="popover-box" v-if="dis">
+                  [售后] 您的年服务费即将到期，请充值
+                  <!-- 您有
+                  <span style="color:#ff0000">24</span>个
+                  <span style="color:#ff0000">普通</span>
+                  订单流程需及时处理-->
                 </div>
               </div>
             </el-popover>
 
             <router-link to="afterLoggin" class="dh">
-              <el-avatar
-                class="avatar"
-                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-              ></el-avatar>
+              <el-avatar class="avatar" :src="imgTou"></el-avatar>
               <span class="phone">{{phone}}</span>
             </router-link>
             <span class="out" @click="onLogout">退出</span>
@@ -353,6 +366,7 @@
 
 <script>
 import validCode from "@/components/vaildcode";
+import {GetUserMassage} from "@/api/api";
 import {
   Login,
   Register,
@@ -389,7 +403,10 @@ export default {
       selectItem1: "请选择",
       items1: [],
       pid: 0, //省份id
-      cid: 0 //市id
+      cid: 0, //市id
+      dis: true, //提醒处售后状态控制
+      dingdanSum: 50, //提醒出角标数量，即订单总数
+      imgTou: ""
     };
   },
   computed: {
@@ -398,12 +415,37 @@ export default {
     }
   },
   mounted() {
-    this.isLogin();
-    this.ceshi();
-    this.getGetProvince();
-    this.guoqi();
+    this.init();
   },
   methods: {
+    init() {
+      this.userMessage();
+      this.isLogin();
+      this.ceshi();
+      this.getGetProvince();
+      this.guoqi();
+    },
+    // 获取用户信息,头像
+    userMessage() {
+      const userId = sessionStorage.getItem("user_id");
+      const params = {
+        user_id: userId
+      };
+      GetUserMassage(params).then(res => {
+        let { data, msg, code } = res;
+        console.log(data);
+        // this.showMsg(msg,code);
+        if (code === 1) {
+          // this.userMessage1 = data;
+          this.imgTou =
+            data.img == null
+              ? "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+              : data.img;
+          // this.imgTou = data.img || this.defaultImg;
+          // console.log(this.userMessage1);
+        }
+      });
+    },
     isLogin() {
       this.ifLogin = !!this.$store.state.user_id;
     },
@@ -459,24 +501,23 @@ export default {
       }, 1000);
     },
     // 定制需求等检测是否已经登录
-    dinghzi(str){
+    dinghzi(str) {
       let num = sessionStorage.getItem("user_id");
       let roPath = this.$route.name;
-      if(num == null && roPath != "index" ){
+      if (num == null && roPath != "index") {
         this.$router.push({
-            name:`index`,
-            params:{
-              isRegister:'2'
-            }
-          })
-      }else if(roPath == "index" && num == null){
-        console.log(123123)
+          name: `index`,
+          params: {
+            isRegister: "2"
+          }
+        });
+      } else if (roPath == "index" && num == null) {
+        console.log(123123);
         this.dialogVisible = true;
         this.isRegister = 2;
-        this.$message.error('请登录')
-      }
-      else{
-          this.$router.push({name:str})
+        this.$message.error("请登录");
+      } else {
+        this.$router.push({ name: str });
       }
     },
     submit(formName) {
@@ -557,22 +598,22 @@ export default {
       }
     },
     //登录过期，弹出登录框
-    guoqi(){
+    guoqi() {
       let roPath = this.$route.params.isRegister;
-      console.log("112132"+"测试测试"+roPath)
-      if(roPath == 2){
+      console.log("112132" + "测试测试" + roPath);
+      if (roPath == 2) {
         this.dialogVisible = true;
-        this.isRegister = 2
+        this.isRegister = 2;
         Logout().then(res => {
-        let { data, msg, code } = res.data;
-        if (code === 1) {
-          this.$message.error('请登录')
-          this.$store.commit("logout");
-          this.ifLogin = false;
-          // this.reload();
-          this.$router.push('/');
-        }
-      });
+          let { data, msg, code } = res.data;
+          if (code === 1) {
+            this.$message.error("请登录");
+            this.$store.commit("logout");
+            this.ifLogin = false;
+            // this.reload();
+            this.$router.push("/");
+          }
+        });
       }
     },
     // 城市改变，获取相应的二级城市等
@@ -667,9 +708,9 @@ export default {
   text-align: center;
 }
 .popover-box {
-    text-align: center;
-    margin: 10px 0;
-  }
+  text-align: left;
+  margin: 10px 0;
+}
 </style>
 <style scoped lang='scss'>
 .header {
@@ -889,7 +930,6 @@ export default {
       text-align: right;
     }
   }
-  
 }
 </style>
 

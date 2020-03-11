@@ -58,9 +58,17 @@
                 <el-row style="margin-bottom: 10px;">
                   <el-col :span="12">
                     <el-form-item label="手机号" required>
-                      <el-tooltip class="item"  :disabled="disabled" effect="dark" content="手机号格式有误" placement="top-start">
+                      <el-popover
+                        placement="top"
+                        width="150"
+                        trigger="manual"
+                        content="手机号格式有误,请修改"
+                        v-model="disabled">
+                        <el-input slot="reference" class="phone" type="text" v-model.number="form.need_phone" @input="checkPhone" ></el-input>
+                      </el-popover>
+                      <!-- <el-tooltip class="item"   :disabled="disabled" effect="dark" content="手机号格式有误" placement="top-start">
                         <el-input class="phone" type="text" v-model.number="form.need_phone" @input="checkPhone" ></el-input>
-                      </el-tooltip>
+                      </el-tooltip> -->
                     </el-form-item>
                   </el-col>
                   <el-col :span="12">
@@ -196,7 +204,7 @@ export default {
         }
       ],
       UploadAction: "",
-      disabled:true,//手机号悬浮提示
+      disabled:false,//手机号悬浮提示
     };
   },
   mounted() {
@@ -248,9 +256,10 @@ export default {
         // console.log("错误错误");
         // this.showMsg("手机号码输入错误","0")
         // this.form.need_phone=""
-        this.disabled = false;
-      } else {
         this.disabled = true;
+
+      } else {
+        this.disabled = false;
       }
     },
     need_submit() {

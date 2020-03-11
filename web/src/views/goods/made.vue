@@ -44,12 +44,13 @@
         <FormItem label="需求名称" prop="project_name">
           <Input v-model="formValidate.project_name" placeholder="请输入" style="width: 450px;" />
         </FormItem>
+
         <FormItem label="案例图片" prop="img">
-          <div class="demo-upload-list" v-for="(item, index) in uploadList" :key="index">
+          <div class="demo-upload-list" v-for="(item, index) in uploadList1" :key="index">
             <template v-if="item.status === 'finished'">
               <img :src="item.url" />
               <div class="demo-upload-list-cover">
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
+                <Icon type="ios-trash-outline" @click.native="handleRemove1(item)"></Icon>
               </div>
             </template>
             <template v-else>
@@ -58,15 +59,15 @@
           </div>
           <Upload
             multiple
-            ref="upload"
+            ref="upload1"
             :show-upload-list="false"
-            :default-file-list="iconList"
-            :on-success="handleSuccess"
+            :default-file-list="iconList1"
+            :on-success="handleSuccess1"
             :format="['jpg','jpeg','png']"
             :max-size="10240"
-            :on-format-error="handleFormatError"
-            :on-exceeded-size="handleMaxSize"
-            :before-upload="handleBeforeUpload"
+            :on-format-error="handleFormatError1"
+            :on-exceeded-size="handleMaxSize1"
+            :before-upload="handleBeforeUpload1"
             type="drag"
             name="image"
             :action="UploadAction"
@@ -256,7 +257,9 @@ export default {
     return {
       tableData: [],
       uploadList: [],
+      uploadList1:[],
       iconList: [],
+      iconList1: [],
       typeList: [],
       sortList: [],
       UploadAction: "",
@@ -324,7 +327,8 @@ export default {
         project_price_down: "",
         develop: [],
         project_detail: "",
-        goods_images: ""
+        goods_images: "",
+        goods_images1:""
       },
       ruleValidate: {
         project_name: [
@@ -494,11 +498,41 @@ export default {
       }
       return check;
     },
+    // 案例图片
+    handleView1(file) {
+      this.visible = true;
+    },
+    handleRemove1(file) {
+      const fileList = this.$refs.upload1.fileList;
+      // console.log(this.$refs.upload.fileList.splice(fileList.indexOf(file)));
+      this.$refs.upload1.fileList.splice(fileList.indexOf(file), 1);
+      this.formValidate.goods_images = "";
+    },
+    handleSuccess1(res, file) {
+      // file.url = res.data;
+      // this.formItem.img = res.data.substr( res.data.indexOf( 'upload' ) );
+      file.url = res.data.filePath; //获取图片路径
+      this.formValidate.goods_images1 += res.data.filePath + ",";
+    },
+    handleFormatError1(file) {
+      this.$Message.error("文件格式不正确, 请选择jpg或者png.");
+    },
+    handleMaxSize1(file) {
+      this.$Message.error("文件大小不能超过10M");
+    },
+    handleBeforeUpload1() {
+      const check = this.uploadList1.length < 5;
+      if (!check) {
+        this.$Message.error("只能上传五张品牌图");
+      }
+      return check;
+    },
   },
   mounted() {
     let vm = this;
     this.UploadAction = config.front_url + "file/qn_upload";
     this.uploadList = this.$refs.upload.fileList;
+    this.uploadList1 = this.$refs.upload1.fileList;
   }
 };
 </script>

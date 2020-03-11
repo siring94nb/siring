@@ -3,7 +3,7 @@
     <Myheader />
     <div style="padding-top:10px; padding-bottom:130px;max-width:1260px;margin:0 auto">
       <div style="margin-bottom: 50px;">
-        <div class="title">投融介</div>
+        <div class="title">项目详情</div>
         <div class="left">
           <Quickaside />
         </div>

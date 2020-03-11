@@ -819,11 +819,11 @@ export default {
             background: rgba(102, 204, 255, 1);
             color: #ffffff;
             font-size: 14px;
-            line-height: 26px;
+            line-height: 18px;
             text-align: center;
             margin-right: 20px;
-            width: 40px;
-            padding-top: 15px;
+            width: 26px;
+            // padding-top: 15px;
           }
           &:nth-of-type(2) {
             background: rgb(238, 250, 255);

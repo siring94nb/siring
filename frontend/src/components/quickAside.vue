@@ -2,8 +2,9 @@
   <div class="recomment-left">
     <div class="quick-desc">
       <div class="desc-title">
-        <i :class="{'iconfont':true,'icon-jisuanqi':rou=='quickValuation','i1':rou=='quickValuation','icon-xuqiubaosong':rou=='fillDemand','icon-wenwangwenbanli':rou=='ai-promotion'}"></i>
-        <span style="font-size:18px">{{type == 1? '定制需求':rou=="ai-promotion"?'提交稿件':'快捷估价'}}</span>
+        <i :class="{'iconfont':true,'icon-jisuanqi':rou=='quickValuation','i1':rou=='quickValuation','icon-xuqiubaosong':rou=='fillDemand','icon-wenwangwenbanli':rou=='ai-promotion'}" v-if="rou !='newInvestment'"></i>
+        <i :class="{'iconfont':true,'icon-xuqiubaosong':rou=='newInvestment'}" v-if="rou =='newInvestment'"></i>
+        <span style="font-size:18px">{{type == 1? '定制需求':rou=="ai-promotion"?'提交稿件':rou=="newInvestment"?'投融说明':'快捷估价'}}</span>
       </div>
       <div :class=" {'desc-dit1':rou=='ai-promotion','desc-dit':rou!='ai-promotion'}">
         {{type == 1?'请详细填写右边需求信息，提交需求后，系统将根据信息需求情况，及时走公司需求的梳理分析，以及报价、合同、设计等流程；为您提供完美的用户体验！':rou=="ai-promotion"?
@@ -13,8 +14,10 @@
     </div>
     <div class="recomment-cont">
       <div class="recomment-title">
-        <i class="iconfont icon-shouye"></i>
-        <span>定制案例欣赏</span>
+        <!-- <i class="iconfont icon-shouye" v-if="rou!='fillDemand'||rou!='quickValuation'"></i> -->
+        <i class="iconfont icon-hua"></i>
+        <span v-if="rou != 'newInvestment'">定制案例欣赏</span>
+        <span v-if="rou == 'newInvestment'">投融介见面会</span>
       </div>
       <div class="recomment-list">
         <div class="recomment-item" v-for="(item,index) in recommentList" :key="item.id">
@@ -125,7 +128,7 @@ export default {
       height: 34px;
       line-height: 34px;
       box-sizing: border-box;
-      .icon-shouye {
+      .icon-hua {
         font-size: 24px;
         color: rgb(216, 30, 6);
         vertical-align: middle;

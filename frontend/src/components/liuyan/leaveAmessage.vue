@@ -155,7 +155,7 @@ export default {
       console.log(this.Pid);
       let params = {
         pid: parseInt(this.pid),
-        // uid: parseInt(sessionStorage.getItem("user_id"))
+        uid: parseInt(this.uid)
       };
       msgList(params).then(res => {
         let { code, data, msg } = res;

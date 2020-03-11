@@ -136,7 +136,7 @@
           <p class="bgw">{{percent}}%</p>
           <p class="require-star tip">
             会员折扣
-            <span class="ques"><i class="el-icon-question" style="font-size:16px;"></i></span>
+            <span class="ques"><router-link to="hints"><i class="el-icon-question" style="font-size:16px;"></i></router-link></span>
           </p>
           <p></p>
         </div>
@@ -498,8 +498,8 @@ export default {
       }
       .ques {
         display: inline-block;
-        width: 16px;
-        height: 16px;
+        width: 20px;
+        height: 20px;
         // line-height: 20px;
         text-align: center;
         border-radius: 50%;
