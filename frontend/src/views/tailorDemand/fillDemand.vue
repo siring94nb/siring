@@ -122,7 +122,7 @@
         </div>
       </div>
     </div>
-    <myfooter />
+      <myfooter />
   </div>
 </template>
 
@@ -130,7 +130,7 @@
 import Myheader from "@/components/header";
 import Myfooter from "@/components/footer";
 import Quickaside from "@/components/quickAside";
-import { needOrderAdd } from "@/api/api";
+import { needOrderAdd ,GetDevlopType} from "@/api/api";
 export default {
   components: {
     Myheader,
@@ -205,6 +205,7 @@ export default {
       ],
       UploadAction: "",
       disabled:false,//手机号悬浮提示
+      typeList1:[],
     };
   },
   mounted() {
@@ -221,6 +222,7 @@ export default {
       let vm = this;
       this.form.user_id = JSON.parse(sessionStorage.getItem("user_id"));
       vm.UploadAction = "https://manage.siring.com.cn/api/file/qn_upload";
+      this.getDevlopType();
     },
     handleSuccess(response, file, fileList) {
       this.form.need_file = response.data.filePath;
@@ -242,6 +244,16 @@ export default {
         this.$message.error("上传文件大小不能超过50M！");
       }
       return size;
+    },
+    getDevlopType() {
+      GetDevlopType().then(res => {
+        let { code, data, msg } = res.data;
+        console.log(123123)
+        if (code === 1) {
+          console.log(data)
+          this.typeList1 = data;
+        }
+      });
     },
     // 获取图片链接
     handleAvatarSuccess(res, file) {

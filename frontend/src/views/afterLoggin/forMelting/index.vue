@@ -44,7 +44,7 @@
         <div>
           <router-link to="/addForMelting" style="color:#0099ff;border:1px solid #0099ff">
             <i class="el-icon-plus"></i>
-            <span>新发稿</span>
+            <span>新投融</span>
           </router-link>
         </div>
       </div>
@@ -117,8 +117,8 @@
         </div>
       </div>
     </div>
-    <div @click.stop="setorderId(3,40)">测试流程跳转</div>
-    <div @click.stop="getconsoleList1">测试获取结果</div>
+    <!-- <div @click.stop="setorderId(3,40)">测试流程跳转</div>
+    <div @click.stop="getconsoleList1">测试获取结果</div> -->
   </div>
 </template>
 <script>

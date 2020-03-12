@@ -133,50 +133,65 @@ export default {
       },
       columnsList: [
         {
-          title: "稿件编号",
+          title: "项目编号",
           type: "index",
           width: 65,
           align: "center",
           key: "id"
         },
         {
-          title: "标题",
+          title: "用户名",
           align: "center",
           key: "no",
           width: 200
         },
         {
-          title: "稿件类型",
+          title: "用户账号",
+          align: "center",
+          key: "need_category"
+        },
+        {
+          title: "投融类型",
           align: "center",
           key: "name",
           render: (h, param) => {
             if (param.row.need_category == "1") {
-              return h("div", "自撰稿件");
+              return h("div", "投资");
             } else if (param.row.need_category == "2") {
-              return h("div", "委托代写");
+              return h("div", "融资");
             } else {
-              return h("div", "");
+              return h("div", "未知");
             }
           }
         },
         {
-          title: "套餐费用",
-          align: "center",
-          key: "need_category",
-        },
-        {
-          title: "稿件费用",
+          title: "项目名称",
           align: "center",
           key: "terminal",
           width: 200
         },
         {
-          title: "总计费用",
+          title: "行业领域",
           align: "center",
           key: "phone"
         },
         {
-          title: "创建时间",
+          title: "赏金",
+          align: "center",
+          key: "order_amount"
+        },
+        // {
+        //   title: "状态",
+        //   align: "center",
+        //   key: "order_amount",
+        // },
+        {
+          title: "双方最新消息",
+          align: "center",
+          key: "order_amount"
+        },
+        {
+          title: "平台最新消息",
           align: "center",
           key: "order_amount"
         },
@@ -250,7 +265,7 @@ export default {
           label: "代写稿件"
         }
       ],
-      model1:""
+      model1: ""
     };
   },
   created() {
@@ -316,18 +331,18 @@ export default {
   background-color: rgb(140, 218, 255);
 }
 .btn-xsgt {
-  background-color: rgb(255,0,0);
+  background-color: rgb(255, 0, 0);
 }
-.btn-xxjmh{
-  background-color: rgb(102,153,0);
+.btn-xxjmh {
+  background-color: rgb(102, 153, 0);
 }
 .btn-httg {
-  background-color: rgb(0,51,255);
+  background-color: rgb(0, 51, 255);
 }
 .btn-xmwtjs {
-  background-color: rgb(171,147,48);
+  background-color: rgb(171, 147, 48);
 }
 .btn-xmzz {
-  background-color: rgb(134,134,134);
+  background-color: rgb(134, 134, 134);
 }
 </style>

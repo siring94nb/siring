@@ -160,7 +160,7 @@ export default {
           con: [
             // "定制需求订单", "定制类似订单"
             { name: "定制需求订单", rou: "/demand_order" },
-            { name: "定制类似订单", rou: "/ceshi" }
+            { name: "定制类似订单", rou: "/customization_analogy" }
           ]
         },
         {
@@ -193,7 +193,7 @@ export default {
       routerValue: this.$route.path,
       imgUrl: require("../../assets/images/头像 (2).png"), //用户头像
       // imgUrl:"",
-      imgBUrl: require("../../assets/images/image775877.jpeg"),
+      imgBUrl: require("../../assets/images/u176.png"),
       name: "未设置", //用户姓名
       dis: true,
       wstyle: "",

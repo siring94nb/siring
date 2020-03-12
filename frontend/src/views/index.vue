@@ -183,7 +183,7 @@
           </div>
         </div>
       </div>
-      <div id="jiameng" class="xcx-cont" style="height:400px">
+      <div id="jiameng" class="xcx-cont" style="height:400px;">
         <jsjm />
       </div>
       <!-- 融资案例 -->
@@ -762,7 +762,7 @@ export default {
     .cover {
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.5);
       .cover-inner {
         width: 1200px;
         margin: 0 auto;

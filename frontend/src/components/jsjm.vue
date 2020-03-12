@@ -1,7 +1,8 @@
 <template>
   <div class="sjhy">
     <h2 class="title">角色加盟</h2>
-    <div class="sjhy-cont">
+    <div class="box">
+      <div class="sjhy-cont">
       <!-- <img :src="require('@/assets/images/u327.png')" width="1200" alt /> -->
       <!-- <img :src="require('@/assets/images/u266.png')" width="1200" alt /> -->
       <div class="imgBox">
@@ -33,6 +34,8 @@
         </div>
       </div>
     </div>
+    </div>
+    
   </div>
 </template>
 
@@ -45,11 +48,17 @@ export default {};
   background: #ffffff;
   width: 100%;
   padding-bottom: 30px;
+  margin-bottom: 0;
+}
+.box{
+  background: rgba(0,0,0,.5);
+  padding: 20px 0 20px 0;
 }
 .sjhy-cont {
   position: relative;
   width: 1200px;
   margin: 0 auto;
+  
   .tocity{
     position: absolute;
     top: 20px;

@@ -170,7 +170,9 @@ export default {
     getDevlopType() {
       GetDevlopType().then(res => {
         let { code, data, msg } = res.data;
+        console.log(123123)
         if (code === 1) {
+          console.log(data)
           this.typeList = data;
         }
       });

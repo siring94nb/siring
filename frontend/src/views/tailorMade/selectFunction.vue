@@ -143,6 +143,7 @@ export default {
       this.minPrice += item.price_down * item.work_hours;
       this.maxPrice += item.price_up * item.work_hours;
       // this.date += item.work_hours;
+      
       this.date = Number((this.date + item.work_hours).toFixed(1));
     },
     minusData(item) {
@@ -205,11 +206,14 @@ export default {
           //   this.tableData.push(data.model[i]);
           // }
           for (let i = 0; i < this.typeList.length; i++) {
+            console.log(data.model[i].length)
+            
             for (let j = 0; j < data.model[i].length; j++) {
+              data.model[i][j].push("biaozhi",i)
               this.tableData.push(data.model[i][j])
             }
           }
-          // console.log(this.tableData)
+          console.log(this.tableData)
         }
       });
     },

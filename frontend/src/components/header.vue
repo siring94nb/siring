@@ -31,28 +31,36 @@
             <el-popover ref="popover1" placement="bottom" width="320" trigger="hover">
               <div>
                 <div class="popover-box">
+                  <router-link to="demand_order">
                   [订单>软件/定制] 您有
                   <span style="color:#ff0000">24</span>个
                   <!-- <span style="color:#ff0000">软件/定制</span> -->
                   订单流程需及时处理
+                  </router-link>
                 </div>
                 <div class="popover-box">
+                  <router-link to="storeIndex">
                   [订单>小程序SaaS] 您有
                   <span style="color:#ff0000">24</span>个
                   <!-- <span style="color:#ff0000">小程序SaaS</span> -->
                   订单流程需及时处理
+                  </router-link>
                 </div>
                 <div class="popover-box">
+                  <router-link to="generalizeIndex">
                   [订单>AI推广运营] 您有
                   <span style="color:#ff0000">24</span>个
                   <!-- <span style="color:#ff0000">AI推广运营</span> -->
                   订单流程需及时处理
+                  </router-link>
                 </div>
                 <div class="popover-box">
+                  <router-link to="forMelting">
                   [订单>投融介] 您有
                   <span style="color:#ff0000">24</span>个
                   <!-- <span style="color:#ff0000">投融介</span> -->
                   订单流程需及时处理
+                  </router-link>
                 </div>
                 <div class="popover-box" v-if="dis">
                   [售后] 您的年服务费即将到期，请充值
@@ -710,6 +718,9 @@ export default {
 .popover-box {
   text-align: left;
   margin: 10px 0;
+}
+.popover-box a{
+  color: #606662;
 }
 </style>
 <style scoped lang='scss'>
