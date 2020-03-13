@@ -243,7 +243,8 @@ export default {
           for (let i = 0; i < this.typeList.length; i++) {
             console.log(data.model[i].length)
             for (let j = 0; j < data.model[i].length; j++) {
-              data.model[i][j].push("biaozhi",i)
+              // data.model[i][j].push("biaozhi",i)
+              data.model[i][j]['biaozhi'] = i
               this.tableData.push(data.model[i][j])
             }
           }
