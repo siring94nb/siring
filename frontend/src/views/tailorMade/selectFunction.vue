@@ -87,14 +87,19 @@ export default {
       checkedObj: {},
       minPrice: 0,
       maxPrice: 0,
-      date: 0
+      date: 0,
+      long:"",
+      sum:[]
     };
   },
   mounted() {
-    this.getTableData();
+    this.init()
     // this.ceshi();
   },
   methods: {
+    init(){
+      this.getTableData();
+    },
     chooseType(index, id) {
       this.typeIndex = index;
       this.tableData = this.dataList[index];
@@ -143,7 +148,28 @@ export default {
       this.minPrice += item.price_down * item.work_hours;
       this.maxPrice += item.price_up * item.work_hours;
       // this.date += item.work_hours;
-      
+      for(let i = 0; i<this.long;i++){
+        if(this.long == 0){
+          this.date = Number((this.date + item.work_hours).toFixed(1));
+          console.log("12312")
+        }else{
+          if(sum.length == 0){
+            sum.push(Number(item.work_hours).toFixed(1))
+          }else{
+            if(sum[i] == undefined){
+              sum[i] =Number(item.work_hours).toFixed(1)
+            }else{
+              sum.splice(i,1,(sum[i]+Number(item.work_hours).toFixed(1)))
+            }
+          }
+        }
+      }
+      console.log(sum)
+      console.long(Math.max(...sum))
+      this.data = Math.max(...sum)
+      // if(item.biaozhi ==){
+
+      // }
       this.date = Number((this.date + item.work_hours).toFixed(1));
     },
     minusData(item) {
@@ -151,7 +177,7 @@ export default {
       this.maxPrice -= item.price_up * item.work_hours;
       // this.date -= item.work_hours;
       this.date = Number((this.date - item.work_hours).toFixed(1));
-    },
+    },    
     floatAdd(arg1, arg2) {
       var r1, r2, m;
       try {
@@ -205,9 +231,9 @@ export default {
           // for (let i = 0; i < this.typeList.length; i++) {
           //   this.tableData.push(data.model[i]);
           // }
+          this.long = this.typeList.length
           for (let i = 0; i < this.typeList.length; i++) {
             console.log(data.model[i].length)
-            
             for (let j = 0; j < data.model[i].length; j++) {
               data.model[i][j].push("biaozhi",i)
               this.tableData.push(data.model[i][j])
