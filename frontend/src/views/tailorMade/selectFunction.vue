@@ -167,16 +167,24 @@ export default {
       console.log(sum)
       console.long(Math.max(...sum))
       this.data = Math.max(...sum)
+      
       // if(item.biaozhi ==){
 
       // }
-      this.date = Number((this.date + item.work_hours).toFixed(1));
+      // this.date = Number((this.date + item.work_hours).toFixed(1));
     },
     minusData(item) {
       this.minPrice -= item.price_down * item.work_hours;
       this.maxPrice -= item.price_up * item.work_hours;
+      //查询item里面的时间标识下标在哪，然后作为sum的下标
+      var index = item.biaozhi
+      sum.splice(index,1,(sum[index]-Number(item.work_hours).toFixed(1)))
+      console.log(sum)
+      console.long(Math.max(...sum))
+      this.data = Math.max(...sum)
       // this.date -= item.work_hours;
-      this.date = Number((this.date - item.work_hours).toFixed(1));
+      // this.date = Number((this.date - item.work_hours).toFixed(1));
+      
     },    
     floatAdd(arg1, arg2) {
       var r1, r2, m;
