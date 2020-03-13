@@ -7,7 +7,8 @@ export const loginRouter = {
     meta: {
         title: 'Login - 登录'
     },
-    component: () => import('@/views/login.vue')
+    component: () =>
+        import ('@/views/login.vue')
 };
 
 export const page404 = {
@@ -16,7 +17,8 @@ export const page404 = {
     meta: {
         title: '404-页面不存在'
     },
-    component: () => import('@/views/error_page/404.vue')
+    component: () =>
+        import ('@/views/error_page/404.vue')
 };
 
 export const page403 = {
@@ -25,7 +27,8 @@ export const page403 = {
         title: '403-权限不足'
     },
     name: 'error_403',
-    component: () => import('@/views/error_page/403.vue')
+    component: () =>
+        import ('@/views/error_page/403.vue')
 };
 
 export const page500 = {
@@ -34,13 +37,15 @@ export const page500 = {
         title: '500-服务端错误'
     },
     name: 'error_500',
-    component: () => import('@/views/error_page/500.vue')
+    component: () =>
+        import ('@/views/error_page/500.vue')
 };
 
 export const locking = {
     path: '/locking',
     name: 'locking',
-    component: () => import('@/views/main_components/lock_screen/components/locking-page.vue')
+    component: () =>
+        import ('@/views/main_components/lock_screen/components/locking-page.vue')
 };
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
@@ -49,61 +54,69 @@ export const otherRouter = {
     name: 'otherRouter',
     redirect: '/home',
     component: Main,
-    children: [
-        {
+    children: [{
             path: 'home',
             title: { i18n: 'home' },
             name: 'home_index',
             access: 'admin/OrderGoods/index',
-            component: () => import('@/views/home/home.vue')
+            component: () =>
+                import ('@/views/home/home.vue')
         },
         {
             path: 'own',
             title: '个人中心',
             name: 'own_index',
-            component: () => import('@/views/own/index.vue')
+            component: () =>
+                import ('@/views/own/index.vue')
         },
         {
             path: 'request/:hash',
             title: '请求参数',
             name: 'interface_request',
-            component: () => import('@/views/interface/request.vue')
+            component: () =>
+                import ('@/views/interface/request.vue')
         },
         {
             path: 'response/:hash',
             title: '返回参数',
             name: 'interface_response',
-            component: () => import('@/views/interface/response.vue')
+            component: () =>
+                import ('@/views/interface/response.vue')
         },
         {
             path: 'Relation/detail/:detail_id',
             name: 'relation_detail',
             title: '用户关系网详情',
-            component: () => import('@/views/user/relation_detail.vue')
+            component: () =>
+                import ('@/views/user/relation_detail.vue')
         },
         {
             path: 'Goods/add/:goods_id',
             name: 'goods_add',
             title: '开发商品添加',
-            component: () => import('@/views/goods/goods_add.vue')
+            component: () =>
+                import ('@/views/goods/goods_add.vue')
         },
         {
             path: 'NeedOrder/need_index/:id&:status',
             name: 'demand_order_detail',
             title: '定制需求订单详情',
-            component: () => import('@/views/order/demand_order_detail.vue')
+            component: () =>
+                import ('@/views/order/demand_order_detail.vue')
         },
         {
             path: 'promotionDetail/need_index/:id&:status',
             name: 'promotion_detail',
             title: '推广运营订单详情',
-            component: () => import('@/views/order/promotion_detail.vue')
+            component: () =>
+                import ('@/views/order/promotion_detail.vue')
         },
         {
             path: 'investmentDetail/need_index/:id&:status',
             name: 'investment_detail',
             title: '投融介订单详情',
-            component: () => import('@/views/order/investment_detail.vue')
+            component: () =>
+                import ('@/views/order/investment_detail.vue')
         }
         // {
         //     path: 'OrderGoods/detail/:detail_id',
@@ -116,21 +129,20 @@ export const otherRouter = {
 };
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里
-export const appRouter = [
-    {
+export const appRouter = [{
         path: '/system',
         icon: 'ios-build',
         name: 'system',
         title: '管理员管理',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'user',
                 icon: 'ios-people',
                 name: 'user',
                 access: 'admin/User/index',
                 title: '管理员管理',
-                component: () => import('@/views/system/user.vue')
+                component: () =>
+                    import ('@/views/system/user.vue')
             },
             {
                 path: 'auth',
@@ -138,7 +150,8 @@ export const appRouter = [
                 name: 'auth',
                 access: 'admin/Auth/index',
                 title: '管理员组管理',
-                component: () => import('@/views/system/auth.vue')
+                component: () =>
+                    import ('@/views/system/auth.vue')
             },
             {
                 path: 'menu',
@@ -146,7 +159,8 @@ export const appRouter = [
                 name: 'menu',
                 access: 'admin/Menu/index',
                 title: '权限管理',
-                component: () => import('@/views/system/menu.vue')
+                component: () =>
+                    import ('@/views/system/menu.vue')
 
             },
         ]
@@ -207,14 +221,14 @@ export const appRouter = [
         title: '会员管理',
         name: 'User',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'index',
                 icon: 'ios-contact',
                 name: 'index',
                 access: 'admin/UserManage/index',
                 title: '会员列表',
-                component: () => import('@/views/user/index.vue')
+                component: () =>
+                    import ('@/views/user/index.vue')
             },
             {
                 path: 'partner',
@@ -222,7 +236,8 @@ export const appRouter = [
                 name: 'partner',
                 access: 'admin/UserPartner/index',
                 title: '合伙人列表',
-                component: () => import('@/views/user/partner.vue')
+                component: () =>
+                    import ('@/views/user/partner.vue')
             },
             {
                 path: 'subcontractor',
@@ -230,7 +245,8 @@ export const appRouter = [
                 name: 'subcontractor',
                 access: 'admin/UserSubcontractor/index',
                 title: '分包商列表',
-                component: () => import('@/views/user/subcontractor.vue')
+                component: () =>
+                    import ('@/views/user/subcontractor.vue')
             },
             {
                 path: 'feedback',
@@ -238,7 +254,8 @@ export const appRouter = [
                 name: 'feedback',
                 access: 'admin/Feedback/index',
                 title: '意见反馈',
-                component: () => import('@/views/user/feedback.vue')
+                component: () =>
+                    import ('@/views/user/feedback.vue')
             },
 
         ]
@@ -249,21 +266,21 @@ export const appRouter = [
         title: '商品管理',
         name: 'Goods',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'goods',
                 icon: 'ios-phone-portrait',
                 name: 'goods',
                 title: '软件/定制',
-                component: () => import('@/views/goods/goodsMain.vue'),
-                children: [
-                    {
+                component: () =>
+                    import ('@/views/goods/goodsMain.vue'),
+                children: [{
                         path: 'develop_goods',
                         icon: 'ios-pint',
                         name: 'develop_goods',
                         access: 'admin/Goods/index',
                         title: '软件/开发',
-                        component: () => import('@/views/goods/goods.vue')
+                        component: () =>
+                            import ('@/views/goods/goods.vue')
                     },
                     {
                         path: 'made_example',
@@ -271,7 +288,8 @@ export const appRouter = [
                         name: 'made_example',
                         access: 'admin/Goods/made',
                         title: '定制案例',
-                        component: () => import('@/views/goods/made.vue')
+                        component: () =>
+                            import ('@/views/goods/made.vue')
                     },
                     {
                         path: 'evaluate',
@@ -279,7 +297,8 @@ export const appRouter = [
                         name: 'evaluate',
                         access: 'admin/Goods/evaluate',
                         title: '快捷估价',
-                        component: () => import('@/views/goods/evaluate.vue'),
+                        component: () =>
+                            import ('@/views/goods/evaluate.vue'),
                     },
                 ]
             },
@@ -288,15 +307,16 @@ export const appRouter = [
                 icon: 'md-ribbon',
                 title: '小程序管理',
                 name: 'applet',
-                component: () => import('@/views/applet/appletMain.vue'),
-                children: [
-                    {
+                component: () =>
+                    import ('@/views/applet/appletMain.vue'),
+                children: [{
                         path: 'industryModule',
                         icon: 'ios-pint',
                         name: 'industryModule',
                         access: 'admin/AppletManage/index',
                         title: '行业模块',
-                        component: () => import('@/views/applet/industryModule.vue'),
+                        component: () =>
+                            import ('@/views/applet/industryModule.vue'),
                     },
                     {
                         path: 'model_meal',
@@ -304,7 +324,8 @@ export const appRouter = [
                         name: 'model_meal',
                         access: 'admin/AppletManage/model_meal',
                         title: '模板套餐',
-                        component: () => import('@/views/applet/templatePackage.vue'),
+                        component: () =>
+                            import ('@/views/applet/templatePackage.vue'),
                     }
                 ]
             },
@@ -315,39 +336,43 @@ export const appRouter = [
                 title: '推广运营',
                 name: 'extension',
                 access: 'admin/AppletManage/model_meal',
-                component: () => import('@/views/goods/extension.vue'),
+                component: () =>
+                    import ('@/views/goods/extension.vue'),
             },
             {
                 path: 'investment',
                 icon: 'logo-usd',
                 title: '投融介',
                 name: 'investment',
-                component: () => import('@/views/goods/goodsMain.vue'),
-                children: [
-                {
-                    path: 'schedule',
-                    icon: 'ios-pint',
-                    name: 'schedule',
-                    access: 'admin/Schedule/index',
-                    title: '日程安排',
-                    component: () => import('@/views/goods/schedule.vue'),
-                },
-                {
-                    path: 'setup',
-                    icon: 'ios-pint',
-                    name: 'setup',
-                    access: 'admin/Setup/index',
-                    title: '投融设置',
-                    component: () => import('@/views/goods/setup.vue'),
-                },
-                {
-                    path: 'testing',
-                    icon: 'ios-pint',
-                    name: 'testing',
-                    access: 'admin/Testing/index',
-                    title: '投融项目',
-                    component: () => import('@/views/goods/testing.vue'),
-                },
+                component: () =>
+                    import ('@/views/goods/goodsMain.vue'),
+                children: [{
+                        path: 'schedule',
+                        icon: 'ios-pint',
+                        name: 'schedule',
+                        access: 'admin/Schedule/index',
+                        title: '日程安排',
+                        component: () =>
+                            import ('@/views/goods/schedule.vue'),
+                    },
+                    {
+                        path: 'setup',
+                        icon: 'ios-pint',
+                        name: 'setup',
+                        access: 'admin/Setup/index',
+                        title: '投融设置',
+                        component: () =>
+                            import ('@/views/goods/setup.vue'),
+                    },
+                    {
+                        path: 'testing',
+                        icon: 'ios-pint',
+                        name: 'testing',
+                        access: 'admin/Testing/index',
+                        title: '投融项目',
+                        component: () =>
+                            import ('@/views/goods/testing.vue'),
+                    },
                 ]
             },
 
@@ -359,21 +384,21 @@ export const appRouter = [
         title: '订单管理',
         name: 'Information',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'order',
                 icon: 'ios-pint',
                 name: 'order',
                 title: '加盟/角色订单',
-                component: () => import('@/views/order/order.vue'),
-                children: [
-                    {
+                component: () =>
+                    import ('@/views/order/order.vue'),
+                children: [{
                         path: 'member_order',
                         icon: 'ios-clipboard',
                         name: 'member_order',
                         access: 'admin/JoinOrder/index',
                         title: '会员订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () =>
+                            import ('@/views/order/index.vue')
                     },
                     {
                         path: 'partner_order',
@@ -381,7 +406,8 @@ export const appRouter = [
                         name: 'partner_order',
                         access: 'admin/JoinOrder/partner',
                         title: '合伙人订单',
-                        component: () => import('@/views/order/partner.vue')
+                        component: () =>
+                            import ('@/views/order/partner.vue')
                     },
                     {
                         path: 'merchant_order',
@@ -389,7 +415,8 @@ export const appRouter = [
                         name: 'merchant_order',
                         access: 'admin/JoinOrder/merchant',
                         title: '分包商订单',
-                        component: () => import('@/views/order/merchant.vue')
+                        component: () =>
+                            import ('@/views/order/merchant.vue')
                     },
                 ]
             },
@@ -398,15 +425,16 @@ export const appRouter = [
                 icon: 'ios-pint',
                 name: 'made_order',
                 title: '软件/定制订单',
-                component: () => import('@/views/order/order.vue'),
-                children: [
-                    {
+                component: () =>
+                    import ('@/views/order/order.vue'),
+                children: [{
                         path: 'need_order',
                         icon: 'ios-clipboard',
                         name: 'need_order',
                         access: 'admin/NeedOrder/need_index',
                         title: '定制需求订单',
-                        component: () => import('@/views/order/demand_order.vue')
+                        component: () =>
+                            import ('@/views/order/demand_order.vue')
                     },
                     {
                         path: 'review_order',
@@ -414,7 +442,8 @@ export const appRouter = [
                         name: 'review_order',
                         access: 'admin/NeedOrderAudit/index',
                         title: '订单审核',
-                        component: () => import('@/views/order/review_order.vue')
+                        component: () =>
+                            import ('@/views/order/review_order.vue')
                     },
                 ]
             },
@@ -423,15 +452,16 @@ export const appRouter = [
                 icon: 'ios-pint',
                 name: 'saas_order',
                 title: 'saas套餐订单',
-                component: () => import('@/views/order/order.vue'),
-                children: [
-                    {
+                component: () =>
+                    import ('@/views/order/order.vue'),
+                children: [{
                         path: 'model_order',
                         icon: 'ios-clipboard',
                         name: 'model_order',
                         access: 'admin/ModelOrder/index',
                         title: '套餐订单',
-                        component: () => import('@/views/order/model_order.vue')
+                        component: () =>
+                            import ('@/views/order/model_order.vue')
                     },
                     {
                         path: 'adder_order',
@@ -439,7 +469,8 @@ export const appRouter = [
                         name: 'adder_order',
                         access: 'admin/ModelOrder/index',
                         title: '增值服务订单',
-                        component: () => import('@/views/order/index.vue')
+                        component: () =>
+                            import ('@/views/order/index.vue')
                     },
                 ]
             },
@@ -448,34 +479,34 @@ export const appRouter = [
                 icon: 'ios-pint',
                 name: 'promotion',
                 title: '推广运营订单',
-                component: () => import('@/views/order/order.vue'),
-                children: [
-                    {
-                        path: 'promotion_order',
-                        icon: 'ios-clipboard',
-                        name: 'promotion_order',
-                        access: 'admin/Promotion/index',
-                        title: '套餐订单',
-                        component: () => import('@/views/order/promotion.vue')
-                    },
-                ]
+                component: () =>
+                    import ('@/views/order/order.vue'),
+                children: [{
+                    path: 'promotion_order',
+                    icon: 'ios-clipboard',
+                    name: 'promotion_order',
+                    access: 'admin/Promotion/index',
+                    title: '套餐订单',
+                    component: () =>
+                        import ('@/views/order/promotion.vue')
+                }, ]
             },
             {
                 path: 'investment',
                 icon: 'ios-pint',
                 name: 'investment',
                 title: '投融介订单',
-                component: () => import('@/views/order/order.vue'),
-                children: [
-                    {
-                        path: 'investment_order',
-                        icon: 'ios-clipboard',
-                        name: 'investment_order',
-                        access: 'admin/Investment/index',
-                        title: '套餐订单',
-                        component: () => import('@/views/order/investment.vue')
-                    },
-                ]
+                component: () =>
+                    import ('@/views/order/order.vue'),
+                children: [{
+                    path: 'investment_order',
+                    icon: 'ios-clipboard',
+                    name: 'investment_order',
+                    access: 'admin/Investment/index',
+                    title: '套餐订单',
+                    component: () =>
+                        import ('@/views/order/investment.vue')
+                }, ]
             },
 
         ]
@@ -494,7 +525,8 @@ export const appRouter = [
                 name: 'Subcontract',
                 access: 'admin/Subcontract/index',
                 title: '分包列表',
-                component: () => import('@/views/subcontract/index.vue')
+                component: () =>
+                    import ('@/views/subcontract/index.vue')
             },
             {
                 path: 'Receipt',
@@ -502,7 +534,8 @@ export const appRouter = [
                 name: 'Receipt',
                 access: 'admin/Receipt/index',
                 title: '接单列表',
-                component: () => import('@/views/subcontract/receipt.vue')
+                component: () =>
+                    import ('@/views/subcontract/receipt.vue')
             },
         ]
     },
@@ -520,7 +553,8 @@ export const appRouter = [
                 name: 'CapitalDetailed',
                 access: 'admin/Capital/index',
                 title: '资金明细',
-                component: () => import('@/views/capital/detailed.vue')
+                component: () =>
+                    import ('@/views/capital/detailed.vue')
             },
             {
                 path: 'fundsAudit',
@@ -528,7 +562,8 @@ export const appRouter = [
                 name: 'fundsAudit',
                 access: 'admin/CapitalCard/index',
                 title: '线下支付审核',
-                component: () => import('@/views/capital/fundsAudit.vue')
+                component: () =>
+                    import ('@/views/capital/fundsAudit.vue')
             },
             {
                 path: 'Cash',
@@ -536,7 +571,8 @@ export const appRouter = [
                 name: 'Cash',
                 access: 'admin/Cash/index',
                 title: '提现审核',
-                component: () => import('@/views/capital/cash.vue')
+                component: () =>
+                    import ('@/views/capital/cash.vue')
             },
             {
                 path: 'Invoice',
@@ -544,7 +580,8 @@ export const appRouter = [
                 name: 'Invoice',
                 access: 'admin/Invoice/index',
                 title: '开票审核',
-                component: () => import('@/views/capital/invoice.vue')
+                component: () =>
+                    import ('@/views/capital/invoice.vue')
             },
         ]
     },
@@ -554,16 +591,15 @@ export const appRouter = [
         title: '营销管理',
         name: 'Marketing',
         component: Main,
-        children: [
-            {
-                path: 'Discount',
-                icon: 'logo-hackernews',
-                name: 'Discount',
-                access: 'admin/Discount/index',
-                title: '优惠券管理',
-                component: () => import('@/views/discount/index.vue')
-            },
-        ]
+        children: [{
+            path: 'Discount',
+            icon: 'logo-hackernews',
+            name: 'Discount',
+            access: 'admin/Discount/index',
+            title: '优惠券管理',
+            component: () =>
+                import ('@/views/discount/index.vue')
+        }, ]
     },
     {
         path: '/Setup',
@@ -571,14 +607,14 @@ export const appRouter = [
         title: '运营管理',
         name: 'Setup',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'banner',
                 icon: 'md-reverse-camera',
                 name: 'banner',
                 access: 'admin/Banner/index',
                 title: 'banner管理',
-                component: () => import('@/views/banner/list.vue')
+                component: () =>
+                    import ('@/views/banner/list.vue')
             },
             {
                 path: 'about',
@@ -586,7 +622,8 @@ export const appRouter = [
                 name: 'about',
                 access: 'admin/About/profitInfo',
                 title: '关于我们',
-                component: () => import('@/views/about/index.vue')
+                component: () =>
+                    import ('@/views/about/index.vue')
             },
 
             {
@@ -595,7 +632,8 @@ export const appRouter = [
                 name: 'contact',
                 access: 'admin/Contact/signInfo',
                 title: '联系我们',
-                component: () => import('@/views/contact/index.vue')
+                component: () =>
+                    import ('@/views/contact/index.vue')
 
             },
             {
@@ -604,7 +642,8 @@ export const appRouter = [
                 name: 'member',
                 access: 'admin/Member/index',
                 title: '核心成员',
-                component: () => import('@/views/member/list.vue')
+                component: () =>
+                    import ('@/views/member/list.vue')
 
             },
             {
@@ -613,7 +652,8 @@ export const appRouter = [
                 name: 'honor',
                 access: 'admin/Honor/index',
                 title: '荣誉/证书',
-                component: () => import('@/views/about/honor.vue')
+                component: () =>
+                    import ('@/views/about/honor.vue')
 
             },
             {
@@ -622,7 +662,8 @@ export const appRouter = [
                 name: 'course',
                 access: 'admin/Course/index',
                 title: '发展历程',
-                component: () => import('@/views/about/course.vue')
+                component: () =>
+                    import ('@/views/about/course.vue')
 
             },
             {
@@ -631,7 +672,8 @@ export const appRouter = [
                 name: 'suggest',
                 access: 'admin/Message/index',
                 title: '留言管理',
-                component: () => import('@/views/about/suggest.vue')
+                component: () =>
+                    import ('@/views/about/suggest.vue')
 
             },
             {
@@ -639,16 +681,17 @@ export const appRouter = [
                 icon: 'ios-hammer',
                 name: 'vip',
                 title: '会员设置',
-                component: () => import('@/views/vipsetting/index.vue'),
+                component: () =>
+                    import ('@/views/vipsetting/index.vue'),
                 // redirect: '/vip/vipLevel',
-                children: [
-                    {
+                children: [{
                         path: 'vipLevel',
                         icon: 'ios-hammer',
                         name: 'vipLevel',
                         title: '会员等级',
                         access: 'admin/RoleJoin/member_index',
-                        component: () => import('@/views/vipsetting/vipLevel.vue'),
+                        component: () =>
+                            import ('@/views/vipsetting/vipLevel.vue'),
                     },
                     {
                         path: 'settingCity',
@@ -656,7 +699,8 @@ export const appRouter = [
                         name: 'settingCity',
                         title: '城市等级',
                         access: 'admin/RoleJoin/city_index',
-                        component: () => import('@/views/vipsetting/settingCity.vue'),
+                        component: () =>
+                            import ('@/views/vipsetting/settingCity.vue'),
                     },
                     {
                         path: 'cityPartner',
@@ -664,7 +708,8 @@ export const appRouter = [
                         name: 'cityPartner',
                         title: '城市合伙人',
                         access: 'admin/RoleJoin/partner_index',
-                        component: () => import('@/views/vipsetting/cityPartner.vue'),
+                        component: () =>
+                            import ('@/views/vipsetting/cityPartner.vue'),
                     },
                     {
                         path: 'fbs',
@@ -672,7 +717,8 @@ export const appRouter = [
                         name: 'fbs',
                         title: '分包商',
                         access: 'admin/RoleJoin/subcontractor_index',
-                        component: () => import('@/views/vipsetting/fbs.vue'),
+                        component: () =>
+                            import ('@/views/vipsetting/fbs.vue'),
                     },
 
                 ]
@@ -686,14 +732,14 @@ export const appRouter = [
         title: '通用设置',
         name: 'General',
         component: Main,
-        children: [
-            {
+        children: [{
                 path: 'BackupSql',
                 icon: 'md-construct',
                 name: 'BackupSql',
                 access: 'admin/BackupSql/index',
                 title: '数据库管理',
-                component: () => import('@/views/backup/index.vue')
+                component: () =>
+                    import ('@/views/backup/index.vue')
             },
             {
                 path: 'seo',
@@ -701,7 +747,8 @@ export const appRouter = [
                 name: 'seo',
                 access: 'admin/Seo/index',
                 title: 'SEO设置',
-                component: () => import('@/views/system/seo.vue')
+                component: () =>
+                    import ('@/views/system/seo.vue')
             },
             {
                 path: 'Treaty',
@@ -709,17 +756,29 @@ export const appRouter = [
                 name: 'Treaty',
                 access: 'admin/Treaty/index',
                 title: '网站协议',
-                component: () => import('@/views/system/treaty.vue')
+                component: () =>
+                    import ('@/views/system/treaty.vue')
             },
+
             {
                 path: 'log',
                 icon: 'md-list-box',
                 name: 'log',
                 access: 'admin/Log/index',
                 title: '日志管理',
-                component: () => import('@/views/system/log.vue')
+                component: () =>
+                    import ('@/views/system/log.vue')
             },
-            
+            {
+                path: 'Advertising',
+                icon: 'ios-globe-outline',
+                name: 'Advertising',
+                access: 'admin/Advertising/index',
+                title: '广告管理',
+                component: () =>
+                    import ('@/views/system/advertising.vue')
+            },
+
         ]
     },
 

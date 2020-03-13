@@ -16,9 +16,9 @@
     <div class="square">
       <i class="icon iconfont icon-erweima" />
       <p>顾问</p>
-      <div class="float-cont">
-        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 10px 10px;">
-        <div class="float-title">
+      <div class="float-cont" style="right:158px;">
+        <div style="border:1px solid rgb(255,234,234);font-size:12px;background:#fff;padding: 0px 10px 10px 10px; color:#999;display:flex;width:260px">
+        <!-- <div class="float-title">
           <i class="icon iconfont icon-weixin" />专家顾问：
           <p class="aside-text">扫一扫</p>
         </div>
@@ -33,31 +33,39 @@
           <span class="wx-qrcode">
             <img :src="require('@/assets/images/u388.png')" width="150" height="150" alt />
           </span>
-        </p>
+        </p> -->
+        <div style="margin-right:30px">
+          <img :src="require('@/assets/images/u388.png')" width="115" height="115" alt />
+          <div>扫描二维码直接联系</div>
+        </div>
+        <div >
+          <img :src="require('@/assets/images/u388.png')" width="115" height="115" alt />
+          <div>扫描二维码直接联系</div>
+        </div>
         </div>
       </div>
     </div>
     <div class="square">
       <i class="icon iconfont icon-kefu" />
       <p>客服</p>
-      <div class="float-cont">
-        <div style="border:1px solid rgb(255,234,234);padding: 0px 10px 10px 10px;">
-        <div class="float-title">
+      <div class="float-cont" >
+        <div style="border:1px solid rgb(255,234,234);padding: 10px 10px 10px 10px;">
+        <!-- <div class="float-title">
           <i class="iconfont icon-icon" />QQ客服：
-        </div>
-        <p class="contact-number interactive-bg">
+        </div> -->
+        <p class="contact-number interactive-bg" style="background:#fff">
           <a
             id="qq"
             target="_blank"
             href="http://wpa.qq.com/msgrd?v=3&amp;uin=50087335&amp;site=qq&amp;menu=yes"
-          >50087335</a>
+          ><img :src="require('../assets/images/qq.png')" alt=""><span>业务咨询</span></a>
         </p>
-        <p class="contact-number interactive-bg">
+        <p class="contact-number interactive-bg" style="background:#fff">
           <a
             id="qq"
             target="_blank"
             href="http://wpa.qq.com/msgrd?v=3&amp;uin=415364124&amp;site=qq&amp;menu=yes"
-          >415364124</a>
+          ><img :src="require('../assets/images/qq.png')" alt=""><span>业务咨询</span></a>
         </p>
         </div>
       </div>
@@ -244,6 +252,21 @@ export default {
   .topBtn {
     opacity: 1 !important;
     transition: opacity 0.4s;
+  }
+}
+#qq{
+  display:flex;
+  font-size: 16px;
+  color: #ffffff;
+  background: #557aff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  align-items: center;
+  justify-content: center;
+  img{
+    width: 28px;
+    height: 28px;
+    padding-right: 5px;
   }
 }
 </style>
