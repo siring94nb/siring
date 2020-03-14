@@ -759,7 +759,6 @@ export const appRouter = [{
                 component: () =>
                     import ('@/views/system/treaty.vue')
             },
-
             {
                 path: 'log',
                 icon: 'md-list-box',

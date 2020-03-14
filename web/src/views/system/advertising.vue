@@ -33,13 +33,55 @@
           @on-page-size-change="changeSize"
         ></Page>
         <!--  @on-change="changePage"
-          @on-page-size-change="changeSize" -->
+        @on-page-size-change="changeSize"-->
       </div>
     </div>
+    <Modal v-model="ggDis" title="新增广告内容" width="600" >
+      <div class="cinzengBox" style="margin-bottom: 10px;">
+        <span class="biaozhi">*</span>
+        <span>广告名称：</span>
+        <Input v-model="guanggaoName" placeholder="请输入广告名称" style="width: 300px" />
+      </div>
+      <div class="biaozhu">广告名称只是作为辨别多个广告条目之用，并不显示在广告中</div>
+      <div class="cinzengBox">
+        <span class="biaozhi">*</span>
+        <span>广告位置：</span>
+        <Select v-model="weizhiVale" style="width:300px">
+          <Option
+            v-for="item in guanggaoweizhi"
+            :value="item.value"
+            :key="item.value"
+          >{{ item.label }}</Option>
+        </Select>
+      </div>
+      <div class="cinzengBox">
+        <span style="margin-right:15px">上线/下线</span>
+        <RadioGroup v-model="sx">
+          <Radio label="shang">
+            <span>上线</span>
+          </Radio>
+          <Radio label="xia">
+            <span>下线</span>
+          </Radio>
+        </RadioGroup>
+      </div>
+      <div class="cinzengBox">
+        <span class="biaozhi">*</span>
+        <span>广告图片：</span>
+      </div>
+      <div class="cinzengBox">
+        <span class="biaozhi">*</span>
+        <span>广告链接：</span>
+        <Input v-model="guanggaoLink" placeholder="请输入广告链接" style="width: 300px" />
+      </div>
+      <div slot="footer">
+        <Button type="success">提交</Button>
+      </div>
+    </Modal>
   </div>
 </template>
 <script>
-import axios from "axios";  
+import axios from "axios";
 const editButton = (vm, h, currentRow, index) => {
   return h(
     "Button",
@@ -52,12 +94,13 @@ const editButton = (vm, h, currentRow, index) => {
       },
       on: {
         click: () => {
-          vm.$router.push({
-            name: "goods_add",
-            params: {
-              goods_id: currentRow.id
-            }
-          });
+          vm.ggDis = !vm.ggDis;
+          // vm.$router.push({
+          //   name: "goods_add",
+          //   params: {
+          //     goods_id: currentRow.id
+          //   }
+          // });
         }
       }
     },
@@ -160,17 +203,17 @@ export default {
           align: "center",
           key: "category_id",
           render: (h, param) => {
-                  if (param.row.category_id == "1") {
-                      return h("div", "上线");
-                  } else if (param.row.vest == "2") {
-                      return h("div", "下线");
-                  }
-              }
+            if (param.row.category_id == "1") {
+              return h("div", "上线");
+            } else if (param.row.vest == "2") {
+              return h("div", "下线");
+            }
+          }
         },
         {
           title: "点击次数",
           align: "center",
-          key: "goods_number",
+          key: "goods_number"
         },
         {
           title: "操作",
@@ -180,7 +223,7 @@ export default {
           handle: ["edit", "delete"]
         }
       ],
-      tableData:[],
+      tableData: [],
       tableShow: {
         currentPage: 1,
         pageSize: 10,
@@ -191,13 +234,45 @@ export default {
         status: "",
         category_id: -1
       },
+      // 弹窗部分
+      guanggaoName: "",
+      guanggaoweizhi: [
+        {
+          value: "New York",
+          label: "New York"
+        },
+        {
+          value: "London",
+          label: "London"
+        },
+        {
+          value: "Sydney",
+          label: "Sydney"
+        },
+        {
+          value: "Ottawa",
+          label: "Ottawa"
+        },
+        {
+          value: "Paris",
+          label: "Paris"
+        },
+        {
+          value: "Canberra",
+          label: "Canberra"
+        }
+      ],
+      weizhiVale: "",
+      sx: "shang",
+      guanggaoLink: "",
+      ggDis: false
     };
   },
-   created() {
+  created() {
     this.init();
     this.getList();
   },
-   methods: {
+  methods: {
     init() {
       let vm = this;
       this.columnsList.forEach(item => {

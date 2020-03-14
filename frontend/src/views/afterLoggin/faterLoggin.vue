@@ -380,10 +380,8 @@ export default {
         console.log(data);
         if (code === 1) {
           this.yue = data.money;
-          this.imgUrl =data.img
-            // data.img == null
-              // ? require("../../assets/images/头像 (2).png")
-              // : data.img;
+          this.imgUrl =
+            data.img == null? require("../../assets/images/头像 (2).png"): data.img;
           this.name = data.realname || this.name;
           this.updated_at = data.updated_at;
           this.shujuData = data;

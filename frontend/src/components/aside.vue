@@ -39,7 +39,7 @@
           <div>扫描二维码直接联系</div>
         </div>
         <div >
-          <img :src="require('@/assets/images/u388.png')" width="115" height="115" alt />
+          <img :src="require('@/assets/images/u389.png')" width="115" height="115" alt />
           <div>扫描二维码直接联系</div>
         </div>
         </div>

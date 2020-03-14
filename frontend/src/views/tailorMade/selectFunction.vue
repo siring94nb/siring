@@ -8,11 +8,14 @@
         <div class="types-right">
           <div class="types-list">
             <div class="types-title">选择开发端（可多选）</div>
+            <!--  
+              :class="{'type-item': true, 'on': typeIndex==index}" 
+              @click="chooseType(index, item.plate_from_id)"
+            -->
             <div
-              :class="{'type-item': true, 'on': typeIndex==index}"
+              class="type-item on"
               v-for="(item, index) in typeList"
               :key="index"
-              @click="chooseType(index, item.plate_from_id)"
             >
               <i :class="item.className"></i>
               <p class="type-name">{{ item.plate_from }}</p>
@@ -153,20 +156,20 @@ export default {
           this.date = Number((this.date + item.work_hours).toFixed(1));
           console.log("12312")
         }else{
-          if(sum.length == 0){
-            sum.push(Number(item.work_hours).toFixed(1))
+          if(this.sum.length == 0){
+            this.sum.push(Number(item.work_hours).toFixed(1))
           }else{
-            if(sum[i] == undefined){
-              sum[i] =Number(item.work_hours).toFixed(1)
+            if(this.sum[i] == undefined){
+              this.sum[i] =Number(item.work_hours).toFixed(1)
             }else{
-              sum.splice(i,1,(sum[i]+Number(item.work_hours).toFixed(1)))
+              this.sum.splice(i,1,(this.sum[i]+Number(item.work_hours).toFixed(1)))
             }
           }
         }
       }
-      console.log(sum)
-      console.long(Math.max(...sum))
-      this.data = Math.max(...sum)
+      console.log(this.sum)
+      console.long(Math.max(...this.sum))
+      this.data = Math.max(...this.sum)
       
       // if(item.biaozhi ==){
 
@@ -178,10 +181,10 @@ export default {
       this.maxPrice -= item.price_up * item.work_hours;
       //查询item里面的时间标识下标在哪，然后作为sum的下标
       var index = item.biaozhi
-      sum.splice(index,1,(sum[index]-Number(item.work_hours).toFixed(1)))
-      console.log(sum)
-      console.long(Math.max(...sum))
-      this.data = Math.max(...sum)
+      this.sum.splice(index,1,(this.sum[index]-Number(item.work_hours).toFixed(1)))
+      console.log(this.sum)
+      console.long(Math.max(...this.sum))
+      this.data = Math.max(...this.sum)
       // this.date -= item.work_hours;
       // this.date = Number((this.date - item.work_hours).toFixed(1));
       
@@ -242,7 +245,7 @@ export default {
           this.long = this.typeList.length
           for (let i = 0; i < this.typeList.length; i++) {
             console.log(data.model[i].length)
-            for (let j = 0; j < data.model[i].length; j++) {
+            for (let j = 0; j < data.model[i].length; j++) { 
               // data.model[i][j].push("biaozhi",i)
               data.model[i][j]['biaozhi'] = i
               this.tableData.push(data.model[i][j])
